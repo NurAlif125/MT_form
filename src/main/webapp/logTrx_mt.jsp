@@ -1,0 +1,29 @@
+<style>
+    textarea {
+        resize: none;
+    }
+</style>
+<div class="form-row"><span class="label_sub"><b>Log MT Text</b></span></div>
+<div class="form-row">
+    <div class="form-cols">
+        <div class="blok-1">
+            <span><h3>Before</h3></span> <br/>
+            <textarea name="before" id="before" class="mttext"><c:out value="${textById.modify_mt}" /></textarea>
+        </div>
+        <div class="blok-1">
+            <span><h3>After</h3></span> <br/>
+            <textarea name="after" id="after" class="mttext"><c:out value="${textById.final_mt}" /></textarea>
+        </div>
+        <div class="blok-1">
+            <br/><span><h3>Record Before Changed</h3></span>
+            <%--<pre style="color:red">${keyBefore}</pre>--%>
+            <textarea cols="200" rows="6" class="mtlog">${keyBefore}</textarea>
+        </div>
+        <div class="blok-1">
+            <br/><span><h3>Record After Changed</h3></span>
+            <%--pre style="color:red">${keyAfter}</pre--%>
+            <textarea cols="200" rows="6" class="mtlog">${keyAfter}</textarea>
+        </div>
+    </div>
+</div>
+<hr/>

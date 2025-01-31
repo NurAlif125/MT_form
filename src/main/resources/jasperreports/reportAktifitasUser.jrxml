@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="778196b4-1f88-47de-af90-9bbe41eda8ac">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="username" class="java.lang.String"/>
+	<field name="user_id" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="hostname" class="java.lang.String"/>
+	<field name="ip" class="java.lang.String"/>
+	<field name="event_date" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<image hAlign="Right">
+				<reportElement key="image" x="591" y="0" width="210" height="41" uuid="1680a96f-310d-4b5f-9cc7-1936e7cb2aee">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<imageExpression><![CDATA["cmrtgs.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement key="staticText" style="Title" x="320" y="20" width="170" height="49" uuid="4b194bc1-25fa-4ffc-986a-d3c043d78479"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="22" isBold="false"/>
+				</textElement>
+				<text><![CDATA[User Activity]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="0" y="0" width="262" height="16" uuid="4baeb903-1b31-4840-9031-deac006e51ac">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Printed by : "+$P{username}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<line>
+				<reportElement key="line" positionType="FixRelativeToBottom" x="0" y="15" width="801" height="1" uuid="7be91040-2af6-44cb-b138-83e1f966777e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement key="staticText" style="Column header" x="41" y="1" width="83" height="14" forecolor="#736343" uuid="57288fb9-fe25-4c0a-9189-5a010d3f5f22"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[User ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" style="Column header" x="124" y="1" width="149" height="14" forecolor="#736343" uuid="fda4ad3c-d1a1-4c8a-a182-afe29d5405aa"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Event Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" style="Column header" x="273" y="1" width="99" height="14" forecolor="#736343" uuid="84b7bfa2-7215-4f95-b04c-cd4e75797eb2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Hostname]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" style="Column header" x="372" y="2" width="98" height="14" forecolor="#736343" uuid="49f6fa9a-195e-4e90-a4a9-eb326ec391fe"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[IP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" style="Column header" x="475" y="2" width="325" height="14" forecolor="#736343" uuid="87251da2-1943-45ed-9550-5cc992673f70"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText" style="Column header" x="1" y="1" width="30" height="14" forecolor="#736343" uuid="47f1186c-97ae-4393-abf6-a8831cb4038b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[No]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<frame>
+				<reportElement key="frame" style="Row" mode="Opaque" x="0" y="1" width="801" height="15" uuid="492916b9-ba27-450a-8818-bf98d0996c6b"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField" style="Detail" x="41" y="0" width="83" height="15" uuid="453aca22-cf13-4e04-b39e-72ab3b191900"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{user_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField" style="Detail" x="124" y="0" width="149" height="15" uuid="fb59ddfb-b2cf-4acb-b37f-aa8fa002509f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{event_date}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField" style="Detail" x="273" y="0" width="99" height="15" uuid="649e4e98-5804-4c8d-bf34-a10a59ba47d5"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hostname}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField" style="Detail" x="474" y="0" width="327" height="15" uuid="5efd1dbe-c031-4225-9fdb-1d68ffa7b66f"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField" style="Detail" x="1" y="0" width="30" height="15" uuid="1da80230-64d2-49f1-bfd4-c2ef154c0e9b"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+					<reportElement key="textField" style="Detail" x="372" y="0" width="99" height="15" uuid="a74dce6b-2631-4d78-89ed-b76d19cf457d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{ip}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement key="line" positionType="FixRelativeToBottom" x="0" y="1" width="802" height="1" uuid="38dbc630-30b1-4a0d-b3c7-5455944a41ad"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement key="frame" mode="Opaque" x="-20" y="-4" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="17051032-9448-4f75-8013-52396e521713"/>
+				<textField evaluationTime="Report" isBlankWhenNull="false">
+					<reportElement key="textField" style="Column header" x="783" y="0" width="40" height="20" forecolor="#736343" uuid="56904dd1-38c9-4acc-bcb3-56fa99fa1221"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField" style="Column header" x="703" y="0" width="80" height="20" forecolor="#736343" uuid="19f18b03-e3e1-43ee-8be0-259f6053741c"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy HH.mm.ss" isBlankWhenNull="false">
+					<reportElement key="textField" style="Column header" x="22" y="0" width="197" height="20" forecolor="#736343" uuid="e995bd62-6397-45a6-9b12-2be0695dd448"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

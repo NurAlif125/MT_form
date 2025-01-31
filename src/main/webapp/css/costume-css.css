@@ -1,0 +1,14 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 15, 2022, 1:35:20 PM
+    Author     : Farras
+*/
+
+
+.shadow:hover {
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.85) !important;
+}
+

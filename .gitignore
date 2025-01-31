@@ -1,0 +1,11 @@
+/build
+/dist
+/nbproject/private/
+/DB
+/.idea
+build.xml
+/src/java/db.properties
+/target/
+
+/nbproject/
+/.vscode/

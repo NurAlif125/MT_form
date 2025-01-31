@@ -1,0 +1,281 @@
+<%-- 
+    Document   : button_action
+    Update on  : Sept 16, 2015, 9:28:00 PM
+--%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<div class="form-row-action">
+    <c:forEach var="item" items="${role}">
+        <% if (request.getParameter("id") != null) {%>
+        <% if (session.getAttribute("flagFilter") == null) {%>
+        <% } else { %>
+        <% if (session.getAttribute("flagStatus").equals("NACK")) {%>
+        <c:if test="${item == 'FLOW:MOD'}">
+            <input type="button" name="modified" id="modified" value="Modify" />
+        </c:if>
+        <% }%>
+        <% if (session.getAttribute("flagStatus").equals("INC-WAIT")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <% if (session.getAttribute("messageType").equals("103") || session.getAttribute("messageType").equals("pacs.008.001.08")) {%>
+            <%--<c:if test="${headerById.komentar!='NAMA BERBEDA SAAT INQUIRY REKENING'}">--%>
+            <c:if test="${headerById.komentar=='Not Found'}">
+                <input type="button" name="saveAcc" id="saveAcc" value="Save" />
+            </c:if>  
+            <c:if test="${headerById.komentar=='Account name does not match'}">
+                <input type="button" name="verifyACC" id="verifyACC" value="Adjustment Name" />
+                <input type="button" name="push_release" id="push_release" value="Push Release" /> 
+            </c:if>
+            <input type="button" name="recheck" id="recheck" value="Recheck" />
+            <input type="button" name="investigate" id="investigate" value="Investigate" />
+            <input type="button" name="retur" id="retur" value="Retur" />
+            <%--c:forEach var="itemInc" items="${role}">
+                <c:if test="${itemInc == 'FLOW:RETUR'}">
+                    <input type="button" name="retur" id="retur" value="Retur" />
+                </c:if>
+            </c:forEach--%>
+
+            <input type="button" name="sendTEXT" id="sendTEXT" value="Receive MT" />
+            <% }%>
+            <% if (session.getAttribute("messageType").equals("101") || session.getAttribute("messageType").equals("202") || session.getAttribute("messageType").equals("200")) {%>
+            <c:forEach var="itemInc" items="${role}">
+                <c:if test="${itemInc == 'FLOW:INCM'}">
+                    <input type="button" name="incoming_ok" id="incoming_ok" value="Receive MT" />
+                </c:if>
+            </c:forEach>
+            <% }%>
+            <!--101 end here-->
+        </c:if>
+        <c:if test="${item == 'FLOW:REJECT'}">
+            <input type="button" name="reject" id="reject" value="Reject" />
+        </c:if>
+        <% if (session.getAttribute("messageType").equals("202") || session.getAttribute("messageType").equals("200")) {%>
+        <c:if test="${item == 'FLOW:RETUR'}">
+            <input type="button" name="retur299" id="retur299" value="Retur" />
+        </c:if>
+        <% }%>
+        <% }%>
+        <!--INC-WAIT end here-->
+
+        <% if (session.getAttribute("flagStatus").equals("INC-ADJ")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <input type="button" name="approveADJ" id="approveADJ" value="Approve Adjustment" />
+            <input type="button" name="rejectADJ" id="rejectADJ" value="Reject Adjustment" />
+        </c:if>
+        <% }%>
+        <% if (session.getAttribute("flagStatus").equals("INC-STL")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <input type="button" name="reSendTEXT" id="reSendTEXT" value="Reactivate MT" />
+            <input type="button" name="retur" id="retur" value="Retur" />
+        </c:if>
+        <% }%>
+        <% if (session.getAttribute("flagStatus").equals("INC-HOLD")) {%>
+        <% if (session.getAttribute("messageType").equals("101")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <c:forEach var="itemInc" items="${role}">
+                <c:if test="${itemInc == 'FLOW:INCM'}">
+                    <input type="button" name="incWait" id="incWait" value="INC-WAIT" />
+                </c:if>
+            </c:forEach>
+        </c:if>
+        <% }%>
+        <% if (session.getAttribute("messageType").equals("202") || session.getAttribute("messageType").equals("200")) {%>
+        <c:if test="${item == 'FLOW:RETUR'}">
+            <input type="button" name="retur299" id="retur299" value="Retur" />
+        </c:if>
+        <% }%>
+        <% }%>
+        <% if (session.getAttribute("flagStatus").equals("MOD")) {%>
+        <c:if test="${item == 'FLOW:CREATE'}">
+            <input type="hidden" name="flag" id="flag" value="VER" />
+            <input type="hidden" name="action_type" id="action_type" value="save" />
+            <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
+        </c:if>
+        <%--<c:if test="${item == 'FLOW:VER'}">
+            <input type="button" name="verified" id="verified" value="Verifiy" />
+        </c:if>--%>
+        <%}%>
+        <% if (session.getAttribute("flagStatus").equals("VER")) {%>
+        <c:if test="${item == 'FLOW:AUTH'}">
+            <input type="button" name="authorized" id="authorized" value="Authorize" />
+        </c:if>
+        <%}%>
+        <% if (session.getAttribute("flagStatus").equals("AUTH")) {%>
+        <c:if test="${item == 'FLOW:TEXT'}">
+            <input type="button" name="generated" id="generated" value="Resend" />
+            <!--<input type="button" name="reject" id="reject" value="Complete" />-->
+        </c:if>
+        <!--here we go...!-->
+        <!--20230302-->
+        <c:if test="${item == 'FLOW:REJECT'}">
+            <input type="button" name="reject" id="reject" value="Reject" />
+        </c:if>
+        <%}%>
+        <% if (session.getAttribute("flagStatus").equals("INC-NOK")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <% if (session.getAttribute("messageType").equals("103")) {%>
+            <input type="button" name="search_cover" id="search_cover" value="Search Cover" /> <!-- 20191231 ditambah search cover -->
+            <% }%>  
+            <input type="button" name="reject" id="reject" value="Reject" />
+            <input type="button" name="recheck" id="recheck" value="Recheck" />
+
+        </c:if>
+        <% }%>
+        <% if (session.getAttribute("flagStatus").equals("INC-STLHOLD")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <% if (session.getAttribute("messageType").equals("103")) {%>
+            <input type="button" name="search_cover" id="search_cover" value="Search Cover" /> <!-- 20191231 ditambah search cover -->
+            <% }%>  
+            <input type="button" name="reject" id="reject" value="Reject" />
+
+
+            <input type="button" name="manual_settle" id="manual_settle" value="Manual Settle" /> 
+
+        </c:if>
+        <% }%>
+
+        <% if (session.getAttribute("flagStatus").equals("INC-STLHOLD-CNF")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <% if (session.getAttribute("messageType").equals("103")) {%>
+            <input type="button" name="search_cover" id="search_cover" value="Search Cover" /> <!-- 20191231 ditambah search cover -->
+            <% }%>  
+            <!--            <input type="button" name="reject" id="reject" value="Reject" />
+                        <input type="button" name="recheck" id="recheck" value="Recheck" />
+                        <input type="button" name="manual_settle" id="manual_settle" value="Manual Settle" />-->
+            <input type="button" name="approve_settle" id="approve_settle" value="Approve" /> 
+            <input type="button" name="reject_settle" id="reject_settle" value="Reject Settle" /> 
+
+
+        </c:if>
+        <% }%>
+
+
+        <% if (session.getAttribute("flagStatus").equals("INC-OK")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <% if (session.getAttribute("messageType").equals("103") || session.getAttribute("messageType").equals("pacs.008.001.08")) {%>
+
+            <!--    2024-12-16 : Farras, Menambahkan push release untukt ransaksi tertentu yg ada di INC-OK
+            karena tidak perlu menunggu cover dana-->
+            <input type="button" name="push_release" id="push_release" value="Push Release" /> 
+
+            <input type="button" name="search_cover" id="search_cover" value="Search Cover" /> <!-- 20191231 ditambah search cover -->
+
+            <!--<input type="button" name="investigate" id="investigate" value="Investigate" />  2024-12-23 kebutuhan untuk nanya jika statement belum datang -->
+            <!--<input type="button" name="retur" id="retur" value="Retur" />-->
+            <% }%>
+            <input type="button" name="reject" id="reject" value="Reject" />
+        </c:if>
+        <% if (session.getAttribute("messageType").equals("101") || session.getAttribute("messageType").equals("200") || session.getAttribute("messageType").equals("202")) {%>
+        <c:if test="${item == 'FLOW:INCS'}">
+            <input type="button" name="incoming_settle" id="incoming_settle" value="INC-STL" />
+        </c:if>
+        <% }%>
+        <% }%>
+        <% if (session.getAttribute("flagStatus").equals("VER")) {%>
+        <c:if test="${item == 'FLOW:MOD'}">
+            <input type="button" name="modified" id="modified" value="Modify" />
+        </c:if>
+        <% }%>
+        <% // if (session.getAttribute("flagStatus").equals("INC-STL")) {%>
+        <%--<c:if test="${item == 'FLOW:INC'}">--%>
+        <!--<input type="button" name="getConfirm" id="getConfirm" value="Send Confirmation" />-->
+        <%--</c:if>--%>
+        <% // }%>
+        <% if (session.getAttribute("flagStatus").equals("INC-INV")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <c:if test="${headerById.komentar=='NAMA BERBEDA SAAT INQUIRY REKENING'}">
+                <input type="button" name="verifyACC" id="verifyACC" value="Adjustment Name" />
+                <input type="button" name="sendTEXT" id="sendTEXT" value="Receive MT" />
+            </c:if>
+        </c:if>
+        <c:if test="${item == 'FLOW:RETUR'}">
+            <input type="button" name="returinv" id="returinv" value="Retur" />
+        </c:if>
+        <% }%>
+        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("RETURNED") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
+        <c:if test="${item == 'FLOW:REJECT'}">
+            <input type="button" name="reject" id="reject" value="Reject" />
+        </c:if>
+        <% }%>
+        <!--INC-NSTP-->
+        <% if (session.getAttribute("flagStatus").equals("INC-NSTP")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <input type="button" name="saveRate" id="saveRate" value="Save" />
+        </c:if>
+        <c:if test="${item == 'FLOW:REJECT'}">
+            <input type="button" name="reject" id="reject" value="Reject" />
+        </c:if>
+        <% if (session.getAttribute("messageType").equals("202") || session.getAttribute("messageType").equals("200")) {%>
+        <c:if test="${item == 'FLOW:RETUR'}">
+            <input type="button" name="retur299" id="retur299" value="Retur" />
+        </c:if>
+        <% }%>    
+        <% }%>
+        <!--INC-NSTP-->
+        <!--INC-SPRT-->
+        <% if (session.getAttribute("flagStatus").equals("INC-SPRT")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <input type="button" name="acceptSPRT" id="acceptSPRT" value="Approve Special Rate" />
+            <input type="button" name="rejectSPRT" id="rejectSPRT" value="Reject Special Rate" />
+        </c:if>
+        <c:if test="${item == 'FLOW:REJECT'}">
+            <input type="button" name="reject" id="reject" value="Reject" />
+        </c:if>
+        <% if (session.getAttribute("messageType").equals("202") || session.getAttribute("messageType").equals("200")) {%>
+        <c:if test="${item == 'FLOW:RETUR'}">
+            <input type="button" name="retur299" id="retur299" value="Retur" />
+        </c:if>
+        <% }%>
+        <% }%>
+        <!--INC-SPRT-->
+        <% }%>
+        <c:if test="${item == 'FLOW:PRINT'}">
+
+            <c:choose>
+                <c:when test="${headerById.networktype== null}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                    <!--<input type="button" name="printedmx" id="printedmx" value="Print" />-->
+                </c:when>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
+
+        </c:if>
+        <% } else {%>
+        <c:if test="${item == 'FLOW:CREATE'}">
+            <input type="hidden" name="action_type" id="action_type" value="save" />
+            <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
+        </c:if>
+        <% } %>
+        <!--20180417 untuk resend ack dan incominig-->
+        <% if (session.getAttribute("flagStatus").equals("ACK") || session.getAttribute("flagStatus").equals("RACK")) {%>
+        <c:if test="${item == 'FLOW:RACK'}">
+            <input type="button" name="RACK" id="RACK" value="Resend ACK" />
+        </c:if>
+        <% } %>
+        <% if (session.getAttribute("flagStatus").equals("INC-OK") || session.getAttribute("flagStatus").equals("INC-ROK")) {%>
+        <c:if test="${item == 'FLOW:INC-ROK'}">
+            <input type="button" name="INC-ROK" id="INC-ROK" value="Resend INC-OK" />
+        </c:if>
+        <% } %>
+        <% if (session.getAttribute("flagStatus").equals("ACK") || session.getAttribute("flagStatus").equals("INC-OK") || session.getAttribute("flagStatus").equals("RACK") || session.getAttribute("flagStatus").equals("INC-ROK")) {%>
+        <c:if test="${item == 'FLOW:DELHIS'}"> 
+            <input type="button" name="DELHIS" id="DELHIS" value="Delete Journal History" />
+        </c:if>
+        <% } %>
+        <!-- ... existing code ... -->
+        <% if (session.getAttribute("flagStatus").equals("INC-RTR")) {%>
+        <c:if test="${item == 'FLOW:INC'}">
+            <input type="button" name="retur" id="retur" value="Retur" />
+        </c:if>
+        <% }%>
+        <!-- ... existing code ... -->
+        <!--end 20180417-->
+
+    </c:forEach>            
+    <input type="button" name="back" id="back" value="Back" />
+</div>

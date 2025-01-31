@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<Context antiJARLocking="true" path="/AppRTGS"/>
+-->
+<Context antiJARLocking="true" antiResourceLocking="true" path="/AppCM" reloadable="true">
+  <Manager className="org.apache.catalina.session.PersistentManager" saveOnRestart="false"/>
+</Context>
