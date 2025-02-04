@@ -51,7 +51,7 @@
                     <div style="width: 25rem;" class="shadow pt-5 px-5 bg-body rounded h-100 d-flex align-items-center">
 
                         <form class="w-100" nam="frmLogin" method="POST" action="ServletControllerUserData">
-                            <img class="loginPage" style="width: 100%;" src="images/flickr.com/cmmega.png"/><br><br><br>
+                            <img class="loginPage" style="width: 100%;" src="images/cmdanamon.png"/><br><br><br>
                             <h3 style="color:#20696d;"><b>CM - SWIFT Interface</b></h3>
                             <br>
                             <div class="form-floating mb-3">
