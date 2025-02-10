@@ -204,85 +204,126 @@
                 <c:if test="${(item == 'FLOW:CREATE')}">
                 <li><span class="dir">Create Message</span>
                     <ul>
-                        <li><span class="dir">Message Category 1</span>
-                            <ul>                        
+                        <li><span class="dir">MT</span>
+                            <ul>
+                                <li><span class="dir">Message Category 1</span>
+                                    <ul>                        
+                                        <c:forEach var="item" items="${role}">
+                                            <%--c:if test="${item == 'MT:101'}">
+                                            <li><a href="mt101.jsp">101 - Request for Transfer</a></li>
+                                            </c:if--%>
+                                            <%-- <c:if test="${item == 'MT:191'}">
+                                                 <li><a href="mt191.jsp">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
+                                                 </c:if>--%>
+                                            <c:if test="${item == 'MT:103'}">
+                                                <li><a href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MT:199'}">
+                                                <li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MT:199'}">
+                                                <li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>
+                                                </c:if>
+                                            </c:forEach>
+                                    </ul>
+                                </li>
+                                <li><span class="dir">Message Category 2</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'MT:200'}">
+                                                <li><a href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MT:202'}">
+                                                <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MT:202'}">
+                                                <li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>
+                                                </c:if>
+                                                <%-- <c:if test="${item == 'MT:202COV'}">
+                                                 <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
+                                                 </c:if> --%>
+                                            </c:forEach>
+                                    </ul>
+                                </li>
+                                <!--                        <li><span class="dir">Message Category 4</span>
+                                
+                                                        </li>
+                                                        <li><span class="dir">Message Category 5</span>
+                                
+                                                        </li>-->
+                                <!-- <li><span class="dir">Message Category 7</span>
+                                    <ul>                        
                                 <c:forEach var="item" items="${role}">
-                                    <%--c:if test="${item == 'MT:101'}">
-                                    <li><a href="mt101.jsp">101 - Request for Transfer</a></li>
-                                    </c:if--%>
-                                    <%-- <c:if test="${item == 'MT:191'}">
-                                         <li><a href="mt191.jsp">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
-                                         </c:if>--%>
-                                    <c:if test="${item == 'MT:103'}">
-                                        <li><a href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
-                                        </c:if>
-                                        <c:if test="${item == 'MT:199'}">
-                                        <li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>
-                                        </c:if>
-                                        <c:if test="${item == 'MT:199'}">
-                                        <li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>
-                                        </c:if>
-                                    </c:forEach>
+                                    <c:if test="${item == 'MT:760'}">
+                                        <li><a href="mt760.jsp">760 - Issue of a Demand Guarantee/Standby Guarantee/Standby Letter of Credit</a></li>
+                                    </c:if>
+                                    <c:if test="${item == 'MT:761'}">
+                                        <li><a href="mt761.jsp">761 - Issue of a Demand Guarantee/Standby Letter of Credit</a></li>
+                                    </c:if>
+                                    <c:if test="${item == 'MT:767'}">
+                                        <li><a href="mt767.jsp">767 - Amendment to a Demand Guarantee/Standby Guarantee/Standby Letter of Credit</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </li> -->
+                                <li><span class="dir">Message Category 9</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <%-- <c:if test="${item == 'MT:910'}">
+                                                 <li><a href="mt910.jsp">910 - Confirmation of Credit</a></li>
+                                                 </c:if> --%>
+                                            <c:if test="${item == 'MT:940'}">
+                                                <li><a href="mt940.jsp?create=true">940 - Customer Statement Message</a></li>
+                                                </c:if>
+                                                <%-- <c:if test="${item == 'MT:942'}">
+                                                 <li><a href="mt942.jsp">942 - Interim Transaction Report</a></li>
+                                                 </c:if>--%>
+                                                <c:if test="${item == 'MT:950'}">
+                                                <li><a href="mt950.jsp?create=true">950 - Statement Message</a></li>
+                                                </c:if>
+                                                <%-- <c:if test="${item == 'MT:999'}">
+                                                 <li><a href="mt999.jsp">999 - Free Format Message</a></li>
+                                                 </c:if>--%>
+                                            </c:forEach>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
-                        <li><span class="dir">Message Category 2</span>
+                        <li><span class="dir">MX</span>
                             <ul>
-                                <c:forEach var="item" items="${role}">
-                                    <c:if test="${item == 'MT:200'}">
-                                        <li><a href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>
-                                        </c:if>
-                                        <c:if test="${item == 'MT:202'}">
-                                        <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
-                                        </c:if>
-                                        <c:if test="${item == 'MT:202'}">
-                                        <li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>
-                                        </c:if>
-                                        <%-- <c:if test="${item == 'MT:202COV'}">
-                                         <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
-                                         </c:if> --%>
-                                    </c:forEach>
-                            </ul>
-                        </li>
-                        <!--                        <li><span class="dir">Message Category 4</span>
-                        
-                                                </li>
-                                                <li><span class="dir">Message Category 5</span>
-                        
-                                                </li>-->
-                        <!-- <li><span class="dir">Message Category 7</span>
-                            <ul>                        
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'MT:760'}">
-                                <li><a href="mt760.jsp">760 - Issue of a Demand Guarantee/Standby Guarantee/Standby Letter of Credit</a></li>
-                            </c:if>
-                            <c:if test="${item == 'MT:761'}">
-                                <li><a href="mt761.jsp">761 - Issue of a Demand Guarantee/Standby Letter of Credit</a></li>
-                            </c:if>
-                            <c:if test="${item == 'MT:767'}">
-                                <li><a href="mt767.jsp">767 - Amendment to a Demand Guarantee/Standby Guarantee/Standby Letter of Credit</a></li>
-                            </c:if>
-                        </c:forEach>
-                    </ul>
-                </li> -->
-                        <li><span class="dir">Message Category 9</span>
-                            <ul>
-                                <c:forEach var="item" items="${role}">
-                                    <%-- <c:if test="${item == 'MT:910'}">
-                                         <li><a href="mt910.jsp">910 - Confirmation of Credit</a></li>
-                                         </c:if> --%>
-                                    <c:if test="${item == 'MT:940'}">
-                                        <li><a href="mt940.jsp?create=true">940 - Customer Statement Message</a></li>
-                                        </c:if>
-                                        <%-- <c:if test="${item == 'MT:942'}">
-                                         <li><a href="mt942.jsp">942 - Interim Transaction Report</a></li>
-                                         </c:if>--%>
-                                        <c:if test="${item == 'MT:950'}">
-                                        <li><a href="mt950.jsp?create=true">950 - Statement Message</a></li>
-                                        </c:if>
-                                        <%-- <c:if test="${item == 'MT:999'}">
-                                         <li><a href="mt999.jsp">999 - Free Format Message</a></li>
-                                         </c:if>--%>
-                                    </c:forEach>
+                                <li><span class="dir">Payments Clearing and Settlement</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'MX:pacs00800108'}">
+                                                <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:pacs00900108'}">
+                                                <li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
+                                                </c:if>
+                                            </c:forEach>
+                                    </ul>
+                                </li>
+                                <li><span class="dir">Cash Management</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'MX:camt05300108'}">
+                                                <li><a href="main_camt053.jsp">CAMT.053.001.08 - Bank To Customer Statement V08</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:camt05500108'}">
+                                                <li><a href="main_camt055.jsp">CAMT.055.001.08 - Customer Payment Cancellation Request V08</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:camt05600108'}">
+                                                <li><a href="main_camt056.jsp">CAMT.056.001.08 - FI To FI Payment Cancellation Request V08</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:camt10700108'}">
+                                                <li><a href="main_camt107.jsp">CAMT.107.001.08 - Cheque Presentment Notification V08</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:camt10800108'}">
+                                                <li><a href="main_camt108.jsp">CAMT.108.001.08 - Cheque Cancellation Or Stop Request V08</a></li>
+                                                </c:if>
+                                            </c:forEach>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                     </ul>

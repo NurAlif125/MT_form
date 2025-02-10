@@ -342,6 +342,17 @@
                                                     <label>998 <input type="checkbox" name="role_detail" id="role_detail" value="MT:998" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:998'}"> checked="true" </c:if></c:forEach> /></label>--%>
                         <!--<label>999 <input type="checkbox" name="role_detail" id="role_detail" value="MT:999" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:999'}"> checked="true" </c:if></c:forEach> /></label>-->
                             </div>
+                            <div class="form-row"><span class="labelL">Payment Clearing and Settlement</span>
+                        <label>PACS.008.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00800108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00800108'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>PACS.009.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00900108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00900108'}"> checked="true" </c:if></c:forEach> /></label>
+                        </div>
+                        <div class="form-row"><span class="labelL">Cash Management</span>
+                        <label>CAMT.053.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05300108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05300108'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>CAMT.055.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05500108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05500108'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>CAMT.056.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05600108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05600108'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>CAMT.107.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10700108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10700108'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>CAMT.108.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10800108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10800108'}"> checked="true" </c:if></c:forEach> /></label>
+                        </div>
                         </div>
                         <!--                <div class="form-row"><span class="labelL">&nbsp;</span>-->
                         <div class="form-row-action" >
