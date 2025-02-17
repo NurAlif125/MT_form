@@ -14,10 +14,10 @@
 <!--<link rel="icon" href="images/favicon.ico"/>-->
 <div id="isi">
     <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'MX:camt10800108'}">
-            <div id="judul">CAMT.108.001.08 - Cheque Cancellation Or Stop Request V08</div>
+        <c:if test="${item == 'MX:camt10800101'}">
+            <div id="judul">CAMT.108.001.08 - Cheque Cancellation Or Stop Request V01</div>
             <form id="form1" name="form1" method="post" action="SCDataTransaksiOutgoingPlainMX">
-                <input name="messageType" id="messageType" type="hidden" value="camt10800108" />
+                <input name="messageType" id="messageType" type="hidden" value="camt10800101" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
                         <li><a href="#" rel="view1">Header</a></li>
@@ -28,7 +28,7 @@
                             <%@ include file="header_mt.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
-                            <%@ include file="camt10800108.jsp" %>
+                            <%@ include file="camt10800101.jsp" %>
                         </div>
                     </div>
                 </div>

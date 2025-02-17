@@ -350,8 +350,8 @@
                         <label>CAMT.053.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05300108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05300108'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>CAMT.055.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05500108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05500108'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>CAMT.056.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05600108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05600108'}"> checked="true" </c:if></c:forEach> /></label>
-                        <label>CAMT.107.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10700108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10700108'}"> checked="true" </c:if></c:forEach> /></label>
-                        <label>CAMT.108.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10800108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10800108'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>CAMT.107.001.01 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10700101" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10700101'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>CAMT.108.001.01 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10800101" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10800101'}"> checked="true" </c:if></c:forEach> /></label>
                         </div>
                         </div>
                         <!--                <div class="form-row"><span class="labelL">&nbsp;</span>-->

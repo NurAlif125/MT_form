@@ -315,11 +315,11 @@
                                                 <c:if test="${item == 'MX:camt05600108'}">
                                                 <li><a href="main_camt056.jsp">CAMT.056.001.08 - FI To FI Payment Cancellation Request V08</a></li>
                                                 </c:if>
-                                                <c:if test="${item == 'MX:camt10700108'}">
-                                                <li><a href="main_camt107.jsp">CAMT.107.001.08 - Cheque Presentment Notification V08</a></li>
+                                                <c:if test="${item == 'MX:camt10700101'}">
+                                                <li><a href="main_camt107.jsp">CAMT.107.001.01 - Cheque Presentment Notification V01</a></li>
                                                 </c:if>
-                                                <c:if test="${item == 'MX:camt10800108'}">
-                                                <li><a href="main_camt108.jsp">CAMT.108.001.08 - Cheque Cancellation Or Stop Request V08</a></li>
+                                                <c:if test="${item == 'MX:camt10800101'}">
+                                                <li><a href="main_camt108.jsp">CAMT.108.001.01 - Cheque Cancellation Or Stop Request V01</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
