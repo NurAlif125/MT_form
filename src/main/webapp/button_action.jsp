@@ -278,4 +278,6 @@
 
     </c:forEach>            
     <input type="button" name="back" id="back" value="Back" />
+    
+    <input type="button" name="validate" id="btn-validate" value="Validate" />
 </div>

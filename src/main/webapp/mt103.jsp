@@ -25,6 +25,7 @@
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
+<script src="js/tailwind_4.0.6-index.global.js"></script>
 
 <div id="isi">
     <c:forEach var="item" items="${role}">
@@ -39,13 +40,14 @@
 
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
-                        <li><a href="#" rel="view1">Header</a></li>
-                        <li><a href="#" rel="view2">Body</a></li>
-                        <li><a href="#" rel="view3">Comment</a></li>
-                        <li><a href="#" rel="view4">Histories</a></li>
-                        <li><a href="#" rel="view5">Log MT Text</a></li>
-                        <li><a href="#" rel="view6">MT Relation</a></li>
-                        <li><a href="#" rel="view7" id="tabView7">Translation</a></li>
+                        <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
+                        <li id="tab-view2"><a href="#" rel="view2">Body</a></li>
+                        <li id="tab-view3"><a href="#" rel="view3">Comment</a></li>
+                        <li id="tab-view4"><a href="#" rel="view4">Histories</a></li>
+                        <li id="tab-view5"><a href="#" rel="view5">Log MT Text</a></li>
+                        <li id="tab-view6"><a href="#" rel="view6">MT Relation</a></li>
+                        <li  id="tab-view7"><a href="#" rel="view7" id="tabView7">Translation</a></li>
+                        <li hidden id="tab-validate"><a href="#" rel="view8" id="tabView8">Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
@@ -894,6 +896,9 @@
                             <div class="form-row">
                                 <%@include file="VMtFull.jsp" %>
                             </div>
+                        </div>
+                        <div id="view8" class="tabcontent">
+                            <div id="error-container"></div>
                         </div>
                     </div>
                 </div>

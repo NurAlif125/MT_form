@@ -108,10 +108,52 @@
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);
-                alert(error.html());
+//                alert(error.html());
+                $("#tab-validate").removeAttr("hidden");
+//                console.log(error.html())
             },
             showErrors: function (errorMap, errorList) {
                 this.defaultShowErrors();
+
+                console.log(errorList);
+                
+                  $("#tab-validate").removeAttr("hidden");
+                 
+                 $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
+                 $("#view8").css("display", "block");
+                 $('#tab-view1').removeClass("selected").removeAttr('class');
+                 $('#tab-view2').removeClass("selected").removeAttr('class');
+                 $('#tab-view3').removeClass("selected").removeAttr('class');
+                 $('#tab-view4').removeClass("selected").removeAttr('class');
+                 $('#tab-view5').removeClass("selected").removeAttr('class');
+                 $('#tab-view6').removeClass("selected").removeAttr('class');
+                 $('#tab-view7').removeClass("selected").removeAttr('class');
+                 $('#tab-validate').addClass("selected");
+
+                let errorContainer = document.getElementById("error-container");
+                
+                if (errorList.length === 0) {
+                    errorContainer.innerHTML = ""; 
+                    return;
+                }
+
+                let tableHTML = `<table border="1" style="width:100% !important; font-size:8pt !important;">
+                                    <tr style="background:#d6d6d6;">
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Node</th>
+                                    <th>Message</th></tr>`;
+                errorList.forEach(errors => {
+                    tableHTML += `<tr onmouseover="this.style.background='#f6f6f6'" onmouseout="this.style.backgroundColor='transparent'">
+                                    <td style="padding: 5px;">Error</td>
+                                   <td style="padding: 5px;"></td>
+                                   <td style="padding: 5px;"></td>`;
+                    tableHTML += '<td style="padding: 5px;">'+errors.message+'</td></tr>';
+                });
+
+                tableHTML += `</table>`;
+
+                errorContainer.innerHTML = tableHTML; 
             }
         });
     });

@@ -139,6 +139,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("password", password);
                                 session.setAttribute("ip_access", ip_access);
                                 session.setAttribute("comp_name", comp_name);
+                                session.setAttribute("role_id", String.valueOf(data.getRole()));
                                 session.setAttribute("berhasillogin", berhasilLogin);
                                 session.setAttribute("gagallogin", gagalLogin);
                                 session.setAttribute("notifVer", notifVer);

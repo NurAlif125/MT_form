@@ -820,6 +820,11 @@
         <url-pattern>/SCInvesitvationOutgoing103</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>SCNotification</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCNotification</servlet-class>
+    </servlet>
+    
     
     <session-config>
         <session-timeout>

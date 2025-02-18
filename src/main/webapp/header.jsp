@@ -8,6 +8,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="com.vensys.appcm.controller.SCNotification" %>
+<%--<%@page import="java.io.FileInputStream" %>--%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -35,6 +37,9 @@
     <script type="text/javascript" src="js/jquery.validate.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <%@ include file="rule/validate_button.jsp" %>
+    <script src="js/tailwind_4.0.6-index.global.js"></script>
+    <link rel="stylesheet" href="css/notification-styles.css" type="text/css"/>
+    <link href="css/toastify.min.css" rel="stylesheet" type="text/css">
     <%--    <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
         <script type="text/javascript">
             $(window).load(function () {
@@ -65,10 +70,18 @@
     <!-- Header -->
     <!--20210405 ditambah host dan appversion-->
     <h1 class="logoAtas"><img class="homePage" src="images/flickr.com/cm.png"/><span>${hostname} (${appVersion})</span></h1>
-    <font class="main-site"><u><%= tglsekarang%></u> <a href="changePassword.jsp" class="adm"><% out.print((String) session.getAttribute("user_id"));%><img src="images/user.png" style="margin-bottom:-2px;" /></a> <a href="ServletControllerLogout" class="log">Logout <img src="images/logout.png" style="margin-bottom:-2px;" /></a> <br>
-        <p class="last">Last Success Login: <% out.print((String) session.getAttribute("berhasillogin"));%><br>
+    <font class="main-site" style="margin-top: -29px;">
+        <div class="contents">
+            <u><%= tglsekarang%></u> 
+            <a style="padding:10px 0 0 5px !important;" href="changePassword.jsp" class="adm inline-flex"><% out.print((String) session.getAttribute("user_id"));%>
+                <img src="images/user.png" />
+            </a>
+        </div>
+        <a style="padding:10px 0 0 5px !important;" href="ServletControllerLogout" class="log inline-flex">Logout <img src="images/logout.png" style="margin-bottom:-2px;" /></a> 
+        <br>
+        <span class="last mt-[-12px]">Last Success Login: <% out.print((String) session.getAttribute("berhasillogin"));%><br>
             Last Failed Login: <% out.print((String) session.getAttribute("gagallogin"));%><br/>
-            Transaction to VER: <a style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a>&nbsp; | &nbsp; Transaction to AUTH: <a style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a></p>
+            Transaction to VER: <a style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a>&nbsp; | &nbsp; Transaction to AUTH: <a style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a></span>
     </font>
     <ul id="nav" class="dropdown dropdown-horizontal">
         <c:forEach var="item" items="${role}">
@@ -394,8 +407,15 @@
                 <li><a href="contact.jsp">Contact Us</a></li>
                 </c:if>
             </c:forEach>
+                
+                <div onclick="openModal()" class="notif-container" style="float: right;">
+                    <a class="link-notif" href="#">Notif</a>
+                    <span hidden id="notifCount" class="notif-badge">
+                        
+                    </span>
+                </div>
     </ul>
-    <body>
+    <body style="clear: both;">
         <input type="hidden" id="timeout" name="timeout" value="<% out.print(session.getAttribute("timeout"));%>"/>
         <!--<input type="hidden" id="timeout" name="timeout" value="300000"/>-->
         <script type="text/javascript">
@@ -413,4 +433,42 @@
             });
             SetWinTimeout();
         </script>
+        
+        
+    
+    <!-- Modal Notifikasi -->
+    <div id="notifModal" class="modal-notif" onclick="outsideClick(event)">
+        <div class="modal-notif-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>Notifikasi</h3>
+
+            <div id="notifLists">
+                <table id="tableList" class="tbl-notif">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="tbl-th-notif"><input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes()"></th>
+                            <th class="tbl-th-notif">title</th>
+                            <th class="tbl-th-notif">message</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notifList" class="tbl-body-notif">
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Detail Pesan -->
+            <div id="notifDetail" style="display: none;">
+                <h3>Detail Pesan</h3>
+                <p id="detailContent"></p>
+                <button class="back-btn-detail" onclick="backToList()">Kembali</button>
+            </div>
+            
+            <div class="p-4 text-center border-t">
+            <button onclick="markAsRead()" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Tandai Sudah Dibaca</button>
+        </div>
+        </div>
+    </div>
+
+    <script src="js/notif-control.js"></script>
+ 
     </body>

@@ -1,0 +1,91 @@
+.notif-container {
+    position: relative;
+    float: right;
+    /*padding: 10px;*/
+}
+
+.notif-container .link-notif {
+    text-decoration: none;
+    color: #333;
+    padding-right: 40px;
+}
+
+.notif-badge {
+    position: absolute;
+    top: -10px;
+    right: 17px;
+    background: red;
+    color: white;
+    padding: 5px 8px;
+    border-radius: 50%;
+    font-size: 8pt;
+}
+
+  /* Modal */
+.modal-notif {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-notif-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-modal {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tbl-notif {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.tbl-td-notif {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.tbl-th-notif {
+    background-color: #f2f2f2;
+    padding: 2px;
+}
+
+/* Hover dan pointer pada baris tabel */
+.tbl-tr-notif {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.tbl-tr-notif:hover {
+    background-color: #f0f0f0;
+}
+
+.back-btn-detail {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.back-btn-detail:hover {
+    background: #0056b3;
+}
