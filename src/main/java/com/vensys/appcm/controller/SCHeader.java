@@ -18,12 +18,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import com.vensys.appcm.model.Header;
 import com.vensys.appcm.model.ResultHeader;
+import java.io.Serializable;
 
 /**
  *
  * @author Muhammad Abdul Hadi
  */
-public class SCHeader extends HttpServlet {
+public class SCHeader extends HttpServlet implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static String CONTROLLERHEADERS = "controllerHeaders.jsp";
@@ -42,8 +43,7 @@ public class SCHeader extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String io_type = request.getParameter("io_type");
-        
-        
+
         String sender_logical_terminal = request.getParameter("sender_logical_terminal");
         String receiver_institution = request.getParameter("receiver_institution");
         String mt_type = request.getParameter("mt_type");
@@ -84,7 +84,7 @@ public class SCHeader extends HttpServlet {
             httpSession.setAttribute("notifAuth", notifAuth);
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
                 System.out.println("masuk sini");
-                headers = bBHeaders.getAllHeader(httpSession, io_type, flag); // 2025-01-07
+                headers = bBHeaders.getAllHeader(httpSession, io_type, flag);// 2025-01-07
 //                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
                 httpSession.setAttribute("headers", headers);

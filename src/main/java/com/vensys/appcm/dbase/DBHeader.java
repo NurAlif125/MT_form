@@ -975,6 +975,7 @@ public class DBHeader {
 //        now.add(Calendar.MONTH, -1);
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
 //        System.out.println("tanggal_transaksi_sebulan : "+tanggal_transaksi_sebulan);
+System.out.println("Session ID: " + httpSession.getId());
         List<String> list = (ArrayList) httpSession.getAttribute("role");
         System.out.println("role: " + list);
 //        for (int i = 0; i < list.size(); i++) {

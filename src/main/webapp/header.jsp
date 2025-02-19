@@ -285,6 +285,11 @@
                                     </c:forEach>
                             </ul>
                         </li>
+                        <c:forEach var="item" items="${role}">
+                            <c:if test="${item == 'FLOW:LTCREATE'}">
+                                <li><a href="ControllerHeaderTemplate">Template List</a></li>
+                                </c:if>
+                            </c:forEach>
                     </ul>
                 </li>
             </c:if>
@@ -366,7 +371,11 @@
                                 <li><a href="upload_confirmation.jsp">Upload Confirmation</a></li>
                                 <li><a href="upload_branch.jsp">Upload Branch Outgoing</a></li>
                             </c:if--%>
-                        </c:forEach>
+                            <!--20230718 tambah menu-->
+                            <c:if test="${(item == 'MENU:UPLOADSTMT')}">
+                                <li><a href="upload_stmt.jsp">Upload MT950</a></li>
+                                </c:if>
+                            </c:forEach>
                     </ul>
                 </li>
             </c:if>
