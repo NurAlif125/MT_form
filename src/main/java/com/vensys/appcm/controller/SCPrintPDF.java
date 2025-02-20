@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
 import com.vensys.appcm.model.Header;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -63,19 +64,32 @@ public class SCPrintPDF extends HttpServlet {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("user_id");
 
-        String pdfDirectoryPath = "C:\\ReportCM\\";
+        String pdfDirectoryPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "ReportCM";
         Files.createDirectories(Paths.get(pdfDirectoryPath));
-        String pdfFilePath = pdfDirectoryPath + "report_" + userId + ".pdf";
+        String pdfFileName = "report_" + userId + ".pdf";
+        String pdfFilePath = pdfDirectoryPath + File.separator + pdfFileName;
+        String ServerName = request.getServerName();
+        int ServerPort = request.getServerPort();
 
         executorService.execute(() -> {
-            generateAndSavePdf(requestData, userId, pdfFilePath);
+            generateAndSavePdf(requestData, userId, pdfFilePath, ServerName, ServerPort);
         });
 
+        String downloadUrl = "http://" + ServerName + ":" + ServerPort + request.getContextPath() + "/download?file=" + pdfFileName;
+
         response.setContentType("application/json");
-        response.getWriter().write("{\"status\": \"Processing\", \"message\": \"Your PDF is being generated in the background. You will be notified when it's ready.\"}");
+        response.setCharacterEncoding("UTF-8");
+
+        String jsonResponse = "{"
+                + "\"status\": \"Processing\","
+                + "\"message\": \"Your PDF is being generated.\","
+                + "\"download_url\": \"" + downloadUrl + "\""
+                + "}";
+
+        response.getWriter().write(jsonResponse);
     }
 
-    private void generateAndSavePdf(Map<String, String> requestData, String userId, String pdfFilePath) {
+    private void generateAndSavePdf(Map<String, String> requestData, String userId, String pdfFilePath, String ServerName, int ServerPort) {
         DBconnection dbConn = new DBconnection();
         ArrayList<Header> headers = new ArrayList<>();
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
@@ -83,6 +97,10 @@ public class SCPrintPDF extends HttpServlet {
         byte[] bytes = null;
 
         try {
+
+            Path pdfDir = Paths.get(System.getProperty("user.home"), "Downloads", "ReportCM");
+            Files.createDirectories(pdfDir);
+
             File reportFile = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTNoTotal.jasper"));
             File reportFileInc = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTInc.jasper"));
             File reportFileOut = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTOut.jasper"));
@@ -120,7 +138,11 @@ public class SCPrintPDF extends HttpServlet {
             fos.write(bytes);
             fos.close();
 
+            String pdfFileName = new File(pdfFilePath).getName();
+            String downloadUrl = "http://" + ServerName + ":" + ServerPort + getServletContext().getContextPath() + "/download?file=" + pdfFileName;
+
             System.out.println("PDF generated successfully: " + pdfFilePath);
+            System.out.println("Download URL: " + downloadUrl);
 
         } catch (Exception e) {
             e.printStackTrace();

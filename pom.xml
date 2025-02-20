@@ -525,6 +525,7 @@
     </dependencies>
 
     <build>
+        <finalName>AppCM</finalName>
         <plugins>
             <!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
