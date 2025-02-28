@@ -761,6 +761,54 @@ public class DBDataTransaksiOutgoing {
             log.error("addDataTransaksi():" + e.getMessage());
         }
     }
+    
+    public void addMXText(String data, String id) {
+        try {
+            String sql = "INSERT INTO mx_text(id_headers, final_mx,modify_mx) VALUES (?,?,?)";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, Integer.parseInt(id));
+            st.setString(2, data);
+            st.setString(3, data);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Add data mx_text " + e.getMessage());
+        }
+
+    }
+    
+    public void addDataMXTag(String id, String json, String headerSaa) {
+        try {
+            String sql = "INSERT INTO tags_mx VALUES(?,?::jsonb,?,?)";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, Integer.parseInt(id));
+            st.setString(2, json);
+            st.setString(3, headerSaa);
+            st.setString(4, "");
+            st.executeUpdate();
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            log.error("addDataTag():" + e.toString());
+        }
+
+    }
+    
+    public Map<String, String> getBodyAnHeaderMXById(int id) {
+        Map<String, String> data = new HashMap<String, String>();
+        try {
+            log.info("ID for get tags_MX " + id);
+            String sql = "SELECT json_tag, header_saa FROM tags_mx WHERE id_headers=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                data.put("bodyMX", rs.getString("json_tag"));
+                data.put("headerMX", rs.getString("header_saa"));
+            }
+        } catch (Exception e) {
+            log.error("On class " + this.getClass().toString() + " function getBodyAnHeaderMXById():" + e.toString());
+        }
+        return data;
+    }
 
     public void updateVerifiedAccount(String acc, String name) {
         try {

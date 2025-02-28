@@ -272,11 +272,12 @@
 
                         input.setAttribute("name", "dataXML")
                         input.setAttribute("value", xml)
+                        input.style.display="none"
                         nodeForm.appendChild(input)
 
                         // disini untuk append child receiver dan logical terminal
-                        nodeForm.appendChild(nodeReceiverInstitution)
-                        nodeForm.appendChild(nodeLogicalTerminal)
+//                        nodeForm.appendChild(nodeReceiverInstitution)
+//                        nodeForm.appendChild(nodeLogicalTerminal)
 
                         nodeForm.submit()
                     })
