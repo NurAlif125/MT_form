@@ -9,9 +9,25 @@
 <link rel="stylesheet" href="js/DataTables/datatables.min.css">
 <script src="js/DataTables/datatables.min.js"></script>
 <script src="js/DataTables/datatables.js"></script>
+<script src="js/jquery-3.7.1.min_cdn"></script>
+<script src="js/DataTables/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <% String menu = request.getParameter("menu");%>
+<style>
+    #filterRow th {
+        padding: 8px;
+        text-align: center;
+        background-color: #f8f9fa; /* Light grey background */
+    }
+
+    #filterRow input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 5px;
+    }
+
+</style>
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MENU:LIST_TRANSACTIONS'}">
@@ -83,42 +99,61 @@
                         </thead>
 
                         <tbody>
-                        <c:forEach items="${headers}" var="item">
-                            <tr>
-                                <%--c:if test="${flagFilter == 'VER'}">
-                                    <td><input type="checkbox" name="chkId" id="chkId" value="${item.id_headers}"></td>
-                                </c:if--%>
-                                <td><%=rowNum++%></td>
-                                <td>${item.messageType}</td>
-                                <%--
-                                <td>
-                                    <c:choose>
-                                        <c:when test = "${fn:contains(item.block3,'111:009;')}">
-                                            Yes
-                                        </c:when>
-                                        <c:otherwise>
-                                            No
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                --%>
-                            <td>${item.io_type}</td>
-                            <td>${item.sequenceNumber}</td>
-                            <td>${item.logicalTerminal}</td>
-                            <td>${item.receiverAddress}</td>
-                            <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">${item.trans_refference}</a></td>
-                            <td>${item.trans_related_refference}</td>
-                            <td>${item.trans_date_value}</td>
-                            <td>${item.trans_ccy}</td>
-                            <%--<td style="text-align: right"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${item.tag32Amount}" /></td>--%>
-                            <td style="text-align: right">${item.trans_amount}</td>
-                            <td>${item.tanggal}</td>
-                            <td>${item.flag}</td>
-                            <td>${item.source}</td>
-                            <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">view</a></td>
-                            </tr>
-                        </c:forEach>
+                            <c:forEach items="${headers}" var="item">
+                                <tr>
+                                    <%--c:if test="${flagFilter == 'VER'}">
+                                        <td><input type="checkbox" name="chkId" id="chkId" value="${item.id_headers}"></td>
+                                    </c:if--%>
+                                    <td><%=rowNum++%></td>
+                                    <td>${item.messageType}</td>
+                                    <%--
+                                    <td>
+                                        <c:choose>
+                                            <c:when test = "${fn:contains(item.block3,'111:009;')}">
+                                                Yes
+                                            </c:when>
+                                            <c:otherwise>
+                                                No
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                    --%>
+                                    <td>${item.io_type}</td>
+                                    <td>${item.sequenceNumber}</td>
+                                    <td>${item.logicalTerminal}</td>
+                                    <td>${item.receiverAddress}</td>
+                                    <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">${item.trans_refference}</a></td>
+                                    <td>${item.trans_related_refference}</td>
+                                    <td>${item.trans_date_value}</td>
+                                    <td>${item.trans_ccy}</td>
+                                    <%--<td style="text-align: right"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${item.tag32Amount}" /></td>--%>
+                                    <td style="text-align: right">${item.trans_amount}</td>
+                                    <td>${item.tanggal}</td>
+                                    <td>${item.flag}</td>
+                                    <td>${item.source}</td>
+                                    <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">view</a></td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
+                        <tfoot>
+                            <tr id="filterRow">
+                                <th></th>
+                                <th><input type="text" class="column-search" placeholder="Search MT"></th>
+                                <th><input type="text" class="column-search" placeholder="Search I/O"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Seq"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Logical"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Corr."></th>
+                                <th><input type="text" class="column-search" placeholder="Search Ref."></th>
+                                <th><input type="text" class="column-search" placeholder="Search Rel. Ref"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Date"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Ccy"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Amount"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Creation"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Status"></th>
+                                <th><input type="text" class="column-search" placeholder="Search Source"></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </form>
             </div><!--close content-->
@@ -319,6 +354,36 @@
     $('#chkAll').click(function () {
         $('input:checkbox').prop('checked', this.checked);
     });
+    new DataTable('#example', {
+        initComplete: function () {
+            this.api()
+                    .columns()
+                    .every(function () {
+                        let column = this;
+                        let title = column.footer().textContent;
+                        let columnIndex = column.index();
+                        let table = $('#example').DataTable();
+                        let columnCount = table.columns().count();
+
+                        let input = document.createElement('input');
+                        input.placeholder = title;
+
+                        if (columnIndex === 0 || columnIndex === columnCount - 1) {
+                            
+                        } else {
+                            column.footer().replaceChildren(input);
+                        }
+
+                        input.addEventListener('keyup', () => {
+                            if (column.search() !== this.value) {
+                                column.search(input.value).draw();
+                            }
+                        });
+                    });
+        }
+    });
+    
+    $('#example tfoot tr').appendTo('#example thead');
 </script>
 <script>
     // Get the modal

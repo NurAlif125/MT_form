@@ -286,6 +286,13 @@
                     console.log("Ini MT")
                 }
             </script>
+                  <% if ((request.getParameter("idlt") == null) ) {%>
+            <c:forEach var="itemF" items="${role}">
+                <c:if test="${itemF == 'FLOW:LTCREATE'}">
+                    <input type="button" name="submit_template" id="submit_template" value="Save As Template" />
+                </c:if>
+            </c:forEach>    
+            <% } %>
         </c:if>
         <% } %>
         <!--20180417 untuk resend ack dan incominig-->
@@ -312,7 +319,12 @@
         <% }%>
         <!-- ... existing code ... -->
         <!--end 20180417-->
-
+        <% if ((request.getParameter("idlt") != null) ) {%>
+        <c:if test="${item == 'FLOW:LTUPDATE'}">
+            <input type="hidden" id="idlt" name="idlt" value="${param.idlt}" />
+            <input type="button" name="save_template_edit" id="save_template_edit" value="Save Edit Template" />
+        </c:if>
+        <% } %>
     </c:forEach>            
     <input type="button" name="back" id="back" value="Back" />
 </div>

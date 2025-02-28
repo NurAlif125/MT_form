@@ -114,11 +114,11 @@
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="COT:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'COT:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="COT:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'COT:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
                             </div>
-                    <div class="form-row">
-                        <span class="labelL">General Setting</span>
-                        <label>View <input type="checkbox" name="role_detail" id="role_detail" value="GS:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'GS:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
+                            <div class="form-row">
+                                <span class="labelL">General Setting</span>
+                                <label>View <input type="checkbox" name="role_detail" id="role_detail" value="GS:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'GS:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="GS:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'GS:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
-                    </div>
+                            </div>
                             <div class="form-row">
                                 <span class="labelL">BIC</span>
                                 <label>List <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:LIST'}"> checked="true" </c:if></c:forEach> /></label>
@@ -353,6 +353,12 @@
                         <label>CAMT.107.001.01 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10700101" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10700101'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>CAMT.108.001.01 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt10800101" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt10800101'}"> checked="true" </c:if></c:forEach> /></label>
                         </div>
+                            <div class="form-row">
+                                <span class="labelL">List Template</span>
+                                <label>Create <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:LTCREATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:LTCREATE'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:LTUPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:LTUPDATE'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Disable <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:LTDELETE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:LTDELETE'}"> checked="true" </c:if></c:forEach> /></label>
+                            </div>
                         </div>
                         <!--                <div class="form-row"><span class="labelL">&nbsp;</span>-->
                         <div class="form-row-action" >
