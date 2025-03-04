@@ -57,7 +57,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException, SQLException {
+            throws ServletException, IOException, ParseException, SQLException, Exception {
         HttpSession session = request.getSession();
         DBconnection dbConn = new DBconnection();
         DBDataTransaksiOutgoing dBTrx = new DBDataTransaksiOutgoing(dbConn.getConnection());
@@ -85,7 +85,12 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         data.setBanking_priority("N");
         data.setMur("M");
         data.setOperator_comment("Operator Comment");
-        data.setBlock3(null);
+        if (abstractMX.getMxId().toString().contains("pacs.008") || abstractMX.getMxId().toString().contains("pacs.009")) {
+            data.setBlock3(request.getParameter("UETR"));
+        } else {
+            data.setBlock3(null);
+        }
+        data.setFlag(dBTrx.getFlagFromQueue(abstractMX.getMxId().toString()));
 //        data.setBlock3(UUID.randomUUID().toString());
         String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         
@@ -449,6 +454,8 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             java.util.logging.Logger.getLogger(SCDataTransaksiOutgoingPlainMX.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(SCDataTransaksiOutgoingPlainMX.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SCDataTransaksiOutgoingPlainMX.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -468,6 +475,8 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         } catch (ParseException ex) {
             java.util.logging.Logger.getLogger(SCDataTransaksiOutgoingPlainMX.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            java.util.logging.Logger.getLogger(SCDataTransaksiOutgoingPlainMX.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
             java.util.logging.Logger.getLogger(SCDataTransaksiOutgoingPlainMX.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

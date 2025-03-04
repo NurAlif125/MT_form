@@ -20,7 +20,7 @@
                 <input type="hidden" name="id" id="id" value="${dataMTById.id}" />
                 <div id="tabs-1" class="formBody">
                     <div class="form-row"><span class="labelL">MT</span>
-                        <input type="text" name="mt" id="mt" maxlength="10" size="10" required="required" value="<c:out value="${dataMTById.mt}" />" />
+                        <input type="text" name="mt" id="mt" maxlength="15" size="15" required="required" value="<c:out value="${dataMTById.mt}" />" />
                     </div>
                     <div class="form-row"><span class="labelL">Detail</span>
                         <input type="text" name="detail" id="detail" maxlength="255" size="100" value="<c:out value="${dataMTById.detail}" />" />

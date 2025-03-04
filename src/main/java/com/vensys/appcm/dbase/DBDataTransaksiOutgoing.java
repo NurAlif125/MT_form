@@ -102,7 +102,11 @@ public class DBDataTransaksiOutgoing {
             st.setString(13, data.getMur()); // mur
             st.setString(14, data.getOperator_comment()); //komentar
             st.setTimestamp(15, timestamp); //tanggal
-            st.setString(16, "MOD"); //flag
+            if (data.getFlag().isEmpty() || data.getFlag() == null || data.getFlag().equalsIgnoreCase("")) {
+                st.setString(16, "MOD"); //flag
+            } else {
+                st.setString(16, data.getFlag()); //flag
+            }
             st.setString(17, "SRC:MANUAL"); //user edit 
             st.setString(18, user_id); //template name 
             st.setInt(19, 0); //flag template 
@@ -131,6 +135,35 @@ public class DBDataTransaksiOutgoing {
         evl.insertDataEvent(user_id, "Membuat transaksi baru", ip_access, comp_name);
         evl.updateLogUser(user_id, "trx", timestampString);
         return header;
+    }
+    
+    public String getFlagFromQueue(String messType) throws SQLException, Exception {
+        log.info("masuk getFlagFromQueue();");
+        String flag = "MOD";
+        
+        try {
+            String sql = "SELECT queue FROM mt_details WHERE mt = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, messType);
+            
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {
+                if (rs.getString("queue").equals("1")) {
+                    flag = "MOD";
+                } else if (rs.getString("queue").equals("2")) {
+                    flag = "VER";
+                } else if (rs.getString("queue").equals("3")) {
+                    flag = "AUTH";
+                } else {
+                    flag = "MOD";
+                }
+            }
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        return flag;
     }
 
 //    }
