@@ -114,21 +114,21 @@
                                 <li><a href="SCBICList">BIC</a></li>
                                 </c:if>
                             </c:forEach>
-                        <!-- <c:forEach var="item" items="${role}">
+                        <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'BIC_GO:LIST'}">
                                 <li><a href="SCDataBICGoList">Swift Go BIC</a></li>
                             </c:if>
                         </c:forEach>
-                        <c:forEach var="item" items="${role}">
+                        <!-- <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'S_LIMIT:LIST'}">
                                 <li><a href="SCDataSwiftLimitList">Swift Go Limit</a></li>
                             </c:if>
                         </c:forEach>     -->
-                        <!-- <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'CRG:LIST'}">
-                                <li><a href="SCDataChargesList">Charges</a></li>
+                        <c:forEach var="item" items="${role}">
+                            <c:if test="${item == 'MT_QUEUE:LIST'}">
+                                <li><a href="SCDataMTList">MT Queue</a></li>
                             </c:if>
-                        </c:forEach> -->
+                        </c:forEach>
                         <!-- <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'ACCP:LIST'}">
                                 <li><a href="SCDataAccPenagihanList">Account Penagihan</a></li>

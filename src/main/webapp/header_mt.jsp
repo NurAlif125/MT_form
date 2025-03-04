@@ -10,14 +10,14 @@
     <c:choose>
         <c:when test="${headerById.io_type == null}">
             <select name="sender_logical_terminal" id="sender_logical_terminal">
-                <option value="MEGAIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>MEGAIDJAXXXX</option>
-                <option value="MEGAIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJ0AXXX'}"> selected </c:if>>MEGAIDJ0AXXX</option>
+                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
+                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>
                 </select>
         </c:when>
         <c:when test="${headerById.io_type == 'I'}">
             <select name="sender_logical_terminal" id="sender_logical_terminal">
-                <option value="MEGAIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>MEGAIDJAXXXX</option>
-                <option value="MEGAIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJ0AXXX'}"> selected </c:if>>MEGAIDJ0AXXX</option>
+                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
+                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>
                 </select>
         </c:when>
         <c:otherwise>

@@ -32,7 +32,15 @@ public class DataHeaderTransaksi {
     private String source;
     private String multi_currency;
     private BigDecimal multi_amount;
+    private String flag;
 
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public String getNetworkType() {
         return networkType;

@@ -102,7 +102,11 @@ public class DBDataTransaksiOutgoing {
             st.setString(13, data.getMur()); // mur
             st.setString(14, data.getOperator_comment()); //komentar
             st.setTimestamp(15, timestamp); //tanggal
-            st.setString(16, "MOD"); //flag
+            if (data.getFlag().isEmpty() || data.getFlag() == null || data.getFlag().equalsIgnoreCase("")) {
+                st.setString(16, "MOD"); //flag
+            } else {
+                st.setString(16, data.getFlag()); //flag
+            }
             st.setString(17, "SRC:MANUAL"); //user edit 
             st.setString(18, user_id); //template name 
             st.setInt(19, 0); //flag template 
@@ -131,6 +135,35 @@ public class DBDataTransaksiOutgoing {
         evl.insertDataEvent(user_id, "Membuat transaksi baru", ip_access, comp_name);
         evl.updateLogUser(user_id, "trx", timestampString);
         return header;
+    }
+    
+    public String getFlagFromQueue(String messType) throws SQLException, Exception {
+        log.info("masuk getFlagFromQueue();");
+        String flag = "MOD";
+        
+        try {
+            String sql = "SELECT queue FROM mt_details WHERE mt = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, messType);
+            
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()) {
+                if (rs.getString("queue").equals("1")) {
+                    flag = "MOD";
+                } else if (rs.getString("queue").equals("2")) {
+                    flag = "VER";
+                } else if (rs.getString("queue").equals("3")) {
+                    flag = "AUTH";
+                } else {
+                    flag = "MOD";
+                }
+            }
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+            e.printStackTrace();
+        }
+        return flag;
     }
 
 //    }
@@ -760,6 +793,54 @@ public class DBDataTransaksiOutgoing {
         } catch (SQLException e) {
             log.error("addDataTransaksi():" + e.getMessage());
         }
+    }
+    
+    public void addMXText(String data, String id) {
+        try {
+            String sql = "INSERT INTO mx_text(id_headers, final_mx,modify_mx) VALUES (?,?,?)";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, Integer.parseInt(id));
+            st.setString(2, data);
+            st.setString(3, data);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Add data mx_text " + e.getMessage());
+        }
+
+    }
+    
+    public void addDataMXTag(String id, String json, String headerSaa) {
+        try {
+            String sql = "INSERT INTO tags_mx VALUES(?,?::jsonb,?,?)";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, Integer.parseInt(id));
+            st.setString(2, json);
+            st.setString(3, headerSaa);
+            st.setString(4, "");
+            st.executeUpdate();
+        } catch (SQLException e) {
+//            e.printStackTrace();
+            log.error("addDataTag():" + e.toString());
+        }
+
+    }
+    
+    public Map<String, String> getBodyAnHeaderMXById(int id) {
+        Map<String, String> data = new HashMap<String, String>();
+        try {
+            log.info("ID for get tags_MX " + id);
+            String sql = "SELECT json_tag, header_saa FROM tags_mx WHERE id_headers=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                data.put("bodyMX", rs.getString("json_tag"));
+                data.put("headerMX", rs.getString("header_saa"));
+            }
+        } catch (Exception e) {
+            log.error("On class " + this.getClass().toString() + " function getBodyAnHeaderMXById():" + e.toString());
+        }
+        return data;
     }
 
     public void updateVerifiedAccount(String acc, String name) {
