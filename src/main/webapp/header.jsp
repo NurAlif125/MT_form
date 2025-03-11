@@ -294,7 +294,10 @@
                                 <li><span class="dir">Payments Clearing and Settlement</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
-                                            <c:if test="${item == 'MX:pacs00800108'}">
+                                            <c:if test="${item == 'MX:pacs00400109'}">
+                                                <li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:pacs00800108'}">
                                                 <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108'}">
