@@ -59,20 +59,52 @@
     }
     input[type="text"] {
         all: revert;
-        width: 40%; /* w-full */
+        width: 30%; /* w-full */
         padding: 0.25rem; /* p-2 */
         color: #111827; /* text-gray-900 */
         border: 1px solid #d1d5db; /* border border-gray-300 */
         border-radius: 0.5rem; /* rounded-lg */
         font-size: 13px;
     }
-
     input[type="text"]:focus {
         outline: none;
         border-color: #3b82f6; /* focus:border-blue-500 */
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
-
+    input[type="number"] {
+        all: revert;
+        width: 30%; /* w-full */
+        padding: 0.25rem; /* p-2 */
+        color: #111827; /* text-gray-900 */
+        border: 1px solid #d1d5db; /* border border-gray-300 */
+        border-radius: 0.5rem; /* rounded-lg */
+        font-size: 13px;
+    }
+    input[type="number"]:focus {
+        outline: none;
+        border-color: #3b82f6; /* focus:border-blue-500 */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    input[type="time"] {
+        all: revert;
+        width: 30%; /* w-full */
+        padding: 0.25rem; /* p-2 */
+        color: #111827; /* text-gray-900 */
+        border: 1px solid #d1d5db; /* border border-gray-300 */
+        border-radius: 0.5rem; /* rounded-lg */
+        font-size: 13px;
+    }
+    input[type="time"]:focus {
+        outline: none;
+        border-color: #3b82f6; /* focus:border-blue-500 */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    input[required="required"] {
+        background-color: #DEFCF9;
+    }
+    input[disabled="disabled"] {
+        background-color: #ECCFD1;
+    }
 </style>
 <script>
     function generateuetr() {
@@ -82,7 +114,8 @@
         inputField.setAttribute("value", uuid);
     }
 </script>
-
+<script src="js/flatpickr.js"></script>
+<link rel="stylesheet" href="css/flatpickr.css">
 <meta id="generator-farras" name="generator" content="XSD2HTML2XML v3: https://github.com/MichielCM/xsd2html2xml" data-xsd2html2xml-source='<c:out value='${dataIsoXML}' />'/>
 <script src="js/xml2html_rule.js" type="text/javascript"></script>
 
@@ -97,7 +130,7 @@
             } else {
                 this.removeAttribute("value");
             }
-            ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/CreDtTm"><input type="datetime-local" onchange='if (this.value) {
+            ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
                         this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
                     } else {
                         this.removeAttribute("value");
@@ -236,7 +269,7 @@
                 this.removeAttribute("value"); };' required="required" min="0" step="0.1" pattern="[-]?{0,}" data-xsd2html2xml-primitive="decimal" data-xsd2html2xml-description="InterbankSettlementAmount"><span>InterbankSettlementAmount</span></label><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="attribute" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/@Ccy"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency</span></label>
-                            </fieldset></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="IntrBkSttlmDt" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrBkSttlmDt"><input type="date" onchange='if (this.value) {
+                            </fieldset></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="IntrBkSttlmDt" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrBkSttlmDt"><input type="text" class="date" onchange='if (this.value) {
                 this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
                 this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="InterbankSettlementDate"><span>InterbankSettlementDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="SttlmPrty" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmPrty"><select onchange='this.childNodes.forEach(function (o) {
                             if (o.nodeType == Node.ELEMENT_NODE)
@@ -245,22 +278,22 @@
                                     <option value="NORM">Normal</option></select><span>SettlementPriority<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">SettlementPriority</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="SttlmTmIndctn" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmIndctn">
                                 <legend>SettlementTimeIndication<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
-                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DbtDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmIndctn/DbtDtTm"><input type="datetime-local" onchange='if (this.value) {
+                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DbtDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmIndctn/DbtDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
                 this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-                this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="DebitDateTime"><span>DebitDateTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">DebitDateTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CdtDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmIndctn/CdtDtTm"><input type="datetime-local" onchange='if (this.value) {
+                this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="DebitDateTime"><span>DebitDateTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">DebitDateTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CdtDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmIndctn/CdtDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
                             this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
                             this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreditDateTime"><span>CreditDateTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CreditDateTime</button></section>
                             </fieldset>
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">SettlementTimeIndication</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="SttlmTmReq" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq">
                                 <legend>SettlementTimeRequest<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
-                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CLSTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/CLSTm"><input type="time" onchange='if (this.value) {
+                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CLSTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/CLSTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
                 this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-                this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="CLSTime"><span>CLSTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CLSTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="TillTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/TillTm"><input type="time" onchange='if (this.value) {
+                this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="CLSTime"><span>CLSTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CLSTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="TillTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/TillTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
                             this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-                            this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="TillTime"><span>TillTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">TillTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/FrTm"><input type="time" onchange='if (this.value) {
+                            this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="TillTime"><span>TillTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">TillTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/FrTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
                                         this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-                                        this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="FromTime"><span>FromTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">FromTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RjctTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/RjctTm"><input type="time" onchange='if (this.value) {
+                                        this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="FromTime"><span>FromTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">FromTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RjctTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/SttlmTmReq/RjctTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
                                                     this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
                                                     this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="RejectTime"><span>RejectTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">RejectTime</button></section>
                             </fieldset>
@@ -1728,3 +1761,25 @@
                     </fieldset></section>
             </fieldset></section>
     </fieldset></section>
+    <script>
+        flatpickr(".datetime-local", {
+            enableTime: true,
+            enableSeconds: true,
+            dateFormat: "Y-m-d\TH:i:S",
+            time_24hr: true,
+            minuteIncrement: 1,
+        });
+        flatpickr(".date", {
+            dateFormat: "Y-m-d",
+            enableTime: false
+        });
+        flatpickr(".time", {
+            enableTime: true,
+            enableSeconds: true,
+            dateFormat: "H:i:S",
+            time_24hr: true,
+            minuteIncrement: 1,
+            noCalendar: true,
+            utc: true
+        });
+    </script>

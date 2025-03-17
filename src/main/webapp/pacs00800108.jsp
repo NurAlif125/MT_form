@@ -59,20 +59,52 @@
     }
     input[type="text"] {
         all: revert;
-        width: 40%; /* w-full */
+        width: 30%; /* w-full */
         padding: 0.25rem; /* p-2 */
         color: #111827; /* text-gray-900 */
         border: 1px solid #d1d5db; /* border border-gray-300 */
         border-radius: 0.5rem; /* rounded-lg */
         font-size: 13px;
     }
-
     input[type="text"]:focus {
         outline: none;
         border-color: #3b82f6; /* focus:border-blue-500 */
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
-
+    input[type="number"] {
+        all: revert;
+        width: 30%; /* w-full */
+        padding: 0.25rem; /* p-2 */
+        color: #111827; /* text-gray-900 */
+        border: 1px solid #d1d5db; /* border border-gray-300 */
+        border-radius: 0.5rem; /* rounded-lg */
+        font-size: 13px;
+    }
+    input[type="number"]:focus {
+        outline: none;
+        border-color: #3b82f6; /* focus:border-blue-500 */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    input[type="time"] {
+        all: revert;
+        width: 30%; /* w-full */
+        padding: 0.25rem; /* p-2 */
+        color: #111827; /* text-gray-900 */
+        border: 1px solid #d1d5db; /* border border-gray-300 */
+        border-radius: 0.5rem; /* rounded-lg */
+        font-size: 13px;
+    }
+    input[type="time"]:focus {
+        outline: none;
+        border-color: #3b82f6; /* focus:border-blue-500 */
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    input[required="required"] {
+        background-color: #DEFCF9;
+    }
+    input[disabled="disabled"] {
+        background-color: #ECCFD1;
+    }
 </style>
 <script>
     function generateuetr() {
@@ -82,7 +114,8 @@
         inputField.setAttribute("value", uuid);
     }
 </script>
-
+<script src="js/flatpickr.js"></script>
+<link rel="stylesheet" href="css/flatpickr.css">
 <meta id="generator-farras" name="generator" content="XSD2HTML2XML v3: https://github.com/MichielCM/xsd2html2xml" data-xsd2html2xml-source='<c:out value='${dataIsoXML}' />'/>
 <script src="js/xml2html_rule.js" type="text/javascript"></script>
 
@@ -97,7 +130,7 @@
         } else {
             this.removeAttribute("value");
         }
-        ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/CreDtTm"><input type="datetime-local" onchange='if (this.value) {
+        ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
                     this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
                 } else {
                     this.removeAttribute("value");
@@ -170,7 +203,7 @@
                                         </legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId">
                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/ClrSysMmbId">
                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -315,7 +348,7 @@
                                         </legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId">
                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/ClrSysMmbId">
                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -448,7 +481,7 @@
                                         </legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId">
                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/ClrSysMmbId">
                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -644,7 +677,7 @@
             this.removeAttribute("value"); };' required="required" min="0" step="0.1" pattern="[-]?{0,}" data-xsd2html2xml-primitive="decimal" data-xsd2html2xml-description="InterbankSettlementAmount"><span>InterbankSettlementAmount</span></label><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="attribute" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/@Ccy"><input type="text" onchange='if (this.value) {
                         this.setAttribute("value", this.value); } else {
                         this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency</span></label>
-                            </fieldset></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="IntrBkSttlmDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt"><input type="date" onchange='if (this.value) {
+                            </fieldset></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="IntrBkSttlmDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="InterbankSettlementDate"><span>InterbankSettlementDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="SttlmPrty" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmPrty"><select onchange='this.childNodes.forEach(function (o) {
                         if (o.nodeType == Node.ELEMENT_NODE)
@@ -653,25 +686,25 @@
                                     <option value="NORM">Normal</option></select><span>SettlementPriority<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">SettlementPriority</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="SttlmTmIndctn" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmIndctn">
                                 <legend>SettlementTimeIndication<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
-                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DbtDtTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmIndctn/DbtDtTm"><input type="datetime-local" onchange='if (this.value) {
+                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DbtDtTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmIndctn/DbtDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
             this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-            this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="DebitDateTime"><span>DebitDateTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">DebitDateTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CdtDtTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmIndctn/CdtDtTm"><input type="datetime-local" onchange='if (this.value) {
+            this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="DebitDateTime"><span>DebitDateTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">DebitDateTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CdtDtTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmIndctn/CdtDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
                         this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
                         this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreditDateTime"><span>CreditDateTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CreditDateTime</button></section>
                             </fieldset>
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">SettlementTimeIndication</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="SttlmTmReq" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq">
                                 <legend>SettlementTimeRequest<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
-                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CLSTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/CLSTm"><input type="time" onchange='if (this.value) {
+                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CLSTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/CLSTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
             this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
         } else {
             this.removeAttribute("value");
         }
-        ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="CLSTime"><span>CLSTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CLSTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="TillTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/TillTm"><input type="time" onchange='if (this.value) {
+        ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="CLSTime"><span>CLSTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CLSTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="TillTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/TillTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
                     this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-                    this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="TillTime"><span>TillTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">TillTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/FrTm"><input type="time" onchange='if (this.value) {
+                    this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="TillTime"><span>TillTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">TillTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/FrTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
                                 this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-                                this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="FromTime"><span>FromTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">FromTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RjctTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/RjctTm"><input type="time" onchange='if (this.value) {
+                                this.removeAttribute("value"); };' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="time" data-xsd2html2xml-description="FromTime"><span>FromTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">FromTime</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RjctTm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/SttlmTmReq/RjctTm"><input type="text" placeholder="00:00:00" onchange='if (this.value) {
                                             this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
                                         } else {
                                             this.removeAttribute("value");
@@ -707,7 +740,7 @@
                                         <legend>Agent</legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId">
                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value);
         } else {
             this.removeAttribute("value");
@@ -783,7 +816,7 @@
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -925,7 +958,7 @@
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -1064,7 +1097,7 @@
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value);
         } else {
             this.removeAttribute("value");
@@ -1200,7 +1233,7 @@
                                 <legend>InstructingAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -1225,7 +1258,7 @@
                                 <legend>InstructedAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value);
         } else {
             this.removeAttribute("value");
@@ -1254,7 +1287,7 @@
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value);
         } else {
             this.removeAttribute("value");
@@ -1386,7 +1419,7 @@
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -1520,7 +1553,7 @@
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -1724,7 +1757,7 @@
                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/Id/PrvtId/DtAndPlcOfBirth">
                                                         <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                         </legend>
-                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="BirthDate"><span>BirthDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/Id/PrvtId/DtAndPlcOfBirth/PrvcOfBirth"><input type="text" onchange='if (this.value) {
                         this.setAttribute("value", this.value);
@@ -1866,7 +1899,7 @@
                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/Id/PrvtId/DtAndPlcOfBirth">
                                                         <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                         </legend>
-                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
         } else {
             this.removeAttribute("value");
@@ -1995,7 +2028,7 @@
                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Id/PrvtId/DtAndPlcOfBirth">
                                                         <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                         </legend>
-                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="BirthDate"><span>BirthDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Id/PrvtId/DtAndPlcOfBirth/PrvcOfBirth"><input type="text" onchange='if (this.value) {
                         this.setAttribute("value", this.value); } else {
@@ -2096,7 +2129,7 @@
                                 <legend>DebtorAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -2238,7 +2271,7 @@
                                 <legend>CreditorAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -2463,7 +2496,7 @@
                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Id/PrvtId/DtAndPlcOfBirth">
                                                         <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                         </legend>
-                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="BirthDate"><span>BirthDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Id/PrvtId/DtAndPlcOfBirth/PrvcOfBirth"><input type="text" onchange='if (this.value) {
                         this.setAttribute("value", this.value); } else {
@@ -2650,7 +2683,7 @@
                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/Id/PrvtId/DtAndPlcOfBirth">
                                                         <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                         </legend>
-                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="BirthDate"><span>BirthDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/Id/PrvtId/DtAndPlcOfBirth/PrvcOfBirth"><input type="text" onchange='if (this.value) {
                         this.setAttribute("value", this.value);
@@ -2744,7 +2777,7 @@
                                         </legend>
                                         <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Tp" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RgltryRptg/Dtls/Tp"><input type="text" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
-            this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Type"><span>Type<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RgltryRptg/Dtls/Dt"><input type="date" onchange='if (this.value) {
+            this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Type"><span>Type<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RgltryRptg/Dtls/Dt"><input type="text" class="date" onchange='if (this.value) {
                         this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
                     } else {
                         this.removeAttribute("value");
@@ -2889,7 +2922,7 @@
                                                     </fieldset>
                                                     <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nb" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/RfrdDocInf/Nb"><input type="text" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
-            this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&amp;\*=^_`\{\|\}~&quot;;&lt;&gt;@\[\\\]]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Number"><span>Number<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Number</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RltdDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/RfrdDocInf/RltdDt"><input type="date" onchange='if (this.value) {
+            this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&amp;\*=^_`\{\|\}~&quot;;&lt;&gt;@\[\\\]]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Number"><span>Number<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Number</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RltdDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/RfrdDocInf/RltdDt"><input type="text" class="date" onchange='if (this.value) {
                         this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
                         this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="RelatedDate"><span>RelatedDate<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">RelatedDate</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LineDtls" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/RfrdDocInf/LineDtls">
                                                         <legend>LineDetails<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -2916,7 +2949,7 @@
         } else {
             this.removeAttribute("value");
         }
-        ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&amp;\*=^_`\{\|\}~&quot;;&lt;&gt;@\[\\\]]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Number"><span>Number<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Number</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RltdDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/RfrdDocInf/LineDtls/Id/RltdDt"><input type="date" onchange='if (this.value) {
+        ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&amp;\*=^_`\{\|\}~&quot;;&lt;&gt;@\[\\\]]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Number"><span>Number<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Number</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RltdDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/RfrdDocInf/LineDtls/Id/RltdDt"><input type="text" class="date" onchange='if (this.value) {
                     this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
                 } else {
                     this.removeAttribute("value");
@@ -3257,7 +3290,7 @@
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/Invcr/Id/PrvtId/DtAndPlcOfBirth">
                                                                         <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                         </legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/Invcr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/Invcr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
         } else {
             this.removeAttribute("value");
@@ -3379,7 +3412,7 @@
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/Invcee/Id/PrvtId/DtAndPlcOfBirth">
                                                                         <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                         </legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/Invcee/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/Invcee/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); }
         ;' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="BirthDate"><span>BirthDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/Invcee/Id/PrvtId/DtAndPlcOfBirth/PrvcOfBirth"><input type="text" onchange='if (this.value) {
@@ -3500,7 +3533,7 @@
                         this.setAttribute("value", this.value); } else {
                         this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency</span></label>
                                                     </fieldset>
-                                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">TotalTaxAmount</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Dt"><input type="date" onchange='if (this.value) {
+                                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">TotalTaxAmount</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Dt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
         } else {
             this.removeAttribute("value");
@@ -3532,7 +3565,7 @@
                                                             ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&amp;\*=^_`\{\|\}~&quot;;&lt;&gt;@\[\\\]]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="FormsCode"><span>FormsCode<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">FormsCode</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Prd" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd">
                                                                 <legend>Period<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                 </legend>
-                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Yr" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/Yr"><input type="date" onchange='if (this.value) {
+                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Yr" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/Yr"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="Year"><span>Year<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Year</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Tp" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/Tp"><select onchange='this.childNodes.forEach(function (o) {
                         if (o.nodeType == Node.ELEMENT_NODE)
@@ -3558,12 +3591,12 @@
                                                                             <option value="HLF2">SecondHalf</option></select><span>Type<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrToDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/FrToDt">
                                                                         <legend>FromToDate<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                         </legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/FrToDt/FrDt"><input type="date" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/FrToDt/FrDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
         } else {
             this.removeAttribute("value");
         }
-        ;' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="FromDate"><span>FromDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ToDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/FrToDt/ToDt"><input type="date" onchange='if (this.value) {
+        ;' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="FromDate"><span>FromDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ToDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/Prd/FrToDt/ToDt"><input type="text" class="date" onchange='if (this.value) {
                     this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
                     this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="ToDate"><span>ToDate</span></label></section>
                                                                     </fieldset>
@@ -3601,7 +3634,7 @@
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Prd" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd">
                                                                                 <legend>Period<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                                 </legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Yr" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/Yr"><input type="date" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Yr" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/Yr"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="Year"><span>Year<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Year</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Tp" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/Tp"><select onchange='this.childNodes.forEach(function (o) {
                         if (o.nodeType == Node.ELEMENT_NODE)
@@ -3627,12 +3660,12 @@
                                                                                             <option value="HLF2">SecondHalf</option></select><span>Type<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrToDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/FrToDt">
                                                                                         <legend>FromToDate<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                                         </legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/FrToDt/FrDt"><input type="date" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FrDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/FrToDt/FrDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
         } else {
             this.removeAttribute("value");
         }
-        ;' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="FromDate"><span>FromDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ToDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/FrToDt/ToDt"><input type="date" onchange='if (this.value) {
+        ;' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="FromDate"><span>FromDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ToDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/TaxRmt/Rcrd/TaxAmt/Dtls/Prd/FrToDt/ToDt"><input type="text" class="date" onchange='if (this.value) {
                     this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
                 } else {
                     this.removeAttribute("value");
@@ -3759,7 +3792,7 @@
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/Grnshee/Id/PrvtId/DtAndPlcOfBirth">
                                                                                 <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                                 </legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/Grnshee/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/Grnshee/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim());
         } else {
             this.removeAttribute("value");
@@ -3892,7 +3925,7 @@
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtAndPlcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/PrvtId/DtAndPlcOfBirth">
                                                                                 <legend>DateAndPlaceOfBirth<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                                                 </legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="date" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BirthDt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/PrvtId/DtAndPlcOfBirth/BirthDt"><input type="text" class="date" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="BirthDate"><span>BirthDate</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvcOfBirth" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/PrvtId/DtAndPlcOfBirth/PrvcOfBirth"><input type="text" onchange='if (this.value) {
                         this.setAttribute("value", this.value); } else {
@@ -3938,7 +3971,7 @@
         } else {
             this.removeAttribute("value");
         }
-        ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&amp;\*=^_`\{\|\}~&quot;;&lt;&gt;@\[\\\]]+" maxlength="140" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="ReferenceNumber"><span>ReferenceNumber<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">ReferenceNumber</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/Dt"><input type="date" onchange='if (this.value) {
+        ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&amp;\*=^_`\{\|\}~&quot;;&lt;&gt;@\[\\\]]+" maxlength="140" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="ReferenceNumber"><span>ReferenceNumber<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">ReferenceNumber</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/Dt"><input type="text" class="date" onchange='if (this.value) {
                     this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
                     this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="Date"><span>Date<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Date</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="RmtdAmt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/RmtInf/Strd/GrnshmtRmt/RmtdAmt">
                                                         <legend>RemittedAmount<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -3968,3 +4001,25 @@
                     </fieldset></section>
             </fieldset></section>
     </fieldset></section>
+    <script>
+        flatpickr(".datetime-local", {
+            enableTime: true,
+            enableSeconds: true,
+            dateFormat: "Y-m-d\TH:i:S",
+            time_24hr: true,
+            minuteIncrement: 1,
+        });
+        flatpickr(".date", {
+            dateFormat: "Y-m-d",
+            enableTime: false
+        });
+        flatpickr(".time", {
+            enableTime: true,
+            enableSeconds: true,
+            dateFormat: "H:i:S",
+            time_24hr: true,
+            minuteIncrement: 1,
+            noCalendar: true,
+            utc: true
+        });
+    </script>

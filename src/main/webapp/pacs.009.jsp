@@ -29,7 +29,7 @@
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MX:pacs00900108'}">
             <div id="judul">PACS.009.001.08 Financial Institution Credit Transfer V08</div>
-            <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingPlainMXChangeStats" onsubmit="return confirm('Do you want to save this MX data?');">
+            <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingMX" onsubmit="return confirm('Do you want to save this MX data?');">
                 <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
                 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">

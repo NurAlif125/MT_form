@@ -412,6 +412,10 @@
         <servlet-name>SCHeaderTemplate</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCHeaderTemplate</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDataTransaksiOutgoingMX</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCDashBoardTransactions</servlet-name>
         <url-pattern>/SCDashBoardTransactions</url-pattern>
@@ -827,8 +831,10 @@
         <servlet-name>SCHeaderTemplate</servlet-name>
         <url-pattern>/ControllerHeaderTemplate</url-pattern>
     </servlet-mapping>
-    
-    
+    <servlet-mapping>
+        <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
+        <url-pattern>/SCDataTransaksiOutgoingMX</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

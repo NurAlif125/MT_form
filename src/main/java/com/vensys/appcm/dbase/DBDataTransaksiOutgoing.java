@@ -82,8 +82,8 @@ public class DBDataTransaksiOutgoing {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String timestampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
         try {
-            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry) \n"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
+            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype) \n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
                     + "RETURNING id_headers;";
             PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -119,6 +119,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(26, ""); //receiver output time 
             st.setString(27, data.getBlock3()); // block 3 
             st.setString(28, "SRC:MANUAL"); //user entry
+            st.setString(29, data.getNetworkType()); //networktype
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -347,13 +348,7 @@ public class DBDataTransaksiOutgoing {
             CreateText ct = new CreateText(conn);
             
             // Harus mengetahui dulu apakah MX atau MT
-            if (networkType.equalsIgnoreCase("MT")){
-                log.info("STL MT for id_headers "+id_headers);
-                
-    //            CreateTextNew ctn = new CreateTextNew(conn);
-                ct.getFinalMT(id_headers, io_type);
-            }
-            else if(networkType.equalsIgnoreCase("MX")) {
+            if (networkType.contains("pacs") || networkType.contains("camt")) {
                 log.info("STL MX for id_headers "+id_headers);
                 
                 // get json
@@ -366,18 +361,21 @@ public class DBDataTransaksiOutgoing {
                 var bodyMessage = AbstractMX.fromJson(body);
                 var variant = bodyMessage.getMxId().id();
                 
+                Map<String, String> finalMX = getMxTextById(id_headers.toString());
                 
                 log.info("Version : "+variant);
                 
                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
                 
-                System.out.println(fullMessage);
+                System.out.println(finalMX.get("modify_mx"));
                 
-                ct.createTextFileMX(fullMessage,variant,id_headers,"O");
-                                
+                ct.createTextFileMX(finalMX.get("modify_mx"),variant,id_headers, "I");
+            } else {
+                log.info("STL MT for id_headers "+id_headers);
+                
+    //            CreateTextNew ctn = new CreateTextNew(conn);
+                ct.getFinalMT(id_headers, io_type);
             }
-            
-            
         }
     }
     
@@ -795,6 +793,76 @@ public class DBDataTransaksiOutgoing {
         }
     }
     
+    public int updateMXText(String xml, int id_headers) throws SQLException, Exception {
+        int update = 0;
+        try {
+            String sql = "UPDATE mx_text set modify_mx=? where id_headers=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, xml);
+            st.setInt(2, id_headers);
+            update = st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
+    }
+    
+    public int updateTagsMXText (String json, int id_headers) throws SQLException, Exception {
+        int update = 0;
+        try {
+            String sql = "UPDATE tags_mx set json_tag=?::jsonb where id_headers=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, json);
+            st.setInt(2, id_headers);
+            update = st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
+    }
+    
+    public int updateFlagMX(String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name) throws SQLException, Exception {
+        int update = 0;
+        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        try {
+            String sql = "UPDATE headers set receiverAddress=?, flag=?,tanggal=? where flag =? and id_headers=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, responder.toUpperCase());
+            st.setString(2, flag);
+            st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
+            st.setString(4, flag_before);
+            st.setInt(5, id_headers);
+            update = st.executeUpdate();
+            if (update > 0) {
+                System.out.println("Update Flag to:" + flag);
+                updateDataHeaderStatus(flag, tanggal_transaksi, id_headers, user_id, ip_access, comp_name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
+    }
+    
+    public void updateDataHeaderStatus(String status_header, String status_tanggal, Integer id_headers, String user_login, String ip_access, String comp_name) {
+        log.info("updateDataHeaderStatus");
+        try {
+            String sql = "INSERT INTO header_status(id_headers,status_header,status_tanggal,user_login,ip_access,comp_name) VALUES (?,?,?,?,?,?)";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id_headers);
+            st.setString(2, status_header);
+            st.setString(3, status_tanggal);
+            st.setString(4, user_login);
+            st.setString(5, ip_access);
+            st.setString(6, comp_name);
+//            System.out.println(st);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        evl.insertDataEvent(user_login, "Update status transaksi menjadi " + status_header, ip_access, comp_name);
+        evl.updateLogUser(user_login, "trx", tanggal);
+    }
+    
     public void addMXText(String data, String id) {
         try {
             String sql = "INSERT INTO mx_text(id_headers, final_mx,modify_mx) VALUES (?,?,?)";
@@ -823,6 +891,23 @@ public class DBDataTransaksiOutgoing {
             log.error("addDataTag():" + e.toString());
         }
 
+    }
+    
+    public String getTagsMX (int id) {
+        String json = "";
+        try {
+            String sql = "SELECT json_tag from tags_mx WHERE id_headers = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                json = rs.getString(1);
+            }
+            System.out.println("json_tag: " + json);
+        } catch (SQLException e) {
+            System.out.println("Error getTagsMX: " + e.getMessage());
+        }
+        return json;
     }
     
     public Map<String, String> getBodyAnHeaderMXById(int id) {
