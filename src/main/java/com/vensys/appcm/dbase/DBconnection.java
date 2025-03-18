@@ -18,11 +18,14 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
+import com.vensys.appcm.myutils.Encryptor;
+import java.util.logging.Level;
 
 public class DBconnection {
 
     private Connection conn;
     private static final Logger log = LogManager.getLogger(DBconnection.class);
+    Encryptor enc = new Encryptor();
 
     public DBconnection() {
         try {
@@ -36,8 +39,16 @@ public class DBconnection {
                 prop.load(inputStream);
                 String DRIVER = prop.getProperty("driver");
                 String URL = prop.getProperty("url");
-                String USER = prop.getProperty("user");
-                String PASS = prop.getProperty("password");
+//                String USER = prop.getProperty("user");
+//                String PASS = prop.getProperty("password");
+                String USER = null;
+                String PASS = null;
+                try {
+                    USER = enc.decryptTD(prop.getProperty("user"), "AKey@VenSys");
+                    PASS = enc.decryptTD(prop.getProperty("password"), "AKey@VenSys");
+                } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 Class.forName(DRIVER);
                 conn = DriverManager.getConnection(URL, USER, PASS);
                 log.info("Database connection established");

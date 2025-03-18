@@ -10,14 +10,14 @@
     <c:choose>
         <c:when test="${headerById.io_type == null}">
             <select name="sender_logical_terminal" id="sender_logical_terminal">
-                <option value="MEGAIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>MEGAIDJAXXXX</option>
-                <option value="MEGAIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJ0AXXX'}"> selected </c:if>>MEGA  IDJ0AXXX</option>
+                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
+                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>
                 </select>
         </c:when>
         <c:when test="${headerById.io_type == 'I'}">
             <select name="sender_logical_terminal" id="sender_logical_terminal">
-                <option value="MEGAIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>MEGAIDJAXXXX</option>
-                <option value="MEGAIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJ0AXXX'}"> selected </c:if>>MEGAIDJ0AXXX</option>
+                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
+                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>
                 </select>
         </c:when>
         <c:otherwise>
@@ -61,7 +61,7 @@
             <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" minlength="12" autocomplete="off" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
         </c:otherwise>
 </c:choose--%>
-    <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" minlength="12" autocomplete="off" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
+    <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" minlength="12" autocomplete="off" input_type="Receiver Institution" location="Header" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
     <%--<input readonly="true" type="text" name="receiver_institution" id="receiver_institution" maxlength="12" <c:choose><c:when test="${empty headerById.receiverAddress}">value="INDOIDJRXXXX"</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />--%>
 </div>
 <div class="form-row"><span class="label">Address Expansion</span>  <!-- 20191230 -->

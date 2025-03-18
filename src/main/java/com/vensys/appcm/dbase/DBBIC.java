@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.vensys.appcm.model.DataBIC;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -29,6 +30,7 @@ public class DBBIC {
     public DBBIC(Connection conn) {
         this.conn = conn;
     }
+    Logger log = Logger.getLogger(getClass().getName());
 
     public void addBic(DataBIC data) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -200,7 +202,7 @@ public class DBBIC {
         }
         return datas;
     }
-        public List<String[]> getPagesBicAjax(int offset, int numberLimit) throws Exception {
+    public List<String[]> getPagesBicAjax(int offset, int numberLimit) throws Exception {
         List<String[]> datas = new ArrayList<String[]>();
         String sql = "SELECT id_member,code_member,company,address,note FROM bic ORDER BY id_member OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
 //        System.out.println("sql=" + sql);
@@ -217,6 +219,47 @@ public class DBBIC {
             datas.add(value);
         }
         return datas;
+    }
+        
+    public void addBICBulk(List<DataBIC> data) {
+        String sql = "INSERT INTO bic (code_member,company,address,note)"
+                + "VALUES (?,?,?,?)";
+        try {
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            this.conn.setAutoCommit(false);
+            for (DataBIC temp: data) {
+                st.setString(1, temp.getCode_member());
+                st.setString(2, temp.getCompany());
+                st.setString(3, temp.getAddress());
+                st.setString(4, temp.getNote());
+                //st.setString(5, temp.getModification_flag());
+                st.addBatch();
+            }
+            int[] result = st.executeBatch();
+            this.log.info("The number of rows inserted: " + result.length);
+            this.conn.commit();
+        } catch (Exception e) {
+            try {
+                this.conn.rollback();
+            } catch (SQLException ex) {
+                this.log.error(ex.getMessage());
+            }  
+            e.printStackTrace();
+            this.log.error(e.getMessage());
+        }
+    }
+        
+    public String truncateBICBulk() {
+        String result = "Gagal Truncate";
+        try {
+            String sql = "truncate table bic";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result = "Gagal Truncate \n " + e.toString();
+        }
+        return result;
     }
 }
 

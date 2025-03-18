@@ -4,7 +4,7 @@
 //// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 //// * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
 //// */
-////package ldap;
+package ldap;
 //
 //import java.io.FileInputStream;
 //import java.io.IOException;
@@ -29,7 +29,7 @@
 // *
 // * @author admin.gtframe
 // */
-//public class LDAPCon {
+public class LDAPCon {
 //
 //    public static void main(String[] args) {
 //        String username = "admin";
@@ -173,4 +173,4 @@
 //// */
 //////public class LDAPCon {
 //////    
-//////}
+}
