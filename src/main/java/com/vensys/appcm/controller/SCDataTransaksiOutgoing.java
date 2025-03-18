@@ -79,6 +79,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         CreateText ct = new CreateText(dbConn.getConnection());
         CreateTextNew ctn = new CreateTextNew(dbConn.getConnection());
         DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn.getConnection());
+        String dataXml = request.getParameter("dataXML");
         
         log.info("SCData Transaksi Outgoign Awalan");
         if (idsToUpdate == null) {
@@ -86,6 +87,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             System.out.println("sender1: " + request.getParameter("sender_logical_terminal"));
             data.setSender_logical_terminal(request.getParameter("sender_logical_terminal"));
             data.setMessageType(messageType);
+            data.setFlag(dBDataTransaksiOutgoing.getFlagFromQueue(messageType));
             data.setReceiver_institution(request.getParameter("receiver_institution"));
             data.setPriority(request.getParameter("priority"));
             data.setMonitoring(request.getParameter("monitoring"));
@@ -302,11 +304,16 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         dBDataTransaksiOutgoing.addMTText(ct.createFinalMT(ct.getHeaderById(id_headers)), id_headers);
                     }
                 } else {
-                    log.info("update data MT");
-                    if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
-                        dBDataTransaksiOutgoing.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                    if (messageType.contains("pacs") || messageType.contains("camt")) {
+                        log.info("update data MX");
+                        dBDataTransaksiOutgoing.updateMXText(dataXml, Integer.parseInt(id));
                     } else {
-                        dBDataTransaksiOutgoing.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                        log.info("update data MT");
+                        if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
+                            dBDataTransaksiOutgoing.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                        } else {
+                            dBDataTransaksiOutgoing.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                        }
                     }
                 }
                 //20211215 penambahan cek duplikat create manual
