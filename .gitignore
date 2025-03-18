@@ -9,3 +9,4 @@ build.xml
 
 /nbproject/
 /.vscode/
+src/main/resources/db.properties

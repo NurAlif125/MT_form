@@ -46,6 +46,7 @@ public class AKoneksiData {
 
 //        data.setDirBackEndBackUpOutgoing(prop.getProperty("dirBackEndBackUpOutgoing"));
 //        data.setDirFrontEndOutgoing(prop.getProperty("dirFrontEndOutgoing"));
+        data.setDirFrontEndOutgoingMX(prop.getProperty("dirFrontEndOutgoingMX"));
         data.setDirFrontEndIncoming(prop.getProperty("dirFrontEndIncoming"));
         data.setDirFrontEndBackUpIncoming(prop.getProperty("dirFrontEndBackUpIncoming"));
 

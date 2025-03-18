@@ -4,6 +4,15 @@
  */
 package com.vensys.appcm.controller;
 
+import com.prowidesoftware.swift.model.mx.MxCamt05300108;
+import com.prowidesoftware.swift.model.mx.MxCamt05500108;
+import com.prowidesoftware.swift.model.mx.MxCamt05600108;
+import com.prowidesoftware.swift.model.mx.MxCamt10700101;
+import com.prowidesoftware.swift.model.mx.MxCamt10800101;
+import com.prowidesoftware.swift.model.mx.MxPacs00400109;
+import com.prowidesoftware.swift.model.mx.MxPacs00800108;
+import com.prowidesoftware.swift.model.mx.MxPacs00900108;
+import com.prowidesoftware.swift.model.mx.MxWriteConfiguration;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBHeader;
 import com.vensys.appcm.dbase.DBMTRelation;
@@ -117,19 +126,17 @@ public class VDataTransaksiOutgoing extends HttpServlet {
 
         try {
             System.out.println("masuk gettextbyid");
-            textById = dbText.getMtTextById(Integer.parseInt(request.getParameter("id")));
-
-//            textById = dbText.getMxTextById(Integer.parseInt(request.getParameter("id")));
+            
+            if (headerById.getMessageType().contains("pacs") || headerById.getMessageType().contains("camt")) {
+                textById = dbText.getMxTextById(Integer.parseInt(request.getParameter("id")));
+            } else {
+                textById = dbText.getMtTextById(Integer.parseInt(request.getParameter("id")));
+            }
             
 
             //ini yg bawaan MT
             String before = textById.getModify_mt();
             String after = textById.getFinal_mt();
-            //ini modify baru MX
-//            String before = textById.getOri_mx();
-//            String after = textById.getModify_mx();
-            //System.out.println("before : " + before);
-            //System.out.println("after :" + after);
 
             BufferedReader br1 = null;
             BufferedReader br2 = null;
@@ -191,10 +198,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             //request.setAttribute("keyBefore", resultBfr);
            request.setAttribute("keyAfter", StringEscapeUtils.escapeHtml(resultAft));
            request.setAttribute("keyBefore", StringEscapeUtils.escapeHtml(resultBfr));
-            
-            
-            
-            
+
 //            System.out.println("textByid: "+textById);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -259,71 +263,68 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         request.setAttribute("receiverInstitution", receiverInstitution); // ditambahkan pada 20191230 untuk mengetahui nama dari recins
         //request.setAttribute("evidence_exist", evidence_exist); //20240108 ditambah ini
         String suffix = "COV";
+        RequestDispatcher view;
         
-        // TIdak akan muncul keculai di rumah INC-INV
-        // Disini untuk memasukan nilai atribute role nya khsusu untuk INC-INV
-        /*List role = (List)httpSession.getAttribute("role");
-        if (headerById.getFlag().equalsIgnoreCase("INC-INV")){
+        if (headerById.getNetworktype() == null) {
+            view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
+        } else if (headerById.getMessageType().contains("pacs") || headerById.getMessageType().contains("camt")) {
+            MxWriteConfiguration mxConfiguration =  new MxWriteConfiguration();
+            mxConfiguration.rootElement = "Document";
+            mxConfiguration.documentPrefix = null;
+            mxConfiguration.headerPrefix = null;
             
-//            System.out.println("Iterate Rolenya");
-            for(int i = 0 ; i < role.size() ; i++){
-//                System.out.println("Role : "+role.get(i));
-                
-                // Jika ternyata dia juga punya INC-CHGRTLACCT maka kirim attribute buat JSP
-                if (role.get(i).toString().equalsIgnoreCase("FLOW:INC-CHGRTLACCT")){
-                    request.setAttribute("isHasRoleChgRtlAcct", true);
+            if (headerById.getMessageType().contains("pacs.004") || headerById.getMessageType().contains("pacs.008") || headerById.getMessageType().contains("pacs.009") || headerById.getMessageType().contains("camt.053") || headerById.getMessageType().contains("camt.055") || headerById.getMessageType().contains("camt.056") || headerById.getMessageType().contains("camt.107") || headerById.getMessageType().contains("camt.108")) {
+                String json = opr.getBodyAnHeaderMXById(Integer.parseInt(request.getParameter("id"))).get("bodyMX");
+                if (headerById.getMessageType().contains("pacs.004")) {
+                    MxPacs00400109 dataMXpacs004 = MxPacs00400109.fromJson(json);
+                    dataMXpacs004.setAppHdr(null);
+                    String clearMX = dataMXpacs004.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("pacs.008")) {
+                    MxPacs00800108 dataMXpacs008 = MxPacs00800108.fromJson(json);
+                    dataMXpacs008.setAppHdr(null);
+                    String clearMX = dataMXpacs008.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("pacs.009")) {
+                    MxPacs00900108 dataMXpacs009 = MxPacs00900108.fromJson(json);
+                    dataMXpacs009.setAppHdr(null);
+                    String clearMX = dataMXpacs009.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("camt.053")) {
+                    MxCamt05300108 dataMXcamt053 = MxCamt05300108.fromJson(json);
+                    dataMXcamt053.setAppHdr(null);
+                    String clearMX = dataMXcamt053.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("camt.055")) {
+                    MxCamt05500108 dataMXcamt055 = MxCamt05500108.fromJson(json);
+                    dataMXcamt055.setAppHdr(null);
+                    String clearMX = dataMXcamt055.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("camt.056")) {
+                    MxCamt05600108 dataMXcamt056 = MxCamt05600108.fromJson(json);
+                    dataMXcamt056.setAppHdr(null);
+                    String clearMX = dataMXcamt056.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("camt.107")) {
+                    MxCamt10700101 dataMXcamt107 = MxCamt10700101.fromJson(json);
+                    dataMXcamt107.setAppHdr(null);
+                    String clearMX = dataMXcamt107.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("camt.108")) {
+                    MxCamt10800101 dataMXcamt108 = MxCamt10800101.fromJson(json);
+                    dataMXcamt108.setAppHdr(null);
+                    String clearMX = dataMXcamt108.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
                 }
-            }
-        }*/
-
-        //System.out.println("header is exist nih 72nya : " + headerById.getIsNextAgentExist());
-
-        if (headerById.getMessageType().trim().toLowerCase().contains("pacs")||
-                headerById.getMessageType().trim().toLowerCase().contains("camt") ||
-                 headerById.getMessageType().trim().toLowerCase().contains("pain")) {
-            System.out.println("apaapaan");
-           if (headerById.getMessageType().trim().toLowerCase().contains("pacs.008")) {
-                EssentialFieldPacs008 dataEssentialFieldPacs008 = bBHeaders.getEssentialFieldPacs008byId(Integer.parseInt(request.getParameter("id")));
-                request.setAttribute("mxById", dataEssentialFieldPacs008);
-            }
-            // converting json to mx
-//            MxPacs00800108 pacs008 = MxPacs00800108.fromJson(dataMx.get("body"));
-//            request.setAttribute("mx_modify", pacs008.message());
-            Map<String, String> dataMx = opr.getMxTextById(request.getParameter("id"));
-
-            request.setAttribute("mx_modify", dataMx.get("modify_mx"));
-            request.setAttribute("final_mx", dataMx.get("final_mx"));
-            request.setAttribute("multiformat_mt", dataMx.get("multiformat_mt"));
-            request.setAttribute("message_type", headerById.getMessageType().trim());
-            // System.out.println("muncul :" + dataMx.get("ori_mx") + "selesai ");
-            RequestDispatcher view = request.getRequestDispatcher("VMxview.jsp");
-//            RequestDispatcher view = request.getRequestDispatcher("ui2/page-message/" + headerById.getMessageType().trim() + ".jsp");
-            view.forward(request, response);
-        } else {
-             System.out.println("apaapaan2");
-             Map<String, String> dataMt = opr.getMtTextById(request.getParameter("id"));
-            request.setAttribute("final_mt", dataMt.get("ori_mt"));
-            request.setAttribute("modify_mt", dataMt.get("modify_mt"));
-            request.setAttribute("final_mx", dataMt.get("final_mx"));
-            request.setAttribute("final_mt", dataMt.get("final_mt"));
-            request.setAttribute("message_type", headerById.getMessageType().trim());
-            System.out.println("muncul :" + dataMt.get("ori_mt") + "selesai ");
-            System.out.println("muncul :" + dataMt.get("final_mx") + "selesai ");
-            System.out.println("muncul :" + dataMt.get("final_tags_mx") + "selesai ");
-            // System.out.println("cov==" + headerById.getCov());
-            if (headerById.getBlock3() == null) {
-                RequestDispatcher view = request.getRequestDispatcher("mt" + headerById.getMessageType() + ".jsp");
-                view.forward(request, response);
-            } else if (headerById.getBlock3().contains("119:COV")) {
-                RequestDispatcher view = request.getRequestDispatcher("mt" + headerById.getMessageType() + suffix + ".jsp");
-                view.forward(request, response);
+                
+                view = request.getRequestDispatcher(headerById.getMessageType().substring(0, 8) + ".jsp");
             } else {
-                RequestDispatcher view = request.getRequestDispatcher("mt" + headerById.getMessageType() + ".jsp");
-                view.forward(request, response);
+                view = request.getRequestDispatcher("mx.jsp");
             }
+        } else {
+            view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
         }
-
-//        System.out.println("JSP : "+"mt" + headerById.getMessageType().trim() + ".jsp");
+        view.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

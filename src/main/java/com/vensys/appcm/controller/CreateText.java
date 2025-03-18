@@ -131,9 +131,9 @@ public class CreateText {
         System.out.println("cek dbHMTL: " + dbHTML);
         FileWriter fstream = null;
         if (io_type.equalsIgnoreCase("I")) {
-            fstream = new FileWriter(getOutDir() + "/" + type + "_" + dbHTML + "_" + id + ".txt");
+            fstream = new FileWriter(getOutDirMX() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
         } else {
-            fstream = new FileWriter(getIncDir() + "/" + type + "_" + dbHTML + "_" + id + ".txt");
+            fstream = new FileWriter(getIncDir() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
         }
         BufferedWriter out = new BufferedWriter(fstream);
 //        out.write(fin.toUpperCase());
@@ -455,6 +455,14 @@ public class CreateText {
 //        }
     }
 
+    public String getOutDirMX() throws IOException {
+        log.info("getOurDirMX");
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("dirFrontEndOutgoingMX");
+    }
+    
     public String getOutDir() throws IOException {
         log.info("getOutDir");
         Properties prop = new Properties();
