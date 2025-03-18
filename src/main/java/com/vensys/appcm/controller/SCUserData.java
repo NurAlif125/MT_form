@@ -163,7 +163,12 @@ public class SCUserData extends HttpServlet {
                                 while (st.hasMoreElements()) {
                                     list.add(st.nextToken());
                                 }
-                                session.setAttribute("role", list);
+                                
+                                System.out.println("Session ID: " + session.getId());
+                                
+                                ReplicationManager replicationManager = new ReplicationManager(list);
+
+                                session.setAttribute("role", replicationManager.getRoles());
                                 session.setAttribute("dataRoleList", dataRoleList);
 
                                 session.setAttribute("flagStatus", "");

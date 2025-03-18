@@ -103,6 +103,43 @@
             <input type="hidden" name="flag" id="flag" value="VER" />
             <input type="hidden" name="action_type" id="action_type" value="save" />
             <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
+            <script>
+                var nodeIsGenerator = document.getElementById("generator-farras")
+
+                var nodeReceiverInstitution = document.getElementById("receiver_institution")
+                var nodeLogicalTerminal = document.getElementById("sender_logical_terminal")
+
+                console.log(nodeReceiverInstitution)
+                console.log(nodeLogicalTerminal)
+
+                if (nodeIsGenerator) {
+                    var nodeForm = document.getElementById("form1")
+
+                    nodeForm.addEventListener("submit", function (e) {
+                        console.log("testing")
+                        e.preventDefault()
+                        var xml = htmlToXML(nodeForm)
+                        console.log(xml)
+
+                        // buat element untuk menampung data XML
+                        var input = document.createElement("input")
+
+                        input.setAttribute("name", "dataXML")
+                        input.setAttribute("value", xml)
+                        input.style.display="none"
+                        nodeForm.appendChild(input)
+
+                        // disini untuk append child receiver dan logical terminal
+//                        nodeForm.appendChild(nodeReceiverInstitution)
+//                        nodeForm.appendChild(nodeLogicalTerminal)
+
+                        nodeForm.submit()
+                    })
+                    console.log("Ini XML")
+                } else {
+                    console.log("Ini MT")
+                }
+            </script>
         </c:if>
         <%--<c:if test="${item == 'FLOW:VER'}">
             <input type="button" name="verified" id="verified" value="Verifiy" />
@@ -263,6 +300,50 @@
         <c:if test="${item == 'FLOW:CREATE'}">
             <input type="hidden" name="action_type" id="action_type" value="save" />
             <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
+            <script>
+                var nodeIsGenerator = document.getElementById("generator-farras")
+
+                var nodeReceiverInstitution = document.getElementById("receiver_institution")
+                var nodeLogicalTerminal = document.getElementById("sender_logical_terminal")
+
+                console.log(nodeReceiverInstitution)
+                console.log(nodeLogicalTerminal)
+
+                if (nodeIsGenerator) {
+                    var nodeForm = document.getElementById("form1")
+
+                    nodeForm.addEventListener("submit", function (e) {
+                        console.log("testing")
+                        e.preventDefault()
+                        var xml = htmlToXML(nodeForm)
+                        console.log(xml)
+
+                        // buat element untuk menampung data XML
+                        var input = document.createElement("input")
+
+                        input.setAttribute("name", "dataXML")
+                        input.setAttribute("value", xml)
+                        input.style.display="none"
+                        nodeForm.appendChild(input)
+
+                        // disini untuk append child receiver dan logical terminal
+//                        nodeForm.appendChild(nodeReceiverInstitution)
+//                        nodeForm.appendChild(nodeLogicalTerminal)
+
+                        nodeForm.submit()
+                    })
+                    console.log("Ini XML")
+                } else {
+                    console.log("Ini MT")
+                }
+            </script>
+                  <% if ((request.getParameter("idlt") == null) ) {%>
+            <c:forEach var="itemF" items="${role}">
+                <c:if test="${itemF == 'FLOW:LTCREATE'}">
+                    <input type="button" name="submit_template" id="submit_template" value="Save As Template" />
+                </c:if>
+            </c:forEach>    
+            <% } %>
         </c:if>
         <% } %>
         <!--20180417 untuk resend ack dan incominig-->
@@ -290,6 +371,13 @@
         <!-- ... existing code ... -->
         <!--end 20180417-->
 
+             <% if ((request.getParameter("idlt") != null) ) {%>
+        <c:if test="${item == 'FLOW:LTUPDATE'}">
+            <input type="hidden" id="idlt" name="idlt" value="${param.idlt}" />
+            <input type="button" name="save_template_edit" id="save_template_edit" value="Save Edit Template" />
+        </c:if>
+        <% } %>
+
     </c:forEach>      
         <input type="button" name="back" id="back" value="Back" />
     </div>
@@ -300,4 +388,5 @@
         <input type="button" name="submit_template" id="submit_template" value="Save As Template">
     </div>
     
+
 </div>

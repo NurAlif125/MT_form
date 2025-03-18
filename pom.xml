@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.vensys</groupId>
-    <artifactId>mavenproject1</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>AppCM</artifactId>
+    <version>1.0</version>
     <packaging>war</packaging>
-    <name>mavenproject1-1.0-SNAPSHOT</name>
+    <name>AppCM</name>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -539,6 +539,7 @@
     </dependencies>
 
     <build>
+        <finalName>AppCM</finalName>
         <plugins>
             <!--            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -22,6 +22,7 @@ public class MKoneksiData {
     private String dirBackEndIncomingNok;
 //    private String dirBackEndBackUpOutgoing;
 //    private String dirFrontEndOutgoing;
+    private String dirFrontEndOutgoingMX;
     private String dirFrontEndIncoming;
     private String dirFrontEndBackUpIncoming;
 
@@ -40,6 +41,14 @@ public class MKoneksiData {
     private String action;
     private String userws;
     private String passwordws;
+
+    public String getDirFrontEndOutgoingMX() {
+        return dirFrontEndOutgoingMX;
+    }
+
+    public void setDirFrontEndOutgoingMX(String dirFrontEndOutgoingMX) {
+        this.dirFrontEndOutgoingMX = dirFrontEndOutgoingMX;
+    }
 
     public String getAction() {
         return action;
