@@ -34,8 +34,8 @@ public class DBnotification {
         
 //        PreparedStatement st = this.conn.prepareStatement(sql);
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {  // Auto-close PreparedStatement
-            st.setString(1, roleId);      // Untuk '1' di msg_to_role
-            st.setString(2, userId);  // Untuk 'admin' is_read_user
+            st.setString(1, roleId); 
+            st.setString(2, userId);
 //            ResultSet rs = st.executeQuery();
             
             try (ResultSet rs = st.executeQuery()) {  // Auto-close ResultSet
@@ -50,25 +50,50 @@ public class DBnotification {
     }
     
     public List<Map<String, String>> getNotificationList(String userId, String roleId) throws SQLException {
-    List<Map<String, String>> notifications = new ArrayList<>();
-    String sql = "SELECT id_notif, title_msg, msg_body FROM notifications \n" +
-                 "WHERE ? = ANY(string_to_array(COALESCE(msg_to_role, ''), ','))\n" +
-                 "AND NOT (? = ANY(string_to_array(COALESCE(is_read_userid, ''), ',')))\n" +
-                 "ORDER BY created_at DESC;";
-    
-    try (PreparedStatement st = this.conn.prepareStatement(sql)) {
-        st.setString(1, roleId);
-        st.setString(2, userId);
-        try (ResultSet rs = st.executeQuery()) {
-            while (rs.next()) {
-                Map<String, String> notif = new HashMap<>();
-                notif.put("id", rs.getString("id_notif"));
-                notif.put("title", rs.getString("title_msg"));
-                notif.put("message", rs.getString("msg_body"));
-                notifications.add(notif);
+        List<Map<String, String>> notifications = new ArrayList<>();
+        String sql = "SELECT id_notif, title_msg, msg_body FROM notifications \n" +
+                     "WHERE ? = ANY(string_to_array(COALESCE(msg_to_role, ''), ','))\n" +
+                     "AND NOT (? = ANY(string_to_array(COALESCE(is_read_userid, ''), ',')))\n" +
+                     "ORDER BY created_at DESC;";
+
+        try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+            st.setString(1, roleId);
+            st.setString(2, userId);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, String> notif = new HashMap<>();
+                    notif.put("id", rs.getString("id_notif"));
+                    notif.put("title", rs.getString("title_msg"));
+                    notif.put("message", rs.getString("msg_body"));
+                    notifications.add(notif);
+                }
             }
         }
+        return notifications;
     }
-    return notifications;
-}
+    
+    public List<Map<String, String>> markAsReadNotif(String userId, String roleId) throws SQLException {
+        List<Map<String, String>> datas = new ArrayList<>();
+        String sql = "SELECT id_notif, title_msg, msg_body FROM notifications \n" +
+                     "WHERE ? = ANY(string_to_array(COALESCE(msg_to_role, ''), ','))\n" +
+                     "AND NOT (? = ANY(string_to_array(COALESCE(is_read_userid, ''), ',')))\n" +
+                     "ORDER BY created_at DESC;";
+
+        try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+            st.setString(1, roleId);
+            st.setString(2, userId);
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, String> notif = new HashMap<>();
+                    notif.put("id", rs.getString("id_notif"));
+                    notif.put("title", rs.getString("title_msg"));
+                    notif.put("message", rs.getString("msg_body"));
+                    datas.add(notif);
+                }
+            }
+        }
+        return datas;
+    }
+    
+    
 }

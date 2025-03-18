@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
  *
  * @author HP PROBOOK 430 G8
  */
-@WebServlet({"/NotifServlet", "/SCNotificationList"})
+@WebServlet({"/NotifServlet", "/SCNotificationList", "/markAsReadNotif"})
 public class SCNotification extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
@@ -73,33 +73,64 @@ public class SCNotification extends HttpServlet {
     
     protected void getNotificationList(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, Exception {
-    response.setContentType("application/json");
-    PrintWriter out = response.getWriter();
-    HttpSession session = request.getSession();
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
+
+        String userId = (String) session.getAttribute("user_id");
+        String roleId = (String) session.getAttribute("role_id");
+
+        if (userId == null || roleId == null) {
+            out.print("[]"); // Jika user belum login, kembalikan list kosong
+            return;
+        }
+
+        DBconnection dbConn = new DBconnection();
+        try {
+            DBnotification notif = new DBnotification(dbConn.getConnection());
+            List<Map<String, String>> notificationList = notif.getNotificationList(userId, roleId);
+            Gson gson = new Gson();
+            out.print(gson.toJson(notificationList));
+            System.out.println(gson.toJson(notificationList));
+        } catch (Exception e) {
+            out.print("[]");
+            e.printStackTrace();
+            System.err.println("SCNotificationList Error: " + e.getMessage());
+        } finally {
+            dbConn.closeConnection();
+        }
+    }
     
-    String userId = (String) session.getAttribute("user_id");
-    String roleId = (String) session.getAttribute("role_id");
+    protected void markAsReadNotif(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException, Exception {
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        HttpSession session = request.getSession();
 
-    if (userId == null || roleId == null) {
-        out.print("[]"); // Jika user belum login, kembalikan list kosong
-        return;
-    }
+        String userId = (String) session.getAttribute("user_id");
+        String roleId = (String) session.getAttribute("role_id");
 
-    DBconnection dbConn = new DBconnection();
-    try {
-        DBnotification notif = new DBnotification(dbConn.getConnection());
-        List<Map<String, String>> notificationList = notif.getNotificationList(userId, roleId);
-        Gson gson = new Gson();
-        out.print(gson.toJson(notificationList));
-        System.out.println(gson.toJson(notificationList));
-    } catch (Exception e) {
-        out.print("[]");
-        e.printStackTrace();
-        System.err.println("SCNotificationList Error: " + e.getMessage());
-    } finally {
-        dbConn.closeConnection();
+        if (userId == null || roleId == null) {
+            out.print("[]"); // no login, kembalikan list kosong
+            return;
+        }
+
+        DBconnection dbConn = new DBconnection();
+        try {
+            DBnotification notif = new DBnotification(dbConn.getConnection());
+            List<Map<String, String>> notificationList = notif.getNotificationList(userId, roleId);
+            Gson gson = new Gson();
+            out.print(gson.toJson(notificationList));
+            System.out.println(gson.toJson(notificationList));
+        } catch (Exception e) {
+            out.print("[]");
+            e.printStackTrace();
+            System.err.println("SCNotificationList Error: " + e.getMessage());
+        } finally {
+            dbConn.closeConnection();
+        }
     }
-}
+    
 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -120,6 +151,12 @@ public class SCNotification extends HttpServlet {
         if (path.equals("/SCNotificationList")) {
              try {
                  getNotificationList(request, response);
+             } catch (Exception ex) {
+                 java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
+             }
+        } else if(path.equals("/markAsReadNotif")) {
+             try {
+                 markAsReadNotif(request, response);
              } catch (Exception ex) {
                  java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
              }
