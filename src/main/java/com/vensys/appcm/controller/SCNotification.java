@@ -101,7 +101,7 @@ public class SCNotification extends HttpServlet {
         }
     }
     
-    protected void markAsReadNotif(HttpServletRequest request, HttpServletResponse response)
+        protected void markAsReadNotif(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, Exception {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
