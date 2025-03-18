@@ -123,7 +123,7 @@ function markAsRead() {
 
         $.ajax({
             type: "POST",
-            url: "MarkAsReadServlet",
+            url: "markAsReadNotif",
             data: { notifIds: checkedNotifs.join(",") },
             dataType: "json",
             success: function (data) {
