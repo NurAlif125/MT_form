@@ -1,6 +1,6 @@
 <%-- 
-    Document   : pacs.008
-    Created on : Feb 28, 2025, 10:16:43 AM
+    Document   : pacs.004
+    Created on : Mar 12, 2025, 11:08:38 AM
     Author     : rafli
 --%>
 
@@ -27,8 +27,8 @@
 <script type="text/javascript" src="js/validateDate.js"></script>
 <div id="isi">
     <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'MX:pacs00800108'}">
-            <div id="judul">PACS.008.001.08 FI To FI Customer Credit Transfer V08</div>
+        <c:if test="${item == 'MX:pacs00400109'}">
+            <div id="judul">PACS.004.001.09 Payment Return V09</div>
             <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingMX" onsubmit="return confirm('Do you want to save this MX data?');">
                 <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
                 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
@@ -46,7 +46,7 @@
                             <%@ include file="header_mt.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
-                            <%@ include file="pacs00800108.jsp" %>
+                            <%@ include file="pacs00400109.jsp" %>
                         </div>
                         <div id="view3" class="tabcontent">
                             <div class="form-row">
@@ -76,12 +76,12 @@
 </div>
 <script type="text/javascript" src="js/data-tree.js"></script>
 <script>
-    var xmldata = document.getElementById("hiddenmxfull").value;
+                var xmldata = document.getElementById("hiddenmxfull").value;
 //    console.log(xmldata);
-    new DataTree({
-        xml: xmldata,
-        container: '#mxfull',
-        attrs:'show',
-        startExpanded:true
-    });
+                new DataTree({
+                    xml: xmldata,
+                    container: '#mxfull',
+                    attrs: 'show',
+                    startExpanded: true
+                });
 </script>

@@ -23,6 +23,7 @@ import com.prowidesoftware.swift.model.mx.MxWriteConfiguration;
 import com.prowidesoftware.swift.model.mx.dic.BranchAndFinancialInstitutionIdentification6;
 import com.prowidesoftware.swift.model.mx.dic.FinancialInstitutionIdentification18;
 import com.prowidesoftware.swift.model.mx.dic.Party44Choice;
+import com.prowidesoftware.swift.model.mx.MxPacs00400109;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
@@ -75,7 +76,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         DataHeaderTransaksi data = new DataHeaderTransaksi();
         
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
-        
+        data.setNetworkType("MX");
         data.setMessageType(abstractMX.getMxId().toString());
         data.setMessageType(abstractMX.getMxId().toString());
         data.setSender_logical_terminal(logicalTerminal);
@@ -114,7 +115,52 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         appHeader.setBizSvc("swift.cbprplus.02");
         appHeader.setCreationDate(true);
         
-        if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
+        if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
+            appHeader.setMsgDefIdr("pacs.004.001.09");
+            
+            MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;
+            
+            if (dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrId() != null) {
+                appHeader.setBizMsgIdr(dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrId());
+            } else {
+                String seq;
+                String tglToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                String seqDB = dBTrx.getSeq();
+                String[] arSeq = seqDB.split("#");
+                seq = arSeq[0].trim();
+                int seqInt = Integer.parseInt(seq);
+                seqInt = seqInt + 1;
+                String sseqint = String.valueOf(seqInt);
+                String padder = "";
+                for (int k = 0; k < 3 - sseqint.length(); k++) {
+                    padder += "0";
+                }
+                seq = padder + sseqint;
+                String resetDate = arSeq[1].trim();
+                SimpleDateFormat tgl = new SimpleDateFormat("yyyy-MM-dd");
+                Date date1 = tgl.parse(tglToday);
+                Date date2 = tgl.parse(resetDate);
+                String dateUpdate = resetDate;
+                int tahun = Integer.parseInt(tglToday.substring(0, 4));
+                String bulan = tglToday.substring(5, 7);
+                String hari = tglToday.substring(8, 10);
+                if (date1.compareTo(date2) > 0 || date1.compareTo(date2) == 0) {
+                    tahun = tahun + 1;
+                    dateUpdate = String.valueOf(tahun) + "-01-01";
+                    seq = "000";
+                } else {
+                    dateUpdate = resetDate;
+                }
+                dBTrx.updateSequence(dateUpdate, seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
+            }
+            
+            dataMXpacs004.setAppHdr(appHeader);
+            
+            dBTrx.addMXText(dataMXpacs004.message(mxConfiguration), returnId_headers);
+            
+            dBTrx.addDataMXTag(returnId_headers, ((MxPacs00400109) abstractMX).toJson(), saaHeader);
+        } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             appHeader.setMsgDefIdr("pacs.008.001.08");
             
             MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
@@ -151,7 +197,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                     dateUpdate = resetDate;
                 }
                 dBTrx.updateSequence(dateUpdate, seq);
-                appHeader.setBizMsgIdr("BSMD" + tahun + bulan + hari + seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXpacs008.setAppHdr(appHeader);
@@ -196,7 +242,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                     dateUpdate = resetDate;
                 }
                 dBTrx.updateSequence(dateUpdate, seq);
-                appHeader.setBizMsgIdr("BSMD" + tahun + bulan + hari + seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXpacs009.setAppHdr(appHeader);
@@ -241,7 +287,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                     dateUpdate = resetDate;
                 }
                 dBTrx.updateSequence(dateUpdate, seq);
-                appHeader.setBizMsgIdr("BSMD" + tahun + bulan + hari + seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt053.setAppHdr(appHeader);
@@ -286,7 +332,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                     dateUpdate = resetDate;
                 }
                 dBTrx.updateSequence(dateUpdate, seq);
-                appHeader.setBizMsgIdr("BSMD" + tahun + bulan + hari + seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt055.setAppHdr(appHeader);
@@ -331,7 +377,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                     dateUpdate = resetDate;
                 }
                 dBTrx.updateSequence(dateUpdate, seq);
-                appHeader.setBizMsgIdr("BSMD" + tahun + bulan + hari + seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt056.setAppHdr(appHeader);
@@ -376,7 +422,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                     dateUpdate = resetDate;
                 }
                 dBTrx.updateSequence(dateUpdate, seq);
-                appHeader.setBizMsgIdr("BSMD" + tahun + bulan + hari + seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt107.setAppHdr(appHeader);
@@ -421,7 +467,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                     dateUpdate = resetDate;
                 }
                 dBTrx.updateSequence(dateUpdate, seq);
-                appHeader.setBizMsgIdr("BSMD" + tahun + bulan + hari + seq);
+                appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt108.setAppHdr(appHeader);

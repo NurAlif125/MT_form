@@ -1060,7 +1060,17 @@ System.out.println("Session ID: " + httpSession.getId());
         } else if (flag.equalsIgnoreCase("ERR")) {
             isDuplicate = "3";
             where += " AND flag='MOD' ";
-        } else {
+        } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+            where += " AND flag='CVT-MOD' ";
+        } else if (flag.equalsIgnoreCase("CVT-VER")) {
+            where += " AND flag='CVT-VER' ";
+        } else if (flag.equalsIgnoreCase("WAITING-AML")) {
+            where += " AND flag='WAITING-AML' ";
+        } else if (flag.equalsIgnoreCase("CVT-INC")) {
+            where += " AND flag='CVT-INC' ";
+        }
+        
+        else {
             where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
         }
         List<Header> headers = new ArrayList<Header>();

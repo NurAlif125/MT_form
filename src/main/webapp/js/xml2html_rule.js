@@ -557,6 +557,26 @@
             if ((button.parentNode.children.length - 2) == button.getAttribute("data-xsd2html2xml-max"))
 //                button.setAttribute("disabled", "disabled");
                 button.style.display = "none";
+            
+                flatpickr(".datetime-local", {
+                    enableTime: true,
+                    enableSeconds: true,
+                    dateFormat: "Y-m-d\TH:i:S",
+                    time_24hr: true,
+                    minuteIncrement: 1
+                });
+                flatpickr(".date", {
+                    dateFormat: "Y-m-d",
+                    enableTime: false
+                });
+                // flatpickr(".time", {
+                //     enableTime: true,
+                //     enableSeconds: true,
+                //     dateFormat: "H:i:S",
+                //     time_24hr: true,
+                //     minuteIncrement: 1,
+                //     noCalendar: true
+                // });
         }
 
         var clickRemoveButton = function (button) {

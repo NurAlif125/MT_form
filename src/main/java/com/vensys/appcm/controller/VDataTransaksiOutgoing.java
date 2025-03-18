@@ -9,6 +9,7 @@ import com.prowidesoftware.swift.model.mx.MxCamt05500108;
 import com.prowidesoftware.swift.model.mx.MxCamt05600108;
 import com.prowidesoftware.swift.model.mx.MxCamt10700101;
 import com.prowidesoftware.swift.model.mx.MxCamt10800101;
+import com.prowidesoftware.swift.model.mx.MxPacs00400109;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.prowidesoftware.swift.model.mx.MxWriteConfiguration;
@@ -272,10 +273,14 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             mxConfiguration.documentPrefix = null;
             mxConfiguration.headerPrefix = null;
             
-            if (headerById.getMessageType().contains("pacs.008") || headerById.getMessageType().contains("pacs.009") || headerById.getMessageType().contains("camt.053") || headerById.getMessageType().contains("camt.055") || headerById.getMessageType().contains("camt.056") || headerById.getMessageType().contains("camt.107") || headerById.getMessageType().contains("camt.108")) {
+            if (headerById.getMessageType().contains("pacs.004") || headerById.getMessageType().contains("pacs.008") || headerById.getMessageType().contains("pacs.009") || headerById.getMessageType().contains("camt.053") || headerById.getMessageType().contains("camt.055") || headerById.getMessageType().contains("camt.056") || headerById.getMessageType().contains("camt.107") || headerById.getMessageType().contains("camt.108")) {
                 String json = opr.getBodyAnHeaderMXById(Integer.parseInt(request.getParameter("id"))).get("bodyMX");
-                
-                if (headerById.getMessageType().contains("pacs.008")) {
+                if (headerById.getMessageType().contains("pacs.004")) {
+                    MxPacs00400109 dataMXpacs004 = MxPacs00400109.fromJson(json);
+                    dataMXpacs004.setAppHdr(null);
+                    String clearMX = dataMXpacs004.message(mxConfiguration);
+                    request.setAttribute("dataIsoXML", clearMX);
+                } else if (headerById.getMessageType().contains("pacs.008")) {
                     MxPacs00800108 dataMXpacs008 = MxPacs00800108.fromJson(json);
                     dataMXpacs008.setAppHdr(null);
                     String clearMX = dataMXpacs008.message(mxConfiguration);

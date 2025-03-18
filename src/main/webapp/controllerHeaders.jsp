@@ -51,6 +51,10 @@
                 <% } else if (menu.equalsIgnoreCase("17")) { %> Incoming Big Amount
                 <% } else if (menu.equalsIgnoreCase("18")) { %> Incoming Special Rate
                 <% } else if (menu.equalsIgnoreCase("19")) { %> Incoming Adjustment
+                <% } else if (menu.equalsIgnoreCase("20")) { %> Modify Convert
+                <% } else if (menu.equalsIgnoreCase("21")) { %> Verify Convert
+                <% } else if (menu.equalsIgnoreCase("22")) { %> Waiting AML
+                <% } else if (menu.equalsIgnoreCase("23")) { %> Incoming Convert
                 <% } %>
                 Transactions 
             </div>

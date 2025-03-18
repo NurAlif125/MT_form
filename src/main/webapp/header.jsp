@@ -294,7 +294,10 @@
                                 <li><span class="dir">Payments Clearing and Settlement</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
-                                            <c:if test="${item == 'MX:pacs00800108'}">
+                                            <c:if test="${item == 'MX:pacs00400109'}">
+                                                <li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:pacs00800108'}">
                                                 <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108'}">
@@ -365,6 +368,9 @@
 
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-NSTP&menu=17">Incoming Big Amount</a></li>-->
                                             </c:if>
+                                            <c:if test="${iteminc == 'FLOW:CVT-INC'}">
+                                                <li><a href="controllerHeaders?io_type=O&flag=CVT-INC&menu=23">Incoming Convert</a></li>
+                                            </c:if>
                                         </c:forEach>
                                         <li><a href="controllerHeaders?io_type=O&flag=INC-INV&menu=8">Incoming Investigation</a></li>
                                     </ul>
@@ -391,6 +397,15 @@
                                                 </c:if>
                                                 <c:if test="${item == 'FLOW:AUTH'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Authorization</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'FLOW:CVT-MOD'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-MOD&menu=20">Modify Convert</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'FLOW:CVT-VER'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-VER&menu=21">Verify Convert</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'FLOW:WAITING-AML'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=WAITING-AML&menu=22">Waiting AML</a></li>
                                                 </c:if>
                                                 <%--<c:if test="${item == 'FLOW:TEXT'}">--%>
                                             <!--<li><a href="controllerHeaders?io_type=I&flag=TEXT&menu=4">Text Generation</a></li>-->
