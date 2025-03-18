@@ -4,7 +4,21 @@
 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<div class="form-row-action">
+<style>
+    .container_ {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+        
+    .btn--group {
+        display: flex;
+        gap: 5px;
+    }
+</style>
+
+<div class="form-row-action container_">
+    <div class="btn--group">
     <c:forEach var="item" items="${role}">
         <% if (request.getParameter("id") != null) {%>
         <% if (session.getAttribute("flagFilter") == null) {%>
@@ -276,8 +290,14 @@
         <!-- ... existing code ... -->
         <!--end 20180417-->
 
-    </c:forEach>            
-    <input type="button" name="back" id="back" value="Back" />
+    </c:forEach>      
+        <input type="button" name="back" id="back" value="Back" />
+    </div>
     
-    <input type="button" name="validate" id="btn-validate" value="Validate" />
+    <div class="btn--group">
+        <input type="button" name="validate" id="btn-validate" value="Validate" />
+        <input type="button" name="export" id="btn-export" value="Export" />
+        <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+    </div>
+    
 </div>

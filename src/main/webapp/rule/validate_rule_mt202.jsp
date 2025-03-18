@@ -6,7 +6,10 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        $("#form1").validate({
+        let validator = $("#form1").validate({
+            ignore: [],  
+            onkeyup: false,          // Nonaktifkan validasi saat mengetik
+            onfocusout: false, 
             rules: {
                 //header
                 //unit: "required",
@@ -53,8 +56,174 @@
                 type_of58_: "required",
                 _181_of58a_identifier_code: "required",
                 _184_of58d_name_address: "required"
+            },
+            messages: {
+                //header
+                sender_logical_terminal: {required: "sender_logical_terminal harus diisi..!!"},
+                receiver_institution: {required: "receiver_institution harus diisi..!!"},
+                priority: {required: "priority harus diisi..!!"},
+                
+                //body
+                _010_mf20_sender_reference: {required: "mf20 harus diisi..!!"},
+                
+                _011_mf21_: {required: "mf21 harus diisi..!!"},
+
+                //mf32a
+                _060_mf32a_date: {required: "MF32a Date harus diisi..!!"},
+                _061_mf32a_currency: {required: "MF32a Currency harus diisi..!!"},
+                _062_mf32a_amount: {required: "MF32a Amount harus diisi..!!"},
+
+                //of52
+                _111_of52a_identifier_code: {required: "Of52A Identifier Code harus diisi..!!"},
+                _114_of52d_name_address: {required: "Of52D Name Address harus diisi..!!"},
+
+                //of53
+                _121_of53a_identifier_code: {required: "Of53A Identifier Code harus diisi..!!"},
+                _126_of53d_name_address: {required: "Of53D Name Address harus diisi..!!"},
+
+                //of54
+                _131_of54a_identifier_code: {required: "Of54A Identifier Code harus diisi..!!"},
+                _136_of54d_name_address: {required: "Of54D Name Address harus diisi..!!"},
+
+                //of56
+                _161_of56a_identifier_code: {required: "Of56A Identifier Code harus diisi..!!"},
+                _165_of56d_name_address: {required: "Of56D Name Address harus diisi..!!"},
+
+                //of57
+                _171_of57a_identifier_code: {required: "Of57A Identifier Code harus diisi..!!"},
+                _177_of57d_name_address: {required: "Of57D Name Address harus diisi..!!"},
+
+                //of58
+                type_of58_: {required: "Of58 harus diisi..!!"},
+                _181_of58a_identifier_code: {required: "Of58A Identifier Code harus diisi..!!"},
+                _184_of58d_name_address: {required: "Of57D Name Address harus diisi..!!"}
+                
+            },
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+//                alert(error.html());
+                $("#tab-validate").removeAttr("hidden");
+//                console.log(error.html())
+            },
+            showErrors: function (errorMap, errorList) {
+                this.defaultShowErrors();
+                
+                $("#tab-validate").removeAttr("hidden");
+                 
+                $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
+                $("#view8").css("display", "block");
+                $('#tab-view1').removeClass("selected").removeAttr('class');
+                $('#tab-view2').removeClass("selected").removeAttr('class');
+                $('#tab-view3').removeClass("selected").removeAttr('class');
+                $('#tab-view4').removeClass("selected").removeAttr('class');
+                $('#tab-view5').removeClass("selected").removeAttr('class');
+                $('#tab-view6').removeClass("selected").removeAttr('class');
+                $('#tab-view7').removeClass("selected").removeAttr('class');
+                $('#tab-validate').addClass("selected");
+
+                let errorContainer = document.getElementById("error-container");
+                
+                if (errorList.length === 0) {
+                    errorContainer.innerHTML = ""; 
+//                    return;
+                } 
+                
+                let tableHTML = `<table border="1" style="width:100% !important; font-size:8pt !important;">
+                                    <tr style="background:#d6d6d6;">
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Node</th>
+                                    <th>Message</th></tr>`;
+
+                    
+                errorList.forEach(errors => {
+                    let inputID = errors.element.id || "";
+                    let locationTab = errors.element.getAttribute("location") || "";
+                    let inputType = errors.element.getAttribute("input_type") || "";
+
+                    tableHTML += '<tr class="error__row" data-input-id="'+inputID+'" content-body="'+locationTab+'" onmouseover="this.style.background=\'#f6f6f6\'" onmouseout="this.style.backgroundColor=\'transparent\'" style="cursor:pointer;">';
+                    tableHTML += '<td style="padding: 5px;">Error</td>';
+                    tableHTML += '<td style="padding: 5px;">'+locationTab+'</td>';
+                    tableHTML += '<td style="padding: 5px;">'+inputType+'</td>';
+                    tableHTML += '<td style="padding: 5px;">'+errors.message+'</td></tr>';
+                });
+
+                tableHTML += `</table>`;
+                errorContainer.innerHTML = tableHTML; 
+                
+                document.querySelectorAll(".error__row").forEach(row => {
+                    row.addEventListener("click", function () {
+                        let targetRow = event.target.closest(".error__row"); 
+                        let inputId = this.getAttribute("data-input-id");
+                        let tabContentGroup = this.getAttribute("content-body");
+                        
+                    if (targetRow) {
+                        let input = document.getElementById(inputId);
+                        if (input) {
+                            if(tabContentGroup == "Header") {
+                                $("#view2, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $("#view1").css("display", "block");
+                                $('#tab-view1').addClass("selected");
+                                $('#tab-view2').removeClass("selected").removeAttr('class');
+                                $('#tab-view3').removeClass("selected").removeAttr('class');
+                                $('#tab-view4').removeClass("selected").removeAttr('class');
+                                $('#tab-view5').removeClass("selected").removeAttr('class');
+                                $('#tab-view6').removeClass("selected").removeAttr('class');
+                                $('#tab-view7').removeClass("selected").removeAttr('class');
+                                $('#tab-validate').removeClass("selected").removeAttr('class');
+                            } 
+                            else if (tabContentGroup == "Body") {
+                                 $("#view1, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $('#tab-view1').removeClass("selected").removeAttr('class');
+                                $('#tab-view2').addClass("selected");
+                                $('#tab-view3').removeClass("selected").removeAttr('class');
+                                $('#tab-view4').removeClass("selected").removeAttr('class');
+                                $('#tab-view5').removeClass("selected").removeAttr('class');
+                                $('#tab-view6').removeClass("selected").removeAttr('class');
+                                $('#tab-view7').removeClass("selected").removeAttr('class');
+                                $('#tab-validate').removeClass("selected").removeAttr('class');
+                                $("#view2").css("display", "block");
+                                
+                            }
+                            
+                            input.focus();
+                        } else {
+                            console.log("nothing input element")
+                        }
+                    }
+                    });
+                });
+            },
+//            submitHandler: function(form) {
+//                // Eksekusi hanya jika validasi sukses
+//                form.submit();
+//            }
+            
+        });
+        
+        $("#btn-validate").click(function () {
+            let isValid = $("#form1").valid(); 
+            if (isValid) {
+                alert("Semua input valid!");
+            } 
+        });
+
+        $("#submit_mt").click(function (e) {
+            e.preventDefault();
+            let isValid = $("#form1").valid(); 
+            if (isValid) {  
+                $("#form1").submit(); 
+            } else {
+                alert("Masih ada error! Harap perbaiki sebelum menyimpan.");
             }
         });
+        
+        $.validator.addMethod("regex", function(value, element, param) {
+            //this.optional(element) lewati validasi jika kosong dan param.test(value) check regex
+            return this.optional(element) || param.test(value); 
+//            Jika tidak ada pesan khusus dalam messages tampilkan "Format tidak valid"
+        }, "Format tidak valid");
+        
     });
 </script>
 

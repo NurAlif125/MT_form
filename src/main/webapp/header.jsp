@@ -37,9 +37,7 @@
     <script type="text/javascript" src="js/jquery.validate.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <%@ include file="rule/validate_button.jsp" %>
-    <script src="js/tailwind_4.0.6-index.global.js"></script>
     <link rel="stylesheet" href="css/notification-styles.css" type="text/css"/>
-    <link href="css/toastify.min.css" rel="stylesheet" type="text/css">
     <%--    <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
         <script type="text/javascript">
             $(window).load(function () {
@@ -70,18 +68,10 @@
     <!-- Header -->
     <!--20210405 ditambah host dan appversion-->
     <h1 class="logoAtas"><img class="homePage" src="images/flickr.com/cm.png"/><span>${hostname} (${appVersion})</span></h1>
-    <font class="main-site" style="margin-top: -29px;">
-        <div class="contents">
-            <u><%= tglsekarang%></u> 
-            <a style="padding:10px 0 0 5px !important;" href="changePassword.jsp" class="adm inline-flex"><% out.print((String) session.getAttribute("user_id"));%>
-                <img src="images/user.png" />
-            </a>
-        </div>
-        <a style="padding:10px 0 0 5px !important;" href="ServletControllerLogout" class="log inline-flex">Logout <img src="images/logout.png" style="margin-bottom:-2px;" /></a> 
-        <br>
-        <span class="last mt-[-12px]">Last Success Login: <% out.print((String) session.getAttribute("berhasillogin"));%><br>
+    <font class="main-site"><u><%= tglsekarang%></u> <a href="changePassword.jsp" class="adm"><% out.print((String) session.getAttribute("user_id"));%><img src="images/user.png" style="margin-bottom:-2px;" /></a> <a href="ServletControllerLogout" class="log">Logout <img src="images/logout.png" style="margin-bottom:-2px;" /></a> <br>
+        <p class="last">Last Success Login: <% out.print((String) session.getAttribute("berhasillogin"));%><br>
             Last Failed Login: <% out.print((String) session.getAttribute("gagallogin"));%><br/>
-            Transaction to VER: <a style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a>&nbsp; | &nbsp; Transaction to AUTH: <a style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a></span>
+            Transaction to VER: <a style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a>&nbsp; | &nbsp; Transaction to AUTH: <a style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a></p>
     </font>
     <ul id="nav" class="dropdown dropdown-horizontal">
         <c:forEach var="item" items="${role}">
@@ -197,6 +187,16 @@
                                 <li><a href="SCDataUserList">User</a></li>
                                 </c:if>
                             </c:forEach>
+                            <c:forEach var="item" items="${role}">
+                                <c:if test="${item == 'MT_QUEUE:LIST'}">
+                                <li><a href="SCDataMTList">Message Queue</a></li>
+                                </c:if>
+                            </c:forEach>
+                            <c:forEach var="item" items="${role}">
+                                <c:if test="${item == 'STP_LIMIT:LIST'}">
+                                <li><a href="SCSTPLimitList">STP Limit</a></li>
+                                </c:if>
+                            </c:forEach>
                             <%--<c:forEach var="item" items="${role}">
                                 <c:if test="${item == 'UPLOAD_GO:LIST'}">
                                 <li><a href="SCUploadSwiftGoList">Upload Member Swift Go</a></li>
@@ -229,12 +229,15 @@
                                     <c:if test="${item == 'MT:103'}">
                                         <li><a href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
                                         </c:if>
-                                        <c:if test="${item == 'MT:199'}">
+                                       <%-- <c:if test="${item == 'MT:191'}">
+                                        <li><a href="mt191.jsp?create=true">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
+                                        </c:if> --%>
+                                       <%-- <c:if test="${item == 'MT:199'}">
                                         <li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>
-                                        </c:if>
-                                        <c:if test="${item == 'MT:199'}">
+                                        </c:if>--%>
+                                        <%--<c:if test="${item == 'MT:199'}">
                                         <li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>
-                                        </c:if>
+                                        </c:if> --%>
                                     </c:forEach>
                             </ul>
                         </li>
@@ -247,12 +250,12 @@
                                         <c:if test="${item == 'MT:202'}">
                                         <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
                                         </c:if>
-                                        <c:if test="${item == 'MT:202'}">
+                                        <%--<c:if test="${item == 'MT:202'}">
                                         <li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>
-                                        </c:if>
-                                        <%-- <c:if test="${item == 'MT:202COV'}">
+                                        </c:if> --%>
+                                        <c:if test="${item == 'MT:202COV'}">
                                          <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
-                                         </c:if> --%>
+                                         </c:if>
                                     </c:forEach>
                             </ul>
                         </li>
@@ -277,7 +280,7 @@
                         </c:forEach>
                     </ul>
                 </li> -->
-                        <li><span class="dir">Message Category 9</span>
+                        <!-- <li><span class="dir">Message Category 9</span>
                             <ul>
                                 <c:forEach var="item" items="${role}">
                                     <%-- <c:if test="${item == 'MT:910'}">
@@ -297,7 +300,7 @@
                                          </c:if>--%>
                                     </c:forEach>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
             </c:if>
@@ -408,11 +411,9 @@
                 </c:if>
             </c:forEach>
                 
-                <div onclick="openModal()" class="notif-container" style="float: right;">
-                    <a class="link-notif" href="#">Notif</a>
-                    <span hidden id="notifCount" class="notif-badge">
-                        
-                    </span>
+                <div hidden onclick="openModal()" class="notif-container" style="float: right;">
+                    <span class="link-notif">Notif</span>
+                    <span id="notifCount" class="notif-badge"></span>
                 </div>
     </ul>
     <body style="clear: both;">
@@ -442,9 +443,9 @@
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h3>Notifikasi</h3>
 
-            <div id="notifLists">
+            <div id="notifLists" style="overflow: scroll; height: 450px; max-height: 450px;">
                 <table id="tableList" class="tbl-notif">
-                    <thead>
+                    <thead class="tbl-head-notif">
                         <tr class="bg-gray-200">
                             <th class="tbl-th-notif"><input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes()"></th>
                             <th class="tbl-th-notif">title</th>
@@ -454,21 +455,24 @@
                     <tbody id="notifList" class="tbl-body-notif">
                     </tbody>
                 </table>
+                
+                <!-- Detail Pesan -->
+                <div id="notifDetail" style="display: none;">
+                    <h3>Detail Pesan</h3>
+                    <div id="detailContent" style="overflow: scroll; height: 365px; max-height: 365px; padding:2px;"></div>
+                    <button class="back-btn-detail" onclick="backToList()">Kembali</button>
+                </div>
             </div>
 
-            <!-- Detail Pesan -->
-            <div id="notifDetail" style="display: none;">
-                <h3>Detail Pesan</h3>
-                <p id="detailContent"></p>
-                <button class="back-btn-detail" onclick="backToList()">Kembali</button>
-            </div>
             
-            <div class="p-4 text-center border-t">
-            <button onclick="markAsRead()" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Tandai Sudah Dibaca</button>
+            <div class="p-4 text-center border-t" style="padding: 7px 4px 4px 4px;">
+             <input type="button" onclick="markAsRead()" name="submit_mt" id="btn-read" value="Read" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600" />
+            <!--<button onclick="markAsRead()" id="btn-read" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Tandai Sudah Dibaca</button>-->
         </div>
         </div>
     </div>
-
-    <script src="js/notif-control.js"></script>
+    
+    
+    <%@ include file="NotificationControl.jsp" %>
  
     </body>

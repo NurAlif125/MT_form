@@ -6,7 +6,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#form1").validate({
+        let validator = $("#form1").validate({
+            ignore: [],  
+            onkeyup: false,          // Nonaktifkan validasi saat mengetik
+            onfocusout: false,       // Nonaktifkan validasi saat pindah input
+//            onclick: false,          // Nonaktifkan validasi saat klik
             rules: {
                 //header
                 //unit: "required",
@@ -15,14 +19,20 @@
                 //sender_type_institution: "required",
 
                 //receiver_type: "required",
+//                receiver_institution: {required: true, input_type: "Receiver Institution", location: "Header"},
                 receiver_institution: "required",
 
                 priority: "required",
                 //monitoring: "required",
 
                 //body
+//                _010_mf20_sender_reference: {required: true, input_type: "MF20", location: "Body"},
                 _010_mf20_sender_reference: "required",
                 _030_mf23b_bank_code: "required",
+                
+//                 sender_logical_terminal: {
+//                    regex: /^.{3,}$/ // Minimal 3 karakter jika diisi
+//                },
 
                 //mf32a
                 _060_mf32a_date: "required",
@@ -72,6 +82,9 @@
                 _210_of71a_details_charges: "required"
             },
             messages: {
+//                sender_logical_terminal: {
+//                     regex: "Minimal 3 karakter"
+//                },
                 sender_logical_terminal: {required: "sender_logical_terminal harus diisi..!!"},
                 receiver_institution: {required: "receiver_institution harus diisi..!!"},
                 priority: {required: "priority harus diisi..!!"},
@@ -114,49 +127,128 @@
             },
             showErrors: function (errorMap, errorList) {
                 this.defaultShowErrors();
-
-                console.log(errorList);
                 
-                  $("#tab-validate").removeAttr("hidden");
+                $("#tab-validate").removeAttr("hidden");
                  
-                 $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
-                 $("#view8").css("display", "block");
-                 $('#tab-view1').removeClass("selected").removeAttr('class');
-                 $('#tab-view2').removeClass("selected").removeAttr('class');
-                 $('#tab-view3').removeClass("selected").removeAttr('class');
-                 $('#tab-view4').removeClass("selected").removeAttr('class');
-                 $('#tab-view5').removeClass("selected").removeAttr('class');
-                 $('#tab-view6').removeClass("selected").removeAttr('class');
-                 $('#tab-view7').removeClass("selected").removeAttr('class');
-                 $('#tab-validate').addClass("selected");
+                $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
+                $("#view8").css("display", "block");
+                $('#tab-view1').removeClass("selected").removeAttr('class');
+                $('#tab-view2').removeClass("selected").removeAttr('class');
+                $('#tab-view3').removeClass("selected").removeAttr('class');
+                $('#tab-view4').removeClass("selected").removeAttr('class');
+                $('#tab-view5').removeClass("selected").removeAttr('class');
+                $('#tab-view6').removeClass("selected").removeAttr('class');
+                $('#tab-view7').removeClass("selected").removeAttr('class');
+                $('#tab-validate').addClass("selected");
 
                 let errorContainer = document.getElementById("error-container");
                 
                 if (errorList.length === 0) {
                     errorContainer.innerHTML = ""; 
-                    return;
-                }
-
+//                    return;
+                } 
+                
                 let tableHTML = `<table border="1" style="width:100% !important; font-size:8pt !important;">
                                     <tr style="background:#d6d6d6;">
                                     <th>Type</th>
                                     <th>Location</th>
                                     <th>Node</th>
                                     <th>Message</th></tr>`;
+
+                    
                 errorList.forEach(errors => {
-                    tableHTML += `<tr onmouseover="this.style.background='#f6f6f6'" onmouseout="this.style.backgroundColor='transparent'">
-                                    <td style="padding: 5px;">Error</td>
-                                   <td style="padding: 5px;"></td>
-                                   <td style="padding: 5px;"></td>`;
+                    let inputID = errors.element.id || "";
+                    let locationTab = errors.element.getAttribute("location") || "";
+                    let inputType = errors.element.getAttribute("input_type") || "";
+
+                    tableHTML += '<tr class="error__row" data-input-id="'+inputID+'" content-body="'+locationTab+'" onmouseover="this.style.background=\'#f6f6f6\'" onmouseout="this.style.backgroundColor=\'transparent\'" style="cursor:pointer;">';
+                    tableHTML += '<td style="padding: 5px;">Error</td>';
+                    tableHTML += '<td style="padding: 5px;">'+locationTab+'</td>';
+                    tableHTML += '<td style="padding: 5px;">'+inputType+'</td>';
                     tableHTML += '<td style="padding: 5px;">'+errors.message+'</td></tr>';
                 });
 
                 tableHTML += `</table>`;
-
                 errorContainer.innerHTML = tableHTML; 
+                
+                document.querySelectorAll(".error__row").forEach(row => {
+                    row.addEventListener("click", function () {
+                        let targetRow = event.target.closest(".error__row"); 
+                        let inputId = this.getAttribute("data-input-id");
+                        let tabContentGroup = this.getAttribute("content-body");
+                        
+                    if (targetRow) {
+                        let input = document.getElementById(inputId);
+                        if (input) {
+                            if(tabContentGroup == "Header") {
+                                $("#view2, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $("#view1").css("display", "block");
+                                $('#tab-view1').addClass("selected");
+                                $('#tab-view2').removeClass("selected").removeAttr('class');
+                                $('#tab-view3').removeClass("selected").removeAttr('class');
+                                $('#tab-view4').removeClass("selected").removeAttr('class');
+                                $('#tab-view5').removeClass("selected").removeAttr('class');
+                                $('#tab-view6').removeClass("selected").removeAttr('class');
+                                $('#tab-view7').removeClass("selected").removeAttr('class');
+                                $('#tab-validate').removeClass("selected").removeAttr('class');
+                            } 
+                            else if (tabContentGroup == "Body") {
+                                 $("#view1, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $('#tab-view1').removeClass("selected").removeAttr('class');
+                                $('#tab-view2').addClass("selected");
+                                $('#tab-view3').removeClass("selected").removeAttr('class');
+                                $('#tab-view4').removeClass("selected").removeAttr('class');
+                                $('#tab-view5').removeClass("selected").removeAttr('class');
+                                $('#tab-view6').removeClass("selected").removeAttr('class');
+                                $('#tab-view7').removeClass("selected").removeAttr('class');
+                                $('#tab-validate').removeClass("selected").removeAttr('class');
+                                $("#view2").css("display", "block");
+                                
+                            }
+                            
+                            input.focus();
+                        } else {
+                            console.log("nothing input element")
+                        }
+                    }
+                    });
+                });
+                
+                
+            },
+//            submitHandler: function(form) {
+//                // Eksekusi hanya jika validasi sukses
+//                form.submit();
+//            }
+        });
+        
+        $("#btn-validate").click(function () {
+            let isValid = $("#form1").valid(); 
+            if (isValid) {
+                alert("Semua input valid!");
+            } 
+        });
+
+        $("#submit_mt").click(function (e) {
+            e.preventDefault();
+            let isValid = $("#form1").valid(); 
+            if (isValid) {  
+                $("#form1").submit(); 
+            } else {
+                alert("Masih ada error! Harap perbaiki sebelum menyimpan.");
             }
         });
+        
+        $.validator.addMethod("regex", function(value, element, param) {
+            //this.optional(element) lewati validasi jika kosong dan param.test(value) check regex
+            return this.optional(element) || param.test(value); 
+//            Jika tidak ada pesan khusus dalam messages tampilkan "Format tidak valid"
+        }, "Format tidak valid");
+   
+    
     });
+    
+    
 </script>
 
 <link rel="stylesheet" type="text/css" href="css/validate.css" />

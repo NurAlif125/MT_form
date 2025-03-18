@@ -4,17 +4,25 @@
     /*padding: 10px;*/
 }
 
+.notif-container:hover {
+    background: #20696d;
+}
+
 .notif-container .link-notif {
     text-decoration: none;
-    color: #333;
+    color: #fff;
     padding-right: 40px;
+    cursor: pointer;
 }
+
+
+
 
 .notif-badge {
     position: absolute;
     top: -10px;
     right: 17px;
-    background: red;
+    background: transparent;
     color: white;
     padding: 5px 8px;
     border-radius: 50%;
@@ -35,7 +43,7 @@
 
 .modal-notif-content {
     background-color: white;
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 20px;
     width: 50%;
     border-radius: 8px;
@@ -44,7 +52,7 @@
 
 .close-modal {
     float: right;
-    font-size: 20px;
+    font-size: 26px;
     font-weight: bold;
     cursor: pointer;
 }
@@ -88,4 +96,10 @@
 
 .back-btn-detail:hover {
     background: #0056b3;
+}
+
+#detailContent a {
+    color: #20696d !important;
+    text-decoration: underline !important;
+    font-weight: bold !important;
 }

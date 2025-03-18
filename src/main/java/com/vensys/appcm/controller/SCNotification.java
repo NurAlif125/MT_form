@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -39,7 +40,7 @@ public class SCNotification extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, Exception {
         String strErrMsg = null;
         
          response.setContentType("application/json");
@@ -71,7 +72,7 @@ public class SCNotification extends HttpServlet {
     }
     
     protected void getNotificationList(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+        throws ServletException, IOException, Exception {
     response.setContentType("application/json");
     PrintWriter out = response.getWriter();
     HttpSession session = request.getSession();
@@ -117,9 +118,17 @@ public class SCNotification extends HttpServlet {
          String path = request.getServletPath();
 
         if (path.equals("/SCNotificationList")) {
-            getNotificationList(request, response);
+             try {
+                 getNotificationList(request, response);
+             } catch (Exception ex) {
+                 java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
+             }
         } else {
-            processRequest(request, response);
+             try {
+                 processRequest(request, response);
+             } catch (Exception ex) {
+                 java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
+             }
         }
     }
 
@@ -134,7 +143,11 @@ public class SCNotification extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

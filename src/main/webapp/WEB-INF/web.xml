@@ -825,6 +825,11 @@
         <servlet-class>com.vensys.appcm.controller.SCNotification</servlet-class>
     </servlet>
     
+    <servlet>
+        <servlet-name>SCUploadBIC</servlet-name>
+        <servlet-class>controller.SCUploadBIC</servlet-class>
+    </servlet>
+    
     
     <session-config>
         <session-timeout>

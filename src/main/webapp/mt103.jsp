@@ -25,7 +25,6 @@
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
-<script src="js/tailwind_4.0.6-index.global.js"></script>
 
 <div id="isi">
     <c:forEach var="item" items="${role}">
@@ -60,14 +59,14 @@
 
                             <!-- MF20 -->
                             <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sender's Reference</span>
-                                <input type="text" onkeypress="avoidSplChars(event)" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" class="mandatory" maxlength="16" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="avoidSplChars(event)" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" class="mandatory" maxlength="16" input_type="MF20" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <hr/>
 
                                     <!-- MF23B -->
                                     <div class="form-row"><span class="label_body">MF23B</span><span class="label"><a style="color:red;text-decoration:none">*</a>Bank Operation Code</span>
                                 <%--<input type="text" name="_030_mf23b_bank_code" id="_030_mf23b_bank_code" maxlength="4" class="mandatory" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_030_mf23b_bank_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />--%>
-                                <select id="_030_mf23b_bank_code" name="_030_mf23b_bank_code" class="mandatory">
+                                <select id="_030_mf23b_bank_code" name="_030_mf23b_bank_code" class="mandatory" input_type="MF23B Bank Code" location="Body" >
                                     <option value="">choose a code</option>
                                     <option value="CRED" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_030_mf23b_bank_code'}"><c:if test="${item.detail=='CRED'}"> selected="true" </c:if></c:if></c:forEach>>CRED - Normal Credit Transfer</option> <!-- - Ordering Customer-->
                                     <option value="CRTS" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_030_mf23b_bank_code'}"><c:if test="${item.detail=='CRTS'}"> selected="true" </c:if></c:if></c:forEach>>CRTS - Test Message</option>
@@ -129,10 +128,10 @@
                             </div>
 
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency Code</span>
-                                <input type="text" name="_061_mf32a_currency" id="_061_mf32a_currency" class="mandatory" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" name="_061_mf32a_currency" id="_061_mf32a_currency" class="mandatory" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Amount</span>                             
-                                        <input type="text" name="_062_mf32a_amount" id="_062_mf32a_amount" class="mandatory" onpaste="return false" ondrop="return false" maxlength="15" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)" />
+                                        <input type="text" name="_062_mf32a_amount" id="_062_mf32a_amount" class="mandatory" onpaste="return false" ondrop="return false" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)" />
                                         <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
@@ -183,7 +182,7 @@
 
                                     <!-- MF50 -->
                                     <div class="form-row"><span class="label_body">MF50</span><span class="label">Ordering Customer</span>
-                                        <select id="type_mf50_ordering_customer" name="type_mf50_ordering_customer" class="mandatory">
+                                        <select id="type_mf50_ordering_customer" name="type_mf50_ordering_customer" class="mandatory" input_type="MF50 Ordering Customer" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="a">A - BIC</option>
                                             <option value="f">F - Number/Name and Address Details</option>
@@ -541,7 +540,7 @@
 
                                     <!-- M59/59A -->
                                     <div class="form-row"><span class="label_body">MF59</span><span class="label">Beneficiary Customer</span>
-                                        <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory">
+                                        <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="Of59A" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="59">59 - Name and Address</option>
                                             <option value="59a">59A - BIC</option>
@@ -694,7 +693,7 @@
 
                                     <!-- OF71A -->
                                     <div class="form-row"><span class="label_body">OF71A</span><span class="label">Details of Charges</span>
-                                        <select id="_210_of71a_details_charges" name="_210_of71a_details_charges" class="mandatory">
+                                        <select id="_210_of71a_details_charges" name="_210_of71a_details_charges" class="mandatory" input_type="Of71A Detail Charges" location="Body">
                                             <option value="">choose a code</option>
                                             <option value="OUR" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='OUR'}"> selected="true" </c:if></c:if></c:forEach>>OUR</option> <!-- - Ordering Customer-->
                                     <option value="BEN" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='BEN'}"> selected="true" </c:if></c:if></c:forEach>>BEN</option>

@@ -12,10 +12,10 @@
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MT_QUEUE:LIST'}">
-            <div id="judul">List of Message Type
+            <div id="judul">List of Message Queue
                 <c:forEach var="item" items="${role}">
                     <c:if test="${item == 'MT_QUEUE:ADD'}">
-                        <a href="addMT.jsp" class="srb2">Add Message Type</a>
+                        <a href="addMT.jsp" class="srb2">Add Message Queue</a>
                     </c:if>
                 </c:forEach>
             </div>
@@ -25,7 +25,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>MT</th>
+                            <th>MT/MX</th>
                             <th>Detail</th>
                             <th>Queue</th>
                             <th>Last Update</th>

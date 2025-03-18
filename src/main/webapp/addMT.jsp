@@ -8,10 +8,10 @@
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MT_QUEUE:ADD'}">
-            <div id="judul">Add Message Type
+            <div id="judul">Add Message Queue
                 <c:forEach var="item" items="${role}">
                     <c:if test="${item == 'MT_QUEUE:LIST'}">
-                        <a href="SCDataMTList" class="srb3">Message Type List</a>
+                        <a href="SCDataMTList" class="srb3">Message Queue List</a>
                     </c:if>
                 </c:forEach>
             </div>
@@ -19,7 +19,7 @@
             <form id="form1" name="form1" method="post" action="SCDataMT">
                 <input type="hidden" name="id" id="id" value="${dataMTById.id}" />
                 <div id="tabs-1" class="formBody">
-                    <div class="form-row"><span class="labelL">MT</span>
+                    <div class="form-row"><span class="labelL">MT/MX</span>
                         <input type="text" name="mt" id="mt" maxlength="10" size="10" required="required" value="<c:out value="${dataMTById.mt}" />" />
                     </div>
                     <div class="form-row"><span class="labelL">Detail</span>
