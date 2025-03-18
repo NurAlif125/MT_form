@@ -18,13 +18,13 @@
                 <c:forEach var="item" items="${role}">
                     <c:if test="${item == 'MEMBER_CODE:ADD'}">
                         <a href="mbic.jsp" class="srb2">Add BIC</a>
-                        <!--<a href="uploadbic.jsp" class="srb4">Upload BIC</a>-->   
+                        <a href="uploadbic.jsp" class="srb4">Upload BIC</a>   
                     </c:if>
                 </c:forEach>
             </div>
             <div id="content">
                 <!--For showing total pages-->
-                <select id="select-page">
+                <select hidden id="select-page">
                     <%
                         // total data devide by 25k to decide how much total page that we 
                         // have to provide
@@ -65,7 +65,7 @@
 
     $(document).ready(function () {       
         var dt = $('#example').DataTable({
-            "paging": false,
+            "paging": true,
             "scrollX": true,
             "responsive": true,
             "scrollY": '50vh',
@@ -78,6 +78,12 @@
                 }
             },
             "columnDefs": [
+                {
+                    "targets": 1,  // Kolom kedua (BIC)
+                    "render": function(data, type, row) {
+                        return '<span style="color: #28787C; font-weight: bold;">'+data+'</span>';
+                    }
+                },
                 {
                     "className": "dt-head-left",
                     "targets": "_all",

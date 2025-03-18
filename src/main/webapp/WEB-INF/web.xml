@@ -827,6 +827,20 @@
         <servlet-name>SCInvesitvationOutgoing103</servlet-name>
         <url-pattern>/SCInvesitvationOutgoing103</url-pattern>
     </servlet-mapping>
+
+    
+    <servlet>
+        <servlet-name>SCNotification</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCNotification</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>SCUploadBIC</servlet-name>
+        <servlet-class>controller.SCUploadBIC</servlet-class>
+    </servlet>
+    
+    
+
     <servlet-mapping>
         <servlet-name>SCHeaderTemplate</servlet-name>
         <url-pattern>/ControllerHeaderTemplate</url-pattern>
@@ -835,6 +849,7 @@
         <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
         <url-pattern>/SCDataTransaksiOutgoingMX</url-pattern>
     </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30
