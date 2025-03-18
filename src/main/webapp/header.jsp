@@ -411,7 +411,7 @@
                 </c:if>
             </c:forEach>
                 
-                <div hidden onclick="openModal()" class="notif-container" style="float: right;">
+                <div onclick="openModal()" class="notif-container" style="float: right;">
                     <span class="link-notif">Notif</span>
                     <span id="notifCount" class="notif-badge"></span>
                 </div>
