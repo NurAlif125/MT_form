@@ -794,6 +794,7 @@ public class DBDataTransaksiOutgoing {
     }
     
     public int updateMXText(String xml, int id_headers) throws SQLException, Exception {
+        log.info("masuk updateMXText();");
         int update = 0;
         try {
             String sql = "UPDATE mx_text set modify_mx=? where id_headers=?";
@@ -801,6 +802,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(1, xml);
             st.setInt(2, id_headers);
             update = st.executeUpdate();
+            log.info("update MX berhasil!");
         } catch (SQLException e) {
             e.printStackTrace();
         }

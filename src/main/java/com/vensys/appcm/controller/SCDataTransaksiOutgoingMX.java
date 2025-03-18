@@ -205,10 +205,11 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 dataMXpacs008.setAppHdr(appHeader);
                 String newXML = dataMXpacs008.message(mxConfiguration);
-                dBTrx.updateMXText(newXML, headers.getId_headers());
+                System.out.println("newXML: " + newXML);
+                dBTrx.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
                 String newJson = dataMXpacs008.toJson();
-                dBTrx.updateTagsMXText(newJson, headers.getId_headers());
+                dBTrx.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
                 
                 int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
