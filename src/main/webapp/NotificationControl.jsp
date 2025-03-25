@@ -14,9 +14,11 @@ function fetchNotifications() {
             let notifCountElement = $("#notifCount");
 
             if (currentNotifCount === 0) {
+                $("#checkAll").css({ display: "none" });
                 notifCountElement.attr("hidden", true);
                 notifCountElement.css({ display: "none", background: "transparent"});
             } else {
+                $("#checkAll").css({ display: "" });
                 notifCountElement.attr("hidden", false);
                 notifCountElement.css({ display: "block", background: "red"});
                 notifCountElement.text(currentNotifCount > 99 ? "99+" : currentNotifCount);
@@ -55,14 +57,12 @@ function fetchNotificationList() {
         notifList.empty(); // Bersihkan list sebelum diisi ulang
 
         if (data.length === 0) {
-            notifList.append('<tr><td colspan="3" style="padding:2px;">No Notifications</td></tr>');
+            notifList.append('<tr><td colspan="3" style="padding:2px; text-align:center;">No Notifications</td></tr>');
         } else {
             data.forEach((notif) => {
                  let title = notif.title ? notif.title.trim() : "";
                 let message = notif.message ? notif.message.trim() : "";
-//                console.log(title)
 
-//                console.log("Menambahkan notifikasi:", title, message);
 
                let row = $("<tr>").addClass("tbl-tr-notif").attr("onclick", "showDetail('"+message+"')");;
                 let checkboxCell = $("<td>").addClass("tbl-td-notif").append(
@@ -70,7 +70,7 @@ function fetchNotificationList() {
                         type: "checkbox",
                         class: "notifCheckbox",
                         value: notif.id
-                    }).attr("onclick","event.stopPropagation()")
+                    }).css("cursor", "pointer").attr("onclick","event.stopPropagation()")
                 );
                 let titleCell = $("<td>").addClass("tbl-td-notif").text(title);
                 let messageCell = $("<td>").addClass("tbl-td-notif").html(message);
@@ -107,8 +107,8 @@ function markAsRead() {
 //    });
     
     
-    $(document).ready(function () {
-    $("#btn-read").on("click", function () {
+//    $(document).ready(function () {
+//    $("#btn-read").on("click", function () {
         let checkedNotifs = [];
         $(".notifCheckbox:checked").each(function () {
             checkedNotifs.push($(this).val());
@@ -120,37 +120,47 @@ function markAsRead() {
         }
         
         console.log("msg is read: "+checkedNotifs);
-
-        $.ajax({
-            type: "POST",
-            url: "markAsReadNotif",
-            data: { notifIds: checkedNotifs.join(",") },
-            dataType: "json",
-            success: function (data) {
-                if (data.status === "success") {
-                    checkedNotifs.forEach(id => {
-                        let messageCell = $(`#message-${id}`);
-                        if (!messageCell.text().includes("(Sudah Dibaca)")) {
-                            messageCell.append(" (Sudah Dibaca)");
-                        }
-                        // Disable checkbox setelah berhasil update
-                        $(`.notif-checkbox[data-id='${id}']`).prop("disabled", true);
-                    });
-                    console.log(`Updated ${data.updated} notifications.`);
-                } else if (data.status === "already_read") {
-                    console.log("Semua notifikasi sudah dibaca.");
-                } else {
-                    alert("Gagal memperbarui notifikasi.");
+        
+         $.ajax({
+                type: "POST",
+                url: "markAsReadNotif",
+                data: {
+                    readNotif: checkedNotifs.join(',')
+                },
+                success: function (response) {
+                    console.log(response)
+                    console.log(response.status)
+                    if (response.status == "success") {
+                        fetchNotificationList()
+                        fetchNotifications()
+                        console.log("berhasil read notification")
+                    } else {
+                        console.log("gagal read notification")
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching notifications:", error);
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error:", status, error);
-            }
-        });
-    });
-});
+        }); 
 
-    
+//        fetch("markAsReadNotif", {
+//            method: "POST",
+//            headers: {
+//                "Content-Type": "application/x-www-form-urlencoded"
+//            },
+//            body: JSON.stringify({ readNotif: checkedNotifs })
+//        })
+//        .then(response => response.text())
+//        .then(data => {
+//            console.log("data:" + data)
+//            fetchNotificationList()
+//            fetchNotifications()
+//        })
+//        .catch(error => console.error("Error:", error));
+
+//    });
+//});
+
 }
 
 function openModal() {
@@ -162,8 +172,11 @@ function openModal() {
 function closeModal() {
     $("#notifModal").css({ display: "none" });
     resetModal();
-    $("#tableList").css({ display: "block" });
+//    $("#tableList").css({ display: "block" });
 //    $('#checkAll').attr('checked', false); 
+    $("#notifList").css({ display: "" });
+    $("#notifDetail").css({ display: "none" });
+    $("#tableList").css({ display: "" });
     $('#checkAll').prop('checked', false);
     $("#btn-read").prop('hidden', false);
 }

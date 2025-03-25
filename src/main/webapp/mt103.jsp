@@ -136,6 +136,9 @@
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
                                             function formatUang(n, currency) {
+                                                if (isNaN(n)) {
+                                                    return "";
+                                                }
                                                 return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                             }
                                             var number2 = document.getElementById('_062_mf32a_amount').value;
@@ -145,7 +148,9 @@
                                             var nominalStyle = nominal.fontsize(2);
                                             var nominalStylec = nominalStyle.fontcolor("red");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
-                                            document.write(nominalStylec);
+                                            if (nominal !== "") {
+                                                document.write(nominalStylec);
+                                            }
                                         </script>
                                     </div>
                                     <hr/>
@@ -160,6 +165,9 @@
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
                                             function formatUang(n, currency) {
+                                                if (isNaN(n)) {
+                                                    return "";
+                                                }
                                                 return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                             }
                                             var number2 = document.getElementById('_072_of33b_amount').value;
@@ -169,7 +177,9 @@
                                             var nominalStyle = nominal.fontsize(2);
                                             var nominalStylec = nominalStyle.fontcolor("red");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
-                                            document.write(nominalStylec);
+                                            if (nominal !== "") {
+                                                document.write(nominalStylec);
+                                            }
                                         </script>
                                     </div>
                                     <hr/>
@@ -568,7 +578,7 @@
                                     </div>
                                     <% }%>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Name and Address</span>
-                                        <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" class="mandatory" style="resize:none;" name="_181_mf59_name_address" id="_181_mf59_name_address" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_181_mf59_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>         
+                                        <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" class="mandatory" style="resize:none;" input_type="_181_mf59_name_address" location="Body" name="_181_mf59_name_address" id="_181_mf59_name_address" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_181_mf59_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>         
                                             </div>
                                     <% if (session.getAttribute("flagStatus").equals("INC-WAIT") || session.getAttribute("flagStatus").equals("INC-ADJ")) {%>
                                     <c:if test="${headerById.komentar=='Not Found'}">
@@ -717,6 +727,9 @@
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
                                                         function formatUang(n, currency) {
+                                                            if (isNaN(n)) {
+                                                                return "";
+                                                            }
                                                             return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                                         }
                                                         var number2 = document.getElementById('_221_of71f_amount').value;
@@ -726,7 +739,9 @@
                                                         var nominalStyle = nominal.fontsize(2);
                                                         var nominalStylec = nominalStyle.fontcolor("red");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        document.write(nominalStylec);
+                                                        if (nominal !== "") {
+                                                            document.write(nominalStylec);
+                                                        }
                                                     </script>
                                                 </div>
                                             </div>
@@ -744,6 +759,9 @@
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
                                                         function formatUang(n, currency) {
+                                                            if (isNaN(n)) {
+                                                                return "";
+                                                            }
                                                             return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                                         }
                                                         var number2 = document.getElementById('_223_of71f_amount').value;
@@ -753,7 +771,9 @@
                                                         var nominalStyle = nominal.fontsize(2);
                                                         var nominalStylec = nominalStyle.fontcolor("red");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        document.write(nominalStylec);
+                                                        if (nominal !== "") {
+                                                            document.write(nominalStylec);
+                                                        }
                                                     </script>
                                                 </div>
                                             </div>
@@ -771,6 +791,9 @@
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
                                                         function formatUang(n, currency) {
+                                                            if (isNaN(n)) {
+                                                                return "";
+                                                            }
                                                             return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                                         }
                                                         var number2 = document.getElementById('_225_of71f_amount').value;
@@ -780,7 +803,9 @@
                                                         var nominalStyle = nominal.fontsize(2);
                                                         var nominalStylec = nominalStyle.fontcolor("red");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        document.write(nominalStylec);
+                                                        if (nominal !== "") {
+                                                            document.write(nominalStylec);
+                                                        }
                                                     </script>
                                                 </div>
                                             </div>
@@ -798,6 +823,9 @@
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
                                                         function formatUang(n, currency) {
+                                                            if (isNaN(n)) {
+                                                                return "";
+                                                            }
                                                             return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                                         }
                                                         var number2 = document.getElementById('_227_of71f_amount').value;
@@ -807,7 +835,9 @@
                                                         var nominalStyle = nominal.fontsize(2);
                                                         var nominalStylec = nominalStyle.fontcolor("red");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        document.write(nominalStylec);
+                                                        if (nominal !== "") {
+                                                            document.write(nominalStylec);
+                                                        }
                                                     </script>
                                                 </div>
                                             </div>
@@ -825,6 +855,9 @@
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
                                                         function formatUang(n, currency) {
+                                                            if (isNaN(n)) {
+                                                                return "";
+                                                            }
                                                             return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                                         }
                                                         var number2 = document.getElementById('_229_of71f_amount').value;
@@ -834,7 +867,9 @@
                                                         var nominalStyle = nominal.fontsize(2);
                                                         var nominalStylec = nominalStyle.fontcolor("red");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        document.write(nominalStylec);
+                                                        if (nominal !== "") {
+                                                            document.write(nominalStylec);
+                                                        }
                                                     </script>
                                                 </div>
                                             </div>
@@ -852,6 +887,9 @@
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
                                             function formatUang(n, currency) {
+                                                if (isNaN(n)) {
+                                                    return "";
+                                                }
                                                 return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                             }
                                             var number2 = document.getElementById('_231_of71g_amount').value;
@@ -861,7 +899,9 @@
                                             var nominalStyle = nominal.fontsize(2);
                                             var nominalStylec = nominalStyle.fontcolor("red");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
-                                            document.write(nominalStylec);
+                                            if (nominal !== "") {
+                                                document.write(nominalStylec);
+                                            }
                                         </script>
                                     </div>
                                     <hr/>

@@ -86,6 +86,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             System.out.println("sender1: " + request.getParameter("sender_logical_terminal"));
             data.setSender_logical_terminal(request.getParameter("sender_logical_terminal"));
             data.setMessageType(messageType);
+            data.setFlag(dBDataTransaksiOutgoing.getFlagFromQueue(messageType));
             data.setReceiver_institution(request.getParameter("receiver_institution"));
             data.setPriority(request.getParameter("priority"));
             data.setMonitoring(request.getParameter("monitoring"));
