@@ -1077,8 +1077,7 @@ System.out.println("Session ID: " + httpSession.getId());
         String sql = """
                      SELECT id_headers,messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,
                      receiverAddress,tanggal, id_headers,flag,isDuplicate,
-                     trans_refference,trans_related_refference,trans_amount,
-                     trans_date_value,trans_ccy, block3,source
+                     block3,source
                      FROM headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
                 + "ORDER BY tanggal DESC";
         System.out.println("sql header....= " + sql);
@@ -1102,17 +1101,8 @@ System.out.println("Session ID: " + httpSession.getId());
 //                flag = "ERR";
 //            }
             header.setFlag(rs.getString(10));
-            header.setTrans_refference(rs.getString(12));
-            header.setTrans_related_refference(rs.getString(13));
-            header.setTrans_amount(rs.getString(14));
-            header.setTrans_date_value(rs.getString(15));
-            if (rs.getString(16) == null) {
-                header.setTrans_ccy("0");
-            } else {
-                header.setTrans_ccy(rs.getString(16).replace(",", "."));
-            }
-            header.setBlock3(rs.getString(16));
-            header.setSource(rs.getString(18));
+            header.setBlock3(rs.getString(12));
+            header.setSource(rs.getString(13));
 
 //            header.setTrans_ccy(rs.getString(15));
 //            header.setTag20(rs.getString(12));
