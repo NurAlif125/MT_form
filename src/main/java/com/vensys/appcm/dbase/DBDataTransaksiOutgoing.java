@@ -506,7 +506,7 @@ public class DBDataTransaksiOutgoing {
         Header header = new Header();
         String sql = "SELECT logicalTerminal, messageType, receiverAddress, messagePriority, "
                 + "deliveryMonitoring, bankingPriority, mur, komentar, block3, flag, io_type, sessionNumber, "
-                + "sequenceNumber, COALESCE(networkType, 'MT') AS networkType, isnostro, komentar, tanggal, "
+                + "sequenceNumber, COALESCE(networkType, 'MT') AS networkType, komentar, tanggal, "
                 + "senderInputTime, MIRLogicalTerminal, receiverOutputDate, receiverOutputTime, source "
                 + "FROM headers WHERE id_headers = '" + headerId + "'";
 
@@ -528,7 +528,6 @@ public class DBDataTransaksiOutgoing {
             header.setSessionNumber(rs.getString(12));
             header.setSequenceNumber(rs.getString(13));
             header.setNetworktype(rs.getString(14));//20231227 ditambah ini
-            header.setIsNostro(rs.getString("isNostro")); //return inc 103
             header.setKomentar(rs.getString("komentar"));
             header.setTanggal(rs.getString("tanggal"));
             header.setSenderInputTime(rs.getString("senderInputTime"));
@@ -834,6 +833,26 @@ public class DBDataTransaksiOutgoing {
             st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
             st.setString(4, flag_before);
             st.setInt(5, id_headers);
+            update = st.executeUpdate();
+            if (update > 0) {
+                System.out.println("Update Flag to:" + flag);
+                updateDataHeaderStatus(flag, tanggal_transaksi, id_headers, user_id, ip_access, comp_name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
+    }
+    
+    public int updateFlagAfterValidate(String flag, int id_headers, String user_id, String ip_access, String comp_name) {
+        int update = 0;
+        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        try {
+            String sql = "UPDATE headers set flag=?,tanggal=? where id_headers=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, flag);
+            st.setTimestamp(2, new java.sql.Timestamp(new java.util.Date().getTime()));
+            st.setInt(3, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
                 System.out.println("Update Flag to:" + flag);
@@ -2013,5 +2032,22 @@ public class DBDataTransaksiOutgoing {
             ex.printStackTrace();
         }
         return tags;
+    }
+    
+    public boolean updateKomentar(int id_headers, String komentar) {
+        
+        boolean update = false;
+        try {
+            String sql = "Update headers SET komentar=? WHERE id_headers=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, komentar);  //flag/
+            st.setInt(2, id_headers);   //id_headers/
+            if (st.executeUpdate() > 0) {
+                update = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return update;
     }
 }

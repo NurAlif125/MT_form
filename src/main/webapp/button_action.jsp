@@ -318,21 +318,44 @@
                         var xml = htmlToXML(nodeForm)
                         console.log(xml)
 
+                        var existingInputs = document.getElementsByName("dataXML")
+                        existingInputs.forEach(input => input.parentNode.removeChild(input))
+
                         // buat element untuk menampung data XML
                         var input = document.createElement("input")
 
                         input.setAttribute("name", "dataXML")
                         input.setAttribute("value", xml)
-                        input.style.display="none"
+                        input.setAttribute("type", "hidden")
                         nodeForm.appendChild(input)
-
-                        // disini untuk append child receiver dan logical terminal
-//                        nodeForm.appendChild(nodeReceiverInstitution)
-//                        nodeForm.appendChild(nodeLogicalTerminal)
-
-                        nodeForm.submit()
+                        console.log("Input dataXML telah ditambahkan:", input)
+                        kirimData(xml)
                     })
                     console.log("Ini XML")
+
+                    function kirimData(input) {
+                        fetch("SCValidateMX", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: "dataXML=" + encodeURIComponent(input)
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            if (data.trim() === "null" || data.trim() === "") {
+                                console.log("Data kosong, form akan dikirim...")
+                                nodeForm.submit()
+                            } else {
+                                const modal = document.getElementById("myModal");
+                                document.getElementById("errorInformation").innerHTML = data
+                                modal.classList.add("show")
+                                console.log(data)
+                                e.preventDefault()
+                            }
+                        })
+                        .catch(error => console.error("Error:", error))
+                    }
                 } else {
                     console.log("Ini MT")
                 }

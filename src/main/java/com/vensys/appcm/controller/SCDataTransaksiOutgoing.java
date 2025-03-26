@@ -287,6 +287,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                                 }
                             } else {
                                 if (!tag.getDetail().isEmpty()) {
+                                    System.out.println(tag.getUrutan() + tag.getDetail() + tag.getTag() + tag.getTagName());
                                     dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
                                 }
                             }
