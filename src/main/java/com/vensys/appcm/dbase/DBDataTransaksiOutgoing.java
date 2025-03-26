@@ -506,7 +506,7 @@ public class DBDataTransaksiOutgoing {
         Header header = new Header();
         String sql = "SELECT logicalTerminal, messageType, receiverAddress, messagePriority, "
                 + "deliveryMonitoring, bankingPriority, mur, komentar, block3, flag, io_type, sessionNumber, "
-                + "sequenceNumber, COALESCE(networkType, 'MT') AS networkType, isnostro, komentar, tanggal, "
+                + "sequenceNumber, COALESCE(networkType, 'MT') AS networkType, komentar, tanggal, "
                 + "senderInputTime, MIRLogicalTerminal, receiverOutputDate, receiverOutputTime, source "
                 + "FROM headers WHERE id_headers = '" + headerId + "'";
 
@@ -528,7 +528,6 @@ public class DBDataTransaksiOutgoing {
             header.setSessionNumber(rs.getString(12));
             header.setSequenceNumber(rs.getString(13));
             header.setNetworktype(rs.getString(14));//20231227 ditambah ini
-            header.setIsNostro(rs.getString("isNostro")); //return inc 103
             header.setKomentar(rs.getString("komentar"));
             header.setTanggal(rs.getString("tanggal"));
             header.setSenderInputTime(rs.getString("senderInputTime"));
