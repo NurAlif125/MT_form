@@ -36,12 +36,16 @@
         font-size: 20px;
         cursor: pointer;
     }
+    .tableValidate tr td{
+        width: 100%;
+        border: 1px solid #000;
+    }
 </style>
 <div id="myModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Oopss!</h2>
-        <table id="tableValidate" style="width: 100%; border: 1px #ddd;">
+        <table id="tableValidate" style="width: 100%; border: 1px solid #000;">
             <thead>
                 <tr>
                     <th>Message</th>
