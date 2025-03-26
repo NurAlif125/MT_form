@@ -106,14 +106,6 @@
         background-color: #ECCFD1;
     }
 </style>
-<script>
-    function generateuetr() {
-        const uuid = crypto.randomUUID();
-        const inputField = document.getElementById("UETR");
-        inputField.value = uuid;
-        inputField.setAttribute("value", uuid);
-    }
-</script>
 <script src="js/flatpickr.js"></script>
 <link rel="stylesheet" href="css/flatpickr.css">
 <meta id="generator-farras" name="generator" content="XSD2HTML2XML v3: https://github.com/MichielCM/xsd2html2xml" data-xsd2html2xml-source='<c:out value='${dataIsoXML}' />'/>
@@ -1782,4 +1774,16 @@
             noCalendar: true,
             utc: true
         });
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        function generateuetr() {
+            const uuid = generateUUID();
+            const inputField = document.getElementById("UETR");
+            inputField.value = uuid;
+            inputField.setAttribute("value", uuid);
+        }
     </script>

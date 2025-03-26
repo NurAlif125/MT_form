@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import com.vensys.appcm.model.DataHeaderTransaksi;
+import com.vensys.appcm.rulePacs.rulePacs008;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -112,10 +113,11 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         appHeader.getTo().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
         appHeader.getTo().getFIId().getFinInstnId().setBICFI(receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12));
         
-        appHeader.setBizSvc("swift.cbprplus.02");
+        appHeader.setBizSvc("swift.cbprplus.03");
         appHeader.setCreationDate(true);
         
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
+            log.info("ini " + abstractMX.getMxId().id());
             appHeader.setMsgDefIdr("pacs.004.001.09");
             
             MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;
@@ -161,6 +163,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             
             dBTrx.addDataMXTag(returnId_headers, ((MxPacs00400109) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
+            log.info("ini " + abstractMX.getMxId().id());
             appHeader.setMsgDefIdr("pacs.008.001.08");
             
             MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
@@ -206,6 +209,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             
             dBTrx.addDataMXTag(returnId_headers, ((MxPacs00800108) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
+            log.info("ini " + abstractMX.getMxId().id());
             appHeader.setMsgDefIdr("pacs.009.001.08");
             
             MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;

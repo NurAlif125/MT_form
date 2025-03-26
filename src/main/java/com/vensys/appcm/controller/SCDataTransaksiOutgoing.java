@@ -79,6 +79,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         CreateText ct = new CreateText(dbConn.getConnection());
         CreateTextNew ctn = new CreateTextNew(dbConn.getConnection());
         DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn.getConnection());
+        String dataXml = request.getParameter("dataXML");
         
         log.info("SCData Transaksi Outgoign Awalan");
         if (idsToUpdate == null) {
@@ -286,6 +287,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                                 }
                             } else {
                                 if (!tag.getDetail().isEmpty()) {
+                                    System.out.println(tag.getUrutan() + tag.getDetail() + tag.getTag() + tag.getTagName());
                                     dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
                                 }
                             }
@@ -303,11 +305,16 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         dBDataTransaksiOutgoing.addMTText(ct.createFinalMT(ct.getHeaderById(id_headers)), id_headers);
                     }
                 } else {
-                    log.info("update data MT");
-                    if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
-                        dBDataTransaksiOutgoing.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                    if (messageType.contains("pacs") || messageType.contains("camt")) {
+                        log.info("update data MX");
+                        dBDataTransaksiOutgoing.updateMXText(dataXml, Integer.parseInt(id));
                     } else {
-                        dBDataTransaksiOutgoing.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                        log.info("update data MT");
+                        if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
+                            dBDataTransaksiOutgoing.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                        } else {
+                            dBDataTransaksiOutgoing.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
+                        }
                     }
                 }
                 //20211215 penambahan cek duplikat create manual

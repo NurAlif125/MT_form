@@ -36,3 +36,5 @@
         </c:if>
     </c:forEach>
 </div>
+<%@ include file="modalValidate.jsp" %>
+<%@ include file="validateMX.jsp" %>

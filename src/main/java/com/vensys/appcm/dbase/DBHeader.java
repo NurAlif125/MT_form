@@ -1075,11 +1075,10 @@ System.out.println("Session ID: " + httpSession.getId());
         }
         List<Header> headers = new ArrayList<Header>();
         String sql = """
-                     SELECT id_headers,messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,
-                     receiverAddress,tanggal, id_headers,flag,isDuplicate,
-                     trans_refference,trans_related_refference,trans_amount,
-                     trans_date_value,trans_ccy, block3,source
-                     FROM headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
+                     SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,
+                     h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,
+                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
+                     FROM headers h INNER JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
                 + "ORDER BY tanggal DESC";
         System.out.println("sql header....= " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -1102,17 +1101,17 @@ System.out.println("Session ID: " + httpSession.getId());
 //                flag = "ERR";
 //            }
             header.setFlag(rs.getString(10));
-            header.setTrans_refference(rs.getString(12));
-            header.setTrans_related_refference(rs.getString(13));
-            header.setTrans_amount(rs.getString(14));
-            header.setTrans_date_value(rs.getString(15));
-            if (rs.getString(16) == null) {
+            header.setBlock3(rs.getString(12));
+            header.setSource(rs.getString(13));
+            header.setTrans_refference(rs.getString(14));
+            header.setTrans_related_refference(rs.getString(15));
+            header.setTrans_amount(rs.getString(17));
+            header.setTrans_date_value(rs.getString(16));
+            if (rs.getString(18) == null) {
                 header.setTrans_ccy("0");
             } else {
                 header.setTrans_ccy(rs.getString(16).replace(",", "."));
             }
-            header.setBlock3(rs.getString(16));
-            header.setSource(rs.getString(18));
 
 //            header.setTrans_ccy(rs.getString(15));
 //            header.setTag20(rs.getString(12));
@@ -1480,13 +1479,8 @@ System.out.println("Session ID: " + httpSession.getId());
                     "    block3, \n" +
                     "    flag, \n" +
                     "    io_type, \n" +
-                    "    special_rate, \n" +
-                    "    multi_currency, \n" +
-                    "    multi_amount, \n" +
-                    "    cust_curr, \n" +
                     "    branch, \n" +
                     "    COALESCE(t32c.detail, json_tag->'fiToFICstmrCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'ccy') AS curr,\n" +
-                    "    special_rate_multi,\n" +
                     "    COALESCE(networkType, 'MT') as networkType\n" +
                     "FROM \n" +
                     "    headers h\n" +
@@ -1521,17 +1515,8 @@ System.out.println("Session ID: " + httpSession.getId());
             header.setBlock3(rs.getString(9));
             header.setFlag(rs.getString(10));
             header.setIo_type(rs.getString(11));
-            header.setSpecial_rate(rs.getString(12));
-            header.setMulti_currency(rs.getString(13));
-            header.setMulti_amount(rs.getBigDecimal(14));
-            if (rs.getString(15) == null) {
-                header.setCust_curr("N/A");
-            } else {
-                header.setCust_curr(rs.getString(15));
-            }
-            header.setBranch(rs.getString(16));
-            header.setTag32Currency(rs.getString(17));
-            header.setSpecial_rate_multi(rs.getString(18));
+            header.setBranch(rs.getString(12));
+            header.setTag32Currency(rs.getString(13));
             header.setNetworktype(rs.getString("networktype"));
         }
         return header;
