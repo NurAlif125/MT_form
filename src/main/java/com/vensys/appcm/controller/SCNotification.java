@@ -91,7 +91,7 @@ public class SCNotification extends HttpServlet {
             List<Map<String, String>> notificationList = notif.getNotificationList(userId, roleId);
             Gson gson = new Gson();
             out.print(gson.toJson(notificationList));
-            System.out.println(gson.toJson(notificationList));
+//            System.out.println(gson.toJson(notificationList));
         } catch (Exception e) {
             out.print("[]");
             e.printStackTrace();
@@ -101,14 +101,16 @@ public class SCNotification extends HttpServlet {
         }
     }
     
-        protected void markAsReadNotif(HttpServletRequest request, HttpServletResponse response)
+    protected void markAsReadNotif(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException, Exception {
         response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
 
         String userId = (String) session.getAttribute("user_id");
         String roleId = (String) session.getAttribute("role_id");
+        String readIdNotif = request.getParameter("readNotif");
 
         if (userId == null || roleId == null) {
             out.print("[]"); // no login, kembalikan list kosong
@@ -116,16 +118,20 @@ public class SCNotification extends HttpServlet {
         }
 
         DBconnection dbConn = new DBconnection();
+        
         try {
             DBnotification notif = new DBnotification(dbConn.getConnection());
-            List<Map<String, String>> notificationList = notif.getNotificationList(userId, roleId);
-            Gson gson = new Gson();
-            out.print(gson.toJson(notificationList));
-            System.out.println(gson.toJson(notificationList));
+            boolean readNotifications = notif.markAsReadNotif(userId, roleId, readIdNotif);
+            System.out.println("hasilllll======="+readNotifications);
+            if (readNotifications) {
+                response.getWriter().write("{\"status\":\"success\"}");
+            } else {
+                response.getWriter().write("{\"status\":\"failed\"}");
+            }
         } catch (Exception e) {
-            out.print("[]");
             e.printStackTrace();
-            System.err.println("SCNotificationList Error: " + e.getMessage());
+            response.getWriter().write("{\"status\":\"error\"}");
+            System.err.println("SCNotificationList maskAsRead Error: " + e.getMessage());
         } finally {
             dbConn.closeConnection();
         }
@@ -154,12 +160,6 @@ public class SCNotification extends HttpServlet {
              } catch (Exception ex) {
                  java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
              }
-        } else if(path.equals("/markAsReadNotif")) {
-             try {
-                 markAsReadNotif(request, response);
-             } catch (Exception ex) {
-                 java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
-             }
         } else {
              try {
                  processRequest(request, response);
@@ -180,11 +180,21 @@ public class SCNotification extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         String path = request.getServletPath();
+
+            if (path.equals("/markAsReadNotif")) {
+                try {
+                    markAsReadNotif(request, response);
+                } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    processRequest(request, response);
+                } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(SCNotification.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
     }
 
     /**

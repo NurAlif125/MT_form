@@ -67,16 +67,29 @@
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
                                             function formatUang(n, currency) {
+                                                if (isNaN(n)) {
+                                                    return "";
+                                                }
                                                 return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                             }
                                             var number2 = document.getElementById('_062_mf32a_amount').value;
                                             var number2r = number2.replace(',', '.');
                                             var number2F = parseFloat(number2r);
                                             var nominal = formatUang(number2F, "");
+                                            
+//                                            if (nominal === "") {
+//                                                document.write("");
+//                                            } else {
+//                                                var nominalStyle = nominal.fontsize(5);
+//                                                var nominalStylec = nominalStyle.fontcolor("red");
+//                                                document.write(nominalStylec);
+//                                            }
                                             var nominalStyle = nominal.fontsize(5);
                                             var nominalStylec = nominalStyle.fontcolor("red");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
-                                            document.write(nominalStylec);
+                                            if (nominal !== "") {
+                                                document.write(nominalStylec);
+                                            }
                                         </script>
                                     </div>
                                     <hr/>

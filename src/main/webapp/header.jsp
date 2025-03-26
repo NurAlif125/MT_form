@@ -129,7 +129,7 @@
                         </c:forEach>     -->
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MT_QUEUE:LIST'}">
-                                <li><a href="SCDataMTList">MT Queue</a></li>
+                                <li><a href="SCDataMTList">Message Queue</a></li>
                             </c:if>
                         </c:forEach>
                         <!-- <c:forEach var="item" items="${role}">
@@ -185,11 +185,6 @@
                             <c:forEach var="item" items="${role}">
                                 <c:if test="${item == 'USER:LIST'}">
                                 <li><a href="SCDataUserList">User</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'MT_QUEUE:LIST'}">
-                                <li><a href="SCDataMTList">Message Queue</a></li>
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">
@@ -505,13 +500,13 @@
     <div id="notifModal" class="modal-notif" onclick="outsideClick(event)">
         <div class="modal-notif-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h3>Notifikasi</h3>
+            <h3>Notifications</h3>
 
             <div id="notifLists" style="overflow: scroll; height: 450px; max-height: 450px;">
                 <table id="tableList" class="tbl-notif">
                     <thead class="tbl-head-notif">
                         <tr class="bg-gray-200">
-                            <th class="tbl-th-notif"><input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes()"></th>
+                            <th class="tbl-th-notif" style="width:10px; cursor:pointer;"><input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes()"></th>
                             <th class="tbl-th-notif">title</th>
                             <th class="tbl-th-notif">message</th>
                         </tr>
