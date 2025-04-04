@@ -6,11 +6,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        let validator = $("#form1").validate({
-            ignore: [],  
-            onkeyup: false,          // Nonaktifkan validasi saat mengetik
-            onfocusout: false,       // Nonaktifkan validasi saat pindah input
-//            onclick: false,          // Nonaktifkan validasi saat klik
+        $("#form1").validate({
             rules: {
                 //header
                 //unit: "required",
@@ -19,20 +15,14 @@
                 //sender_type_institution: "required",
 
                 //receiver_type: "required",
-//                receiver_institution: {required: true, input_type: "Receiver Institution", location: "Header"},
                 receiver_institution: "required",
 
                 priority: "required",
                 //monitoring: "required",
 
                 //body
-//                _010_mf20_sender_reference: {required: true, input_type: "MF20", location: "Body"},
                 _010_mf20_sender_reference: "required",
                 _030_mf23b_bank_code: "required",
-                
-//                 sender_logical_terminal: {
-//                    regex: /^.{3,}$/ // Minimal 3 karakter jika diisi
-//                },
 
                 //mf32a
                 _060_mf32a_date: "required",
@@ -82,9 +72,6 @@
                 _210_of71a_details_charges: "required"
             },
             messages: {
-//                sender_logical_terminal: {
-//                     regex: "Minimal 3 karakter"
-//                },
                 sender_logical_terminal: {required: "sender_logical_terminal harus diisi..!!"},
                 receiver_institution: {required: "receiver_institution harus diisi..!!"},
                 priority: {required: "priority harus diisi..!!"},
@@ -109,7 +96,6 @@
                 _161_of56a_identifier_code: {required: "of56a_identifier_code harus diisi..!!"},
                 _163_of56c_party_identifier: {required: "of56c_party_identifier harus diisi..!!"},
                 _165_of56d_name_address: {required: "of56d_name_address harus diisi..!!"},
-                type_of57_: {required: "of57a harus diisi..!!"},
                 _171_of57a_identifier_code: {required: "of57a_identifier_code harus diisi..!!"},
                 _175_of57c_party_identifier: {required: "of57c_party_identifier harus diisi..!!"},
                 _177_of57d_name_address: {required: "of57d_name_address harus diisi..!!"},
@@ -121,153 +107,19 @@
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);
-//                alert(error.html());
-                $("#tab-validate").removeAttr("hidden");
-//                console.log(error.html())
+                alert(error.html());
             },
             showErrors: function (errorMap, errorList) {
                 this.defaultShowErrors();
-                
-                $("#tab-validate").removeAttr("hidden");
-                 
-                $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
-                $("#view8").css("display", "block");
-                $('#tab-view1').removeClass("selected").removeAttr('class');
-                $('#tab-view2').removeClass("selected").removeAttr('class');
-                $('#tab-view3').removeClass("selected").removeAttr('class');
-                $('#tab-view4').removeClass("selected").removeAttr('class');
-                $('#tab-view5').removeClass("selected").removeAttr('class');
-                $('#tab-view6').removeClass("selected").removeAttr('class');
-                $('#tab-view7').removeClass("selected").removeAttr('class');
-                $('#tab-validate').addClass("selected");
-
-                let errorContainer = document.getElementById("error-container");
-                
-                if (errorList.length === 0) {
-                    errorContainer.innerHTML = ""; 
-//                    return;
-                } 
-                
-                let tableHTML = `<table border="1" style="width:100% !important; font-size:8pt !important;">
-                                    <tr style="background:#d6d6d6;">
-                                    <th>Type</th>
-                                    <th>Location</th>
-                                    <th>Node</th>
-                                    <th>Message</th></tr>`;
-
-                    
-                errorList.forEach(errors => {
-                    let inputID = errors.element.id || "";
-                    let locationTab = errors.element.getAttribute("location") || "";
-                    let inputType = errors.element.getAttribute("input_type") || "";
-
-                    tableHTML += '<tr class="error__row" data-input-id="'+inputID+'" content-body="'+locationTab+'" onmouseover="this.style.background=\'#f6f6f6\'" onmouseout="this.style.backgroundColor=\'transparent\'" style="cursor:pointer;">';
-                    tableHTML += '<td style="padding: 5px;">Error</td>';
-                    tableHTML += '<td style="padding: 5px;">'+locationTab+'</td>';
-                    tableHTML += '<td style="padding: 5px;">'+inputType+'</td>';
-                    tableHTML += '<td style="padding: 5px;">'+errors.message+'</td></tr>';
-                });
-
-                tableHTML += `</table>`;
-                errorContainer.innerHTML = tableHTML; 
-                
-                document.querySelectorAll(".error__row").forEach(row => {
-                    row.addEventListener("click", function () {
-                        let targetRow = event.target.closest(".error__row"); 
-                        let inputId = this.getAttribute("data-input-id");
-                        let tabContentGroup = this.getAttribute("content-body");
-                        
-                    if (targetRow) {
-                        let input = document.getElementById(inputId);
-                        if (input) {
-                            if(tabContentGroup == "Header") {
-                                $("#view2, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
-                                $("#view1").css("display", "block");
-                                $('#tab-view1').addClass("selected");
-                                $('#tab-view2').removeClass("selected").removeAttr('class');
-                                $('#tab-view3').removeClass("selected").removeAttr('class');
-                                $('#tab-view4').removeClass("selected").removeAttr('class');
-                                $('#tab-view5').removeClass("selected").removeAttr('class');
-                                $('#tab-view6').removeClass("selected").removeAttr('class');
-                                $('#tab-view7').removeClass("selected").removeAttr('class');
-                                $('#tab-validate').removeClass("selected").removeAttr('class');
-                            } 
-                            else if (tabContentGroup == "Body") {
-                                 $("#view1, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
-                                $('#tab-view1').removeClass("selected").removeAttr('class');
-                                $('#tab-view2').addClass("selected");
-                                $('#tab-view3').removeClass("selected").removeAttr('class');
-                                $('#tab-view4').removeClass("selected").removeAttr('class');
-                                $('#tab-view5').removeClass("selected").removeAttr('class');
-                                $('#tab-view6').removeClass("selected").removeAttr('class');
-                                $('#tab-view7').removeClass("selected").removeAttr('class');
-                                $('#tab-validate').removeClass("selected").removeAttr('class');
-                                $("#view2").css("display", "block");
-                                
-                            }
-                            
-                            input.focus();
-                        } else {
-                            console.log("nothing input element")
-                        }
-                    }
-                    });
-                });
-                
-                
-            },
-//            submitHandler: function(form) {
-//                // Eksekusi hanya jika validasi sukses
-//                form.submit();
-//            }
-        });
-        
-        $("#btn-validate").click(function () {
-            let isValid = $("#form1").valid(); 
-            if (isValid) {
-                alert("All inputs are valid!");
-            } 
-        });
-
-        $("#submit_mt").click(function (e) {
-            e.preventDefault();
-            let isValid = $("#form1").valid(); 
-            if (isValid) {  
-                $("#form1").submit(); 
-            } else {
-                alert("There are still errors! Please fix them before saving.");
             }
         });
-        
-        $.validator.addMethod("regex", function(value, element, param) {
-            //this.optional(element) lewati validasi jika kosong dan param.test(value) check regex
-            return this.optional(element) || param.test(value); 
-//            Jika tidak ada pesan khusus dalam messages tampilkan "Format tidak valid"
-        }, "Format tidak valid");
-   
-    
     });
-    
-    
 </script>
 
 <link rel="stylesheet" type="text/css" href="css/validate.css" />
 
 <script type="text/javascript">
     $(document).ready(function () {
-        
-        $("#check_special_rate").hide();
-        $("#special_rate").prop("required", false);
-        $("#special_rate_checkbox").click(function () {
-            if ($("#special_rate_checkbox").is(":checked")) {
-                $("#check_special_rate").show();
-                $("#special_rate").prop("required", false);
-            } else {
-                $("#check_special_rate").hide();
-                $("#special_rate").prop("required", false);
-            }
-        });
-        
         //OF71
         $("#_210_of71a_details_charges").change(function () {
             if ($("#_210_of71a_details_charges").val() == "OUR") {
@@ -334,147 +186,54 @@
         //mf50_a_f_k
         $("#div_mf50a_").hide();
         $("#div_mf50f_").hide();
-        $("#div_mf50f_2").hide();
-        $("#div_mf50f_3").hide();
-        $("#div_mf50f_4").hide();
         $("#div_mf50k_").hide();
         $("#_090_mf50a_account").attr("disabled", true);
         $("#_091_mf50a_identifier_code").attr("disabled", true);
-//        $("#_093_mf50f_party_identifier").attr("disabled", true);
-//        $("#_094_mf50f_name_address").attr("disabled", true);
-        $("#_093_mf50f_account").attr("disabled", true);
-        $("#_094_mf50f_number").attr("disabled", true);
-        $("#_095_mf50f_details").attr("disabled", true);
-        $("#check_mf50f_2").attr("disabled", true);
-        $("#check_mf50f_3").attr("disabled", true);
-        $("#check_mf50f_4").attr("disabled", true);
+        $("#_093_mf50f_party_identifier").attr("disabled", true);
+        $("#_094_mf50f_name_address").attr("disabled", true);
         $("#_105_mf50k_account").attr("disabled", true);
         $("#_106_mf50k_name_address").attr("disabled", true);
         $("#type_mf50_ordering_customer").change(function () {
             if ($("#type_mf50_ordering_customer").val() == "a") {
                 $("#div_mf50a_").show();
                 $("#div_mf50f_").hide();
-                $("#div_mf50f_2").hide();
-                $("#div_mf50f_3").hide();
-                $("#div_mf50f_4").hide();
                 $("#div_mf50k_").hide();
                 $("#_090_mf50a_account").attr("disabled", false);
                 $("#_091_mf50a_identifier_code").attr("disabled", false);
-//                $("#_093_mf50f_party_identifier").attr("disabled", true);
-//                $("#_094_mf50f_name_address").attr("disabled", true);      
-                $("#_093_mf50f_account").attr("disabled", true);
-                $("#_094_mf50f_number").attr("disabled", true);
-                $("#_095_mf50f_details").attr("disabled", true);
-                $("#check_mf50f_2").attr("disabled", true);
-                $("#check_mf50f_3").attr("disabled", true);
-                $("#check_mf50f_4").attr("disabled", true);
+                $("#_093_mf50f_party_identifier").attr("disabled", true);
+                $("#_094_mf50f_name_address").attr("disabled", true);
                 $("#_105_mf50k_account").attr("disabled", true);
                 $("#_106_mf50k_name_address").attr("disabled", true);
             } else if ($("#type_mf50_ordering_customer").val() == "f") {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").show();
-                $("#div_mf50f_2").show();
-                $("#div_mf50f_3").show();
-                $("#div_mf50f_4").show();
                 $("#div_mf50k_").hide();
                 $("#_090_mf50a_account").attr("disabled", true);
                 $("#_091_mf50a_identifier_code").attr("disabled", true);
-//                $("#_093_mf50f_party_identifier").attr("disabled", false);
-//                $("#_094_mf50f_name_address").attr("disabled", false);
-                $("#_093_mf50f_account").attr("disabled", false);
-                $("#_094_mf50f_number").attr("disabled", false);
-                $("#_095_mf50f_details").attr("disabled", false);
-                $("#check_mf50f_2").attr("disabled", false);
-                $("#check_mf50f_3").attr("disabled", false);
-                $("#check_mf50f_4").attr("disabled", false);
+                $("#_093_mf50f_party_identifier").attr("disabled", false);
+                $("#_094_mf50f_name_address").attr("disabled", false);
                 $("#_105_mf50k_account").attr("disabled", true);
                 $("#_106_mf50k_name_address").attr("disabled", true);
             } else if ($("#type_mf50_ordering_customer").val() == "k") {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").hide();
-                $("#div_mf50f_2").hide();
-                $("#div_mf50f_3").hide();
-                $("#div_mf50f_4").hide();
                 $("#div_mf50k_").show();
                 $("#_090_mf50a_account").attr("disabled", true);
                 $("#_091_mf50a_identifier_code").attr("disabled", true);
-//                $("#_093_mf50f_party_identifier").attr("disabled", true);
-//                $("#_094_mf50f_name_address").attr("disabled", true);
-                $("#_093_mf50f_account").attr("disabled", true);
-                $("#_094_mf50f_number").attr("disabled", true);
-                $("#_095_mf50f_details").attr("disabled", true);
-                $("#check_mf50f_2").attr("disabled", true);
-                $("#check_mf50f_3").attr("disabled", true);
-                $("#check_mf50f_4").attr("disabled", true);
+                $("#_093_mf50f_party_identifier").attr("disabled", true);
+                $("#_094_mf50f_name_address").attr("disabled", true);
                 $("#_105_mf50k_account").attr("disabled", false);
                 $("#_106_mf50k_name_address").attr("disabled", false);
             } else {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").hide();
-                $("#div_mf50f_2").hide();
-                $("#div_mf50f_3").hide();
-                $("#div_mf50f_4").hide();
                 $("#div_mf50k_").hide();
                 $("#_090_mf50a_account").attr("disabled", true);
                 $("#_091_mf50a_identifier_code").attr("disabled", true);
-//                $("#_093_mf50f_party_identifier").attr("disabled", true);
-//                $("#_094_mf50f_name_address").attr("disabled", true);
-                $("#_093_mf50f_account").attr("disabled", true);
-                $("#_094_mf50f_number").attr("disabled", true);
-                $("#_095_mf50f_details").attr("disabled", true);
-                $("#check_mf50f_2").attr("disabled", true);
-                $("#check_mf50f_3").attr("disabled", true);
-                $("#check_mf50f_4").attr("disabled", true);
+                $("#_093_mf50f_party_identifier").attr("disabled", true);
+                $("#_094_mf50f_name_address").attr("disabled", true);
                 $("#_105_mf50k_account").attr("disabled", true);
                 $("#_106_mf50k_name_address").attr("disabled", true);
-            }
-        });
-        
-        //mf50f_2
-        $("#check_mf50f_2").hide();
-        $("#_096_mf50f_number").prop("required", false);
-        $("#_097_mf50f_details").prop("required", false);
-        $("#name_address_checkbox_2_50").click(function () {
-            if ($("#name_address_checkbox_2_50").is(":checked")) {
-                $("#check_mf50f_2").show();
-                $("#_096_mf50f_number").prop("required", true);
-                $("#_097_mf50f_details").prop("required", true);
-            } else {
-                $("#check_mf50f_2").hide();
-                $("#_096_mf50f_number").prop("required", false);
-                $("#_097_mf50f_details").prop("required", false);
-            }
-        });
-        
-        //mf50f_3
-        $("#check_mf50f_3").hide();
-        $("#_098_mf50f_number").prop("required", false);
-        $("#_099_mf50f_details").prop("required", false);
-        $("#name_address_checkbox_3_50").click(function () {
-            if ($("#name_address_checkbox_3_50").is(":checked")) {
-                $("#check_mf50f_3").show();
-                $("#_098_mf50f_number").prop("required", true);
-                $("#_099_mf50f_details").prop("required", true);
-            } else {
-                $("#check_mf50f_3").hide();
-                $("#_098_mf50f_number").prop("required", false);
-                $("#_099_mf50f_details").prop("required", false);
-            }
-        });
-        
-        //mf50f_4
-        $("#check_mf50f_4").hide();
-        $("#_100_mf50f_number").prop("required", false);
-        $("#_101_mf50f_details").prop("required", false);
-        $("#name_address_checkbox_4_50").click(function () {
-            if ($("#name_address_checkbox_4_50").is(":checked")) {
-                $("#check_mf50f_4").show();
-                $("#_100_mf50f_number").prop("required", true);
-                $("#_101_mf50f_details").prop("required", true);
-            } else {
-                $("#check_mf50f_4").hide();
-                $("#_100_mf50f_number").prop("required", false);
-                $("#_101_mf50f_details").prop("required", false);
             }
         });
 
@@ -797,6 +556,59 @@
             }
         });
 
+        //mf59_59a
+//        $("#div_mf59_").hide();
+//        $("#div_mf59a_").hide();
+//        $("#div_mf59f_").hide();
+//        $("#_180_mf59_account").attr("disabled", true);
+//        $("#_181_mf59_name_address").attr("disabled", true);
+//        $("#_182_mf59a_account").attr("disabled", true);
+//        $("#_183_mf59a_identifier_code").attr("disabled", true);
+//        $("#_185_mf59f_account").attr("disabled", true);
+//        $("#_186_mf59f_name_address").attr("disabled", true);
+//        $("#type_of59_59a_").change(function() {
+//            if ( $("#type_of59_59a_").val() == "59"){
+//                $("#div_mf59_").show();
+//                $("#div_mf59a_").hide();
+//                $("#div_mf59f_").hide();
+//                $("#_180_mf59_account").attr("disabled", false);
+//                $("#_181_mf59_name_address").attr("disabled", false);
+//                $("#_182_mf59a_account").attr("disabled", true);
+//                $("#_183_mf59a_identifier_code").attr("disabled", true);
+//                $("#_185_mf59f_account").attr("disabled", true);
+//                $("#_186_mf59f_name_address").attr("disabled", true);
+//            } else if ( $("#type_of59_59a_").val() == "59a"){
+//                $("#div_mf59_").hide();
+//                $("#div_mf59a_").show();
+//                $("#div_mf59f_").hide();
+//                $("#_180_mf59_account").attr("disabled", true);
+//                $("#_181_mf59_name_address").attr("disabled", true);
+//                $("#_182_mf59a_account").attr("disabled", false);
+//                $("#_183_mf59a_identifier_code").attr("disabled", false);
+//                $("#_185_mf59f_account").attr("disabled", true);
+//                $("#_186_mf59f_name_address").attr("disabled", true);
+//            } else if ( $("#type_of59_59a_").val() == "59f"){
+//                $("#div_mf59_").hide();
+//                $("#div_mf59a_").hide();
+//                $("#div_mf59f_").show();
+//                $("#_180_mf59_account").attr("disabled", true);
+//                $("#_181_mf59_name_address").attr("disabled", true);
+//                $("#_182_mf59a_account").attr("disabled", true);
+//                $("#_183_mf59a_identifier_code").attr("disabled", true);
+//                $("#_185_mf59f_account").attr("disabled", false);
+//                $("#_186_mf59f_name_address").attr("disabled", false);
+//            } else{
+//                $("#div_mf59_").hide();
+//                $("#div_mf59a_").hide();
+//                $("#div_mf59f_").hide();
+//                $("#_180_mf59_account").attr("disabled", true);
+//                $("#_181_mf59_name_address").attr("disabled", true);
+//                $("#_182_mf59a_account").attr("disabled", true);
+//                $("#_183_mf59a_identifier_code").attr("disabled", true);
+//                $("#_185_mf59f_account").attr("disabled", true);
+//                $("#_186_mf59f_name_address").attr("disabled", true);
+//            }
+//        });
 
         //mf59
         $("#div_mf59_").hide();
@@ -1029,23 +841,6 @@
                 $("#_229_of71f_amount").prop("required", false);
             }
         });
-        
-        //OF26t_check
-//        $("#check_of26t").hide();
-//        $("#_050_of26t_code").attr("disabled", true);
-//        $("#transaction_type_code_checkbox").click(function () {
-//            if ($("#transaction_type_code_checkbox").is(":checked")) {
-//                $("#check_of26t").show();
-//                $("#_050_of26t_code").attr("disabled", false);
-//            } else {
-//                $("#check_of26t").hide();
-//                $("#_050_of26t_code").attr("disabled", true);
-//            }
-//        });
-        //end of the line
-        
-        
-        
     });
 </script>
 
@@ -1099,163 +894,50 @@
         }
 
         //mf50_a_f_k
-//        if ($("#_090_mf50a_account").val() != "" || $("#_091_mf50a_identifier_code").val() != "") {
-//            $("#type_mf50_ordering_customer").val("a").attr("selected", true);
-//            $("#div_mf50a_").show();
-//            $("#div_mf50f_").hide();
-//            $("#div_mf50k_").hide();
-//            $("#_090_mf50a_account").attr("disabled", false);
-//            $("#_091_mf50a_identifier_code").attr("disabled", false);
-//            $("#_093_mf50f_party_identifier").attr("disabled", true);
-//            $("#_094_mf50f_name_address").attr("disabled", true);
-//            $("#_105_mf50k_account").attr("disabled", true);
-//            $("#_106_mf50k_name_address").attr("disabled", true);
-//        } else if ($("#_093_mf50f_party_identifier").val() != "" || $("#_094_mf50f_name_address").val() != "") {
-//            $("#type_mf50_ordering_customer").val("f").attr("selected", true);
-//            $("#div_mf50a_").hide();
-//            $("#div_mf50f_").show();
-//            $("#div_mf50k_").hide();
-//            $("#_090_mf50a_account").attr("disabled", true);
-//            $("#_091_mf50a_identifier_code").attr("disabled", true);
-//            $("#_093_mf50f_party_identifier").attr("disabled", false);
-//            $("#_094_mf50f_name_address").attr("disabled", false);
-//            $("#_105_mf50k_account").attr("disabled", true);
-//            $("#_106_mf50k_name_address").attr("disabled", true);
-//        } else if ($("#_105_mf50k_account").val() != "" || $("#_106_mf50k_name_address").val() != "") {
-//            $("#type_mf50_ordering_customer").val("k").attr("selected", true);
-//            $("#div_mf50a_").hide();
-//            $("#div_mf50f_").hide();
-//            $("#div_mf50k_").show();
-//            $("#_090_mf50a_account").attr("disabled", true);
-//            $("#_091_mf50a_identifier_code").attr("disabled", true);
-//            $("#_093_mf50f_party_identifier").attr("disabled", true);
-//            $("#_094_mf50f_name_address").attr("disabled", true);
-//            $("#_105_mf50k_account").attr("disabled", false);
-//            $("#_106_mf50k_name_address").attr("disabled", false);
-//        } else {
-//            $("#div_mf50a_").hide();
-//            $("#div_mf50f_").hide();
-//            $("#div_mf50k_").hide();
-//            $("#_090_mf50a_account").attr("disabled", true);
-//            $("#_091_mf50a_identifier_code").attr("disabled", true);
-//            $("#_093_mf50f_party_identifier").attr("disabled", true);
-//            $("#_094_mf50f_name_address").attr("disabled", true);
-//            $("#_105_mf50k_account").attr("disabled", true);
-//            $("#_106_mf50k_name_address").attr("disabled", true);
-//        }
-//        --------------------
-//            50_a_f_k
-            if ($("#_090_mf50a_account").val() != "" || $("#_091_mf50a_identifier_code").val() != "") {
+        if ($("#_090_mf50a_account").val() != "" || $("#_091_mf50a_identifier_code").val() != "") {
             $("#type_mf50_ordering_customer").val("a").attr("selected", true);
             $("#div_mf50a_").show();
             $("#div_mf50f_").hide();
-            $("#div_mf50f_2").hide();
-            $("#div_mf50f_3").hide();
-            $("#div_mf50f_4").hide();
             $("#div_mf50k_").hide();
             $("#_090_mf50a_account").attr("disabled", false);
             $("#_091_mf50a_identifier_code").attr("disabled", false);
-            $("#_093_mf50f_account").attr("disabled", true);
-            $("#_094_mf50f_number").attr("disabled", true);
-            $("#_095_mf50f_details").attr("disabled", true);
-            $("#check_mf50f_2").attr("disabled", true);
-            $("#check_mf50f_3").attr("disabled", true);
-            $("#check_mf50f_4").attr("disabled", true);
+            $("#_093_mf50f_party_identifier").attr("disabled", true);
+            $("#_094_mf50f_name_address").attr("disabled", true);
             $("#_105_mf50k_account").attr("disabled", true);
             $("#_106_mf50k_name_address").attr("disabled", true);
-        } else if ($("#_094_mf50f_number").val() != "" || $("#_095_mf50f_details").val() != "") {
+        } else if ($("#_093_mf50f_party_identifier").val() != "" || $("#_094_mf50f_name_address").val() != "") {
             $("#type_mf50_ordering_customer").val("f").attr("selected", true);
             $("#div_mf50a_").hide();
             $("#div_mf50f_").show();
-            $("#div_mf50f_2").show();
-            $("#div_mf50f_3").show();
-            $("#div_mf50f_4").show();
             $("#div_mf50k_").hide();
             $("#_090_mf50a_account").attr("disabled", true);
             $("#_091_mf50a_identifier_code").attr("disabled", true);
-            $("#_093_mf50f_account").attr("disabled", false);
-            $("#_094_mf50f_number").attr("disabled", false);
-            $("#_095_mf50f_details").attr("disabled", false);
-            $("#check_mf50f_2").attr("disabled", false);
-            $("#check_mf50f_3").attr("disabled", false);
-            $("#check_mf50f_4").attr("disabled", false);
+            $("#_093_mf50f_party_identifier").attr("disabled", false);
+            $("#_094_mf50f_name_address").attr("disabled", false);
             $("#_105_mf50k_account").attr("disabled", true);
             $("#_106_mf50k_name_address").attr("disabled", true);
         } else if ($("#_105_mf50k_account").val() != "" || $("#_106_mf50k_name_address").val() != "") {
             $("#type_mf50_ordering_customer").val("k").attr("selected", true);
             $("#div_mf50a_").hide();
             $("#div_mf50f_").hide();
-            $("#div_mf50f_2").hide();
-            $("#div_mf50f_3").hide();
-            $("#div_mf50f_4").hide();
             $("#div_mf50k_").show();
             $("#_090_mf50a_account").attr("disabled", true);
             $("#_091_mf50a_identifier_code").attr("disabled", true);
-            $("#_093_mf50f_account").attr("disabled", true);
-            $("#_094_mf50f_number").attr("disabled", true);
-            $("#_095_mf50f_details").attr("disabled", true);
-            $("#check_mf50f_2").attr("disabled", true);
-            $("#check_mf50f_3").attr("disabled", true);
-            $("#check_mf50f_4").attr("disabled", true);
+            $("#_093_mf50f_party_identifier").attr("disabled", true);
+            $("#_094_mf50f_name_address").attr("disabled", true);
             $("#_105_mf50k_account").attr("disabled", false);
             $("#_106_mf50k_name_address").attr("disabled", false);
         } else {
             $("#div_mf50a_").hide();
             $("#div_mf50f_").hide();
-            $("#div_mf50f_2").hide();
-            $("#div_mf50f_3").hide();
-            $("#div_mf50f_4").hide();
             $("#div_mf50k_").hide();
             $("#_090_mf50a_account").attr("disabled", true);
             $("#_091_mf50a_identifier_code").attr("disabled", true);
-            $("#_093_mf50f_account").attr("disabled", true);
-            $("#_094_mf50f_number").attr("disabled", true);
-            $("#_095_mf50f_details").attr("disabled", true);
-            $("#check_mf50f_2").attr("disabled", true);
-            $("#check_mf50f_3").attr("disabled", true);
-            $("#check_mf50f_4").attr("disabled", true);
+            $("#_093_mf50f_party_identifier").attr("disabled", true);
+            $("#_094_mf50f_name_address").attr("disabled", true);
             $("#_105_mf50k_account").attr("disabled", true);
             $("#_106_mf50k_name_address").attr("disabled", true);
         }
-        
-        //mf50f_2
-        if ($("#_096_mf50f_number").val() != "" || $("#_097_mf50f_details").val() != "") {
-            $("#name_address_checkbox_2_50").prop("checked", true);
-            $("#check_mf50f_2").show();
-            $("#_096_mf50f_number").prop("required", true);
-            $("#_097_mf50f_details").prop("required", true);
-        } else {
-            $("#check_mf50f_2").hide();
-            $("#_096_mf50f_number").prop("required", false);
-            $("#_097_mf50f_details").prop("required", false);
-        }
-        
-        //mf50f_3
-        if ($("#_098_mf50f_number").val() != "" || $("#_099_mf50f_details").val() != "") {
-            $("#name_address_checkbox_3_50").prop("checked", true);
-            $("#check_mf50f_3").show();
-            $("#_098_mf50f_number").prop("required", true);
-            $("#_099_mf50f_details").prop("required", true);
-        } else {
-            $("#check_mf50f_3").hide();
-            $("#_098_mf50f_number").prop("required", false);
-            $("#_099_mf50f_details").prop("required", false);
-        }
-        
-        //mf50f_4
-        if ($("#_100_mf50f_number").val() != "" || $("#_101_mf50f_details").val() != "") {
-            $("#name_address_checkbox_4_50").prop("checked", true);
-            $("#check_mf50f_4").show();
-            $("#_100_mf50f_number").prop("required", true);
-            $("#_101_mf50f_details").prop("required", true);
-        } else {
-            $("#check_mf50f_4").hide();
-            $("#_100_mf50f_number").prop("required", false);
-            $("#_101_mf50f_details").prop("required", false);
-        }
-
-    `       `
-        
 
         //of52_a_d
         if ($("#_110_of52a_party_identifier").val() != "" || $("#_111_of52a_identifier_code").val() != "") {
@@ -1575,6 +1257,7 @@
 //            $("#_185_mf59f_account").attr("disabled", true);
 //            $("#_186_mf59f_name_address").attr("disabled", true);
 //        }
+        //mf59_59a
         if ($("#_180_mf59_account").val() != "" || $("#_181_mf59_name_address").val() != "") {
             $("#type_of59_59a_").val("59").attr("selected", true);
             $("#div_mf59_").show();
@@ -1753,32 +1436,6 @@
             $("#_228_of71f_currency").prop("required", false);
             $("#_229_of71f_amount").prop("required", false);
         }
-        
-        
-        
-        //special rate
-        if ($("#special_rate").val() != "") {
-            $("#special_rate_checkbox").prop("checked", true);
-            $("#check_special_rate").show();
-            $("#special_rate").prop("required", true);
-        } else {
-            $("#check_special_rate").hide();
-            $("#special_rate").prop("required", false);
-        }
-        
-        
-        //OF26t
-//        if ($("#_050_of26t_code").val() != "") {
-//            $("#transaction_type_code_checkbox").attr("checked", true);
-//            $("#check_of26t").show();
-//            $("#_050_of26t_code").attr("disabled", false);
-//        } else {
-//            $("#check_of26t").hide();
-//            $("#_050_of26t_code").attr("disabled", true);
-//        }
-        //end of the line
-        
-        
 
     });
 </script>

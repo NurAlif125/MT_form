@@ -4,7 +4,7 @@
     Author     : Tommy Aji
 --%>
 <%@ include file="header.jsp" %>
-<%@ include file="rule/validate_rule_mt103_beta.jsp" %>
+<%@ include file="rule/validate_rule_mt103.jsp" %>
 <%@ include file="rule/validateList_scr.jsp" %>
 <%--<%@page contentType="text/html" import="java.util.*" %>--%>
 <%@ page import="java.util.*"%>
@@ -59,7 +59,7 @@
 
                             <!-- MF20 -->
                             <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sender's Reference</span>
-                                <input type="text" onkeypress="avoidSplChars(event)" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" class="mandatory" maxlength="16" input_type="MF20" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="avoidSplChars(event)" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" class="mandatory" maxlength="16" input_type="MF20 Sender Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <hr/>
 
@@ -550,7 +550,7 @@
 
                                     <!-- M59/59A -->
                                     <div class="form-row"><span class="label_body">MF59</span><span class="label">Beneficiary Customer</span>
-                                        <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="Of59A" location="Body">
+                                        <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="Of59A Beneficiary Customer" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="59">59 - Name and Address</option>
                                             <option value="59a">59A - BIC</option>

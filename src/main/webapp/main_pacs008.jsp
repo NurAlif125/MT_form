@@ -19,8 +19,9 @@
                 <input name="messageType" id="messageType" type="hidden" value="pacs00800108" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
-                        <li><a href="#" rel="view1">Header</a></li>
-                        <li><a href="#" rel="view2">Create Message</a></li>
+                        <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
+                        <li id="tab-view2"><a href="#" rel="view2">Create Message</a></li>
+                        <li id="tab-validate" ><a href="#" rel="view3" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
@@ -29,6 +30,9 @@
                         <div id="view2" class="tabcontent">
                             <%@ include file="pacs00800108.jsp" %>
                         </div>
+                        <div id="view3" class="tabcontent">
+                            <div id="error-container"></div>
+                        </div>
                     </div>
                 </div>
                 <%@ include file="button_action.jsp" %>
@@ -36,5 +40,6 @@
         </c:if>
     </c:forEach>
 </div>
-<%@ include file="modalValidate.jsp" %>
+<%--<%@ include file="modalValidate.jsp" %>--%>
+<%@ include file="tabValidateMX.jsp" %>
 <%@ include file="validateMX.jsp" %>
