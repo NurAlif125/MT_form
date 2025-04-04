@@ -352,15 +352,13 @@
                         <!--<label>999 <input type="checkbox" name="role_detail" id="role_detail" value="MT:999" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:999'}"> checked="true" </c:if></c:forEach> /></label>-->
                             <!--</div>-->
 
-                                                    <label>998 <input type="checkbox" name="role_detail" id="role_detail" value="MT:998" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:998'}"> checked="true" </c:if></c:forEach> /></label>
-                        <label>999 <input type="checkbox" name="role_detail" id="role_detail" value="MT:999" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:999'}"> checked="true" </c:if></c:forEach> /></label>
-                            </div> -->
-                            <div class="form-row"><span class="labelL">Payment Clearing and Settlement</span>
+                        <div class="form-row"><span class="labelL">Payment Clearing and Settlement</span>
                         <label>PACS.004.001.09 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00400109" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00400109'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>PACS.008.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00800108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00800108'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>PACS.009.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00900108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00900108'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>PACS.009.001.08COV <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00900108cov" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00900108cov'}"> checked="true" </c:if></c:forEach> /></label>
                         </div>
+                </div> 
                         <!-- <div class="form-row"><span class="labelL">Cash Management</span>
                         <label>CAMT.053.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05300108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05300108'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>CAMT.055.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:camt05500108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:camt05500108'}"> checked="true" </c:if></c:forEach> /></label>
@@ -377,7 +375,7 @@
 
                         </div>
                         <!--                <div class="form-row"><span class="labelL">&nbsp;</span>-->
-                        <div class="form-row-action" >
+                        <div class="form-row-action" style="margin:0 12px 0 12px;">
                             <input type="submit" name="submit" id="submit" value="Save" />
                             <!--<input type="button" name="delete_role" id="delete_role" value="Delete" />-->
                             <input type="reset" name="reset" id="reset" value="Reset" />
