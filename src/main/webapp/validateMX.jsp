@@ -42,6 +42,14 @@
         nodeForm.appendChild(input)
         console.log("Input dataXML telah ditambahkan:", input)
         kirimData(xml)
+        
+        //open tab validate
+        $("#tab-view-validate").removeAttr("hidden");
+        $("#view1, #view2").css("display", "none");
+        $("#view3").css("display", "block");
+        $('#tab-view1').removeClass("selected").removeAttr('class');
+        $('#tab-view2').removeClass("selected").removeAttr('class');
+        $('#tab-validate').addClass("selected");
     });
     function kirimData(input) {
         fetch("SCValidateMX", {
@@ -54,7 +62,8 @@
             .then(response => response.text())
             .then(data => {
                 
-                document.getElementById("errorInformation").innerHTML = data;
+//                document.getElementById("errorInformation").innerHTML = data;
+                document.getElementById("errorInformationTable").innerHTML = data;
                 console.log(data)
             })
             .catch(error => console.error("Error:", error));

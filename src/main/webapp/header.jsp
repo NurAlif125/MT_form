@@ -245,7 +245,7 @@
                                                 <c:if test="${item == 'MT:202'}">
                                                 <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
                                                 </c:if>
-                                                <c:if test="${item == 'MT:202'}">
+                                                <c:if test="${item == 'MT:210'}">
                                                 <li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>
                                                 </c:if>
                                                 <%-- <c:if test="${item == 'MT:202COV'}">
