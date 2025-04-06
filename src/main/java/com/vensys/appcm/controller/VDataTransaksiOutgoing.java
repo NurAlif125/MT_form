@@ -272,8 +272,23 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             mxConfiguration.rootElement = "Document";
             mxConfiguration.documentPrefix = null;
             mxConfiguration.headerPrefix = null;
-            
-            if (headerById.getMessageType().contains("pacs.004") || headerById.getMessageType().contains("pacs.008") || headerById.getMessageType().contains("pacs.009") || headerById.getMessageType().contains("camt.053") || headerById.getMessageType().contains("camt.055") || headerById.getMessageType().contains("camt.056") || headerById.getMessageType().contains("camt.107") || headerById.getMessageType().contains("camt.108")) {
+            if (headerById.getMessageType().contains("COV")) {
+                String json = opr.getBodyAnHeaderMXById(Integer.parseInt(request.getParameter("id"))).get("bodyMX");
+                MxPacs00900108 dataMXpacs009 = MxPacs00900108.fromJson(json);
+                dataMXpacs009.setAppHdr(null);
+                String clearMX = dataMXpacs009.message(mxConfiguration);
+                request.setAttribute("dataIsoXML", clearMX);
+                
+                view = request.getRequestDispatcher(headerById.getMessageType().substring(0, 8) + "cov.jsp");
+            } else if (headerById.getMessageType().contains("ADV")) {
+                String json = opr.getBodyAnHeaderMXById(Integer.parseInt(request.getParameter("id"))).get("bodyMX");
+                MxPacs00900108 dataMXpacs009 = MxPacs00900108.fromJson(json);
+                dataMXpacs009.setAppHdr(null);
+                String clearMX = dataMXpacs009.message(mxConfiguration);
+                request.setAttribute("dataIsoXML", clearMX);
+                
+                view = request.getRequestDispatcher(headerById.getMessageType().substring(0, 8) + "adv.jsp");
+            } else if (headerById.getMessageType().contains("pacs.004") || headerById.getMessageType().contains("pacs.008") || headerById.getMessageType().contains("pacs.009") || headerById.getMessageType().contains("camt.053") || headerById.getMessageType().contains("camt.055") || headerById.getMessageType().contains("camt.056") || headerById.getMessageType().contains("camt.107") || headerById.getMessageType().contains("camt.108")) {
                 String json = opr.getBodyAnHeaderMXById(Integer.parseInt(request.getParameter("id"))).get("bodyMX");
                 if (headerById.getMessageType().contains("pacs.004")) {
                     MxPacs00400109 dataMXpacs004 = MxPacs00400109.fromJson(json);

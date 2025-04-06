@@ -1786,4 +1786,20 @@
             inputField.value = uuid;
             inputField.setAttribute("value", uuid);
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusInput = document.getElementById("status"); // Ambil elemen status
+            const form = document.getElementById("form1"); // Ambil elemen form
+
+            if ((statusInput && statusInput.value === "INC" && form) || (statusInput && statusInput.value === "VER" && form) || (statusInput && statusInput.value === "AUTH" && form)) {
+                const allInputs = form.elements; // Ambil semua elemen dalam form sekali saja
+                for (let input of allInputs) {
+                    if (input.tagName === "SELECT" || input.tagName === "BUTTON") {
+                        input.disabled = true;
+                    } else {
+                        input.readOnly = true;
+                    }
+                }
+            }
+        });
     </script>

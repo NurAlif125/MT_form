@@ -312,6 +312,12 @@
                                                 <c:if test="${item == 'MX:pacs00900108'}">
                                                 <li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
+                                                <c:if test="${item == 'MX:pacs00900108cov'}">
+                                                <li><a href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:pacs00900108adv'}">
+                                                <li><a href="main_pacs009adv.jsp">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>
+                                                </c:if>
                                             </c:forEach>
                                     </ul>
                                 </li>

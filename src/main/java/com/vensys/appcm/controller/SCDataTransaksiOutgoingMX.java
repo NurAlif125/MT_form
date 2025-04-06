@@ -214,6 +214,71 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             }
+        } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
+            if (flag.equalsIgnoreCase("MOD")) {
+                String newFlag = "VER";
+                
+                MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
+                
+                String json = dBTrx.getTagsMX(Integer.parseInt(idHeaders));
+                
+                MxPacs00900108 dataOld = MxPacs00900108.fromJson(json);
+                
+                appHeader = (BusinessAppHdrV02) dataOld.getAppHdr();
+                appHeader.setFr(new Party44Choice());
+                appHeader.getFr().setFIId(new BranchAndFinancialInstitutionIdentification6());
+                appHeader.getFr().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
+                appHeader.getFr().getFIId().getFinInstnId().setBICFI(logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12));
+                
+                appHeader.setTo(new Party44Choice());
+                appHeader.getTo().setFIId(new BranchAndFinancialInstitutionIdentification6());
+                appHeader.getTo().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
+                appHeader.getTo().getFIId().getFinInstnId().setBICFI(receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12));
+                
+                if (dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId() != null) {
+                    appHeader.setBizMsgIdr(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId());
+                } else {
+                    String seq;
+                    String tglToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                    String seqDB = dBTrx.getSeq();
+                    String[] arSeq = seqDB.split("#");
+                    seq = arSeq[0].trim();
+                    int seqInt = Integer.parseInt(seq);
+                    String sseqint = String.valueOf(seqInt);
+                    String padder = "";
+                    for (int k = 0; k < 3 - sseqint.length(); k++) {
+                        padder += "0";
+                    }
+                    seq = padder + sseqint;
+                    String resetDate = arSeq[1].trim();
+                    SimpleDateFormat tgl = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date1 = tgl.parse(tglToday);
+                    Date date2 = tgl.parse(resetDate);
+                    String dateUpdate = resetDate;
+                    int tahun = Integer.parseInt(tglToday.substring(0, 4));
+                    String bulan = tglToday.substring(5, 7);
+                    String hari = tglToday.substring(8, 10);
+                    if (date1.compareTo(date2) > 0 || date1.compareTo(date2) == 0) {
+                        tahun = tahun + 1;
+                        dateUpdate = String.valueOf(tahun) + "-01-01";
+                        seq = "000";
+                    } else {
+                        dateUpdate = resetDate;
+                    }
+                    appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
+                }
+                
+                dataMXpacs009.setAppHdr(appHeader);
+                String newXML = dataMXpacs009.message(mxConfiguration);
+                System.out.println("newXML: " + newXML);
+                dBTrx.updateMXText(newXML, Integer.parseInt(idHeaders));
+                
+                String newJson = dataMXpacs009.toJson();
+                dBTrx.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
+                
+                int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+            }
         }
         dbConn.closeConnection();
         RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");

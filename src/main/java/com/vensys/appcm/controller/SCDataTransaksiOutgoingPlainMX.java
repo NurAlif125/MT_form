@@ -66,6 +66,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         
         String receiverAddress = request.getParameter("receiver_institution");
         String logicalTerminal = request.getParameter("sender_logical_terminal");
+        String messType = request.getParameter("messageType");
         
         log.info("The receiver address : " + receiverAddress);
         log.info("The logical terminal : " + logicalTerminal);
@@ -78,8 +79,13 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
         data.setNetworkType("MX");
-        data.setMessageType(abstractMX.getMxId().toString());
-        data.setMessageType(abstractMX.getMxId().toString());
+        if (messType.equalsIgnoreCase("pacs00900108cov")) {
+            data.setMessageType("pacs.009.001.08COV");
+        } else if (messType.equalsIgnoreCase("pacs00900108adv")) {
+            data.setMessageType("pacs.009.001.08ADV");
+        } else {
+            data.setMessageType(abstractMX.getMxId().toString());
+        }
         data.setSender_logical_terminal(logicalTerminal);
         data.setReceiver_institution(receiverAddress);
         data.setPriority("N");
@@ -113,7 +119,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         appHeader.getTo().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
         appHeader.getTo().getFIId().getFinInstnId().setBICFI(receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12));
         
-        appHeader.setBizSvc("swift.cbprplus.03");
+        if (messType.contains("cov")) {
+            appHeader.setBizSvc("swift.cbprplus.cov.03");
+        } else if (messType.contains("adv")) {
+            appHeader.setBizSvc("swift.cbprplus.adv.03");
+        } else {
+            appHeader.setBizSvc("swift.cbprplus.03");
+        }
+        
         appHeader.setCreationDate(true);
         
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {

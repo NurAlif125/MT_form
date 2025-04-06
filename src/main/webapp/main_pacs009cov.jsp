@@ -1,6 +1,6 @@
 <%-- 
-    Document   : main_pacs009
-    Created on : Feb 10, 2025, 4:14:12 PM
+    Document   : main_pacs009cov
+    Created on : Apr 5, 2025, 5:02:59 AM
     Author     : rafli
 --%>
 
@@ -13,10 +13,10 @@
 <link href="css/tabcontent.css" rel="stylesheet" type="text/css" />
 <div id="isi">
     <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'MX:pacs00900108'}">
-            <div id="judul">PACS.009.001.08 Financial Institution Credit Transfer V08</div>
+        <c:if test="${item == 'MX:pacs00900108cov'}">
+            <div id="judul">PACS.009.001.08COV Financial Institution Credit Transfer V08</div>
             <form id="form1" name="form1" method="post" action="SCDataTransaksiOutgoingPlainMX">
-                <input name="messageType" id="messageType" type="hidden" value="pacs00900108" />
+                <input name="messageType" id="messageType" type="hidden" value="pacs00900108cov" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
@@ -28,7 +28,7 @@
                             <%@ include file="header_mt.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
-                            <%@ include file="pacs00900108.jsp" %>
+                            <%@ include file="pacs00900108cov.jsp" %>
                         </div>
                         <div id="view3" class="tabcontent">
                             <div id="error-container"></div>

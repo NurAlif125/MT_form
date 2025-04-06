@@ -1,6 +1,6 @@
 <%-- 
-    Document   : pacs.009
-    Created on : Feb 28, 2025, 10:15:41 AM
+    Document   : pacs.009adv
+    Created on : Apr 6, 2025, 10:30:30 PM
     Author     : rafli
 --%>
 
@@ -28,7 +28,7 @@
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MX:pacs00900108'}">
-            <div id="judul">PACS.009.001.08 Financial Institution Credit Transfer V08</div>
+            <div id="judul">PACS.009.001.08ADV Financial Institution Credit Transfer V08</div>
             <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingMX" onsubmit="return confirm('Do you want to save this MX data?');">
                 <input type="hidden" name="status" id="status" value="${headerById.flag}" />
                 <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
@@ -47,7 +47,7 @@
                             <%@ include file="header_mt.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
-                            <%@ include file="pacs00900108.jsp" %>
+                            <%@ include file="pacs00900108adv.jsp" %>
                         </div>
                         <div id="view3" class="tabcontent">
                             <div class="form-row">
