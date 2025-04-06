@@ -98,6 +98,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             data.setMulti_currency(request.getParameter("multi_currency"));
             header.setLogicalTerminal(data.getSender_logical_terminal());
             header.setReceiverAddress(data.getReceiver_institution());
+            data.setNetworkType("MT");
 //            header.setTanggal(now.toString());//tanggal date time formatter
 //            header.setTanggal_date(now);
 

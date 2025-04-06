@@ -770,13 +770,13 @@ public class DBHeader {
 //        } else {
 //            where += "io_type IN ('') AND ";
 //        }
-////        SRC:MANUAL,SRC:GTFRAME
-//        if (list.contains("SRC:MANUAL") && list.contains("SRC:GTFRAME") && list.contains("SRC:UPLOAD")) {
-//            where += "userEntry IN ('SRC:MANUAL','SRC:GTFRAME','SRC:UPLOAD') "; //role diganti jadi where. AND dihapus
-//        } else if (list.contains("SRC:MANUAL") && list.contains("SRC:GTFRAME")) {
-//            where += "userEntry IN ('SRC:MANUAL','SRC:GTFRAME') ";
-//        } else if (list.contains("SRC:GTFRAME") && list.contains("SRC:UPLOAD")) {
-//            where += "userEntry IN ('SRC:GTFRAME','SRC:UPLOAD') ";
+////        SRC:MANUAL,SRC:FIA
+//        if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA") && list.contains("SRC:UPLOAD")) {
+//            where += "userEntry IN ('SRC:MANUAL','SRC:FIA','SRC:UPLOAD') "; //role diganti jadi where. AND dihapus
+//        } else if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA")) {
+//            where += "userEntry IN ('SRC:MANUAL','SRC:FIA') ";
+//        } else if (list.contains("SRC:FIA") && list.contains("SRC:UPLOAD")) {
+//            where += "userEntry IN ('SRC:FIA','SRC:UPLOAD') ";
 //        } else if (list.contains("SRC:MANUAL") && list.contains("SRC:UPLOAD")) {
 //            where += "userEntry IN ('SRC:MANUAL','SRC:UPLOAD') ";
 //        } else {
@@ -991,13 +991,13 @@ System.out.println("Session ID: " + httpSession.getId());
         } else {
             where += "io_type IN ('') AND ";
         }
-//        SRC:MANUAL,SRC:GTFRAME
-        if (list.contains("SRC:MANUAL") && list.contains("SRC:GTFRAME") && list.contains("SRC:UPLOAD")) {
-            where += "userEntry IN ('SRC:MANUAL','SRC:GTFRAME','SRC:UPLOAD') "; //role diganti jadi where. AND dihapus
-        } else if (list.contains("SRC:MANUAL") && list.contains("SRC:GTFRAME")) {
-            where += "userEntry IN ('SRC:MANUAL','SRC:GTFRAME') ";
-        } else if (list.contains("SRC:GTFRAME") && list.contains("SRC:UPLOAD")) {
-            where += "userEntry IN ('SRC:GTFRAME','SRC:UPLOAD') ";
+//        SRC:MANUAL,SRC:FIA
+        if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA") && list.contains("SRC:UPLOAD")) {
+            where += "userEntry IN ('SRC:MANUAL','SRC:FIA','SRC:UPLOAD') "; //role diganti jadi where. AND dihapus
+        } else if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA")) {
+            where += "userEntry IN ('SRC:MANUAL','SRC:FIA') ";
+        } else if (list.contains("SRC:FIA") && list.contains("SRC:UPLOAD")) {
+            where += "userEntry IN ('SRC:FIA','SRC:UPLOAD') ";
         } else if (list.contains("SRC:MANUAL") && list.contains("SRC:UPLOAD")) {
             where += "userEntry IN ('SRC:MANUAL','SRC:UPLOAD') ";
         } else {
@@ -1145,23 +1145,23 @@ System.out.println("Session ID: " + httpSession.getId());
         } else {
             role += "io_type IN ('') AND ";
         }
-//        SRC:MANUAL,SRC:GTFRAME
-        if (list.contains("SRC:MANUAL") && list.contains("SRC:GTFRAME")) {
-            role += "userEntry IN ('SRC:MANUAL','SRC:GTFRAME') AND ";
+//        SRC:MANUAL,SRC:FIA
+        if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA")) {
+            role += "userEntry IN ('SRC:MANUAL','SRC:FIA') AND ";
         } else if (list.contains("SRC:MANUAL")) {
             role += "userEntry IN ('SRC:MANUAL') AND ";
-        } else if (list.contains("SRC:GTFRAME")) {
-            role += "userEntry IN ('SRC:GTFRAME') AND ";
+        } else if (list.contains("SRC:FIA")) {
+            role += "userEntry IN ('SRC:FIA') AND ";
         } else {
             role += "userEntry IN ('') AND ";
         }
 //        FLOW:MOD,FLOW:VER,FLOW:AUTH,FLOW:TEXT
-//        if (list.contains("SRC:MANUAL") && list.contains("SRC:GTFRAME")) {
-//            role += "userEntry IN ('SRC:MANUAL','SRC:GTFRAME') AND ";
+//        if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA")) {
+//            role += "userEntry IN ('SRC:MANUAL','SRC:FIA') AND ";
 //        } else if (list.contains("SRC:MANUAL")) {
 //            role += "userEntry IN ('SRC:MANUAL') AND ";
-//        } else if (list.contains("SRC:GTFRAME")) {
-//            role += "userEntry IN ('SRC:GTFRAME') AND ";
+//        } else if (list.contains("SRC:FIA")) {
+//            role += "userEntry IN ('SRC:FIA') AND ";
 //        } else {
 //            role += "userEntry IN ('') AND ";
 //        }
