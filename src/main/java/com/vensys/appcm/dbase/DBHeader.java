@@ -1106,12 +1106,13 @@ System.out.println("Session ID: " + httpSession.getId());
             header.setTrans_refference(rs.getString(14));
             header.setTrans_related_refference(rs.getString(15));
             header.setTrans_amount(rs.getString(17));
-            header.setTrans_date_value(rs.getString(16));
-            if (rs.getString(18) == null) {
-                header.setTrans_ccy("0");
+            if (rs.getString(17) == null) {
+                header.setTrans_amount("0");
             } else {
-                header.setTrans_ccy(rs.getString(16).replace(",", "."));
+                header.setTrans_amount(rs.getString(17).replace(",", "."));
             }
+            header.setTrans_date_value(rs.getString(16));
+            header.setTrans_ccy(rs.getString(18));
 
 //            header.setTrans_ccy(rs.getString(15));
 //            header.setTag20(rs.getString(12));
