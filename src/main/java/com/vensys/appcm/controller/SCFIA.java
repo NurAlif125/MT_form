@@ -43,7 +43,7 @@ public class SCFIA extends HttpServlet {
         data.setNeedconverted(Integer.parseInt(request.getParameter("needconverted")));
         data.setSourceto(request.getParameter("sourceto"));
         if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-            //dbData.addBic(data);
+            dbData.addFIA(data);
         } else {
             dbData.updateFIA(data, id);
         }

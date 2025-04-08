@@ -31,7 +31,6 @@ public class DBFIA {
         this.conn = conn;
     }
     Logger log = Logger.getLogger(getClass().getName());
-	//select source,mtormx,needcheckaml,needconverted,sourceto from configuration_fia
     public void addFIA(DataFIA data) {
         try {
             String sql = "INSERT INTO configuration_fia(source,mtormx,needcheckaml,needconverted,sourceto) VALUES (?,?,?,?,?)";
@@ -116,8 +115,8 @@ public class DBFIA {
                 rs.getString(1),
                 rs.getString(2),
                 rs.getString(3),
-                rs.getString(4),
-                rs.getString(5),
+                rs.getInt(4)==1 ? "Yes" : "No",
+                rs.getInt(5)==1 ? "Yes" : "No",
                 rs.getString(6),                
                 };
             datas.add(value);
