@@ -37,8 +37,16 @@
         <servlet-class>com.vensys.appcm.controller.SCBIC</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SCFIA</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCFIA</servlet-class>
+    </servlet>    
+    <servlet>
         <servlet-name>SCBICList</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCBICList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCFIAList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCFIAList</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletControllerChangeUserData</servlet-name>
@@ -297,6 +305,10 @@
         <servlet-class>com.vensys.appcm.controller.VBIC</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>VFIA</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.VFIA</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>VDataAccBalance</servlet-name>
         <servlet-class>com.vensys.appcm.controller.VDataAccBalance</servlet-class>
     </servlet>
@@ -480,8 +492,16 @@
         <url-pattern>/SCBIC</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SCFIA</servlet-name>
+        <url-pattern>/SCFIA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SCBICList</servlet-name>
         <url-pattern>/SCBICList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCFIAList</servlet-name>
+        <url-pattern>/SCFIAList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletControllerChangeUserData</servlet-name>
@@ -742,6 +762,10 @@
     <servlet-mapping>
         <servlet-name>VBIC</servlet-name>
         <url-pattern>/VBIC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VFIA</servlet-name>
+        <url-pattern>/VFIA</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>VDataAccBalance</servlet-name>

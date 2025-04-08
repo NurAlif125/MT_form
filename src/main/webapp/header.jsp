@@ -132,6 +132,11 @@
                                 <li><a href="SCDataMTList">Message Queue</a></li>
                             </c:if>
                         </c:forEach>
+                        <c:forEach var="item" items="${role}">
+                            <c:if test="${item == 'FIACONF:LIST'}">
+                                <li><a href="SCFIAList">FIA Configuration</a></li>
+                            </c:if>
+                        </c:forEach>
                         <!-- <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'ACCP:LIST'}">
                                 <li><a href="SCDataAccPenagihanList">Account Penagihan</a></li>
