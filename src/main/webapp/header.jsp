@@ -13,6 +13,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <%@ page import="java.text.*,java.util.*" session="true"%>
     <%
@@ -275,7 +276,7 @@
                                 </c:forEach>
                             </ul>
                         </li> -->
-                                <li><span class="dir">Message Category 9</span>
+<!--                                <li><span class="dir">Message Category 9</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <%-- <c:if test="${item == 'MT:910'}">
@@ -295,7 +296,7 @@
                                                  </c:if>--%>
                                             </c:forEach>
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li><span class="dir">MX</span>

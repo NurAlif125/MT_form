@@ -8,6 +8,10 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %> 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -266,27 +270,6 @@
                                         </c:if>
                                         <c:if test="${item == 'MT:767'}">
                                         <li><a href="mt767.jsp">767 - Amendment to a Demand Guarantee/Standby Guarantee/Standby Letter of Credit</a></li>
-                                        </c:if>
-                                    </c:forEach>
-                            </ul>
-                        </li>
-                        <li><span class="dir">Message Category 9</span>
-                            <ul>
-                                <c:forEach var="item" items="${role}">
-                                    <c:if test="${item == 'MT:910'}">
-                                        <li><a href="mt910.jsp">910 - Confirmation of Credit</a></li>
-                                        </c:if>
-                                        <%--c:if test="${item == 'MT:940'}">
-                                            <li><a href="mt940.jsp">940 - Customer Statement Message</a></li>
-                                            </c:if>
-                                            <c:if test="${item == 'MT:942'}">
-                                            <li><a href="mt942.jsp">942 - Interim Transaction Report</a></li>
-                                            </c:if>
-                                            <c:if test="${item == 'MT:950'}">
-                                            <li><a href="mt950.jsp">950 - Statement Message</a></li>
-                                            </c:if--%>
-                                        <c:if test="${item == 'MT:999'}">
-                                        <li><a href="mt999.jsp">999 - Free Format Message</a></li>
                                         </c:if>
                                     </c:forEach>
                             </ul>
