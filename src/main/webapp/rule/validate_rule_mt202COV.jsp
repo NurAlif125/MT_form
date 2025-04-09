@@ -63,25 +63,25 @@
 
             },
             messages: {
-                sender_logical_terminal: {required: "sender_logical_terminal harus diisi..!!"},
-                receiver_institution: {required: "receiver_institution harus diisi..!!"},
-                priority: {required: "priority harus diisi..!!"},
+                sender_logical_terminal: {required: "sender_logical_terminal must be filled..!!"},
+                receiver_institution: {required: "receiver_institution must be filled..!!"},
+                priority: {required: "priority must be filled..!!"},
                 
                 //body
-                _010_mf20_sender_reference: {required: "mf20 Sender Reference harus diisi..!!"},
-                _011_mf21_: {required: "mf21 harus diisi..!!"},
-                _060_mf32a_date: {required: "mf32a_date harus diisi..!!"},
-                _061_mf32a_currency: {required: "mf32a_currency harus diisi..!!"},
-                _062_mf32a_amount: {required: "mf32a_amount harus diisi..!!"},
-                _111_of52a_identifier_code: {required: "of52a_identifier_code harus diisi..!!"},
-                _114_of52d_name_address: {required: "of52d_name_address harus diisi..!!"},
-                _181_of58a_identifier_code: {required: "of58a_identifier_code harus diisi..!!"},
-                _184_of58d_name_address: {required: "of58d_name_address harus diisi..!!"},
-                type_mf50_ordering_customer: {required: "mf50_ordering_customer harus diisi..!!"},
-                _241_mf50a_identifier_code: {required: "mf50a_identifier_code harus diisi..!!"},
-                _243_mf50f_party_identifier: {required: "mf50f_party_identifier harus diisi..!!"},
-                _244_mf50f_name_address: {required: "mf50f_name_address harus diisi..!!"},
-                _246_mf50k_name_address: {required: "mf50k_name_address harus diisi..!!"}
+                _010_mf20_sender_reference: {required: "mf20 Sender Reference must be filled..!!"},
+                _011_mf21_: {required: "mf21 must be filled..!!"},
+                _060_mf32a_date: {required: "mf32a_date must be filled..!!"},
+                _061_mf32a_currency: {required: "mf32a_currency must be filled..!!"},
+                _062_mf32a_amount: {required: "mf32a_amount must be filled..!!"},
+                _111_of52a_identifier_code: {required: "of52a_identifier_code must be filled..!!"},
+                _114_of52d_name_address: {required: "of52d_name_address must be filled..!!"},
+                _181_of58a_identifier_code: {required: "of58a_identifier_code must be filled..!!"},
+                _184_of58d_name_address: {required: "of58d_name_address must be filled..!!"},
+                type_mf50_ordering_customer: {required: "mf50_ordering_customer must be filled..!!"},
+                _241_mf50a_identifier_code: {required: "mf50a_identifier_code must be filled..!!"},
+                _243_mf50f_party_identifier: {required: "mf50f_party_identifier must be filled..!!"},
+                _244_mf50f_name_address: {required: "mf50f_name_address must be filled..!!"},
+                _246_mf50k_name_address: {required: "mf50k_name_address must be filled..!!"}
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);

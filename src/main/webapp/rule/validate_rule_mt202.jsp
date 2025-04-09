@@ -59,44 +59,44 @@
             },
             messages: {
                 //header
-                sender_logical_terminal: {required: "sender_logical_terminal harus diisi..!!"},
-                receiver_institution: {required: "receiver_institution harus diisi..!!"},
-                priority: {required: "priority harus diisi..!!"},
+                sender_logical_terminal: {required: "sender_logical_terminal must be filled..!!"},
+                receiver_institution: {required: "receiver_institution must be filled..!!"},
+                priority: {required: "priority must be filled..!!"},
                 
                 //body
-                _010_mf20_sender_reference: {required: "mf20 harus diisi..!!"},
+                _010_mf20_sender_reference: {required: "mf20 must be filled..!!"},
                 
-                _011_mf21_: {required: "mf21 harus diisi..!!"},
+                _011_mf21_: {required: "mf21 must be filled..!!"},
 
                 //mf32a
-                _060_mf32a_date: {required: "MF32a Date harus diisi..!!"},
-                _061_mf32a_currency: {required: "MF32a Currency harus diisi..!!"},
-                _062_mf32a_amount: {required: "MF32a Amount harus diisi..!!"},
+                _060_mf32a_date: {required: "MF32a Date must be filled..!!"},
+                _061_mf32a_currency: {required: "MF32a Currency must be filled..!!"},
+                _062_mf32a_amount: {required: "MF32a Amount must be filled..!!"},
 
                 //of52
-                _111_of52a_identifier_code: {required: "Of52A Identifier Code harus diisi..!!"},
-                _114_of52d_name_address: {required: "Of52D Name Address harus diisi..!!"},
+                _111_of52a_identifier_code: {required: "Of52A Identifier Code must be filled..!!"},
+                _114_of52d_name_address: {required: "Of52D Name Address must be filled..!!"},
 
                 //of53
-                _121_of53a_identifier_code: {required: "Of53A Identifier Code harus diisi..!!"},
-                _126_of53d_name_address: {required: "Of53D Name Address harus diisi..!!"},
+                _121_of53a_identifier_code: {required: "Of53A Identifier Code must be filled..!!"},
+                _126_of53d_name_address: {required: "Of53D Name Address must be filled..!!"},
 
                 //of54
-                _131_of54a_identifier_code: {required: "Of54A Identifier Code harus diisi..!!"},
-                _136_of54d_name_address: {required: "Of54D Name Address harus diisi..!!"},
+                _131_of54a_identifier_code: {required: "Of54A Identifier Code must be filled..!!"},
+                _136_of54d_name_address: {required: "Of54D Name Address must be filled..!!"},
 
                 //of56
-                _161_of56a_identifier_code: {required: "Of56A Identifier Code harus diisi..!!"},
-                _165_of56d_name_address: {required: "Of56D Name Address harus diisi..!!"},
+                _161_of56a_identifier_code: {required: "Of56A Identifier Code must be filled..!!"},
+                _165_of56d_name_address: {required: "Of56D Name Address must be filled..!!"},
 
                 //of57
-                _171_of57a_identifier_code: {required: "Of57A Identifier Code harus diisi..!!"},
-                _177_of57d_name_address: {required: "Of57D Name Address harus diisi..!!"},
+                _171_of57a_identifier_code: {required: "Of57A Identifier Code must be filled..!!"},
+                _177_of57d_name_address: {required: "Of57D Name Address must be filled..!!"},
 
                 //of58
-                type_of58_: {required: "Of58 harus diisi..!!"},
-                _181_of58a_identifier_code: {required: "Of58A Identifier Code harus diisi..!!"},
-                _184_of58d_name_address: {required: "Of57D Name Address harus diisi..!!"}
+                type_of58_: {required: "Of58 must be filled..!!"},
+                _181_of58a_identifier_code: {required: "Of58A Identifier Code must be filled..!!"},
+                _184_of58d_name_address: {required: "Of57D Name Address must be filled..!!"}
                 
             },
             errorPlacement: function (error, element) {
