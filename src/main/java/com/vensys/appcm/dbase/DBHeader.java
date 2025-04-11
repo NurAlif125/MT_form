@@ -1078,7 +1078,7 @@ System.out.println("Session ID: " + httpSession.getId());
                      SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,
                      h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,
                      h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
-                     FROM headers h INNER JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
+                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
                 + "ORDER BY tanggal DESC";
         System.out.println("sql header....= " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
