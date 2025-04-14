@@ -1066,8 +1066,18 @@ System.out.println("Session ID: " + httpSession.getId());
             where += " AND flag='CVT-VER' ";
         } else if (flag.equalsIgnoreCase("WAITING-AML")) {
             where += " AND flag='WAITING-AML' ";
-        } else if (flag.equalsIgnoreCase("CVT-INC")) {
-            where += " AND flag='CVT-INC' ";
+        } else if (flag.equalsIgnoreCase("INC-CVT")) {
+            where += " AND flag='INC-CVT' ";
+        } else if (flag.equalsIgnoreCase("INC")) { 
+            where += " AND flag='INC' ";
+        } else if (flag.equalsIgnoreCase("RESEND-CNF")) { 
+            where += " AND flag='RESEND-CNF' ";
+        } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) { 
+            where += " AND flag='INC-REJECT-CNF' ";
+        } else if (flag.equalsIgnoreCase("INC-AML")) { 
+            where += " AND flag='INC-AML' ";
+        } else if (flag.equalsIgnoreCase("AML-TERMINATE")) { 
+            where += " AND flag='AML-TERMINATE' ";
         }
         
         else {
