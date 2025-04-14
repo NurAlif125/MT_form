@@ -98,7 +98,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         } else {
             data.setBlock3(null);
         }
-        data.setFlag(dBTrx.getFlagFromQueue(abstractMX.getMxId().toString()));
+        data.setFlag("VER");
 //        data.setBlock3(UUID.randomUUID().toString());
         String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         
