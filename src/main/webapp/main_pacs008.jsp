@@ -40,7 +40,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="errorInformationTable"></tbody>
-                                </table>
+                                </table> 
                             </div>
                         </div>
                     </div>
