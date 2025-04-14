@@ -9,6 +9,7 @@ import com.prowidesoftware.swift.model.mx.AbstractMX;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.vensys.appcm.rulePacs.rulePacs008;
+import com.vensys.appcm.rulePacs.rulePacs008_2024;
 import com.vensys.appcm.rulePacs.rulePacs009;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,11 +41,13 @@ public class SCValidateMX extends HttpServlet {
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         String dataXml = request.getParameter("dataXML");
+        String logicalTerminal = request.getParameter("sender_logical_terminal");
+        String receiverAddress = request.getParameter("receiver_institution");
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
-            rulePacs008 rulepacs008 = new rulePacs008(dataMXpacs008);
-            rulepacs008.runRules();
+            rulePacs008_2024 rulepacs008 = new rulePacs008_2024 (dataMXpacs008);
+            rulepacs008.runRules(logicalTerminal, receiverAddress);
             String errorRulePacs008 = rulepacs008.getErrorRule();
             System.out.println(errorRulePacs008);
             out.print(errorRulePacs008);
