@@ -35,14 +35,14 @@
                         <label>Outgoing & Incoming <input type="radio" name="role_detail" id="role_detail" value="TYPE:OUTGOING_INCOMING" <c:forEach var="item" items="${list}"><c:if test="${item == 'TYPE:OUTGOING_INCOMING'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Outgoing <input type="radio" name="role_detail" id="role_detail" value="TYPE:OUTGOING" <c:forEach var="item" items="${list}"><c:if test="${item == 'TYPE:OUTGOING'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Incoming <input type="radio" name="role_detail" id="role_detail" value="TYPE:INCOMING" <c:forEach var="item" items="${list}"><c:if test="${item == 'TYPE:INCOMING'}"> checked="true" </c:if></c:forEach> /></label>
-                            </div>
-                            <div class="form-row"><span class="labelL">Source</span>
-                                <label>Manual <input type="checkbox" name="role_detail" id="role_detail" value="SRC:MANUAL" <c:forEach var="item" items="${list}"><c:if test="${item == 'SRC:MANUAL'}"> checked="true" </c:if></c:forEach> /></label>
-                                <!--<label>Upload <input type="checkbox" name="role_detail" id="role_detail" value="SRC:UPLOAD" <c:forEach var="item" items="${list}"><c:if test="${item == 'SRC:UPLOAD'}"> checked="true" </c:if></c:forEach> /></label>-->
-                                <label>Fiorano <input type="checkbox" name="role_detail" id="role_detail" value="SRC:FIA" <c:forEach var="item" items="${list}"><c:if test="${item == 'SRC:FIA'}"> checked="true" </c:if></c:forEach> /></label>
-                            </div>
-                            <div class="form-row"><span class="labelL">Flow</span>
-                                <label>Reject <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:REJECT" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:REJECT'}"> checked="true" </c:if></c:forEach> /></label>
+                    </div>
+                    <div class="form-row"><span class="labelL">Source</span>
+                        <label>Manual <input type="checkbox" name="role_detail" id="role_detail" value="SRC:MANUAL" <c:forEach var="item" items="${list}"><c:if test="${item == 'SRC:MANUAL'}"> checked="true" </c:if></c:forEach> /></label>
+                        <!--<label>Upload <input type="checkbox" name="role_detail" id="role_detail" value="SRC:UPLOAD" <c:forEach var="item" items="${list}"><c:if test="${item == 'SRC:UPLOAD'}"> checked="true" </c:if></c:forEach> /></label>-->
+                        <label>Fiorano <input type="checkbox" name="role_detail" id="role_detail" value="SRC:FIA" <c:forEach var="item" items="${list}"><c:if test="${item == 'SRC:FIA'}"> checked="true" </c:if></c:forEach> /></label>
+                    </div>
+                    <div class="form-row"><span class="labelL">Flow</span>
+                        <label>Reject <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:REJECT" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:REJECT'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Create <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:CREATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:CREATE'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Modify <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:MOD" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:MOD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Verify <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:VER" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:VER'}"> checked="true" </c:if></c:forEach> /></label>
@@ -55,8 +55,16 @@
                         <label>NACK <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:NACK" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:NACK'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Print <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:PRINT" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:PRINT'}"> checked="true" </c:if></c:forEach> /></label>
                         <!--<label>Incoming <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC'}"> checked="true" </c:if></c:forEach> /></label>-->
-                        <label>Incoming Convert <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:CVT-INC" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:CVT-INC'}"> checked="true" </c:if> </c:forEach> /></label>
-                    </div> 
+                        <label>Incoming Transaction <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC'}"> checked="true" </c:if> </c:forEach> /></label>
+                    </div>
+                    <div class="form-row"><span class="labelL">&nbsp;</span>
+                        <label>Incoming Convert <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-CVT" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-CVT'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Incoming Convert Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:RESEND-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:RESEND-CNF'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Incoming Reject Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-REJECT-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-REJECT-CNF'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Incoming Waiting AML <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-AML" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-AML'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Resend to Channel <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:Un-Settle" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:Un-Settle'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Waiting AML Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:AML-TERMINATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:AML-TERMINATE'}"> checked="true" </c:if> </c:forEach> /></label>
+                    </div>
                     <div class="form-row"><span class="labelL">Menu</span>
                         <label>Dashboard <input type="checkbox" name="role_detail" id="role_detail" value="MENU:DASHBOARD" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:DASHBOARD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Master <input type="checkbox" name="role_detail" id="role_detail" value="MENU:MASTER" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:MASTER'}"> checked="true" </c:if></c:forEach> /></label>
@@ -72,22 +80,22 @@
                     </div>
                     <div class="form-row">
                         <span class="labelL"> Daily Outgoing Transactions</span>
-                        <label>List<input type="checkbox" name="role_detail" id="role_detail" value="DOT:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'DOT:LIST'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>List <input type="checkbox" name="role_detail" id="role_detail" value="DOT:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'DOT:LIST'}"> checked="true" </c:if></c:forEach> /></label>
                             </div>
-                            <div class="form-row">
-                                <span class="labelL">Message Queue</span>
-                                <label>List <input type="checkbox" name="role_detail" id="role_detail" value="MT_QUEUE:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT_QUEUE:LIST'}"> checked="true" </c:if></c:forEach> /></label>
+<!--                    <div class="form-row">
+                        <span class="labelL">Message Queue</span>
+                        <label>List <input type="checkbox" name="role_detail" id="role_detail" value="MT_QUEUE:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT_QUEUE:LIST'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Add <input type="checkbox" name="role_detail" id="role_detail" value="MT_QUEUE:ADD" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT_QUEUE:ADD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="MT_QUEUE:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT_QUEUE:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="MT_QUEUE:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT_QUEUE:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
-                            </div>
-                            <div class="form-row">
-                                <span class="labelL">BIC</span>
-                                <label>List <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:LIST'}"> checked="true" </c:if></c:forEach> /></label>
+                    </div>-->
+                    <div class="form-row">
+                        <span class="labelL">BIC</span>
+                        <label>List <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:LIST'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Add <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:ADD" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:ADD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
-                            </div>
+                    </div>
                     <div class="form-row">
                         <span class="labelL">User</span>
                         <label>List <input type="checkbox" name="role_detail" id="role_detail" value="USER:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:LIST'}"> checked="true" </c:if></c:forEach> /></label>
@@ -120,7 +128,7 @@
                         <label>202 <input type="checkbox" name="role_detail" id="role_detail" value="MT:202" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:202'}"> checked="true" </c:if></c:forEach> /></label>
 
                         <label>202COV <input type="checkbox" name="role_detail" id="role_detail" value="MT:202COV" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:202COV'}"> checked="true" </c:if></c:forEach> /></label>
-                        <label>210 <input type="checkbox" name="role_detail" id="role_detail" value="MT:210" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:210'}"> checked="true" </c:if></c:forEach> /></label> 
+                        <!--<label>210 <input type="checkbox" name="role_detail" id="role_detail" value="MT:210" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:210'}"> checked="true" </c:if></c:forEach> /></label>--> 
                         <!-- <label>290 <input type="checkbox" name="role_detail" id="role_detail" value="MT:290" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:290'}"> checked="true" </c:if></c:forEach> /></label> -->
                         <!-- <label>291 <input type="checkbox" name="role_detail" id="role_detail" value="MT:291" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:291'}"> checked="true" </c:if></c:forEach> /></label> -->
                         <!-- <label>292 <input type="checkbox" name="role_detail" id="role_detail" value="MT:292" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:292'}"> checked="true" </c:if></c:forEach> /></label> -->

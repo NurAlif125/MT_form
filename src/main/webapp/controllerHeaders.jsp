@@ -33,7 +33,7 @@
         <c:if test="${item == 'MENU:LIST_TRANSACTIONS'}">
             <div id="judul">List of <% if (menu.equalsIgnoreCase("1")) { %>Modification
                 <% } else if (menu.equalsIgnoreCase("2")) { %> Verification
-                <% } else if (menu.equalsIgnoreCase("3")) { %> Authorization
+                <% } else if (menu.equalsIgnoreCase("3")) { %> Authorize
                 <% } else if (menu.equalsIgnoreCase("4")) { %> Text Generation
                 <% } else if (menu.equalsIgnoreCase("5")) { %> NACK
                 <% } else if (menu.equalsIgnoreCase("6")) { %> Incoming Wait
@@ -55,6 +55,12 @@
                 <% } else if (menu.equalsIgnoreCase("21")) { %> Verify Convert
                 <% } else if (menu.equalsIgnoreCase("22")) { %> Waiting AML
                 <% } else if (menu.equalsIgnoreCase("23")) { %> Incoming Convert
+                <% } else if (menu.equalsIgnoreCase("24")) { %> Incoming
+                <% } else if (menu.equalsIgnoreCase("25")) { %> Incoming Convert Confirmation
+                <% } else if (menu.equalsIgnoreCase("26")) { %> Incoming Reject Confirmation
+                <% } else if (menu.equalsIgnoreCase("27")) { %> Incoming Waiting AML
+                <% } else if (menu.equalsIgnoreCase("28")) { %> Un-Settle 
+                <% } else if (menu.equalsIgnoreCase("29")) { %> Waiting AML Confirmation 
                 <% } %>
                 Transactions 
             </div>
