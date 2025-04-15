@@ -40,9 +40,12 @@
         input.setAttribute("type", "hidden")
         input.setAttribute("value", xml)
         nodeForm.appendChild(input)
+        let sender = $('#sender_logical_terminal').val();
+        let receiver = $('#receiver_institution').val();
+        
         console.log("Input dataXML telah ditambahkan:", input)
         document.getElementById("errorInformationTable").innerHTML= '';
-        kirimData(xml)
+        kirimData(xml, sender, receiver)
         
         //open tab validate
         $("#tab-view-validate").removeAttr("hidden");
@@ -52,13 +55,15 @@
         $('#tab-view2').removeClass("selected").removeAttr('class');
         $('#tab-validate').addClass("selected");
     });
-    function kirimData(input) {
+    
+  
+    function kirimData(input, sender, receiver) {
         fetch("SCValidateMX", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: "dataXML=" + encodeURIComponent(input)
+            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)
         })
             .then(response => response.text())
             .then(data => {
