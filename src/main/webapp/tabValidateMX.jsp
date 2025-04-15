@@ -60,22 +60,10 @@
             let inputType = errors.element.getAttribute("input_type") || "";
 
             formHeaderValidate += '<tr class="error__row" input-id="'+inputID+'" content-body="'+locationTab+'" onmouseover="this.style.background=\'#f6f6f6\'" onmouseout="this.style.backgroundColor=\'transparent\'" style="cursor:pointer;">';
-    //        formHeaderValidate += '<td style="padding: 5px;">Error</td>';
-            formHeaderValidate += '<td style="padding: 5px;">'+errors.message+'</td>'; // Message dulu
-            formHeaderValidate += '<td style="padding: 5px;">'+inputType+' (Header)</td>';   
-    //        formHeaderValidate += '<td style="padding: 5px;">'+locationTab+'</td></tr>';
+            formHeaderValidate += '<td style="padding: 5px;">'+errors.message+'</td>';
+            formHeaderValidate += '<td style="padding: 5px;">'+inputType+' (Header)</td>';  
             formHeaderValidate += '</tr>';
         });    
-
-    //    let tableValidate = `<table id="errorInfoTable">
-    //        <thead>
-    //            <tr>
-    //            <th>Message</th>
-    //            <th>Path</th>
-    //            </tr>
-    //        </thead>`;
-    //        tableValidate += '<tbody id="errorInformationTable">'+formHeaderValidate+'</tbody>'
-    //        tableValidate += `</table>`;
 
         document.getElementById("errorInformationTable").innerHTML = formHeaderValidate;
     }
@@ -83,18 +71,10 @@
     function clickFocusValidate() {
         document.querySelectorAll(".error__row").forEach(row => {
             row.addEventListener("click", function (event) {
-    //                    let targetRow = event.target.closest(".error__row"); 
-    //                    let inputId = getAttribute("data-input-id");
-    //                    let tabContentGroup = getAttribute("content-body");
-
             let targetRow = event.target.closest(".error__row"); 
             if (!targetRow) return;
-
-            // Perbaikan: Panggil getAttribute pada targetRow
             let inputId = targetRow.getAttribute("input-id");
             let tabContentGroup = targetRow.getAttribute("content-body");
-
-            console.log("Baris error diklik");
 
             let input = document.getElementById(inputId);
             if (!input) {
