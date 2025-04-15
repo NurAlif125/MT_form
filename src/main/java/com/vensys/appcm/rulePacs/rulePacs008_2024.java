@@ -51,12 +51,12 @@ public class rulePacs008_2024 {
     public void runRules(String logicalTerminal, String receiverAddress) {
         String msgId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
         if (msgId == null || msgId.equalsIgnoreCase("") || msgId.isEmpty()) {
-            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/MsgId\"><td><a href=\"#FIToFICstmrCdtTrf/GrpHdr/MsgId\">MessageIdentification is mandatory!</a></td><td>FIToFICstmrCdtTrf/GrpHdr/MsgId</td></tr>");
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/MsgId\"><td>MessageIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/GrpHdr/MsgId</td></tr>");
         }
 
         OffsetDateTime creDtTm = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getCreDtTm();
         if (creDtTm == null || creDtTm.equals("")) {
-            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/CreDtTm\"><td><a href=\"#FIToFICstmrCdtTrf/GrpHdr/CreDtTm\">CreationDateTime is mandatory!</a></td><td>FIToFICstmrCdtTrf/GrpHdr/CreDtTm</td></tr>");
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/CreDtTm\"><td>CreationDateTime is mandatory!</td><td>FIToFICstmrCdtTrf/GrpHdr/CreDtTm</td></tr>");
         }
 
         SettlementInstruction7 sttlmInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getSttlmInf();
