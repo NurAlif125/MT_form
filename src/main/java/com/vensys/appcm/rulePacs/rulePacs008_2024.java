@@ -49,6 +49,10 @@ public class rulePacs008_2024 {
     }
 
     public void runRules(String logicalTerminal, String receiverAddress) {
+//        if ((logicalTerminal != null) && (receiverAddress != null)) {
+//            logicalTerminal = logicalTerminal.substring(0, logicalTerminal.length() - 1);
+//            receiverAddress = receiverAddress.substring(0, receiverAddress.length() - 1);
+//        }
         String msgId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
         if (msgId == null || msgId.equalsIgnoreCase("") || msgId.isEmpty()) {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/MsgId\"><td>MessageIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/GrpHdr/MsgId</td></tr>");
@@ -276,7 +280,7 @@ public class rulePacs008_2024 {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>Charge information is mandatory if CRED is present – if no charges are taken, Zero must be used in \"Amount\" (any agent in the payment chain).</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgBr</td></tr>");
         }
 
-        if (chrgBr == ChargeBearerType1Code.DEBT && chrgsInf.size() > 1) {
+        if ((chrgBr == ChargeBearerType1Code.DEBT && chrgsInf.size() > 1) || (chrgBr == ChargeBearerType1Code.DEBT && chrgsInf.isEmpty())) {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>If \"Charge Bearer/DEBT\" is present, then only one occurrence of \"Charge Information\" is allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf</td></tr>");
         }
 
@@ -471,8 +475,11 @@ public class rulePacs008_2024 {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt</td></tr>");
                 }
                 if (bicInstgAgt != null) {
-                    if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal)) {
-                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI\"><td>\"From\" BIC must match \"Instructing Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
+                    if (logicalTerminal != null) {
+                        String logicalTerminal1 = logicalTerminal.substring(0, logicalTerminal.length() - 1);
+                        if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI\"><td>\"From\" BIC must match \"Instructing Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
+                        }
                     }
                 }
             }
@@ -487,8 +494,11 @@ public class rulePacs008_2024 {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>InstructedAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                 }
                 if (bicInstdAgt != null) {
-                    if (!bicInstdAgt.contains(receiverAddress)) {
-                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                    if (receiverAddress != null) {
+                        String receiverAddress1 = receiverAddress.substring(0, receiverAddress.length() - 1);
+                        if (!bicInstdAgt.contains(receiverAddress1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                        }
                     }
                 }
             }
@@ -724,12 +734,13 @@ public class rulePacs008_2024 {
         BranchAndFinancialInstitutionIdentification6 dbtrAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt();
         if (dbtrAgt != null) {
             FinancialInstitutionIdentification18 finInstnIdDbtrAgt = dbtrAgt.getFinInstnId();
-            if (finInstnIdDbtrAgt == null) {
-                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt\"><td>DebtorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt</td></tr>");
-            }
             if (finInstnIdDbtrAgt != null) {
                 String nameDbtrAgt = finInstnIdDbtrAgt.getNm();
+                String bicDbtrAgt = finInstnIdDbtrAgt.getBICFI();
                 PostalAddress24 pstlAdrDbtrAgt = finInstnIdDbtrAgt.getPstlAdr();
+                if ((nameDbtrAgt == null || nameDbtrAgt.equalsIgnoreCase("")) && (bicDbtrAgt == null || bicDbtrAgt.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt\"><td>DebtorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt</td></tr>");
+                }
                 if (((nameDbtrAgt == null || nameDbtrAgt.equalsIgnoreCase("") || nameDbtrAgt.isEmpty())
                         && pstlAdrDbtrAgt != null) || (pstlAdrDbtrAgt == null && (nameDbtrAgt != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId</td></tr>");
@@ -772,12 +783,13 @@ public class rulePacs008_2024 {
         BranchAndFinancialInstitutionIdentification6 cdtrAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt();
         if (cdtrAgt != null) {
             FinancialInstitutionIdentification18 finInstnIdCdtrAgt = cdtrAgt.getFinInstnId();
-            if (finInstnIdCdtrAgt == null) {
-                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt\"><td>DebtorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
-            }
             if (finInstnIdCdtrAgt != null) {
                 String nameCdtrAgt = finInstnIdCdtrAgt.getNm();
+                String bicCdtrAgt = finInstnIdCdtrAgt.getBICFI();
                 PostalAddress24 pstlAdrCdtrAgt = finInstnIdCdtrAgt.getPstlAdr();
+                if ((nameCdtrAgt == null || nameCdtrAgt.equalsIgnoreCase("")) && (bicCdtrAgt == null || bicCdtrAgt.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt\"><td>DebtorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
+                }
                 if (((nameCdtrAgt == null || nameCdtrAgt.equalsIgnoreCase("") || nameCdtrAgt.isEmpty())
                         && pstlAdrCdtrAgt != null) || (pstlAdrCdtrAgt == null && (nameCdtrAgt != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId</td></tr>");
@@ -925,11 +937,11 @@ public class rulePacs008_2024 {
             String currencyIntrBkSttlmAmt = intrBkSttlmAmt.getCcy();
             String currencyInstdAmt = instdAmt.getCcy();
             if (currencyIntrBkSttlmAmt != null && currencyInstdAmt != null) {
-                if ((currencyInstdAmt != currencyIntrBkSttlmAmt) || !currencyInstdAmt.equalsIgnoreCase(currencyIntrBkSttlmAmt) && (xChgRate == null)) {
+                if (!currencyInstdAmt.equalsIgnoreCase(currencyIntrBkSttlmAmt) && (xChgRate == null)) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate\"><td>If InstructedAmount is present and the currency is different from the currency in InterbankSettlementAmount, then ExchangeRate must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate</td></tr>");
                 }
 
-                if ((currencyInstdAmt == currencyIntrBkSttlmAmt) || currencyInstdAmt.equalsIgnoreCase(currencyIntrBkSttlmAmt) && (xChgRate != null)) {
+                if (currencyInstdAmt.equalsIgnoreCase(currencyIntrBkSttlmAmt) && (xChgRate != null)) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate\"><td>If InstructedAmount is present and the currency is the same as the currency in InterbankSettlementAmount, then ExchangeRate is not allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate</td></tr>");
                 }
             }

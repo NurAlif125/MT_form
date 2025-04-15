@@ -45,10 +45,11 @@
                         </div>
                     </div>
                 </div>
+                <%@ include file="tabValidateMX.jsp" %>
                 <%@ include file="button_action.jsp" %>
             </form>
         </c:if>
     </c:forEach>
 </div>
-<%@ include file="tabValidateMX.jsp" %>
+
 <%@ include file="validateMX.jsp" %>

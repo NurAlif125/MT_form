@@ -132,9 +132,11 @@
                         input.setAttribute("type", "hidden")
                         input.setAttribute("value", xml)
                         nodeForm.appendChild(input)
+                        let sender = $('#sender_logical_terminal').val();
+                        let receiver = $('#receiver_institution').val();
                         console.log("Input dataXML telah ditambahkan:", input)
                         document.getElementById("errorInformationTable").innerHTML= '';
-                        kirimData(xml)
+                        kirimData(xml, sender, receiver)
                         
                         $("#tab-view-validate").removeAttr("hidden");
                         $("#view1, #view2").css("display", "none");
@@ -145,13 +147,13 @@
                     })
                     console.log("Ini XML")
 
-                    function kirimData(input) {
+                    function kirimData(input, sender, receiver) {
                         fetch("SCValidateMX", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body: "dataXML=" + encodeURIComponent(input)
+                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)
                         })
                         .then(response => response.text())
                         .then(data => {
@@ -274,7 +276,7 @@
             <input type="button" name="returinv" id="returinv" value="Retur" />
         </c:if>
         <% }%>
-        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("RETURNED") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
+        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
         <c:if test="${item == 'FLOW:REJECT'}">
             <input type="button" name="reject" id="reject" value="Reject" />
         </c:if>
@@ -361,9 +363,11 @@
                         input.setAttribute("type", "hidden")
                         input.setAttribute("value", xml)
                         nodeForm.appendChild(input)
+                        let sender = $('#sender_logical_terminal').val();
+                        let receiver = $('#receiver_institution').val();
                         console.log("Input dataXML telah ditambahkan:", input)
                         document.getElementById("errorInformationTable").innerHTML= '';
-                        kirimData(xml)
+                        kirimData(xml, sender, receiver)
                         
                         $("#tab-view-validate").removeAttr("hidden");
                         $("#view1, #view2").css("display", "none");
@@ -374,13 +378,13 @@
                     })
                     console.log("Ini XML")
 
-                    function kirimData(input) {
+                    function kirimData(input, sender, receiver) {
                         fetch("SCValidateMX", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body: "dataXML=" + encodeURIComponent(input)
+                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)
                         })
                         .then(response => response.text())
                         .then(data => {
