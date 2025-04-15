@@ -39,6 +39,8 @@ import com.vensys.appcm.model.DataHeaderTransaksi;
 import com.vensys.appcm.rulePacs.rulePacs008;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
+import java.io.InputStream;
+import java.util.Properties;
 import org.apache.log4j.Logger;
 /**
  *
@@ -120,11 +122,11 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         appHeader.getTo().getFIId().getFinInstnId().setBICFI(receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12));
         
         if (messType.contains("cov")) {
-            appHeader.setBizSvc("swift.cbprplus.cov.03");
+            appHeader.setBizSvc(getBizSvcCov());
         } else if (messType.contains("adv")) {
-            appHeader.setBizSvc("swift.cbprplus.adv.03");
+            appHeader.setBizSvc(getBizSvcAdv());
         } else {
-            appHeader.setBizSvc("swift.cbprplus.03");
+            appHeader.setBizSvc(getBizSvc());
         }
         
         appHeader.setCreationDate(true);
@@ -497,6 +499,30 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         dbConn.closeConnection();
         RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
         dispatcher.forward(request, response);
+    }
+    
+    public String getBizSvc() throws IOException {
+        log.info("getBizSvc");
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("bizSvc");
+    }
+    
+    public String getBizSvcCov() throws IOException {
+        log.info("getBizSvcCov");
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("bizSvcCov");
+    }
+    
+    public String getBizSvcAdv() throws IOException {
+        log.info("getBizSvcAdv");
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("bizSvcAdv");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
