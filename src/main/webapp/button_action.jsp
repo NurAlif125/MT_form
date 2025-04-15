@@ -121,21 +121,53 @@
                         var xml = htmlToXML(nodeForm)
                         console.log(xml)
 
+                        var existingInputs = document.getElementsByName("dataXML")
+                        existingInputs.forEach(input => input.parentNode.removeChild(input))
+
                         // buat element untuk menampung data XML
                         var input = document.createElement("input")
 
+                        input.setAttribute("id", "dataXML")
                         input.setAttribute("name", "dataXML")
+                        input.setAttribute("type", "hidden")
                         input.setAttribute("value", xml)
-                        input.style.display="none"
                         nodeForm.appendChild(input)
-
-                        // disini untuk append child receiver dan logical terminal
-//                        nodeForm.appendChild(nodeReceiverInstitution)
-//                        nodeForm.appendChild(nodeLogicalTerminal)
-
-                        nodeForm.submit()
+                        console.log("Input dataXML telah ditambahkan:", input)
+                        document.getElementById("errorInformationTable").innerHTML= '';
+                        kirimData(xml)
+                        
+                        $("#tab-view-validate").removeAttr("hidden");
+                        $("#view1, #view2").css("display", "none");
+                        $("#view3").css("display", "block");
+                        $('#tab-view1').removeClass("selected").removeAttr('class');
+                        $('#tab-view2').removeClass("selected").removeAttr('class');
+                        $('#tab-validate').addClass("selected");
                     })
                     console.log("Ini XML")
+
+                    function kirimData(input) {
+                        fetch("SCValidateMX", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: "dataXML=" + encodeURIComponent(input)
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            if (data.trim() === "null" || data.trim() === "") {
+                                console.log("Data kosong, form akan dikirim...")
+                                nodeForm.submit()
+                            } else {
+                                validateHeader();
+                                document.getElementById("errorInformationTable").innerHTML += data;
+                                console.log(data)         
+                                clickFocusValidate();
+                                e.preventDefault()
+                            }
+                        })
+                        .catch(error => console.error("Error:", error))
+                    }
                 } else {
                     console.log("Ini MT")
                 }
@@ -324,12 +356,21 @@
                         // buat element untuk menampung data XML
                         var input = document.createElement("input")
 
+                        input.setAttribute("id", "dataXML")
                         input.setAttribute("name", "dataXML")
-                        input.setAttribute("value", xml)
                         input.setAttribute("type", "hidden")
+                        input.setAttribute("value", xml)
                         nodeForm.appendChild(input)
                         console.log("Input dataXML telah ditambahkan:", input)
+                        document.getElementById("errorInformationTable").innerHTML= '';
                         kirimData(xml)
+                        
+                        $("#tab-view-validate").removeAttr("hidden");
+                        $("#view1, #view2").css("display", "none");
+                        $("#view3").css("display", "block");
+                        $('#tab-view1').removeClass("selected").removeAttr('class');
+                        $('#tab-view2').removeClass("selected").removeAttr('class');
+                        $('#tab-validate').addClass("selected");
                     })
                     console.log("Ini XML")
 
@@ -347,10 +388,10 @@
                                 console.log("Data kosong, form akan dikirim...")
                                 nodeForm.submit()
                             } else {
-                                const modal = document.getElementById("myModal");
-                                document.getElementById("errorInformation").innerHTML = data
-                                modal.classList.add("show")
-                                console.log(data)
+                                validateHeader();
+                                document.getElementById("errorInformationTable").innerHTML += data;
+                                console.log(data)         
+                                clickFocusValidate();
                                 e.preventDefault()
                             }
                         })

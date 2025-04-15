@@ -49,6 +49,8 @@ public class rulePacs008_2024 {
     }
 
     public void runRules(String logicalTerminal, String receiverAddress) {
+        logicalTerminal = logicalTerminal.substring(0, logicalTerminal.length() - 1);
+        receiverAddress = receiverAddress.substring(0, receiverAddress.length() - 1);
         String msgId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
         if (msgId == null || msgId.equalsIgnoreCase("") || msgId.isEmpty()) {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/MsgId\"><td>MessageIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/GrpHdr/MsgId</td></tr>");
@@ -487,7 +489,7 @@ public class rulePacs008_2024 {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>InstructedAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                 }
                 if (bicInstdAgt != null) {
-                    if (!bicInstdAgt.equalsIgnoreCase(receiverAddress)) {
+                    if (!bicInstdAgt.contains(receiverAddress)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                     }
                 }
