@@ -31,7 +31,17 @@
                             <%@ include file="pacs00800108.jsp" %>
                         </div>
                         <div id="view3" class="tabcontent">
-                            <div id="error-container"></div>
+                            <div id="error-container">
+                                <table id="errorInfoTable">
+                                    <thead>
+                                        <tr>
+                                        <th>Message</th>
+                                        <th>Path</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="errorInformationTable"></tbody>
+                                </table> 
+                            </div>
                         </div>
                     </div>
                 </div>

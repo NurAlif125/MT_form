@@ -41,6 +41,7 @@
         input.setAttribute("value", xml)
         nodeForm.appendChild(input)
         console.log("Input dataXML telah ditambahkan:", input)
+        document.getElementById("errorInformationTable").innerHTML= '';
         kirimData(xml)
         
         //open tab validate
@@ -63,8 +64,11 @@
             .then(data => {
                 
 //                document.getElementById("errorInformation").innerHTML = data;
-                document.getElementById("errorInformationTable").innerHTML = data;
-                console.log(data)
+                validateHeader();
+                document.getElementById("errorInformationTable").innerHTML += data;
+                console.log(data)         
+                clickFocusValidate();
+    
             })
             .catch(error => console.error("Error:", error));
     }
