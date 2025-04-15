@@ -49,8 +49,6 @@ public class rulePacs008_2024 {
     }
 
     public void runRules(String logicalTerminal, String receiverAddress) {
-        logicalTerminal = logicalTerminal.substring(0, logicalTerminal.length() - 1);
-        receiverAddress = receiverAddress.substring(0, receiverAddress.length() - 1);
         String msgId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
         if (msgId == null || msgId.equalsIgnoreCase("") || msgId.isEmpty()) {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/MsgId\"><td>MessageIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/GrpHdr/MsgId</td></tr>");

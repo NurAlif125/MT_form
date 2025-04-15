@@ -41,8 +41,8 @@ public class SCValidateMX extends HttpServlet {
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         String dataXml = request.getParameter("dataXML");
-        String logicalTerminal = request.getParameter("sender_logical_terminal");
-        String receiverAddress = request.getParameter("receiver_institution");
+        String logicalTerminal = request.getParameter("sender");
+        String receiverAddress = request.getParameter("receiver");
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
