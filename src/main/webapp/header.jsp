@@ -237,7 +237,7 @@
                                             </c:forEach>
                                     </ul>
                                 </li>
-                                <li><span class="dir">Message Category 2</span>
+<!--                                <li><span class="dir">Message Category 2</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MT:200'}">
@@ -254,7 +254,7 @@
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
-                                </li>
+                                </li>-->
                                 <!--                        <li><span class="dir">Message Category 4</span>
                                 
                                                         </li>
@@ -305,24 +305,24 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:pacs00400109'}">
-                                                <li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>
+                                                <!--<li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00800108'}">
                                                 <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108'}">
-                                                <li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
+                                                <!--<li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108cov'}">
-                                                <li><a href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>
+                                                <!--<li><a href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108adv'}">
-                                                <li><a href="main_pacs009adv.jsp">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>
+                                                <!--<li><a href="main_pacs009adv.jsp">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>-->
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
                                 </li>
-                                <li><span class="dir">Cash Management</span>
+<!--                                <li><span class="dir">Cash Management</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:camt05300108'}">
@@ -342,7 +342,7 @@
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
 
                         </li>
