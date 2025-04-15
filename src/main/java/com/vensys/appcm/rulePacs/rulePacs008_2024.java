@@ -113,7 +113,7 @@ public class rulePacs008_2024 {
                     String nameInstdRmbrmsntAgt = finInstnIdInstdRmbrmsntAgt.getNm();
                     PostalAddress24 pstlAdrInstdRmbrsmntAgt = finInstnIdInstdRmbrmsntAgt.getPstlAdr();
                     if (((nameInstdRmbrmsntAgt == null || nameInstdRmbrmsntAgt.equalsIgnoreCase("") || nameInstdRmbrmsntAgt.isEmpty())
-                            && pstlAdrInstdRmbrsmntAgt != null) || (pstlAdrInstdRmbrsmntAgt == null && (nameInstdRmbrmsntAgt != null || !nameInstdRmbrmsntAgt.isEmpty()))) {
+                            && pstlAdrInstdRmbrsmntAgt != null) || (pstlAdrInstdRmbrsmntAgt == null && nameInstdRmbrmsntAgt != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId</td></tr>");
                     }
 
@@ -133,18 +133,18 @@ public class rulePacs008_2024 {
                         String ctrySubDvsnInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getCtrySubDvsn();
                         String ctryInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getCtry();
                         String twnNmInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getTwnNm();
-                        if ((adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt == null || ctryInstdRmbrsmntAgt.equalsIgnoreCase("") || ctryInstdRmbrsmntAgt.isEmpty()) && (twnNmInstdRmbrsmntAgt == null || twnNmInstdRmbrsmntAgt.equalsIgnoreCase("") || twnNmInstdRmbrsmntAgt.isEmpty()))
-                                || (adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt != null || !ctryInstdRmbrsmntAgt.equalsIgnoreCase("") || !ctryInstdRmbrsmntAgt.isEmpty()) && (twnNmInstdRmbrsmntAgt == null || twnNmInstdRmbrsmntAgt.equalsIgnoreCase("") || twnNmInstdRmbrsmntAgt.isEmpty()))
-                                || (adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt == null || ctryInstdRmbrsmntAgt.equalsIgnoreCase("") || ctryInstdRmbrsmntAgt.isEmpty()) && (twnNmInstdRmbrsmntAgt != null || !twnNmInstdRmbrsmntAgt.equalsIgnoreCase("") || !twnNmInstdRmbrsmntAgt.isEmpty()))) {
+                        if ((adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt == null || ctryInstdRmbrsmntAgt.isEmpty()) && (twnNmInstdRmbrsmntAgt == null || twnNmInstdRmbrsmntAgt.isEmpty()))
+                                || (adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt != null) && (twnNmInstdRmbrsmntAgt == null || twnNmInstdRmbrsmntAgt.isEmpty()))
+                                || (adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt == null || ctryInstdRmbrsmntAgt.isEmpty()) && (twnNmInstdRmbrsmntAgt != null))) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
                         }
 
-                        if (!adrLineInstdRmbrsmntAgt.isEmpty() && ((DeptInstdRmbrsmntAgt != null || !DeptInstdRmbrsmntAgt.equalsIgnoreCase("") || !DeptInstdRmbrsmntAgt.isEmpty()) || (subDeptInstdRmbrsmntAgt != null || !subDeptInstdRmbrsmntAgt.equalsIgnoreCase("") || !subDeptInstdRmbrsmntAgt.isEmpty())
-                                || (strtNmInstdRmbrsmntAgt != null || !strtNmInstdRmbrsmntAgt.equalsIgnoreCase("") || !strtNmInstdRmbrsmntAgt.isEmpty()) || (bldgNbInstdRmbrsmntAgt != null || !bldgNbInstdRmbrsmntAgt.equalsIgnoreCase("") || !bldgNbInstdRmbrsmntAgt.isEmpty())
-                                || (bldgNmInstdRmbrsmntAgt != null || !bldgNmInstdRmbrsmntAgt.equalsIgnoreCase("") || !bldgNmInstdRmbrsmntAgt.isEmpty()) || (flrInstdRmbrsmntAgt != null || !flrInstdRmbrsmntAgt.equalsIgnoreCase("") || !flrInstdRmbrsmntAgt.isEmpty())
-                                || (pstBxInstdRmbrsmntAgt != null || !pstBxInstdRmbrsmntAgt.equalsIgnoreCase("") || !pstBxInstdRmbrsmntAgt.isEmpty()) || (roomInstdRmbrsmntAgt != null || !roomInstdRmbrsmntAgt.equalsIgnoreCase("") || !roomInstdRmbrsmntAgt.isEmpty())
-                                || (pstCdInstdRmbrsmntAgt != null || !pstCdInstdRmbrsmntAgt.equalsIgnoreCase("") || !pstCdInstdRmbrsmntAgt.isEmpty()) || (twnLctnNmInstdRmbrsmntAgt != null || !twnLctnNmInstdRmbrsmntAgt.equalsIgnoreCase("") || !twnLctnNmInstdRmbrsmntAgt.isEmpty())
-                                || (dstrctNmInstdRmbrsmntAgt != null || !dstrctNmInstdRmbrsmntAgt.equalsIgnoreCase("") || !dstrctNmInstdRmbrsmntAgt.isEmpty()) || (ctrySubDvsnInstdRmbrsmntAgt != null || !ctrySubDvsnInstdRmbrsmntAgt.equalsIgnoreCase("") || !ctrySubDvsnInstdRmbrsmntAgt.isEmpty()))) {
+                        if (!adrLineInstdRmbrsmntAgt.isEmpty() && (DeptInstdRmbrsmntAgt != null || subDeptInstdRmbrsmntAgt != null
+                                || strtNmInstdRmbrsmntAgt != null || bldgNbInstdRmbrsmntAgt != null
+                                || bldgNmInstdRmbrsmntAgt != null || flrInstdRmbrsmntAgt != null
+                                || pstBxInstdRmbrsmntAgt != null || roomInstdRmbrsmntAgt != null
+                                || pstCdInstdRmbrsmntAgt != null || twnLctnNmInstdRmbrsmntAgt != null
+                                || dstrctNmInstdRmbrsmntAgt != null || ctrySubDvsnInstdRmbrsmntAgt != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
                         }
                     }
@@ -158,7 +158,7 @@ public class rulePacs008_2024 {
                     String nameThrdRmbrmsntAgt = finInstnIdThrdRmbrmsntAgt.getNm();
                     PostalAddress24 pstlAdrThrdRmbrsmntAgt = finInstnIdThrdRmbrmsntAgt.getPstlAdr();
                     if (((nameThrdRmbrmsntAgt == null || nameThrdRmbrmsntAgt.equalsIgnoreCase("") || nameThrdRmbrmsntAgt.isEmpty())
-                            && pstlAdrThrdRmbrsmntAgt != null) || (pstlAdrThrdRmbrsmntAgt == null && (nameThrdRmbrmsntAgt != null || !nameThrdRmbrmsntAgt.isEmpty()))) {
+                            && pstlAdrThrdRmbrsmntAgt != null) || (pstlAdrThrdRmbrsmntAgt == null && (nameThrdRmbrmsntAgt != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId</td></tr>");
                     }
 
@@ -178,18 +178,18 @@ public class rulePacs008_2024 {
                         String ctrySubDvsnThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getCtrySubDvsn();
                         String ctryThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getCtry();
                         String twnNmThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getTwnNm();
-                        if ((adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt == null || ctryThrdRmbrsmntAgt.equalsIgnoreCase("") || ctryThrdRmbrsmntAgt.isEmpty()) && (twnNmThrdRmbrsmntAgt == null || twnNmThrdRmbrsmntAgt.equalsIgnoreCase("") || twnNmThrdRmbrsmntAgt.isEmpty()))
-                                || (adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt != null || !ctryThrdRmbrsmntAgt.equalsIgnoreCase("") || !ctryThrdRmbrsmntAgt.isEmpty()) && (twnNmThrdRmbrsmntAgt == null || twnNmThrdRmbrsmntAgt.equalsIgnoreCase("") || twnNmThrdRmbrsmntAgt.isEmpty()))
-                                || (adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt == null || ctryThrdRmbrsmntAgt.equalsIgnoreCase("") || ctryThrdRmbrsmntAgt.isEmpty()) && (twnNmThrdRmbrsmntAgt != null || !twnNmThrdRmbrsmntAgt.equalsIgnoreCase("") || !twnNmThrdRmbrsmntAgt.isEmpty()))) {
+                        if ((adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt == null || ctryThrdRmbrsmntAgt.isEmpty()) && (twnNmThrdRmbrsmntAgt == null || twnNmThrdRmbrsmntAgt.isEmpty()))
+                                || (adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt != null) && (twnNmThrdRmbrsmntAgt == null || twnNmThrdRmbrsmntAgt.isEmpty()))
+                                || (adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt == null || ctryThrdRmbrsmntAgt.isEmpty()) && (twnNmThrdRmbrsmntAgt != null))) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
                         }
 
-                        if (!adrLineThrdRmbrsmntAgt.isEmpty() && ((DeptThrdRmbrsmntAgt != null || !DeptThrdRmbrsmntAgt.equalsIgnoreCase("") || !DeptThrdRmbrsmntAgt.isEmpty()) || (subDeptThrdRmbrsmntAgt != null || !subDeptThrdRmbrsmntAgt.equalsIgnoreCase("") || !subDeptThrdRmbrsmntAgt.isEmpty())
-                                || (strtNmThrdRmbrsmntAgt != null || !strtNmThrdRmbrsmntAgt.equalsIgnoreCase("") || !strtNmThrdRmbrsmntAgt.isEmpty()) || (bldgNbThrdRmbrsmntAgt != null || !bldgNbThrdRmbrsmntAgt.equalsIgnoreCase("") || !bldgNbThrdRmbrsmntAgt.isEmpty())
-                                || (bldgNmThrdRmbrsmntAgt != null || !bldgNmThrdRmbrsmntAgt.equalsIgnoreCase("") || !bldgNmThrdRmbrsmntAgt.isEmpty()) || (flrThrdRmbrsmntAgt != null || !flrThrdRmbrsmntAgt.equalsIgnoreCase("") || !flrThrdRmbrsmntAgt.isEmpty())
-                                || (pstBxThrdRmbrsmntAgt != null || !pstBxThrdRmbrsmntAgt.equalsIgnoreCase("") || !pstBxThrdRmbrsmntAgt.isEmpty()) || (roomThrdRmbrsmntAgt != null || !roomThrdRmbrsmntAgt.equalsIgnoreCase("") || !roomThrdRmbrsmntAgt.isEmpty())
-                                || (pstCdThrdRmbrsmntAgt != null || !pstCdThrdRmbrsmntAgt.equalsIgnoreCase("") || !pstCdThrdRmbrsmntAgt.isEmpty()) || (twnLctnNmThrdRmbrsmntAgt != null || !twnLctnNmThrdRmbrsmntAgt.equalsIgnoreCase("") || !twnLctnNmThrdRmbrsmntAgt.isEmpty())
-                                || (dstrctNmThrdRmbrsmntAgt != null || !dstrctNmThrdRmbrsmntAgt.equalsIgnoreCase("") || !dstrctNmThrdRmbrsmntAgt.isEmpty()) || (ctrySubDvsnThrdRmbrsmntAgt != null || !ctrySubDvsnThrdRmbrsmntAgt.equalsIgnoreCase("") || !ctrySubDvsnThrdRmbrsmntAgt.isEmpty()))) {
+                        if (!adrLineThrdRmbrsmntAgt.isEmpty() && (DeptThrdRmbrsmntAgt != null || subDeptThrdRmbrsmntAgt != null
+                                || strtNmThrdRmbrsmntAgt != null || bldgNbThrdRmbrsmntAgt != null
+                                || bldgNmThrdRmbrsmntAgt != null || flrThrdRmbrsmntAgt != null
+                                || pstBxThrdRmbrsmntAgt != null || roomThrdRmbrsmntAgt != null
+                                || pstCdThrdRmbrsmntAgt != null || twnLctnNmThrdRmbrsmntAgt != null
+                                || dstrctNmThrdRmbrsmntAgt != null || ctrySubDvsnThrdRmbrsmntAgt != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
                         }
                     }
@@ -234,9 +234,10 @@ public class rulePacs008_2024 {
             if (instrId == null || instrId.equalsIgnoreCase("") || instrId.isEmpty()) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>InstructionIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId</td></tr>");
             }
-
-            if (instrId.startsWith("/") && instrId.endsWith("/") && instrId.contains("//")) {
-                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><><><>");
+            if (instrId != null) {
+                if (instrId.startsWith("/") && instrId.endsWith("/") && instrId.contains("//")) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><><><>");
+                }
             }
 
             String endToEndId = pmtId.getEndToEndId();
@@ -271,7 +272,7 @@ public class rulePacs008_2024 {
 
         ChargeBearerType1Code chrgBr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgBr();
         List<Charges7> chrgsInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgsInf();
-        if (chrgBr == ChargeBearerType1Code.CRED && (chrgsInf.isEmpty() || chrgsInf == null)) {
+        if (chrgBr == ChargeBearerType1Code.CRED && (chrgsInf.isEmpty() || chrgsInf.isEmpty())) {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>Charge information is mandatory if CRED is present – if no charges are taken, Zero must be used in \"Amount\" (any agent in the payment chain).</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgBr</td></tr>");
         }
 
@@ -279,7 +280,7 @@ public class rulePacs008_2024 {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>If \"Charge Bearer/DEBT\" is present, then only one occurrence of \"Charge Information\" is allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf</td></tr>");
         }
 
-        if (chrgsInf != null || !chrgsInf.isEmpty()) {
+        if (chrgsInf != null) {
             for (int i = 0; i < chrgsInf.size(); i++) {
                 BranchAndFinancialInstitutionIdentification6 agtChrgsInf = chrgsInf.get(i).getAgt();
                 FinancialInstitutionIdentification18 finInstnIdChrgsInf = agtChrgsInf.getFinInstnId();
@@ -287,7 +288,7 @@ public class rulePacs008_2024 {
                     String nameChrgsInf = finInstnIdChrgsInf.getNm();
                     PostalAddress24 pstlAdrChrgsInf = finInstnIdChrgsInf.getPstlAdr();
                     if (((nameChrgsInf == null || nameChrgsInf.equalsIgnoreCase("") || nameChrgsInf.isEmpty())
-                            && pstlAdrChrgsInf != null) || (pstlAdrChrgsInf == null && (nameChrgsInf != null || !nameChrgsInf.isEmpty()))) {
+                            && pstlAdrChrgsInf != null) || (pstlAdrChrgsInf == null && nameChrgsInf != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId</td></tr>");
                     }
 
@@ -307,18 +308,18 @@ public class rulePacs008_2024 {
                         String ctrySubDvsnChrgsInf = pstlAdrChrgsInf.getCtrySubDvsn();
                         String ctryChrgsInf = pstlAdrChrgsInf.getCtry();
                         String twnNmChrgsInf = pstlAdrChrgsInf.getTwnNm();
-                        if ((adrLineChrgsInf.isEmpty() && (ctryChrgsInf == null || ctryChrgsInf.equalsIgnoreCase("") || ctryChrgsInf.isEmpty()) && (twnNmChrgsInf == null || twnNmChrgsInf.equalsIgnoreCase("") || twnNmChrgsInf.isEmpty()))
-                                || (adrLineChrgsInf.isEmpty() && (ctryChrgsInf != null || !ctryChrgsInf.equalsIgnoreCase("") || !ctryChrgsInf.isEmpty()) && (twnNmChrgsInf == null || twnNmChrgsInf.equalsIgnoreCase("") || twnNmChrgsInf.isEmpty()))
-                                || (adrLineChrgsInf.isEmpty() && (ctryChrgsInf == null || ctryChrgsInf.equalsIgnoreCase("") || ctryChrgsInf.isEmpty()) && (twnNmChrgsInf != null || !twnNmChrgsInf.equalsIgnoreCase("") || !twnNmChrgsInf.isEmpty()))) {
+                        if ((adrLineChrgsInf.isEmpty() && (ctryChrgsInf == null || ctryChrgsInf.isEmpty()) && (twnNmChrgsInf == null || twnNmChrgsInf.equalsIgnoreCase("") || twnNmChrgsInf.isEmpty()))
+                                || (adrLineChrgsInf.isEmpty() && (ctryChrgsInf != null) && (twnNmChrgsInf == null || twnNmChrgsInf.equalsIgnoreCase("") || twnNmChrgsInf.isEmpty()))
+                                || (adrLineChrgsInf.isEmpty() && (ctryChrgsInf == null || ctryChrgsInf.equalsIgnoreCase("") || ctryChrgsInf.isEmpty()) && (twnNmChrgsInf != null))) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
                         }
 
-                        if (!adrLineChrgsInf.isEmpty() && ((DeptChrgsInf != null || !DeptChrgsInf.equalsIgnoreCase("") || !DeptChrgsInf.isEmpty()) || (subDeptChrgsInf != null || !subDeptChrgsInf.equalsIgnoreCase("") || !subDeptChrgsInf.isEmpty())
-                                || (strtNmChrgsInf != null || !strtNmChrgsInf.equalsIgnoreCase("") || !strtNmChrgsInf.isEmpty()) || (bldgNbChrgsInf != null || !bldgNbChrgsInf.equalsIgnoreCase("") || !bldgNbChrgsInf.isEmpty())
-                                || (bldgNmChrgsInf != null || !bldgNmChrgsInf.equalsIgnoreCase("") || !bldgNmChrgsInf.isEmpty()) || (flrChrgsInf != null || !flrChrgsInf.equalsIgnoreCase("") || !flrChrgsInf.isEmpty())
-                                || (pstBxChrgsInf != null || !pstBxChrgsInf.equalsIgnoreCase("") || !pstBxChrgsInf.isEmpty()) || (roomChrgsInf != null || !roomChrgsInf.equalsIgnoreCase("") || !roomChrgsInf.isEmpty())
-                                || (pstCdChrgsInf != null || !pstCdChrgsInf.equalsIgnoreCase("") || !pstCdChrgsInf.isEmpty()) || (twnLctnNmChrgsInf != null || !twnLctnNmChrgsInf.equalsIgnoreCase("") || !twnLctnNmChrgsInf.isEmpty())
-                                || (dstrctNmChrgsInf != null || !dstrctNmChrgsInf.equalsIgnoreCase("") || !dstrctNmChrgsInf.isEmpty()) || (ctrySubDvsnChrgsInf != null || !ctrySubDvsnChrgsInf.equalsIgnoreCase("") || !ctrySubDvsnChrgsInf.isEmpty()))) {
+                        if (!adrLineChrgsInf.isEmpty() && (DeptChrgsInf != null || subDeptChrgsInf != null
+                                || strtNmChrgsInf != null || bldgNbChrgsInf != null
+                                || bldgNmChrgsInf != null || flrChrgsInf != null
+                                || pstBxChrgsInf != null || roomChrgsInf != null
+                                || pstCdChrgsInf != null || twnLctnNmChrgsInf != null
+                                || dstrctNmChrgsInf != null || ctrySubDvsnChrgsInf != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
                         }
                     }
@@ -333,7 +334,7 @@ public class rulePacs008_2024 {
                 String namePrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getNm();
                 PostalAddress24 pstlAdrPrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getPstlAdr();
                 if (((namePrvsInstgAgt1 == null || namePrvsInstgAgt1.equalsIgnoreCase("") || namePrvsInstgAgt1.isEmpty())
-                        && pstlAdrPrvsInstgAgt1 != null) || (pstlAdrPrvsInstgAgt1 == null && (namePrvsInstgAgt1 != null || !namePrvsInstgAgt1.isEmpty()))) {
+                        && pstlAdrPrvsInstgAgt1 != null) || (pstlAdrPrvsInstgAgt1 == null && (namePrvsInstgAgt1 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId</td></tr>");
                 }
 
@@ -354,17 +355,17 @@ public class rulePacs008_2024 {
                     String ctryPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getCtry();
                     String twnNmPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getTwnNm();
                     if ((adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 == null || ctryPrvsInstgAgt1.equalsIgnoreCase("") || ctryPrvsInstgAgt1.isEmpty()) && (twnNmPrvsInstgAgt1 == null || twnNmPrvsInstgAgt1.equalsIgnoreCase("") || twnNmPrvsInstgAgt1.isEmpty()))
-                            || (adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 != null || !ctryPrvsInstgAgt1.equalsIgnoreCase("") || !ctryPrvsInstgAgt1.isEmpty()) && (twnNmPrvsInstgAgt1 == null || twnNmPrvsInstgAgt1.equalsIgnoreCase("") || twnNmPrvsInstgAgt1.isEmpty()))
-                            || (adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 == null || ctryPrvsInstgAgt1.equalsIgnoreCase("") || ctryPrvsInstgAgt1.isEmpty()) && (twnNmPrvsInstgAgt1 != null || !twnNmPrvsInstgAgt1.equalsIgnoreCase("") || !twnNmPrvsInstgAgt1.isEmpty()))) {
+                            || (adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 != null) && (twnNmPrvsInstgAgt1 == null || twnNmPrvsInstgAgt1.equalsIgnoreCase("") || twnNmPrvsInstgAgt1.isEmpty()))
+                            || (adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 == null || ctryPrvsInstgAgt1.equalsIgnoreCase("") || ctryPrvsInstgAgt1.isEmpty()) && (twnNmPrvsInstgAgt1 != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLinePrvsInstgAgt1.isEmpty() && ((DeptPrvsInstgAgt1 != null || !DeptPrvsInstgAgt1.equalsIgnoreCase("") || !DeptPrvsInstgAgt1.isEmpty()) || (subDeptPrvsInstgAgt1 != null || !subDeptPrvsInstgAgt1.equalsIgnoreCase("") || !subDeptPrvsInstgAgt1.isEmpty())
-                            || (strtNmPrvsInstgAgt1 != null || !strtNmPrvsInstgAgt1.equalsIgnoreCase("") || !strtNmPrvsInstgAgt1.isEmpty()) || (bldgNbPrvsInstgAgt1 != null || !bldgNbPrvsInstgAgt1.equalsIgnoreCase("") || !bldgNbPrvsInstgAgt1.isEmpty())
-                            || (bldgNmPrvsInstgAgt1 != null || !bldgNmPrvsInstgAgt1.equalsIgnoreCase("") || !bldgNmPrvsInstgAgt1.isEmpty()) || (flrPrvsInstgAgt1 != null || !flrPrvsInstgAgt1.equalsIgnoreCase("") || !flrPrvsInstgAgt1.isEmpty())
-                            || (pstBxPrvsInstgAgt1 != null || !pstBxPrvsInstgAgt1.equalsIgnoreCase("") || !pstBxPrvsInstgAgt1.isEmpty()) || (roomPrvsInstgAgt1 != null || !roomPrvsInstgAgt1.equalsIgnoreCase("") || !roomPrvsInstgAgt1.isEmpty())
-                            || (pstCdPrvsInstgAgt1 != null || !pstCdPrvsInstgAgt1.equalsIgnoreCase("") || !pstCdPrvsInstgAgt1.isEmpty()) || (twnLctnNmPrvsInstgAgt1 != null || !twnLctnNmPrvsInstgAgt1.equalsIgnoreCase("") || !twnLctnNmPrvsInstgAgt1.isEmpty())
-                            || (dstrctNmPrvsInstgAgt1 != null || !dstrctNmPrvsInstgAgt1.equalsIgnoreCase("") || !dstrctNmPrvsInstgAgt1.isEmpty()) || (ctrySubDvsnPrvsInstgAgt1 != null || !ctrySubDvsnPrvsInstgAgt1.equalsIgnoreCase("") || !ctrySubDvsnPrvsInstgAgt1.isEmpty()))) {
+                    if (!adrLinePrvsInstgAgt1.isEmpty() && (DeptPrvsInstgAgt1 != null || subDeptPrvsInstgAgt1 != null
+                            || strtNmPrvsInstgAgt1 != null || bldgNbPrvsInstgAgt1 != null
+                            || bldgNmPrvsInstgAgt1 != null || flrPrvsInstgAgt1 != null
+                            || pstBxPrvsInstgAgt1 != null || roomPrvsInstgAgt1 != null
+                            || pstCdPrvsInstgAgt1 != null || twnLctnNmPrvsInstgAgt1 != null
+                            || dstrctNmPrvsInstgAgt1 != null || ctrySubDvsnPrvsInstgAgt1 != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -378,7 +379,7 @@ public class rulePacs008_2024 {
                 String namePrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getNm();
                 PostalAddress24 pstlAdrPrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getPstlAdr();
                 if (((namePrvsInstgAgt2 == null || namePrvsInstgAgt2.equalsIgnoreCase("") || namePrvsInstgAgt2.isEmpty())
-                        && pstlAdrPrvsInstgAgt2 != null) || (pstlAdrPrvsInstgAgt2 == null && (namePrvsInstgAgt2 != null || !namePrvsInstgAgt2.isEmpty()))) {
+                        && pstlAdrPrvsInstgAgt2 != null) || (pstlAdrPrvsInstgAgt2 == null && (namePrvsInstgAgt2 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId</td></tr>");
                 }
 
@@ -399,17 +400,17 @@ public class rulePacs008_2024 {
                     String ctryPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getCtry();
                     String twnNmPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getTwnNm();
                     if ((adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 == null || ctryPrvsInstgAgt2.equalsIgnoreCase("") || ctryPrvsInstgAgt2.isEmpty()) && (twnNmPrvsInstgAgt2 == null || twnNmPrvsInstgAgt2.equalsIgnoreCase("") || twnNmPrvsInstgAgt2.isEmpty()))
-                            || (adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 != null || !ctryPrvsInstgAgt2.equalsIgnoreCase("") || !ctryPrvsInstgAgt2.isEmpty()) && (twnNmPrvsInstgAgt2 == null || twnNmPrvsInstgAgt2.equalsIgnoreCase("") || twnNmPrvsInstgAgt2.isEmpty()))
-                            || (adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 == null || ctryPrvsInstgAgt2.equalsIgnoreCase("") || ctryPrvsInstgAgt2.isEmpty()) && (twnNmPrvsInstgAgt2 != null || !twnNmPrvsInstgAgt2.equalsIgnoreCase("") || !twnNmPrvsInstgAgt2.isEmpty()))) {
+                            || (adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 != null) && (twnNmPrvsInstgAgt2 == null || twnNmPrvsInstgAgt2.equalsIgnoreCase("") || twnNmPrvsInstgAgt2.isEmpty()))
+                            || (adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 == null || ctryPrvsInstgAgt2.equalsIgnoreCase("") || ctryPrvsInstgAgt2.isEmpty()) && (twnNmPrvsInstgAgt2 != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLinePrvsInstgAgt2.isEmpty() && ((DeptPrvsInstgAgt2 != null || !DeptPrvsInstgAgt2.equalsIgnoreCase("") || !DeptPrvsInstgAgt2.isEmpty()) || (subDeptPrvsInstgAgt2 != null || !subDeptPrvsInstgAgt2.equalsIgnoreCase("") || !subDeptPrvsInstgAgt2.isEmpty())
-                            || (strtNmPrvsInstgAgt2 != null || !strtNmPrvsInstgAgt2.equalsIgnoreCase("") || !strtNmPrvsInstgAgt2.isEmpty()) || (bldgNbPrvsInstgAgt2 != null || !bldgNbPrvsInstgAgt2.equalsIgnoreCase("") || !bldgNbPrvsInstgAgt2.isEmpty())
-                            || (bldgNmPrvsInstgAgt2 != null || !bldgNmPrvsInstgAgt2.equalsIgnoreCase("") || !bldgNmPrvsInstgAgt2.isEmpty()) || (flrPrvsInstgAgt2 != null || !flrPrvsInstgAgt2.equalsIgnoreCase("") || !flrPrvsInstgAgt2.isEmpty())
-                            || (pstBxPrvsInstgAgt2 != null || !pstBxPrvsInstgAgt2.equalsIgnoreCase("") || !pstBxPrvsInstgAgt2.isEmpty()) || (roomPrvsInstgAgt2 != null || !roomPrvsInstgAgt2.equalsIgnoreCase("") || !roomPrvsInstgAgt2.isEmpty())
-                            || (pstCdPrvsInstgAgt2 != null || !pstCdPrvsInstgAgt2.equalsIgnoreCase("") || !pstCdPrvsInstgAgt2.isEmpty()) || (twnLctnNmPrvsInstgAgt2 != null || !twnLctnNmPrvsInstgAgt2.equalsIgnoreCase("") || !twnLctnNmPrvsInstgAgt2.isEmpty())
-                            || (dstrctNmPrvsInstgAgt2 != null || !dstrctNmPrvsInstgAgt2.equalsIgnoreCase("") || !dstrctNmPrvsInstgAgt2.isEmpty()) || (ctrySubDvsnPrvsInstgAgt2 != null || !ctrySubDvsnPrvsInstgAgt2.equalsIgnoreCase("") || !ctrySubDvsnPrvsInstgAgt2.isEmpty()))) {
+                    if (!adrLinePrvsInstgAgt2.isEmpty() && (DeptPrvsInstgAgt2 != null || subDeptPrvsInstgAgt2 != null
+                            || strtNmPrvsInstgAgt2 != null || bldgNbPrvsInstgAgt2 != null
+                            || bldgNmPrvsInstgAgt2 != null || flrPrvsInstgAgt2 != null
+                            || pstBxPrvsInstgAgt2 != null || roomPrvsInstgAgt2 != null
+                            || pstCdPrvsInstgAgt2 != null || twnLctnNmPrvsInstgAgt2 != null
+                            || dstrctNmPrvsInstgAgt2 != null || ctrySubDvsnPrvsInstgAgt2 != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -423,7 +424,7 @@ public class rulePacs008_2024 {
                 String namePrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getNm();
                 PostalAddress24 pstlAdrPrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getPstlAdr();
                 if (((namePrvsInstgAgt3 == null || namePrvsInstgAgt3.equalsIgnoreCase("") || namePrvsInstgAgt3.isEmpty())
-                        && pstlAdrPrvsInstgAgt3 != null) || (pstlAdrPrvsInstgAgt3 == null && (namePrvsInstgAgt3 != null || !namePrvsInstgAgt3.isEmpty()))) {
+                        && pstlAdrPrvsInstgAgt3 != null) || (pstlAdrPrvsInstgAgt3 == null)) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId</td></tr>");
                 }
 
@@ -444,17 +445,17 @@ public class rulePacs008_2024 {
                     String ctryPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getCtry();
                     String twnNmPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getTwnNm();
                     if ((adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 == null || ctryPrvsInstgAgt3.equalsIgnoreCase("") || ctryPrvsInstgAgt3.isEmpty()) && (twnNmPrvsInstgAgt3 == null || twnNmPrvsInstgAgt3.equalsIgnoreCase("") || twnNmPrvsInstgAgt3.isEmpty()))
-                            || (adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 != null || !ctryPrvsInstgAgt3.equalsIgnoreCase("") || !ctryPrvsInstgAgt3.isEmpty()) && (twnNmPrvsInstgAgt3 == null || twnNmPrvsInstgAgt3.equalsIgnoreCase("") || twnNmPrvsInstgAgt3.isEmpty()))
-                            || (adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 == null || ctryPrvsInstgAgt3.equalsIgnoreCase("") || ctryPrvsInstgAgt3.isEmpty()) && (twnNmPrvsInstgAgt3 != null || !twnNmPrvsInstgAgt3.equalsIgnoreCase("") || !twnNmPrvsInstgAgt3.isEmpty()))) {
+                            || (adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 != null) && (twnNmPrvsInstgAgt3 == null || twnNmPrvsInstgAgt3.equalsIgnoreCase("") || twnNmPrvsInstgAgt3.isEmpty()))
+                            || (adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 == null || ctryPrvsInstgAgt3.equalsIgnoreCase("") || ctryPrvsInstgAgt3.isEmpty()) && (twnNmPrvsInstgAgt3 != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLinePrvsInstgAgt3.isEmpty() && ((DeptPrvsInstgAgt3 != null || !DeptPrvsInstgAgt3.equalsIgnoreCase("") || !DeptPrvsInstgAgt3.isEmpty()) || (subDeptPrvsInstgAgt3 != null || !subDeptPrvsInstgAgt3.equalsIgnoreCase("") || !subDeptPrvsInstgAgt3.isEmpty())
-                            || (strtNmPrvsInstgAgt3 != null || !strtNmPrvsInstgAgt3.equalsIgnoreCase("") || !strtNmPrvsInstgAgt3.isEmpty()) || (bldgNbPrvsInstgAgt3 != null || !bldgNbPrvsInstgAgt3.equalsIgnoreCase("") || !bldgNbPrvsInstgAgt3.isEmpty())
-                            || (bldgNmPrvsInstgAgt3 != null || !bldgNmPrvsInstgAgt3.equalsIgnoreCase("") || !bldgNmPrvsInstgAgt3.isEmpty()) || (flrPrvsInstgAgt3 != null || !flrPrvsInstgAgt3.equalsIgnoreCase("") || !flrPrvsInstgAgt3.isEmpty())
-                            || (pstBxPrvsInstgAgt3 != null || !pstBxPrvsInstgAgt3.equalsIgnoreCase("") || !pstBxPrvsInstgAgt3.isEmpty()) || (roomPrvsInstgAgt3 != null || !roomPrvsInstgAgt3.equalsIgnoreCase("") || !roomPrvsInstgAgt3.isEmpty())
-                            || (pstCdPrvsInstgAgt3 != null || !pstCdPrvsInstgAgt3.equalsIgnoreCase("") || !pstCdPrvsInstgAgt3.isEmpty()) || (twnLctnNmPrvsInstgAgt3 != null || !twnLctnNmPrvsInstgAgt3.equalsIgnoreCase("") || !twnLctnNmPrvsInstgAgt3.isEmpty())
-                            || (dstrctNmPrvsInstgAgt3 != null || !dstrctNmPrvsInstgAgt3.equalsIgnoreCase("") || !dstrctNmPrvsInstgAgt3.isEmpty()) || (ctrySubDvsnPrvsInstgAgt3 != null || !ctrySubDvsnPrvsInstgAgt3.equalsIgnoreCase("") || !ctrySubDvsnPrvsInstgAgt3.isEmpty()))) {
+                    if (!adrLinePrvsInstgAgt3.isEmpty() && (DeptPrvsInstgAgt3 != null || subDeptPrvsInstgAgt3 != null
+                            || strtNmPrvsInstgAgt3 != null || bldgNbPrvsInstgAgt3 != null
+                            || bldgNmPrvsInstgAgt3 != null || flrPrvsInstgAgt3 != null
+                            || pstBxPrvsInstgAgt3 != null || roomPrvsInstgAgt3 != null
+                            || pstCdPrvsInstgAgt3 != null || twnLctnNmPrvsInstgAgt3 != null
+                            || dstrctNmPrvsInstgAgt3 != null || ctrySubDvsnPrvsInstgAgt3 != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -469,8 +470,10 @@ public class rulePacs008_2024 {
                 if (bicInstgAgt == null || bicInstgAgt.equalsIgnoreCase("") || bicInstgAgt.isEmpty()) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt</td></tr>");
                 }
-                if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal) || bicInstgAgt != logicalTerminal) {
-                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI\"><td>\"From\" BIC must match \"Instructing Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
+                if (bicInstgAgt != null) {
+                    if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI\"><td>\"From\" BIC must match \"Instructing Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
+                    }
                 }
             }
         }
@@ -481,10 +484,12 @@ public class rulePacs008_2024 {
             if (finInstnIdInstdAgt != null) {
                 String bicInstdAgt = finInstnIdInstdAgt.getBICFI();
                 if (bicInstdAgt == null || bicInstdAgt.equalsIgnoreCase("") || bicInstdAgt.isEmpty()) {
-                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>InstructedAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>InstructedAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                 }
-                if (!bicInstdAgt.equalsIgnoreCase(receiverAddress) || bicInstdAgt != receiverAddress) {
-                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                if (bicInstdAgt != null) {
+                    if (!bicInstdAgt.equalsIgnoreCase(receiverAddress)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                    }
                 }
             }
         }
@@ -496,7 +501,7 @@ public class rulePacs008_2024 {
                 String nameIntrmyAgt1 = finInstnIdIntrmyAgt1.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt1 = finInstnIdIntrmyAgt1.getPstlAdr();
                 if (((nameIntrmyAgt1 == null || nameIntrmyAgt1.equalsIgnoreCase("") || nameIntrmyAgt1.isEmpty())
-                        && pstlAdrIntrmyAgt1 != null) || (pstlAdrIntrmyAgt1 == null && (nameIntrmyAgt1 != null || !nameIntrmyAgt1.isEmpty()))) {
+                        && pstlAdrIntrmyAgt1 != null) || (pstlAdrIntrmyAgt1 == null && (nameIntrmyAgt1 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId</td></tr>");
                 }
 
@@ -517,17 +522,17 @@ public class rulePacs008_2024 {
                     String ctryIntrmyAgt1 = pstlAdrIntrmyAgt1.getCtry();
                     String twnNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getTwnNm();
                     if ((adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 == null || ctryIntrmyAgt1.equalsIgnoreCase("") || ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 == null || twnNmIntrmyAgt1.equalsIgnoreCase("") || twnNmIntrmyAgt1.isEmpty()))
-                            || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 != null || !ctryIntrmyAgt1.equalsIgnoreCase("") || !ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 == null || twnNmIntrmyAgt1.equalsIgnoreCase("") || twnNmIntrmyAgt1.isEmpty()))
-                            || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 == null || ctryIntrmyAgt1.equalsIgnoreCase("") || ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 != null || !twnNmIntrmyAgt1.equalsIgnoreCase("") || !twnNmIntrmyAgt1.isEmpty()))) {
+                            || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 != null) && (twnNmIntrmyAgt1 == null || twnNmIntrmyAgt1.equalsIgnoreCase("") || twnNmIntrmyAgt1.isEmpty()))
+                            || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 == null || ctryIntrmyAgt1.equalsIgnoreCase("") || ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLineIntrmyAgt1.isEmpty() && ((DeptIntrmyAgt1 != null || !DeptIntrmyAgt1.equalsIgnoreCase("") || !DeptIntrmyAgt1.isEmpty()) || (subDeptIntrmyAgt1 != null || !subDeptIntrmyAgt1.equalsIgnoreCase("") || !subDeptIntrmyAgt1.isEmpty())
-                            || (strtNmIntrmyAgt1 != null || !strtNmIntrmyAgt1.equalsIgnoreCase("") || !strtNmIntrmyAgt1.isEmpty()) || (bldgNbIntrmyAgt1 != null || !bldgNbIntrmyAgt1.equalsIgnoreCase("") || !bldgNbIntrmyAgt1.isEmpty())
-                            || (bldgNmIntrmyAgt1 != null || !bldgNmIntrmyAgt1.equalsIgnoreCase("") || !bldgNmIntrmyAgt1.isEmpty()) || (flrIntrmyAgt1 != null || !flrIntrmyAgt1.equalsIgnoreCase("") || !flrIntrmyAgt1.isEmpty())
-                            || (pstBxIntrmyAgt1 != null || !pstBxIntrmyAgt1.equalsIgnoreCase("") || !pstBxIntrmyAgt1.isEmpty()) || (roomIntrmyAgt1 != null || !roomIntrmyAgt1.equalsIgnoreCase("") || !roomIntrmyAgt1.isEmpty())
-                            || (pstCdIntrmyAgt1 != null || !pstCdIntrmyAgt1.equalsIgnoreCase("") || !pstCdIntrmyAgt1.isEmpty()) || (twnLctnNmIntrmyAgt1 != null || !twnLctnNmIntrmyAgt1.equalsIgnoreCase("") || !twnLctnNmIntrmyAgt1.isEmpty())
-                            || (dstrctNmIntrmyAgt1 != null || !dstrctNmIntrmyAgt1.equalsIgnoreCase("") || !dstrctNmIntrmyAgt1.isEmpty()) || (ctrySubDvsnIntrmyAgt1 != null || !ctrySubDvsnIntrmyAgt1.equalsIgnoreCase("") || !ctrySubDvsnIntrmyAgt1.isEmpty()))) {
+                    if (!adrLineIntrmyAgt1.isEmpty() && (DeptIntrmyAgt1 != null || subDeptIntrmyAgt1 != null
+                            || strtNmIntrmyAgt1 != null || bldgNbIntrmyAgt1 != null
+                            || bldgNmIntrmyAgt1 != null || flrIntrmyAgt1 != null
+                            || pstBxIntrmyAgt1 != null || roomIntrmyAgt1 != null
+                            || pstCdIntrmyAgt1 != null || twnLctnNmIntrmyAgt1 != null
+                            || dstrctNmIntrmyAgt1 != null || ctrySubDvsnIntrmyAgt1 != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -541,7 +546,7 @@ public class rulePacs008_2024 {
                 String nameIntrmyAgt2 = finInstnIdIntrmyAgt2.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt2 = finInstnIdIntrmyAgt2.getPstlAdr();
                 if (((nameIntrmyAgt2 == null || nameIntrmyAgt2.equalsIgnoreCase("") || nameIntrmyAgt2.isEmpty())
-                        && pstlAdrIntrmyAgt2 != null) || (pstlAdrIntrmyAgt2 == null && (nameIntrmyAgt2 != null || !nameIntrmyAgt2.isEmpty()))) {
+                        && pstlAdrIntrmyAgt2 != null) || (pstlAdrIntrmyAgt2 == null && (nameIntrmyAgt2 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId</td></tr>");
                 }
 
@@ -562,17 +567,17 @@ public class rulePacs008_2024 {
                     String ctryIntrmyAgt2 = pstlAdrIntrmyAgt2.getCtry();
                     String twnNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getTwnNm();
                     if ((adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 == null || ctryIntrmyAgt2.equalsIgnoreCase("") || ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 == null || twnNmIntrmyAgt2.equalsIgnoreCase("") || twnNmIntrmyAgt2.isEmpty()))
-                            || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 != null || !ctryIntrmyAgt2.equalsIgnoreCase("") || !ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 == null || twnNmIntrmyAgt2.equalsIgnoreCase("") || twnNmIntrmyAgt2.isEmpty()))
-                            || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 == null || ctryIntrmyAgt2.equalsIgnoreCase("") || ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 != null || !twnNmIntrmyAgt2.equalsIgnoreCase("") || !twnNmIntrmyAgt2.isEmpty()))) {
+                            || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 != null) && (twnNmIntrmyAgt2 == null || twnNmIntrmyAgt2.equalsIgnoreCase("") || twnNmIntrmyAgt2.isEmpty()))
+                            || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 == null || ctryIntrmyAgt2.equalsIgnoreCase("") || ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLineIntrmyAgt2.isEmpty() && ((DeptIntrmyAgt2 != null || !DeptIntrmyAgt2.equalsIgnoreCase("") || !DeptIntrmyAgt2.isEmpty()) || (subDeptIntrmyAgt2 != null || !subDeptIntrmyAgt2.equalsIgnoreCase("") || !subDeptIntrmyAgt2.isEmpty())
-                            || (strtNmIntrmyAgt2 != null || !strtNmIntrmyAgt2.equalsIgnoreCase("") || !strtNmIntrmyAgt2.isEmpty()) || (bldgNbIntrmyAgt2 != null || !bldgNbIntrmyAgt2.equalsIgnoreCase("") || !bldgNbIntrmyAgt2.isEmpty())
-                            || (bldgNmIntrmyAgt2 != null || !bldgNmIntrmyAgt2.equalsIgnoreCase("") || !bldgNmIntrmyAgt2.isEmpty()) || (flrIntrmyAgt2 != null || !flrIntrmyAgt2.equalsIgnoreCase("") || !flrIntrmyAgt2.isEmpty())
-                            || (pstBxIntrmyAgt2 != null || !pstBxIntrmyAgt2.equalsIgnoreCase("") || !pstBxIntrmyAgt2.isEmpty()) || (roomIntrmyAgt2 != null || !roomIntrmyAgt2.equalsIgnoreCase("") || !roomIntrmyAgt2.isEmpty())
-                            || (pstCdIntrmyAgt2 != null || !pstCdIntrmyAgt2.equalsIgnoreCase("") || !pstCdIntrmyAgt2.isEmpty()) || (twnLctnNmIntrmyAgt2 != null || !twnLctnNmIntrmyAgt2.equalsIgnoreCase("") || !twnLctnNmIntrmyAgt2.isEmpty())
-                            || (dstrctNmIntrmyAgt2 != null || !dstrctNmIntrmyAgt2.equalsIgnoreCase("") || !dstrctNmIntrmyAgt2.isEmpty()) || (ctrySubDvsnIntrmyAgt2 != null || !ctrySubDvsnIntrmyAgt2.equalsIgnoreCase("") || !ctrySubDvsnIntrmyAgt2.isEmpty()))) {
+                    if (!adrLineIntrmyAgt2.isEmpty() && (DeptIntrmyAgt2 != null || subDeptIntrmyAgt2 != null
+                            || strtNmIntrmyAgt2 != null || bldgNbIntrmyAgt2 != null
+                            || bldgNmIntrmyAgt2 != null || flrIntrmyAgt2 != null
+                            || pstBxIntrmyAgt2 != null || roomIntrmyAgt2 != null
+                            || pstCdIntrmyAgt2 != null || twnLctnNmIntrmyAgt2 != null
+                            || dstrctNmIntrmyAgt2 != null || ctrySubDvsnIntrmyAgt2 != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -586,7 +591,7 @@ public class rulePacs008_2024 {
                 String nameIntrmyAgt3 = finInstnIdIntrmyAgt3.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt3 = finInstnIdIntrmyAgt3.getPstlAdr();
                 if (((nameIntrmyAgt3 == null || nameIntrmyAgt3.equalsIgnoreCase("") || nameIntrmyAgt3.isEmpty())
-                        && pstlAdrIntrmyAgt3 != null) || (pstlAdrIntrmyAgt3 == null && (nameIntrmyAgt3 != null || !nameIntrmyAgt3.isEmpty()))) {
+                        && pstlAdrIntrmyAgt3 != null) || (pstlAdrIntrmyAgt3 == null && (nameIntrmyAgt3 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId</td></tr>");
                 }
 
@@ -607,17 +612,17 @@ public class rulePacs008_2024 {
                     String ctryIntrmyAgt3 = pstlAdrIntrmyAgt3.getCtry();
                     String twnNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getTwnNm();
                     if ((adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 == null || ctryIntrmyAgt3.equalsIgnoreCase("") || ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 == null || twnNmIntrmyAgt3.equalsIgnoreCase("") || twnNmIntrmyAgt3.isEmpty()))
-                            || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 != null || !ctryIntrmyAgt3.equalsIgnoreCase("") || !ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 == null || twnNmIntrmyAgt3.equalsIgnoreCase("") || twnNmIntrmyAgt3.isEmpty()))
-                            || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 == null || ctryIntrmyAgt3.equalsIgnoreCase("") || ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 != null || !twnNmIntrmyAgt3.equalsIgnoreCase("") || !twnNmIntrmyAgt3.isEmpty()))) {
+                            || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 != null) && (twnNmIntrmyAgt3 == null || twnNmIntrmyAgt3.equalsIgnoreCase("") || twnNmIntrmyAgt3.isEmpty()))
+                            || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 == null || ctryIntrmyAgt3.equalsIgnoreCase("") || ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLineIntrmyAgt3.isEmpty() && ((DeptIntrmyAgt3 != null || !DeptIntrmyAgt3.equalsIgnoreCase("") || !DeptIntrmyAgt3.isEmpty()) || (subDeptIntrmyAgt3 != null || !subDeptIntrmyAgt3.equalsIgnoreCase("") || !subDeptIntrmyAgt3.isEmpty())
-                            || (strtNmIntrmyAgt3 != null || !strtNmIntrmyAgt3.equalsIgnoreCase("") || !strtNmIntrmyAgt3.isEmpty()) || (bldgNbIntrmyAgt3 != null || !bldgNbIntrmyAgt3.equalsIgnoreCase("") || !bldgNbIntrmyAgt3.isEmpty())
-                            || (bldgNmIntrmyAgt3 != null || !bldgNmIntrmyAgt3.equalsIgnoreCase("") || !bldgNmIntrmyAgt3.isEmpty()) || (flrIntrmyAgt3 != null || !flrIntrmyAgt3.equalsIgnoreCase("") || !flrIntrmyAgt3.isEmpty())
-                            || (pstBxIntrmyAgt3 != null || !pstBxIntrmyAgt3.equalsIgnoreCase("") || !pstBxIntrmyAgt3.isEmpty()) || (roomIntrmyAgt3 != null || !roomIntrmyAgt3.equalsIgnoreCase("") || !roomIntrmyAgt3.isEmpty())
-                            || (pstCdIntrmyAgt3 != null || !pstCdIntrmyAgt3.equalsIgnoreCase("") || !pstCdIntrmyAgt3.isEmpty()) || (twnLctnNmIntrmyAgt3 != null || !twnLctnNmIntrmyAgt3.equalsIgnoreCase("") || !twnLctnNmIntrmyAgt3.isEmpty())
-                            || (dstrctNmIntrmyAgt3 != null || !dstrctNmIntrmyAgt3.equalsIgnoreCase("") || !dstrctNmIntrmyAgt3.isEmpty()) || (ctrySubDvsnIntrmyAgt3 != null || !ctrySubDvsnIntrmyAgt3.equalsIgnoreCase("") || !ctrySubDvsnIntrmyAgt3.isEmpty()))) {
+                    if (!adrLineIntrmyAgt3.isEmpty() && (DeptIntrmyAgt3 != null || subDeptIntrmyAgt3 != null
+                            || strtNmIntrmyAgt3 != null || bldgNbIntrmyAgt3 != null
+                            || bldgNmIntrmyAgt3 != null || flrIntrmyAgt3 != null
+                            || pstBxIntrmyAgt3 != null || roomIntrmyAgt3 != null
+                            || pstCdIntrmyAgt3 != null || twnLctnNmIntrmyAgt3 != null
+                            || dstrctNmIntrmyAgt3 != null || ctrySubDvsnIntrmyAgt3 != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -629,7 +634,7 @@ public class rulePacs008_2024 {
             String nmUltmtDbtr = ultmtDbtr.getNm();
             PostalAddress24 pstlAdrUltmtDbtr = ultmtDbtr.getPstlAdr();
             if (((nmUltmtDbtr == null || nmUltmtDbtr.equalsIgnoreCase("") || nmUltmtDbtr.isEmpty())
-                    && pstlAdrUltmtDbtr != null) || (pstlAdrUltmtDbtr == null && (nmUltmtDbtr != null || !nmUltmtDbtr.isEmpty()))) {
+                    && pstlAdrUltmtDbtr != null) || (pstlAdrUltmtDbtr == null && (nmUltmtDbtr != null))) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr</td></tr>");
             }
 
@@ -647,7 +652,7 @@ public class rulePacs008_2024 {
             String nmInitgPty = initgPty.getNm();
             PostalAddress24 pstlAdrInitgPty = initgPty.getPstlAdr();
             if (((nmInitgPty == null || nmInitgPty.equalsIgnoreCase("") || nmInitgPty.isEmpty())
-                    && pstlAdrInitgPty != null) || (pstlAdrInitgPty == null && (nmInitgPty != null || !nmInitgPty.isEmpty()))) {
+                    && pstlAdrInitgPty != null) || (pstlAdrInitgPty == null && (nmInitgPty != null))) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty</td></tr>");
             }
 
@@ -700,17 +705,17 @@ public class rulePacs008_2024 {
                 String ctryDbtr = pstlAdrDbtr.getCtry();
                 String twnNmDbtr = pstlAdrDbtr.getTwnNm();
                 if ((adrLineDbtr.isEmpty() && (ctryDbtr == null || ctryDbtr.equalsIgnoreCase("") || ctryDbtr.isEmpty()) && (twnNmDbtr == null || twnNmDbtr.equalsIgnoreCase("") || twnNmDbtr.isEmpty()))
-                        || (adrLineDbtr.isEmpty() && (ctryDbtr != null || !ctryDbtr.equalsIgnoreCase("") || !ctryDbtr.isEmpty()) && (twnNmDbtr == null || twnNmDbtr.equalsIgnoreCase("") || twnNmDbtr.isEmpty()))
-                        || (adrLineDbtr.isEmpty() && (ctryDbtr == null || ctryDbtr.equalsIgnoreCase("") || ctryDbtr.isEmpty()) && (twnNmDbtr != null || !twnNmDbtr.equalsIgnoreCase("") || !twnNmDbtr.isEmpty()))) {
+                        || (adrLineDbtr.isEmpty() && (ctryDbtr != null) && (twnNmDbtr == null || twnNmDbtr.equalsIgnoreCase("") || twnNmDbtr.isEmpty()))
+                        || (adrLineDbtr.isEmpty() && (ctryDbtr == null || ctryDbtr.equalsIgnoreCase("") || ctryDbtr.isEmpty()) && (twnNmDbtr != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
                 }
 
-                if (!adrLineDbtr.isEmpty() && ((DeptDbtr != null || !DeptDbtr.equalsIgnoreCase("") || !DeptDbtr.isEmpty()) || (subDeptDbtr != null || !subDeptDbtr.equalsIgnoreCase("") || !subDeptDbtr.isEmpty())
-                        || (strtNmDbtr != null || !strtNmDbtr.equalsIgnoreCase("") || !strtNmDbtr.isEmpty()) || (bldgNbDbtr != null || !bldgNbDbtr.equalsIgnoreCase("") || !bldgNbDbtr.isEmpty())
-                        || (bldgNmDbtr != null || !bldgNmDbtr.equalsIgnoreCase("") || !bldgNmDbtr.isEmpty()) || (flrDbtr != null || !flrDbtr.equalsIgnoreCase("") || !flrDbtr.isEmpty())
-                        || (pstBxDbtr != null || !pstBxDbtr.equalsIgnoreCase("") || !pstBxDbtr.isEmpty()) || (roomDbtr != null || !roomDbtr.equalsIgnoreCase("") || !roomDbtr.isEmpty())
-                        || (pstCdDbtr != null || !pstCdDbtr.equalsIgnoreCase("") || !pstCdDbtr.isEmpty()) || (twnLctnNmDbtr != null || !twnLctnNmDbtr.equalsIgnoreCase("") || !twnLctnNmDbtr.isEmpty())
-                        || (dstrctNmDbtr != null || !dstrctNmDbtr.equalsIgnoreCase("") || !dstrctNmDbtr.isEmpty()) || (ctrySubDvsnDbtr != null || !ctrySubDvsnDbtr.equalsIgnoreCase("") || !ctrySubDvsnDbtr.isEmpty()))) {
+                if (!adrLineDbtr.isEmpty() && (DeptDbtr != null || subDeptDbtr != null
+                        || strtNmDbtr != null || bldgNbDbtr != null
+                        || bldgNmDbtr != null || flrDbtr != null
+                        || pstBxDbtr != null || roomDbtr != null
+                        || pstCdDbtr != null || twnLctnNmDbtr != null
+                        || dstrctNmDbtr != null || ctrySubDvsnDbtr != null)) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
                 }
             }
@@ -747,17 +752,17 @@ public class rulePacs008_2024 {
                     String ctryDbtrAgt = pstlAdrDbtrAgt.getCtry();
                     String twnNmDbtrAgt = pstlAdrDbtrAgt.getTwnNm();
                     if ((adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt == null || ctryDbtrAgt.equalsIgnoreCase("") || ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt == null || twnNmDbtrAgt.equalsIgnoreCase("") || twnNmDbtrAgt.isEmpty()))
-                            || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt != null || !ctryDbtrAgt.equalsIgnoreCase("") || !ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt == null || twnNmDbtrAgt.equalsIgnoreCase("") || twnNmDbtrAgt.isEmpty()))
-                            || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt == null || ctryDbtrAgt.equalsIgnoreCase("") || ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt != null || !twnNmDbtrAgt.equalsIgnoreCase("") || !twnNmDbtrAgt.isEmpty()))) {
+                            || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt != null) && (twnNmDbtrAgt == null || twnNmDbtrAgt.equalsIgnoreCase("") || twnNmDbtrAgt.isEmpty()))
+                            || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt == null || ctryDbtrAgt.equalsIgnoreCase("") || ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLineDbtrAgt.isEmpty() && ((DeptDbtrAgt != null || !DeptDbtrAgt.equalsIgnoreCase("") || !DeptDbtrAgt.isEmpty()) || (subDeptDbtrAgt != null || !subDeptDbtrAgt.equalsIgnoreCase("") || !subDeptDbtrAgt.isEmpty())
-                            || (strtNmDbtrAgt != null || !strtNmDbtrAgt.equalsIgnoreCase("") || !strtNmDbtrAgt.isEmpty()) || (bldgNbDbtrAgt != null || !bldgNbDbtrAgt.equalsIgnoreCase("") || !bldgNbDbtrAgt.isEmpty())
-                            || (bldgNmDbtrAgt != null || !bldgNmDbtrAgt.equalsIgnoreCase("") || !bldgNmDbtrAgt.isEmpty()) || (flrDbtrAgt != null || !flrDbtrAgt.equalsIgnoreCase("") || !flrDbtrAgt.isEmpty())
-                            || (pstBxDbtrAgt != null || !pstBxDbtrAgt.equalsIgnoreCase("") || !pstBxDbtrAgt.isEmpty()) || (roomDbtrAgt != null || !roomDbtrAgt.equalsIgnoreCase("") || !roomDbtrAgt.isEmpty())
-                            || (pstCdDbtrAgt != null || !pstCdDbtrAgt.equalsIgnoreCase("") || !pstCdDbtrAgt.isEmpty()) || (twnLctnNmDbtrAgt != null || !twnLctnNmDbtrAgt.equalsIgnoreCase("") || !twnLctnNmDbtrAgt.isEmpty())
-                            || (dstrctNmDbtrAgt != null || !dstrctNmDbtrAgt.equalsIgnoreCase("") || !dstrctNmDbtrAgt.isEmpty()) || (ctrySubDvsnDbtrAgt != null || !ctrySubDvsnDbtrAgt.equalsIgnoreCase("") || !ctrySubDvsnDbtrAgt.isEmpty()))) {
+                    if (!adrLineDbtrAgt.isEmpty() && (DeptDbtrAgt != null || subDeptDbtrAgt != null
+                            || strtNmDbtrAgt != null || bldgNbDbtrAgt != null
+                            || bldgNmDbtrAgt != null || flrDbtrAgt != null
+                            || pstBxDbtrAgt != null || roomDbtrAgt != null
+                            || pstCdDbtrAgt != null || twnLctnNmDbtrAgt != null
+                            || dstrctNmDbtrAgt != null || ctrySubDvsnDbtrAgt != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -795,17 +800,17 @@ public class rulePacs008_2024 {
                     String ctryCdtrAgt = pstlAdrCdtrAgt.getCtry();
                     String twnNmCdtrAgt = pstlAdrCdtrAgt.getTwnNm();
                     if ((adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt == null || ctryCdtrAgt.equalsIgnoreCase("") || ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt == null || twnNmCdtrAgt.equalsIgnoreCase("") || twnNmCdtrAgt.isEmpty()))
-                            || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt != null || !ctryCdtrAgt.equalsIgnoreCase("") || !ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt == null || twnNmCdtrAgt.equalsIgnoreCase("") || twnNmCdtrAgt.isEmpty()))
-                            || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt == null || ctryCdtrAgt.equalsIgnoreCase("") || ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt != null || !twnNmCdtrAgt.equalsIgnoreCase("") || !twnNmCdtrAgt.isEmpty()))) {
+                            || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt != null) && (twnNmCdtrAgt == null || twnNmCdtrAgt.equalsIgnoreCase("") || twnNmCdtrAgt.isEmpty()))
+                            || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt == null || ctryCdtrAgt.equalsIgnoreCase("") || ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt != null))) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
                     }
 
-                    if (!adrLineCdtrAgt.isEmpty() && ((DeptCdtrAgt != null || !DeptCdtrAgt.equalsIgnoreCase("") || !DeptCdtrAgt.isEmpty()) || (subDeptCdtrAgt != null || !subDeptCdtrAgt.equalsIgnoreCase("") || !subDeptCdtrAgt.isEmpty())
-                            || (strtNmCdtrAgt != null || !strtNmCdtrAgt.equalsIgnoreCase("") || !strtNmCdtrAgt.isEmpty()) || (bldgNbCdtrAgt != null || !bldgNbCdtrAgt.equalsIgnoreCase("") || !bldgNbCdtrAgt.isEmpty())
-                            || (bldgNmCdtrAgt != null || !bldgNmCdtrAgt.equalsIgnoreCase("") || !bldgNmCdtrAgt.isEmpty()) || (flrCdtrAgt != null || !flrCdtrAgt.equalsIgnoreCase("") || !flrCdtrAgt.isEmpty())
-                            || (pstBxCdtrAgt != null || !pstBxCdtrAgt.equalsIgnoreCase("") || !pstBxCdtrAgt.isEmpty()) || (roomCdtrAgt != null || !roomCdtrAgt.equalsIgnoreCase("") || !roomCdtrAgt.isEmpty())
-                            || (pstCdCdtrAgt != null || !pstCdCdtrAgt.equalsIgnoreCase("") || !pstCdCdtrAgt.isEmpty()) || (twnLctnNmCdtrAgt != null || !twnLctnNmCdtrAgt.equalsIgnoreCase("") || !twnLctnNmCdtrAgt.isEmpty())
-                            || (dstrctNmCdtrAgt != null || !dstrctNmCdtrAgt.equalsIgnoreCase("") || !dstrctNmCdtrAgt.isEmpty()) || (ctrySubDvsnCdtrAgt != null || !ctrySubDvsnCdtrAgt.equalsIgnoreCase("") || !ctrySubDvsnCdtrAgt.isEmpty()))) {
+                    if (!adrLineCdtrAgt.isEmpty() && (DeptCdtrAgt != null || subDeptCdtrAgt != null
+                            || strtNmCdtrAgt != null || bldgNbCdtrAgt != null
+                            || bldgNmCdtrAgt != null || flrCdtrAgt != null
+                            || pstBxCdtrAgt != null || roomCdtrAgt != null
+                            || pstCdCdtrAgt != null || twnLctnNmCdtrAgt != null
+                            || dstrctNmCdtrAgt != null || ctrySubDvsnCdtrAgt != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
                     }
                 }
@@ -852,17 +857,17 @@ public class rulePacs008_2024 {
                 String ctryCdtr = pstlAdrCdtr.getCtry();
                 String twnNmCdtr = pstlAdrCdtr.getTwnNm();
                 if ((adrLineCdtr.isEmpty() && (ctryCdtr == null || ctryCdtr.equalsIgnoreCase("") || ctryCdtr.isEmpty()) && (twnNmCdtr == null || twnNmCdtr.equalsIgnoreCase("") || twnNmCdtr.isEmpty()))
-                        || (adrLineCdtr.isEmpty() && (ctryCdtr != null || !ctryCdtr.equalsIgnoreCase("") || !ctryCdtr.isEmpty()) && (twnNmCdtr == null || twnNmCdtr.equalsIgnoreCase("") || twnNmCdtr.isEmpty()))
-                        || (adrLineCdtr.isEmpty() && (ctryCdtr == null || ctryCdtr.equalsIgnoreCase("") || ctryCdtr.isEmpty()) && (twnNmCdtr != null || !twnNmCdtr.equalsIgnoreCase("") || !twnNmCdtr.isEmpty()))) {
+                        || (adrLineCdtr.isEmpty() && (ctryCdtr != null) && (twnNmCdtr == null || twnNmCdtr.equalsIgnoreCase("") || twnNmCdtr.isEmpty()))
+                        || (adrLineCdtr.isEmpty() && (ctryCdtr == null || ctryCdtr.equalsIgnoreCase("") || ctryCdtr.isEmpty()) && (twnNmCdtr != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
                 }
 
-                if (!adrLineCdtr.isEmpty() && ((DeptCdtr != null || !DeptCdtr.equalsIgnoreCase("") || !DeptCdtr.isEmpty()) || (subDeptCdtr != null || !subDeptCdtr.equalsIgnoreCase("") || !subDeptCdtr.isEmpty())
-                        || (strtNmCdtr != null || !strtNmCdtr.equalsIgnoreCase("") || !strtNmCdtr.isEmpty()) || (bldgNbCdtr != null || !bldgNbCdtr.equalsIgnoreCase("") || !bldgNbCdtr.isEmpty())
-                        || (bldgNmCdtr != null || !bldgNmCdtr.equalsIgnoreCase("") || !bldgNmCdtr.isEmpty()) || (flrCdtr != null || !flrCdtr.equalsIgnoreCase("") || !flrCdtr.isEmpty())
-                        || (pstBxCdtr != null || !pstBxCdtr.equalsIgnoreCase("") || !pstBxCdtr.isEmpty()) || (roomCdtr != null || !roomCdtr.equalsIgnoreCase("") || !roomCdtr.isEmpty())
-                        || (pstCdCdtr != null || !pstCdCdtr.equalsIgnoreCase("") || !pstCdCdtr.isEmpty()) || (twnLctnNmCdtr != null || !twnLctnNmCdtr.equalsIgnoreCase("") || !twnLctnNmCdtr.isEmpty())
-                        || (dstrctNmCdtr != null || !dstrctNmCdtr.equalsIgnoreCase("") || !dstrctNmCdtr.isEmpty()) || (ctrySubDvsnCdtr != null || !ctrySubDvsnCdtr.equalsIgnoreCase("") || !ctrySubDvsnCdtr.isEmpty()))) {
+                if (!adrLineCdtr.isEmpty() && (DeptCdtr != null || subDeptCdtr != null
+                        || strtNmCdtr != null || bldgNbCdtr != null
+                        || bldgNmCdtr != null || flrCdtr != null
+                        || pstBxCdtr != null || roomCdtr != null
+                        || pstCdCdtr != null || twnLctnNmCdtr != null
+                        || dstrctNmCdtr != null || ctrySubDvsnCdtr != null)) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
                 }
             }
@@ -873,7 +878,7 @@ public class rulePacs008_2024 {
             String nmUltmtCdtr = ultmtCdtr.getNm();
             PostalAddress24 pstlAdrUltmtCdtr = ultmtCdtr.getPstlAdr();
             if (((nmUltmtCdtr == null || nmUltmtCdtr.equalsIgnoreCase("") || nmUltmtCdtr.isEmpty())
-                    && pstlAdrUltmtCdtr != null) || (pstlAdrUltmtCdtr == null && (nmUltmtCdtr != null || !nmUltmtCdtr.isEmpty()))) {
+                    && pstlAdrUltmtCdtr != null) || (pstlAdrUltmtCdtr == null && (nmUltmtCdtr != null))) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr</td></tr>");
             }
 
