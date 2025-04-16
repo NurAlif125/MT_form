@@ -138,9 +138,10 @@ public class DBUserData {
     public boolean authenticateUser(String user_id) throws Exception {
         boolean isValid = false;
         String sql = "SELECT user_id, name, password, status_new, user_mt_routing, description "
-                + "FROM users WHERE user_id='" + user_id + "' ";
+                + "FROM users WHERE user_id= ? ";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1 , user_id);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
             String _user_id = rs.getString(1);

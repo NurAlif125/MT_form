@@ -167,11 +167,11 @@ public class SCHeader extends HttpServlet implements Serializable {
                     } else if (flag.equalsIgnoreCase("WAITING-AML")) {
                         flag = "WAITING-AML";
                         menu = "22";
-                    } else if (flag.equalsIgnoreCase("INC-CVT")) {
+                    } else if (flag.equalsIgnoreCase("CVT-INC")) {
                         flag = "CVT-INC";
                         menu = "23";
                     } else if (flag.equalsIgnoreCase("INC")) {
-                        flag = "INC-TRX";
+                        flag = "INC";
                         menu = "24";
                     } else if (flag.equalsIgnoreCase("RESEND-CNF")) {
                         flag = "RESEND-CNF";
