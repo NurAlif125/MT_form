@@ -298,7 +298,7 @@ public class DBUserData {
 
     public void updatewrongpass(DataUser data) {
         try {
-            String sql = "UPDATE [user] SET wrongpass=? WHERE user_id=?";
+            String sql = "UPDATE user SET wrongpass=? WHERE user_id=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setInt(1, data.getWrongpass());     //wrongpass
             st.setString(2, data.getUser_id());     //user_id
@@ -310,7 +310,7 @@ public class DBUserData {
     
         public void updateenable(DataUser data) {
         try {
-            String sql = "UPDATE [user] SET enable=0 WHERE user_id=?";
+            String sql = "UPDATE user SET enable=0 WHERE user_id=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id());     //user_id
             st.executeUpdate();
