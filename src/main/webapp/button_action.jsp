@@ -192,7 +192,7 @@
         <!--here we go...!-->
         <!--20230302-->
         <c:if test="${item == 'FLOW:REJECT'}">
-            <input type="button" name="reject" id="reject" value="Reject" />
+            <!--<input type="button" name="reject" id="reject" value="Reject" />-->
         </c:if>
         <%}%>
         <% if (session.getAttribute("flagStatus").equals("INC-NOK")) {%>

@@ -202,17 +202,17 @@ public class rulePacs008_2024 {
 
             CashAccount38 instdRmbrsmntAgtAcct = sttlmInf.getInstdRmbrsmntAgtAcct();
             if (instdRmbrsmntAgtAcct != null && instdRmbrsmntAgt == null) {
-                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt\"><td>If InstructedReimbursementAgentAccount is present, then InstructedReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt</td><>");
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt\"><td>If InstructedReimbursementAgentAccount is present, then InstructedReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt</td></tr>");
             }
 
             CashAccount38 instgRmbrsmntAgtAcct = sttlmInf.getInstgRmbrsmntAgtAcct();
             if (instgRmbrsmntAgtAcct != null && instgRmbrsmntAgt == null) {
-                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt\"><td>If InstructingReimbursementAgentAccount is present, the InstructingReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt</td></tr>");
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt\"><td>If InstructingReimbursementAgentAccount is present, then InstructingReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt</td></tr>");
             }
 
             CashAccount38 thrdRmbrsmntAgtAcct = sttlmInf.getThrdRmbrsmntAgtAcct();
             if (thrdRmbrsmntAgtAcct != null && thrdRmbrsmntAgt == null) {
-                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt\"><td>If ThirdReimbursementAgentAccount is present, the ThirdReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt</td></tr>");
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt\"><td>If ThirdReimbursementAgentAccount is present, then ThirdReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt</td></tr>");
             }
 
             if ((thrdRmbrsmntAgt != null && instdRmbrsmntAgt == null && instgRmbrsmntAgt == null) || (thrdRmbrsmntAgt != null && instdRmbrsmntAgt != null && instgRmbrsmntAgt == null) || (thrdRmbrsmntAgt != null && instdRmbrsmntAgt == null && instgRmbrsmntAgt != null)) {
@@ -239,8 +239,8 @@ public class rulePacs008_2024 {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>InstructionIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId</td></tr>");
             }
             if (instrId != null) {
-                if (instrId.startsWith("/") && instrId.endsWith("/") && instrId.contains("//")) {
-                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><><><>");
+                if (instrId.startsWith("/") || instrId.endsWith("/") || instrId.contains("//")) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId</td></tr>");
                 }
             }
 
@@ -256,7 +256,7 @@ public class rulePacs008_2024 {
         }
 
         ActiveCurrencyAndAmount intrBkSttlmAmt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt();
-        if (intrBkSttlmAmt == null) {
+        if (intrBkSttlmAmt.getValue() == null) {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt\"><td>InterBankSettlementAmount is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt</td></tr>");
         }
 
@@ -291,6 +291,10 @@ public class rulePacs008_2024 {
                 if (finInstnIdChrgsInf != null) {
                     String nameChrgsInf = finInstnIdChrgsInf.getNm();
                     PostalAddress24 pstlAdrChrgsInf = finInstnIdChrgsInf.getPstlAdr();
+                    String bicChrgsInf = finInstnIdChrgsInf.getBICFI();
+                    if ((nameChrgsInf == null || nameChrgsInf.equalsIgnoreCase("")) && (bicChrgsInf == null || bicChrgsInf.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId\"><td>FinancialInstitutionIdentification in ChargesInformation is mandatory if ChargesInformation is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId</td></tr>");
+                    }
                     if (((nameChrgsInf == null || nameChrgsInf.equalsIgnoreCase("") || nameChrgsInf.isEmpty())
                             && pstlAdrChrgsInf != null) || (pstlAdrChrgsInf == null && nameChrgsInf != null)) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId</td></tr>");
@@ -337,6 +341,10 @@ public class rulePacs008_2024 {
             if (finInstnIdPrvsInstgAgt1 != null) {
                 String namePrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getNm();
                 PostalAddress24 pstlAdrPrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getPstlAdr();
+                String bicPrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getBICFI();
+                if ((namePrvsInstgAgt1 == null || namePrvsInstgAgt1.equalsIgnoreCase("")) && (bicPrvsInstgAgt1== null || bicPrvsInstgAgt1.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent1 is mandatory if PreviousInstructingAgent1 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId</td></tr>");
+                }
                 if (((namePrvsInstgAgt1 == null || namePrvsInstgAgt1.equalsIgnoreCase("") || namePrvsInstgAgt1.isEmpty())
                         && pstlAdrPrvsInstgAgt1 != null) || (pstlAdrPrvsInstgAgt1 == null && (namePrvsInstgAgt1 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId</td></tr>");
@@ -382,6 +390,10 @@ public class rulePacs008_2024 {
             if (finInstnIdPrvsInstgAgt2 != null) {
                 String namePrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getNm();
                 PostalAddress24 pstlAdrPrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getPstlAdr();
+                String bicPrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getBICFI();
+                if ((namePrvsInstgAgt2 == null || namePrvsInstgAgt2.equalsIgnoreCase("")) && (bicPrvsInstgAgt2 == null || bicPrvsInstgAgt2.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent2 is mandatory if PreviousInstructingAgent2 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId</td></tr>");
+                }
                 if (((namePrvsInstgAgt2 == null || namePrvsInstgAgt2.equalsIgnoreCase("") || namePrvsInstgAgt2.isEmpty())
                         && pstlAdrPrvsInstgAgt2 != null) || (pstlAdrPrvsInstgAgt2 == null && (namePrvsInstgAgt2 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId</td></tr>");
@@ -427,6 +439,10 @@ public class rulePacs008_2024 {
             if (finInstnIdPrvsInstgAgt3 != null) {
                 String namePrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getNm();
                 PostalAddress24 pstlAdrPrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getPstlAdr();
+                String bicPrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getBICFI();
+                if ((namePrvsInstgAgt3 == null || namePrvsInstgAgt3.equalsIgnoreCase("")) && (bicPrvsInstgAgt3 == null || bicPrvsInstgAgt3.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent3 is mandatory if PreviousInstructingAgent3 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId</td></tr>");
+                }
                 if (((namePrvsInstgAgt3 == null || namePrvsInstgAgt3.equalsIgnoreCase("") || namePrvsInstgAgt3.isEmpty())
                         && pstlAdrPrvsInstgAgt3 != null) || (pstlAdrPrvsInstgAgt3 == null)) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId</td></tr>");
@@ -505,11 +521,15 @@ public class rulePacs008_2024 {
         }
 
         BranchAndFinancialInstitutionIdentification6 intrmyAgt1 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt1();
-        if (prvsInstgAgt1 != null) {
-            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt1 = prvsInstgAgt1.getFinInstnId();
+        if (intrmyAgt1 != null) {
+            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt1 = intrmyAgt1.getFinInstnId();
             if (finInstnIdIntrmyAgt1 != null) {
                 String nameIntrmyAgt1 = finInstnIdIntrmyAgt1.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt1 = finInstnIdIntrmyAgt1.getPstlAdr();
+                String bicIntrmyAgt1 = finInstnIdIntrmyAgt1.getBICFI();
+                if ((nameIntrmyAgt1 == null || nameIntrmyAgt1.equalsIgnoreCase("")) && (bicIntrmyAgt1 == null || bicIntrmyAgt1.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent1 is mandatory if IntermediaryAgent1 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId</td></tr>");
+                }
                 if (((nameIntrmyAgt1 == null || nameIntrmyAgt1.equalsIgnoreCase("") || nameIntrmyAgt1.isEmpty())
                         && pstlAdrIntrmyAgt1 != null) || (pstlAdrIntrmyAgt1 == null && (nameIntrmyAgt1 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId</td></tr>");
@@ -550,11 +570,15 @@ public class rulePacs008_2024 {
         }
 
         BranchAndFinancialInstitutionIdentification6 intrmyAgt2 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt2();
-        if (prvsInstgAgt2 != null) {
+        if (intrmyAgt2 != null) {
             FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = prvsInstgAgt2.getFinInstnId();
             if (finInstnIdIntrmyAgt2 != null) {
                 String nameIntrmyAgt2 = finInstnIdIntrmyAgt2.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt2 = finInstnIdIntrmyAgt2.getPstlAdr();
+                String bicIntrmyAgt2 = finInstnIdIntrmyAgt2.getBICFI();
+                if ((nameIntrmyAgt2 == null || nameIntrmyAgt2.equalsIgnoreCase("")) && (bicIntrmyAgt2 == null || bicIntrmyAgt2.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent2 is mandatory if IntermediaryAgent2 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId</td></tr>");
+                }
                 if (((nameIntrmyAgt2 == null || nameIntrmyAgt2.equalsIgnoreCase("") || nameIntrmyAgt2.isEmpty())
                         && pstlAdrIntrmyAgt2 != null) || (pstlAdrIntrmyAgt2 == null && (nameIntrmyAgt2 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId</td></tr>");
@@ -600,6 +624,10 @@ public class rulePacs008_2024 {
             if (finInstnIdIntrmyAgt3 != null) {
                 String nameIntrmyAgt3 = finInstnIdIntrmyAgt3.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt3 = finInstnIdIntrmyAgt3.getPstlAdr();
+                String bicIntrmyAgt3 = finInstnIdIntrmyAgt3.getBICFI();
+                if ((nameIntrmyAgt3 == null || nameIntrmyAgt3.equalsIgnoreCase("")) && (bicIntrmyAgt3 == null || bicIntrmyAgt3.equalsIgnoreCase(""))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent3 is mandatory if IntermediaryAgent3 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId</td></tr>");
+                }
                 if (((nameIntrmyAgt3 == null || nameIntrmyAgt3.equalsIgnoreCase("") || nameIntrmyAgt3.isEmpty())
                         && pstlAdrIntrmyAgt3 != null) || (pstlAdrIntrmyAgt3 == null && (nameIntrmyAgt3 != null))) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId</td></tr>");
@@ -788,7 +816,7 @@ public class rulePacs008_2024 {
                 String bicCdtrAgt = finInstnIdCdtrAgt.getBICFI();
                 PostalAddress24 pstlAdrCdtrAgt = finInstnIdCdtrAgt.getPstlAdr();
                 if ((nameCdtrAgt == null || nameCdtrAgt.equalsIgnoreCase("")) && (bicCdtrAgt == null || bicCdtrAgt.equalsIgnoreCase(""))) {
-                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt\"><td>DebtorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt\"><td>CreditorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
                 }
                 if (((nameCdtrAgt == null || nameCdtrAgt.equalsIgnoreCase("") || nameCdtrAgt.isEmpty())
                         && pstlAdrCdtrAgt != null) || (pstlAdrCdtrAgt == null && (nameCdtrAgt != null))) {
@@ -965,7 +993,7 @@ public class rulePacs008_2024 {
 
         CashAccount38 intrmyAgt3Acct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt3Acct();
         if (intrmyAgt3Acct != null && intrmyAgt3 == null) {
-            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3\"><td>If IntermediaryAgent1Account is present, then IntermediaryAgent3 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3</td></tr>");
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3\"><td>If IntermediaryAgent3Account is present, then IntermediaryAgent3 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3</td></tr>");
         }
 
         if (intrmyAgt3 != null && intrmyAgt2 == null) {
