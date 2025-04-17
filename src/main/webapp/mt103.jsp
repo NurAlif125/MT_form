@@ -44,9 +44,8 @@
                         <li id="tab-view3"><a href="#" rel="view3">Comment</a></li>
                         <li id="tab-view4"><a href="#" rel="view4">Histories</a></li>
                         <li id="tab-view5"><a href="#" rel="view5">Log MT Text</a></li>
-                        <li id="tab-view6"><a href="#" rel="view6">MT to MX</a></li>
-                        <li id="tab-view7"><a href="#" rel="view7">MT Relation</a></li>
-                        <li  id="tab-view8"><a href="#" rel="view8" id="tabView7">Translation</a></li>
+                        <li id="tab-view6"><a href="#" rel="view6">MT Relation</a></li>
+                        <li  id="tab-view7"><a href="#" rel="view7" id="tabView7">Translation</a></li>
                         <li hidden id="tab-validate"><a href="#" rel="view8" id="tabView8">Validate</a></li>
                     </ul>
                     <div class="tabcontents">
@@ -930,17 +929,14 @@
                             <%@ include file="logTrx_mt.jsp" %>
                         </div>
                         <div id="view6" class="tabcontent">
-                            <%@ include files="mt_mx.jsp" %>
-                        </div>
-                        <div id="view7" class="tabcontent">
                             <%@ include file="relation_mt.jsp" %>
                         </div>
-                        <div id="view8" class="tab-content">
+                        <div id="view7" class="tab-content">
                             <div class="form-row">
-                                <%@include file="VMtFull.jsp" %>
+                                <%@include file="mt_mx.jsp" %>
                             </div>
                         </div>
-                        <div id="view9" class="tabcontent">
+                        <div id="view8" class="tabcontent">
                             <div id="error-container"></div>
                         </div>
                     </div>
