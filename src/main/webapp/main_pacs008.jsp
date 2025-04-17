@@ -21,7 +21,7 @@
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
                         <li id="tab-view2"><a href="#" rel="view2">Create Message</a></li>
-                        <li id="tab-validate" ><a href="#" rel="view3" id="tab-view-validate" hidden>Validate</a></li>
+                        <li id="tab-validate" ><a href="#" rel="view7" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
@@ -30,7 +30,7 @@
                         <div id="view2" class="tabcontent">
                             <%@ include file="pacs00800108.jsp" %>
                         </div>
-                        <div id="view3" class="tabcontent">
+                        <div id="view7" class="tabcontent">
                             <div id="error-container">
                                 <table id="errorInfoTable">
                                     <thead>

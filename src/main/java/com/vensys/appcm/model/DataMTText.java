@@ -12,6 +12,15 @@ public class DataMTText {
     private int id_headers;
     private String modify_mt;
     private String final_mt;
+    private String final_mx;
+
+    public String getFinal_mx() {
+        return final_mx;
+    }
+
+    public void setFinal_mx(String final_mx) {
+        this.final_mx = final_mx;
+    }
 
     public int getId_headers() {
         return id_headers;
