@@ -121,29 +121,30 @@ public class SCUserData extends HttpServlet {
 //                    isValidLogon = dbo.authenticateLogin(user_id, password);
                     isValidLogon = dbo.authenticateUser(user_id);
                     isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
+                    if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
+                        strErrMsg = "Invalid username or password";
+                        session.setAttribute("errormsg", strErrMsg);
+                        dispatcher = request.getRequestDispatcher("login.jsp");
+                        dispatcher.forward(request, response);
+                        log.info("login.jsp");
+                        return;
+                    } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
+                        strErrMsg = "Unable to connect to LDAP";
+                        session.setAttribute("errormsg", strErrMsg);
+                        dispatcher = request.getRequestDispatcher("login.jsp");
+                        dispatcher.forward(request, response);
+                        log.info("login.jsp");
+                        return;
+                    } else if(isValidLogonLdap.equalsIgnoreCase("")){
+                        strErrMsg = "Unable to connect to LDAP!";
+                        session.setAttribute("errormsg", strErrMsg);
+                        dispatcher = request.getRequestDispatcher("login.jsp");
+                        dispatcher.forward(request, response);
+                        log.info("login.jsp");
+                        return;
+                    }
+                    
                     if (isValidLogon) {
-                        if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
-                            strErrMsg = "Invalid username or password";
-                            session.setAttribute("errormsg", strErrMsg);
-                            dispatcher = request.getRequestDispatcher("login.jsp");
-                            dispatcher.forward(request, response);
-                            log.info("login.jsp");
-                            return;
-                        } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
-                            strErrMsg = "Unable to connect to LDAP";
-                            session.setAttribute("errormsg", strErrMsg);
-                            dispatcher = request.getRequestDispatcher("login.jsp");
-                            dispatcher.forward(request, response);
-                            log.info("login.jsp");
-                            return;
-                        } else if(isValidLogonLdap.equalsIgnoreCase("")){
-                            strErrMsg = "Unable to connect to LDAP!";
-                            session.setAttribute("errormsg", strErrMsg);
-                            dispatcher = request.getRequestDispatcher("login.jsp");
-                            dispatcher.forward(request, response);
-                            log.info("login.jsp");
-                            return;
-                        }
                         
                         if (data.getStatus_new() == 1){
                             successLogin = true;
