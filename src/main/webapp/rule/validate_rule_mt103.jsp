@@ -130,7 +130,7 @@
                 
                 $("#tab-validate").removeAttr("hidden");
                  
-                $("#view1, #view2, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
                 $("#view8").css("display", "block");
                 $('#tab-view1').removeClass("selected").removeAttr('class');
                 $('#tab-view2').removeClass("selected").removeAttr('class');
@@ -139,7 +139,6 @@
                 $('#tab-view5').removeClass("selected").removeAttr('class');
                 $('#tab-view6').removeClass("selected").removeAttr('class');
                 $('#tab-view7').removeClass("selected").removeAttr('class');
-                $('#tab-view8').removeClass("selected").removeAttr('class');
                 $('#tab-validate').addClass("selected");
 
                 let errorContainer = document.getElementById("error-container");
@@ -191,7 +190,6 @@
                                 $('#tab-view5').removeClass("selected").removeAttr('class');
                                 $('#tab-view6').removeClass("selected").removeAttr('class');
                                 $('#tab-view7').removeClass("selected").removeAttr('class');
-                                $('#tab-view8').removeClass("selected").removeAttr('class');
                                 $('#tab-validate').removeClass("selected").removeAttr('class');
                             } 
                             else if (tabContentGroup == "Body") {
@@ -203,7 +201,6 @@
                                 $('#tab-view5').removeClass("selected").removeAttr('class');
                                 $('#tab-view6').removeClass("selected").removeAttr('class');
                                 $('#tab-view7').removeClass("selected").removeAttr('class');
-                                $('#tab-view8').removeClass("selected").removeAttr('class');
                                 $('#tab-validate').removeClass("selected").removeAttr('class');
                                 $("#view2").css("display", "block");
                                 
