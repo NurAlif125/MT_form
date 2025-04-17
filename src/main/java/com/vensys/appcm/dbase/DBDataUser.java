@@ -107,7 +107,7 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser() throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
-        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,role_name FROM users LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
+        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name FROM users AS usr LEFT JOIN roles AS rl ON usr.role=rl.role_id ORDER BY usr.user_id ASC";
 //        System.out.println("sql 1 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
