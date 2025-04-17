@@ -5,6 +5,7 @@
 package com.vensys.appcm.controller;
 
 import com.vensys.appcm.dbase.*;
+import com.vensys.appcm.ldap.LDAPCon;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,7 +52,7 @@ public class SCUserData extends HttpServlet {
         DataUser data = new DataUser();
         DataRole dataRole = new DataRole();
         DataLogin dataLogin = new DataLogin();
-//        LDAPCon ldapCon = new LDAPCon();
+        LDAPCon ldapCon = new LDAPCon();
         DBUserData dbo = new DBUserData(dbConn.getConnection());
         DBEventLog evl = new DBEventLog(dbConn.getConnection());
         DBDataRole dboRole = new DBDataRole(dbConn.getConnection());
@@ -106,6 +107,7 @@ public class SCUserData extends HttpServlet {
 //                    
 //                }
                 boolean isValidLogon = false;
+                String isValidLogonLdap = "";
                 boolean successLogin = false;
                 boolean changepassword = false;
                 try {
@@ -116,9 +118,33 @@ public class SCUserData extends HttpServlet {
 //                    expired_date.setTime(sdf.parse(data.getExpired_date()));
 //                    currentdate.setTime(dt);
                     isValidLogon = true;
-//                    isValidLogon = ldapCon.loginLDAP(user_id, password);
-                    isValidLogon = dbo.authenticateLogin(user_id, password);
+//                    isValidLogon = dbo.authenticateLogin(user_id, password);
+                    isValidLogon = dbo.authenticateUser(user_id);
+                    isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
                     if (isValidLogon) {
+                        if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
+                            strErrMsg = "Invalid username or password";
+                            session.setAttribute("errormsg", strErrMsg);
+                            dispatcher = request.getRequestDispatcher("login.jsp");
+                            dispatcher.forward(request, response);
+                            log.info("login.jsp");
+                            return;
+                        } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
+                            strErrMsg = "Unable to connect to LDAP";
+                            session.setAttribute("errormsg", strErrMsg);
+                            dispatcher = request.getRequestDispatcher("login.jsp");
+                            dispatcher.forward(request, response);
+                            log.info("login.jsp");
+                            return;
+                        } else if(isValidLogonLdap.equalsIgnoreCase("")){
+                            strErrMsg = "Unable to connect to LDAP!";
+                            session.setAttribute("errormsg", strErrMsg);
+                            dispatcher = request.getRequestDispatcher("login.jsp");
+                            dispatcher.forward(request, response);
+                            log.info("login.jsp");
+                            return;
+                        }
+                        
                         if (data.getStatus_new() == 1){
                             successLogin = true;
 //                        if (data.getNolog() == null) {
@@ -297,4 +323,3 @@ public class SCUserData extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
-
