@@ -30,9 +30,9 @@
                     <div class="form-row"><span class="labelL2">User ID</span>
                         <input type="text" name="username" id="username" maxlength="255" value="<c:out value="${dataUserById.user_id}" />" <% if(request.getParameter("user_id")==null) { %> <% } else { %> disabled="disabled" <% } %> />
                     </div>
-                    <div id="div_password" class="form-row"><span class="labelL2">Password</span>
+<!--                    <div id="div_password" class="form-row"><span class="labelL2">Password</span>
                          <input type="text" name="password" id="password" maxlength="255" value="<c:out value="${dataUserById.password}" />" />
-                    </div>
+                    </div>-->
                     <%--
                     <div class="form-row"><span class="labelL2">Status New</span>
                         <input type="text" name="status_new" id="status_new" maxlength="45" value="<c:out value="${dataUserById.status_new}" />" />
