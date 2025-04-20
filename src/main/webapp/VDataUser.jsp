@@ -19,13 +19,23 @@
                     </c:if>
                 </c:forEach>
             </div>
-            <div id="message">
+<!--            <div id="message">
                 <span class="style1">
                     <div align="center">
                         <c:out value="${message}"/>
                     </div>
                 </span>
-            </div>
+            </div>-->
+            <c:if test="${not empty sessionScope.message}">
+                <div id="message">
+                    <span class="style1">
+                        <div align="center">
+                            <c:out value="${sessionScope.message}" />
+                        </div>
+                    </span>
+                </div>
+                <c:remove var="message" scope="session" />
+            </c:if>
             <div id="content">
                 <%int rowNum = 1;%>
                 <table id="example" class="display nowrap" style="width:100%">
@@ -37,7 +47,7 @@
                             <th>Description</th>
                             <th>Role</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <!--<th>Action</th>-->
                             <!--<th>Auto Disable</th>-->
                         </tr>
                     </thead>
@@ -59,7 +69,7 @@
                             </c:otherwise>
                         </c:choose>
                             <%--<td>${item.auto_disable}</td>--%>
-                        <td><a href="ResetPassword?user_id=${item.user_id}">Reset password</a></td>
+                        <!--<td><a href="ResetPassword?user_id=${item.user_id}">Reset password</a></td>-->
                         </tr>
                     </c:forEach>
                     </tbody>

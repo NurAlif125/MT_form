@@ -40,12 +40,12 @@ public class DBDataUser {
     public void addDataUser(DataUser data, String mofier, String ip, String comp) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO users (user_id,name,password,description,role,enable) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO users (user_id,name,description,password,role,enable) VALUES (?,?,?,?,?,?)";
 //            String sql = "INSERT INTO [user] (user_id,name,description,role,enable) VALUES (?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id()); //user_id
             st.setString(2, data.getName());     //name
-            st.setString(3, data.getPassword());     //password
+            st.setString(3, "1");     //password
             st.setString(4, data.getDescription());     //description
             st.setInt(5, data.getRole());     //role
             st.setInt(6, data.getEnable());     //enable

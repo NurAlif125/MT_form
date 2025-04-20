@@ -66,7 +66,7 @@ public class LDAPCon {
         return validLogin;
     }
 
-      public boolean cekUserAdd(String userToSearch, String username, String password) {
+      public String cekUserAdd(String userToSearch, String username, String password) {
         readConfigProperties();  
         
 //        String user = "user2",passw="123456";
@@ -75,54 +75,62 @@ public class LDAPCon {
 //        String domain = "example.com";
 //        String dc = "dc=example,dc=com";
         
-        String bindDN = "cn="+username+","+dc;
-        
-        // connection property
+       String bindDN = "cn=" + username + "," + dc;
+
         Hashtable<String, String> env = new Hashtable<>();
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, ldapurl);
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
-//        environment.put(Context.SECURITY_PROTOCOL, "ssl");
         env.put(Context.SECURITY_PRINCIPAL, bindDN);
         env.put(Context.SECURITY_CREDENTIALS, password);
-        
+
         Boolean userExist = false;
+        String searchUser = "";
+        String checkConnect = "";
+        
         try {
-            // Membuat konteks awal
             InitialDirContext context = new InitialDirContext(env);
             System.out.println("Koneksi ke LDAP berhasil!");
 
-            // Melakukan pencarian (contoh)
-            String searchBase = "cn="+userToSearch+","+dc; // Ganti dengan base DN yang sesuai
-            String searchFilter = "(objectClass=*)"; // Filter pencarian, misalnya semua objek
+            String searchBase = "cn=" + userToSearch + "," + dc;
+            String searchFilter = "(objectClass=*)";
 
             SearchControls searchControls = new SearchControls();
             searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
             NamingEnumeration<SearchResult> results = context.search(searchBase, searchFilter, searchControls);
-            
-            userExist = (results.hasMore()) ? true : false;
-            
+
             while (results.hasMore()) {
                 SearchResult result = results.next();
                 System.out.println("Found: " + result.getNameInNamespace());
+                userExist = true;
             }
 
-            // Menutup konteks
             context.close();
+        } catch (AuthenticationException ex) {
+            System.out.println("Error Authentication:" + ex.getMessage());
         } catch (NamingException ex) {
+            checkConnect = "not connect";
             System.err.println("Koneksi LDAP gagal: " + ex.getMessage());
-            log.error("=== Error NamingException Detail ===");
-            log.error("Error Naming:" + ex.getExplanation());
-            log.error("Explanation: " + ex.getExplanation());
-            log.error("Message: " + ex.getMessage());
-            log.error("Root Cause: " + ex.getRootCause());
-            log.error("Cause: " + ex.getCause());
-            ex.printStackTrace();
-//            e.printStackTrace();
+            System.out.println("=== Error NamingException Detail ===");
+            System.out.println("Error Naming: " + ex.getExplanation());
+            System.out.println("Explanation: " + ex.getExplanation());
+            System.out.println("Message: " + ex.getMessage());
+            System.out.println("Root Cause: " + ex.getRootCause());
+            System.out.println("Cause: " + ex.getCause());
         }
-        
-        return userExist;
+
+        if (!userExist) {
+            searchUser = "user not found";
+        } else if (userExist) {
+            searchUser = "success";
+        } else if (checkConnect.equals("not connect")) {
+            searchUser = "not connect";
+                
+        }
+
+//        System.out.println("result = " + searchUser);
+        return searchUser;
     }
     
     public void readConfigProperties() {
