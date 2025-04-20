@@ -16,18 +16,18 @@ import java.util.Date;
  */
 public class DBEventLog {
 
-    Connection conn;
+    Connection conn2;
 
-    public DBEventLog(Connection conn) {
-        DBconnection dbConn = new DBconnection();
-        this.conn = dbConn.getConnection();
+    public DBEventLog(Connection conn2) {
+        DBconnection2 dbConn = new DBconnection2();
+        this.conn2 = dbConn.getConnection2();
     }
     
     public void insertDataEvent(String user_id, String event, String ip, String com) {
         String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
             String sql = "Insert into event_log (user_id, event_date, ip, hostname, description) values (?, ?, ?, ?, ?)";
-            PreparedStatement st = this.conn.prepareStatement(sql);
+            PreparedStatement st = this.conn2.prepareStatement(sql);
             try {
                 st.setString(1, user_id);
                 st.setString(2, tanggal);
@@ -57,13 +57,13 @@ public class DBEventLog {
             PreparedStatement st;
             if (type.equalsIgnoreCase("login")) {
                 sql = "UPDATE users SET last_login=?,last_activity=? WHERE user_id=?";
-                st = this.conn.prepareStatement(sql);
+                st = this.conn2.prepareStatement(sql);
                 st.setString(1, tanggal);
                 st.setString(2, tanggal);
                 st.setString(3, user_id);
             } else {
                 sql = "UPDATE users SET last_activity=? WHERE user_id=?";
-                st = this.conn.prepareStatement(sql);
+                st = this.conn2.prepareStatement(sql);
                 st.setString(1, tanggal);
                 st.setString(2, user_id);
                 
@@ -87,13 +87,13 @@ public class DBEventLog {
             PreparedStatement st;
             if (type.equalsIgnoreCase("login")) {
                 sql = "UPDATE user SET last_login=?,last_activity=? WHERE user_id=?";
-                st = this.conn.prepareStatement(sql);
+                st = this.conn2.prepareStatement(sql);
                 st.setString(1, tanggal);
                 st.setString(2, tanggal);
                 st.setString(3, user_id);
             } else {
                 sql = "UPDATE user SET last_activity=? WHERE user_id=?";
-                st = this.conn.prepareStatement(sql);
+                st = this.conn2.prepareStatement(sql);
                 st.setString(1, tanggal);
                 st.setString(2, user_id);
             }

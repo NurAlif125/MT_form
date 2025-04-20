@@ -34,6 +34,8 @@ public class DBDataUser {
     public DBDataUser(Connection conn) {
         this.conn = conn;
     }
+    
+
     DBEventLog evl = new DBEventLog(conn);
     String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 

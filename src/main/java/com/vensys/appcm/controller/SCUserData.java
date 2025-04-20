@@ -122,7 +122,14 @@ public class SCUserData extends HttpServlet {
                     isValidLogon = dbo.authenticateUser(user_id);
                     isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
                     if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
-                        strErrMsg = "Invalid username or password";
+                        strErrMsg = "Invalid user ID or password";
+                        session.setAttribute("errormsg", strErrMsg);
+                        dispatcher = request.getRequestDispatcher("login.jsp");
+                        dispatcher.forward(request, response);
+                        log.info("login.jsp");
+                        return;
+                    } else if(isValidLogonLdap.equalsIgnoreCase("nothing user")){
+                        strErrMsg = "Invalid username LDAP or password";
                         session.setAttribute("errormsg", strErrMsg);
                         dispatcher = request.getRequestDispatcher("login.jsp");
                         dispatcher.forward(request, response);
