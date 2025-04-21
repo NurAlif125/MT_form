@@ -7,9 +7,13 @@ package com.vensys.appcm.rulePacs;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.prowidesoftware.swift.model.mx.dic.ActiveCurrencyAndAmount;
 import com.prowidesoftware.swift.model.mx.dic.BranchAndFinancialInstitutionIdentification6;
+import com.prowidesoftware.swift.model.mx.dic.CashAccount38;
 import com.prowidesoftware.swift.model.mx.dic.CreditTransferTransaction36;
 import com.prowidesoftware.swift.model.mx.dic.FinancialInstitutionIdentification18;
 import com.prowidesoftware.swift.model.mx.dic.GroupHeader93;
+import com.prowidesoftware.swift.model.mx.dic.Instruction3Code;
+import com.prowidesoftware.swift.model.mx.dic.Instruction5Code;
+import com.prowidesoftware.swift.model.mx.dic.InstructionForCreditorAgent2;
 import com.prowidesoftware.swift.model.mx.dic.PaymentIdentification7;
 import com.prowidesoftware.swift.model.mx.dic.PostalAddress24;
 import java.time.LocalDate;
@@ -253,14 +257,14 @@ public class rulePacs009_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 instgAgt = cdtTrfTxInf.getInstgAgt();
             if (instgAgt != null) {
                 FinancialInstitutionIdentification18 finInstnIdInstgAgt = instgAgt.getFinInstnId();
                 if (finInstnIdInstgAgt != null) {
                     String bicInstgAgt = finInstnIdInstgAgt.getBICFI();
                     if (bicInstgAgt == null || bicInstgAgt.equalsIgnoreCase("")) {
-                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtrTrf/CdtTrfTxinf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>FICdtrTrf/CdtTrfTxinf/InstgAgt</td></tr>");
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/InstgAgt</td></tr>");
                     } else {
                         if (logicalTerminal != null) {
                             String logicalTerminal1 = logicalTerminal.substring(0, 11);
@@ -271,7 +275,7 @@ public class rulePacs009_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 instdAgt = cdtTrfTxInf.getInstdAgt();
             if (instdAgt != null) {
                 FinancialInstitutionIdentification18 finInstnIdInstdAgt = instdAgt.getFinInstnId();
@@ -288,6 +292,424 @@ public class rulePacs009_2024 {
                         }
                     }
                 }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 intrmyAgt1 = cdtTrfTxInf.getIntrmyAgt1();
+            if (intrmyAgt1 != null) {
+                FinancialInstitutionIdentification18 finInstnIdIntrmyAgt1 = intrmyAgt1.getFinInstnId();
+                if (finInstnIdIntrmyAgt1 != null) {
+                    String nameIntrmyAgt1 = finInstnIdIntrmyAgt1.getNm();
+                    PostalAddress24 pstlAdrIntrmyAgt1 = finInstnIdIntrmyAgt1.getPstlAdr();
+                    String bicIntrmyAgt1 = finInstnIdIntrmyAgt1.getBICFI();
+                    if ((nameIntrmyAgt1 == null || nameIntrmyAgt1.equalsIgnoreCase("")) && (bicIntrmyAgt1 == null || bicIntrmyAgt1.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent1 is mandatory if IntermediaryAgent1 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId</td></tr>");
+                    }
+                    if (((nameIntrmyAgt1 == null || nameIntrmyAgt1.equalsIgnoreCase("") || nameIntrmyAgt1.isEmpty())
+                            && pstlAdrIntrmyAgt1 != null) || (pstlAdrIntrmyAgt1 == null && (nameIntrmyAgt1 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrIntrmyAgt1 != null) {
+                        List<String> adrLineIntrmyAgt1 = pstlAdrIntrmyAgt1.getAdrLine();
+                        String DeptIntrmyAgt1 = pstlAdrIntrmyAgt1.getDept();
+                        String subDeptIntrmyAgt1 = pstlAdrIntrmyAgt1.getSubDept();
+                        String strtNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getStrtNm();
+                        String bldgNbIntrmyAgt1 = pstlAdrIntrmyAgt1.getBldgNb();
+                        String bldgNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getBldgNm();
+                        String flrIntrmyAgt1 = pstlAdrIntrmyAgt1.getFlr();
+                        String pstBxIntrmyAgt1 = pstlAdrIntrmyAgt1.getPstBx();
+                        String roomIntrmyAgt1 = pstlAdrIntrmyAgt1.getRoom();
+                        String pstCdIntrmyAgt1 = pstlAdrIntrmyAgt1.getPstCd();
+                        String twnLctnNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getTwnLctnNm();
+                        String dstrctNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getDstrctNm();
+                        String ctrySubDvsnIntrmyAgt1 = pstlAdrIntrmyAgt1.getCtrySubDvsn();
+                        String ctryIntrmyAgt1 = pstlAdrIntrmyAgt1.getCtry();
+                        String twnNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getTwnNm();
+                        if ((adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 == null || ctryIntrmyAgt1.equalsIgnoreCase("") || ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 == null || twnNmIntrmyAgt1.equalsIgnoreCase("") || twnNmIntrmyAgt1.isEmpty()))
+                                || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 != null) && (twnNmIntrmyAgt1 == null || twnNmIntrmyAgt1.equalsIgnoreCase("") || twnNmIntrmyAgt1.isEmpty()))
+                                || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 == null || ctryIntrmyAgt1.equalsIgnoreCase("") || ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineIntrmyAgt1.isEmpty() && (DeptIntrmyAgt1 != null || subDeptIntrmyAgt1 != null
+                                || strtNmIntrmyAgt1 != null || bldgNbIntrmyAgt1 != null
+                                || bldgNmIntrmyAgt1 != null || flrIntrmyAgt1 != null
+                                || pstBxIntrmyAgt1 != null || roomIntrmyAgt1 != null
+                                || pstCdIntrmyAgt1 != null || twnLctnNmIntrmyAgt1 != null
+                                || dstrctNmIntrmyAgt1 != null || ctrySubDvsnIntrmyAgt1 != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 intrmyAgt2 = cdtTrfTxInf.getIntrmyAgt2();
+            if (intrmyAgt2 != null) {
+                FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = prvsInstgAgt2.getFinInstnId();
+                if (finInstnIdIntrmyAgt2 != null) {
+                    String nameIntrmyAgt2 = finInstnIdIntrmyAgt2.getNm();
+                    PostalAddress24 pstlAdrIntrmyAgt2 = finInstnIdIntrmyAgt2.getPstlAdr();
+                    String bicIntrmyAgt2 = finInstnIdIntrmyAgt2.getBICFI();
+                    if ((nameIntrmyAgt2 == null || nameIntrmyAgt2.equalsIgnoreCase("")) && (bicIntrmyAgt2 == null || bicIntrmyAgt2.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent2 is mandatory if IntermediaryAgent2 is present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId</td></tr>");
+                    }
+                    if (((nameIntrmyAgt2 == null || nameIntrmyAgt2.equalsIgnoreCase("") || nameIntrmyAgt2.isEmpty())
+                            && pstlAdrIntrmyAgt2 != null) || (pstlAdrIntrmyAgt2 == null && (nameIntrmyAgt2 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrIntrmyAgt2 != null) {
+                        List<String> adrLineIntrmyAgt2 = pstlAdrIntrmyAgt2.getAdrLine();
+                        String DeptIntrmyAgt2 = pstlAdrIntrmyAgt2.getDept();
+                        String subDeptIntrmyAgt2 = pstlAdrIntrmyAgt2.getSubDept();
+                        String strtNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getStrtNm();
+                        String bldgNbIntrmyAgt2 = pstlAdrIntrmyAgt2.getBldgNb();
+                        String bldgNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getBldgNm();
+                        String flrIntrmyAgt2 = pstlAdrIntrmyAgt2.getFlr();
+                        String pstBxIntrmyAgt2 = pstlAdrIntrmyAgt2.getPstBx();
+                        String roomIntrmyAgt2 = pstlAdrIntrmyAgt2.getRoom();
+                        String pstCdIntrmyAgt2 = pstlAdrIntrmyAgt2.getPstCd();
+                        String twnLctnNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getTwnLctnNm();
+                        String dstrctNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getDstrctNm();
+                        String ctrySubDvsnIntrmyAgt2 = pstlAdrIntrmyAgt2.getCtrySubDvsn();
+                        String ctryIntrmyAgt2 = pstlAdrIntrmyAgt2.getCtry();
+                        String twnNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getTwnNm();
+                        if ((adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 == null || ctryIntrmyAgt2.equalsIgnoreCase("") || ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 == null || twnNmIntrmyAgt2.equalsIgnoreCase("") || twnNmIntrmyAgt2.isEmpty()))
+                                || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 != null) && (twnNmIntrmyAgt2 == null || twnNmIntrmyAgt2.equalsIgnoreCase("") || twnNmIntrmyAgt2.isEmpty()))
+                                || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 == null || ctryIntrmyAgt2.equalsIgnoreCase("") || ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineIntrmyAgt2.isEmpty() && (DeptIntrmyAgt2 != null || subDeptIntrmyAgt2 != null
+                                || strtNmIntrmyAgt2 != null || bldgNbIntrmyAgt2 != null
+                                || bldgNmIntrmyAgt2 != null || flrIntrmyAgt2 != null
+                                || pstBxIntrmyAgt2 != null || roomIntrmyAgt2 != null
+                                || pstCdIntrmyAgt2 != null || twnLctnNmIntrmyAgt2 != null
+                                || dstrctNmIntrmyAgt2 != null || ctrySubDvsnIntrmyAgt2 != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 intrmyAgt3 = cdtTrfTxInf.getIntrmyAgt3();
+            if (intrmyAgt3 != null) {
+                FinancialInstitutionIdentification18 finInstnIdIntrmyAgt3 = intrmyAgt3.getFinInstnId();
+                if (finInstnIdIntrmyAgt3 != null) {
+                    String nameIntrmyAgt3 = finInstnIdIntrmyAgt3.getNm();
+                    PostalAddress24 pstlAdrIntrmyAgt3 = finInstnIdIntrmyAgt3.getPstlAdr();
+                    String bicIntrmyAgt3 = finInstnIdIntrmyAgt3.getBICFI();
+                    if ((nameIntrmyAgt3 == null || nameIntrmyAgt3.equalsIgnoreCase("")) && (bicIntrmyAgt3 == null || bicIntrmyAgt3.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent3 is mandatory if IntermediaryAgent3 is present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId</td></tr>");
+                    }
+                    if (((nameIntrmyAgt3 == null || nameIntrmyAgt3.equalsIgnoreCase("") || nameIntrmyAgt3.isEmpty())
+                            && pstlAdrIntrmyAgt3 != null) || (pstlAdrIntrmyAgt3 == null && (nameIntrmyAgt3 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrIntrmyAgt3 != null) {
+                        List<String> adrLineIntrmyAgt3 = pstlAdrIntrmyAgt3.getAdrLine();
+                        String DeptIntrmyAgt3 = pstlAdrIntrmyAgt3.getDept();
+                        String subDeptIntrmyAgt3 = pstlAdrIntrmyAgt3.getSubDept();
+                        String strtNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getStrtNm();
+                        String bldgNbIntrmyAgt3 = pstlAdrIntrmyAgt3.getBldgNb();
+                        String bldgNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getBldgNm();
+                        String flrIntrmyAgt3 = pstlAdrIntrmyAgt3.getFlr();
+                        String pstBxIntrmyAgt3 = pstlAdrIntrmyAgt3.getPstBx();
+                        String roomIntrmyAgt3 = pstlAdrIntrmyAgt3.getRoom();
+                        String pstCdIntrmyAgt3 = pstlAdrIntrmyAgt3.getPstCd();
+                        String twnLctnNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getTwnLctnNm();
+                        String dstrctNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getDstrctNm();
+                        String ctrySubDvsnIntrmyAgt3 = pstlAdrIntrmyAgt3.getCtrySubDvsn();
+                        String ctryIntrmyAgt3 = pstlAdrIntrmyAgt3.getCtry();
+                        String twnNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getTwnNm();
+                        if ((adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 == null || ctryIntrmyAgt3.equalsIgnoreCase("") || ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 == null || twnNmIntrmyAgt3.equalsIgnoreCase("") || twnNmIntrmyAgt3.isEmpty()))
+                                || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 != null) && (twnNmIntrmyAgt3 == null || twnNmIntrmyAgt3.equalsIgnoreCase("") || twnNmIntrmyAgt3.isEmpty()))
+                                || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 == null || ctryIntrmyAgt3.equalsIgnoreCase("") || ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineIntrmyAgt3.isEmpty() && (DeptIntrmyAgt3 != null || subDeptIntrmyAgt3 != null
+                                || strtNmIntrmyAgt3 != null || bldgNbIntrmyAgt3 != null
+                                || bldgNmIntrmyAgt3 != null || flrIntrmyAgt3 != null
+                                || pstBxIntrmyAgt3 != null || roomIntrmyAgt3 != null
+                                || pstCdIntrmyAgt3 != null || twnLctnNmIntrmyAgt3 != null
+                                || dstrctNmIntrmyAgt3 != null || ctrySubDvsnIntrmyAgt3 != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 dbtr = cdtTrfTxInf.getDbtr();
+            if (dbtr != null) {
+                FinancialInstitutionIdentification18 finInstnIdDbtr = dbtr.getFinInstnId();
+                if (finInstnIdDbtr != null) {
+                    String bicDbtr = finInstnIdDbtr.getBICFI();
+                    String nameDbtr = finInstnIdDbtr.getNm();
+                    PostalAddress24 pstlAdrDbtr = finInstnIdDbtr.getPstlAdr();
+                    if ((bicDbtr == null || bicDbtr.equalsIgnoreCase("")) && (nameDbtr == null || nameDbtr.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr\"><td>Debtor is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr</td></tr>");
+                    }
+
+                    if (((nameDbtr == null || nameDbtr.equalsIgnoreCase("") || nameDbtr.isEmpty())
+                            && pstlAdrDbtr != null) || (pstlAdrDbtr == null && (nameDbtr != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId\"><td>Name and Address must always be present together.</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrDbtr != null) {
+                        List<String> adrLineDbtr = pstlAdrDbtr.getAdrLine();
+                        String DeptDbtr = pstlAdrDbtr.getDept();
+                        String subDeptDbtr = pstlAdrDbtr.getSubDept();
+                        String strtNmDbtr = pstlAdrDbtr.getStrtNm();
+                        String bldgNbDbtr = pstlAdrDbtr.getBldgNb();
+                        String bldgNmDbtr = pstlAdrDbtr.getBldgNm();
+                        String flrDbtr = pstlAdrDbtr.getFlr();
+                        String pstBxDbtr = pstlAdrDbtr.getPstBx();
+                        String roomDbtr = pstlAdrDbtr.getRoom();
+                        String pstCdDbtr = pstlAdrDbtr.getPstCd();
+                        String twnLctnNmDbtr = pstlAdrDbtr.getTwnLctnNm();
+                        String dstrctNmDbtr = pstlAdrDbtr.getDstrctNm();
+                        String ctrySubDvsnDbtr = pstlAdrDbtr.getCtrySubDvsn();
+                        String ctryDbtr = pstlAdrDbtr.getCtry();
+                        String twnNmDbtr = pstlAdrDbtr.getTwnNm();
+
+                        if ((adrLineDbtr.isEmpty() && (ctryDbtr == null || ctryDbtr.equalsIgnoreCase("") || ctryDbtr.isEmpty()) && (twnNmDbtr == null || twnNmDbtr.equalsIgnoreCase("") || twnNmDbtr.isEmpty()))
+                                || (adrLineDbtr.isEmpty() && (ctryDbtr != null) && (twnNmDbtr == null || twnNmDbtr.equalsIgnoreCase("") || twnNmDbtr.isEmpty()))
+                                || (adrLineDbtr.isEmpty() && (ctryDbtr == null || ctryDbtr.equalsIgnoreCase("") || ctryDbtr.isEmpty()) && (twnNmDbtr != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineDbtr.isEmpty() && (DeptDbtr != null || subDeptDbtr != null
+                                || strtNmDbtr != null || bldgNbDbtr != null
+                                || bldgNmDbtr != null || flrDbtr != null
+                                || pstBxDbtr != null || roomDbtr != null
+                                || pstCdDbtr != null || twnLctnNmDbtr != null
+                                || dstrctNmDbtr != null || ctrySubDvsnDbtr != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 dbtrAgt = cdtTrfTxInf.getDbtrAgt();
+            if (dbtrAgt != null) {
+                FinancialInstitutionIdentification18 finInstnIdDbtrAgt = dbtrAgt.getFinInstnId();
+                if (finInstnIdDbtrAgt != null) {
+                    String nameDbtrAgt = finInstnIdDbtrAgt.getNm();
+                    String bicDbtrAgt = finInstnIdDbtrAgt.getBICFI();
+                    PostalAddress24 pstlAdrDbtrAgt = finInstnIdDbtrAgt.getPstlAdr();
+                    if ((nameDbtrAgt == null || nameDbtrAgt.equalsIgnoreCase("")) && (bicDbtrAgt == null || bicDbtrAgt.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId\"><td>FinancialInstitutionIdentification in DebtorAgent is mandatory if DebtorAgent is present.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt</td></tr>");
+                    }
+                    if (((nameDbtrAgt == null || nameDbtrAgt.equalsIgnoreCase("") || nameDbtrAgt.isEmpty())
+                            && pstlAdrDbtrAgt != null) || (pstlAdrDbtrAgt == null && (nameDbtrAgt != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrDbtrAgt != null) {
+                        List<String> adrLineDbtrAgt = pstlAdrDbtrAgt.getAdrLine();
+                        String DeptDbtrAgt = pstlAdrDbtrAgt.getDept();
+                        String subDeptDbtrAgt = pstlAdrDbtrAgt.getSubDept();
+                        String strtNmDbtrAgt = pstlAdrDbtrAgt.getStrtNm();
+                        String bldgNbDbtrAgt = pstlAdrDbtrAgt.getBldgNb();
+                        String bldgNmDbtrAgt = pstlAdrDbtrAgt.getBldgNm();
+                        String flrDbtrAgt = pstlAdrDbtrAgt.getFlr();
+                        String pstBxDbtrAgt = pstlAdrDbtrAgt.getPstBx();
+                        String roomDbtrAgt = pstlAdrDbtrAgt.getRoom();
+                        String pstCdDbtrAgt = pstlAdrDbtrAgt.getPstCd();
+                        String twnLctnNmDbtrAgt = pstlAdrDbtrAgt.getTwnLctnNm();
+                        String dstrctNmDbtrAgt = pstlAdrDbtrAgt.getDstrctNm();
+                        String ctrySubDvsnDbtrAgt = pstlAdrDbtrAgt.getCtrySubDvsn();
+                        String ctryDbtrAgt = pstlAdrDbtrAgt.getCtry();
+                        String twnNmDbtrAgt = pstlAdrDbtrAgt.getTwnNm();
+                        if ((adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt == null || ctryDbtrAgt.equalsIgnoreCase("") || ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt == null || twnNmDbtrAgt.equalsIgnoreCase("") || twnNmDbtrAgt.isEmpty()))
+                                || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt != null) && (twnNmDbtrAgt == null || twnNmDbtrAgt.equalsIgnoreCase("") || twnNmDbtrAgt.isEmpty()))
+                                || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt == null || ctryDbtrAgt.equalsIgnoreCase("") || ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineDbtrAgt.isEmpty() && (DeptDbtrAgt != null || subDeptDbtrAgt != null
+                                || strtNmDbtrAgt != null || bldgNbDbtrAgt != null
+                                || bldgNmDbtrAgt != null || flrDbtrAgt != null
+                                || pstBxDbtrAgt != null || roomDbtrAgt != null
+                                || pstCdDbtrAgt != null || twnLctnNmDbtrAgt != null
+                                || dstrctNmDbtrAgt != null || ctrySubDvsnDbtrAgt != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 cdtrAgt = cdtTrfTxInf.getCdtrAgt();
+            if (cdtrAgt != null) {
+                FinancialInstitutionIdentification18 finInstnIdCdtrAgt = cdtrAgt.getFinInstnId();
+                if (finInstnIdCdtrAgt != null) {
+                    String nameCdtrAgt = finInstnIdCdtrAgt.getNm();
+                    String bicCdtrAgt = finInstnIdCdtrAgt.getBICFI();
+                    PostalAddress24 pstlAdrCdtrAgt = finInstnIdCdtrAgt.getPstlAdr();
+                    if ((nameCdtrAgt == null || nameCdtrAgt.equalsIgnoreCase("")) && (bicCdtrAgt == null || bicCdtrAgt.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId\"><td>FinancialInstitutionIdentification in CreditorAgent is mandatory if CreditorAgent is present.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
+                    }
+                    if (((nameCdtrAgt == null || nameCdtrAgt.equalsIgnoreCase("") || nameCdtrAgt.isEmpty())
+                            && pstlAdrCdtrAgt != null) || (pstlAdrCdtrAgt == null && (nameCdtrAgt != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrCdtrAgt != null) {
+                        List<String> adrLineCdtrAgt = pstlAdrCdtrAgt.getAdrLine();
+                        String DeptCdtrAgt = pstlAdrCdtrAgt.getDept();
+                        String subDeptCdtrAgt = pstlAdrCdtrAgt.getSubDept();
+                        String strtNmCdtrAgt = pstlAdrCdtrAgt.getStrtNm();
+                        String bldgNbCdtrAgt = pstlAdrCdtrAgt.getBldgNb();
+                        String bldgNmCdtrAgt = pstlAdrCdtrAgt.getBldgNm();
+                        String flrCdtrAgt = pstlAdrCdtrAgt.getFlr();
+                        String pstBxCdtrAgt = pstlAdrCdtrAgt.getPstBx();
+                        String roomCdtrAgt = pstlAdrCdtrAgt.getRoom();
+                        String pstCdCdtrAgt = pstlAdrCdtrAgt.getPstCd();
+                        String twnLctnNmCdtrAgt = pstlAdrCdtrAgt.getTwnLctnNm();
+                        String dstrctNmCdtrAgt = pstlAdrCdtrAgt.getDstrctNm();
+                        String ctrySubDvsnCdtrAgt = pstlAdrCdtrAgt.getCtrySubDvsn();
+                        String ctryCdtrAgt = pstlAdrCdtrAgt.getCtry();
+                        String twnNmCdtrAgt = pstlAdrCdtrAgt.getTwnNm();
+                        if ((adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt == null || ctryCdtrAgt.equalsIgnoreCase("") || ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt == null || twnNmCdtrAgt.equalsIgnoreCase("") || twnNmCdtrAgt.isEmpty()))
+                                || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt != null) && (twnNmCdtrAgt == null || twnNmCdtrAgt.equalsIgnoreCase("") || twnNmCdtrAgt.isEmpty()))
+                                || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt == null || ctryCdtrAgt.equalsIgnoreCase("") || ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineCdtrAgt.isEmpty() && (DeptCdtrAgt != null || subDeptCdtrAgt != null
+                                || strtNmCdtrAgt != null || bldgNbCdtrAgt != null
+                                || bldgNmCdtrAgt != null || flrCdtrAgt != null
+                                || pstBxCdtrAgt != null || roomCdtrAgt != null
+                                || pstCdCdtrAgt != null || twnLctnNmCdtrAgt != null
+                                || dstrctNmCdtrAgt != null || ctrySubDvsnCdtrAgt != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 cdtr = cdtTrfTxInf.getCdtr();
+            if (cdtr != null) {
+                FinancialInstitutionIdentification18 finInstnIdCdtr = cdtr.getFinInstnId();
+                if (finInstnIdCdtr != null) {
+                    String bicCdtr = finInstnIdCdtr.getBICFI();
+                    String nameCdtr = finInstnIdCdtr.getNm();
+                    PostalAddress24 pstlAdrCdtr = finInstnIdCdtr.getPstlAdr();
+                    if ((bicCdtr == null || bicCdtr.equalsIgnoreCase("")) && (nameCdtr == null || nameCdtr.equalsIgnoreCase(""))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr\"><td>Debtor is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr</td></tr>");
+                    }
+
+                    if (((nameCdtr == null || nameCdtr.equalsIgnoreCase("") || nameCdtr.isEmpty())
+                            && pstlAdrCdtr != null) || (pstlAdrCdtr == null && (nameCdtr != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId\"><td>Name and Address must always be present together.</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrCdtr != null) {
+                        List<String> adrLineDbtr = pstlAdrCdtr.getAdrLine();
+                        String DeptCdtr = pstlAdrCdtr.getDept();
+                        String subDeptCdtr = pstlAdrCdtr.getSubDept();
+                        String strtNmCdtr = pstlAdrCdtr.getStrtNm();
+                        String bldgNbCdtr = pstlAdrCdtr.getBldgNb();
+                        String bldgNmCdtr = pstlAdrCdtr.getBldgNm();
+                        String flrCdtr = pstlAdrCdtr.getFlr();
+                        String pstBxCdtr = pstlAdrCdtr.getPstBx();
+                        String roomCdtr = pstlAdrCdtr.getRoom();
+                        String pstCdCdtr = pstlAdrCdtr.getPstCd();
+                        String twnLctnNmCdtr = pstlAdrCdtr.getTwnLctnNm();
+                        String dstrctNmCdtr = pstlAdrCdtr.getDstrctNm();
+                        String ctrySubDvsnCdtr = pstlAdrCdtr.getCtrySubDvsn();
+                        String ctryCdtr = pstlAdrCdtr.getCtry();
+                        String twnNmCdtr = pstlAdrCdtr.getTwnNm();
+
+                        if ((adrLineDbtr.isEmpty() && (ctryCdtr == null || ctryCdtr.equalsIgnoreCase("") || ctryCdtr.isEmpty()) && (twnNmCdtr == null || twnNmCdtr.equalsIgnoreCase("") || twnNmCdtr.isEmpty()))
+                                || (adrLineDbtr.isEmpty() && (ctryCdtr != null) && (twnNmCdtr == null || twnNmCdtr.equalsIgnoreCase("") || twnNmCdtr.isEmpty()))
+                                || (adrLineDbtr.isEmpty() && (ctryCdtr == null || ctryCdtr.equalsIgnoreCase("") || ctryCdtr.isEmpty()) && (twnNmCdtr != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineDbtr.isEmpty() && (DeptCdtr != null || subDeptCdtr != null
+                                || strtNmCdtr != null || bldgNbCdtr != null
+                                || bldgNmCdtr != null || flrCdtr != null
+                                || pstBxCdtr != null || roomCdtr != null
+                                || pstCdCdtr != null || twnLctnNmCdtr != null
+                                || dstrctNmCdtr != null || ctrySubDvsnCdtr != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+
+            List<InstructionForCreditorAgent2> instrForCdtrAgt = cdtTrfTxInf.getInstrForCdtrAgt();
+            if (!instrForCdtrAgt.isEmpty()) {
+                Instruction5Code code1 = instrForCdtrAgt.get(0).getCd();
+                if (instrForCdtrAgt.size() > 1) {
+                    Instruction5Code code2 = instrForCdtrAgt.get(1).getCd();
+                    if (code1 == code2) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd\"><td>Each code can only be used once for element instruction for Creditor Agent</td><td>FICdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd</td></tr>");
+                    }
+                }
+            }
+
+            CashAccount38 cdtrAgtAcct = cdtTrfTxInf.getCdtrAgtAcct();
+            if (cdtrAgtAcct != null && cdtrAgt == null) {
+                validationRuleComment.add("<tr class=\"error__row\"input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt\"><td>If CreditorAgentAccount is present, then CreditorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
+            }
+
+            CashAccount38 dbtrAgtAcct = cdtTrfTxInf.getDbtrAcct();
+            if (dbtrAgtAcct != null && dbtrAgt == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt\"><td>If DebtorAgentAccount is present, then DebtorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt</td></tr>");
+            }
+
+            CashAccount38 intrmyAgt1Acct = cdtTrfTxInf.getIntrmyAgt1Acct();
+            if (intrmyAgt1Acct != null && intrmyAgt1 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1\"><td>If IntermediaryAgent1Account is present, then IntermediaryAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1</td></tr>");
+            }
+
+            if (intrmyAgt1 != null && cdtrAgt == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt\"><td>If IntermediaryAgent1 is present, then CreditorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
+            }
+
+            CashAccount38 intrmyAgt2Acct = cdtTrfTxInf.getIntrmyAgt2Acct();
+            if (intrmyAgt2Acct != null && intrmyAgt2 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2\"><td>If IntermediaryAgent2Account is present, then IntermediaryAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2</td></tr>");
+            }
+
+            if (intrmyAgt2 != null && intrmyAgt1 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1\"><td>If IntermediaryAgent2 is present, then IntermediaryAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1</td></tr>");
+            }
+
+            CashAccount38 intrmyAgt3Acct = cdtTrfTxInf.getIntrmyAgt3Acct();
+            if (intrmyAgt3Acct != null && intrmyAgt3 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3\"><td>If IntermediaryAgent3Account is present, then IntermediaryAgent3 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3</td></tr>");
+            }
+
+            if (intrmyAgt3 != null && intrmyAgt2 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2\"><td>If IntermediaryAgent3 is present, then IntermediaryAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2</td></tr>");
+            }
+            
+            CashAccount38 prvsInstgAgt1Acct = cdtTrfTxInf.getPrvsInstgAgt1Acct();
+            if (prvsInstgAgt1Acct != null && prvsInstgAgt1 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1\"><td>If PreviousInstructing1Account is present, then PreviousInstructingAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1</td></tr>");
+            }
+
+            CashAccount38 prvsInstgAgt2Acct = cdtTrfTxInf.getPrvsInstgAgt2Acct();
+            if (prvsInstgAgt2Acct != null && prvsInstgAgt2 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2\"><td>If PreviousInstructing2Account is present, then PreviousInstructingAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2</td></tr>");
+            }
+
+            CashAccount38 prvsInstgAgt3Acct = cdtTrfTxInf.getPrvsInstgAgt3Acct();
+            if (prvsInstgAgt3Acct != null && prvsInstgAgt3 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3\"><td>If PreviousInstructing3Account is present, then PreviousInstructingAgent3 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3</td></tr>");
+            }
+
+            if (prvsInstgAgt2 != null && prvsInstgAgt1 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1\"><td>If PreviousInstructingAgent2 is present, then PreviousInstructingAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1</td></tr>");
+            }
+
+            if (prvsInstgAgt3 != null && prvsInstgAgt2 == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2\"><td>If PreviousInstructingAgent3 is present, then PreviousInstructingAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2</td></tr>");
             }
         }
     }
