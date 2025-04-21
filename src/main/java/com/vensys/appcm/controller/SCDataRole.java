@@ -9,6 +9,7 @@ package com.vensys.appcm.controller;
  */
 import com.vensys.appcm.dbase.DBDataRole;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.sql.SQLException;
@@ -44,8 +45,10 @@ public class SCDataRole extends HttpServlet {
             throws ServletException, IOException, SQLException {
 
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DataRole data = new DataRole();
         DBDataRole dbData = new DBDataRole(dbConn.getConnection());
+        DBDataRole dbData2 = new DBDataRole(dbConn2.getConnection2());
         HttpSession session = request.getSession();
         String role_id = request.getParameter("role_id");
         String role_enable = "";
@@ -76,17 +79,17 @@ public class SCDataRole extends HttpServlet {
             if (duplicate) {
                 strErrMsg = "Role Already Exist!!";//belum beres
             } else {
-                dbData.addDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.addDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             }
 
 //            System.out.println("addDataRole");
         } else {
             data.setRole_id(Integer.parseInt(request.getParameter("role_id")));
             if (request.getParameter("delete_role") == null) {
-                dbData.updateDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.updateDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("updateDataRole");
             } else {
-                dbData.delete(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.delete(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("delete");
             }
         }
@@ -97,6 +100,7 @@ public class SCDataRole extends HttpServlet {
             ex.printStackTrace();
         } finally {
             dbConn.closeConnection();
+            dbConn2.closeConnection2();
         }
         session.setAttribute("message", strErrMsg);
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataRoleList");

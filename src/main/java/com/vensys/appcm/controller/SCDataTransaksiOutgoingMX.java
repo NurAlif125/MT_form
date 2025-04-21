@@ -29,6 +29,7 @@ import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.prowidesoftware.swift.model.mx.dic.BranchAndFinancialInstitutionIdentification;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,7 +65,9 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
             throws ServletException, IOException, ParseException, SQLException, Exception {
         HttpSession session = request.getSession();
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DBDataTransaksiOutgoing dBTrx = new DBDataTransaksiOutgoing(dbConn.getConnection());
+        DBDataTransaksiOutgoing dBTrx2 = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
         
         String idHeaders = request.getParameter("id");
         
@@ -85,9 +88,13 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         BusinessAppHdrV02 appHeader;
         
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
-            if (flag.equalsIgnoreCase("MOD")) {
-                
-                String newFlag = "VER";
+            if (flag.equalsIgnoreCase("MOD") || flag.equalsIgnoreCase("CVT-MOD")) {
+                String newFlag = "";
+                if (flag.equalsIgnoreCase("MOD")) {
+                    newFlag = "VER";
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    newFlag = "CVT-VER";
+                }
                 
                 MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;
                 
@@ -136,22 +143,34 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                     } else {
                         dateUpdate = resetDate;
                     }
+                    dBTrx2.updateSequence(dateUpdate, seq);
                     appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
                 }
                 
                 dataMXpacs004.setAppHdr(appHeader);
                 String newXML = dataMXpacs004.message(mxConfiguration);
-                dBTrx.updateMXText(newXML, headers.getId_headers());
+                dBTrx2.updateMXText(newXML, headers.getId_headers());
                 
                 String newJson = dataMXpacs004.toJson();
-                dBTrx.updateTagsMXText(newJson, headers.getId_headers());
+                dBTrx2.updateTagsMXText(newJson, headers.getId_headers());
                 
-                int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                if (flag.equalsIgnoreCase("MOD")) {
+                    int doUpdate = dBTrx2.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    int doUpdate = dBTrx2.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                }
+                
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
-            if (flag.equalsIgnoreCase("MOD")) {
-                String newFlag = "VER";
+            if (flag.equalsIgnoreCase("MOD") || flag.equalsIgnoreCase("CVT-MOD")) {
+                String newFlag = "";
+                if (flag.equalsIgnoreCase("MOD")) {
+                    newFlag = "VER";
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    newFlag = "CVT-VER";
+                }
                 
                 MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
                 
@@ -200,23 +219,35 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                     } else {
                         dateUpdate = resetDate;
                     }
+                    dBTrx2.updateSequence(dateUpdate, seq);
                     appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
                 }
                 
                 dataMXpacs008.setAppHdr(appHeader);
                 String newXML = dataMXpacs008.message(mxConfiguration);
                 System.out.println("newXML: " + newXML);
-                dBTrx.updateMXText(newXML, Integer.parseInt(idHeaders));
+                dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
                 String newJson = dataMXpacs008.toJson();
-                dBTrx.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
+                dBTrx2.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
                 
-                int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                if(flag.equalsIgnoreCase("MOD")) {
+                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                }
+                
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
-            if (flag.equalsIgnoreCase("MOD")) {
-                String newFlag = "VER";
+            if (flag.equalsIgnoreCase("MOD") || flag.equalsIgnoreCase("CVT-MOD")) {
+                String newFlag = "";
+                if (flag.equalsIgnoreCase("MOD")) {
+                    newFlag = "VER";
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    newFlag = "CVT-VER";
+                }
                 
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
                 
@@ -265,22 +296,30 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                     } else {
                         dateUpdate = resetDate;
                     }
+                    dBTrx2.updateSequence(dateUpdate, seq);
                     appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
                 }
                 
                 dataMXpacs009.setAppHdr(appHeader);
                 String newXML = dataMXpacs009.message(mxConfiguration);
                 System.out.println("newXML: " + newXML);
-                dBTrx.updateMXText(newXML, Integer.parseInt(idHeaders));
+                dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
                 String newJson = dataMXpacs009.toJson();
-                dBTrx.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
+                dBTrx2.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
                 
-                int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                if(flag.equalsIgnoreCase("MOD")) {
+                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                }
+                
             }
         }
         dbConn.closeConnection();
+        dbConn2.closeConnection2();
         RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
         dispatcher.forward(request, response);
     }
