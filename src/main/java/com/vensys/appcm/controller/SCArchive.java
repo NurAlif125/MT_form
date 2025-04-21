@@ -6,6 +6,7 @@ package com.vensys.appcm.controller;
 
 import com.vensys.appcm.dbase.DBArchive;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -50,13 +51,15 @@ public class SCArchive extends HttpServlet {
         String act = "1";
         String forward = "";
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         List<Archive> archive = new ArrayList<>();
         DBArchive dBArchive = new DBArchive(dbConn.getConnection());
+        DBArchive dBArchive2 = new DBArchive(dbConn2.getConnection2());
         try {
 //            System.out.println("masuk if");
             if (action != null) {
 //                action = "backup";
-                dBArchive.archiveDataHeader(user, action, date_from, date_end);
+                dBArchive2.archiveDataHeader(user, action, date_from, date_end);
             }
             archive = dBArchive.getAllData(act);
             httpSession.setAttribute("archive", archive);

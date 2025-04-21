@@ -28,6 +28,7 @@ import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -64,7 +65,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             throws ServletException, IOException, ParseException, SQLException, Exception {
         HttpSession session = request.getSession();
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DBDataTransaksiOutgoing dBTrx = new DBDataTransaksiOutgoing(dbConn.getConnection());
+        DBDataTransaksiOutgoing dBTrx2 = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
         
         String receiverAddress = request.getParameter("receiver_institution");
         String logicalTerminal = request.getParameter("sender_logical_terminal");
@@ -168,15 +171,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXpacs004.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXpacs004.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXpacs004.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxPacs00400109) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxPacs00400109) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             log.info("ini " + abstractMX.getMxId().id());
             appHeader.setMsgDefIdr("pacs.008.001.08");
@@ -214,15 +217,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXpacs008.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXpacs008.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXpacs008.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxPacs00800108) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxPacs00800108) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
             log.info("ini " + abstractMX.getMxId().id());
             appHeader.setMsgDefIdr("pacs.009.001.08");
@@ -260,15 +263,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXpacs009.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXpacs009.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXpacs009.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxPacs00900108) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxPacs00900108) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.053")) {
             appHeader.setMsgDefIdr("camt.053.001.08");
             
@@ -305,15 +308,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt053.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXcamt053.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXcamt053.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxCamt05300108) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05300108) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.055")) {
             appHeader.setMsgDefIdr("camt.055.001.08");
             
@@ -350,15 +353,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt055.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXcamt055.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXcamt055.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxCamt05500108) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05500108) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.056")) {
             appHeader.setMsgDefIdr("camt.056.001.08");
             
@@ -395,15 +398,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt056.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXcamt056.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXcamt056.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxCamt05600108) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05600108) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.107")) {
             appHeader.setMsgDefIdr("camt.107.001.01");
             
@@ -440,15 +443,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt107.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXcamt107.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXcamt107.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxCamt10700101) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10700101) abstractMX).toJson(), saaHeader);
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.108")) {
             appHeader.setMsgDefIdr("camt.108.001.01");
             
@@ -485,18 +488,19 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 } else {
                     dateUpdate = resetDate;
                 }
-                dBTrx.updateSequence(dateUpdate, seq);
+                dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
             
             dataMXcamt108.setAppHdr(appHeader);
             
-            dBTrx.addMXText(dataMXcamt108.message(mxConfiguration), returnId_headers);
+            dBTrx2.addMXText(dataMXcamt108.message(mxConfiguration), returnId_headers);
             
-            dBTrx.addDataMXTag(returnId_headers, ((MxCamt10800101) abstractMX).toJson(), saaHeader);
+            dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10800101) abstractMX).toJson(), saaHeader);
         }
         
         dbConn.closeConnection();
+        dbConn2.closeConnection2();
         RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
         dispatcher.forward(request, response);
     }
