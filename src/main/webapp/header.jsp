@@ -155,32 +155,32 @@
                                                 <li><a href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:199'}">
-                                                <li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>
+                                                <!--<li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:199'}">
-                                                <li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>
+                                                <!--<li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>-->
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
                                 </li>
-<!--                                <li><span class="dir">Message Category 2</span>
+                                <li><span class="dir">Message Category 2</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MT:200'}">
-                                                <li><a href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>
+                                                <!--<li><a href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202'}">
                                                 <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:210'}">
-                                                <li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>
+                                                <!--<li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202COV'}">
                                                  <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
-                                </li>-->
+                                </li>
                                 <!--                        <li><span class="dir">Message Category 4</span>
                                 
                                                         </li>
@@ -240,7 +240,7 @@
                                                 <li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108cov'}">
-                                                <!--<li><a href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>-->
+                                                <li><a href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108adv'}">
                                                 <!--<li><a href="main_pacs009adv.jsp">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>-->
