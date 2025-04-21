@@ -7,6 +7,8 @@ package com.vensys.appcm.controller;
 import com.vensys.appcm.dbase.DBDataUser;
 import com.vensys.appcm.dbase.DBUserData;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
+import com.vensys.appcm.ldap.LDAPCon;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -42,8 +44,11 @@ public class SCDataUser extends HttpServlet {
             throws ServletException, IOException, NoSuchAlgorithmException, SQLException {
         log.info("processRequest-1");
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DataUser data = new DataUser();
+        LDAPCon ldapCon = new LDAPCon();
         DBDataUser dbData = new DBDataUser(dbConn.getConnection());
+        DBDataUser dbData2 = new DBDataUser(dbConn2.getConnection2());
         DBUserData dbo = new DBUserData(dbConn.getConnection());
         HttpSession session = request.getSession();
         String user_id = request.getParameter("user_id");
@@ -80,24 +85,43 @@ public class SCDataUser extends HttpServlet {
 //            dbData.addDataUser(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 ////            System.out.println("addDataUser");
 //        }
+
+        String user_session = (String) session.getAttribute("user_id");
+        String pass_session = (String) session.getAttribute("password");
+        String isValidLogonLdap = "";
+        isValidLogonLdap = ldapCon.cekUserAdd(request.getParameter("username"), user_session, pass_session);
+        
         if (user_id == null ? "null" == null : user_id.equals("null") || user_id.isEmpty()) {
             try {
                 isValidUser = dbo.authenticateUser(data.getUser_id());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            if (isValidUser) {//validasi untuk user
-                message = "User already exist!!";
-            } else {
-                dbData.addDataUser(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+            
+            String foundUser = "";
+            if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
+                message = "Error Connection LDAP!";
+            } else if (isValidLogonLdap.equalsIgnoreCase("user not found")) {
+                message = "user not found";
+            } else if(isValidLogonLdap.equalsIgnoreCase("success")) {
+                message = request.getParameter("username")+" Succesfully Created";
+                foundUser = "Found User LDAP";
+            }
+            
+            if (foundUser.equalsIgnoreCase("Found User LDAP")) {
+                if (isValidUser) {//validasi untuk user
+                    message = "User already exist!!";
+                } else {
+                    dbData2.addDataUser(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                }
             }
 //            System.out.println("addDataUser");
         } else {
             if (request.getParameter("delete_user") == null) {
-                dbData.updateDataUser(data, user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.updateDataUser(data, user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("updateDataUser");
             } else {
-                dbData.delete(user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.delete(user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("delete");
             }
         }
