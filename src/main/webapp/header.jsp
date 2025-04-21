@@ -398,7 +398,7 @@
                         <!--<li><a href="role_report.jsp">Role</a></li>-->
                         <li><a href="user_report.jsp">User</a></li>
                         <li><a href="user_activity_report.jsp">User Activity</a></li>
-                        <li><a href="user_login_report.jsp">Audit Trail</a></li>
+                        <li><a href="audit_trail_report.jsp">Audit Trail</a></li>
                         <!--<li><a href="user_login_report.jsp">User Login</a></li>-->
                         <!--<li><a href="SCNostroListReconcile">Recon</a></li>-->
                     </ul>
