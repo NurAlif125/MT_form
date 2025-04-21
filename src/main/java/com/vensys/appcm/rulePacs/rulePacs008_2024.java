@@ -571,7 +571,7 @@ public class rulePacs008_2024 {
 
         BranchAndFinancialInstitutionIdentification6 intrmyAgt2 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt2();
         if (intrmyAgt2 != null) {
-            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = prvsInstgAgt2.getFinInstnId();
+            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = intrmyAgt2.getFinInstnId();
             if (finInstnIdIntrmyAgt2 != null) {
                 String nameIntrmyAgt2 = finInstnIdIntrmyAgt2.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt2 = finInstnIdIntrmyAgt2.getPstlAdr();
@@ -619,8 +619,8 @@ public class rulePacs008_2024 {
         }
 
         BranchAndFinancialInstitutionIdentification6 intrmyAgt3 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt3();
-        if (prvsInstgAgt3 != null) {
-            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt3 = prvsInstgAgt3.getFinInstnId();
+        if (intrmyAgt3 != null) {
+            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt3 = intrmyAgt3.getFinInstnId();
             if (finInstnIdIntrmyAgt3 != null) {
                 String nameIntrmyAgt3 = finInstnIdIntrmyAgt3.getNm();
                 PostalAddress24 pstlAdrIntrmyAgt3 = finInstnIdIntrmyAgt3.getPstlAdr();

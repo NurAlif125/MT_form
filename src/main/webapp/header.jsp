@@ -81,30 +81,14 @@
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                                <li><a href="DashBoard.jsp">Daily Outgoing Transactions</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'DOT:LIST'}">
-                                <li><a href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
-                                </c:if>
-                            </c:forEach>
-
+                            <li><a href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
+                            </c:if>
+                        </c:forEach>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                                <li><a href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <%--c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'DT:LIST'}">
-                                <li><a href="DailyTransactions.jsp">Daily Transactions</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'YT:LIST'}">
-                                <li><a href="YearlyTransactions.jsp">Yearly Transactions</a></li>
-                                </c:if>
-                            </c:forEach--%>
+                            <li><a href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
+                            </c:if>
+                        </c:forEach>
                     </ul>
                 </li>
             </c:if>
@@ -116,60 +100,13 @@
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MEMBER_CODE:LIST'}">
                                 <li><a href="SCBICList">BIC</a></li>
-                                </c:if>
-                            </c:forEach>
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'BIC_GO:LIST'}">
-                                <li><a href="SCDataBICGoList">Swift Go BIC</a></li>
                             </c:if>
                         </c:forEach>
-                        <!-- <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'S_LIMIT:LIST'}">
-                                <li><a href="SCDataSwiftLimitList">Swift Go Limit</a></li>
-                            </c:if>
-                        </c:forEach>     -->
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MT_QUEUE:LIST'}">
                                 <!--<li><a href="SCDataMTList">Message Queue</a></li>-->
                             </c:if>
                         </c:forEach>
-                        <!-- <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'ACCP:LIST'}">
-                                <li><a href="SCDataAccPenagihanList">Account Penagihan</a></li>
-                            </c:if>
-                        </c:forEach> -->
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'NOSTRO:LIST'}">
-                                <li><a href="SCDataNostroList">Nostro</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'ACCV:LIST'}">
-                                <li><a href="SCDataVerAccList">Verified Account</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'CTY:LIST'}">
-                                <li><a href="SCNegaraSuspectList">Country Suspect</a></li>
-                                </c:if>
-                            </c:forEach>
-
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'COT:VIEW'}">
-                                <li><a href="SCDataCutOffList">Cut Of Time</a></li>
-                                <!--<li><a href="SCCutOfTime">Cut Of Time</a></li>-->
-                            </c:if>
-                        </c:forEach>
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'CTR:LIST'}">
-                                <li><a href="CounterRateList">Counter Rate</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'GS:VIEW'}">
-                                <li><a href="SCGeneralSetting">General Setting</a></li>
-                                </c:if>
-                            </c:forEach>
                     </ul>
                 </li>
             </c:if>
@@ -181,24 +118,13 @@
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'ROLE:LIST'}">
                                 <li><a href="SCDataRoleList">Role</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'USER:LIST'}">
+                            </c:if>
+                        </c:forEach>
+                        <c:forEach var="item" items="${role}">
+                            <c:if test="${item == 'USER:LIST'}">
                                 <li><a href="SCDataUserList">User</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'STP_LIMIT:LIST'}">
-                                <li><a href="SCSTPLimitList">STP Limit</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <%--<c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'UPLOAD_GO:LIST'}">
-                                <li><a href="SCUploadSwiftGoList">Upload Member Swift Go</a></li>
-                                </c:if>
-                            </c:forEach>--%>
-
+                            </c:if>
+                        </c:forEach>
                     </ul>
                 </li>
             </c:if>
@@ -311,7 +237,7 @@
                                                 <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108'}">
-                                                <!--<li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>-->
+                                                <li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108cov'}">
                                                 <!--<li><a href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>-->
@@ -473,7 +399,6 @@
                         <li><a href="user_report.jsp">User</a></li>
                         <li><a href="user_activity_report.jsp">User Activity</a></li>
                         <li><a href="user_login_report.jsp">User Login</a></li>
-                        <li><a href="SCNostroListReconcile">Recon</a></li>
                     </ul>
                 </li>
             </c:if>
