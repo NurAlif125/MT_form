@@ -45,10 +45,6 @@
         <servlet-class>com.vensys.appcm.controller.SCChangeUserData</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SCCutOfTime</servlet-name>
-        <servlet-class>com.vensys.appcm.controller.SCCutOfTime</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SCDataAccBalance</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCDataAccBalance</servlet-class>
     </servlet>
@@ -397,10 +393,6 @@
         <servlet-class>com.vensys.appcm.controller.SCNostroListReconcile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>test</servlet-name>
-        <servlet-class>com.vensys.appcm.controller.test</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SCGeneralSetting</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCGeneralSetting</servlet-class>
     </servlet>
@@ -486,10 +478,6 @@
     <servlet-mapping>
         <servlet-name>ServletControllerChangeUserData</servlet-name>
         <url-pattern>/ServletControllerChangeUserData</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SCCutOfTime</servlet-name>
-        <url-pattern>/SCCutOfTime</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SCDataAccBalance</servlet-name>
@@ -816,10 +804,6 @@
         <url-pattern>/SCNostroListReconcile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>test</servlet-name>
-        <url-pattern>/test</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>SCGeneralSetting</servlet-name>
         <url-pattern>/SCGeneralSetting</url-pattern>
     </servlet-mapping>
@@ -827,20 +811,14 @@
         <servlet-name>SCInvesitvationOutgoing103</servlet-name>
         <url-pattern>/SCInvesitvationOutgoing103</url-pattern>
     </servlet-mapping>
-
-    
     <servlet>
         <servlet-name>SCNotification</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCNotification</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>SCUploadBIC</servlet-name>
         <servlet-class>controller.SCUploadBIC</servlet-class>
     </servlet>
-    
-    
-
     <servlet-mapping>
         <servlet-name>SCHeaderTemplate</servlet-name>
         <url-pattern>/ControllerHeaderTemplate</url-pattern>
@@ -849,7 +827,6 @@
         <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
         <url-pattern>/SCDataTransaksiOutgoingMX</url-pattern>
     </servlet-mapping>
-
     <session-config>
         <session-timeout>
             30

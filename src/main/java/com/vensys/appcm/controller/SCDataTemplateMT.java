@@ -6,6 +6,7 @@ package com.vensys.appcm.controller;
 
 import com.vensys.appcm.dbase.DBDataTemplateMT;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -67,9 +68,11 @@ public class SCDataTemplateMT extends HttpServlet {
         String lastInsertedID = "";
         int cek = 0;
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         HeaderTemplate headertemplate = new HeaderTemplate();
         HeaderTemplate data = new HeaderTemplate();
         DBDataTemplateMT dBDataTemplateMT = new DBDataTemplateMT(dbConn.getConnection());
+        DBDataTemplateMT dBDataTemplateMT2 = new DBDataTemplateMT(dbConn2.getConnection2());
         data.setName(request.getParameter("Template_Name"));
 
         if (mt != null) {
@@ -84,12 +87,12 @@ public class SCDataTemplateMT extends HttpServlet {
         data.setUpdateBy((String) session.getAttribute("user_id"));
 
         if (id == null || id.equals("null") || id.isEmpty()) {
-            lastInsertedID = dBDataTemplateMT.addDataTemplateMT(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+            lastInsertedID = dBDataTemplateMT2.addDataTemplateMT(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             System.out.println(lastInsertedID);
         } else if (isDelete != null) {
             if (isDelete.equals("true")) {
                 try {
-                    dBDataTemplateMT.deleteDataTemplateMT(data, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                    dBDataTemplateMT2.deleteDataTemplateMT(data, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 } catch (Exception ex) {
                     java.util.logging.Logger.getLogger(SCDataTemplateMT.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -97,7 +100,7 @@ public class SCDataTemplateMT extends HttpServlet {
 
         } else {
             try {
-                dBDataTemplateMT.updateDataTemplateMT(data, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dBDataTemplateMT2.updateDataTemplateMT(data, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             } catch (Exception ex) {
                 java.util.logging.Logger.getLogger(SCDataTemplateMT.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -111,7 +114,7 @@ public class SCDataTemplateMT extends HttpServlet {
         if (id == null || id.equals("null") || id.isEmpty() || isDelete != null) {
 
         } else {
-            dBDataTemplateMT.cleanDataTagTemplate(Integer.parseInt(id));
+            dBDataTemplateMT2.cleanDataTagTemplate(Integer.parseInt(id));
         }
 
         if (id == null || id.equals("null") || id.isEmpty()) {
@@ -131,21 +134,21 @@ public class SCDataTemplateMT extends HttpServlet {
                     tag.setTagName(tags);   //tagName
                     if (id == null || id.equals("null") || id.isEmpty()) {
                         if (tag.getTag().startsWith("15")) {
-                            dBDataTemplateMT.addDataTagTemplate(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(lastInsertedID));
+                            dBDataTemplateMT2.addDataTagTemplate(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(lastInsertedID));
                         } else {
                             if (!tag.getDetail().isEmpty()) {
-                                dBDataTemplateMT.addDataTagTemplate(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(lastInsertedID));
+                                dBDataTemplateMT2.addDataTagTemplate(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(lastInsertedID));
                             }
                         }
                     } else {
                         if (tag.getTag().startsWith("15")) {
                             cek = dBDataTemplateMT.cekDataTagsTemplate(id, tags);
                             if (cek == 0) {
-                                dBDataTemplateMT.addDataTagsBeforeNoTagsTemplate(tag.getUrutan(), id, tag.getTag(), tag.getDetail(), tag.getTagName());
+                                dBDataTemplateMT2.addDataTagsBeforeNoTagsTemplate(tag.getUrutan(), id, tag.getTag(), tag.getDetail(), tag.getTagName());
                             }
                         } else {
                             if (!tag.getDetail().isEmpty()) {
-                                dBDataTemplateMT.addDataTagTemplate(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
+                                dBDataTemplateMT2.addDataTagTemplate(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
                             }
                         }
                     }
@@ -171,14 +174,15 @@ public class SCDataTemplateMT extends HttpServlet {
 
                     cek = dBDataTemplateMT.cekDataTagsTemplate(id, tags);
                     if (cek == 0) {
-                        dBDataTemplateMT.addDataTagsBeforeNoTagsTemplate(tag.getUrutan(), id, tag.getTag(), tag.getDetail(), tag.getTagName());
+                        dBDataTemplateMT2.addDataTagsBeforeNoTagsTemplate(tag.getUrutan(), id, tag.getTag(), tag.getDetail(), tag.getTagName());
                     } else {
-                        dBDataTemplateMT.updateDataTag(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
+                        dBDataTemplateMT2.updateDataTag(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
                     }
                 }
             }
         }
         dbConn.closeConnection();
+        dbConn2.closeConnection2();
         if (id == null || id.equals("null") || id.isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/mt" + messageType + ".jsp?create=true");
         } else if (id != null) {

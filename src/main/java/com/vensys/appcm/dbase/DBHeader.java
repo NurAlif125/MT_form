@@ -1312,10 +1312,10 @@ System.out.println("Session ID: " + httpSession.getId());
         Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
         List<Header> headers = new ArrayList<Header>();
-        String sql = "SELECT DISTINCT headers.id_headers, messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,"
-                + "receiverAddress,tanggal,headers.id_headers,flag FROM headers,header_status "
-                + "WHERE headers.id_headers=header_status.id_headers "
-                + "AND isDuplicate=2 AND CAST(headers.tanggal as date)='" + dDay.format(tanggal) + "' ORDER BY tanggal DESC";
+        String sql = "SELECT DISTINCT h.id_headers,h.messageType,h.logicalTerminal,h.sessionNumber,h.sequenceNumber,h.io_type,"
+                + "h.receiverAddress,h.tanggal,h.flag,trx.trans_reference "
+                + "FROM headers h INNER JOIN header_status hs ON h.id_headers = hs.id_headers LEFT JOIN trx_detail trx ON trx.id_headers = h.id_headers "
+                + "WHERE h.isDuplicate = 2 AND CAST(h.tanggal AS DATE) = '" + dDay.format(tanggal) + "' ORDER BY h.tanggal DESC";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -1333,10 +1333,9 @@ System.out.println("Session ID: " + httpSession.getId());
             }
             header.setReceiverAddress(rs.getString(7).toUpperCase());
             header.setTanggal(rs.getString(8));
-            header.setId_headers(rs.getInt(9));
-//            header.setStatus_header(rs.getString(10));
-            header.setTag20(ambilTag20(header.getId_headers(), ""));
-            header.setFlag(rs.getString(10));
+            header.setId_headers(rs.getInt(1));
+            header.setTag20(rs.getString(10));
+            header.setFlag(rs.getString(9));
             headers.add(header);
         }
         return headers;

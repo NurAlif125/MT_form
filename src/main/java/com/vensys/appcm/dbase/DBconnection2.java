@@ -38,7 +38,7 @@ public class DBconnection2 {
             if (inputStream != null) {
                 prop.load(inputStream);
                 String DRIVER = prop.getProperty("driver");
-                String URL = prop.getProperty("url2");
+                String URL = prop.getProperty("urlMaster");
 //                String USER = prop.getProperty("user");
 //                String PASS = prop.getProperty("password");
                 String USER = null;

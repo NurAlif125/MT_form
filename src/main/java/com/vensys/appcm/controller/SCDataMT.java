@@ -6,6 +6,7 @@ package com.vensys.appcm.controller;
 
 import com.vensys.appcm.dbase.DBDataMT;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -38,21 +39,22 @@ public class SCDataMT extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DataMT data = new DataMT();
-        DBDataMT dbData = new DBDataMT(dbConn.getConnection());
+        DBDataMT dbData2 = new DBDataMT(dbConn2.getConnection2());
         HttpSession session = request.getSession();
         String id = request.getParameter("id");
         data.setMt(request.getParameter("mt"));
         data.setDetail(request.getParameter("detail"));
         data.setQueue(request.getParameter("queue"));
         if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-            dbData.addDataMT(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+            dbData2.addDataMT(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         } else {
             data.setId(Integer.parseInt(request.getParameter("id")));
             if (request.getParameter("delete_mt") == null ) {
-                dbData.updateDataMT(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.updateDataMT(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             } else {
-                dbData.delete(data.getId(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.delete(data.getId(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             }
         }
         try {
@@ -61,6 +63,7 @@ public class SCDataMT extends HttpServlet {
             log.error(ex.getMessage());
         } finally {
             dbConn.closeConnection();
+            dbConn2.closeConnection2();
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataMTList");
         dispatcher.forward(request, response);
