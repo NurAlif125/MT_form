@@ -29,6 +29,8 @@
         $("#value_date_11").datepicker({dateFormat:"ymmdd"},new Date());
         $("#value_date_12").datepicker({dateFormat:"ymmdd"},new Date());
         $("#value_date_13").datepicker({dateFormat:"ymmdd"},new Date());
+        $("#insert_date_from").datepicker({dateFormat:"yy-mm-dd"},new Date());
+        $("#insert_date_end").datepicker({dateFormat:"yy-mm-dd"},new Date());
         
         
         $("input[name=dateValue]").datepicker({dateFormat:"ymmdd"},new Date());
