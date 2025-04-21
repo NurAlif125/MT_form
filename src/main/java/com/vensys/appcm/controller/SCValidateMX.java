@@ -11,6 +11,7 @@ import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.vensys.appcm.rulePacs.rulePacs008;
 import com.vensys.appcm.rulePacs.rulePacs008_2024;
 import com.vensys.appcm.rulePacs.rulePacs009;
+import com.vensys.appcm.rulePacs.rulePacs009Cov_2024;
 import com.vensys.appcm.rulePacs.rulePacs009_2024;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -56,6 +57,12 @@ public class SCValidateMX extends HttpServlet {
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
             if (abstractMX.getMxId().getBusinessService().toString().contains("cov")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
+                rulePacs009Cov_2024 rulepacs009cov = new rulePacs009Cov_2024 (dataMXpacs009);
+                rulepacs009cov.runRules(logicalTerminal, receiverAddress);
+                String errorRulePacs009cov = rulepacs009cov.getErrorRule();
+                System.out.println(errorRulePacs009cov);
+                out.print(errorRulePacs009cov);
+                System.out.println(gson.toJson(errorRulePacs009cov));
             } else if (abstractMX.getMxId().getBusinessService().toString().contains("adv")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
             } else {

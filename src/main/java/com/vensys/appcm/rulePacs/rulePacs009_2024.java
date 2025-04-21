@@ -345,7 +345,7 @@ public class rulePacs009_2024 {
 
             BranchAndFinancialInstitutionIdentification6 intrmyAgt2 = cdtTrfTxInf.getIntrmyAgt2();
             if (intrmyAgt2 != null) {
-                FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = prvsInstgAgt2.getFinInstnId();
+                FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = intrmyAgt2.getFinInstnId();
                 if (finInstnIdIntrmyAgt2 != null) {
                     String nameIntrmyAgt2 = finInstnIdIntrmyAgt2.getNm();
                     PostalAddress24 pstlAdrIntrmyAgt2 = finInstnIdIntrmyAgt2.getPstlAdr();
@@ -598,7 +598,7 @@ public class rulePacs009_2024 {
                     String nameCdtr = finInstnIdCdtr.getNm();
                     PostalAddress24 pstlAdrCdtr = finInstnIdCdtr.getPstlAdr();
                     if ((bicCdtr == null || bicCdtr.equalsIgnoreCase("")) && (nameCdtr == null || nameCdtr.equalsIgnoreCase(""))) {
-                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr\"><td>Debtor is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr</td></tr>");
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr\"><td>Creditor is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr</td></tr>");
                     }
 
                     if (((nameCdtr == null || nameCdtr.equalsIgnoreCase("") || nameCdtr.isEmpty())

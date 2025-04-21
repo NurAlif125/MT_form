@@ -22,6 +22,7 @@
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
                         <li id="tab-view2"><a href="#" rel="view2">Create Message</a></li>
                         <li id="tab-validate" ><a href="#" rel="view3" id="tab-view-validate" hidden>Validate</a></li>
+                        <li id="tab-validate" ><a href="#" rel="view7" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
@@ -33,12 +34,26 @@
                         <div id="view3" class="tabcontent">
                             <div id="error-container"></div>
                         </div>
+                        <div id="view7" class="tabcontent">
+                            <div id="error-container">
+                                <table id="errorInfoTable">
+                                    <thead>
+                                        <tr>
+                                        <th>Message</th>
+                                        <th>Path</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="errorInformationTable"></tbody>
+                                </table> 
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <%@ include file="tabValidateMX.jsp" %>
                 <%@ include file="button_action.jsp" %>
             </form>
         </c:if>
     </c:forEach>
 </div>
-<%@ include file="tabValidateMX.jsp" %>
+
 <%@ include file="validateMX.jsp" %>
