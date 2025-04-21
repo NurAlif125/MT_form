@@ -44,8 +44,8 @@ public class DBconnection2 {
                 String USER = null;
                 String PASS = null;
                 try {
-                    USER = enc.decryptTD(prop.getProperty("user"), "AKey@VenSys");
-                    PASS = enc.decryptTD(prop.getProperty("password"), "AKey@VenSys");
+                    USER = enc.decryptTD(prop.getProperty("user2"), "AKey@VenSys");
+                    PASS = enc.decryptTD(prop.getProperty("password2"), "AKey@VenSys");
                 } catch (Exception ex) {
                     java.util.logging.Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
                 }
