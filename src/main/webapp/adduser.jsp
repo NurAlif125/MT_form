@@ -52,13 +52,13 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="form-row"><span class="labelL2">Sub-Role</span>
+<!--                    <div class="form-row"><span class="labelL2">Sub-Role</span>
                         <select name="role" id="sub-role">
                             <option value=""></option>
                             <option vlaue="1">Checker</option>
                             <option value="2">Maker</option>
                         </select>
-                    </div>
+                    </div>-->
                     <%--<div class="form-row"><span class="labelL2">Password Rule : </span>
                         <select name="rulepassword" id="rulepassword">
                              <option value=""></option>
