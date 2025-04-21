@@ -451,9 +451,29 @@
     </div>
     
     <div class="btn--group">
-        <input type="button" name="validate" id="btn-validate" value="Validate" />
+        <c:forEach var="item" items="${role}">
+            <% if (request.getParameter("id") != null) {%>
+            <% if (session.getAttribute("flagStatus").equals("MOD")) {%>
+            <c:if test="${item == 'FLOW:MOD'}">
+                <input type="button" name="validate" id="btn-validate" value="Validate" />
+                <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+            </c:if>
+            <% } else if (session.getAttribute("flagStatus").equals("CVT-MOD")) { %>
+            <c:if test="${item == 'FLOW:CVT-MOD'}">
+                <input type="button" name="validate" id="btn-validate" value="Validate" />
+                <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+            </c:if>
+            <% } %>
+            <% } else { %>
+            <c:if test="${item == 'FLOW:CREATE'}">
+                <input type="button" name="validate" id="btn-validate" value="Validate" />
+                <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+            </c:if>
+            <% } %>
+        </c:forEach>
+        
         <input type="button" name="export" id="btn-export" value="Export" />
-        <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+        
     </div>
     
 
