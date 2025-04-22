@@ -140,7 +140,7 @@
                         
                         $("#tab-view-validate").removeAttr("hidden");
                         $("#view1, #view2").css("display", "none");
-                        $("#view3").css("display", "block");
+                        $("#view7").css("display", "block");
                         $('#tab-view1').removeClass("selected").removeAttr('class');
                         $('#tab-view2').removeClass("selected").removeAttr('class');
                         $('#tab-validate').addClass("selected");
@@ -165,7 +165,6 @@
                                 document.getElementById("errorInformationTable").innerHTML += data;
                                 console.log(data)         
                                 clickFocusValidate();
-                                e.preventDefault()
                             }
                         })
                         .catch(error => console.error("Error:", error))
@@ -371,7 +370,7 @@
                         
                         $("#tab-view-validate").removeAttr("hidden");
                         $("#view1, #view2").css("display", "none");
-                        $("#view3").css("display", "block");
+                        $("#view7").css("display", "block");
                         $('#tab-view1').removeClass("selected").removeAttr('class');
                         $('#tab-view2').removeClass("selected").removeAttr('class');
                         $('#tab-validate').addClass("selected");
@@ -396,7 +395,6 @@
                                 document.getElementById("errorInformationTable").innerHTML += data;
                                 console.log(data)         
                                 clickFocusValidate();
-                                e.preventDefault()
                             }
                         })
                         .catch(error => console.error("Error:", error))
