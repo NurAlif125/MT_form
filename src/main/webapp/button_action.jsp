@@ -134,9 +134,10 @@
                         nodeForm.appendChild(input)
                         let sender = $('#sender_logical_terminal').val();
                         let receiver = $('#receiver_institution').val();
+                        let messType = $('#messageType').val();
                         console.log("Input dataXML telah ditambahkan:", input)
                         document.getElementById("errorInformationTable").innerHTML= '';
-                        kirimData(xml, sender, receiver)
+                        kirimData(xml, sender, receiver, messType)
                         
                         $("#tab-view-validate").removeAttr("hidden");
                         $("#view1, #view2").css("display", "none");
@@ -147,13 +148,13 @@
                     })
                     console.log("Ini XML")
 
-                    function kirimData(input, sender, receiver) {
+                    function kirimData(input, sender, receiver, messType) {
                         fetch("SCValidateMX", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)
+                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)+"&messageType="+encodeURIComponent(messType)
                         })
                         .then(response => response.text())
                         .then(data => {
@@ -364,9 +365,10 @@
                         nodeForm.appendChild(input)
                         let sender = $('#sender_logical_terminal').val();
                         let receiver = $('#receiver_institution').val();
+                        let messType = $('#messageType').val();
                         console.log("Input dataXML telah ditambahkan:", input)
                         document.getElementById("errorInformationTable").innerHTML= '';
-                        kirimData(xml, sender, receiver)
+                        kirimData(xml, sender, receiver, messType)
                         
                         $("#tab-view-validate").removeAttr("hidden");
                         $("#view1, #view2").css("display", "none");
@@ -377,13 +379,13 @@
                     })
                     console.log("Ini XML")
 
-                    function kirimData(input, sender, receiver) {
+                    function kirimData(input, sender, receiver, messType) {
                         fetch("SCValidateMX", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)
+                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)+"&messageType="+encodeURIComponent(messType)
                         })
                         .then(response => response.text())
                         .then(data => {

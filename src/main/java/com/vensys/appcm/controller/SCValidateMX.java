@@ -45,6 +45,7 @@ public class SCValidateMX extends HttpServlet {
         String dataXml = request.getParameter("dataXML");
         String logicalTerminal = request.getParameter("sender");
         String receiverAddress = request.getParameter("receiver");
+        String messType = request.getParameter("messageType");
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
@@ -55,7 +56,7 @@ public class SCValidateMX extends HttpServlet {
             out.print(errorRulePacs008);
             System.out.println(gson.toJson(errorRulePacs008));
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
-            if (abstractMX.getMxId().getBusinessService().toString().contains("cov")) {
+            if (messType.contains("cov")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
                 rulePacs009Cov_2024 rulepacs009cov = new rulePacs009Cov_2024 (dataMXpacs009);
                 rulepacs009cov.runRules(logicalTerminal, receiverAddress);
@@ -63,7 +64,7 @@ public class SCValidateMX extends HttpServlet {
                 System.out.println(errorRulePacs009cov);
                 out.print(errorRulePacs009cov);
                 System.out.println(gson.toJson(errorRulePacs009cov));
-            } else if (abstractMX.getMxId().getBusinessService().toString().contains("adv")) {
+            } else if (messType.contains("adv")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
             } else {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
