@@ -30,9 +30,6 @@
                         <div id="view2" class="tabcontent">
                             <%@ include file="pacs00900108cov.jsp" %>
                         </div>
-                        <div id="view3" class="tabcontent">
-                            <div id="error-container"></div>
-                        </div>
                         <div id="view7" class="tabcontent">
                             <div id="error-container">
                                 <table id="errorInfoTable">
