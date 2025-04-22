@@ -13,6 +13,7 @@ import com.vensys.appcm.rulePacs.rulePacs008_2024;
 import com.vensys.appcm.rulePacs.rulePacs009;
 import com.vensys.appcm.rulePacs.rulePacs009Cov_2024;
 import com.vensys.appcm.rulePacs.rulePacs009_2024;
+import com.vensys.appcm.rulePacs.rulePacs009adv_2024;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,6 +67,12 @@ public class SCValidateMX extends HttpServlet {
                 System.out.println(gson.toJson(errorRulePacs009cov));
             } else if (messType.contains("adv")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
+                rulePacs009adv_2024 rulepacs009adv = new rulePacs009adv_2024 (dataMXpacs009);
+                rulepacs009adv.runRules(logicalTerminal, receiverAddress);
+                String errorRulePacs009adv = rulepacs009adv.getErrorRule();
+                System.out.println(errorRulePacs009adv);
+                out.print(errorRulePacs009adv);
+                System.out.println(gson.toJson(errorRulePacs009adv));
             } else {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
                 rulePacs009_2024 rulepacs009 = new rulePacs009_2024 (dataMXpacs009);
