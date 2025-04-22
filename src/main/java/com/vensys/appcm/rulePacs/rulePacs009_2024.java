@@ -267,7 +267,7 @@ public class rulePacs009_2024 {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/InstgAgt</td></tr>");
                     } else {
                         if (logicalTerminal != null) {
-                            String logicalTerminal1 = logicalTerminal.substring(0, 11);
+                            String logicalTerminal1 = logicalTerminal.substring(0, logicalTerminal.length() - 1);
                             if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal1)) {
                                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI\"><td>BAH \"From\" BIC must match \"Instructing Agent\" BIC</td><td>FICdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
                             }
