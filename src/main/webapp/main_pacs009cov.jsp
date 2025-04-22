@@ -21,7 +21,6 @@
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
                         <li id="tab-view2"><a href="#" rel="view2">Create Message</a></li>
-                        <li id="tab-validate" ><a href="#" rel="view3" id="tab-view-validate" hidden>Validate</a></li>
                         <li id="tab-validate" ><a href="#" rel="view7" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
