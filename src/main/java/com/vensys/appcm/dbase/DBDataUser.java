@@ -190,9 +190,9 @@ public class DBDataUser {
             where = "WHERE enable = '" + status + "'";
         }
         String sql = "SELECT user_id, name, role_name, enable, last_login, last_activity "
-                + "FROM users "
-                + "LEFT JOIN roles "
-                + "ON role = role_id "
+                + "FROM users as u "
+                + "LEFT JOIN roles as r "
+                + "ON u.role = r.role_id "
                 + where;
 //        System.out.println("sql 2 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);

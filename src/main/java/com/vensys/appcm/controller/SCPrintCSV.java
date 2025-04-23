@@ -42,11 +42,12 @@ public class SCPrintCSV extends HttpServlet {
         String date_from = request.getParameter("date_from");
         String date_end = request.getParameter("date_end");
         String flag = request.getParameter("flag");
-String value_date = request.getParameter("value_date").substring(2).replace("-", ""); //20190926
+        String value_date = request.getParameter("value_date").substring(2).replace("-", ""); //20190926
         String value_date_end = request.getParameter("value_date_end").substring(2).replace("-", "");
         String io_type = request.getParameter("io_type"); //20190926
         String filter = request.getParameter("filter_msg"); //20230522
         String currency = request.getParameter("cust_curr");
+        String status= request.getParameter("status")+"";
 
         HttpSession session = request.getSession();
         DBconnection dbConn = new DBconnection();
@@ -54,11 +55,13 @@ String value_date = request.getParameter("value_date").substring(2).replace("-",
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=report.csv");
-        try {
-            headers = bBHeaders.getAllHeaderReportXls(mt_type, flag, value_date, date_from, date_end, io_type, value_date_end, filter, currency);
+        try {          
+            headers = bBHeaders.getAllHeaderReport(status,io_type,mt_type, value_date, date_from, date_end, flag, filter, currency, value_date_end);
+            //headers = bBHeaders.getAllHeaderReportXls(mt_type, flag, value_date, date_from, date_end, io_type, value_date_end, filter, currency);
 //            headers = bBHeaders.getAllHeaderReportXls(mt_type, flag, value_date, date_from, date_end, io_type, value_date_end);
             OutputStream outputStream = response.getOutputStream();
-            String outputResult = "NO;MT;I/O;SENDER;RECEIVER;REFERENCE;DATE;CURRENCY;AMOUNT;SENDER ACC.;SENDER NAME;RECEIVER ACC.;RECEIVER NAME;DATE TIME;STATUS\n";
+            String outputResult = "NO;CHANNEL;MT/MX;I/O;SENDER;RECEIVER;REFERENCE;CREATIONDATE;VALUEDATE;CURRENCY;AMOUNT;STATUS\n";
+//             String outputResult = "NO;MT;I/O;SENDER;RECEIVER;REFERENCE;DATE;CURRENCY;AMOUNT;SENDER ACC.;SENDER NAME;RECEIVER ACC.;RECEIVER NAME;DATE TIME;STATUS\n";
             String sender = "";//20190926
             String receiver = "";
             for (int i = 0; i < headers.size(); i++) {
@@ -72,7 +75,10 @@ String value_date = request.getParameter("value_date").substring(2).replace("-",
                 }
 
                 //20190926
-                outputResult += (i + 1) + ";" + headers.get(i).getMessageType() + ";" + headers.get(i).getIo_type() + ";" + sender + ";" + receiver + ";" + headers.get(i).getTag20() + ";" + headers.get(i).getTag32Date() + ";" + headers.get(i).getTag32Currency() + ";" + headers.get(i).getTag32Amount() + ";" + headers.get(i).getTag50Acc() + ";" + headers.get(i).getTag50Nm() + ";" + headers.get(i).getTag59Acc() + ";" + headers.get(i).getTag59Nm() + ";" + headers.get(i).getTanggal() + ";" + headers.get(i).getFlag() + "\n";
+//                outputResult += (i + 1) + ";" + headers.get(i).getMessageType() + ";" + headers.get(i).getIo_type() + ";" + sender + ";" + receiver + ";" + headers.get(i).getTag20() + ";" + headers.get(i).getTag32Date() + ";" + heade
+                outputResult += (i + 1) + ";" + headers.get(i).getChannel() + ";" + headers.get(i).getMessageType() + ";" + headers.get(i).getIo_type() + ";" 
+                        + sender + ";" + receiver + ";" + headers.get(i).getTag20() + ";" + headers.get(i).getTanggal()+ ";" + headers.get(i).getTag32Date() + ";" + headers.get(i).getTag32Currency() + ";"
+                        + headers.get(i).getTag32Amount() + ";" + headers.get(i).getFlag() + "\n";
             }
             outputStream.write(outputResult.getBytes());
             outputStream.flush();
