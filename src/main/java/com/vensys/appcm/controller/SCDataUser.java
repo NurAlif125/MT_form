@@ -102,7 +102,7 @@ public class SCDataUser extends HttpServlet {
             if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
                 message = "Error Connection LDAP!";
             } else if (isValidLogonLdap.equalsIgnoreCase("user not found")) {
-                message = "user not found";
+                message = "User not registered in LDAP. Please contact Administrator!";
             } else if(isValidLogonLdap.equalsIgnoreCase("success")) {
                 message = request.getParameter("username")+" Succesfully Created";
                 foundUser = "Found User LDAP";
@@ -110,7 +110,7 @@ public class SCDataUser extends HttpServlet {
             
             if (foundUser.equalsIgnoreCase("Found User LDAP")) {
                 if (isValidUser) {//validasi untuk user
-                    message = "User already exist!!";
+                    message = "User already exist!";
                 } else {
                     dbData2.addDataUser(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
