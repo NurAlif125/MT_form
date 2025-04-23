@@ -84,7 +84,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body text-primary">
-                    <c:out value="${errormsg}"/>
+                    <c:if test="${not empty errormsg}">
+                        <c:out value="${errormsg}"/>
+                        <c:remove var="errormsg" scope="session"/>
+                    </c:if>
                 </div>
             </div>
         </div>
