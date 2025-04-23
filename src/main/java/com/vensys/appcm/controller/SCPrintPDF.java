@@ -61,6 +61,7 @@ public class SCPrintPDF extends HttpServlet {
         requestData.put("filter_msg", request.getParameter("filter_msg"));
         requestData.put("cust_curr", request.getParameter("cust_curr"));
 
+        System.out.println("filter filter="+ request.getParameter("filter_msg"));
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("user_id");
 
@@ -112,7 +113,7 @@ public class SCPrintPDF extends HttpServlet {
             if ((requestData.get("flag").equalsIgnoreCase("INC-STL") && requestData.get("io_type").equalsIgnoreCase("O"))
                     || (requestData.get("flag").equalsIgnoreCase("INC-RSTL") && requestData.get("io_type").equalsIgnoreCase("O"))
                     || (requestData.get("flag").equalsIgnoreCase("INC-CNF") && requestData.get("io_type").equalsIgnoreCase("O"))) {
-
+                System.out.println("satu");
                 headers = bBHeaders.getAllHeaderReportIncoming(requestData.get("status"), requestData.get("io_type"),
                         requestData.get("mt_type"), requestData.get("value_date"), requestData.get("date_from"),
                         requestData.get("date_end"), requestData.get("flag"), requestData.get("value_date_end"));
@@ -121,13 +122,14 @@ public class SCPrintPDF extends HttpServlet {
             } else if ((requestData.get("flag").equalsIgnoreCase("AUTH") && requestData.get("io_type").equalsIgnoreCase("I"))
                     || (requestData.get("flag").equalsIgnoreCase("TEXT") && requestData.get("io_type").equalsIgnoreCase("I"))
                     || (requestData.get("flag").equalsIgnoreCase("ACK") && requestData.get("io_type").equalsIgnoreCase("I"))) {
-
+                System.out.println("DUA");
                 headers = bBHeaders.getAllHeaderReportOutgoing(requestData.get("status"), requestData.get("io_type"),
                         requestData.get("mt_type"), requestData.get("value_date"), requestData.get("date_from"),
                         requestData.get("date_end"), requestData.get("flag"), requestData.get("value_date_end"), requestData.get("filter_msg"));
                 bytes = JasperRunManager.runReportToPdf(reportFileOut.getPath(), model, new JRBeanCollectionDataSource(headers));
 
             } else {
+                System.out.println("TIGA");
                 headers = bBHeaders.getAllHeaderReport(requestData.get("status"), requestData.get("io_type"), requestData.get("mt_type"),
                         requestData.get("value_date"), requestData.get("date_from"), requestData.get("date_end"),
                         requestData.get("flag"), requestData.get("filter_msg"), requestData.get("cust_curr"), requestData.get("value_date_end"));
