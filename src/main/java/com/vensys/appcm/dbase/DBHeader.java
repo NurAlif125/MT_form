@@ -49,7 +49,7 @@ public class DBHeader {
         this.conn = conn;
     }
 
-    public ArrayList<Header> getAllHeaderReport(String status, String io_type, String mt_type, String value_date, String date_from, String date_end, String flag, String filter, String cust_curr, String value_date_end) throws SQLException {
+    public ArrayList<Header> getAllHeaderReport2(String status, String io_type, String mt_type, String value_date, String date_from, String date_end, String flag, String filter, String cust_curr, String value_date_end) throws SQLException {
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
 
@@ -387,12 +387,14 @@ public class DBHeader {
 //        } else {
 //            where += " AND filter = '" + filter + "' ";
 //        }
-        if (filter.equals("")) {
+        if ( filter == null) {
             where += "";
         } else if (filter.equals("1")) {
             where += " AND block3 like '%111:009;%'";
         } else if (filter.equals("0")) {
             where += " AND block3 not like '%111:009;%'";
+        }else{
+            where += "";
         }
 
         String sql = "SELECT DISTINCT h.id_headers,messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,receiverAddress,tanggal, h.id_headers,flag,isDuplicate,branch,\n"
@@ -538,7 +540,7 @@ public class DBHeader {
                 + "replace(t50ac.detail,'/','') as senderAcc, t50nm.detail as senderName, replace(t59ac.detail,'/','') as receiverAcc, t59nm.detail as receiverName, "
                 + "coalesce(t52.detail, receiverAddress), coalesce(SUBSTRING(t52.detail, 5,2), SUBSTRING(receiverAddress, 5,2)) AS ExtractString, "
                 + "SUBSTRING(t57.detail, 5,2) AS ExtractString, coalesce(t70.detail, '-'), coalesce(coalesce(t54.detail, t53.detail), receiverAddress), coalesce(t71a.detail, '-'), "
-                + "branch, komentar, no_ft "
+                + "branch, komentar "
                 + "FROM headers h "
                 + "LEFT JOIN tags t20 ON t20.id_headers = h.id_headers AND t20.tag = '20' "
                 + "LEFT JOIN tags t21 ON t21.id_headers = h.id_headers AND t21.tag = '21' "
@@ -613,7 +615,7 @@ public class DBHeader {
             header.setBranch(rs.getString(30));
             header.setKomentar(rs.getString(31));
             System.out.println("isi komen " + rs.getString(31));
-            header.setNoFT(rs.getString(32));
+            //header.setNoFT(rs.getString(32));
             headers.add(header);
         }
         return headers;
@@ -1702,13 +1704,13 @@ System.out.println("Session ID: " + httpSession.getId());
     public String ambilTag20(int headerId, String prefix) throws SQLException {
         String data = "";
         String sql = "SELECT detail FROM " + prefix + "tags WHERE id_headers=" + headerId + " AND tag='20'";
-//        System.out.println("sql=" + sql);
+        System.out.println("sqlambil20=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             data = rs.getString(1);
         }
-//        System.out.println("data=" + data);
+        System.out.println("data=" + data);
         return data.toUpperCase();
     }
 
@@ -3005,4 +3007,130 @@ System.out.println("Session ID: " + httpSession.getId());
             }
             return headers;
         }
+          
+    public ArrayList<Header> getAllHeaderReport(String status, String io_type, String mt_type, String value_date, String date_from, String date_end, String flag, String filter, String cust_curr, String value_date_end) throws SQLException {
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+
+        formatRp.setCurrencySymbol("");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+        ArrayList<Header> headers = new ArrayList<Header>();
+        String where = "";
+        Double amountAck = 0.0;
+        Double amountNack = 0.0;
+        if (io_type.equalsIgnoreCase("IO")) {//20190926
+            where += "";
+        } else if (io_type.equalsIgnoreCase("I")) {
+            where += " AND io_type = 'I'";
+        } else {
+            where += " AND io_type = 'O'";
+        }
+        if (mt_type == null || mt_type.isEmpty()) {
+            where += "";
+        } else {
+            where += " AND messageType = '" + mt_type + "'";
+        }
+//        System.out.println("### flag ### = " + flag);
+        if (flag == null || flag.isEmpty()) {
+            where += "";
+        } else {
+            // diganti menjadi = asalnya like 20150930
+            where += " AND flag = '" + flag + "'";
+        }
+        if (cust_curr != null && !cust_curr.isEmpty()) {
+            where += " AND t32c.detail = '" + cust_curr + "'";
+        }
+
+        where += " AND CAST(hd.tanggal as DATE) BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:59'"; //20200213
+        String sql = "SELECT DISTINCT \n" +
+                    "    hd.id_headers, \n" +
+                    "    hd.messageType,\n" +
+                    "    hd.logicalTerminal,\n" +
+                    "    hd.io_type,\n" +
+                    "    hd.receiverAddress,\n" +
+                    "    hd.tanggal,\n" +
+                    "    hd.flag, \n" +
+                    "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
+"                    SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
+"                    RIGHT(t32d.detail, 2), '') AS vdate,\n" +
+                    "\n" +
+                    "    -- REF --\n" +
+                    "    COALESCE(\n" +
+                    "        t20.detail, \n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].pmtId.instrId'), -- pacs.008\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.grpHdr.msgId'), -- pacs.004\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].pmtId.instrId'), -- pacs.009\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.rsltnOfInvstgtn.assgnmt.id'), -- camt.029\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrAcctRpt.rpt[0].id'), -- camt.052\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrStmt.stmt[0].id'), -- camt.053\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.undrlyg[0].txInf[0]._case.id'), -- camt.056\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.assgnmt.id'), -- camt.056\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtStsRpt.grpHdr.msgId'),\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.ntfctn.id'),\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.grpHdr.msgId'),\n" +
+                    "                 JSON_VALUE(mx.json_tag,'$.cstmrPmtCxlReq.assgnmt.id')\n" +
+                    "        )))))))))))) as ref,\n" +
+                    "\n" +
+                    "    -- Currency\n" +
+                    "    COALESCE(\n" +
+                    "        t32c.detail, \n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy'), -- pacs.008\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.ccy'),  -- pacs.004\n" +
+                    "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy')  -- pacs.009\n" +
+                    "        ))\n" +
+                    "    ) as curr,\n" +
+                    "\n" +
+                    "    -- Amount\n" +
+                    "    COALESCE(\n" +
+                    "        t32.detail, \n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value'), -- pacs.008\n" +
+                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.value'), -- pacs.004\n" +
+                    "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value') -- pacs.009\n" +
+                    "        ))\n" +
+                    "    ) as amount,\n" +
+                    "\n" +
+                    "hd.source\n" +
+                    "FROM headers as hd \n" +
+                    "--LEFT JOIN header_status hds ON hds.id_headers = hd.id_headers \n" +
+                    "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
+                    "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
+                    "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
+                    "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
+                    "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
+                    "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
+                    "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
+                    "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE " 
+                + " isDuplicate=0 " + where
+                + " ORDER BY tanggal DESC";
+        System.out.println("sql getAllHeaderReport = " + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        
+        while (rs.next()) {
+            Header header = new Header();
+            header.setMessageType(rs.getString(2));
+            if (rs.getString(4).equalsIgnoreCase("O")) {
+                header.setLogicalTerminal(rs.getString(5));
+                header.setReceiverAddress(rs.getString(3));
+            } else {
+                header.setLogicalTerminal(rs.getString(3));
+                header.setReceiverAddress(rs.getString(5));
+            }
+            header.setIo_type(rs.getString(4));
+            header.setTanggal(rs.getString(6));
+            header.setFlag(rs.getString(7));
+            header.setId_headers(rs.getInt(1));
+            header.setTag20(rs.getString("ref"));
+            header.setTag32Date(rs.getString("vdate"));
+            header.setTag32Currency(rs.getString("curr"));
+            header.setTag32Amount(rs.getString("amount"));
+            header.setSource(rs.getString("source"));
+            
+            headers.add(header);
+        }
+        return headers;
+    }
 }
