@@ -14,21 +14,21 @@
         <% int jmlVer = ((Integer) session.getAttribute("notifVer"));
             if (jmlVer <= 1) {
         %>
-        <h3>You have <a style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a> transaction to Verify.</h3><br/>
+        <h3>You have <a href="controllerHeaders?io_type=I&flag=MOD&menu=1" style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a> transaction to Verify.</h3><br/>
         <%
         } else {
         %>
-        <h3>You have <a style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a> transactions to Verify.</h3><br/>
+        <h3>You have <a href="controllerHeaders?io_type=I&flag=MOD&menu=1" style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a> transactions to Verify.</h3><br/>
         <%
             }
             int jmlAuth = ((Integer) session.getAttribute("notifAuth"));
             if (jmlAuth <= 1) {
         %>
-        <h3>You have <a style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a> transaction to Authorize.</h3><br/>
+        <h3>You have <a href="controllerHeaders?io_type=I&flag=VER&menu=2" style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a> transaction to Authorize.</h3><br/>
         <%
         } else {
         %>
-        <h3>You have <a style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a> transactions to Authorize.</h3><br/>
+        <h3>You have <a href="controllerHeaders?io_type=I&flag=VER&menu=2" style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a> transactions to Authorize.</h3><br/>
         <%
             }
         %>
