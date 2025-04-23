@@ -143,7 +143,7 @@ public class LDAPCon {
             System.out.println("Berhasil konek ke LDAP server!");
 
             // Filter pencarian berdasarkan CN
-            String baseDN = dc;
+            String baseDN = base_DN;
             String filter = "(cn="+userToSearch+")";
             SearchControls controls = new SearchControls();
             controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
