@@ -167,7 +167,7 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MT:200'}">
-                                                <!--<li><a href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>-->
+                                                <li><a href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202'}">
                                                 <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
@@ -176,7 +176,7 @@
                                                 <!--<li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202COV'}">
-                                                 <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
+                                                <!--<li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>-->
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
