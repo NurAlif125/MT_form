@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataFIA;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -35,17 +36,19 @@ public class SCFIA extends HttpServlet {
         DBconnection dbConn = new DBconnection();
         DataFIA data = new DataFIA();
         DBFIA dbData = new DBFIA(dbConn.getConnection());
+        HttpSession session = request.getSession();
 
         String id = request.getParameter("id");
         data.setSource(request.getParameter("source"));
         data.setMtormx(request.getParameter("mtormx"));
-        data.setNeedcheckaml(Integer.parseInt(request.getParameter("needcheckaml")));
-        data.setNeedconverted(Integer.parseInt(request.getParameter("needconverted")));
+        data.setNeedcheckaml(parseIntSafe(request.getParameter("needcheckaml"),0));
+        data.setNeedconverted(parseIntSafe(request.getParameter("needconverted"),0));        
         data.setSourceto(request.getParameter("sourceto"));
+        data.setIsenable(parseIntSafe(request.getParameter("isenable"),0));
         if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-            dbData.addFIA(data);
+            dbData.addFIA(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         } else {
-            dbData.updateFIA(data, id);
+            dbData.updateFIA(data, id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         }
         try {
         } catch (Exception ex) {
@@ -92,4 +95,15 @@ public class SCFIA extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    private int parseIntSafe(String value, int defaultValue) {
+        if (value == null || value.trim().isEmpty()) {
+            return defaultValue;
+        }
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
 }

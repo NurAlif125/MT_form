@@ -21,37 +21,34 @@
                         <span class="labelL2">Message Type </span>
                         <input type="text" name="mtormx" id="mtormx" maxlength="45" value="<c:out value='${fiaById.mtormx}' />"/>
                     </div>
+                    
                     <div class="form-row">
-                        <span class="labelL2">Need Check AML </span>
-                        <label for="needcheckaml_yes">
-                            <input type="radio" name="needcheckaml" id="needcheckaml_yes" value="1"
+                        <span class="labelL2">Need Check AML</span>
+                        <label for="needcheckaml_checkbox">
+                            <input type="checkbox" name="needcheckaml" id="needcheckaml_checkbox" value="1"
                                 <c:if test="${fiaById.needcheckaml == '1'}">checked</c:if> />
-                            Yes
-                        </label>
-
-                        <label for="needcheckaml_no" style="margin-left: 1em;">
-                            <input type="radio" name="needcheckaml" id="needcheckaml_no" value="0"
-                                <c:if test="${fiaById.needcheckaml == '0'}">checked</c:if> />
-                            No
+                            
                         </label>
                     </div>
                     <div class="form-row">
-                        <span class="labelL2">Need Converted </span>
-                        <label for="needconverted_yes">
-                            <input type="radio" name="needconverted" id="needconverted_yes" value="1"
+                        <span class="labelL2">Need Converted</span>
+                        <label for="needconverted_checkbox">
+                            <input type="checkbox" name="needconverted" id="needconverted_checkbox" value="1"
                                 <c:if test="${fiaById.needconverted == '1'}">checked</c:if> />
-                            Yes
+                            
                         </label>
-                        <label for="needconverted_no" style="margin-left: 1em;">
-                            <input type="radio" name="needconverted" id="needconverted_no" value="0"
-                                <c:if test="${fiaById.needconverted == '0'}">checked</c:if> />
-                            No
-                        </label>
-                    </div>
+                    </div>                                                         
                     <div class="form-row">
                         <span class="labelL2">Source To</span>
                         <textarea name="sourceto" id="sourceto" ><c:out value="${fiaById.sourceto}" /></textarea>
                     </div>
+                    <div class="form-row">
+                        <span class="labelL2">Enable</span>
+                        <label for="isenable_checkbox">
+                            <input type="checkbox" name="isenable" id="isenable_checkbox" value="1"
+                                <c:if test="${fiaById.isenable == '1'}">checked</c:if> />                           
+                        </label>
+                    </div>                       
                 </div>
                 <div class="form-row-action">
                     <input type="submit" name="submit" id="submit" value="Save" />

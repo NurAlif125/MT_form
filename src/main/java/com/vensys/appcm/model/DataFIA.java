@@ -15,6 +15,15 @@ public class DataFIA {
     private int needcheckaml;
     private int needconverted;
     private String sourceto;
+    private int isenable;
+
+    public int getIsenable() {
+        return isenable;
+    }
+
+    public void setIsenable(int isenable) {
+        this.isenable = isenable;
+    }
 
     public int getId() {
         return id;
