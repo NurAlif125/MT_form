@@ -111,7 +111,10 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser() throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
-        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name FROM users AS usr LEFT JOIN roles AS rl ON usr.role=rl.role_id ORDER BY usr.user_id ASC";
+        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name FROM users AS usr \n" +
+"LEFT JOIN roles AS rl ON usr.role=rl.role_id \n" +
+"WHERE usr.enable !=2\n" +
+"ORDER BY usr.user_id ASC";
 //        System.out.println("sql 1 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -322,6 +325,16 @@ public class DBDataUser {
             data.setAuto_disable(rs.getInt(7));
         }
         return data;
+    }
+    
+    public void disablePermanent(String user_id, String mofier, String ip, String comp) throws SQLException {
+//        String sql = "DELETE FROM [user] WHERE user_id=?";
+        String sql = "Update users set enable =2 , disable_permanent_date=CURRENT_TIMESTAMP WHERE user_id=?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
+        st.executeUpdate();
+        evl.insertDataEvent(mofier, "disable permanent user", ip, comp);
+        evl.updateLogUser(mofier, "user", tanggal);
     }
 }
 

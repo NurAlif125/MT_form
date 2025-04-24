@@ -255,6 +255,9 @@
                         <!--                <div class="form-row"><span class="labelL">&nbsp;</span>-->
                         <div class="form-row-action" style="margin:0 12px 0 12px;">
                             <input type="submit" name="submit" id="submit" value="Save" />
+                            <%if(request.getParameter("role_id")==null){}else{%>
+                                <input type="button" name="delete_role" id="delete_role" value="Disable Permanent" />
+                            <%}%>
                             <!--<input type="button" name="delete_role" id="delete_role" value="Delete" />-->
                             <input type="reset" name="reset" id="reset" value="Reset" />
                             <input type="button" name="back" id="back" value="Back" />

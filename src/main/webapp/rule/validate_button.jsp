@@ -134,7 +134,8 @@
                 flag: $('#flag').val(),
                 value_date: $('#value_date').val(),
                 value_date_end: $('#value_date_end').val(),
-                cust_curr: $('#cust_curr').val()
+                cust_curr: $('#cust_curr').val(),
+                channel: $('#channel').val()
             };
 
             // Send AJAX request
@@ -254,7 +255,7 @@
         $('#print_xls').click(function () {
             var answer = confirm('Do you to report as XLS format..!!');
             if (answer) {
-                document.location.href = 'SCPrintXLS?mt_type=' + $('#mt_type').val() + '&date_from=' + $('#date_from').val() + '&date_end=' + $('#date_end').val() + '&flag=' + $('#flag').val() + '&value_date=' + $('#value_date').val() + '&value_date_end=' + $('#value_date_end').val() + '&io_type=' + $('#io_type').val() + '&filter_msg=' + $('#filter_msg').val();
+                document.location.href = 'SCPrintXLS?mt_type=' + $('#mt_type').val() + '&date_from=' + $('#date_from').val() + '&date_end=' + $('#date_end').val() + '&flag=' + $('#flag').val() + '&value_date=' + $('#value_date').val() + '&value_date_end=' + $('#value_date_end').val() + '&io_type=' + $('#io_type').val() + '&filter_msg=' + $('#filter_msg').val() + '&channel=' + $('#channel').val();
 //                document.location.href = 'SCPrintXLS?mt_type=' + $('#mt_type').val() + '&date_from=' + $('#date_from').val() + '&date_end=' + $('#date_end').val() + '&flag=' + $('#flag').val() + '&value_date=' + $('#value_date').val() + '&io_type=' + $('#io_type').val();
             }
         });
@@ -268,7 +269,7 @@
             var answer = confirm('Do you to report as CSV format..!!');
             if (answer) {
 //                document.location.href = 'SCPrintCSV?mt_type=' + $('#mt_type').val() + '&date_from=' + $('#date_from').val() + '&date_end=' + $('#date_end').val() + '&flag=' + $('#flag').val() + '&value_date=' + $('#value_date').val() + '&io_type=' + $('#io_type').val();
-                document.location.href = 'SCPrintCSV?mt_type=' + $('#mt_type').val() + '&date_from=' + $('#date_from').val() + '&date_end=' + $('#date_end').val() + '&flag=' + $('#flag').val() + '&value_date=' + $('#value_date').val() + '&value_date_end=' + $('#value_date_end').val() + '&io_type=' + $('#io_type').val() + '&filter_msg=' + $('#filter_msg').val();
+                document.location.href = 'SCPrintCSV?mt_type=' + $('#mt_type').val() + '&date_from=' + $('#date_from').val() + '&date_end=' + $('#date_end').val() + '&flag=' + $('#flag').val() + '&value_date=' + $('#value_date').val() + '&value_date_end=' + $('#value_date_end').val() + '&io_type=' + $('#io_type').val() + '&filter_msg=' + $('#filter_msg').val() + '&channel=' + $('#channel').val();
             }
         });
         // penambahan button force INC-OK 16 Sept 2015

@@ -72,7 +72,7 @@ public class DBDataRole {
 
     public List<DataRole> getAllDataRole() throws Exception {
         List<DataRole> datas = new ArrayList<DataRole>();
-        String sql = "SELECT role_id,role_name,role_detail,role_enable,role_desc,timeout FROM roles ORDER BY role_name ASC";
+        String sql = "SELECT role_id,role_name,role_detail,role_enable,role_desc,timeout FROM roles where role_enable !=2 ORDER BY role_name ASC";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -169,6 +169,29 @@ public class DBDataRole {
             datas = true;
         }
         return datas;
+    }
+    
+    public boolean roleIsUsed(int role_id) throws SQLException {
+        boolean datas = false;
+        String sql = "SELECT * from users where role = ? and enable!=2";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, role_id);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            datas = true;
+        }
+        System.out.println("sini"+ datas);
+        return datas;
+    }
+    
+    public void disablePermanent(Integer role_id, String modifier, String ip, String comp) throws SQLException {
+        String sql = "update roles set role_enable = 2, disable_permanent = CURRENT_TIMESTAMP WHERE role_id=?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, role_id);
+        st.executeUpdate();
+        System.out.println(st);
+        evl.insertDataEvent(modifier, "Disable Permanent role", ip, comp);
+        evl.updateLogUser(modifier, "role", tanggal);
     }
     
 }

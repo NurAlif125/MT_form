@@ -3008,10 +3008,10 @@ System.out.println("Session ID: " + httpSession.getId());
             return headers;
         }
           
-    public ArrayList<Header> getAllHeaderReport(String status, String io_type, String mt_type, String value_date, String date_from, String date_end, String flag, String filter, String cust_curr, String value_date_end) throws SQLException {
+    public ArrayList<Header> getAllHeaderReport(String status, String io_type, String mt_type, String value_date, String date_from, String date_end, String flag, String filter, String cust_curr, String value_date_end, String channel) throws SQLException {
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
-
+        System.out.println("CHANNEL2="+channel);
         formatRp.setCurrencySymbol("");
         formatRp.setMonetaryDecimalSeparator(',');
         formatRp.setGroupingSeparator('.');
@@ -3028,6 +3028,7 @@ System.out.println("Session ID: " + httpSession.getId());
         } else {
             where += " AND io_type = 'O'";
         }
+        
         if (mt_type == null || mt_type.isEmpty()) {
             where += "";
         } else {
@@ -3040,8 +3041,25 @@ System.out.println("Session ID: " + httpSession.getId());
             // diganti menjadi = asalnya like 20150930
             where += " AND flag = '" + flag + "'";
         }
+        
         if (cust_curr != null && !cust_curr.isEmpty()) {
             where += " AND t32c.detail = '" + cust_curr + "'";
+        }
+        
+        if ( filter == null) {
+            where += "";
+        } else if (filter.equals("1")) {
+            where += " AND block3 like '%111:009;%'";
+        } else if (filter.equals("0")) {
+            where += " AND block3 not like '%111:009;%'";
+        }else{
+            where += "";
+        }
+        
+        if ( channel == null) {
+            where += "";
+        } else{
+            where += "";
         }
 
         where += " AND CAST(hd.tanggal as DATE) BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:59'"; //20200213
