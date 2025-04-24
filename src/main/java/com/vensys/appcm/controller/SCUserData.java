@@ -82,6 +82,7 @@ public class SCUserData extends HttpServlet {
             data = dbo.getUserDataById(user_id);
             gs = dbg.getGeneralSetting();
 //            dataLogin = dbo.selectLastLoginBerhasil(user_id);
+            dataLogin = dbo.selectLastLoginBerhasil(user_id);
             berhasilLogin = dataLogin.getLoginBerhasil();
             if (berhasilLogin == null) {
                 berhasilLogin = "-";
@@ -92,9 +93,9 @@ public class SCUserData extends HttpServlet {
                 gagalLogin = "-";
             }
             notifVer = dbo.getNotificationVer();
-            System.out.println("notifVer: " + notifVer);
+//            System.out.println("notifVer: " + notifVer);
             notifAuth = dbo.getNotificationAuth();
-            System.out.println("notifAuth: " + notifAuth);
+//            System.out.println("notifAuth: " + notifAuth);
             log.info("processRequest");
         } catch (Exception ex) {
             strErrMsg = "Unable to connect to database";
@@ -104,7 +105,25 @@ public class SCUserData extends HttpServlet {
        String isValidLogonLdap = "";
        isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
        
+        int maxpassw = (data.getWrongpass_max() != null && !data.getWrongpass_max().trim().isEmpty())
+         ? Integer.parseInt(data.getWrongpass_max())
+         : 0;
+        
        if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
+//            if (data.getWrongpass() < maxpassw) {
+//                int c = data.getWrongpass() + 1;
+//                data.setWrongpass(c);
+//                dbo.updatewrongpass(data);
+//                strErrMsg = "Invalid Username or Password";
+//                session.setAttribute("errormsg", strErrMsg);
+//                
+//                if (data.getWrongpass() >= 3) {
+//                     dbo.updateenable(data);
+//                    strErrMsg = "Username is not active, please contact administrator";
+//                    session.setAttribute("errormsg", strErrMsg);
+//                }
+//            }     
+            dbo.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
             strErrMsg = "Invalid Username or Password";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
@@ -165,6 +184,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("ip_access", ip_access);
                                 session.setAttribute("comp_name", comp_name);
                                 session.setAttribute("role_id", String.valueOf(data.getRole()));
+                                session.setAttribute("sub_role_user", String.valueOf(data.getSub_role()));
                                 session.setAttribute("berhasillogin", berhasilLogin);
                                 session.setAttribute("gagallogin", gagalLogin);
                                 session.setAttribute("notifVer", notifVer);
