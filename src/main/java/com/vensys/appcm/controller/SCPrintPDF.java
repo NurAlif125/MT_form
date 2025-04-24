@@ -60,14 +60,16 @@ public class SCPrintPDF extends HttpServlet {
         requestData.put("value_date_end", request.getParameter("value_date_end").substring(2).replace("-", ""));
         requestData.put("filter_msg", request.getParameter("filter_msg"));
         requestData.put("cust_curr", request.getParameter("cust_curr"));
+        requestData.put("channel", request.getParameter("channel"));
 
+        System.out.println("Channel="+request.getParameter("channel"));
         System.out.println("filter filter="+ request.getParameter("filter_msg"));
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("user_id");
 
         String pdfDirectoryPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "ReportCM";
         Files.createDirectories(Paths.get(pdfDirectoryPath));
-        String pdfFileName = "report_" + userId + ".pdf";
+        String pdfFileName = "Report_PDF_" + userId + ".pdf";
         String pdfFilePath = pdfDirectoryPath + File.separator + pdfFileName;
         String ServerName = request.getServerName();
         int ServerPort = request.getServerPort();
@@ -103,14 +105,14 @@ public class SCPrintPDF extends HttpServlet {
             Files.createDirectories(pdfDir);
 
             File reportFile = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTNoTotal.jasper"));
-            File reportFileInc = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTInc.jasper"));
-            File reportFileOut = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTOut.jasper"));
+            //File reportFileInc = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTInc.jasper"));
+            //File reportFileOut = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportListMTOut.jasper"));
 
             Map<String, Object> model = new HashMap<>();
             model.put("username", userId);
             model.put("status", requestData.get("status"));
 
-            if ((requestData.get("flag").equalsIgnoreCase("INC-STL") && requestData.get("io_type").equalsIgnoreCase("O"))
+            /*if ((requestData.get("flag").equalsIgnoreCase("INC-STL") && requestData.get("io_type").equalsIgnoreCase("O"))
                     || (requestData.get("flag").equalsIgnoreCase("INC-RSTL") && requestData.get("io_type").equalsIgnoreCase("O"))
                     || (requestData.get("flag").equalsIgnoreCase("INC-CNF") && requestData.get("io_type").equalsIgnoreCase("O"))) {
                 System.out.println("satu");
@@ -128,13 +130,13 @@ public class SCPrintPDF extends HttpServlet {
                         requestData.get("date_end"), requestData.get("flag"), requestData.get("value_date_end"), requestData.get("filter_msg"));
                 bytes = JasperRunManager.runReportToPdf(reportFileOut.getPath(), model, new JRBeanCollectionDataSource(headers));
 
-            } else {
+            } else {*/
                 System.out.println("TIGA");
                 headers = bBHeaders.getAllHeaderReport(requestData.get("status"), requestData.get("io_type"), requestData.get("mt_type"),
                         requestData.get("value_date"), requestData.get("date_from"), requestData.get("date_end"),
-                        requestData.get("flag"), requestData.get("filter_msg"), requestData.get("cust_curr"), requestData.get("value_date_end"));
+                        requestData.get("flag"), requestData.get("filter_msg"), requestData.get("cust_curr"), requestData.get("value_date_end"), requestData.get("channel"));
                 bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), model, new JRBeanCollectionDataSource(headers));
-            }
+            //}
 
             FileOutputStream fos = new FileOutputStream(pdfFilePath);
             fos.write(bytes);

@@ -69,6 +69,17 @@
                     <div class="form-row"><span class="labelL2">Value Date End</span>
                         <input type="text" name="value_date_end" id="value_date_end" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" />
                     </div>
+                    <div class="form-row"><span class="labelL2">Channel</span>
+                        <select name="channel" id="channel">
+                            <option value="">All</option>
+                            <option value="NCBS">NCBS</option>
+                            <option value="BANK_TRADE">BANK TRADE</option>
+                            <option value="TSA">TSA</option>
+                            <option value="FRONT_ARENA">FRONT ARENA</option>
+                            <option value="CUSTODY">CUSTODY</option>
+                            <option value="AML">AML</option>
+                        </select>
+                    </div>
                     <div class="form-row"><span class="labelL2">Status</span>
                         <jsp:scriptlet>
                                     //String[] flags = new String[]{"MOD", "VER", "AUTH", "TEXT", "ACK", "NACK", "RACK" ,"INC-OK", "INC-NOK", "INC-ROK", "INC-WAIT" };
