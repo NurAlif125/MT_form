@@ -42,13 +42,13 @@
         }
         
         $('#delete_user').click(function(){
-            var answer = confirm('Do you want to delete this user data..!!');
+            var answer = confirm('Do you want to Disable Permanent this user data..!!');
             if(answer){
                 $(location).attr('href','SCDataUser?delete_user=yes&user_id='+$('#user_id').val());
                 return false;
             }
         });
-    });
+    });s
 </script>
 
 <link rel="stylesheet" type="text/css" href="css/validate.css" />

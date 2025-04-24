@@ -77,6 +77,9 @@
 <!--                <div class="form-row"><span class="labelL2">&nbsp;</span>-->
                 <div class="form-row-action">
                     <input type="submit" name="submit" id="submit" value="Save" />
+                    <%if(request.getParameter("user_id")==null){}else{%>
+                    <input type="button" name="delete_user" id="delete_user" value="Disable Permanent" />
+                    <%}%>
                     <!--<input type="button" name="delete_user" id="delete_user" value="Delete" />-->
                     <input type="reset" name="reset" id="reset" value="Reset" />
                     <input type="button" name="back" id="back" value="Back" />

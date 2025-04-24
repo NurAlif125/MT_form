@@ -121,8 +121,11 @@ public class SCDataUser extends HttpServlet {
                 dbData2.updateDataUser(data, user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("updateDataUser");
             } else {
-                dbData2.delete(user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                System.out.println("DISABLE PERMANENT USER");
+               // dbData2.delete(user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("delete");
+                dbData.disablePermanent(user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        
             }
         }
         try {
