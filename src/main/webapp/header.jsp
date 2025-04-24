@@ -13,6 +13,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <%@ page import="java.text.*,java.util.*" session="true"%>
     <%
@@ -80,30 +81,14 @@
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                                <li><a href="DashBoard.jsp">Daily Outgoing Transactions</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'DOT:LIST'}">
-                                <li><a href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
-                                </c:if>
-                            </c:forEach>
-
+                            <li><a href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
+                            </c:if>
+                        </c:forEach>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                                <li><a href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <%--c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'DT:LIST'}">
-                                <li><a href="DailyTransactions.jsp">Daily Transactions</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'YT:LIST'}">
-                                <li><a href="YearlyTransactions.jsp">Yearly Transactions</a></li>
-                                </c:if>
-                            </c:forEach--%>
+                            <li><a href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
+                            </c:if>
+                        </c:forEach>
                     </ul>
                 </li>
             </c:if>
@@ -115,65 +100,18 @@
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MEMBER_CODE:LIST'}">
                                 <li><a href="SCBICList">BIC</a></li>
-                                </c:if>
-                            </c:forEach>
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'BIC_GO:LIST'}">
-                                <li><a href="SCDataBICGoList">Swift Go BIC</a></li>
-                            </c:if>
-                        </c:forEach>
-                        <!-- <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'S_LIMIT:LIST'}">
-                                <li><a href="SCDataSwiftLimitList">Swift Go Limit</a></li>
-                            </c:if>
-                        </c:forEach>     -->
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'MT_QUEUE:LIST'}">
-                                <li><a href="SCDataMTList">Message Queue</a></li>
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'FIACONF:LIST'}">
                                 <li><a href="SCFIAList">FIA Configuration</a></li>
                             </c:if>
-                        </c:forEach>
-                        <!-- <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'ACCP:LIST'}">
-                                <li><a href="SCDataAccPenagihanList">Account Penagihan</a></li>
-                            </c:if>
-                        </c:forEach> -->
+                        </c:forEach>                        
                         <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'NOSTRO:LIST'}">
-                                <li><a href="SCDataNostroList">Nostro</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'ACCV:LIST'}">
-                                <li><a href="SCDataVerAccList">Verified Account</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'CTY:LIST'}">
-                                <li><a href="SCNegaraSuspectList">Country Suspect</a></li>
-                                </c:if>
-                            </c:forEach>
-
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'COT:VIEW'}">
-                                <li><a href="SCDataCutOffList">Cut Of Time</a></li>
-                                <!--<li><a href="SCCutOfTime">Cut Of Time</a></li>-->
+                            <c:if test="${item == 'MT_QUEUE:LIST'}">
+                                <!--<li><a href="SCDataMTList">Message Queue</a></li>-->
                             </c:if>
                         </c:forEach>
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'CTR:LIST'}">
-                                <li><a href="CounterRateList">Counter Rate</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'GS:VIEW'}">
-                                <li><a href="SCGeneralSetting">General Setting</a></li>
-                                </c:if>
-                            </c:forEach>
                     </ul>
                 </li>
             </c:if>
@@ -185,24 +123,13 @@
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'ROLE:LIST'}">
                                 <li><a href="SCDataRoleList">Role</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'USER:LIST'}">
+                            </c:if>
+                        </c:forEach>
+                        <c:forEach var="item" items="${role}">
+                            <c:if test="${item == 'USER:LIST'}">
                                 <li><a href="SCDataUserList">User</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'STP_LIMIT:LIST'}">
-                                <li><a href="SCSTPLimitList">STP Limit</a></li>
-                                </c:if>
-                            </c:forEach>
-                            <%--<c:forEach var="item" items="${role}">
-                                <c:if test="${item == 'UPLOAD_GO:LIST'}">
-                                <li><a href="SCUploadSwiftGoList">Upload Member Swift Go</a></li>
-                                </c:if>
-                            </c:forEach>--%>
-
+                            </c:if>
+                        </c:forEach>
                     </ul>
                 </li>
             </c:if>
@@ -233,10 +160,10 @@
                                                 <li><a href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:199'}">
-                                                <li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>
+                                                <!--<li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:199'}">
-                                                <li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>
+                                                <!--<li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>-->
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
@@ -251,11 +178,11 @@
                                                 <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:210'}">
-                                                <li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>
+                                                <!--<li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>-->
                                                 </c:if>
-                                                <%-- <c:if test="${item == 'MT:202COV'}">
-                                                 <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
-                                                 </c:if> --%>
+                                                <c:if test="${item == 'MT:202COV'}">
+                                                <!--<li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>-->
+                                                </c:if>
                                             </c:forEach>
                                     </ul>
                                 </li>
@@ -280,7 +207,7 @@
                                 </c:forEach>
                             </ul>
                         </li> -->
-                                <li><span class="dir">Message Category 9</span>
+<!--                                <li><span class="dir">Message Category 9</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <%-- <c:if test="${item == 'MT:910'}">
@@ -300,7 +227,7 @@
                                                  </c:if>--%>
                                             </c:forEach>
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li><span class="dir">MX</span>
@@ -309,7 +236,7 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:pacs00400109'}">
-                                                <li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>
+                                                <!--<li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00800108'}">
                                                 <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
@@ -326,7 +253,7 @@
                                             </c:forEach>
                                     </ul>
                                 </li>
-                                <li><span class="dir">Cash Management</span>
+<!--                                <li><span class="dir">Cash Management</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:camt05300108'}">
@@ -346,7 +273,7 @@
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
 
                         </li>
@@ -368,32 +295,48 @@
                                 <c:if test="${(item == 'TYPE:OUTGOING_INCOMING') || (item == 'TYPE:INCOMING')}">
                                 <li><span class="dir">Incoming</span>
                                     <ul>
-                                        <li><a href="controllerHeaders?io_type=O&flag=INC-HOLD&menu=11">Incoming Hold</a></li>
+                                        <!--<li><a href="controllerHeaders?io_type=O&flag=INC-HOLD&menu=11">Incoming Hold</a></li>-->
                                             <c:forEach var="iteminc" items="${role}">
-                                                <c:if test="${iteminc == 'FLOW:INCM'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-WAIT&menu=6">Incoming Wait</a></li>
+                                                <c:if test="${iteminc == 'FLOW:INC-TRX'}">
+                                                    <li><a href="controllerHeaders?io_type=O&flag=INC&menu=24">Incoming Transaction</a></li>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:forEach var="iteminc" items="${role}">
+                                            <c:if test="${iteminc == 'FLOW:INCM'}">
+                                                <!--<li><a href="controllerHeaders?io_type=O&flag=INC-WAIT&menu=6">Incoming Wait</a></li>-->
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-NSTP&menu=17">Incoming NONSTP</a></li>-->
                                             </c:if>
                                             <c:if test="${iteminc == 'FLOW:INCS'}">
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-RSTL&menu=12">Incoming Re-Settle</a></li>-->
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-INV&menu=8">Incoming Investigation</a></li>-->
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-OK&menu=9">Incoming OK</a></li>
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-NOK&menu=10">Incoming Not OK</a></li>
+                                                <!--<li><a href="controllerHeaders?io_type=O&flag=INC-OK&menu=9">Incoming OK</a></li>-->
+                                                <!--<li><a href="controllerHeaders?io_type=O&flag=INC-NOK&menu=10">Incoming Not OK</a></li>-->
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-ADJ&menu=19">Incoming Adjustment</a></li>-->
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-SPRT&menu=18">Incoming Special Rate</a></li>-->
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-STL&menu=7">Incoming Settle</a></li>
+<!--                                                <li><a href="controllerHeaders?io_type=O&flag=INC-STL&menu=7">Incoming Settle</a></li>
                                                 <li><a href="controllerHeaders?io_type=O&flag=INC-RTR&menu=14">Incoming Retur</a></li>
                                                 <li><a href="controllerHeaders?io_type=O&flag=INC-STLHOLD&menu=20">Incoming Settle Hold</a></li>
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-STLHOLD-CNF&menu=12">Incoming Settle Hold Confirmation</a></li>
-
-
+                                                <li><a href="controllerHeaders?io_type=O&flag=INC-STLHOLD-CNF&menu=12">Incoming Settle Hold Confirmation</a></li>-->
+                                                
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-NSTP&menu=17">Incoming Big Amount</a></li>-->
                                             </c:if>
-                                            <c:if test="${iteminc == 'FLOW:CVT-INC'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=CVT-INC&menu=23">Incoming Convert</a></li>
+                                            <c:if test="${iteminc == 'FLOW:INC-CVT'}">
+                                                <li><a href="controllerHeaders?io_type=O&flag=INC-CVT&menu=23">Incoming Convert</a></li>
+                                            </c:if>
+                                            <c:if test="${iteminc == 'FLOW:RESEND-CNF'}">
+                                                <li><a href="controllerHeaders?io_type=O&flag=RESEND-CNF&menu=25">Incoming Convert Confirmation</a></li>
+                                            </c:if>
+                                            <c:if test="${iteminc == 'FLOW:INC-REJECT-CNF'}">
+                                                <li><a href="controllerHeaders?io_type=O&flag=INC-REJECT-CNF&menu=26">Incoming Reject Confirmation</a></li>
+                                            </c:if>
+                                            <c:if test="${iteminc == 'FLOW:INC-AML'}">
+                                                <li><a href="controllerHeaders?io_type=O&flag=INC-AML&menu=27">Incoming Waiting AML</a></li>
+                                            </c:if>
+                                            <c:if test="${iteminc == 'FLOW:Un-Settle'}">
+                                                <li><a href="controllerHeaders?io_type=O&flag=Un-Settle&menu=28">Resend to Channel </a></li>
                                             </c:if>
                                         </c:forEach>
-                                        <li><a href="controllerHeaders?io_type=O&flag=INC-INV&menu=8">Incoming Investigation</a></li>
+                                        <!--<li><a href="controllerHeaders?io_type=O&flag=INC-INV&menu=8">Incoming Investigation</a></li>-->
                                     </ul>
                                 </li>
                             </c:if>
@@ -403,44 +346,41 @@
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'FLOW:MOD'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=MOD&menu=1">Modification</a></li>
-                                                </c:if>
-
-                                            <c:if test="${item == 'FLOW:OUT-MOD-AML'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=OUT-MOD-AML&menu=xx">FTI Modification AML</a></li>
-                                                </c:if>
-                                                <c:if test="${item == 'FLOW:OUT-MOD-RMA'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=OUT-MOD-RMA&menu=xx">FTI Modification RMA</a></li>
-                                                </c:if>
-
-
+                                            </c:if>
                                             <c:if test="${item == 'FLOW:VER'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=VER&menu=2">Verification</a></li>
-                                                </c:if>
-                                                <c:if test="${item == 'FLOW:AUTH'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Authorization</a></li>
-                                                </c:if>
-                                                <c:if test="${item == 'FLOW:CVT-MOD'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-MOD&menu=20">Modify Convert</a></li>
-                                                </c:if>
-                                                <c:if test="${item == 'FLOW:CVT-VER'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-VER&menu=21">Verify Convert</a></li>
-                                                </c:if>
-                                                <c:if test="${item == 'FLOW:WAITING-AML'}">
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:AUTH'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Authorize</a></li>
+                                            </c:if>
+                                        </c:forEach>    
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:WAITING-AML'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=WAITING-AML&menu=22">Waiting AML</a></li>
-                                                </c:if>
-                                                <%--<c:if test="${item == 'FLOW:TEXT'}">--%>
-                                            <!--<li><a href="controllerHeaders?io_type=I&flag=TEXT&menu=4">Text Generation</a></li>-->
-                                            <%--</c:if>--%>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:AML-TERMINATE'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=AML-TERMINATE&menu=29">Waiting AML Confirmation</a></li>
+                                            </c:if>
+                                        </c:forEach>  
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:CVT-MOD'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-MOD&menu=20">Modify Convert</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:CVT-VER'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-VER&menu=21">Verify Convert</a></li>
+                                            </c:if>
                                             <c:if test="${item == 'FLOW:ACK'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=ACK&menu=13">ACK</a></li>
-                                                </c:if>
-                                                <c:if test="${item == 'FLOW:NACK'}">
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:NACK'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=NACK&menu=5">NACK</a></li>
-                                                </c:if>
-                                                <c:if test="${item == 'FLOW:ERR'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=ERR&menu=16">Error</a></li>
-                                                </c:if>
-                                            </c:forEach>
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:ERR'}">
+                                                <!--<li><a href="controllerHeaders?io_type=I&flag=ERR&menu=16">Error</a></li>-->
+                                            </c:if>
+                                        </c:forEach>
                                     </ul>
                                 </li>
                             </c:if>
@@ -463,8 +403,9 @@
                         <!--<li><a href="role_report.jsp">Role</a></li>-->
                         <li><a href="user_report.jsp">User</a></li>
                         <li><a href="user_activity_report.jsp">User Activity</a></li>
-                        <li><a href="user_login_report.jsp">User Login</a></li>
-                        <li><a href="SCNostroListReconcile">Recon</a></li>
+                        <li><a href="audit_trail_report.jsp">Audit Trail</a></li>
+                        <!--<li><a href="user_login_report.jsp">User Login</a></li>-->
+                        <!--<li><a href="SCNostroListReconcile">Recon</a></li>-->
                     </ul>
                 </li>
             </c:if>
