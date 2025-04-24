@@ -138,9 +138,10 @@ public class DBUserData {
     public boolean authenticateUser(String user_id) throws Exception {
         boolean isValid = false;
         String sql = "SELECT user_id, name, password, status_new, user_mt_routing, description "
-                + "FROM users WHERE user_id='" + user_id + "' ";
+                + "FROM users WHERE user_id= ? ";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1 , user_id);
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
             String _user_id = rs.getString(1);
@@ -297,7 +298,7 @@ public class DBUserData {
 
     public void updatewrongpass(DataUser data) {
         try {
-            String sql = "UPDATE [user] SET wrongpass=? WHERE user_id=?";
+            String sql = "UPDATE users SET wrongpass=? WHERE user_id=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setInt(1, data.getWrongpass());     //wrongpass
             st.setString(2, data.getUser_id());     //user_id
@@ -309,7 +310,7 @@ public class DBUserData {
     
         public void updateenable(DataUser data) {
         try {
-            String sql = "UPDATE [user] SET enable=0 WHERE user_id=?";
+            String sql = "UPDATE users SET enable=0 WHERE user_id=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id());     //user_id
             st.executeUpdate();

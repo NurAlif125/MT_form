@@ -933,7 +933,7 @@
                         </div>
                         <div id="view7" class="tab-content">
                             <div class="form-row">
-                                <%@include file="VMtFull.jsp" %>
+                                <%@include file="mt_mx.jsp" %>
                             </div>
                         </div>
                         <div id="view8" class="tabcontent">

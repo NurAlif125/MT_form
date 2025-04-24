@@ -96,6 +96,7 @@
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
                     </div>
+
                     <div class="form-row">
                         <span class="labelL">FIA Config</span>
                         <label>List <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:LIST'}"> checked="true" </c:if></c:forEach> /></label>
@@ -103,6 +104,7 @@
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
                     </div>                      
+
                     <div class="form-row">
                         <span class="labelL">User</span>
                         <label>List <input type="checkbox" name="role_detail" id="role_detail" value="USER:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:LIST'}"> checked="true" </c:if></c:forEach> /></label>

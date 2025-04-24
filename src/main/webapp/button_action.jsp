@@ -121,21 +121,55 @@
                         var xml = htmlToXML(nodeForm)
                         console.log(xml)
 
+                        var existingInputs = document.getElementsByName("dataXML")
+                        existingInputs.forEach(input => input.parentNode.removeChild(input))
+
                         // buat element untuk menampung data XML
                         var input = document.createElement("input")
 
+                        input.setAttribute("id", "dataXML")
                         input.setAttribute("name", "dataXML")
+                        input.setAttribute("type", "hidden")
                         input.setAttribute("value", xml)
-                        input.style.display="none"
                         nodeForm.appendChild(input)
-
-                        // disini untuk append child receiver dan logical terminal
-//                        nodeForm.appendChild(nodeReceiverInstitution)
-//                        nodeForm.appendChild(nodeLogicalTerminal)
-
-                        nodeForm.submit()
+                        let sender = $('#sender_logical_terminal').val();
+                        let receiver = $('#receiver_institution').val();
+                        let messType = $('#messageType').val();
+                        console.log("Input dataXML telah ditambahkan:", input)
+                        document.getElementById("errorInformationTable").innerHTML= '';
+                        kirimData(xml, sender, receiver, messType)
+                        
+                        $("#tab-view-validate").removeAttr("hidden");
+                        $("#view1, #view2").css("display", "none");
+                        $("#view7").css("display", "block");
+                        $('#tab-view1').removeClass("selected").removeAttr('class');
+                        $('#tab-view2').removeClass("selected").removeAttr('class');
+                        $('#tab-validate').addClass("selected");
                     })
                     console.log("Ini XML")
+
+                    function kirimData(input, sender, receiver, messType) {
+                        fetch("SCValidateMX", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)+"&messageType="+encodeURIComponent(messType)
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            if (data.trim() === "null" || data.trim() === "") {
+                                console.log("Data kosong, form akan dikirim...")
+                                nodeForm.submit()
+                            } else {
+                                validateHeader();
+                                document.getElementById("errorInformationTable").innerHTML += data;
+                                console.log(data)         
+                                clickFocusValidate();
+                            }
+                        })
+                        .catch(error => console.error("Error:", error))
+                    }
                 } else {
                     console.log("Ini MT")
                 }
@@ -158,7 +192,7 @@
         <!--here we go...!-->
         <!--20230302-->
         <c:if test="${item == 'FLOW:REJECT'}">
-            <input type="button" name="reject" id="reject" value="Reject" />
+            <!--<input type="button" name="reject" id="reject" value="Reject" />-->
         </c:if>
         <%}%>
         <% if (session.getAttribute("flagStatus").equals("INC-NOK")) {%>
@@ -242,7 +276,7 @@
             <input type="button" name="returinv" id="returinv" value="Retur" />
         </c:if>
         <% }%>
-        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("RETURNED") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
+        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
         <c:if test="${item == 'FLOW:REJECT'}">
             <input type="button" name="reject" id="reject" value="Reject" />
         </c:if>
@@ -324,22 +358,34 @@
                         // buat element untuk menampung data XML
                         var input = document.createElement("input")
 
+                        input.setAttribute("id", "dataXML")
                         input.setAttribute("name", "dataXML")
-                        input.setAttribute("value", xml)
                         input.setAttribute("type", "hidden")
+                        input.setAttribute("value", xml)
                         nodeForm.appendChild(input)
+                        let sender = $('#sender_logical_terminal').val();
+                        let receiver = $('#receiver_institution').val();
+                        let messType = $('#messageType').val();
                         console.log("Input dataXML telah ditambahkan:", input)
-                        kirimData(xml)
+                        document.getElementById("errorInformationTable").innerHTML= '';
+                        kirimData(xml, sender, receiver, messType)
+                        
+                        $("#tab-view-validate").removeAttr("hidden");
+                        $("#view1, #view2").css("display", "none");
+                        $("#view7").css("display", "block");
+                        $('#tab-view1').removeClass("selected").removeAttr('class');
+                        $('#tab-view2').removeClass("selected").removeAttr('class');
+                        $('#tab-validate').addClass("selected");
                     })
                     console.log("Ini XML")
 
-                    function kirimData(input) {
+                    function kirimData(input, sender, receiver, messType) {
                         fetch("SCValidateMX", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/x-www-form-urlencoded"
                             },
-                            body: "dataXML=" + encodeURIComponent(input)
+                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)+"&messageType="+encodeURIComponent(messType)
                         })
                         .then(response => response.text())
                         .then(data => {
@@ -347,11 +393,10 @@
                                 console.log("Data kosong, form akan dikirim...")
                                 nodeForm.submit()
                             } else {
-                                const modal = document.getElementById("myModal");
-                                document.getElementById("errorInformation").innerHTML = data
-                                modal.classList.add("show")
-                                console.log(data)
-                                e.preventDefault()
+                                validateHeader();
+                                document.getElementById("errorInformationTable").innerHTML += data;
+                                console.log(data)         
+                                clickFocusValidate();
                             }
                         })
                         .catch(error => console.error("Error:", error))
@@ -406,9 +451,29 @@
     </div>
     
     <div class="btn--group">
-        <input type="button" name="validate" id="btn-validate" value="Validate" />
+        <c:forEach var="item" items="${role}">
+            <% if (request.getParameter("id") != null) {%>
+            <% if (session.getAttribute("flagStatus").equals("MOD")) {%>
+            <c:if test="${item == 'FLOW:MOD'}">
+                <input type="button" name="validate" id="btn-validate" value="Validate" />
+                <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+            </c:if>
+            <% } else if (session.getAttribute("flagStatus").equals("CVT-MOD")) { %>
+            <c:if test="${item == 'FLOW:CVT-MOD'}">
+                <input type="button" name="validate" id="btn-validate" value="Validate" />
+                <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+            </c:if>
+            <% } %>
+            <% } else { %>
+            <c:if test="${item == 'FLOW:CREATE'}">
+                <input type="button" name="validate" id="btn-validate" value="Validate" />
+                <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+            </c:if>
+            <% } %>
+        </c:forEach>
+        
         <input type="button" name="export" id="btn-export" value="Export" />
-        <input type="button" name="submit_template" id="submit_template" value="Save As Template">
+        
     </div>
     
 

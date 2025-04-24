@@ -45,8 +45,8 @@ public class DBMTText {
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             data.setId_headers(rs.getInt("id_headers"));  
-            data.setModify_mt(rs.getString("final_mx"));  
-            data.setFinal_mt(rs.getString("modify_mx"));     
+            data.setModify_mt(rs.getString("modify_mx"));  
+            data.setFinal_mt(rs.getString("final_mx"));     
              
         }
         return data;
@@ -55,14 +55,15 @@ public class DBMTText {
     
     public DataMTText getMtTextById(int id_headers) throws SQLException {
         DataMTText data = new DataMTText();
-        String sql = "SELECT id_headers, modify_mt, final_mt FROM mt_text WHERE id_headers='" + id_headers + "'";
+        String sql = "SELECT id_headers, modify_mt, final_mt, final_mx FROM mt_text WHERE id_headers='" + id_headers + "'";
         System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             data.setId_headers(rs.getInt(1));  
             data.setModify_mt(rs.getString(2));  
-            data.setFinal_mt(rs.getString(3));     
+            data.setFinal_mt(rs.getString(3));  
+            data.setFinal_mx(rs.getString(4));
         }
         return data;
     }

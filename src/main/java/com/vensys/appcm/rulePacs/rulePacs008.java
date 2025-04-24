@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click to change this license
+ * Click to edit this template
  */
 package com.vensys.appcm.rulePacs;
 
@@ -17,6 +17,7 @@ import com.prowidesoftware.swift.model.mx.dic.OrganisationIdentification29;
 import com.prowidesoftware.swift.model.mx.dic.Party38Choice;
 import com.prowidesoftware.swift.model.mx.dic.PartyIdentification135;
 import com.prowidesoftware.swift.model.mx.dic.PaymentIdentification7;
+import com.prowidesoftware.swift.model.mx.dic.PaymentTypeInformation28;
 import com.prowidesoftware.swift.model.mx.dic.PostalAddress24;
 import com.prowidesoftware.swift.model.mx.dic.SettlementInstruction7;
 import com.prowidesoftware.swift.model.mx.dic.SettlementMethod1Code;
@@ -48,7 +49,12 @@ public class rulePacs008 {
 
     public void runRules() {
         //Rules di sini
-        
+
+        String mandatoryField = Mandatory_Field();
+        if (!mandatoryField.equalsIgnoreCase("")) {
+            validationRuleComment.add(mandatoryField);
+        }
+
         String agentNameRule = CBPR_Agent_Name_Postal_Address_FormalRule();
         if (!agentNameRule.equalsIgnoreCase("")) {
             validationRuleComment.add(agentNameRule);
@@ -108,11 +114,6 @@ public class rulePacs008 {
         if (!instructionCdtrAgt.equalsIgnoreCase("")) {
             validationRuleComment.add(instructionCdtrAgt);
         }
-
-        String mandatoryField = Mandatory_Field();
-        if (!mandatoryField.equalsIgnoreCase("")) {
-            validationRuleComment.add(mandatoryField);
-        }
     }
 
     public String CBPR_Agent_Name_Postal_Address_FormalRule() {
@@ -138,10 +139,10 @@ public class rulePacs008 {
                     String name = finInstnId.getNm();
                     PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                     if (name != null && pstlAdr == null) {
-                        errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId)</td></tr>";
                     }
                     if (name == null && pstlAdr != null) {
-                        errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId)</td></tr>";
                     }
                 }
             }
@@ -151,10 +152,10 @@ public class rulePacs008 {
                     String name = finInstnId.getNm();
                     PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                     if (name != null && pstlAdr == null) {
-                        errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId)</td></tr>";
                     }
                     if (name == null && pstlAdr != null) {
-                        errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId)</td></tr>";
                     }
                 }
             }
@@ -164,10 +165,10 @@ public class rulePacs008 {
                     String name = finInstnId.getNm();
                     PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                     if (name != null && pstlAdr == null) {
-                        errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId)</td></tr>";
                     }
                     if (name == null && pstlAdr != null) {
-                        errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId)</td></tr>";
                     }
                 }
             }
@@ -181,10 +182,10 @@ public class rulePacs008 {
                         String name = finInstnId.getNm();
                         PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                         if (name != null && pstlAdr == null) {
-                            errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId)</td></tr>";
+                            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId)</td></tr>";
                         }
                         if (name == null && pstlAdr != null) {
-                            errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId)</td></tr>";
+                            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId)</td></tr>";
                         }
                     }
                 }
@@ -196,10 +197,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId)</td></tr>";
                 }
             }
         }
@@ -209,10 +210,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2FinInstnId)</td></tr>";
                 }
             }
         }
@@ -222,10 +223,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId)</td></tr>";
                 }
             }
         }
@@ -235,10 +236,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId)</td></tr>";
                 }
             }
         }
@@ -248,10 +249,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId)</td></tr>";
                 }
             }
         }
@@ -261,10 +262,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId)</td></tr>";
                 }
             }
         }
@@ -274,10 +275,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId)</td></tr>";
                 }
             }
         }
@@ -287,10 +288,10 @@ public class rulePacs008 {
                 String name = finInstnId.getNm();
                 PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
                 if (name != null && pstlAdr == null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId)</td></tr>";
                 }
                 if (name == null && pstlAdr != null) {
-                    errorInformation += "<tr><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId\"><td>Name and Address must always be present together. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId)</td></tr>";
                 }
             }
         }
@@ -313,8 +314,8 @@ public class rulePacs008 {
                         List<String> adrLine = pstlAdr.getAdrLine();
                         String twnName = pstlAdr.getTwnNm();
                         String ctry = pstlAdr.getCtry();
-                        if (adrLine.isEmpty() && twnName == null && ctry == null || adrLine.isEmpty() && twnName != null && ctry == null || adrLine.isEmpty() && twnName == null && ctry != null) {
-                            errorInformation += "<tr><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr)</td></tr>";
+                        if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr)</td></tr>";
                         }
                     }
                 }
@@ -327,8 +328,8 @@ public class rulePacs008 {
                         List<String> adrLine = pstlAdr.getAdrLine();
                         String twnName = pstlAdr.getTwnNm();
                         String ctry = pstlAdr.getCtry();
-                        if (adrLine.isEmpty() && twnName == null && ctry == null || adrLine.isEmpty() && twnName != null && ctry == null || adrLine.isEmpty() && twnName == null && ctry != null) {
-                            errorInformation += "<tr><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr)</td></tr>";
+                        if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr)</td></tr>";
                         }
                     }
                 }
@@ -341,10 +342,182 @@ public class rulePacs008 {
                         List<String> adrLine = pstlAdr.getAdrLine();
                         String twnName = pstlAdr.getTwnNm();
                         String ctry = pstlAdr.getCtry();
-                        if ((adrLine.isEmpty() && twnName == null && ctry == null) || (adrLine.isEmpty() && twnName != null && ctry == null) || (adrLine.isEmpty() && twnName == null && ctry != null)) {
-                            errorInformation += "<tr><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr)</td></tr>";
+                        if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr)</td></tr>";
                         }
                     }
+                }
+            }
+        }
+
+        List<Charges7> chrgsInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgsInf();
+        if (chrgsInf != null) {
+            for (int i = 0; i < chrgsInf.size(); i++) {
+                FinancialInstitutionIdentification18 finInstnId = chrgsInf.get(i).getAgt().getFinInstnId();
+                if (finInstnId != null) {
+                    PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                    if (pstlAdr != null) {
+                        List<String> adrLine = pstlAdr.getAdrLine();
+                        String twnName = pstlAdr.getTwnNm();
+                        String ctry = pstlAdr.getCtry();
+                        if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr)</td></tr>";
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 prvsInstgAgt1 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt1();
+        if (prvsInstgAgt1 != null) {
+            FinancialInstitutionIdentification18 finInstnId = prvsInstgAgt1.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 prvsInstgAgt2 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt2();
+        if (prvsInstgAgt2 != null) {
+            FinancialInstitutionIdentification18 finInstnId = prvsInstgAgt2.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 prvsInstgAgt3 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt3();
+        if (prvsInstgAgt3 != null) {
+            FinancialInstitutionIdentification18 finInstnId = prvsInstgAgt3.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 intrmyAgt1 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt1();
+        if (intrmyAgt1 != null) {
+            FinancialInstitutionIdentification18 finInstnId = intrmyAgt1.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/intrmyAgt1/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/intrmyAgt1/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 intrmyAgt2 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt2();
+        if (intrmyAgt2 != null) {
+            FinancialInstitutionIdentification18 finInstnId = intrmyAgt2.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/intrmyAgt2/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/intrmyAgt2/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 intrmyAgt3 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt3();
+        if (intrmyAgt3 != null) {
+            FinancialInstitutionIdentification18 finInstnId = intrmyAgt3.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/intrmyAgt3/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/intrmyAgt3/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+
+        PartyIdentification135 dbtr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtr();
+        if (dbtr != null) {
+            PostalAddress24 pstlAdr = dbtr.getPstlAdr();
+            if (pstlAdr != null) {
+                List<String> adrLine = pstlAdr.getAdrLine();
+                String twnName = pstlAdr.getTwnNm();
+                String ctry = pstlAdr.getCtry();
+                if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr)</td></tr>";
+                }
+            }
+        }
+        
+        BranchAndFinancialInstitutionIdentification6 dbtrAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt();
+        if (dbtrAgt != null) {
+            FinancialInstitutionIdentification18 finInstnId = dbtrAgt.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr  input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+        
+        BranchAndFinancialInstitutionIdentification6 cdtrAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt();
+        if (cdtrAgt != null) {
+            FinancialInstitutionIdentification18 finInstnId = cdtrAgt.getFinInstnId();
+            if (finInstnId != null) {
+                PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
+                if (pstlAdr != null) {
+                    List<String> adrLine = pstlAdr.getAdrLine();
+                    String twnName = pstlAdr.getTwnNm();
+                    String ctry = pstlAdr.getCtry();
+                    if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr)</td></tr>";
+                    }
+                }
+            }
+        }
+        
+        PartyIdentification135 cdtr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtr();
+        if (cdtr != null) {
+            PostalAddress24 pstlAdr = cdtr.getPstlAdr();
+            if (pstlAdr != null) {
+                List<String> adrLine = pstlAdr.getAdrLine();
+                String twnName = pstlAdr.getTwnNm();
+                String ctry = pstlAdr.getCtry();
+                if ((adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase(""))) || (adrLine.isEmpty() && (twnName == null || twnName.equalsIgnoreCase("") || twnName.isEmpty()) && (ctry == null || ctry.isEmpty() || ctry.equalsIgnoreCase("")))) {
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr)</td></tr>";
                 }
             }
         }
@@ -361,7 +534,7 @@ public class rulePacs008 {
             CashAccount38 instdRmbrsmntAgtAcct = sttlmInf.getInstdRmbrsmntAgtAcct();
 
             if (instdRmbrsmntAgtAcct != null && instdRmbrsmntAgt == null) {
-                errorInformation += "<tr><td>If InstructedReimbursementAgentAccount is present, then InstructedReimbursementAgent must be present. Or If InstructedReimbursementAgent is absent, then InstructedReimbursementAgentAccount must be absent. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If InstructedReimbursementAgentAccount is present, then InstructedReimbursementAgent must be present. Or If InstructedReimbursementAgent is absent, then InstructedReimbursementAgentAccount must be absent. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
             }
         }
 
@@ -377,7 +550,7 @@ public class rulePacs008 {
             CashAccount38 instgRmbrsmntAgtAcct = sttlmInf.getInstgRmbrsmntAgtAcct();
 
             if (instgRmbrsmntAgtAcct != null && instgRmbrsmntAgt == null) {
-                errorInformation += "<tr><td>If InstructingReimbursementAgentAccount is present, then InstructingReimbursementAgent must be present. Or If InstructingReimbursementAgent is absent, then InstructingReimbursementAgentAccount must be absent. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If InstructingReimbursementAgentAccount is present, then InstructingReimbursementAgent must be present. Or If InstructingReimbursementAgent is absent, then InstructingReimbursementAgentAccount must be absent. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
             }
         }
 
@@ -394,13 +567,13 @@ public class rulePacs008 {
         CashAccount38 sttlmAcct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getSttlmInf().getSttlmAcct();
 
         if ((sttlmMtd == SettlementMethod1Code.INDA || sttlmMtd == SettlementMethod1Code.INGA) && (instgRmbrsmntAgt != null || instdRmbrsmntAgt != null || thrdRmbrsmntAgt != null)) {
-            errorInformation += "<tr><td>If SettlementMethod is equal to INDA or INGA, then ReimbursementAgent(s) are not allowed. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If SettlementMethod is equal to INDA or INGA, then ReimbursementAgent(s) are not allowed. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
         } else if (sttlmMtd == SettlementMethod1Code.COVE && instgRmbrsmntAgt == null && instdRmbrsmntAgt == null) {
-            errorInformation += "<tr><td>If SettlementMethod is equal to COVE, then InstructedReimbursementAgent or InstructingReimbursementAgent must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If SettlementMethod is equal to COVE, then InstructedReimbursementAgent or InstructingReimbursementAgent must be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
         }
 
         if (sttlmMtd == SettlementMethod1Code.COVE && sttlmAcct != null) {
-            errorInformation += "<tr><td>If SettlementMethod is equal to COVE, then SettlementAccount are not allowed. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If SettlementMethod is equal to COVE, then SettlementAccount are not allowed. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
         }
 
         return errorInformation;
@@ -415,7 +588,7 @@ public class rulePacs008 {
             CashAccount38 thrdRmbrsmntAgtAcct = sttlmInf.getThrdRmbrsmntAgtAcct();
 
             if (thrdRmbrsmntAgtAcct != null && thrdRmbrsmntAgt == null) {
-                errorInformation += "<tr><td>If ThirdReimbursementAgentAccount is present, then ThirdReimbursementAgent must be present. Or If InstructedReimbursementAgent is absent, then InstructedReimbursementAgentAccount must be absent. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If ThirdReimbursementAgentAccount is present, then ThirdReimbursementAgent must be present. Or If InstructedReimbursementAgent is absent, then InstructedReimbursementAgentAccount must be absent. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
             }
         }
 
@@ -432,7 +605,7 @@ public class rulePacs008 {
             BranchAndFinancialInstitutionIdentification6 thrdRmbrsmntAgt = sttlmInf.getThrdRmbrsmntAgt();
 
             if ((thrdRmbrsmntAgt != null && instdRmbrsmntAgt == null && instgRmbrsmntAgt == null) || (thrdRmbrsmntAgt != null && instdRmbrsmntAgt != null && instgRmbrsmntAgt == null) || (thrdRmbrsmntAgt != null && instdRmbrsmntAgt == null && instgRmbrsmntAgt != null)) {
-                errorInformation += "<tr><td>If ThirdReimbursementAgent is present, then InstructingReimbursementAgent and InstructedReimbursementAgent must both be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If ThirdReimbursementAgent is present, then InstructingReimbursementAgent and InstructedReimbursementAgent must both be present. </td><td>(FIToFICstmrCdtTrf/GrpHdr/SttlmInf)</td></tr>";
             }
         }
 
@@ -446,7 +619,7 @@ public class rulePacs008 {
         List<Charges7> chrgsInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgsInf();
         if (chrgBr == ChargeBearerType1Code.DEBT) {
             if (chrgsInf.isEmpty() || chrgsInf.size() > 1) {
-                errorInformation += "<tr><td>If \"Charge Bearer/DEBT\" is present, then only one occurrence of \"Charge Information\" is allowed. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>If \"Charge Bearer/DEBT\" is present, then only one occurrence of \"Charge Information\" is allowed. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf)</td></tr>";
             }
         }
 
@@ -459,7 +632,7 @@ public class rulePacs008 {
         ChargeBearerType1Code chrgBr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgBr();
         List<Charges7> chrgsInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgsInf();
         if (chrgBr == ChargeBearerType1Code.CRED && chrgsInf.isEmpty()) {
-            errorInformation += "<tr><td>Charge information is mandatory if CRED is present – if no charges are taken, Zero must be used in \"Amount\" (any agent in the payment chain). </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>Charge information is mandatory if CRED is present – if no charges are taken, Zero must be used in \"Amount\" (any agent in the payment chain). </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf)</td></tr>";
         }
 
         return errorInformation;
@@ -478,7 +651,7 @@ public class rulePacs008 {
                 if (orgId != null) {
                     String anyBic = orgId.getAnyBIC();
                     if (anyBic == null && name == null) {
-                        errorInformation += "<tr><td>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr\"><td>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr)</td></tr>";
                     }
                 }
             }
@@ -491,7 +664,7 @@ public class rulePacs008 {
                 if (orgId != null) {
                     String anyBic = orgId.getAnyBIC();
                     if (anyBic == null && name == null) {
-                        errorInformation += "<tr><td>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr)</td></tr>";
+                        errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr\"><td>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr)</td></tr>";
                     }
                 }
             }
@@ -512,35 +685,35 @@ public class rulePacs008 {
             String name = ultmtDbtr.getNm();
             PostalAddress24 pstlAdr = ultmtDbtr.getPstlAdr();
             if (pstlAdr != null && name == null) {
-                errorInformation = "<tr><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/Nm)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/Nm\"><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/Nm)</td></tr>";
             }
         }
         if (initgPty != null) {
             String name = initgPty.getNm();
             PostalAddress24 pstlAdr = initgPty.getPstlAdr();
             if (pstlAdr != null && name == null) {
-                errorInformation = "<tr><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/Nm) </td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/Nm\"><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/Nm) </td></tr>";
             }
         }
         if (dbtr != null) {
             String name = dbtr.getNm();
             PostalAddress24 pstlAdr = dbtr.getPstlAdr();
             if (pstlAdr != null && name == null) {
-                errorInformation = "<tr><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm) </td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm\"><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm) </td></tr>";
             }
         }
         if (cdtr != null) {
             String name = cdtr.getNm();
             PostalAddress24 pstlAdr = cdtr.getPstlAdr();
             if (pstlAdr != null && name == null) {
-                errorInformation = "<tr><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm) </td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm\"><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm) </td></tr>";
             }
         }
         if (ultmtCdtr != null) {
             String name = ultmtCdtr.getNm();
             PostalAddress24 pstlAdr = ultmtCdtr.getPstlAdr();
             if (pstlAdr != null && name == null) {
-                errorInformation = "<tr><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/Nm) </td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/Nm\"><td>If Postal Address is present then Name is mandatory. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/Nm) </td></tr>";
             }
         }
 
@@ -556,9 +729,9 @@ public class rulePacs008 {
                 Instruction3Code code1 = instrForCdtrAgt.get(0).getCd();
                 Instruction3Code code2 = instrForCdtrAgt.get(1).getCd();
                 if (code1 == Instruction3Code.CHQB && code2 == Instruction3Code.HOLD) {
-                    errorInformation += "<tr><td>The code \"HOLD\" is not allowed if the code \"CHQB\" is present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd\"><td>The code \"HOLD\" is not allowed if the code \"CHQB\" is present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd)</td></tr>";
                 } else if (code1 == Instruction3Code.PHOB && code2 == Instruction3Code.TELB) {
-                    errorInformation += "<tr><td>The code \"TELB\" is not allowed if the code \"PHOB\" is present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd)</td></tr>";
+                    errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd\"><td>The code \"TELB\" is not allowed if the code \"PHOB\" is present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd)</td></tr>";
                 }
             }
         }
@@ -571,43 +744,43 @@ public class rulePacs008 {
 
         String msgId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
         if (msgId == null || msgId.equalsIgnoreCase("") || msgId.isEmpty()) {
-            errorInformation += "<tr><td>MessageIdentification is mandatory! </td><td>(FIToFICstmrCdtTrf/GrpHdr/MsgId)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/MsgId\"><td>MessageIdentification is mandatory! </td><td>(FIToFICstmrCdtTrf/GrpHdr/MsgId)</td></tr>";
         }
 
         OffsetDateTime creDtTm = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getCreDtTm();
         if (creDtTm == null) {
-            errorInformation += "<tr><td>CreationDateTime is mandatory! </td><td>(FIToFICstmrCdtTrf/GrpHdr/CreDtTm)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/GrpHdr/CreDtTm\"><td>CreationDateTime is mandatory! </td><td>(FIToFICstmrCdtTrf/GrpHdr/CreDtTm)</td></tr>";
         }
 
         String instrId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId();
         String endToEndId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getEndToEndId();
         String uetr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getUETR();
         if (instrId == null || instrId.equalsIgnoreCase("") || instrId.isEmpty()) {
-            errorInformation += "<tr><td>InstructionIdentification is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>InstructionIdentification is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId)</td></tr>";
         }
         if (endToEndId == null || endToEndId.equalsIgnoreCase("") || endToEndId.isEmpty()) {
-            errorInformation += "<tr><td>EndToEndIdentification is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/EndToEndId)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/EndToEndId\"><td>EndToEndIdentification is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/EndToEndId)</td></tr>";
         }
         if (uetr == null || uetr.equalsIgnoreCase("") || uetr.isEmpty()) {
-            errorInformation += "<tr><td>UETR is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/UETR)";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/UETR\"><td>UETR is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/UETR)";
         }
 
         ActiveCurrencyAndAmount intrBkSttlmAmt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt();
         String intrBkSttlmAmtCcy = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy();
-        if (intrBkSttlmAmt == null && (intrBkSttlmAmtCcy == null || intrBkSttlmAmtCcy.equalsIgnoreCase("") || intrBkSttlmAmtCcy.isEmpty())) {
-            errorInformation += "<tr><td>InterBankSettlementAmount and Currency are mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/)</td></tr>";
+        if (intrBkSttlmAmt == null || (intrBkSttlmAmtCcy == null || intrBkSttlmAmtCcy.equalsIgnoreCase("") || intrBkSttlmAmtCcy.isEmpty())) {
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt\"><td>InterBankSettlementAmount and Currency are mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt)</td></tr>";
         }
 
         LocalDate intrBkSttlmDt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt();
         if (intrBkSttlmDt == null) {
-            errorInformation += "<tr><td>InterBankSettlementDate is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt)</td></tr>";
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt\"><td>InterBankSettlementDate is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt)</td></tr>";
         }
 
         FinancialInstitutionIdentification18 instgAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getInstgAgt().getFinInstnId();
         if (instgAgt != null) {
             String bic = instgAgt.getBICFI();
             if (bic == null || bic.equalsIgnoreCase("") || bic.isEmpty()) {
-                errorInformation += "<tr><td>InstructingAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt\"><td>InstructingAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt)</td></tr>";
             }
         }
 
@@ -615,7 +788,7 @@ public class rulePacs008 {
         if (instdAgt != null) {
             String bic = instdAgt.getBICFI();
             if (bic == null || bic.equalsIgnoreCase("") || bic.isEmpty()) {
-                errorInformation += "<tr><td>InstructedAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt\"><td>InstructedAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt)</td></tr>";
             }
         }
 
@@ -625,7 +798,7 @@ public class rulePacs008 {
             PostalAddress24 pstAdr = dbtr.getPstlAdr();
             Party38Choice id = dbtr.getId();
             if (id == null && name == null && pstAdr == null) {
-                errorInformation += "<tr><td>Debtor is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr\"><td>Debtor is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr)</td></tr>";
             }
         }
 
@@ -634,7 +807,7 @@ public class rulePacs008 {
             String bic = dbtrAgt.getFinInstnId().getBICFI();
             String name = dbtrAgt.getFinInstnId().getNm();
             if ((bic == null || bic.equalsIgnoreCase("") || bic.isEmpty()) && (name == null || name.equalsIgnoreCase("") || name.isEmpty())) {
-                errorInformation += "<tr><td>DebtorAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt\"><td>DebtorAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt)</td></tr>";
             }
         }
 
@@ -643,7 +816,7 @@ public class rulePacs008 {
             String bic = cdtrAgt.getFinInstnId().getBICFI();
             String name = cdtrAgt.getFinInstnId().getNm();
             if ((bic == null || bic.equalsIgnoreCase("") || bic.isEmpty()) && (name == null || name.equalsIgnoreCase("") || name.isEmpty())) {
-                errorInformation += "<tr><td>CreditorAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt\"><td>CreditorAgent is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt)</td></tr>";
             }
         }
 
@@ -653,10 +826,10 @@ public class rulePacs008 {
             PostalAddress24 pstAdr = cdtr.getPstlAdr();
             Party38Choice id = cdtr.getId();
             if (id == null && name == null && pstAdr == null) {
-                errorInformation += "<tr><td>Creditor is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr)</td></tr>";
+                errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr\"><td>Creditor is mandatory! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr)</td></tr>";
             }
         }
-        
+
         List<Charges7> chrgsInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgsInf();
         if (chrgsInf != null) {
             for (int i = 0; i < chrgsInf.size(); i++) {
@@ -667,12 +840,23 @@ public class rulePacs008 {
                         String bic = finInstnId.getBICFI();
                         String name = finInstnId.getNm();
                         if ((bic == null || bic.equalsIgnoreCase("") || bic.isEmpty()) && (name == null || name.equalsIgnoreCase("") || name.isEmpty())) {
-                            errorInformation += "<tr><td>FinancialInstitutionIdentification in ChargesInformation is mandatory when ChargesInformation are present! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId)</td></tr>";
+                            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId\"><td>FinancialInstitutionIdentification in ChargesInformation is mandatory when ChargesInformation are present! </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId)</td></tr>";
                         }
                     }
                 }
             }
         }
+        return errorInformation;
+    }
+    
+    public String CBPR_Interbank_Settlement_Currency_FormalRule() {
+        String errorInformation = "";
+        
+        String currency = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy();
+        if (currency.equalsIgnoreCase("XAU") || currency.equalsIgnoreCase("XAG") || currency.equalsIgnoreCase("XPD") || currency.equalsIgnoreCase("XPT")) {
+            errorInformation += "<tr input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/Ccy\"><td>The codes XAU, XAG, XPD and XPT are not allowed, as these are codes are only used for commodities. </td><td>(FICdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/Ccy)</td></tr>";
+        }
+        
         return errorInformation;
     }
 }

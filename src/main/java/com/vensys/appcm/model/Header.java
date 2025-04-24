@@ -103,6 +103,16 @@ public class Header {
     private String infogenerate;
 
     private String mxdetail;
+    
+    private String channel;
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
 
     public String getMxdetail() {
         return mxdetail;
@@ -167,7 +177,15 @@ public class Header {
     public Header() {
     }
 
-    public Header(int id_headers, String applicationId, String serviceId, String logicalTerminal, String sessionNumber, String sequenceNumber, String io_type, String messageType, String receiverAddress, String messagePriority, String deliveryMonitoring, String obsolescencePeriod, String bankingPriority, String mur, String komentar, String tanggal, String userEntry, String flag, String userEdit, String templateName, String flagTemplate, String senderInputTime, String MIRDate, String MIRLogicalTerminal, String MIRSessionNumber, String MIRSequenceNumber, String receiverOutputDate, String receiverOutputTime, String block3, String tag20, String status_header) {
+    public Header(int id_headers, String applicationId, String serviceId, String logicalTerminal, String sessionNumber, 
+            String sequenceNumber, String io_type, String messageType, String receiverAddress, 
+            String messagePriority, String deliveryMonitoring, String obsolescencePeriod, 
+            String bankingPriority, String mur, String komentar, String tanggal, 
+            String userEntry, String flag, String userEdit, String templateName, 
+            String flagTemplate, String senderInputTime, String MIRDate, String MIRLogicalTerminal, 
+            String MIRSessionNumber, String MIRSequenceNumber, String receiverOutputDate, 
+            String receiverOutputTime, String block3, String tag20, String status_header, 
+            String channel) {
         this.id_headers = id_headers;
         this.applicationId = applicationId;
         this.serviceId = applicationId;
@@ -199,6 +217,7 @@ public class Header {
         this.block3 = block3;
         this.tag20 = tag20;
         this.status_header = status_header;
+        this.channel = channel;
     }
 
     public String getSource() {

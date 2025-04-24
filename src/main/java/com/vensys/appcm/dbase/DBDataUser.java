@@ -34,21 +34,24 @@ public class DBDataUser {
     public DBDataUser(Connection conn) {
         this.conn = conn;
     }
+    
+
     DBEventLog evl = new DBEventLog(conn);
     String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
     public void addDataUser(DataUser data, String mofier, String ip, String comp) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO users (user_id,name,password,description,role,enable) VALUES (?,?,?,?,?,?)";
+            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new) VALUES (?,?,?,?,?,?,?)";
 //            String sql = "INSERT INTO [user] (user_id,name,description,role,enable) VALUES (?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id()); //user_id
             st.setString(2, data.getName());     //name
-            st.setString(3, data.getPassword());     //password
+            st.setString(3, "1");     //password
             st.setString(4, data.getDescription());     //description
             st.setInt(5, data.getRole());     //role
             st.setInt(6, data.getEnable());     //enable
+            st.setInt(7, 1);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -107,7 +110,7 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser() throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
-        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,role_name FROM users LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
+        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name FROM users AS usr LEFT JOIN roles AS rl ON usr.role=rl.role_id ORDER BY usr.user_id ASC";
 //        System.out.println("sql 1 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -187,9 +190,9 @@ public class DBDataUser {
             where = "WHERE enable = '" + status + "'";
         }
         String sql = "SELECT user_id, name, role_name, enable, last_login, last_activity "
-                + "FROM users "
-                + "LEFT JOIN roles "
-                + "ON role = role_id "
+                + "FROM users as u "
+                + "LEFT JOIN roles as r "
+                + "ON u.role = r.role_id "
                 + where;
 //        System.out.println("sql 2 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);

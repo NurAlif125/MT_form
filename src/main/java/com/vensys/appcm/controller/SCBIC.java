@@ -5,7 +5,7 @@
 package com.vensys.appcm.controller;
 
 import com.vensys.appcm.dbase.DBBIC;
-import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -32,9 +32,9 @@ public class SCBIC extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DataBIC data = new DataBIC();
-        DBBIC dbData = new DBBIC(dbConn.getConnection());
+        DBBIC dbData = new DBBIC(dbConn2.getConnection2());
 
         String id_member = request.getParameter("id_member");
         data.setCode_member(request.getParameter("code_member"));
@@ -54,7 +54,7 @@ public class SCBIC extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            dbConn.closeConnection();
+            dbConn2.closeConnection2();
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCBICList");
         dispatcher.forward(request, response);

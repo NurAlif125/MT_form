@@ -796,7 +796,7 @@ public class DBDataTransaksiOutgoing {
         log.info("masuk updateMXText();");
         int update = 0;
         try {
-            String sql = "UPDATE mx_text set modify_mx=? where id_headers=?";
+            String sql = "UPDATE mx_text set final_mx=? where id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, xml);
             st.setInt(2, id_headers);

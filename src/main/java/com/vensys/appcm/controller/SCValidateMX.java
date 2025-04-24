@@ -9,6 +9,11 @@ import com.prowidesoftware.swift.model.mx.AbstractMX;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.vensys.appcm.rulePacs.rulePacs008;
+import com.vensys.appcm.rulePacs.rulePacs008_2024;
+import com.vensys.appcm.rulePacs.rulePacs009;
+import com.vensys.appcm.rulePacs.rulePacs009Cov_2024;
+import com.vensys.appcm.rulePacs.rulePacs009_2024;
+import com.vensys.appcm.rulePacs.rulePacs009adv_2024;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -39,20 +44,43 @@ public class SCValidateMX extends HttpServlet {
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
         String dataXml = request.getParameter("dataXML");
+        String logicalTerminal = request.getParameter("sender");
+        String receiverAddress = request.getParameter("receiver");
+        String messType = request.getParameter("messageType");
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
-            rulePacs008 rulepacs008 = new rulePacs008(dataMXpacs008);
-            rulepacs008.runRules();
+            rulePacs008_2024 rulepacs008 = new rulePacs008_2024 (dataMXpacs008);
+            rulepacs008.runRules(logicalTerminal, receiverAddress);
             String errorRulePacs008 = rulepacs008.getErrorRule();
             System.out.println(errorRulePacs008);
             out.print(errorRulePacs008);
             System.out.println(gson.toJson(errorRulePacs008));
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
-            if (abstractMX.getMxId().getBusinessService().toString().contains("cov")) {
+            if (messType.contains("cov")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
-            } else if (abstractMX.getMxId().getBusinessService().toString().contains("adv")) {
+                rulePacs009Cov_2024 rulepacs009cov = new rulePacs009Cov_2024 (dataMXpacs009);
+                rulepacs009cov.runRules(logicalTerminal, receiverAddress);
+                String errorRulePacs009cov = rulepacs009cov.getErrorRule();
+                System.out.println(errorRulePacs009cov);
+                out.print(errorRulePacs009cov);
+                System.out.println(gson.toJson(errorRulePacs009cov));
+            } else if (messType.contains("adv")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
+                rulePacs009adv_2024 rulepacs009adv = new rulePacs009adv_2024 (dataMXpacs009);
+                rulepacs009adv.runRules(logicalTerminal, receiverAddress);
+                String errorRulePacs009adv = rulepacs009adv.getErrorRule();
+                System.out.println(errorRulePacs009adv);
+                out.print(errorRulePacs009adv);
+                System.out.println(gson.toJson(errorRulePacs009adv));
+            } else {
+                MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
+                rulePacs009_2024 rulepacs009 = new rulePacs009_2024 (dataMXpacs009);
+                rulepacs009.runRules(logicalTerminal, receiverAddress);
+                String errorRulePacs009 = rulepacs009.getErrorRule();
+                System.out.println(errorRulePacs009);
+                out.print(errorRulePacs009);
+                System.out.println(gson.toJson(errorRulePacs009));
             }
         }
     }
