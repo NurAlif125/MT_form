@@ -100,6 +100,39 @@ public class SCUserData extends HttpServlet {
             strErrMsg = "Unable to connect to database";
             log.error("getDataUserLogin : " + ex.getMessage());
         }
+       
+       String isValidLogonLdap = "";
+       isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
+       
+       if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
+            strErrMsg = "Invalid Username or Password";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
+        } else if(isValidLogonLdap.equalsIgnoreCase("nothing user")){
+            strErrMsg = "Username is not registered in LDAP, please contact administrator";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
+        } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
+            strErrMsg = "Unable to connect to LDAP";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
+        } else if(isValidLogonLdap.equalsIgnoreCase("")){
+            strErrMsg = "Unable to connect to LDAP!";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
+        }
 
         if (data.getUser_id() != null) {
             if (data.getEnable() == 1) {
@@ -107,7 +140,7 @@ public class SCUserData extends HttpServlet {
 //                    
 //                }
                 boolean isValidLogon = false;
-                String isValidLogonLdap = "";
+                
                 boolean successLogin = false;
                 boolean changepassword = false;
                 try {
@@ -120,54 +153,12 @@ public class SCUserData extends HttpServlet {
                     isValidLogon = true;
 //                    isValidLogon = dbo.authenticateLogin(user_id, password);
                     isValidLogon = dbo.authenticateUser(user_id);
-                    isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
-                    if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
-                        strErrMsg = "Invalid user ID or password";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    } else if(isValidLogonLdap.equalsIgnoreCase("nothing user")){
-                        strErrMsg = "Invalid username LDAP or password";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
-                        strErrMsg = "Unable to connect to LDAP";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    } else if(isValidLogonLdap.equalsIgnoreCase("")){
-                        strErrMsg = "Unable to connect to LDAP!";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    }
+                    
                     
                     if (isValidLogon) {
                         
                         if (data.getStatus_new() == 1){
                             successLogin = true;
-//                        if (data.getNolog() == null) {
-//                            if (Integer.parseInt(data.getNeverlog()) > data.getAuto_disable()) {
-//                                successLogin = false;
-//                            } else {
-//                                successLogin = true;
-//                            }
-//                        } else {
-//                            if (Integer.parseInt(data.getNolog()) > data.getAuto_disable()) {
-//                                successLogin = false;
-//                            } else {
-//                                successLogin = true;
-//                            }
-//                        }
                             if (successLogin) {
                                 session.setAttribute("user_id", user_id);
                                 session.setAttribute("password", password);
@@ -224,11 +215,12 @@ public class SCUserData extends HttpServlet {
                     } else {
                         int maxpass = Integer.parseInt(data.getWrongpass_max());
                         dbo.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
+                        
                         if (data.getWrongpass() < maxpass) {
                             int c = data.getWrongpass() + 1;
                             data.setWrongpass(c);
                             dbo.updatewrongpass(data);
-                            strErrMsg = "User ID or password is incorrect";
+//                            strErrMsg = "User ID or password is incorrect";
                             if (data.getWrongpass() >= 3) {
                                  dbo.updateenable(data);
                                 strErrMsg = "User is disable. Please Call Administrator";
@@ -236,7 +228,8 @@ public class SCUserData extends HttpServlet {
                             session.setAttribute("errormsg", strErrMsg);
                         } else {
                             dbo.updateenable(data);
-                            strErrMsg = "User is disable. Please Call Administrator";
+                            strErrMsg = "Username is not registered in CM, please contact the administrator";
+//                              strErrMsg = "User is disable. Please Call Administrator";
                             session.setAttribute("errormsg", strErrMsg);
                         }
                         log.error(strErrMsg);
@@ -275,7 +268,8 @@ public class SCUserData extends HttpServlet {
                 log.info(strErrMsg);
             }
         } else {
-            strErrMsg = "User ID or password is incorrect";
+//            strErrMsg = "User ID or password is incorrect";
+            strErrMsg = "Username is not registered in CM, please contact the administrator";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
             dispatcher.forward(request, response);
