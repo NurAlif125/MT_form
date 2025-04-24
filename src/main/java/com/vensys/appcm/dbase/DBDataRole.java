@@ -112,7 +112,7 @@ public class DBDataRole {
     public DataRole getDataRoleById(String role_id) throws SQLException {
         DataRole data = new DataRole();
         String sql = "SELECT role_id,role_name,role_detail,role_enable,role_desc,timeout FROM roles WHERE role_id='" + role_id + "'";
-        System.out.println("sql injection =" + sql);
+//        System.out.println("sql injection =" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

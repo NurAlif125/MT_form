@@ -54,10 +54,17 @@ public class SCDataUser extends HttpServlet {
         String user_id = request.getParameter("user_id");
         String enable = "";
         String role = "";
+        String role_id = "";
         String auto_disable = request.getParameter("auto_disable");
 //        String idPass="";
         boolean isValidUser = false;
         String message = "";
+        
+        if(request.getParameter("subrole") == null) {
+            role_id = "0";
+        } else {
+            role_id = request.getParameter("subrole");
+        }
 
         if (request.getParameter("role") == null) {
             role = "0";
@@ -76,6 +83,7 @@ public class SCDataUser extends HttpServlet {
 //        data.setUser_mt_routing(Integer.parseInt(request.getParameter("user_mt_routing")));
         data.setDescription(request.getParameter("description"));
         data.setRole(Integer.parseInt(role));
+        data.setSub_role(Integer.parseInt(role_id));
         data.setEnable(Integer.parseInt(enable));
 //        data.setAuto_disable(Integer.parseInt(auto_disable));
 //        data.setIdpassword(Integer.parseInt(idPass));
@@ -102,15 +110,15 @@ public class SCDataUser extends HttpServlet {
             if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
                 message = "Error Connection LDAP!";
             } else if (isValidLogonLdap.equalsIgnoreCase("user not found")) {
-                message = "User not registered in LDAP. Please contact Administrator!";
+                message = "Failed, username not registered please contact Administrator";
             } else if(isValidLogonLdap.equalsIgnoreCase("success")) {
-                message = request.getParameter("username")+" Succesfully Created";
+                message = "Succesfully Created User";
                 foundUser = "Found User LDAP";
             }
             
             if (foundUser.equalsIgnoreCase("Found User LDAP")) {
                 if (isValidUser) {//validasi untuk user
-                    message = "User already exist!";
+                    message = "Failed, username is already registered in CM";
                 } else {
                     dbData2.addDataUser(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }

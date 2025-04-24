@@ -9,10 +9,13 @@ package com.vensys.appcm.attribute;
  * @author RIZKY
  */
 import com.enterprisedt.util.debug.Logger;
+import com.vensys.appcm.dbase.DBconnection;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 import com.vensys.appcm.model.MKoneksiData;
+import com.vensys.appcm.myutils.Encryptor;
+import java.util.logging.Level;
 
 
 /**
@@ -22,6 +25,7 @@ import com.vensys.appcm.model.MKoneksiData;
 public class AKoneksiData {
 
     Logger log = Logger.getLogger(AKoneksiData.class);
+    Encryptor enc = new Encryptor();
 
     public MKoneksiData getAtributeKoneksiData() {
         MKoneksiData data = new MKoneksiData();
@@ -34,8 +38,14 @@ public class AKoneksiData {
         }
         data.setDriver(prop.getProperty("driver"));
         data.setUrl(prop.getProperty("url"));
-        data.setUser(prop.getProperty("user"));
-        data.setPassword(prop.getProperty("password"));
+//        data.setUser(prop.getProperty("user"));
+//        data.setPassword(prop.getProperty("password"));
+        try {
+            data.setUser(enc.decryptTD(prop.getProperty("user"), "AKey@VenSys"));
+            data.setUser(enc.decryptTD(prop.getProperty("password"), "AKey@VenSys"));
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        data.setDirBackEndOutgoing(prop.getProperty("dirBackEndOutgoing"));
         data.setDirBackEndIncoming(prop.getProperty("outgoing_dir"));
 
@@ -49,15 +59,6 @@ public class AKoneksiData {
         data.setDirFrontEndOutgoingMX(prop.getProperty("dirFrontEndOutgoingMX"));
         data.setDirFrontEndIncoming(prop.getProperty("dirFrontEndIncoming"));
         data.setDirFrontEndBackUpIncoming(prop.getProperty("dirFrontEndBackUpIncoming"));
-
-//        setting mandiri
-        data.setDirBackEndIncomingMandiri(prop.getProperty("dirBackEndIncomingMandiri"));
-        data.setDirBackEndIncomingAckMandiri(prop.getProperty("dirBackEndIncomingAckMandiri"));
-        data.setDirBackEndIncomingNackMandiri(prop.getProperty("dirBackEndIncomingNackMandiri"));
-        data.setDirBackEndIncomingOkMandiri(prop.getProperty("dirBackEndIncomingOkMandiri"));
-        data.setDirBackEndIncomingNokMandiri(prop.getProperty("dirBackEndIncomingNokMandiri"));
-        data.setDirFrontEndIncomingMandiri(prop.getProperty("dirFrontEndIncomingMandiri"));
-        data.setDirFrontEndBackUpIncomingMandiri(prop.getProperty("dirFrontEndBackUpIncomingMandiri"));
         
 //        web service
         data.setUrlWs(prop.getProperty("urlWs"));

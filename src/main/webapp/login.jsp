@@ -55,7 +55,7 @@
                             <h3 style="color:#20696d;"><b>CM - SWIFT Interface</b></h3>
                             <br>
                             <div class="form-floating mb-3">
-                                <input required type="text" name="username" autocomplete="off" class="form-control"  autofocus="true" id="floatUserName" placeholder="Your Username">
+                                <input required type="text" name="username" autocomplete="off" class="form-control"  autofocus="true" id="floatUserName" placeholder="Your Username" maxlength="50">
                                 <label for="floatUserName"><i class="fa-solid fa-user"></i> User ID</label>
                             </div>
 
