@@ -1281,10 +1281,10 @@ System.out.println("Session ID: " + httpSession.getId());
         Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
         List<Header> headers = new ArrayList<Header>();
-        String sql = "SELECT DISTINCT headers.id_headers,messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,"
-                + "receiverAddress,tanggal, headers.id_headers,flag FROM headers,header_status "
-                + "WHERE headers.id_headers=header_status.id_headers AND CAST(headers.tanggal as date) = '" + dDay.format(tanggal) + "' "
-                + "AND isDuplicate=1 ORDER BY tanggal DESC";
+        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,"
+                + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + "WHERE CAST(h.tanggal as date) = '" + dDay.format(tanggal) + "' "
+                + "AND h.isduplicate=1 ORDER BY tanggal DESC";
 //        System.out.println("sql getAllHeaderDuplicate = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -1302,9 +1302,9 @@ System.out.println("Session ID: " + httpSession.getId());
             }
             header.setReceiverAddress(rs.getString(7).toUpperCase());
             header.setTanggal(rs.getString(8));
-            header.setId_headers(rs.getInt(9));
-            header.setFlag(rs.getString(10));
-            header.setTag20(ambilTag20(header.getId_headers(), ""));
+            header.setId_headers(rs.getInt(1));
+            header.setFlag(rs.getString(9));
+            header.setTag20(rs.getString(10));
             headers.add(header);
         }
         return headers;
@@ -1420,41 +1420,36 @@ System.out.println("Session ID: " + httpSession.getId());
         }
 //        List<ResultHeader> datas = new ArrayList<ResultHeader>();
         List<Header> datas = new ArrayList<Header>();
-        String sql = "select h.messageType, h.logicalTerminal, h.receiverAddress, h.io_type, h.tanggal,  h.id_headers, h.flag, t20.detail as reff, t21.detail as relreff, t32d.detail as dt, t32c.detail as curr, t32a.detail as amt, t53.detail as sb, t57.detail as rb, block3, source,sequenceNumber from " + prefix + "headers h "
-                + "LEFT OUTER JOIN tags t20 ON t20.id_headers = h.id_headers AND t20.tag = '20' "
-                + "LEFT OUTER JOIN tags t21 ON t21.id_headers = h.id_headers AND t21.tag = '21' "
-                + "LEFT OUTER JOIN tags t32d ON t32d.id_headers = h.id_headers AND (t32d.tagName like '%mf32a_date%' OR t32d.tagName like '%mf32a_value_date%' OR t32d.tagName like '%mf62f_date%' OR t32d.tagName like '%mf62m_date%') "
-                + "LEFT OUTER JOIN tags t32c ON t32c.id_headers = h.id_headers AND (t32c.tagName like '%mf32a_currency%' OR t32c.tagName like '%mf62f_currency%' OR t32c.tagName like '%mf62m_currency%' OR t32c.tagName like '%mf32b_currency%') "
-                + "LEFT OUTER JOIN tags t32a ON t32a.id_headers = h.id_headers AND (t32a.tagName like '%mf32a_amount%' OR t32a.tagName like '%mf62f_amount%' OR t32a.tagName like '%mf62m_amount%' OR t32a.tagName like '%mf32b_amount%') "
-                + "LEFT OUTER JOIN tags t53 ON t53.id_headers = h.id_headers AND t53.tagName like '%of53a_identifier_code%' "
-                + "LEFT OUTER JOIN tags t57 ON t57.id_headers = h.id_headers AND (t57.tagName like '%of57a_identifier_code%' OR t57.tagName like '%of58a_identifier_code%') "
-                + "WHERE " + where + " AND h.isDuplicate!=1 ORDER BY h.tanggal DESC";
+        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,\n" +
+"                     h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,\n" +
+"                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy\n" +
+"                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE (" + where + ") AND h.isDuplicate!=1 ORDER BY h.tanggal DESC";
         System.out.println("SQLresult : " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             Header data = new Header();
-            data.setMessageType(rs.getString(1));
-            data.setLogicalTerminal(rs.getString(2));
-            data.setReceiverAddress(rs.getString(3));
-            if (rs.getString(4).equalsIgnoreCase("i")) {
+            data.setMessageType(rs.getString(2));
+            data.setLogicalTerminal(rs.getString(3));
+            data.setReceiverAddress(rs.getString(7));
+            if (rs.getString(6).equalsIgnoreCase("i")) {
                 data.setIo_type("Outgoing");
             } else {
                 data.setIo_type("Incoming");
             }
-            data.setTanggal(rs.getString(5));
-            data.setId_headers(rs.getInt(6));
-            data.setFlag(rs.getString(7));
-            data.setTag20(rs.getString(8));
-            data.setTag21(rs.getString(9));
-            if (rs.getString(12) == null) {
-                data.setTag32Amount("0");
+            data.setTanggal(rs.getString(8));
+            data.setId_headers(rs.getInt(1));
+            data.setFlag(rs.getString(10));
+            data.setTrans_refference(rs.getString(14));
+            data.setTrans_related_refference(rs.getString(15));
+            if (rs.getString(17) == null) {
+                data.setTrans_amount("0");
             } else {
-                data.setTag32Amount(rs.getString(12).replace(",", "."));
+                data.setTrans_amount(rs.getString(17).replace(",", "."));
             }
-            data.setTag32Date(rs.getString(10));
-            data.setTag32Currency(rs.getString(11));
-            data.setBlock3(rs.getString(15));
+            data.setTrans_date_value(rs.getString(16));
+            data.setTrans_ccy(rs.getString(18));
+            data.setBlock3(rs.getString(12));
             data.setSource(rs.getString("source"));
             data.setSequenceNumber(rs.getString("sequenceNumber"));
             datas.add(data);

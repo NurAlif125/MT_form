@@ -183,7 +183,7 @@
                                                 <!--<li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202COV'}">
-                                                <!--<li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>-->
+                                                <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
@@ -238,7 +238,7 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:pacs00400109'}">
-                                                <!--<li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>-->
+                                                <li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00800108'}">
                                                 <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
