@@ -66,7 +66,7 @@ public class StartupScheduler implements ServletContextListener {
                 SET enable = 0
                 WHERE enable = 1
                   AND last_login IS NOT NULL
-                  AND to_timestamp(last_login, 'YYYY-MM-DD HH24:MI:SS') < CURRENT_DATE - INTERVAL '1 month' and user_id='admin2';
+                  AND to_timestamp(last_login, 'YYYY-MM-DD HH24:MI:SS') < CURRENT_DATE - INTERVAL '1 month'';
             """;
 
             try {
