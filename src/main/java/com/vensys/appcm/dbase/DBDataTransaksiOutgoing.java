@@ -1586,39 +1586,40 @@ public class DBDataTransaksiOutgoing {
 
     public List<Integer> cekDuplikatID(Header data) throws Exception {
         List<Integer> dupe = new ArrayList<Integer>();
+        SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyy");
+        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = originalFormat.parse(data.getTrans_date_value());
+        String sqlFormattedDate = sqlFormat.format(date);
+        BigDecimal amount = new BigDecimal(data.getTrans_amount());
         try {
-            String sql = "SELECT DISTINCT h.id_headers,messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,receiverAddress,tanggal, h.id_headers,flag,isDuplicate,\n"
-                    + "t59.detail as t59, t32.detail as amount, t57.detail as receiver, t32d.detail as trx_date, t32c.detail as curr\n"
-                    + "FROM headers h\n"
-                    + "LEFT JOIN tags t59 ON t59.id_headers = h.id_headers AND (t59.tagName like '%mf59_account%' OR t59.tagName like '%mf59f_account%')\n"
-                    + "LEFT JOIN tags t32 ON t32.id_headers = h.id_headers AND (t32.tagName like '%mf32a_amount%' OR t32.tagName like '%mf62f_amount%' OR t32.tagName like '%mf62m_amount%' OR t32.tagName like '%mf32b_amount%')\n"
-                    + "LEFT JOIN tags t32c ON t32c.id_headers = h.id_headers AND (t32c.tagName like '%mf32a_currency%' OR t32c.tagName like '%mf62f_currency%' OR t32c.tagName like '%mf62m_currency%' OR t32c.tagName like '%mf32b_currency%')\n"
-                    + "LEFT JOIN tags t32d ON t32d.id_headers = h.id_headers AND (t32d.tagName like '%mf32a_date%' OR t32d.tagName like '%mf62f_date%' OR t32d.tagName like '%mf62m_date%' OR t32d.tagName like '%mf32a_value_date%' OR t32d.tagName like '%mf30_requested_execution_date%')\n"
-                    + "LEFT JOIN tags t57 ON t57.id_headers = h.id_headers AND t57.tagName like '%of57a_identifier_code%'\n"
-                    + "WHERE logicalterminal = ? AND receiveraddress = ? AND t59.detail = ?"
-                    + "AND t32.detail = ? AND t32c.detail = ? AND t32d.detail = ? AND t57.detail = ?\n"
-                    + "AND messagetype = '103' AND tanggal > CURRENT_DATE AND io_type = 'I' ORDER BY h.id_headers";
-            System.out.println("sql cekDuplikatID....= " + sql);
-            log.info("tag20 & tag57 nyaeta " + data.getTag20() + " # " + data.getTag32Date());
+            String sql = "SELECT DISTINCT h.id_headers, messageType, logicalTerminal, sessionNumber, sequenceNumber, io_type,\n"
+                    + "receiverAddress, tanggal, flag, isDuplicate, trx.trans_reference, trx.trans_related_reference, trx.trans_date_value, trx.trans_amount,\n"
+                    + "trx.trans_ccy FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers WHERE logicalTerminal = ? AND receiverAddress = ? AND trx.trans_reference = ?\n"
+                    + "AND trx.trans_date_value::date = ?::date AND trx.trans_amount = ? AND trx.trans_ccy = ? AND messageType = ?\n"
+                    + "AND tanggal > CURRENT_DATE AND io_type = 'I' ORDER BY h.id_headers";
+            log.info("trans_reference & trans_date_value" + data.getTrans_refference() + " # " + data.getTrans_date_value());
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getLogicalTerminal());
             log.info("logical terminal : " + data.getLogicalTerminal());
             st.setString(2, data.getReceiverAddress());
-            System.out.println("receiver Address : " + data.getReceiverAddress());
-            st.setString(3, data.getTag59Acc());
-            System.out.println("59acc : " + data.getTag59Acc());
-            st.setString(4, data.getTag32Amount());
-            System.out.println("Tag32Amt : " + data.getTag32Amount());
-            st.setString(5, data.getTag32Currency());
-            System.out.println("Tag32Ccy : " + data.getTag32Currency());
-            st.setString(6, data.getTag32Date());
-            System.out.println("Tag32Date : " + data.getTag32Date());
-            st.setString(7, data.getTag57());
-            System.out.println("Tag57 : " + data.getTag57());
+            log.info("receiver Address : " + data.getReceiverAddress());
+            st.setString(3, data.getTrans_refference());
+            log.info("trans_reference : " + data.getTrans_refference());
+            if (data.getTrans_date_value().length() == 6) {
+                st.setString(4, "20" + data.getTrans_date_value().substring(0, 2) + "-" + data.getTrans_date_value().substring(2, 4) + "-" + data.getTrans_date_value().substring(4, 6));
+            } else {
+                st.setString(4, data.getTrans_date_value());
+            }
+            log.info("trans_date_value : " + data.getTrans_date_value());
+            st.setBigDecimal(5, amount);
+            log.info("trans_amount : " + data.getTrans_amount());
+            st.setString(6, data.getTrans_ccy());
+            log.info("trans_ccy : " + data.getTrans_ccy());
+            st.setString(7, data.getMessageType());
+            log.info("messageType : " + data.getMessageType());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                int file = rs.getInt(1);
-                dupe.add(file);
+                dupe.add(rs.getInt(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();
