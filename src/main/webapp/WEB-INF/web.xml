@@ -424,6 +424,10 @@
         <servlet-name>SCDataDisablePermanentRoleList</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCDataDisablePermanentRoleList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCDataUserDisable</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDataUserDisable</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCDashBoardTransactions</servlet-name>
         <url-pattern>/SCDashBoardTransactions</url-pattern>
@@ -858,6 +862,10 @@
     <servlet-mapping>
         <servlet-name>SCDataDisablePermanentRoleList</servlet-name>
         <url-pattern>/SCDataDisablePermanentRoleList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCDataUserDisable</servlet-name>
+        <url-pattern>/SCDataUserDisable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

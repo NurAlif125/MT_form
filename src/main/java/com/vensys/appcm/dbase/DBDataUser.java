@@ -336,5 +336,25 @@ public class DBDataUser {
         evl.insertDataEvent(mofier, "disable permanent user", ip, comp);
         evl.updateLogUser(mofier, "user", tanggal);
     }
+    
+    public List<DataUser> getAllDataUserDisable() throws Exception {
+        List<DataUser> datas = new ArrayList<DataUser>();
+        String sql = "SELECT user_id,name,u.description, rl.role_name as role, disable_permanent_date FROM users  as u\n" +
+        "INNER JOIN roles as rl ON rl.role_id=u.role\n" +
+        "Where u.enable='2'";
+//        System.out.println("sql 1 = " + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            DataUser data = new DataUser();            
+            data.setUser_id(rs.getString(1));   //user_id
+            data.setName(rs.getString(2));  //name
+            data.setDescription(rs.getString(3));     //description
+            data.setRole_name(rs.getString(4));     //role
+            data.setDisable_permanent_date(rs.getDate(5));
+            datas.add(data);
+        }
+        return datas;
+    }
 }
 
