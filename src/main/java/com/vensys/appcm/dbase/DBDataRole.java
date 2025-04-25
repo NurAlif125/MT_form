@@ -194,4 +194,24 @@ public class DBDataRole {
         evl.updateLogUser(modifier, "role", tanggal);
     }
     
+    public List<DataRole> getAllDisableDataRole() throws Exception {
+        List<DataRole> datas = new ArrayList<DataRole>();
+        String sql = "SELECT role_name,role_desc,timeout,disable_permanent FROM roles where role_enable = 2 ORDER BY role_name ASC";
+//        System.out.println("sql=" + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            DataRole data = new DataRole();
+            data.setRole_name(rs.getString(1));   //role_name
+            data.setRole_desc(rs.getString(2));     //role_desc
+            data.setTimeout(rs.getInt(3));  //timeout
+            data.setDisable_permanent(rs.getDate(4));//timeout
+            System.out.println("data tanggal disble ="+ data.getDisable_permanent());
+            datas.add(data);
+        }
+        
+        
+        return datas;
+       
+    }
 }

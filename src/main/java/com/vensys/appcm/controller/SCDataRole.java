@@ -87,6 +87,7 @@ public class SCDataRole extends HttpServlet {
         } else {
             data.setRole_id(Integer.parseInt(request.getParameter("role_id")));
             if (request.getParameter("delete_role") == null) {
+                data.setTimeout(new Integer(request.getParameter("timeout")));
                 dbData2.updateDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("updateDataRole");
             } else {
