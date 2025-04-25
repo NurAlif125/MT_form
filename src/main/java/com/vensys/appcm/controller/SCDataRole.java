@@ -53,6 +53,7 @@ public class SCDataRole extends HttpServlet {
         String role_id = request.getParameter("role_id");
         String role_enable = "";
         String[] role_detail = request.getParameterValues("role_detail");
+        System.out.println("ROLEID="+ role_id);
         String s_role_detail = "";
         if (role_detail != null) {
             for (int i = 0; i < role_detail.length; i++) {
@@ -68,7 +69,7 @@ public class SCDataRole extends HttpServlet {
 //        String batas = request.getParameter("batas");
         data.setRole_name(request.getParameter("role_name"));
 //        data.setLimit(new BigInteger(batas));
-        data.setTimeout(new Integer(request.getParameter("timeout")));
+        //data.setTimeout(new Integer(request.getParameter("timeout")));
         data.setRole_detail(s_role_detail);
         data.setRole_enable(Integer.parseInt(role_enable));
         data.setRole_desc(request.getParameter("role_desc"));
@@ -86,11 +87,23 @@ public class SCDataRole extends HttpServlet {
         } else {
             data.setRole_id(Integer.parseInt(request.getParameter("role_id")));
             if (request.getParameter("delete_role") == null) {
+                data.setTimeout(new Integer(request.getParameter("timeout")));
                 dbData2.updateDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("updateDataRole");
             } else {
-                dbData2.delete(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                //dbData2.delete(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("delete");
+
+                System.out.println("Masuk untuk disable permanent untuk id="+ data.getRole_id());
+                boolean roleIsUsed = dbData.roleIsUsed(data.getRole_id());
+                System.out.println("sini2"+ roleIsUsed);
+                if (roleIsUsed) {
+                    log.info("Role is used By USER");
+                    strErrMsg = "Role is used By USER";
+                } else {
+                    System.out.println("MULAI DISABLE");
+                    dbData.disablePermanent(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                }
             }
         }
         try {

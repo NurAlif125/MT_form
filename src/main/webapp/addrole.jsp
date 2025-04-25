@@ -96,17 +96,28 @@
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
                     </div>
+
+                    <div class="form-row">
+                        <span class="labelL">FIA Config</span>
+                        <label>List <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:LIST'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Add <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:ADD" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:ADD'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>View <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
+                    </div>                      
+
                     <div class="form-row">
                         <span class="labelL">User</span>
                         <label>List <input type="checkbox" name="role_detail" id="role_detail" value="USER:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:LIST'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Add <input type="checkbox" name="role_detail" id="role_detail" value="USER:ADD" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:ADD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="USER:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="USER:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>User Disable Permanent List <input type="checkbox" name="role_detail" id="role_detail" value="USER:DISABLEPERMANENT" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:DISABLEPERMANENT'}"> checked="true" </c:if></c:forEach> /></label>
                     </div><div class="form-row"><span class="labelL">Role</span>
                         <label>List <input type="checkbox" name="role_detail" id="role_detail" value="ROLE:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'ROLE:LIST'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Add <input type="checkbox" name="role_detail" id="role_detail" value="ROLE:ADD" <c:forEach var="item" items="${list}"><c:if test="${item == 'ROLE:ADD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="ROLE:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'ROLE:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="ROLE:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'ROLE:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Role Disable Permanent List <input type="checkbox" name="role_detail" id="role_detail" value="ROLE:DISABLEPERMANENT" <c:forEach var="item" items="${list}"><c:if test="${item == 'ROLE:DISABLEPERMANENT'}"> checked="true" </c:if></c:forEach> /></label>
                     </div>
                     <div class="form-row"><span class="labelL">Message Category 1</span>
                         <!-- <label>101 <input type="checkbox" name="role_detail" id="role_detail" value="MT:101" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:101'}"> checked="true" </c:if></c:forEach> /></label> -->
@@ -245,6 +256,9 @@
                         <!--                <div class="form-row"><span class="labelL">&nbsp;</span>-->
                         <div class="form-row-action" style="margin:0 12px 0 12px;">
                             <input type="submit" name="submit" id="submit" value="Save" />
+                            <%if(request.getParameter("role_id")==null){}else{%>
+                                <input type="button" name="delete_role" id="delete_role" value="Disable Permanent" />
+                            <%}%>
                             <!--<input type="button" name="delete_role" id="delete_role" value="Delete" />-->
                             <input type="reset" name="reset" id="reset" value="Reset" />
                             <input type="button" name="back" id="back" value="Back" />

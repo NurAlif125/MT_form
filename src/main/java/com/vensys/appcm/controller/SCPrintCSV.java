@@ -47,16 +47,20 @@ public class SCPrintCSV extends HttpServlet {
         String io_type = request.getParameter("io_type"); //20190926
         String filter = request.getParameter("filter_msg"); //20230522
         String currency = request.getParameter("cust_curr");
+        String channel = request.getParameter("channel");
         String status= request.getParameter("status")+"";
-
+        
+        System.out.println("Channel="+channel);
+        
         HttpSession session = request.getSession();
         DBconnection dbConn = new DBconnection();
         ArrayList<Header> headers = new ArrayList<Header>();
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment; filename=report.csv");
+        String csvFileName = "Report_CSV_" + session.getAttribute("user_id").toString() + ".xls";
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + csvFileName + "\"");
         try {          
-            headers = bBHeaders.getAllHeaderReport(status,io_type,mt_type, value_date, date_from, date_end, flag, filter, currency, value_date_end);
+            headers = bBHeaders.getAllHeaderReport(status,io_type,mt_type, value_date, date_from, date_end, flag, filter, currency, value_date_end, channel);
             //headers = bBHeaders.getAllHeaderReportXls(mt_type, flag, value_date, date_from, date_end, io_type, value_date_end, filter, currency);
 //            headers = bBHeaders.getAllHeaderReportXls(mt_type, flag, value_date, date_from, date_end, io_type, value_date_end);
             OutputStream outputStream = response.getOutputStream();
@@ -76,7 +80,7 @@ public class SCPrintCSV extends HttpServlet {
 
                 //20190926
 //                outputResult += (i + 1) + ";" + headers.get(i).getMessageType() + ";" + headers.get(i).getIo_type() + ";" + sender + ";" + receiver + ";" + headers.get(i).getTag20() + ";" + headers.get(i).getTag32Date() + ";" + heade
-                outputResult += (i + 1) + ";" + headers.get(i).getChannel() + ";" + headers.get(i).getMessageType() + ";" + headers.get(i).getIo_type() + ";" 
+                outputResult += (i + 1) + ";" + headers.get(i).getSource()+ ";" + headers.get(i).getMessageType() + ";" + headers.get(i).getIo_type() + ";" 
                         + sender + ";" + receiver + ";" + headers.get(i).getTag20() + ";" + headers.get(i).getTanggal()+ ";" + headers.get(i).getTag32Date() + ";" + headers.get(i).getTag32Currency() + ";"
                         + headers.get(i).getTag32Amount() + ";" + headers.get(i).getFlag() + "\n";
             }

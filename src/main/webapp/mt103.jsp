@@ -6,6 +6,7 @@
 <%@ include file="header.jsp" %>
 <%@ include file="rule/validate_rule_mt103.jsp" %>
 <%@ include file="rule/validateList_scr.jsp" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%--<%@page contentType="text/html" import="java.util.*" %>--%>
 <%@ page import="java.util.*"%>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
@@ -702,8 +703,8 @@
                                     <hr/>
 
                                     <!-- OF71A -->
-                                    <div class="form-row"><span class="label_body">OF71A</span><span class="label">Details of Charges</span>
-                                        <select id="_210_of71a_details_charges" name="_210_of71a_details_charges" class="mandatory" input_type="Of71A Detail Charges" location="Body">
+                                    <div class="form-row"><span class="label_body">MF71A</span><span class="label">Details of Charges</span>
+                                        <select id="_210_of71a_details_charges" name="_210_of71a_details_charges" class="mandatory" input_type="MF71A Detail Charges" location="Body">
                                             <option value="">choose a code</option>
                                             <option value="OUR" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='OUR'}"> selected="true" </c:if></c:if></c:forEach>>OUR</option> <!-- - Ordering Customer-->
                                     <option value="BEN" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='BEN'}"> selected="true" </c:if></c:if></c:forEach>>BEN</option>
@@ -933,7 +934,7 @@
                         </div>
                         <div id="view7" class="tab-content">
                             <div class="form-row">
-                                <%@include file="mt_mx.jsp" %>
+                                <%@include file="VMtFull.jsp" %>
                             </div>
                         </div>
                         <div id="view8" class="tabcontent">

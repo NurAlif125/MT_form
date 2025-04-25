@@ -12,19 +12,8 @@
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'USER:LIST'}">
-            <div id="judul">List of User
-                <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'USER:ADD'}">
-                        <c:if test="${sessionScope.sub_role_user == '2'}"> 
-                            <a href="adduser.jsp" class="srb2">Add User</a>
-                        </c:if>
-                    </c:if>
-                </c:forEach>
-                <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'USER:DISABLEPERMANENT'}">
-                            <a href="SCDataUserDisable" class="srb3">List Of Disable Permanent User</a>
-                    </c:if>
-                </c:forEach>
+            <div id="judul">List of Disable Permanent User
+                
             </div>
 <!--            <div id="message">
                 <span class="style1">
@@ -33,16 +22,16 @@
                     </div>
                 </span>
             </div>-->
-            <c:if test="${not empty sessionScope.message}">
                 <div id="message">
-                    <span class="style1">
+                   <span class="style1">
                         <div align="center">
-                            <c:out value="${sessionScope.message}" />
+                            <% if(request.getParameter("action")==null){  %>
+                            <% } else { %>
+                                <c:out value="${message}"/>
+                            <% }%>
                         </div>
                     </span>
                 </div>
-                <c:remove var="message" scope="session" />
-            </c:if>
             <div id="content">
                 <%int rowNum = 1;%>
                 <table id="example" class="display nowrap" style="width:100%">
@@ -52,31 +41,22 @@
                             <th>User Id</th>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Role</th>
-                            <th>Status</th>
+                            <th>Role Name</th>
+                            <th>Disable Date</th>
                             <!--<th>Action</th>-->
                             <!--<th>Auto Disable</th>-->
                         </tr>
                     </thead>
 
                     <tbody>
-                    <c:forEach items="${dataUser}" var="item">
+                    <c:forEach items="${datadisable}" var="item">
                         <tr>
                             <td><%=rowNum++%></td>
-                            <td><a href="VDataUser?user_id=${item.user_id}">${item.user_id}</a></td>
+                            <td>${item.user_id}</td>
                             <td>${item.name}</td>
                             <td>${item.description}</td>
                             <td>${item.role_name}</td>
-                        <c:choose>
-                            <c:when test="${item.enable == 1}">
-                                <td>Enable</td>
-                            </c:when>    
-                            <c:otherwise>
-                                <td>Disable</td>
-                            </c:otherwise>
-                        </c:choose>
-                            <%--<td>${item.auto_disable}</td>--%>
-                        <!--<td><a href="ResetPassword?user_id=${item.user_id}">Reset password</a></td>-->
+                            <td>${item.disable_permanent_date}</td>
                         </tr>
                     </c:forEach>
                     </tbody>

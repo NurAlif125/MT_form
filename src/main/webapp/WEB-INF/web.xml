@@ -36,10 +36,18 @@
         <servlet-name>SCBIC</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCBIC</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>SCFIA</servlet-name>
+        <url-pattern>/SCFIA</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>SCBICList</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCBICList</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>SCFIAList</servlet-name>
+        <url-pattern>/SCFIAList</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ServletControllerChangeUserData</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCChangeUserData</servlet-class>
@@ -293,6 +301,10 @@
         <servlet-class>com.vensys.appcm.controller.VBIC</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>VFIA</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.VFIA</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>VDataAccBalance</servlet-name>
         <servlet-class>com.vensys.appcm.controller.VDataAccBalance</servlet-class>
     </servlet>
@@ -408,6 +420,14 @@
         <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCDataTransaksiOutgoingMX</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCDataDisablePermanentRoleList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDataDisablePermanentRoleList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCDataUserDisable</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDataUserDisable</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCDashBoardTransactions</servlet-name>
         <url-pattern>/SCDashBoardTransactions</url-pattern>
@@ -471,10 +491,18 @@
         <servlet-name>SCBIC</servlet-name>
         <url-pattern>/SCBIC</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>SCFIA</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCFIA</servlet-class>
+    </servlet>    
     <servlet-mapping>
         <servlet-name>SCBICList</servlet-name>
         <url-pattern>/SCBICList</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>SCFIAList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCFIAList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletControllerChangeUserData</servlet-name>
         <url-pattern>/ServletControllerChangeUserData</url-pattern>
@@ -732,6 +760,10 @@
         <url-pattern>/VBIC</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>VFIA</servlet-name>
+        <url-pattern>/VFIA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>VDataAccBalance</servlet-name>
         <url-pattern>/VDataAccBalance</url-pattern>
     </servlet-mapping>
@@ -826,6 +858,14 @@
     <servlet-mapping>
         <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
         <url-pattern>/SCDataTransaksiOutgoingMX</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCDataDisablePermanentRoleList</servlet-name>
+        <url-pattern>/SCDataDisablePermanentRoleList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCDataUserDisable</servlet-name>
+        <url-pattern>/SCDataUserDisable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

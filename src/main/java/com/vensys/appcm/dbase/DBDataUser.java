@@ -42,7 +42,7 @@ public class DBDataUser {
     public void addDataUser(DataUser data, String mofier, String ip, String comp) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new,sub_role) VALUES (?,?,?,?,?,?,?,?)";
 //            String sql = "INSERT INTO [user] (user_id,name,description,role,enable) VALUES (?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id()); //user_id
@@ -52,6 +52,7 @@ public class DBDataUser {
             st.setInt(5, data.getRole());     //role
             st.setInt(6, data.getEnable());     //enable
             st.setInt(7, 1);
+            st.setInt(8, data.getSub_role());
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -110,7 +111,10 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser() throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
-        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name FROM users AS usr LEFT JOIN roles AS rl ON usr.role=rl.role_id ORDER BY usr.user_id ASC";
+        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name FROM users AS usr \n" +
+"LEFT JOIN roles AS rl ON usr.role=rl.role_id \n" +
+"WHERE usr.enable !=2\n" +
+"ORDER BY usr.user_id ASC";
 //        System.out.println("sql 1 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -157,10 +161,11 @@ public class DBDataUser {
 
     public DataUser getDataUserById(String user_id) throws SQLException {
         DataUser data = new DataUser();
-        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable FROM users WHERE user_id='" + user_id + "'";
+        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,sub_role FROM users WHERE user_id=?";
 //        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable FROM [user] WHERE user_id='" + user_id + "'";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             data.setUser_id(rs.getString(1));   //user_id
@@ -171,6 +176,7 @@ public class DBDataUser {
             data.setDescription(rs.getString(6));     //description
             data.setRole(rs.getInt(7));     //role
             data.setEnable(rs.getInt(8));     //enable
+            data.setSub_role(rs.getInt(9));     //enable
         }
         return data;
     }
@@ -319,6 +325,36 @@ public class DBDataUser {
             data.setAuto_disable(rs.getInt(7));
         }
         return data;
+    }
+    
+    public void disablePermanent(String user_id, String mofier, String ip, String comp) throws SQLException {
+//        String sql = "DELETE FROM [user] WHERE user_id=?";
+        String sql = "Update users set enable =2 , disable_permanent_date=CURRENT_TIMESTAMP WHERE user_id=?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
+        st.executeUpdate();
+        evl.insertDataEvent(mofier, "disable permanent user", ip, comp);
+        evl.updateLogUser(mofier, "user", tanggal);
+    }
+    
+    public List<DataUser> getAllDataUserDisable() throws Exception {
+        List<DataUser> datas = new ArrayList<DataUser>();
+        String sql = "SELECT user_id,name,u.description, rl.role_name as role, disable_permanent_date FROM users  as u\n" +
+        "INNER JOIN roles as rl ON rl.role_id=u.role\n" +
+        "Where u.enable='2'";
+//        System.out.println("sql 1 = " + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            DataUser data = new DataUser();            
+            data.setUser_id(rs.getString(1));   //user_id
+            data.setName(rs.getString(2));  //name
+            data.setDescription(rs.getString(3));     //description
+            data.setRole_name(rs.getString(4));     //role
+            data.setDisable_permanent_date(rs.getDate(5));
+            datas.add(data);
+        }
+        return datas;
     }
 }
 
