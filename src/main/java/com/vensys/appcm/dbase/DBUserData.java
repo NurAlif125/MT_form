@@ -33,9 +33,10 @@ public class DBUserData {
     public DataUser getUserDataById(String str) throws SQLException {
         DataUser data = new DataUser();
 
-        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,idrulepass,wrongpass,enable FROM users WHERE user_id='" + str + "'";
+        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,idrulepass,wrongpass,enable,sub_role FROM users WHERE user_id=?";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, str);
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
@@ -49,6 +50,7 @@ public class DBUserData {
             data.setIdpassword(rs.getInt(8));
             data.setWrongpass(rs.getInt(9));
             data.setEnable(rs.getInt(10));
+            data.setSub_role(rs.getInt(11));
         }
         return data;
     }
@@ -137,7 +139,7 @@ public class DBUserData {
 
     public boolean authenticateUser(String user_id) throws Exception {
         boolean isValid = false;
-        String sql = "SELECT user_id, name, password, status_new, user_mt_routing, description "
+        String sql = "SELECT user_id, name, password, status_new, user_mt_routing, description, role_id "
                 + "FROM users WHERE user_id= ? ";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);

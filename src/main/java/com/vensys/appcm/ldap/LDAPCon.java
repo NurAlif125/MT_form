@@ -81,7 +81,7 @@ public class LDAPCon {
                     String admin1DN = admin1Data.getNameInNamespace();
                     Attributes attrs = admin1Data.getAttributes();
 
-                    System.out.println("Data "+admin1DN+"ditemukan:");
+                    System.out.println("Data "+admin1DN+" ditemukan:");
                     System.out.println("  - DN: " + admin1DN);
 
                     // 3. rebind
@@ -102,10 +102,13 @@ public class LDAPCon {
                          validLogin = "success";
 
                     } catch (NamingException e) {
+                        ctx.close();
+                        System.err.println(e);
                         validLogin = "error user or pass";
                         System.err.println("Gagal rebind "+admin1DN);
                     }
                 } else {
+                    ctx.close();
                     validLogin = "nothing user";
                     System.out.println("tidak ditemukan di LDAP");
                 }
@@ -114,12 +117,10 @@ public class LDAPCon {
                 validLogin = "not connect";
                 System.err.println("Error LDAP: " + e.getMessage());
             } finally {
-                if (ctx != null) {
-                    try {
-                        ctx.close();
-                    } catch (NamingException e) {
-                        System.err.println("Gagal menutup koneksi: " + e.getMessage());
-                    }
+                try {
+                    ctx.close();
+                } catch (NamingException e) {
+                    System.err.println("Gagal menutup koneksi: " + e.getMessage());
                 }
             }
 
@@ -143,7 +144,7 @@ public class LDAPCon {
             System.out.println("Berhasil konek ke LDAP server!");
 
             // Filter pencarian berdasarkan CN
-            String baseDN = dc;
+            String baseDN = base_DN;
             String filter = "(cn="+userToSearch+")";
             SearchControls controls = new SearchControls();
             controls.setSearchScope(SearchControls.SUBTREE_SCOPE);

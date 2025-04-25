@@ -55,12 +55,12 @@
                             <h3 style="color:#20696d;"><b>CM - SWIFT Interface</b></h3>
                             <br>
                             <div class="form-floating mb-3">
-                                <input type="text" name="username" autocomplete="off" class="form-control"  autofocus="true" id="floatUserName" placeholder="Your Username">
+                                <input required type="text" name="username" autocomplete="off" class="form-control"  autofocus="true" id="floatUserName" placeholder="Your Username" maxlength="50">
                                 <label for="floatUserName"><i class="fa-solid fa-user"></i> User ID</label>
                             </div>
 
                             <div class="form-floating">
-                                <input type="password" class="form-control" name="password" id="password" autocomplete="off" placeholder="Password">
+                                <input required type="password" class="form-control" name="password" id="password" autocomplete="off" placeholder="Password">
                                 <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
                             </div>
                             <input class="mt-3 btn btn-primary" type="submit" name="Login" value="Login">
@@ -84,7 +84,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
                 <div class="toast-body text-primary">
-                    <c:out value="${errormsg}"/>
+                    <c:if test="${not empty errormsg}">
+                        <c:out value="${errormsg}"/>
+                        <c:remove var="errormsg" scope="session"/>
+                    </c:if>
                 </div>
             </div>
         </div>
