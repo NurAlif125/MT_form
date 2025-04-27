@@ -115,9 +115,9 @@ public class CreateText {
         System.out.println("cek dbHMTL: " + dbHTML);
         FileWriter fstream = null;
         if (io_type.equalsIgnoreCase("I")) {
-            fstream = new FileWriter(getOutDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + ".txt");
+            fstream = new FileWriter(getOutDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + "_" + source + ".txt");
         } else {
-            fstream = new FileWriter(getIncDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + ".txt");
+            fstream = new FileWriter(getIncDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + "_" + source + ".txt");
         }
         BufferedWriter out = new BufferedWriter(fstream);
 //        out.write(fin.toUpperCase());
@@ -126,14 +126,14 @@ public class CreateText {
         log.info("createTextFile : " + "MT" + mt + "_" + dbHTML + "_" + id + ".txt");
     }
     
-    public void createTextFileMX(String fin, String type, int id, String io_type) throws IOException {
+    public void createTextFileMX(String fin, String type, int id, String io_type, String source) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
         System.out.println("cek dbHMTL: " + dbHTML);
         FileWriter fstream = null;
         if (io_type.equalsIgnoreCase("I")) {
-            fstream = new FileWriter(getOutDirMX() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
+            fstream = new FileWriter(getOutDirMX() + "/" + type + "_" + dbHTML + "_" + id + "_" + source +".xml");
         } else {
-            fstream = new FileWriter(getIncDir() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
+            fstream = new FileWriter(getIncDir() + "/" + type + "_" + dbHTML + "_" + id + "_" + source + ".xml");
         }
         BufferedWriter out = new BufferedWriter(fstream);
 //        out.write(fin.toUpperCase());

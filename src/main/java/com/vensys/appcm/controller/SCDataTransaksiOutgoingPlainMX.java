@@ -38,6 +38,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import com.vensys.appcm.model.DataHeaderTransaksi;
 import com.vensys.appcm.model.Header;
+import com.vensys.appcm.myutils.HistoryPaging;
 import com.vensys.appcm.rulePacs.rulePacs008;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
@@ -108,7 +109,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         }
         data.setFlag("VER");
 //        data.setBlock3(UUID.randomUUID().toString());
-        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"));
 
         MxWriteConfiguration mxConfiguration = new MxWriteConfiguration();
         mxConfiguration.documentPrefix = null;
@@ -189,7 +190,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_refference(dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrId());
             datas.setTrans_related_refference(dataMXpacs004.getPmtRtr().getTxInf().get(0).getOrgnlInstrId());
             datas.setTrans_date_value(dataMXpacs004.getPmtRtr().getTxInf().get(0).getIntrBkSttlmDt().getYear() + "-" + dataMXpacs004.getPmtRtr().getTxInf().get(0).getIntrBkSttlmDt().getMonthValue() + "-" + dataMXpacs004.getPmtRtr().getTxInf().get(0).getIntrBkSttlmDt().getDayOfMonth());
-            datas.setTrans_amount(dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrdIntrBkSttlmAmt().getValue().toString());
+            datas.setTrans_amount(dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrdIntrBkSttlmAmt().getValue().toString().replace(",", "."));
             datas.setTrans_ccy(dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrdIntrBkSttlmAmt().getCcy());
             datas.setMessageType(abstractMX.getMxId().toString());
             
@@ -256,7 +257,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_refference(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId());
             datas.setTrans_related_refference(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getEndToEndId());
             datas.setTrans_date_value(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt().getYear() + "-" + dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt().getMonthValue() + "-" + dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt().getDayOfMonth());
-            datas.setTrans_amount(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getValue().toString());
+            datas.setTrans_amount(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getValue().toString().replace(",", "."));
             datas.setTrans_ccy(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
             datas.setMessageType(data.getMessageType());
             
@@ -323,7 +324,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_refference(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId());
             datas.setTrans_related_refference(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getPmtId().getEndToEndId());
             datas.setTrans_date_value(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt().getYear() + "-" + dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt().getMonthValue() + "-" + dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt().getDayOfMonth());
-            datas.setTrans_amount(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getValue().toString());
+            datas.setTrans_amount(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getValue().toString().replace(",", "."));
             datas.setTrans_ccy(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
             datas.setMessageType(data.getMessageType());
             
@@ -622,8 +623,8 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 
         dbConn.closeConnection();
         dbConn2.closeConnection2();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
-        dispatcher.forward(request, response);
+        String pagingHistory = HistoryPaging.getPagingHistory(request, response);
+        response.sendRedirect("controllerHeaders?" + pagingHistory);
     }
 
     public String getBizSvc() throws IOException {

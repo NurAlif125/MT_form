@@ -75,15 +75,15 @@ public class DBDataTransaksiOutgoing {
         return id;
     }
 
-    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name) {
+    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel) {
         String header = "";
         // Mendapatkan string format tanggal dan Timestamp secara langsung
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String timestampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
         try {
-            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype) \n"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
+            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source) \n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
                     + "RETURNING id_headers;";
             PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -120,6 +120,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(27, data.getBlock3()); // block 3 
             st.setString(28, "SRC:MANUAL"); //user entry
             st.setString(29, data.getNetworkType()); //networktype
+            st.setString(30, channel);
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -355,6 +356,7 @@ public class DBDataTransaksiOutgoing {
                 var mapHeadAmdBody = getJSONMXandHeaderSaa(id_headers);
                 var body = mapHeadAmdBody.get("body");
                 var head = mapHeadAmdBody.get("header");
+                String channel = mapHeadAmdBody.get("channel");
                 System.out.println("Body JSON "+body);
                 
                 // merubah json ke object prowide
@@ -369,7 +371,7 @@ public class DBDataTransaksiOutgoing {
                 
                 System.out.println(finalMX.get("modify_mx"));
                 
-                ct.createTextFileMX(finalMX.get("modify_mx"),variant,id_headers, "I");
+                ct.createTextFileMX(finalMX.get("modify_mx"),variant,id_headers, "I", channel);
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
@@ -382,7 +384,7 @@ public class DBDataTransaksiOutgoing {
     
     public Map<String,String> getJSONMXandHeaderSaa(int idHeaders){
         log.info("Get Body MX and Header SAA");
-        String sql = "SELECT json_tag::varchar ,header_saa FROM tags_mx WHERE id_headers = ?";
+        String sql = "SELECT json_tag::varchar, header_saa, h.source AS channel FROM tags_mx LEFT JOIN headers h ON h.id_headers = tags_mx.id_headers WHERE tags_mx.id_headers = ?";
         
         var data = new HashMap<String,String>();
         
@@ -394,6 +396,7 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()){
                 data.put("body", rs.getString("json_tag"));
                 data.put("header", rs.getString("header_saa"));
+                data.put("source", rs.getString("channel"));
                 
                 // return true
                 return data;

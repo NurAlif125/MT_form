@@ -141,7 +141,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             System.out.println("flagStatus: " + flagStatus);
             System.out.println("flag: " + request.getParameter("flag"));
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"));
                 log.info("lastInsertedID " + lastInsertedID);
             } else {
                 if (io_typeStatus.equalsIgnoreCase("I")) {
@@ -235,7 +235,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         } else if (tag.getTagName().equalsIgnoreCase("_011_mf21_")) {
                             header.setTrans_related_refference(tag.getDetail());
                         } else if (tag.getTagName().equalsIgnoreCase("_062_mf32a_amount")) {
-                            header.setTrans_amount(tag.getDetail());
+                            header.setTrans_amount(tag.getDetail().replace(",", "."));
                         } else if (tag.getTagName().equalsIgnoreCase("_061_mf32a_currency")) {
                             header.setTrans_ccy(tag.getDetail());
                         } else if (tag.getTagName().equalsIgnoreCase("_060_mf32a_date")) {
@@ -306,7 +306,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 if (lengthIdDupe > 1) {
                     log.info("246 masuk if");
                     for (int ld = 1; ld < lengthIdDupe; ld++) {
-                        dBDataTransaksiOutgoing.updateDuplikat(idDupe.get(ld));
+                        dBDataTransaksiOutgoing2.updateDuplikat(idDupe.get(ld));
                         log.info("sini 249");
                     }
                     log.info("masuk if 270");
