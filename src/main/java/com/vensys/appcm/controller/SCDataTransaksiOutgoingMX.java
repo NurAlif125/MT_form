@@ -39,6 +39,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import com.vensys.appcm.model.DataHeaderTransaksi;
 import com.vensys.appcm.model.Header;
+import com.vensys.appcm.myutils.HistoryPaging;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
@@ -320,8 +321,8 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         }
         dbConn.closeConnection();
         dbConn2.closeConnection2();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
-        dispatcher.forward(request, response);
+        String pagingHistory = HistoryPaging.getPagingHistory(request, response);
+        response.sendRedirect("controllerHeaders?" + pagingHistory);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

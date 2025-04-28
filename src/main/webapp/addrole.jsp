@@ -137,8 +137,7 @@
                         <div class="form-row"><span class="labelL">Message Category 2</span>
                         <label>200 <input type="checkbox" name="role_detail" id="role_detail" value="MT:200" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:200'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>202 <input type="checkbox" name="role_detail" id="role_detail" value="MT:202" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:202'}"> checked="true" </c:if></c:forEach> /></label>
-
-                        <!--<label>202COV <input type="checkbox" name="role_detail" id="role_detail" value="MT:202COV" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:202COV'}"> checked="true" </c:if></c:forEach> /></label>-->
+                        <label>202COV <input type="checkbox" name="role_detail" id="role_detail" value="MT:202COV" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:202COV'}"> checked="true" </c:if></c:forEach> /></label>
                         <!--<label>210 <input type="checkbox" name="role_detail" id="role_detail" value="MT:210" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:210'}"> checked="true" </c:if></c:forEach> /></label>--> 
                         <!-- <label>290 <input type="checkbox" name="role_detail" id="role_detail" value="MT:290" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:290'}"> checked="true" </c:if></c:forEach> /></label> -->
                         <!-- <label>291 <input type="checkbox" name="role_detail" id="role_detail" value="MT:291" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:291'}"> checked="true" </c:if></c:forEach> /></label> -->
@@ -232,7 +231,7 @@
                             <!--</div>-->
 
                         <div class="form-row"><span class="labelL">Payment Clearing and Settlement</span>
-                        <!--<label>PACS.004.001.09 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00400109" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00400109'}"> checked="true" </c:if></c:forEach> /></label>-->
+                        <label>PACS.004.001.09 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00400109" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00400109'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>PACS.008.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00800108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00800108'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>PACS.009.001.08 <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00900108" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00900108'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>PACS.009.001.08COV <input type="checkbox" name="role_detail" id="role_detail" value="MX:pacs00900108cov" <c:forEach var="item" items="${list}"><c:if test="${item == 'MX:pacs00900108cov'}"> checked="true" </c:if></c:forEach> /></label>

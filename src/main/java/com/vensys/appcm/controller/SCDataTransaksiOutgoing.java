@@ -28,6 +28,7 @@ import jakarta.servlet.http.HttpSession;
 import com.vensys.appcm.model.DataHeaderTransaksi;
 import com.vensys.appcm.model.Header;
 import com.vensys.appcm.model.TagDB;
+import com.vensys.appcm.myutils.HistoryPaging;
 import org.apache.log4j.Logger;
 //import org.apache.log4j.Logger;
 
@@ -90,6 +91,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             System.out.println("sender1: " + request.getParameter("sender_logical_terminal"));
             data.setSender_logical_terminal(request.getParameter("sender_logical_terminal"));
             data.setMessageType(messageType);
+            header.setMessageType(messageType);
             data.setFlag("VER");
             data.setReceiver_institution(request.getParameter("receiver_institution"));
             data.setPriority(request.getParameter("priority"));
@@ -139,7 +141,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             System.out.println("flagStatus: " + flagStatus);
             System.out.println("flag: " + request.getParameter("flag"));
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"));
                 log.info("lastInsertedID " + lastInsertedID);
             } else {
                 if (io_typeStatus.equalsIgnoreCase("I")) {
@@ -228,15 +230,16 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         tag.setDetail(request.getParameter(tags));  //detail
                         tag.setTagName(tags);   //tagName
                         //20211216 penambahan get tagMT 103 untuk pengecekan duplikat
-//                    if (tag.getTagName().equalsIgnoreCase("_010_mf20_sender_reference")) {
-//                        header.setTag20(tag.getDetail());
-//                    } else
-                        if (tag.getTagName().equalsIgnoreCase("_062_mf32a_amount")) {
-                            header.setTag32Amount(tag.getDetail());
+                        if (tag.getTagName().equalsIgnoreCase("_010_mf20_sender_reference")) {
+                            header.setTrans_refference(tag.getDetail());
+                        } else if (tag.getTagName().equalsIgnoreCase("_011_mf21_")) {
+                            header.setTrans_related_refference(tag.getDetail());
+                        } else if (tag.getTagName().equalsIgnoreCase("_062_mf32a_amount")) {
+                            header.setTrans_amount(tag.getDetail().replace(",", "."));
                         } else if (tag.getTagName().equalsIgnoreCase("_061_mf32a_currency")) {
-                            header.setTag32Currency(tag.getDetail());
+                            header.setTrans_ccy(tag.getDetail());
                         } else if (tag.getTagName().equalsIgnoreCase("_060_mf32a_date")) {
-                            header.setTag32Date(tag.getDetail());
+                            header.setTrans_date_value(tag.getDetail());
                         } else if (tag.getTagName().equalsIgnoreCase("_171_of57a_identifier_code")) {
                             header.setTag57(tag.getDetail());
                         } else if (tag.getTagName().equalsIgnoreCase("_180_mf59_account") || (tag.getTagName().equalsIgnoreCase("_185_mf59f_account"))) {
@@ -296,18 +299,18 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         }
                     }
                 }
-                //20211215 penambahan cek duplikat create manual
-//                List<Integer> idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
-//                int lengthIdDupe = idDupe.size();
-//                log.info("panjang dupe nya.... " + lengthIdDupe);
-//                if (lengthIdDupe > 1) {
-//                    log.info("246 masuk if");
-//                    for (int ld = 1; ld < lengthIdDupe; ld++) {
-//                       f dBDataTransaksiOutgoing.updateDuplikat(idDupe.get(ld));
-//                        log.info("sini 249");
-//                    }
-//                    log.info("masuk if 270");
-//                }
+//                20211215 penambahan cek duplikat create manual
+                List<Integer> idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
+                int lengthIdDupe = idDupe.size();
+                log.info("panjang dupe nya.... " + lengthIdDupe);
+                if (lengthIdDupe > 1) {
+                    log.info("246 masuk if");
+                    for (int ld = 1; ld < lengthIdDupe; ld++) {
+                        dBDataTransaksiOutgoing2.updateDuplikat(idDupe.get(ld));
+                        log.info("sini 249");
+                    }
+                    log.info("masuk if 270");
+                }
                 // end of the line
             }
 
@@ -319,8 +322,10 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         }
         dbConn.closeConnection();
         dbConn2.closeConnection2();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
-        dispatcher.forward(request, response);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
+//        dispatcher.forward(request, response);
+        String pagingHistory = HistoryPaging.getPagingHistory(request, response);
+        response.sendRedirect("controllerHeaders?" + pagingHistory);
 
     }
 

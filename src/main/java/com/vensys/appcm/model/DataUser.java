@@ -38,6 +38,15 @@ public class DataUser {
     private String disable_permanent_date2;
     private String email;
     private int idDepartment;
+    private String channel;
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
 
     public int getIdDepartment() {
         return idDepartment;

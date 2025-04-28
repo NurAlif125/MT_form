@@ -24,7 +24,9 @@ import com.vensys.appcm.model.DataLogin;
 import com.vensys.appcm.model.DataRole;
 import com.vensys.appcm.model.DataUser;
 import com.vensys.appcm.model.DataNostro;
+import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
@@ -49,11 +51,13 @@ public class SCUserData extends HttpServlet {
             throws ServletException, IOException {
         RequestDispatcher dispatcher = null;
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DataUser data = new DataUser();
         DataRole dataRole = new DataRole();
         DataLogin dataLogin = new DataLogin();
         LDAPCon ldapCon = new LDAPCon();
         DBUserData dbo = new DBUserData(dbConn.getConnection());
+        DBUserData dbo2 = new DBUserData(dbConn2.getConnection2());
         DBEventLog evl = new DBEventLog(dbConn.getConnection());
         DBDataRole dboRole = new DBDataRole(dbConn.getConnection());
         DBCurrency dbC = new DBCurrency(dbConn.getConnection());
@@ -62,6 +66,7 @@ public class SCUserData extends HttpServlet {
         List<DataRole> dataRoleList = new ArrayList<DataRole>();
         List<DataNostro> dataNostroList = new ArrayList<DataNostro>();
         List<DataCurrency> dataCurrList = new ArrayList<DataCurrency>();
+        String[] dataChannel = null;
 //        List<DataNostro> dataNos = new ArrayList<DataNostro>();
         String user_id = request.getParameter("username");
         String password = request.getParameter("password");
@@ -76,10 +81,12 @@ public class SCUserData extends HttpServlet {
         String comp_name = request.getRemoteHost();
         session.removeAttribute("role");
         String[] gs = null;
+        String channel = "";
 //        List <Nst> nsts = null;
        try {
 //            data = dbo.getUserDataByIdLDAP(user_id);
             data = dbo.getUserDataById(user_id);
+            channel = data.getChannel();
             gs = dbg.getGeneralSetting();
 //            dataLogin = dbo.selectLastLoginBerhasil(user_id);
             dataLogin = dbo.selectLastLoginBerhasil(user_id);
@@ -123,7 +130,7 @@ public class SCUserData extends HttpServlet {
 //                    session.setAttribute("errormsg", strErrMsg);
 //                }
 //            }     
-            dbo.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
+            dbo2.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
             strErrMsg = "Invalid Username or Password";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
@@ -191,13 +198,15 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("notifAuth", notifAuth);
                                 session.setAttribute("hostname", gs[0]);
                                 session.setAttribute("appVersion", gs[1]);
-                                dbo.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
+                                session.setAttribute("channel", channel);
+                                dbo2.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
                                 evl.updateLogUser(user_id, "login", tanggal);
                                 try {
                                     dataRole = dboRole.getDataRoleById(String.valueOf(data.getRole()));
                                     dataRoleList = dboRole.getAllDataRole();
                                     data.setWrongpass(0);
                                     dbo.updatewrongpass(data);
+                                    dataChannel = getChannel().split(",");
                                     log.info("getAllDataRole");
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
@@ -209,12 +218,13 @@ public class SCUserData extends HttpServlet {
                                     list.add(st.nextToken());
                                 }
                                 
-                                System.out.println("Session ID: " + session.getId());
+                                log.info("Session ID: " + session.getId());
                                 
                                 ReplicationManager replicationManager = new ReplicationManager(list);
 
                                 session.setAttribute("role", replicationManager.getRoles());
                                 session.setAttribute("dataRoleList", dataRoleList);
+                                session.setAttribute("dataChannel", dataChannel);
 
                                 session.setAttribute("flagStatus", "");
                                 session.setAttribute("timeout", dataRole.getTimeout());
@@ -304,6 +314,13 @@ public class SCUserData extends HttpServlet {
             log.info("closeConnection");
             log.info("errormsg:" + session.getAttribute("errormsg"));
         }
+    }
+    
+    public String getChannel() throws IOException {
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("channel");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
