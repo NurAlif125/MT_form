@@ -69,7 +69,7 @@
                     <div class="form-row"><span class="labelL2">Enable</span>
                         <input type="checkbox" name="enable" id="enable" value="1" 
                             <c:if test="${dataUserById.enable == '1'}"> checked="true" </c:if>
-                            <c:if test="${sessionScope.sub_role_user != '1'}"> disabled="true" </c:if>
+                            <c:if test="${sessionScope.sub_role_user == '2'}"> readonly onclick="return false;" style="accent-color: grey;" </c:if>
                         />
                     </div>
 <%--                    <div class="form-row"><span class="labelL2">Auto Disable</span>
