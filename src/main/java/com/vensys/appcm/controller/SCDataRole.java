@@ -69,7 +69,7 @@ public class SCDataRole extends HttpServlet {
 //        String batas = request.getParameter("batas");
         data.setRole_name(request.getParameter("role_name"));
 //        data.setLimit(new BigInteger(batas));
-        //data.setTimeout(new Integer(request.getParameter("timeout")));
+        ////data.setTimeout(new Integer(request.getParameter("timeout")));
         data.setRole_detail(s_role_detail);
         data.setRole_enable(Integer.parseInt(role_enable));
         data.setRole_desc(request.getParameter("role_desc"));
