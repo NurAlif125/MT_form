@@ -66,10 +66,10 @@ public class SCPrintXLS extends HttpServlet {
 
             WritableWorkbook workbook = Workbook.createWorkbook(sos);
             WritableSheet sheet = workbook.createSheet("Report", 0);
-            WritableFont cellFont = new WritableFont(WritableFont.COURIER, 10);
+            WritableFont cellFont = new WritableFont(WritableFont.createFont("FreeSans"), 10);
             cellFont.setBoldStyle(WritableFont.BOLD);
             WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
-            WritableFont cellFont2 = new WritableFont(WritableFont.COURIER, 10);
+            WritableFont cellFont2 = new WritableFont(WritableFont.createFont("FreeSans"), 10);
             WritableCellFormat cellFormat2 = new WritableCellFormat(cellFont2);
             Label reportBy = new Label(1, 1, "REPORT BY : " + session.getAttribute("user_id").toString().toUpperCase(), cellFormat);
             Label lno = new Label(1, 3, "NO", cellFormat);
