@@ -58,6 +58,14 @@
                             <input type="radio" name="subrole" value="2" <c:if test="${dataUserById.sub_role == '2'}"> checked="true" </c:if> />Maker
                         </label>
                     </div>
+                    <div class="form-row"><span class="labelL2">Channel</span>
+                        <select name="channel" id="channel">
+                            <option value="">All Channel</option>
+                        <c:forEach var="item1" items="${dataChannel}">
+                            <option value="${item1}"<c:if test="${item1 == dataUserById.channel}"> selected="true" </c:if>>${item1}</option>
+                        </c:forEach>
+                        </select>
+                    </div>
                     <div class="form-row"><span class="labelL2">Enable</span>
                         <input type="checkbox" name="enable" id="enable" value="1" 
                             <c:if test="${dataUserById.enable == '1'}"> checked="true" </c:if>

@@ -968,7 +968,7 @@ public class DBHeader {
 //        }
 //        return headers;
 //    }
-    public List<Header> getAllHeader(HttpSession httpSession, String io_type, String flag) throws Exception {
+    public List<Header> getAllHeader(HttpSession httpSession, String io_type, String flag, String channel) throws Exception {
         String where = "";
         String role = "";
         String isDuplicate = "0";
@@ -1080,10 +1080,14 @@ System.out.println("Session ID: " + httpSession.getId());
             where += " AND flag='INC-AML' ";
         } else if (flag.equalsIgnoreCase("AML-TERMINATE")) { 
             where += " AND flag='AML-TERMINATE' ";
+        } else {
+            where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
         }
         
-        else {
-            where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+        if (channel.equalsIgnoreCase("")) {
+            
+        } else {
+            where += " AND source = '" + channel + "'";
         }
         List<Header> headers = new ArrayList<Header>();
         String sql = """
@@ -1344,7 +1348,7 @@ System.out.println("Session ID: " + httpSession.getId());
     }
 
 //    public List<ResultHeader> getResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type) throws Exception {
-    public List<Header> getResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type) throws Exception {
+    public List<Header> getResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel) throws Exception {
         String where = "";
         String prefix = "";
         if (io_type == null || io_type.isEmpty()) {
@@ -1417,6 +1421,12 @@ System.out.println("Session ID: " + httpSession.getId());
         }
         if (db_type.equalsIgnoreCase("backup")) {
             prefix = "a";
+        }
+        
+        if (channel.equalsIgnoreCase("")) {
+            
+        } else {
+            where += " AND source = '" + channel + "'";
         }
 //        List<ResultHeader> datas = new ArrayList<ResultHeader>();
         List<Header> datas = new ArrayList<Header>();

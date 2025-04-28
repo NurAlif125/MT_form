@@ -40,6 +40,7 @@
                             <th>No</th>
                             <th>User Id</th>
                             <th>Name</th>
+                            <th>Channel</th>
                             <th>Description</th>
                             <th>Role Name</th>
                             <th>Disable Date</th>
@@ -54,6 +55,7 @@
                             <td><%=rowNum++%></td>
                             <td>${item.user_id}</td>
                             <td>${item.name}</td>
+                            <td>${item.channel}</td>
                             <td>${item.description}</td>
                             <td>${item.role_name}</td>
                             <td>${item.disable_permanent_date}</td>

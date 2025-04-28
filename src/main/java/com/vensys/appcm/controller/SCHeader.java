@@ -75,7 +75,9 @@ public class SCHeader extends HttpServlet implements Serializable {
         List<ResultHeader> resultHeader = new ArrayList<ResultHeader>();
         String flagStatus = (String) httpSession.getAttribute("flagStatus");
         System.out.println("flagStatus: " + flagStatus);
+        String channel = "";
         try {
+            channel = (String) httpSession.getAttribute("channel");
             notifVer = dbo.getNotificationVer();
             System.out.println("notifVer: " + notifVer);
             notifAuth = dbo.getNotificationAuth();
@@ -84,7 +86,7 @@ public class SCHeader extends HttpServlet implements Serializable {
             httpSession.setAttribute("notifAuth", notifAuth);
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
                 System.out.println("masuk sini");
-                headers = bBHeaders.getAllHeader(httpSession, io_type, flag);// 2025-01-07
+                headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);// 2025-01-07
 //                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
                 httpSession.setAttribute("headers", headers);
@@ -194,7 +196,7 @@ public class SCHeader extends HttpServlet implements Serializable {
                     }
 
 //                headers = bBHeaders.getAllHeader(httpSession, io_type, flag);
-                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag);
+                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
 //                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("headers", headers);
@@ -209,7 +211,7 @@ public class SCHeader extends HttpServlet implements Serializable {
                 } else {
                     System.out.println("flag else : " + flag);
 //                httpSession.removeAttribute("flagFilter");
-                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag);
+                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
 //                    headers = bBHeaders.getAllHeader(httpSession, io_type, httpSession.getAttribute("flagFilter").toString());
 //                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -225,7 +227,7 @@ public class SCHeader extends HttpServlet implements Serializable {
                 // sender_logical_terminal => sender_bank dan receiver_institution => receiver_bank
                 String db_type = request.getParameter("db_type");
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
-                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
+                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel);
 //                forward = RESULTHEADERS + "?menu="+menu;
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
                 httpSession.setAttribute("flag", status);
