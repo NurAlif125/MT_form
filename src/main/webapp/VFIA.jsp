@@ -8,10 +8,10 @@
 <div id="isi">
     <% int totalDatas = ((Integer) session.getAttribute("numOfBic"));%>
     <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'MEMBER_CODE:LIST'}">
+        <c:if test="${item == 'FIACONF:LIST'}">
             <div id="judul">List of configuration
                 <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'MEMBER_CODE:ADD'}">
+                    <c:if test="${item == 'FIACONF:ADD'}">
                         <a href="mfia.jsp" class="srb2">Add config</a>
                         <!-- <a href="uploadbic.jsp" class="srb4">Upload config</a>    -->
                     </c:if>

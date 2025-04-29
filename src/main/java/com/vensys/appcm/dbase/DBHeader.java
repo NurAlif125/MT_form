@@ -1002,6 +1002,12 @@ System.out.println("Session ID: " + httpSession.getId());
             where += "userEntry IN ('SRC:FIA','SRC:UPLOAD') ";
         } else if (list.contains("SRC:MANUAL") && list.contains("SRC:UPLOAD")) {
             where += "userEntry IN ('SRC:MANUAL','SRC:UPLOAD') ";
+        } else if (list.contains("SRC:MANUAL")) {
+            where += "userEntry IN ('SRC:MANUAL')";
+        } else if (list.contains("SRC:FIA")) {
+            where += "userEntry IN ('SRC:FIA')";
+        } else if (list.contains("SRC:UPLOAD")) {
+            where += "userEntry IN ('SRC:UPLOAD')";
         } else {
             where += "userEntry IN ('') ";
         }
