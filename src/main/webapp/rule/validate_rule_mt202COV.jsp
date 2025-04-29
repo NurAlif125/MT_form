@@ -53,13 +53,18 @@
                 _177_of57d_name_address: "required",
 
                 //of58
-//                type_of58_: "required",
+                type_of58_: "required",
                 _181_of58a_identifier_code: "required",
                 _184_of58d_name_address: "required",
                 
                 //mf50
                 type_mf50_ordering_customer: "required",
                 _241_mf50a_identifier_code: "required",
+                
+                //mf59
+                type_of59_59a_: "required",
+                _291_mf59_name_address: "required",
+                _293_mf59a_identifier_code: "required",
 
             },
             messages: {
@@ -75,13 +80,17 @@
                 _062_mf32a_amount: {required: "mf32a_amount must be filled..!!"},
                 _111_of52a_identifier_code: {required: "of52a_identifier_code must be filled..!!"},
                 _114_of52d_name_address: {required: "of52d_name_address must be filled..!!"},
+                type_of58_: {required: "MF58 Beneficiary Institution must be filled..!!"},
                 _181_of58a_identifier_code: {required: "of58a_identifier_code must be filled..!!"},
                 _184_of58d_name_address: {required: "of58d_name_address must be filled..!!"},
                 type_mf50_ordering_customer: {required: "mf50_ordering_customer must be filled..!!"},
                 _241_mf50a_identifier_code: {required: "mf50a_identifier_code must be filled..!!"},
                 _243_mf50f_party_identifier: {required: "mf50f_party_identifier must be filled..!!"},
                 _244_mf50f_name_address: {required: "mf50f_name_address must be filled..!!"},
-                _246_mf50k_name_address: {required: "mf50k_name_address must be filled..!!"}
+                _246_mf50k_name_address: {required: "mf50k_name_address must be filled..!!"},
+                type_of59_59a_: {required: "MF59 Beneficiary Customer must be filed..!!"},
+                _291_mf59_name_address: {required: "MF59 Name and Address must be filled..!!"},
+                _293_mf59a_identifier_code: {required: "MF59A Identifier Code must be filled..!!"}
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);

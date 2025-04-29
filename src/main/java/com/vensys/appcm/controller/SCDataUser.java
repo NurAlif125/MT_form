@@ -111,7 +111,7 @@ public class SCDataUser extends HttpServlet {
             if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
                 message = "Error Connection LDAP!";
             } else if (isValidLogonLdap.equalsIgnoreCase("user not found")) {
-                message = "Failed, username not registered please contact Administrator";
+                message = "Failed,username is not registered in LDAP, please contact administrator";
             } else if(isValidLogonLdap.equalsIgnoreCase("success")) {
                 message = "Succesfully Created User";
                 foundUser = "Found User LDAP";
