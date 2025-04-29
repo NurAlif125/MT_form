@@ -1,10 +1,10 @@
 <%@ include file="header.jsp" %>
 <div id="isi">
     <c:forEach var="roleItem" items="${role}">
-        <c:if test="${roleItem == 'MEMBER_CODE:ADD'}">
+        <c:if test="${roleItem == 'FIACONF:ADD'}">
             <div id="judul">Add FIA config
                 <c:forEach var="roleItem2" items="${role}">
-                    <c:if test="${roleItem2 == 'MEMBER_CODE:LIST'}">
+                    <c:if test="${roleItem2 == 'FIACONF:LIST'}">
                         <a href="SCFIAList" class="srb3">FIA config List</a>
                     </c:if>
                 </c:forEach>
