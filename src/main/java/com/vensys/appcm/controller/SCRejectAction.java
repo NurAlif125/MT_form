@@ -7,6 +7,7 @@ package com.vensys.appcm.controller;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBHeader;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,12 @@ public class SCRejectAction extends HttpServlet {
         HttpSession session = request.getSession();
         String id = request.getParameter("id");
         String comment = request.getParameter("operator_comment");
-        DBconnection dbConn = new DBconnection();
-        DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn.getConnection());
+        DBconnection2 dbConn = new DBconnection2();
+        DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn.getConnection2());
         HttpSession httpSession = request.getSession();
 //        DBconnection dbConn = new DBconnection();
         List<Header> reject = new ArrayList<Header>();
-        DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
+        DBHeader bBHeaders = new DBHeader(dbConn.getConnection2());
         try {
             dBDataTransaksiOutgoing.updateStatusDuplicate(Integer.parseInt(id),(String) session.getAttribute("user_id"),(String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), comment);
 //            reject = bBHeaders.getAllHeaderReject();
@@ -49,7 +50,7 @@ public class SCRejectAction extends HttpServlet {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            dbConn.closeConnection();
+            dbConn.closeConnection2();
         }
 //        RequestDispatcher dispatcher = request.getRequestDispatcher("viewReject.jsp");
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCReject");

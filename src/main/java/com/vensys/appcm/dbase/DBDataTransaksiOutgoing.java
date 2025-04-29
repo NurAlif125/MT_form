@@ -563,7 +563,7 @@ public class DBDataTransaksiOutgoing {
     public void updateStatusDuplicate(Integer id_headers, String userId, String ipAccess, String compName, String comment) {
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 //        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2,komentar=? WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
-        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2 WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
+        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2, tanggal = LOCALTIMESTAMP WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
 //            st.setString(1, comment);   //comment

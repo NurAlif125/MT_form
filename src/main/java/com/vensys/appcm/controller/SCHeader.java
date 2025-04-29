@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import com.vensys.appcm.model.Header;
 import com.vensys.appcm.model.ResultHeader;
+import com.vensys.appcm.myutils.HistoryPaging;
 import java.io.Serializable;
 
 /**
@@ -244,6 +245,9 @@ public class SCHeader extends HttpServlet implements Serializable {
         } finally {
             dbConn.closeConnection();
         }
+//        RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
+//        dispatcher.forward(request, response);
+        HistoryPaging.getAndSaveAllParameterOnSession(request, response);
         RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
         dispatcher.forward(request, response);
     }

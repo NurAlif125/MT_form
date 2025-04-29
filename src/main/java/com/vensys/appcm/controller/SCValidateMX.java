@@ -6,8 +6,10 @@ package com.vensys.appcm.controller;
 
 import com.google.gson.Gson;
 import com.prowidesoftware.swift.model.mx.AbstractMX;
+import com.prowidesoftware.swift.model.mx.MxPacs00400109;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
+import com.vensys.appcm.rulePacs.rulePacs004_2024;
 import com.vensys.appcm.rulePacs.rulePacs008;
 import com.vensys.appcm.rulePacs.rulePacs008_2024;
 import com.vensys.appcm.rulePacs.rulePacs009;
@@ -82,6 +84,14 @@ public class SCValidateMX extends HttpServlet {
                 out.print(errorRulePacs009);
                 System.out.println(gson.toJson(errorRulePacs009));
             }
+        } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
+            MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;
+            rulePacs004_2024 rulepacs004 = new rulePacs004_2024 (dataMXpacs004);
+            rulepacs004.runRules(logicalTerminal, receiverAddress);
+            String errorRulePacs004 = rulepacs004.getErrorRule();
+            System.out.println(errorRulePacs004);
+            out.print(errorRulePacs004);
+            System.out.println(gson.toJson(errorRulePacs004));
         }
     }
 
