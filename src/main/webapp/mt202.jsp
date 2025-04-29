@@ -224,7 +224,7 @@
                                                 <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Identifier Code</span>
-                                                <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                                <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="56A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_162_of56a_address" id="_162_of56a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_162_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -235,7 +235,7 @@
                                                 <input type="text" name="_164_of56d_party_identifier" id="_164_of56d_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_164_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Name and Address</span>
-                                                <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_165_of56d_name_address" id="_165_of56d_name_address" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_165_of56d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                                <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_165_of56d_name_address" id="_165_of56d_name_address" input_type="56D Name and Address" location="Body" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_165_of56d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -280,8 +280,8 @@
                                     <hr/>
 
                                     <!-- OF58 -->
-                                    <div class="form-row"><span class="label_body">OF58</span><span class="label">Beneficiary Institution</span>
-                                        <select id="type_of58_" name="type_of58_" input_type="Of58" location="Body">
+                                    <div class="form-row"><span class="label_body">MF58</span><span class="label">Beneficiary Institution</span>
+                                        <select id="type_of58_" name="type_of58_" input_type="Of58" location="Body" input_type="MF58 Beneficiary Institution" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="a">A - Beneficiary Inst - BIC</option>
                                             <option value="d">D - Beneficiary Inst - Name and Address</option>

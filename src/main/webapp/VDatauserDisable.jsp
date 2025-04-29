@@ -10,8 +10,8 @@
 <script src="js/DataTables/datatables.min.js"></script>
 <script src="js/DataTables/datatables.js"></script>
 <div id="isi">
-    <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'USER:LIST'}">
+    <%-- <c:forEach var="item" items="${role}">
+        <c:if test="${item == 'USER:LIST'}">--%>
             <div id="judul">List of Disable Permanent User
                 
             </div>
@@ -64,8 +64,8 @@
                     </tbody>
                 </table>
             </div><!--close content-->
-        </c:if>
-    </c:forEach>
+       <%--  </c:if>
+    </c:forEach>--%>
 </div>
 <script>
     $(document).ready(function () {
