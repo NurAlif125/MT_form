@@ -48,7 +48,7 @@ public class DBBIC {
         }
     }
 
-    public void updateBic(DataBIC data, String id_member) {
+    public void updateBic(DataBIC data, int id_member) {
         try {
             String sql = "Update bic SET code_member=?,company=?,address=?,note=? where id_member=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -56,7 +56,7 @@ public class DBBIC {
             st.setString(2, data.getCompany());     //company
             st.setString(3, data.getAddress());     //address
             st.setString(4, data.getNote());     //note
-            st.setString(5, id_member);     //id_member
+            st.setInt(5, id_member);     //id_member
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {

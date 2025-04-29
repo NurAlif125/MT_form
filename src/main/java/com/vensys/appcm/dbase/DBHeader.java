@@ -1327,7 +1327,7 @@ System.out.println("Session ID: " + httpSession.getId());
         String sql = "SELECT DISTINCT h.id_headers,h.messageType,h.logicalTerminal,h.sessionNumber,h.sequenceNumber,h.io_type,"
                 + "h.receiverAddress,h.tanggal,h.flag,trx.trans_reference "
                 + "FROM headers h INNER JOIN header_status hs ON h.id_headers = hs.id_headers LEFT JOIN trx_detail trx ON trx.id_headers = h.id_headers "
-                + "WHERE h.isDuplicate = 2 AND CAST(h.tanggal AS DATE) = '" + dDay.format(tanggal) + "' ORDER BY h.tanggal DESC";
+                + "WHERE h.isDuplicate = 2 AND hs.status_header = 'REJECT' AND CAST(hs.status_tanggal AS DATE) = '" + dDay.format(tanggal) + "' ORDER BY h.tanggal DESC";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
