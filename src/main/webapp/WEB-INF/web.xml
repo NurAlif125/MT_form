@@ -849,8 +849,12 @@
     </servlet>
     <servlet>
         <servlet-name>SCUploadBIC</servlet-name>
-        <servlet-class>controller.SCUploadBIC</servlet-class>
+        <servlet-class>com.vensys.appcm.controller.SCUploadBIC</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>SCUploadBIC</servlet-name>
+        <url-pattern>/SCUploadBIC</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SCHeaderTemplate</servlet-name>
         <url-pattern>/ControllerHeaderTemplate</url-pattern>

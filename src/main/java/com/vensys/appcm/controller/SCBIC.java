@@ -47,7 +47,8 @@ public class SCBIC extends HttpServlet {
             dbData.addBic(data);
 //            System.out.println("addBic");
         } else {
-            dbData.updateBic(data, id_member);
+            int idMember = Integer.parseInt(id_member);
+            dbData.updateBic(data, idMember);
 //            System.out.println("updateBic");
         }
         try {
