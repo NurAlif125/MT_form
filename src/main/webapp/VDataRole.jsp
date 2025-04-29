@@ -18,11 +18,11 @@
                         <a href="addrole.jsp" class="srb2">Add Role</a>
                     </c:if>
                 </c:forEach>
-                 <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'ROLE:DISABLEPERMANENT'}">
+                 <%-- <c:forEach var="item" items="${role}">
+                    <c:if test="${item == 'ROLE:DISABLEPERMANENT'}">--%>
                         <a href="SCDataDisablePermanentRoleList" class="srb3">List of Disable Permanent Role </a>
-                    </c:if>
-                </c:forEach>
+                   <%--  </c:if>
+                </c:forEach>--%>
             </div>
             <div id="message">
                 <span class="style1">

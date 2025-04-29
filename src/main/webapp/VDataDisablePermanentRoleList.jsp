@@ -10,8 +10,8 @@
 <script src="js/DataTables/datatables.min.js"></script>
 <script src="js/DataTables/datatables.js"></script>
 <div id="isi">
-    <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'ROLE:DISABLEPERMANENT'}">
+    <%-- <c:forEach var="item" items="${role}">
+        <c:if test="${item == 'ROLE:DISABLEPERMANENT'}">--%>
             <div id="judul">List of Disable Permanent Role
                 
             </div>
@@ -52,8 +52,8 @@
                 </table>
                 
             </div><!--close content-->            
-        </c:if>
-    </c:forEach>
+        <%-- </c:if>
+    </c:forEach>--%>
 </div>
 <script>
     $(document).ready(function () {
