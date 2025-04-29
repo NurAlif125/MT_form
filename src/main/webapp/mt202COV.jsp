@@ -279,8 +279,8 @@
                             <hr/>
                             
                             <!-- OF58 -->
-                            <div class="form-row"><span class="label_body">OF58</span><span class="label">Beneficiary Institution</span>
-                                <select id="type_of58_" name="type_of58_">
+                            <div class="form-row"><span class="label_body">MF58</span><span class="label">Beneficiary Institution</span>
+                                <select id="type_of58_" name="type_of58_" input_type="MF58 Beneficiary Institution" location="Body">
                                     <option value="">choose a type</option>
                                     <option value="a">A - Beneficiary Inst - BIC</option>
                                     <option value="d">D - Beneficiary Inst - Name and Address</option>
@@ -548,7 +548,7 @@
                             
                             <!--MF59-->
                             <div class="form-row"><span class="label_body">MF59</span><span class="label">Beneficiary Customer</span>
-                                <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory">
+                                <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="MF59 Beneficiary Customer" location="Body">
                                     <option value="">choose a type</option>
                                     <option value="59">59 - Name and Address</option>
                                     <option value="59a">59A - BIC</option>
