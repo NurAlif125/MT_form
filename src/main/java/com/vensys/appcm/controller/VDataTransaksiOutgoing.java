@@ -94,8 +94,8 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             headerById = bBHeaders.getHeaderById(request.getParameter("id"), prefix);
 //            System.out.println("flagStatus:" + headerById.getFlag());
             httpSession.setAttribute("flagStatus", headerById.getFlag());
-            System.out.println("flagStatus: " + headerById.getFlag());
-            System.out.println("id: " + request.getParameter("id"));
+//            System.out.println("flagStatus: " + headerById.getFlag());
+//            System.out.println("id: " + request.getParameter("id"));
             httpSession.setAttribute("io_typeStatus", headerById.getIo_type());
             httpSession.setAttribute("messageType", headerById.getMessageType());
         } catch (Exception ex) {
@@ -106,11 +106,9 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn.getConnection());
             String rekening = dBDataTransaksiOutgoing.getTag59Account103(request.getParameter("id"));
             String namaCore = dBDataTransaksiOutgoing.getVerifiedAccName(rekening);
-            System.out.println("Nama Core:" + namaCore);
-            System.out.println("Rekening:" + rekening);
+//            System.out.println("Nama Core:" + namaCore);
+//            System.out.println("Rekening:" + rekening);
             httpSession.setAttribute("nama_core", namaCore);
-
-            System.out.println();
         }
         try {
             tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
@@ -178,19 +176,19 @@ public class VDataTransaksiOutgoing extends HttpServlet {
                     }
                 }
             }
-            System.out.println("Record di before ");
+//            System.out.println("Record di before ");
             String resultBfr = "";
             for (String keyBefore : beforeRecords.keySet()) {
                 for (int i = 0; i < beforeRecords.get(keyBefore); i++) {
-                    System.out.println("before: " + keyBefore);
+//                    System.out.println("before: " + keyBefore);
                     resultBfr += keyBefore + "\r\n";
                 }
             }
-            System.out.println("Record di after ");
+//            System.out.println("Record di after ");
             String resultAft = "";
             for (String keyAfter : afterRecords.keySet()) {
                 for (int i = 0; i < afterRecords.get(keyAfter); i++) {
-                    System.out.println("after: " + keyAfter);
+//                    System.out.println("after: " + keyAfter);
                     resultAft += keyAfter + "\r\n";
                 }
             }
@@ -265,9 +263,13 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         String suffix = "COV";
         RequestDispatcher view;
         
-        if (headerById.getNetworktype() == null) {
-            view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
-        } else if (headerById.getMessageType().contains("pacs") || headerById.getMessageType().contains("camt")) {
+        if (headerById.getNetworktype().contains("MT")) {
+            if (headerById.getMessageType().contains("103") || headerById.getMessageType().contains("200") || headerById.getMessageType().contains("202")) {
+                view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
+            } else {
+                view = request.getRequestDispatcher("mt.jsp");
+            }
+        } else {
             MxWriteConfiguration mxConfiguration =  new MxWriteConfiguration();
             mxConfiguration.rootElement = "Document";
             mxConfiguration.documentPrefix = null;
@@ -336,8 +338,6 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             } else {
                 view = request.getRequestDispatcher("mx.jsp");
             }
-        } else {
-            view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
         }
         view.forward(request, response);
     }
