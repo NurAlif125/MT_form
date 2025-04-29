@@ -20,11 +20,11 @@
                         </c:if>
                     </c:if>
                 </c:forEach>
-                <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'USER:DISABLEPERMANENT'}">
+                <%-- <c:forEach var="item" items="${role}">
+                    <c:if test="${item == 'USER:DISABLEPERMANENT'}">--%>
                             <a href="SCDataUserDisable" class="srb3">List Of Disable Permanent User</a>
-                    </c:if>
-                </c:forEach>
+                    <%-- </c:if>
+                </c:forEach>--%>
             </div>
 <!--            <div id="message">
                 <span class="style1">
