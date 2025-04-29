@@ -69,7 +69,7 @@ public class SCDataRole extends HttpServlet {
 //        String batas = request.getParameter("batas");
         data.setRole_name(request.getParameter("role_name"));
 //        data.setLimit(new BigInteger(batas));
-        data.setTimeout(new Integer(request.getParameter("timeout")));
+        ////data.setTimeout(new Integer(request.getParameter("timeout")));
         data.setRole_detail(s_role_detail);
         data.setRole_enable(Integer.parseInt(role_enable));
         data.setRole_desc(request.getParameter("role_desc"));
@@ -77,6 +77,7 @@ public class SCDataRole extends HttpServlet {
         boolean duplicate = dbData.cekDataDuplicateRole(data.getRole_name());
 
         if (role_id == null ? "null" == null : role_id.equals("null") || role_id.isEmpty()) {
+            data.setTimeout(new Integer(request.getParameter("timeout")));
             if (duplicate) {
                 strErrMsg = "Role Already Exist!!";//belum beres
             } else {
@@ -93,7 +94,7 @@ public class SCDataRole extends HttpServlet {
             } else {
                 //dbData2.delete(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("delete");
-
+                //data.setTimeout(new Integer(request.getParameter("timeout")));
                 System.out.println("Masuk untuk disable permanent untuk id="+ data.getRole_id());
                 boolean roleIsUsed = dbData.roleIsUsed(data.getRole_id());
                 System.out.println("sini2"+ roleIsUsed);
