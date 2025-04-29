@@ -54,7 +54,7 @@
                             <div class="form-row">
                                 <div class="form-cols">
                                     <div class="blok-mx">
-                                        <input type="hidden" name="hiddenmxfull" id="hiddenmxfull" value="<c:out value='${textById.modify_mt}'/>"/>
+                                        <input type="hidden" name="hiddenmxfull" id="hiddenmxfull" value="<c:out value='${textById.final_mt}'/>"/>
                                         <div name="mxfull" id="mxfull" style="overflow-y: scroll; height:440px; margin-left: 5px; padding: 10px;"></div>
                                     </div>
                                 </div>
