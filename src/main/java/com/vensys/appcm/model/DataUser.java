@@ -19,6 +19,7 @@ public class DataUser {
     private int user_mt_routing;
     private String description;
     private int role;
+    private int sub_role;
     private int enable;
     private String role_name;
     private String password_name;
@@ -37,6 +38,15 @@ public class DataUser {
     private String disable_permanent_date2;
     private String email;
     private int idDepartment;
+    private String channel;
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
 
     public int getIdDepartment() {
         return idDepartment;
@@ -237,6 +247,14 @@ public class DataUser {
      */
     public void setRole(int role) {
         this.role = role;
+    }
+    
+    public int getSub_role() {
+        return sub_role;
+    }
+
+    public void setSub_role(int sub_role) {
+        this.sub_role = sub_role;
     }
 
     /**

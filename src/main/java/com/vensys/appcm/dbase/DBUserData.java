@@ -33,9 +33,10 @@ public class DBUserData {
     public DataUser getUserDataById(String str) throws SQLException {
         DataUser data = new DataUser();
 
-        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,idrulepass,wrongpass,enable FROM users WHERE user_id='" + str + "'";
+        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,idrulepass,wrongpass,enable,sub_role,channel FROM users WHERE user_id=?";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, str);
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
@@ -49,6 +50,8 @@ public class DBUserData {
             data.setIdpassword(rs.getInt(8));
             data.setWrongpass(rs.getInt(9));
             data.setEnable(rs.getInt(10));
+            data.setSub_role(rs.getInt(11));
+            data.setChannel(rs.getString(12));
         }
         return data;
     }
@@ -69,7 +72,7 @@ public class DBUserData {
 
     public DataLogin selectLastLoginGagal(String user_id) throws SQLException {
         DataLogin data = new DataLogin();
-        System.out.println("gagal");
+        System.out.println("selectLastLoginGagal");
         String sql = "select time_login FROM login_history where status_login='0' And user_id='" + user_id + "' order by time_login desc limit 1";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -137,7 +140,7 @@ public class DBUserData {
 
     public boolean authenticateUser(String user_id) throws Exception {
         boolean isValid = false;
-        String sql = "SELECT user_id, name, password, status_new, user_mt_routing, description "
+        String sql = "SELECT user_id, name, password, status_new, user_mt_routing, description, role_id "
                 + "FROM users WHERE user_id= ? ";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);

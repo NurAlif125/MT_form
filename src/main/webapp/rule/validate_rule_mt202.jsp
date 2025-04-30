@@ -55,7 +55,8 @@
                 //of58
                 type_of58_: "required",
                 _181_of58a_identifier_code: "required",
-                _184_of58d_name_address: "required"
+                _184_of58d_name_address: "required",
+                type_of58_: "required"
             },
             messages: {
                 //header
@@ -94,8 +95,8 @@
                 _177_of57d_name_address: {required: "Of57D Name Address must be filled..!!"},
 
                 //of58
-                type_of58_: {required: "Of58 must be filled..!!"},
-                _181_of58a_identifier_code: {required: "Of58A Identifier Code must be filled..!!"},
+                type_of58_: {required: "Mf58 must be filled..!!"},
+                _181_of58a_identifier_code: {required: "Mf58A Identifier Code must be filled..!!"},
                 _184_of58d_name_address: {required: "Of57D Name Address must be filled..!!"}
                 
             },

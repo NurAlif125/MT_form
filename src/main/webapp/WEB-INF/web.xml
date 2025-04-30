@@ -420,6 +420,14 @@
         <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCDataTransaksiOutgoingMX</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCDataDisablePermanentRoleList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDataDisablePermanentRoleList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCDataUserDisable</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDataUserDisable</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCDashBoardTransactions</servlet-name>
         <url-pattern>/SCDashBoardTransactions</url-pattern>
@@ -841,8 +849,12 @@
     </servlet>
     <servlet>
         <servlet-name>SCUploadBIC</servlet-name>
-        <servlet-class>controller.SCUploadBIC</servlet-class>
+        <servlet-class>com.vensys.appcm.controller.SCUploadBIC</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>SCUploadBIC</servlet-name>
+        <url-pattern>/SCUploadBIC</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SCHeaderTemplate</servlet-name>
         <url-pattern>/ControllerHeaderTemplate</url-pattern>
@@ -850,6 +862,14 @@
     <servlet-mapping>
         <servlet-name>SCDataTransaksiOutgoingMX</servlet-name>
         <url-pattern>/SCDataTransaksiOutgoingMX</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCDataDisablePermanentRoleList</servlet-name>
+        <url-pattern>/SCDataDisablePermanentRoleList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCDataUserDisable</servlet-name>
+        <url-pattern>/SCDataUserDisable</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

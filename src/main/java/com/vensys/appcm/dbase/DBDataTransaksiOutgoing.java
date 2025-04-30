@@ -75,15 +75,15 @@ public class DBDataTransaksiOutgoing {
         return id;
     }
 
-    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name) {
+    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel) {
         String header = "";
         // Mendapatkan string format tanggal dan Timestamp secara langsung
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String timestampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
         try {
-            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype) \n"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
+            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source) \n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
                     + "RETURNING id_headers;";
             PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -120,6 +120,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(27, data.getBlock3()); // block 3 
             st.setString(28, "SRC:MANUAL"); //user entry
             st.setString(29, data.getNetworkType()); //networktype
+            st.setString(30, channel);
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -355,6 +356,7 @@ public class DBDataTransaksiOutgoing {
                 var mapHeadAmdBody = getJSONMXandHeaderSaa(id_headers);
                 var body = mapHeadAmdBody.get("body");
                 var head = mapHeadAmdBody.get("header");
+                String channel = mapHeadAmdBody.get("channel");
                 System.out.println("Body JSON "+body);
                 
                 // merubah json ke object prowide
@@ -369,7 +371,7 @@ public class DBDataTransaksiOutgoing {
                 
                 System.out.println(finalMX.get("modify_mx"));
                 
-                ct.createTextFileMX(finalMX.get("modify_mx"),variant,id_headers, "I");
+                ct.createTextFileMX(finalMX.get("modify_mx"),variant,id_headers, "I", channel);
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
@@ -382,7 +384,7 @@ public class DBDataTransaksiOutgoing {
     
     public Map<String,String> getJSONMXandHeaderSaa(int idHeaders){
         log.info("Get Body MX and Header SAA");
-        String sql = "SELECT json_tag::varchar ,header_saa FROM tags_mx WHERE id_headers = ?";
+        String sql = "SELECT json_tag::varchar, header_saa, h.source AS channel FROM tags_mx LEFT JOIN headers h ON h.id_headers = tags_mx.id_headers WHERE tags_mx.id_headers = ?";
         
         var data = new HashMap<String,String>();
         
@@ -394,6 +396,7 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()){
                 data.put("body", rs.getString("json_tag"));
                 data.put("header", rs.getString("header_saa"));
+                data.put("source", rs.getString("channel"));
                 
                 // return true
                 return data;
@@ -560,7 +563,7 @@ public class DBDataTransaksiOutgoing {
     public void updateStatusDuplicate(Integer id_headers, String userId, String ipAccess, String compName, String comment) {
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 //        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2,komentar=? WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
-        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2 WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
+        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2, tanggal = LOCALTIMESTAMP WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
 //            st.setString(1, comment);   //comment
@@ -1586,39 +1589,40 @@ public class DBDataTransaksiOutgoing {
 
     public List<Integer> cekDuplikatID(Header data) throws Exception {
         List<Integer> dupe = new ArrayList<Integer>();
+        SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyy");
+        SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = originalFormat.parse(data.getTrans_date_value());
+        String sqlFormattedDate = sqlFormat.format(date);
+        BigDecimal amount = new BigDecimal(data.getTrans_amount());
         try {
-            String sql = "SELECT DISTINCT h.id_headers,messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,receiverAddress,tanggal, h.id_headers,flag,isDuplicate,\n"
-                    + "t59.detail as t59, t32.detail as amount, t57.detail as receiver, t32d.detail as trx_date, t32c.detail as curr\n"
-                    + "FROM headers h\n"
-                    + "LEFT JOIN tags t59 ON t59.id_headers = h.id_headers AND (t59.tagName like '%mf59_account%' OR t59.tagName like '%mf59f_account%')\n"
-                    + "LEFT JOIN tags t32 ON t32.id_headers = h.id_headers AND (t32.tagName like '%mf32a_amount%' OR t32.tagName like '%mf62f_amount%' OR t32.tagName like '%mf62m_amount%' OR t32.tagName like '%mf32b_amount%')\n"
-                    + "LEFT JOIN tags t32c ON t32c.id_headers = h.id_headers AND (t32c.tagName like '%mf32a_currency%' OR t32c.tagName like '%mf62f_currency%' OR t32c.tagName like '%mf62m_currency%' OR t32c.tagName like '%mf32b_currency%')\n"
-                    + "LEFT JOIN tags t32d ON t32d.id_headers = h.id_headers AND (t32d.tagName like '%mf32a_date%' OR t32d.tagName like '%mf62f_date%' OR t32d.tagName like '%mf62m_date%' OR t32d.tagName like '%mf32a_value_date%' OR t32d.tagName like '%mf30_requested_execution_date%')\n"
-                    + "LEFT JOIN tags t57 ON t57.id_headers = h.id_headers AND t57.tagName like '%of57a_identifier_code%'\n"
-                    + "WHERE logicalterminal = ? AND receiveraddress = ? AND t59.detail = ?"
-                    + "AND t32.detail = ? AND t32c.detail = ? AND t32d.detail = ? AND t57.detail = ?\n"
-                    + "AND messagetype = '103' AND tanggal > CURRENT_DATE AND io_type = 'I' ORDER BY h.id_headers";
-            System.out.println("sql cekDuplikatID....= " + sql);
-            log.info("tag20 & tag57 nyaeta " + data.getTag20() + " # " + data.getTag32Date());
+            String sql = "SELECT DISTINCT h.id_headers, messageType, logicalTerminal, sessionNumber, sequenceNumber, io_type,\n"
+                    + "receiverAddress, tanggal, flag, isDuplicate, trx.trans_reference, trx.trans_related_reference, trx.trans_date_value, trx.trans_amount,\n"
+                    + "trx.trans_ccy FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers WHERE logicalTerminal = ? AND receiverAddress = ? AND trx.trans_reference = ?\n"
+                    + "AND trx.trans_date_value::date = ?::date AND trx.trans_amount = ? AND trx.trans_ccy = ? AND messageType = ?\n"
+                    + "AND tanggal > CURRENT_DATE AND io_type = 'I' ORDER BY h.id_headers";
+            log.info("trans_reference & trans_date_value" + data.getTrans_refference() + " # " + data.getTrans_date_value());
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getLogicalTerminal());
             log.info("logical terminal : " + data.getLogicalTerminal());
             st.setString(2, data.getReceiverAddress());
-            System.out.println("receiver Address : " + data.getReceiverAddress());
-            st.setString(3, data.getTag59Acc());
-            System.out.println("59acc : " + data.getTag59Acc());
-            st.setString(4, data.getTag32Amount());
-            System.out.println("Tag32Amt : " + data.getTag32Amount());
-            st.setString(5, data.getTag32Currency());
-            System.out.println("Tag32Ccy : " + data.getTag32Currency());
-            st.setString(6, data.getTag32Date());
-            System.out.println("Tag32Date : " + data.getTag32Date());
-            st.setString(7, data.getTag57());
-            System.out.println("Tag57 : " + data.getTag57());
+            log.info("receiver Address : " + data.getReceiverAddress());
+            st.setString(3, data.getTrans_refference());
+            log.info("trans_reference : " + data.getTrans_refference());
+            if (data.getTrans_date_value().length() == 6) {
+                st.setString(4, "20" + data.getTrans_date_value().substring(0, 2) + "-" + data.getTrans_date_value().substring(2, 4) + "-" + data.getTrans_date_value().substring(4, 6));
+            } else {
+                st.setString(4, data.getTrans_date_value());
+            }
+            log.info("trans_date_value : " + data.getTrans_date_value());
+            st.setBigDecimal(5, amount);
+            log.info("trans_amount : " + data.getTrans_amount());
+            st.setString(6, data.getTrans_ccy());
+            log.info("trans_ccy : " + data.getTrans_ccy());
+            st.setString(7, data.getMessageType());
+            log.info("messageType : " + data.getMessageType());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                int file = rs.getInt(1);
-                dupe.add(file);
+                dupe.add(rs.getInt(1));
             }
         } catch (SQLException e) {
             e.printStackTrace();

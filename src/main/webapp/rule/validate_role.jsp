@@ -42,7 +42,7 @@
             }
         });
         $('#delete_role').click(function(){
-            var answer = confirm('Do you want to delete this role data..!!');
+            var answer = confirm('Do you want to disable permanent this role data..!!');
             if(answer){
                 $(location).attr('href','SCDataRole?delete_role=yes&role_id='+$('#role_id').val());
                 return false;

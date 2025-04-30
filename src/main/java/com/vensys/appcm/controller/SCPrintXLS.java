@@ -49,14 +49,16 @@ public class SCPrintXLS extends HttpServlet {
         String filter = request.getParameter("filter_msg"); //20230522
         String currency = request.getParameter("cust_curr");
         String status_f= request.getParameter("status")+"";
+        String channel2 = request.getParameter("channel");
         HttpSession session = request.getSession();
         DBconnection dbConn = new DBconnection();
         ArrayList<Header> headers = new ArrayList<Header>();
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
+        System.out.println("Channel="+channel2);
 
         try {
             System.out.println("before tgl " + value_date_end);
-            headers = bBHeaders.getAllHeaderReport(status_f,io_type,mt_type, value_date, date_from, date_end, flag, filter, currency, value_date_end);
+            headers = bBHeaders.getAllHeaderReport(status_f,io_type,mt_type, value_date, date_from, date_end, flag, filter, currency, value_date_end, channel2);
 //            headers = bBHeaders.getAllHeaderReportXls(mt_type, flag, value_date, date_from, date_end, io_type, value_date_end, filter, currency);
             System.out.println("after tgl");
 
@@ -64,10 +66,10 @@ public class SCPrintXLS extends HttpServlet {
 
             WritableWorkbook workbook = Workbook.createWorkbook(sos);
             WritableSheet sheet = workbook.createSheet("Report", 0);
-            WritableFont cellFont = new WritableFont(WritableFont.ARIAL, 10);
+            WritableFont cellFont = new WritableFont(WritableFont.createFont("FreeSans"), 10);
             cellFont.setBoldStyle(WritableFont.BOLD);
             WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
-            WritableFont cellFont2 = new WritableFont(WritableFont.ARIAL, 10);
+            WritableFont cellFont2 = new WritableFont(WritableFont.createFont("FreeSans"), 10);
             WritableCellFormat cellFormat2 = new WritableCellFormat(cellFont2);
             Label reportBy = new Label(1, 1, "REPORT BY : " + session.getAttribute("user_id").toString().toUpperCase(), cellFormat);
             Label lno = new Label(1, 3, "NO", cellFormat);
@@ -126,7 +128,7 @@ public class SCPrintXLS extends HttpServlet {
             sheet.addCell(lstatus);
             for (int i = 0; i < headers.size(); i++) {
                 Label no = new Label(1, i + 4, "" + (i + 1), cellFormat2);
-                Label channel = new Label(12, i + 4, headers.get(i).getChannel(), cellFormat2); 
+                Label channel = new Label(2, i + 4, headers.get(i).getSource(), cellFormat2); 
                 Label mt = new Label(3, i + 4, headers.get(i).getMessageType(), cellFormat2);
                 Label io = new Label(4, i + 4, headers.get(i).getIo_type(), cellFormat2);
                 Label sender = null;//20190926
@@ -216,11 +218,13 @@ public class SCPrintXLS extends HttpServlet {
                 sheet.addCell(status);
             }
 
+            
             response.setContentType("application/vnd.ms-excel");
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
             response.setHeader("Pragma", "public");
-            response.setHeader("Content-Disposition", "inline; filename=report-.xls");
+            String xlsFileName = "Report_XLS_" + session.getAttribute("user_id").toString() + ".xls";
+            response.setHeader("Content-Disposition", "inline; filename=\"" + xlsFileName + "\"");
 
             workbook.write();
             workbook.close();

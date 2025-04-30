@@ -127,6 +127,7 @@ public class CreateText {
         String filePath =  getLocalDir() + "/" + fileName; 
         fstream = new FileWriter(filePath);                   
         System.out.println("filePath: " + filePath);
+
         BufferedWriter out = new BufferedWriter(fstream);
         out.write(fin);
         out.close();
@@ -134,7 +135,7 @@ public class CreateText {
         sftp.uploadToSftp("MT",fileName);
     }
     
-    public void createTextFileMX(String fin, String type, int id, String io_type) throws IOException {
+    public void createTextFileMX(String fin, String type, int id, String io_type, String source) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
         String fileName = type + "_" + dbHTML + "_" + id + ".xml";
         //System.out.println("cek dbHMTL: " + dbHTML);
@@ -147,6 +148,7 @@ public class CreateText {
 //        }
         String filePath =  getLocalDir() + "/" + fileName; 
         fstream = new FileWriter(filePath);                   
+
         BufferedWriter out = new BufferedWriter(fstream);
 //        out.write(fin.toUpperCase());
         out.write(fin);

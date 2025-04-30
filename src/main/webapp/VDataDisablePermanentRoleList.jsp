@@ -10,24 +10,18 @@
 <script src="js/DataTables/datatables.min.js"></script>
 <script src="js/DataTables/datatables.js"></script>
 <div id="isi">
-    <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'ROLE:LIST'}">
-            <div id="judul">List of Role
-                <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'ROLE:ADD'}">
-                        <a href="addrole.jsp" class="srb2">Add Role</a>
-                    </c:if>
-                </c:forEach>
-                 <%-- <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'ROLE:DISABLEPERMANENT'}">--%>
-                        <a href="SCDataDisablePermanentRoleList" class="srb3">List of Disable Permanent Role </a>
-                   <%--  </c:if>
-                </c:forEach>--%>
+    <%-- <c:forEach var="item" items="${role}">
+        <c:if test="${item == 'ROLE:DISABLEPERMANENT'}">--%>
+            <div id="judul">List of Disable Permanent Role
+                
             </div>
             <div id="message">
                 <span class="style1">
                     <div align="center">
-                        <c:out value="${message}"/>
+                       <% if(request.getParameter("action")==null){  %>
+                        <% } else { %>
+                       <c:out value="${message}"/>
+                        <% }%>
                     </div>
                 </span>
             </div>
@@ -40,33 +34,26 @@
                             <th>Role Name</th>
                             <th>Description</th>
                             <th>Timeout</th>
-                            <th>Status</th>
+                            <th>Disable Date</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                    <c:forEach items="${dataRole}" var="item">
+                    <c:forEach items="${disablerole}" var="item">
                         <tr>
                             <td><%=rowNum++%></td>
-                            <td><a href="VDataRole?role_id=${item.role_id}">${item.role_name}</a></td>
+                            <td>${item.role_name}</a></td>
                             <td>${item.role_desc}</td>
                             <td>${item.timeout}</td>
-                            <c:choose>
-                                <c:when test="${item.role_enable == 1}">
-                                    <td>Enable</td>
-                                </c:when>    
-                                <c:otherwise>
-                                    <td>Disable</td>
-                                </c:otherwise>
-                            </c:choose>
+                            <td>${item.disable_permanent}</td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
                 
             </div><!--close content-->            
-        </c:if>
-    </c:forEach>
+        <%-- </c:if>
+    </c:forEach>--%>
 </div>
 <script>
     $(document).ready(function () {

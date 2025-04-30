@@ -489,8 +489,7 @@ public class rulePacs008_2024 {
                 String bicInstgAgt = finInstnIdInstgAgt.getBICFI();
                 if (bicInstgAgt == null || bicInstgAgt.equalsIgnoreCase("") || bicInstgAgt.isEmpty()) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt</td></tr>");
-                }
-                if (bicInstgAgt != null) {
+                } else {
                     if (logicalTerminal != null) {
                         String logicalTerminal1 = logicalTerminal.substring(0, logicalTerminal.length() - 1);
                         if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal1)) {
@@ -508,10 +507,9 @@ public class rulePacs008_2024 {
                 String bicInstdAgt = finInstnIdInstdAgt.getBICFI();
                 if (bicInstdAgt == null || bicInstdAgt.equalsIgnoreCase("") || bicInstdAgt.isEmpty()) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>InstructedAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
-                }
-                if (bicInstdAgt != null) {
+                } else {
                     if (receiverAddress != null) {
-                        String receiverAddress1 = receiverAddress.substring(0, receiverAddress.length() - 1);
+                        String receiverAddress1 = receiverAddress.substring(0, 11);
                         if (!bicInstdAgt.contains(receiverAddress1)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                         }

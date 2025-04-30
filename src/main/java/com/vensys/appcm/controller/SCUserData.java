@@ -24,7 +24,9 @@ import com.vensys.appcm.model.DataLogin;
 import com.vensys.appcm.model.DataRole;
 import com.vensys.appcm.model.DataUser;
 import com.vensys.appcm.model.DataNostro;
+import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
@@ -49,11 +51,13 @@ public class SCUserData extends HttpServlet {
             throws ServletException, IOException {
         RequestDispatcher dispatcher = null;
         DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn2 = new DBconnection2();
         DataUser data = new DataUser();
         DataRole dataRole = new DataRole();
         DataLogin dataLogin = new DataLogin();
         LDAPCon ldapCon = new LDAPCon();
         DBUserData dbo = new DBUserData(dbConn.getConnection());
+        DBUserData dbo2 = new DBUserData(dbConn2.getConnection2());
         DBEventLog evl = new DBEventLog(dbConn.getConnection());
         DBDataRole dboRole = new DBDataRole(dbConn.getConnection());
         DBCurrency dbC = new DBCurrency(dbConn.getConnection());
@@ -62,6 +66,7 @@ public class SCUserData extends HttpServlet {
         List<DataRole> dataRoleList = new ArrayList<DataRole>();
         List<DataNostro> dataNostroList = new ArrayList<DataNostro>();
         List<DataCurrency> dataCurrList = new ArrayList<DataCurrency>();
+        String[] dataChannel = null;
 //        List<DataNostro> dataNos = new ArrayList<DataNostro>();
         String user_id = request.getParameter("username");
         String password = request.getParameter("password");
@@ -76,12 +81,15 @@ public class SCUserData extends HttpServlet {
         String comp_name = request.getRemoteHost();
         session.removeAttribute("role");
         String[] gs = null;
+        String channel = "";
 //        List <Nst> nsts = null;
        try {
 //            data = dbo.getUserDataByIdLDAP(user_id);
             data = dbo.getUserDataById(user_id);
+            channel = data.getChannel();
             gs = dbg.getGeneralSetting();
 //            dataLogin = dbo.selectLastLoginBerhasil(user_id);
+            dataLogin = dbo.selectLastLoginBerhasil(user_id);
             berhasilLogin = dataLogin.getLoginBerhasil();
             if (berhasilLogin == null) {
                 berhasilLogin = "-";
@@ -92,13 +100,64 @@ public class SCUserData extends HttpServlet {
                 gagalLogin = "-";
             }
             notifVer = dbo.getNotificationVer();
-            System.out.println("notifVer: " + notifVer);
+//            System.out.println("notifVer: " + notifVer);
             notifAuth = dbo.getNotificationAuth();
-            System.out.println("notifAuth: " + notifAuth);
+//            System.out.println("notifAuth: " + notifAuth);
             log.info("processRequest");
         } catch (Exception ex) {
             strErrMsg = "Unable to connect to database";
             log.error("getDataUserLogin : " + ex.getMessage());
+        }
+       
+       String isValidLogonLdap = "";
+       isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
+       
+        int maxpassw = (data.getWrongpass_max() != null && !data.getWrongpass_max().trim().isEmpty())
+         ? Integer.parseInt(data.getWrongpass_max())
+         : 0;
+        
+       if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
+//            if (data.getWrongpass() < maxpassw) {
+//                int c = data.getWrongpass() + 1;
+//                data.setWrongpass(c);
+//                dbo.updatewrongpass(data);
+//                strErrMsg = "Invalid Username or Password";
+//                session.setAttribute("errormsg", strErrMsg);
+//                
+//                if (data.getWrongpass() >= 3) {
+//                     dbo.updateenable(data);
+//                    strErrMsg = "Username is not active, please contact administrator";
+//                    session.setAttribute("errormsg", strErrMsg);
+//                }
+//            }     
+            dbo2.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
+            strErrMsg = "Invalid Username or Password";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
+        } else if(isValidLogonLdap.equalsIgnoreCase("nothing user")){
+            strErrMsg = "Username is not registered in LDAP, please contact administrator";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
+        } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
+            strErrMsg = "Unable to connect to LDAP";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
+        } else if(isValidLogonLdap.equalsIgnoreCase("")){
+            strErrMsg = "Unable to connect to LDAP!";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            log.info("login.jsp");
+            return;
         }
 
         if (data.getUser_id() != null) {
@@ -107,7 +166,7 @@ public class SCUserData extends HttpServlet {
 //                    
 //                }
                 boolean isValidLogon = false;
-                String isValidLogonLdap = "";
+                
                 boolean successLogin = false;
                 boolean changepassword = false;
                 try {
@@ -120,73 +179,34 @@ public class SCUserData extends HttpServlet {
                     isValidLogon = true;
 //                    isValidLogon = dbo.authenticateLogin(user_id, password);
                     isValidLogon = dbo.authenticateUser(user_id);
-                    isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
-                    if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
-                        strErrMsg = "Invalid user ID or password";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    } else if(isValidLogonLdap.equalsIgnoreCase("nothing user")){
-                        strErrMsg = "Invalid username LDAP or password";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
-                        strErrMsg = "Unable to connect to LDAP";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    } else if(isValidLogonLdap.equalsIgnoreCase("")){
-                        strErrMsg = "Unable to connect to LDAP!";
-                        session.setAttribute("errormsg", strErrMsg);
-                        dispatcher = request.getRequestDispatcher("login.jsp");
-                        dispatcher.forward(request, response);
-                        log.info("login.jsp");
-                        return;
-                    }
+                    
                     
                     if (isValidLogon) {
                         
                         if (data.getStatus_new() == 1){
                             successLogin = true;
-//                        if (data.getNolog() == null) {
-//                            if (Integer.parseInt(data.getNeverlog()) > data.getAuto_disable()) {
-//                                successLogin = false;
-//                            } else {
-//                                successLogin = true;
-//                            }
-//                        } else {
-//                            if (Integer.parseInt(data.getNolog()) > data.getAuto_disable()) {
-//                                successLogin = false;
-//                            } else {
-//                                successLogin = true;
-//                            }
-//                        }
                             if (successLogin) {
                                 session.setAttribute("user_id", user_id);
                                 session.setAttribute("password", password);
                                 session.setAttribute("ip_access", ip_access);
                                 session.setAttribute("comp_name", comp_name);
                                 session.setAttribute("role_id", String.valueOf(data.getRole()));
+                                session.setAttribute("sub_role_user", String.valueOf(data.getSub_role()));
                                 session.setAttribute("berhasillogin", berhasilLogin);
                                 session.setAttribute("gagallogin", gagalLogin);
                                 session.setAttribute("notifVer", notifVer);
                                 session.setAttribute("notifAuth", notifAuth);
                                 session.setAttribute("hostname", gs[0]);
                                 session.setAttribute("appVersion", gs[1]);
-                                dbo.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
+                                session.setAttribute("channel", channel);
+                                dbo2.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
                                 evl.updateLogUser(user_id, "login", tanggal);
                                 try {
                                     dataRole = dboRole.getDataRoleById(String.valueOf(data.getRole()));
                                     dataRoleList = dboRole.getAllDataRole();
                                     data.setWrongpass(0);
                                     dbo.updatewrongpass(data);
+                                    dataChannel = getChannel().split(",");
                                     log.info("getAllDataRole");
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
@@ -198,12 +218,13 @@ public class SCUserData extends HttpServlet {
                                     list.add(st.nextToken());
                                 }
                                 
-                                System.out.println("Session ID: " + session.getId());
+                                log.info("Session ID: " + session.getId());
                                 
                                 ReplicationManager replicationManager = new ReplicationManager(list);
 
                                 session.setAttribute("role", replicationManager.getRoles());
                                 session.setAttribute("dataRoleList", dataRoleList);
+                                session.setAttribute("dataChannel", dataChannel);
 
                                 session.setAttribute("flagStatus", "");
                                 session.setAttribute("timeout", dataRole.getTimeout());
@@ -224,11 +245,12 @@ public class SCUserData extends HttpServlet {
                     } else {
                         int maxpass = Integer.parseInt(data.getWrongpass_max());
                         dbo.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
+                        
                         if (data.getWrongpass() < maxpass) {
                             int c = data.getWrongpass() + 1;
                             data.setWrongpass(c);
                             dbo.updatewrongpass(data);
-                            strErrMsg = "User ID or password is incorrect";
+//                            strErrMsg = "User ID or password is incorrect";
                             if (data.getWrongpass() >= 3) {
                                  dbo.updateenable(data);
                                 strErrMsg = "User is disable. Please Call Administrator";
@@ -236,7 +258,8 @@ public class SCUserData extends HttpServlet {
                             session.setAttribute("errormsg", strErrMsg);
                         } else {
                             dbo.updateenable(data);
-                            strErrMsg = "User is disable. Please Call Administrator";
+                            strErrMsg = "Username is not registered in CM, please contact the administrator";
+//                              strErrMsg = "User is disable. Please Call Administrator";
                             session.setAttribute("errormsg", strErrMsg);
                         }
                         log.error(strErrMsg);
@@ -275,7 +298,8 @@ public class SCUserData extends HttpServlet {
                 log.info(strErrMsg);
             }
         } else {
-            strErrMsg = "User ID or password is incorrect";
+//            strErrMsg = "User ID or password is incorrect";
+            strErrMsg = "Username is not registered in CM, please contact the administrator";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
             dispatcher.forward(request, response);
@@ -290,6 +314,13 @@ public class SCUserData extends HttpServlet {
             log.info("closeConnection");
             log.info("errormsg:" + session.getAttribute("errormsg"));
         }
+    }
+    
+    public String getChannel() throws IOException {
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("channel");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

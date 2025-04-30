@@ -44,10 +44,11 @@
                 _136_of54d_name_address: "required",
 
                 //of56
-                _161_of56a_identifier_code: "required",
-                _165_of56d_name_address: "required",
+//                _161_of56a_identifier_code: "required",
+//                _165_of56d_name_address: "required",
 
                 //of57
+                type_of57_: "required",
                 _171_of57a_identifier_code: "required",
                 _177_of57d_name_address: "required",
 
@@ -67,8 +68,9 @@
                 _060_mf32a_date: {required: "MF32A Date must be filled..!!"},
                 _061_mf32a_currency: {required: "MF32A Currency must be filled..!!"},
                 _062_mf32a_amount: {required: "MF32A Amount must be filled..!!"},
-                _161_of56a_identifier_code: {required: "OF56A Identifier Code must be filled..!!"},
-                _165_of56d_name_address: {required: "OF56D Name Address must be filled..!!"},
+//                _161_of56a_identifier_code: {required: "OF56A Identifier Code must be filled..!!"},
+//                _165_of56d_name_address: {required: "OF56D Name Address must be filled..!!"},
+                type_of57_: {required: "MF57 Account With Institution must be filled..!!"},
                 _171_of57a_identifier_code: {required: "OF57A Identifier Code must be filled..!!"}
                 
             },

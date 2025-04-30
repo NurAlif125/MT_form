@@ -38,6 +38,7 @@
                         <li id="tab-view3"><a href="#" rel="view3">Comment</a></li>
                         <li id="tab-view4"><a href="#" rel="view4">Histories</a></li>
                         <li id="tab-view5"><a href="#" rel="view5">Log MT Text</a></li>
+                        <li id="tab-view7"><a href="#" rel="view7" id="tabView7">Translation</a></li>
                         <li hidden style="display:none;" id="tab-validate"><a href="#" rel="view6" id="tabView6">Validate</a></li>
                     </ul>
                     <div class="tabcontents">
@@ -279,8 +280,8 @@
                             <hr/>
                             
                             <!-- OF58 -->
-                            <div class="form-row"><span class="label_body">OF58</span><span class="label">Beneficiary Institution</span>
-                                <select id="type_of58_" name="type_of58_">
+                            <div class="form-row"><span class="label_body">MF58</span><span class="label">Beneficiary Institution</span>
+                                <select id="type_of58_" name="type_of58_" input_type="MF58 Beneficiary Institution" location="Body">
                                     <option value="">choose a type</option>
                                     <option value="a">A - Beneficiary Inst - BIC</option>
                                     <option value="d">D - Beneficiary Inst - Name and Address</option>
@@ -548,7 +549,7 @@
                             
                             <!--MF59-->
                             <div class="form-row"><span class="label_body">MF59</span><span class="label">Beneficiary Customer</span>
-                                <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory">
+                                <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="MF59 Beneficiary Customer" location="Body">
                                     <option value="">choose a type</option>
                                     <option value="59">59 - Name and Address</option>
                                     <option value="59a">59A - BIC</option>
@@ -748,7 +749,11 @@
                         <div id="view5" class="tabcontent">
                             <%@ include file="logTrx_mt.jsp" %>
                         </div>
-                        
+                        <div id="view7" class="tab-content">
+                            <div class="form-row">
+                                <%@include file="mt_mx.jsp" %>
+                            </div>
+                        </div>
                         <div id="view6" class="tabcontent">
                             <div id="error-container"></div>
                         </div>

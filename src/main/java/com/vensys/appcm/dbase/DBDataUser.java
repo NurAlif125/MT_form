@@ -42,7 +42,7 @@ public class DBDataUser {
     public void addDataUser(DataUser data, String mofier, String ip, String comp) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new,sub_role,channel) VALUES (?,?,?,?,?,?,?,?,?)";
 //            String sql = "INSERT INTO [user] (user_id,name,description,role,enable) VALUES (?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id()); //user_id
@@ -52,6 +52,8 @@ public class DBDataUser {
             st.setInt(5, data.getRole());     //role
             st.setInt(6, data.getEnable());     //enable
             st.setInt(7, 1);
+            st.setInt(8, data.getSub_role());
+            st.setString(9, data.getChannel());
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -65,13 +67,14 @@ public class DBDataUser {
 //        System.out.println("user_id" + user_id);
         try {
 //            String sql = "UPDATE [user] SET name=?,description=?,role=?,enable=? WHERE user_id=?";
-            String sql = "UPDATE users SET name=?,description=?,role=?,enable=? WHERE user_id=?";
+            String sql = "UPDATE users SET name=?,description=?,role=?,channel=?,enable=? WHERE user_id=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getName());     //name
             st.setString(2, data.getDescription());     //description
             st.setInt(3, data.getRole());     //role
-            st.setInt(4, data.getEnable());     //enable
-            st.setString(5, user_id); //user_id
+            st.setString(4, data.getChannel());
+            st.setInt(5, data.getEnable());     //enable
+            st.setString(6, user_id); //user_id
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -110,7 +113,10 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser() throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
-        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name FROM users AS usr LEFT JOIN roles AS rl ON usr.role=rl.role_id ORDER BY usr.user_id ASC";
+        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name,usr.channel FROM users AS usr \n" +
+"LEFT JOIN roles AS rl ON usr.role=rl.role_id \n" +
+"WHERE usr.enable !=2\n" +
+"ORDER BY usr.user_id ASC";
 //        System.out.println("sql 1 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -125,6 +131,7 @@ public class DBDataUser {
             data.setRole(rs.getInt(5));     //role
             data.setEnable(rs.getInt(6));     //enable
             data.setRole_name(rs.getString(7));     //role_name
+            data.setChannel(rs.getString(8));
             datas.add(data);
         }
         return datas;
@@ -133,7 +140,7 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser(String user_id, String name, String description) throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id "
-        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,role_name FROM users LEFT JOIN roles ON role=role_id "
+        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,role_name,channel FROM users LEFT JOIN roles ON role=role_id "
                 + "WHERE user_id LIKE '%" + user_id + "%' AND name LIKE '%" + name + "%' "
                 + "AND description LIKE '%" + description + "%' " + "ORDER BY user_id ASC";
 //        System.out.println("sql 2 = " + sql);
@@ -150,6 +157,7 @@ public class DBDataUser {
             data.setRole(rs.getInt(5));     //role
             data.setEnable(rs.getInt(6));     //enable
             data.setRole_name(rs.getString(7));     //role_name
+            data.setChannel(rs.getString(8));
             datas.add(data);
         }
         return datas;
@@ -157,10 +165,11 @@ public class DBDataUser {
 
     public DataUser getDataUserById(String user_id) throws SQLException {
         DataUser data = new DataUser();
-        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable FROM users WHERE user_id='" + user_id + "'";
+        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,sub_role,channel FROM users WHERE user_id=?";
 //        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable FROM [user] WHERE user_id='" + user_id + "'";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             data.setUser_id(rs.getString(1));   //user_id
@@ -171,6 +180,8 @@ public class DBDataUser {
             data.setDescription(rs.getString(6));     //description
             data.setRole(rs.getInt(7));     //role
             data.setEnable(rs.getInt(8));     //enable
+            data.setSub_role(rs.getInt(9));     //enable
+            data.setChannel(rs.getString(10));
         }
         return data;
     }
@@ -189,7 +200,7 @@ public class DBDataUser {
         if (status != "") {
             where = "WHERE enable = '" + status + "'";
         }
-        String sql = "SELECT user_id, name, role_name, enable, last_login, last_activity "
+        String sql = "SELECT user_id, name, role_name, enable, last_login, last_activity, channel "
                 + "FROM users as u "
                 + "LEFT JOIN roles as r "
                 + "ON u.role = r.role_id "
@@ -206,6 +217,7 @@ public class DBDataUser {
             data.setEnable(rs.getInt(4));     //enable
             data.setLast_login(replaceNull(rs.getString(5)));
             data.setLast_activity(replaceNull(rs.getString(6)));
+            data.setChannel(rs.getString(7));
             datas.add(data);
         }
         return datas;
@@ -319,6 +331,37 @@ public class DBDataUser {
             data.setAuto_disable(rs.getInt(7));
         }
         return data;
+    }
+    
+    public void disablePermanent(String user_id, String mofier, String ip, String comp) throws SQLException {
+//        String sql = "DELETE FROM [user] WHERE user_id=?";
+        String sql = "Update users set enable =2 , disable_permanent_date=CURRENT_TIMESTAMP WHERE user_id=?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
+        st.executeUpdate();
+        evl.insertDataEvent(mofier, "disable permanent user", ip, comp);
+        evl.updateLogUser(mofier, "user", tanggal);
+    }
+    
+    public List<DataUser> getAllDataUserDisable() throws Exception {
+        List<DataUser> datas = new ArrayList<DataUser>();
+        String sql = "SELECT user_id,name,channel,u.description, rl.role_name as role, disable_permanent_date FROM users  as u\n" +
+        "INNER JOIN roles as rl ON rl.role_id=u.role\n" +
+        "Where u.enable='2'";
+//        System.out.println("sql 1 = " + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            DataUser data = new DataUser();            
+            data.setUser_id(rs.getString(1));   //user_id
+            data.setName(rs.getString(2));  //name
+            data.setChannel(rs.getString(3));
+            data.setDescription(rs.getString(4));     //description
+            data.setRole_name(rs.getString(5));     //role
+            data.setDisable_permanent_date(rs.getDate(6));
+            datas.add(data);
+        }
+        return datas;
     }
 }
 

@@ -117,7 +117,7 @@
                 _181_mf59_name_address: {required: "mf59_name_address must be filled..!!"},
                 _183_mf59a_identifier_code: {required: "mf59a_identifier_code must be filled..!!"},
                 _186_mf59f_name_address: {required: "mf59_name_address must be filled..!!"},
-                _210_of71a_details_charges: {required: "of71a_details_charges must be filled..!!"}
+                _210_of71a_details_charges: {required: "mf71a_details_charges must be filled..!!"}
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);
