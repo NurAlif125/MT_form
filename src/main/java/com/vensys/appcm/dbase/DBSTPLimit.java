@@ -8,6 +8,7 @@ package com.vensys.appcm.dbase;
  *
  * @author RIZKY
  */
+import com.vensys.appcm.model.DataSFTP;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -107,5 +108,37 @@ public class DBSTPLimit {
             data.setTanggal(rs.getString("tanggalupdate"));    
         }
         return data;
+    }
+
+    public DataSFTP getConfigSFTPbyName(String configName) throws SQLException {
+        DataSFTP sftp = new DataSFTP();
+        String sql = "select * from sftp_reader_fia_new where config_name=?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, configName);
+        System.out.println(st);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            sftp.setId(rs.getInt(1));
+            sftp.setConfig_name(rs.getString(2));
+            sftp.setHost(rs.getString(3));
+            sftp.setPort(rs.getInt(4));
+            sftp.setUsername(rs.getString(5));
+            sftp.setPassword(rs.getString(6));
+            sftp.setPrivatekeytype(rs.getString(7));
+            sftp.setPrivatekeypath(rs.getString(8));
+            sftp.setPrivatekeypassword(rs.getString(9));
+            sftp.setPath(rs.getString(10));
+            sftp.setLocalpath(rs.getString(11));
+            sftp.setTransferpath(rs.getString(12));
+            sftp.setSource(rs.getString(13));
+            sftp.setIsenable(rs.getInt(14));
+            sftp.setProtocol(rs.getString(15));
+            sftp.setClientauthenticationtype(rs.getString(16));
+            sftp.setKeystorefile(rs.getString(17));
+            sftp.setKeystorepassword(rs.getString(18));
+            sftp.setKeystorealias(rs.getString(19));
+            sftp.setKeyfilepassword(rs.getString(20));        
+        }
+        return sftp;
     }
 }
