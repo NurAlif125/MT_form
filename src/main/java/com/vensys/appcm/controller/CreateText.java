@@ -18,6 +18,7 @@ import com.vensys.appcm.model.DataSFTP;
 import com.google.gson.Gson;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -115,38 +116,43 @@ public class CreateText {
     public void createTextFile(String fin, String mt, String source, int id, String io_type) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());            
         String fileName = "MT" + mt + "_" + dbHTML + "_" + id + ".txt";
-        SFTP sftp = new SFTP();
+        SFTP sftp = new SFTP();        
         FileWriter fstream = null;
-        System.out.println("fileName:" + fileName);        
-        String filePath =  "D:/z/" + fileName; 
+        System.out.println("fileName:" + fileName);
+//        if (io_type.equalsIgnoreCase("I")) {
+//            fstream = new FileWriter(getOutDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + "_" + source + ".txt");
+//        } else {
+//            fstream = new FileWriter(getIncDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + "_" + source + ".txt");
+//        }     
+        String filePath =  getLocalDir() + "/" + fileName; 
         fstream = new FileWriter(filePath);                   
-        // BufferedWriter out = new BufferedWriter(fstream);
         System.out.println("filePath: " + filePath);
-        System.out.println("fileName: " + fileName);
         BufferedWriter out = new BufferedWriter(fstream);
-
-        // out.write(fin.toUpperCase());
         out.write(fin);
         out.close();
         log.info("createTextFile : " + "MT" + mt + "_" + dbHTML + "_" + id + ".txt");
-        sftp.uploadToSftp(filePath,fileName);
-
+        sftp.uploadToSftp("MT",fileName);
     }
     
     public void createTextFileMX(String fin, String type, int id, String io_type) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
-        System.out.println("cek dbHMTL: " + dbHTML);
+        String fileName = type + "_" + dbHTML + "_" + id + ".xml";
+        //System.out.println("cek dbHMTL: " + dbHTML);
+        SFTP sftp = new SFTP();        
         FileWriter fstream = null;
-        if (io_type.equalsIgnoreCase("I")) {
-            fstream = new FileWriter(getOutDirMX() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
-        } else {
-            fstream = new FileWriter(getIncDir() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
-        }
+//        if (io_type.equalsIgnoreCase("I")) {
+//            fstream = new FileWriter(getOutDirMX() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
+//        } else {
+//            fstream = new FileWriter(getIncDir() + "/" + type + "_" + dbHTML + "_" + id + ".xml");
+//        }
+        String filePath =  getLocalDir() + "/" + fileName; 
+        fstream = new FileWriter(filePath);                   
         BufferedWriter out = new BufferedWriter(fstream);
 //        out.write(fin.toUpperCase());
         out.write(fin);
         out.close();
         log.info("createTextFile : " +  type + "_" + dbHTML + "_" + id + ".txt");
+        sftp.uploadToSftp("MX",fileName);
     }
 
     public String createFinalMT(Header header) throws SQLException, Exception {
@@ -477,7 +483,14 @@ public class CreateText {
         prop.load(inputStream);
         return prop.getProperty("outgoing_dir");
     }
-
+    
+    public String getLocalDir() throws IOException {
+        log.info("getOutDir");
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("localFilePath");
+    }    
     public String getIncDir() throws IOException {
         log.info("getIncDir");
         Properties prop = new Properties();

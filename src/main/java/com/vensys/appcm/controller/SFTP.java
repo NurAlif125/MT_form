@@ -2,81 +2,147 @@ package com.vensys.appcm.controller;
 
 import com.jcraft.jsch.*;
 import com.vensys.appcm.dbase.DBconnection;
-import java.sql.Connection;
-import com.vensys.appcm.dbase.DBSTPLimit;
 import com.vensys.appcm.model.DataSFTP;
-import java.sql.SQLException;
+import com.vensys.appcm.myutils.Encryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class SFTP {
-    Logger log = LogManager.getLogger(getClass().getName());
-    DBconnection dbConn = new DBconnection();
-    public void uploadToSftp(String localFilePath, String remoteFileName) {
-        DataSFTP valueSFTP = null;
-        DBSTPLimit dbsftp = new DBSTPLimit(dbConn.getConnection());
-        try {
-            valueSFTP = dbsftp.getConfigSFTPbyName("coba");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        }
-        
-        // String privateKeyPath = valueSFTP.getPrivatekeypath(); // /home/tomcat/.ssh/known_hosts
-//        String privateKeyPath = (valueSFTP.getPrivatekeypath() == null || valueSFTP.getPrivatekeypath().trim().isEmpty()) ? "/home/tomcat/.ssh/known_hosts" : valueSFTP.getPrivatekeypath();
-//        System.out.println("privateKeyPath:" + privateKeyPath);
-//        String sftpHost = valueSFTP.getHost(); // 192.168.220.42
-//        int sftpPort = valueSFTP.getPort(); // 22
-//        String sftpUser = valueSFTP.getUsername(); // root
-//        String remoteDir = valueSFTP.getTransferpath(); // /root/Public
-        // String localFilePath = valueSFTP.getPath();
-        String privateKeyPath = (valueSFTP.getPrivatekeypath() == null || valueSFTP.getPrivatekeypath().trim().isEmpty()) ? "C:/Users/T440P/.ssh/id_rsa" : valueSFTP.getPrivatekeypath(); // "/home/tomcat/.ssh/known_hosts"
-        String sftpHost = (valueSFTP.getHost() == null || valueSFTP.getHost().trim().isEmpty()) ? "192.168.220.42" : valueSFTP.getHost();
-        int sftpPort = (valueSFTP.getPort() == 0) ? 22 : valueSFTP.getPort();
-        String sftpUser = (valueSFTP.getUsername() == null || valueSFTP.getUsername().trim().isEmpty()) ? "root" : valueSFTP.getUsername();
-        String remoteDir = (valueSFTP.getTransferpath() == null || valueSFTP.getTransferpath().trim().isEmpty()) ? "/root/Public" : valueSFTP.getTransferpath();
+import java.io.InputStream;
+import java.util.Properties;
 
+public class SFTP {
+    private static final Logger log = LogManager.getLogger(SFTP.class);
+
+    private final Encryptor enc = new Encryptor();
+
+    private String privateKeyPath;
+    private String sftpHost;
+    private int sftpPort = 22;
+    private String sftpUser;
+    private String sftpPassword;
+    private String remoteDir;
+    private String localFilePath;
+    private String mt_folder;
+    private String mx_folder;
+
+    public SFTP() {
+        readSFTPProperties();
+    }
+
+    public void uploadToSftp(String MXorMT, String remoteFileName) {
         JSch jsch = new JSch();
         Session session = null;
         ChannelSftp channelSftp = null;
 
         try {
-            jsch.addIdentity(privateKeyPath);
-            session = jsch.getSession(sftpUser, sftpHost, sftpPort);
+            session = prepareSession(jsch);
 
-            // Optional - safer in production
-            session.setConfig("StrictHostKeyChecking", "yes");
-            jsch.setKnownHosts("C:/Users/T440P/.ssh/known_hosts");
-            // jsch.setKnownHosts("/home/tomcat/.ssh/known_hosts");
-            
-            session.connect();
+            log.info("Connecting to SFTP server...");
+            session.connect(30000);
+            log.info("SFTP session connected to {}", sftpHost);
 
             channelSftp = (ChannelSftp) session.openChannel("sftp");
-            channelSftp.connect();
+            channelSftp.connect(10000);
+            log.info("SFTP channel opened.");
 
-            // Upload
-            System.out.println("Uploading file: " + localFilePath + " to " + remoteDir + "/" + remoteFileName);
+            if(MXorMT.equalsIgnoreCase("MT")) {
+                remoteDir = remoteDir + mt_folder;
+            } else if (MXorMT.equalsIgnoreCase("MX")) {
+                remoteDir = remoteDir + mx_folder;
+            } else {
+                log.error("Invalid MXorMT value: {}", MXorMT);
+                return;
+            }
+
+            // Upload file
+            log.info("Uploading file: {} to {}/{}", localFilePath, remoteDir, remoteFileName);
             channelSftp.cd(remoteDir);
-            channelSftp.put(localFilePath, remoteFileName);
-
-            log.info("SFTP upload successful: " + remoteFileName);
-            System.out.println("SFTP upload successful: " + remoteFileName);
+            System.out.println("localFilePath / remoteFileName:" + localFilePath + "/" + remoteFileName);
+            System.out.println("remoteDir:" + remoteDir);
+            channelSftp.put(localFilePath + "/" + remoteFileName, remoteDir);
+            log.info("SFTP upload successful: {}", remoteFileName);
         } catch (Exception e) {
+            System.out.println("error:"+e);
             log.error("SFTP upload failed", e);
         } finally {
-            if (channelSftp != null && channelSftp.isConnected()) {
-                channelSftp.disconnect();
-            }
-            if (session != null && session.isConnected()) {
-                session.disconnect();
-            }
+            disconnectQuietly(channelSftp, session);
         }
     }
 
-//    public static void main(String[] args) {
-//		SFTP sftp = new SFTP();
-//		String filePath = "C:/test/inicumatest.txt"; 
-//		String fileName = "inicumatest.txt";
-//		sftp.uploadToSftp(filePath, fileName);    
-//    }
+    public boolean isSftpServerReachable() {
+        JSch jsch = new JSch();
+        Session session = null;
+
+        try {
+            session = prepareSession(jsch);
+            session.connect(5000);
+            boolean connected = session.isConnected();
+            log.info("SFTP server reachable: {}", connected);
+            return connected;
+        } catch (Exception e) {
+            log.error("SFTP connection test failed: {}", e.getMessage());
+            return false;
+        } finally {
+            disconnectQuietly(null, session);
+        }
+    }
+
+    private Session prepareSession(JSch jsch) throws Exception {
+        if (privateKeyPath != null && !privateKeyPath.isEmpty()) {
+            log.info("Using private key for SFTP.");
+            System.out.println("privateKeyPath:"+privateKeyPath);
+            jsch.addIdentity(privateKeyPath);
+        }
+
+        Session session = jsch.getSession(sftpUser, sftpHost, sftpPort);
+        session.setConfig("StrictHostKeyChecking", "no");
+
+        if ((privateKeyPath == null || privateKeyPath.isEmpty()) && sftpPassword != null && !sftpPassword.isEmpty()) {
+            log.info("Using password authentication for SFTP.");
+            session.setPassword(sftpPassword);
+        }
+
+        if ((privateKeyPath == null || privateKeyPath.isEmpty()) && (sftpPassword == null || sftpPassword.isEmpty())) {
+            log.error("Neither private key nor password provided.");
+            throw new RuntimeException("SFTP credentials missing");
+        }
+
+        return session;
+    }
+
+    private void disconnectQuietly(ChannelSftp channel, Session session) {
+        if (channel != null && channel.isConnected()) {
+            channel.disconnect();
+            log.info("SFTP channel disconnected.");
+        }
+        if (session != null && session.isConnected()) {
+            session.disconnect();
+            log.info("SFTP session disconnected.");
+        }
+    }
+
+    private void readSFTPProperties() {
+        try (InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("db.properties")) {
+            if (inputStream == null) {
+                log.error("db.properties file not found in classpath.");
+                return;
+            }
+
+            Properties prop = new Properties();
+            prop.load(inputStream);
+
+            privateKeyPath = prop.getProperty("privateKeyPath");
+            sftpHost = prop.getProperty("sftpHost");
+            sftpPort = Integer.parseInt(prop.getProperty("sftpPort", "22"));
+            sftpUser = enc.decryptTD(prop.getProperty("sftpUser"), "AKey@VenSys");
+            sftpPassword = enc.decryptTD(prop.getProperty("sftpPassword"), "AKey@VenSys");
+            remoteDir = prop.getProperty("remoteDir");
+            localFilePath = prop.getProperty("localFilePath");
+            mt_folder = prop.getProperty("mt_folder");
+            mx_folder = prop.getProperty("mx_folder");
+
+        } catch (Exception e) {
+            log.error("Failed to read SFTP properties", e);
+        }
+    }
 }
