@@ -369,9 +369,9 @@ public class DBDataTransaksiOutgoing {
                 
                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
                 
-                System.out.println(finalMX.get("modify_mx"));
+                System.out.println(finalMX.get("final_mx"));
                 
-                ct.createTextFileMX(finalMX.get("modify_mx"),variant,id_headers, "I", channel);
+                ct.createTextFileMX(finalMX.get("final_mx"),variant,id_headers, "I", channel);
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
