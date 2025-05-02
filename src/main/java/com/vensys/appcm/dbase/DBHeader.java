@@ -1091,10 +1091,8 @@ System.out.println("Session ID: " + httpSession.getId());
         } else {
             where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
         }
-        
-        if (channel.equalsIgnoreCase("")) {
-            
-        } else {
+                
+        if (channel != null && !channel.isBlank()) {
             where += " AND source = '" + channel + "'";
         }
         List<Header> headers = new ArrayList<Header>();

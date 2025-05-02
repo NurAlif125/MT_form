@@ -300,7 +300,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 } else {
                     if (messageType.contains("pacs") || messageType.contains("camt")) {
                         log.info("update data MX");
-                        dBDataTransaksiOutgoing2.updateMXText(dataXml, Integer.parseInt(id));
+//                        dBDataTransaksiOutgoing2.updateMXText(dataXml, Integer.parseInt(id));
                     } else {
                         log.info("update data MT");
                         if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {

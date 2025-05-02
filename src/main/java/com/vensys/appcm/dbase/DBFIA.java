@@ -87,11 +87,11 @@ public class DBFIA {
         return datas;
     }
 
-    
     public DataFIA getFiaById(String id) throws SQLException {
         DataFIA data = new DataFIA();
-        String sql = "SELECT id,source,mtormx,needcheckaml,needconverted,sourceto,isenable FROM configuration_fia WHERE id='" + id + "'";
+        String sql = "SELECT id,source,mtormx,needcheckaml,needconverted,sourceto,isenable FROM configuration_fia WHERE id=?";
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, Integer.parseInt(id));
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             data.setId(rs.getInt(1));
@@ -114,9 +114,11 @@ public class DBFIA {
 
     public List<String[]> getPagesFIAAjax(int offset, int numberLimit) throws Exception {
         List<String[]> datas = new ArrayList<String[]>();
-        String sql = "SELECT id,source,mtormx,needcheckaml,needconverted,sourceto,isenable FROM configuration_fia ORDER BY id OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
+        String sql = "SELECT id,source,mtormx,needcheckaml,needconverted,sourceto,isenable FROM configuration_fia ORDER BY id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, offset);
+        st.setInt(2, numberLimit);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             String[] value = {
