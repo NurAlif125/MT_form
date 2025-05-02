@@ -523,11 +523,11 @@
             <version>3.0.21</version>
         </dependency>-->
         
-        <!-- https://mvnrepository.com/artifact/com.unboundid/unboundid-ldapsdk -->
+        <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports-fonts -->
         <dependency>
-            <groupId>com.unboundid</groupId>
-            <artifactId>unboundid-ldapsdk</artifactId>
-            <version>7.0.1</version>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports-fonts</artifactId>
+            <version>7.0.2</version>
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

@@ -1084,6 +1084,8 @@ System.out.println("Session ID: " + httpSession.getId());
             where += " AND flag='INC-REJECT-CNF' ";
         } else if (flag.equalsIgnoreCase("INC-AML")) { 
             where += " AND flag='INC-AML' ";
+        } else if (flag.equalsIgnoreCase("Un-Settle")) { 
+            where += " AND flag='Un-Settle' ";
         } else if (flag.equalsIgnoreCase("AML-TERMINATE")) { 
             where += " AND flag='AML-TERMINATE' ";
         } else {
