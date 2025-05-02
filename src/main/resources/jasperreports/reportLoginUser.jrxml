@@ -9,10 +9,10 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="Title" fontName="DejaVu Sans" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
-	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
-	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Column header" forecolor="#666666" fontName="DejaVu Sans" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="DejaVu Sans" fontSize="12"/>
 	<style name="Row" mode="Transparent">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
@@ -39,7 +39,7 @@
 			<staticText>
 				<reportElement key="staticText" style="Title" x="319" y="25" width="170" height="49" uuid="ed9d39a9-73af-4582-b368-d93190d51e16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="22" isBold="false"/>
+					<font fontName="DejaVu Sans" size="22" isBold="false"/>
 				</textElement>
 				<text><![CDATA[User Login]]></text>
 			</staticText>

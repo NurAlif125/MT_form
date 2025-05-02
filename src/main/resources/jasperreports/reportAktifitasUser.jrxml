@@ -9,10 +9,10 @@
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
-	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
-	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
-	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Title" fontName="DejaVu Sans" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="DejaVu Sans" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="DejaVu Sans" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="DejaVu Sans" fontSize="12"/>
 	<style name="Row" mode="Transparent">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
@@ -68,7 +68,7 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="41" y="1" width="83" height="14" forecolor="#736343" uuid="57288fb9-fe25-4c0a-9189-5a010d3f5f22"/>
+				<reportElement key="staticText" style="Column header" x="31" y="1" width="93" height="14" forecolor="#736343" uuid="57288fb9-fe25-4c0a-9189-5a010d3f5f22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[User ID]]></text>
 			</staticText>
@@ -93,8 +93,8 @@
 				<text><![CDATA[Description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="1" y="1" width="30" height="14" forecolor="#736343" uuid="47f1186c-97ae-4393-abf6-a8831cb4038b"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<reportElement key="staticText" style="Column header" stretchType="RelativeToTallestObject" x="1" y="1" width="30" height="14" forecolor="#736343" uuid="47f1186c-97ae-4393-abf6-a8831cb4038b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[No]]></text>
 			</staticText>
 		</band>
@@ -104,7 +104,7 @@
 			<frame>
 				<reportElement key="frame" style="Row" mode="Opaque" x="0" y="1" width="801" height="15" uuid="492916b9-ba27-450a-8818-bf98d0996c6b"/>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="41" y="0" width="83" height="15" uuid="453aca22-cf13-4e04-b39e-72ab3b191900"/>
+					<reportElement key="textField" style="Detail" x="31" y="0" width="93" height="15" uuid="453aca22-cf13-4e04-b39e-72ab3b191900"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
@@ -126,14 +126,14 @@
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
 					<reportElement key="textField" style="Detail" x="474" y="0" width="327" height="15" uuid="5efd1dbe-c031-4225-9fdb-1d68ffa7b66f"/>
-					<textElement textAlignment="Left" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="1" y="0" width="30" height="15" uuid="1da80230-64d2-49f1-bfd4-c2ef154c0e9b"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<reportElement key="textField" style="Detail" stretchType="RelativeToTallestObject" x="1" y="0" width="30" height="15" uuid="1da80230-64d2-49f1-bfd4-c2ef154c0e9b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
