@@ -64,7 +64,7 @@
                     <c:forEach items="${dataUser}" var="item">
                         <tr>
                             <td><%=rowNum++%></td>
-                            <td><a  <c:if test="${item == 'USER:ADD'}"> href="VDataUser?user_id=${item.user_id}" </c:if>>${item.user_id}</a></td>
+                            <td><a href="VDataUser?user_id=${item.user_id}">${item.user_id}</a></td>
                             <td>${item.name}</td>
                             <td>${item.channel}</td>
                             <td>${item.description}</td>

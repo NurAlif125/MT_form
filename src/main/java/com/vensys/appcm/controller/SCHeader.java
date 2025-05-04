@@ -137,6 +137,9 @@ public class SCHeader extends HttpServlet implements Serializable {
                     } else if (flag.equalsIgnoreCase("INC-WAIT") && (flagStatus.equalsIgnoreCase("INC-HOLD"))) {
                         flag = "INC-HOLD";
                         menu = "11";
+                    }  else if (flag.equalsIgnoreCase("ACK")) {
+                        flag = "ACK";
+                        menu = "13";
                     } else if (flag.equalsIgnoreCase("INC-WAIT")) {
                         flag = "INC-WAIT";
                         menu = "6";

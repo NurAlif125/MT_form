@@ -29,7 +29,7 @@ function fetchNotifications() {
 //                alert(`Anda memiliki ${countNewNotif} notifikasi baru!`);
                 console.log("count new notifcation"+countNewNotif)
                 Toastify({
-                    text: `Anda memiliki ${countNewNotif} notifikasi baru!`,
+                    text: `You Have ${countNewNotif} New Notification!`,
                     duration: 3000,
                     close: true,
                     gravity: "bottom",
@@ -130,6 +130,7 @@ function markAsRead() {
                 success: function (response) {
                     console.log(response)
                     console.log(response.status)
+                    $('#checkAll').prop('checked', false);
                     if (response.status == "success") {
                         fetchNotificationList()
                         fetchNotifications()

@@ -335,7 +335,7 @@
                                                 <li><a href="controllerHeaders?io_type=O&flag=INC-AML&menu=27">Incoming Waiting AML</a></li>
                                             </c:if>
                                             <c:if test="${iteminc == 'FLOW:Un-Settle'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=Un-Settle&menu=28">Resend to Channel </a></li>
+                                                <li><a href="controllerHeaders?io_type=O&flag=Un-Settle&menu=28">Incoming Un Settle</a></li>
                                             </c:if>
                                         </c:forEach>
                                         <!--<li><a href="controllerHeaders?io_type=O&flag=INC-INV&menu=8">Incoming Investigation</a></li>-->

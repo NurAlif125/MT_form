@@ -25,7 +25,11 @@
                         <input type="text" name="role_name" id="role_name" maxlength="255" value="<c:out value='${dataRoleById.role_name}' />" />
                     </div>
                     <div class="form-row"><span class="labelL">Role Enable</span>
-                        <input type="checkbox" name="role_enable" id="role_enable" value="1" <c:if test="${dataRoleById.role_enable == '1'}"> checked="true" </c:if> />
+                        <input type="checkbox" name="role_enable" id="role_enable" value="1"
+                            <c:if test="${dataRoleById.role_enable == '1'}"> checked="true" </c:if> 
+                            <c:if test="${sessionScope.sub_role_user == '2'}"> onclick="return false;" 
+                                style="accent-color: #ccc;" </c:if>
+                        />
                         </div>
                         <div class="form-row"><span class="labelL">Role Description</span>
                             <input type="text" name="role_desc" id="role_desc" maxlength="45" value="<c:out value="${dataRoleById.role_desc}" />" />
@@ -62,7 +66,7 @@
                         <label>Incoming Convert Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:RESEND-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:RESEND-CNF'}"> checked="true" </c:if> </c:forEach> /></label>
                         <label>Incoming Reject Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-REJECT-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-REJECT-CNF'}"> checked="true" </c:if> </c:forEach> /></label>
                         <label>Incoming Waiting AML <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-AML" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-AML'}"> checked="true" </c:if> </c:forEach> /></label>
-                        <label>Resend to Channel <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:Un-Settle" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:Un-Settle'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Incoming Un Settle <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:Un-Settle" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:Un-Settle'}"> checked="true" </c:if> </c:forEach> /></label>
                         <label>Waiting AML Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:AML-TERMINATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:AML-TERMINATE'}"> checked="true" </c:if> </c:forEach> /></label>
                     </div>
                     <div class="form-row"><span class="labelL">Menu</span>
