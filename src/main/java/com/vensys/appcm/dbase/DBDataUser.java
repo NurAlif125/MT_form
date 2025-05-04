@@ -22,6 +22,7 @@ import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import com.vensys.appcm.model.DataRole;
 import com.vensys.appcm.model.DataUser;
+import java.sql.Timestamp;
 
 /**
  *
@@ -62,7 +63,7 @@ public class DBDataUser {
         evl.insertDataEvent(mofier, "Tambah user", ip, comp);
         evl.updateLogUser(mofier, "user", tanggal);
     }
-
+    
     public void updateDataUser(DataUser data, String user_id, String mofier, String ip, String comp) {
 //        System.out.println("user_id" + user_id);
         try {

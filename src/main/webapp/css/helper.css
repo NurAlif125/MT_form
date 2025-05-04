@@ -666,7 +666,7 @@ body.cm {
     font-size: 15px;
     font-weight: bold;
 }
-#frmmidle #frmlog form input[type=text],input[type=password]{
+#frmmidle #frmlog form input[type=text],#frmmidle #frmlog form input[type=password]{
     padding: 10px;
     font-size: 15px;
     font-weight: bold;

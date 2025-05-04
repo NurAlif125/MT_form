@@ -52,6 +52,10 @@
         <servlet-name>SCFIA</servlet-name>
         <url-pattern>/SCFIA</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCFIAPath</servlet-name>
+        <url-pattern>/SCFIAPath</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>SCBICList</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCBICList</servlet-class>
@@ -316,6 +320,13 @@
         <servlet-name>VFIA</servlet-name>
         <servlet-class>com.vensys.appcm.controller.VFIA</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>VFIAPath</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.VFIAPath</servlet-class>
+    </servlet>
+    
+    
     <servlet>
         <servlet-name>VDataAccBalance</servlet-name>
         <servlet-class>com.vensys.appcm.controller.VDataAccBalance</servlet-class>
@@ -506,7 +517,11 @@
     <servlet>
         <servlet-name>SCFIA</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCFIA</servlet-class>
-    </servlet>
+    </servlet> 
+    <servlet>
+        <servlet-name>SCFIAPath</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCFIAPath</servlet-class>
+    </servlet>    
     <servlet-mapping>
         <servlet-name>SCBICList</servlet-name>
         <url-pattern>/SCBICList</url-pattern>
@@ -774,6 +789,10 @@
     <servlet-mapping>
         <servlet-name>VFIA</servlet-name>
         <url-pattern>/VFIA</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VFIAPath</servlet-name>
+        <url-pattern>/VFIAPath</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>VDataAccBalance</servlet-name>

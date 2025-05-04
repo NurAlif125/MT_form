@@ -107,7 +107,12 @@
                             <c:if test="${item == 'FIACONF:LIST'}">
                                 <li><a href="SCFIAList">FIA Configuration</a></li>
                             </c:if>
-                        </c:forEach>                        
+                        </c:forEach>
+                        <c:forEach var="item" items="${role}">
+                            <c:if test="${item == 'FIAPATHCONF:LIST'}">
+                                <li><a href="SCFIAPathList">FIA Path Configuration</a></li>
+                            </c:if>
+                        </c:forEach>
                         <c:forEach var="item" items="${role}">
 
                             <c:if test="${item == 'MT_QUEUE:LIST'}">

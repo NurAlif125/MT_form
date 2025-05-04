@@ -105,8 +105,14 @@
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Approval <input type="checkbox" name="role_detail" id="role_detail" value="FIACONF:APPROVAL" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIACONF:APPROVAL'}"> checked="true" </c:if></c:forEach></label>
-                    </div>                      
-
+                    </div>      
+                    <div class="form-row">
+                        <span class="labelL">FIA Path Config</span>
+                        <label>List <input type="checkbox" name="role_detail" id="role_detail" value="FIAPATHCONF:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIAPATHCONF:LIST'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Add <input type="checkbox" name="role_detail" id="role_detail" value="FIAPATHCONF:ADD" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIAPATHCONF:ADD'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>View <input type="checkbox" name="role_detail" id="role_detail" value="FIAPATHCONF:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIAPATHCONF:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="FIAPATHCONF:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FIAPATHCONF:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
+                    </div> 
                     <div class="form-row">
                         <span class="labelL">User</span>
                         <label>List <input type="checkbox" name="role_detail" id="role_detail" value="USER:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'USER:LIST'}"> checked="true" </c:if></c:forEach> /></label>
