@@ -104,13 +104,14 @@
                 $("#tab-validate").removeAttr("hidden");
                  $("#tab-validate").css("display", "");
                  
-                $("#view1, #view2, #view3, #view4, #view5").css("display", "none");
+                $("#view1, #view2, #view3, #view4, #view5, #view8").css("display", "none");
                 $("#view6").css("display", "block");
                 $('#tab-view1').removeClass("selected").removeAttr('class');
                 $('#tab-view2').removeClass("selected").removeAttr('class');
                 $('#tab-view3').removeClass("selected").removeAttr('class');
                 $('#tab-view4').removeClass("selected").removeAttr('class');
                 $('#tab-view5').removeClass("selected").removeAttr('class');
+                $('#tab-view8').removeClass("selected").removeAttr('class');
                 $('#tab-validate').addClass("selected");
 
                 let errorContainer = document.getElementById("error-container");
@@ -153,23 +154,25 @@
                         let input = document.getElementById(inputId);
                         if (input) {
                             if(tabContentGroup == "Header") {
-                                $("#view2, #view3, #view4, #view5, #view6").css("display", "none");
+                                $("#view2, #view3, #view4, #view5, #view6, #view8").css("display", "none");
                                 $("#view1").css("display", "block");
                                 $('#tab-view1').addClass("selected");
                                 $('#tab-view2').removeClass("selected").removeAttr('class');
                                 $('#tab-view3').removeClass("selected").removeAttr('class');
                                 $('#tab-view4').removeClass("selected").removeAttr('class');
                                 $('#tab-view5').removeClass("selected").removeAttr('class');
+                                $('#tab-view8').removeClass("selected").removeAttr('class');
                                 $('#tab-validate').removeClass("selected").removeAttr('class');
                             } 
                             else if (tabContentGroup == "Body") {
-                                 $("#view1, #view3, #view4, #view5, #view6").css("display", "none");
+                                 $("#view1, #view3, #view4, #view5, #view6, #view8").css("display", "none");
                                 $('#tab-view1').removeClass("selected").removeAttr('class');
                                 $("#view2").css("display", "block");
                                 $('#tab-view2').addClass("selected");
                                 $('#tab-view3').removeClass("selected").removeAttr('class');
                                 $('#tab-view4').removeClass("selected").removeAttr('class');
                                 $('#tab-view5').removeClass("selected").removeAttr('class');
+                                $('#tab-view8').removeClass("selected").removeAttr('class');
                                 $('#tab-validate').removeClass("selected").removeAttr('class');
                                 
                             }
