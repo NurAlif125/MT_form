@@ -8,6 +8,7 @@ package com.vensys.appcm.dbase;
  *
  * @author T430
  */
+import com.google.gson.Gson;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,15 +33,12 @@ public class DBBIC {
     }
     Logger log = Logger.getLogger(getClass().getName());
 
-    public void addBic(DataBIC data) {
+    public void addBic(String json) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO bic(code_member,company,address,note) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO bic(need_approve) VALUES (?::jsonb)";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setString(1, data.getCode_member()); //code_member
-            st.setString(2, data.getCompany());     //company
-            st.setString(3, data.getAddress());     //address
-            st.setString(4, data.getNote());     //note
+            st.setString(1, json);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -48,15 +46,53 @@ public class DBBIC {
         }
     }
 
-    public void updateBic(DataBIC data, int id_member) {
+    public void deleteBICApproval(int id_member) {
         try {
-            String sql = "Update bic SET code_member=?,company=?,address=?,note=? where id_member=?";
+            String sql = "UPDATE bic SET need_approve = NULL WHERE id_member = ?";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setString(1, data.getCode_member()); //code_member
-            st.setString(2, data.getCompany());     //company
-            st.setString(3, data.getAddress());     //address
-            st.setString(4, data.getNote());     //note
-            st.setInt(5, id_member);     //id_member
+            st.setInt(1, id_member);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error(e);
+        }
+    }
+    
+    public void deletePermanentBICApproval(int id_member) {
+        try {
+            log.info("Deleting BIC from approval");
+            String sql = "DELETE FROM bic WHERE id_member = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id_member);
+            st.executeUpdate();
+            log.info("Delete BIC Approval success");
+        } catch (SQLException e) {
+            log.error(e);
+        }
+    }
+
+    public void addDataAfterApproval(DataBIC data, int id_member) {
+        try {
+            log.info("addDataAfterApprovalBIC");
+            String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ? WHERE id_member = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, data.getCode_member());
+            st.setString(2, data.getCompany());
+            st.setString(3, data.getAddress());
+            st.setString(4, data.getNote());
+            st.setInt(5, id_member);
+            st.executeUpdate();
+            log.info("success add data BIC");
+        } catch (SQLException e) {
+            log.error(e);
+        }
+    }
+
+    public void updateBic(String json, int id_member) {
+        try {
+            String sql = "Update bic SET need_approve=?::jsonb where id_member=?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, json);
+            st.setInt(2, id_member);     //id_member
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -106,18 +142,36 @@ public class DBBIC {
         DataBIC data = new DataBIC();
         String sql = "SELECT id_member,code_member,company,address,note FROM bic WHERE id_member='" + id_member + "'";
 //        System.out.println("sql=" + sql);
-        PreparedStatement st = this.conn.prepareStatement(sql);
-        ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            data.setId_member(rs.getInt(1));
-            data.setCode_member(rs.getString(2));
-            data.setCompany(rs.getString(3));
-            data.setAddress(rs.getString(4));
-            data.setNote(rs.getString(5));
+        try {
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                data.setId_member(rs.getInt(1));
+                data.setCode_member(rs.getString(2));
+                data.setCompany(rs.getString(3));
+                data.setAddress(rs.getString(4));
+                data.setNote(rs.getString(5));
+            }
+            log.info("getBicById");
+        } catch (SQLException e) {
+            log.error(e);
         }
         return data;
     }
-    
+
+    public DataBIC getBicApprovalById(String id_member) throws SQLException {
+        DataBIC data = new DataBIC();
+        Gson gson = new Gson();
+        String sql = "SELECT id_member, need_approve FROM bic WHERE id_member = ?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, Integer.parseInt(id_member));
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            data = gson.fromJson(rs.getString(2), DataBIC.class);
+        }
+        return data;
+    }
+
     public DataBIC getBicByCode(String codeDataBIC) throws SQLException {
         DataBIC data = new DataBIC();
         String sql = "SELECT id_member,code_member,company,address,note FROM bic WHERE code_member LIKE '%" + codeDataBIC + "%'";
@@ -140,7 +194,7 @@ public class DBBIC {
         st.setInt(1, id);
         st.executeUpdate();
     }
-    
+
     //20221223
     public List<DataBIC> getAllMember(int offset, int fetch) throws Exception {
         List<DataBIC> datas = new ArrayList<DataBIC>();
@@ -161,7 +215,7 @@ public class DBBIC {
         }
         return datas;
     }
-    
+
     public int countMember() throws Exception {
         int result = 0;
         String sql = "select count(*) from bic";
@@ -172,13 +226,22 @@ public class DBBIC {
         }
         return result;
     }
-        public int getNumberofRows() throws Exception {
-        String sql = "SELECT count(*) FROM bic";
+
+    public int getNumberofRows() throws Exception {
+        String sql = "SELECT count(*) FROM bic WHERE need_approve IS NULL";
         ResultSet rs = this.conn.createStatement().executeQuery(sql);
         rs.next();
         return rs.getInt(1);
     }
-        public List<String[]> getAllBicAjax() throws Exception {
+
+    public int getNumberofRowsApprove() throws Exception {
+        String sql = "SELECT count(*) FROM bic WHERE need_approve IS NOT NULL";
+        ResultSet rs = this.conn.createStatement().executeQuery(sql);
+        rs.next();
+        return rs.getInt(1);
+    }
+
+    public List<String[]> getAllBicAjax() throws Exception {
         List<String[]> datas = new ArrayList<String[]>();
         String sql = "SELECT id_member,code_member,company,address,note FROM bic";
 //        System.out.println("sql=" + sql);
@@ -202,9 +265,10 @@ public class DBBIC {
         }
         return datas;
     }
+
     public List<String[]> getPagesBicAjax(int offset, int numberLimit) throws Exception {
         List<String[]> datas = new ArrayList<String[]>();
-        String sql = "SELECT id_member,code_member,company,address,note FROM bic ORDER BY id_member OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
+        String sql = "SELECT id_member,code_member,company,address,note FROM bic WHERE need_approve IS NULL ORDER BY id_member OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -220,14 +284,44 @@ public class DBBIC {
         }
         return datas;
     }
-        
+
+    public List<String[]> getPagesBicAjaxApproval(int offset, int numberLimit) throws Exception {
+        List<String[]> datas = new ArrayList<String[]>();
+        Gson gson = new Gson();
+        try {
+            String sql = "SELECT id_member,need_approve FROM bic WHERE need_approve IS NOT NULL ORDER BY id_member OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                String jsonData = rs.getString(2);
+                if (jsonData == null || jsonData.trim().isEmpty()) {
+                    continue;
+                }
+                DataBIC data = gson.fromJson(jsonData, DataBIC.class);
+
+                String[] value = {
+                    rs.getString(1),
+                    data.getCode_member(),
+                    data.getCompany(),
+                    data.getAddress(),
+                    data.getNote()
+                };
+
+                datas.add(value);
+            }
+        } catch (SQLException e) {
+            log.error(e);
+        }
+        return datas;
+    }
+
     public void addBICBulk(List<DataBIC> data) {
         String sql = "INSERT INTO bic (code_member,company,address,note)"
                 + "VALUES (?,?,?,?)";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             this.conn.setAutoCommit(false);
-            for (DataBIC temp: data) {
+            for (DataBIC temp : data) {
                 st.setString(1, temp.getCode_member());
                 st.setString(2, temp.getCompany());
                 st.setString(3, temp.getAddress());
@@ -243,12 +337,12 @@ public class DBBIC {
                 this.conn.rollback();
             } catch (SQLException ex) {
                 this.log.error(ex.getMessage());
-            }  
+            }
             e.printStackTrace();
             this.log.error(e.getMessage());
         }
     }
-        
+
     public String truncateBICBulk() {
         String result = "Gagal Truncate";
         try {
@@ -262,4 +356,3 @@ public class DBBIC {
         return result;
     }
 }
-

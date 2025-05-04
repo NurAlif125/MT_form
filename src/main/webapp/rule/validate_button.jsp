@@ -24,6 +24,14 @@
     }
 
     $(document).ready(function () {
+        $('#approvebic').click(function () {
+            var answer = confirm('Do you want to approve this BIC?');
+            return answer;
+        });
+        $('#rejectbic').click(function () {
+            var answer = confirm('Do you want to reject this BIC?');
+            return answer;
+        })
         $('#reject').click(function () {
             var answer = confirm('Do you want to reject this MT..!!');
             if (answer) {
@@ -127,42 +135,42 @@
             var answer = confirm('Do you to report as PDF format..!!');
             if (answer) {
                 var requestData = {
-                io_type: $('#io_type').val(),
-                mt_type: $('#mt_type').val(),
-                date_from: $('#date_from').val(),
-                date_end: $('#date_end').val(),
-                flag: $('#flag').val(),
-                value_date: $('#value_date').val(),
-                value_date_end: $('#value_date_end').val(),
-                cust_curr: $('#cust_curr').val(),
-                channel: $('#channel').val()
-            };
+                    io_type: $('#io_type').val(),
+                    mt_type: $('#mt_type').val(),
+                    date_from: $('#date_from').val(),
+                    date_end: $('#date_end').val(),
+                    flag: $('#flag').val(),
+                    value_date: $('#value_date').val(),
+                    value_date_end: $('#value_date_end').val(),
+                    cust_curr: $('#cust_curr').val(),
+                    channel: $('#channel').val()
+                };
 
-            // Send AJAX request
-            $.ajax({
-                url: 'SCPrintPDF', // URL of the servlet
-                type: 'GET', // or 'POST' if needed
-                data: requestData,
-                dataType: 'json',
-                beforeSend: function () {
-                    // ? Show a loading message before the request
-                    $('#status_message').text('Processing... Your PDF is being generated.');
-                },
-                success: function (response) {
-                    // ? Update UI without refreshing
-                    if (response.status === "Processing") {
-                        $('#status_message').html(
-                                'Your PDF is being generated. <br> <a href="' + response.download_url + '" target="_blank">Click here to download when ready</a>'
-                                );
+                // Send AJAX request
+                $.ajax({
+                    url: 'SCPrintPDF', // URL of the servlet
+                    type: 'GET', // or 'POST' if needed
+                    data: requestData,
+                    dataType: 'json',
+                    beforeSend: function () {
+                        // ? Show a loading message before the request
+                        $('#status_message').text('Processing... Your PDF is being generated.');
+                    },
+                    success: function (response) {
+                        // ? Update UI without refreshing
+                        if (response.status === "Processing") {
+                            $('#status_message').html(
+                                    'Your PDF is being generated. <br> <a href="' + response.download_url + '" target="_blank">Click here to download when ready</a>'
+                                    );
+                        }
+                    },
+                    error: function () {
+                        // ? Handle errors
+                        $('#status_message').text('Error processing PDF.');
                     }
-                },
-                error: function () {
-                    // ? Handle errors
-                    $('#status_message').text('Error processing PDF.');
-                }
-            });
+                });
             }
-             // Prepare request parameters
+            // Prepare request parameters
 //            var requestData = {
 //                io_type: $('#io_type').val(),
 //                mt_type: $('#mt_type').val(),

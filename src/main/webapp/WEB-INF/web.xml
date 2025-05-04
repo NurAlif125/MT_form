@@ -36,6 +36,18 @@
         <servlet-name>SCBIC</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCBIC</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCBICApprovalList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCBICApprovalList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VBICApproval</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.VBICApproval</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCBICApproval</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCBICApproval</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCFIA</servlet-name>
         <url-pattern>/SCFIA</url-pattern>
@@ -889,6 +901,18 @@
     <servlet-mapping>
         <servlet-name>SCDataUserDisable</servlet-name>
         <url-pattern>/SCDataUserDisable</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCBICApprovalList</servlet-name>
+        <url-pattern>/SCBICApprovalList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VBICApproval</servlet-name>
+        <url-pattern>/VBICApproval</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCBICApproval</servlet-name>
+        <url-pattern>/SCBICApproval</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
