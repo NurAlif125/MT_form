@@ -15,7 +15,9 @@
             <div id="judul">List of Role
                 <c:forEach var="item" items="${role}">
                     <c:if test="${item == 'ROLE:ADD'}">
-                        <a href="addrole.jsp" class="srb2">Add Role</a>
+                        <c:if test="${sessionScope.sub_role_user == '2'}"> 
+                            <a href="addrole.jsp" class="srb2">Add Role</a>
+                        </c:if>
                     </c:if>
                 </c:forEach>
                  <%-- <c:forEach var="item" items="${role}">

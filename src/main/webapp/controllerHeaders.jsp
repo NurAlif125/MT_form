@@ -59,7 +59,7 @@
                 <% } else if (menu.equalsIgnoreCase("25")) { %> Incoming Convert Confirmation
                 <% } else if (menu.equalsIgnoreCase("26")) { %> Incoming Reject Confirmation
                 <% } else if (menu.equalsIgnoreCase("27")) { %> Incoming Waiting AML
-                <% } else if (menu.equalsIgnoreCase("28")) { %> Un-Settle 
+                <% } else if (menu.equalsIgnoreCase("28")) { %> Incoming Un Settle 
                 <% } else if (menu.equalsIgnoreCase("29")) { %> Waiting AML Confirmation 
                 <% } %>
                 Transactions 

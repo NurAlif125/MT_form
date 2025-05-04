@@ -108,6 +108,25 @@ public class DBDataRole {
         }
         return datas;
     }
+    
+     public List<DataRole> getAllDataRoleForm() throws Exception {
+        List<DataRole> datas = new ArrayList<DataRole>();
+        String sql = "SELECT role_id,role_name,role_detail,role_enable,role_desc,timeout FROM roles where role_enable NOT IN (0,2) ORDER BY role_name ASC";
+//        System.out.println("sql=" + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            DataRole data = new DataRole();
+            data.setRole_id(rs.getInt(1));   //role_id
+            data.setRole_name(rs.getString(2));   //role_name
+            data.setRole_detail(rs.getString(3));  //role_detail
+            data.setRole_enable(rs.getInt(4));     //role_enable
+            data.setRole_desc(rs.getString(5));     //role_desc
+            data.setTimeout(rs.getInt(6));     //timeout
+            datas.add(data);
+        }
+        return datas;
+    }
 
     public DataRole getDataRoleById(String role_id) throws SQLException {
         DataRole data = new DataRole();

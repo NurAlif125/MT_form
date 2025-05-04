@@ -10,3 +10,5 @@ build.xml
 /nbproject/
 /.vscode/
 src/main/resources/db.properties
+
+hs_err_*

@@ -23,9 +23,9 @@
                 <input type="hidden" name="user_id" id="user_id" value="<%=request.getParameter("user_id")%>" />
                 <div id="tabs-1" class="formBody">
                     <div class="form-row">
-    <span class="labelL2">Full Name</span>
-    <input type="text" name="name" id="name" maxlength="255" value="<c:out value='${dataUserById.name}' />" />
-</div>
+                        <span class="labelL2">Full Name</span>
+                        <input type="text" name="name" id="name" maxlength="255" value="<c:out value='${dataUserById.name}' />" />
+                    </div>
 
                     <div class="form-row"><span class="labelL2">User ID</span>
                         <input type="text" name="username" id="username" maxlength="255" value="<c:out value="${dataUserById.user_id}" />" <% if(request.getParameter("user_id")==null) { %> <% } else { %> disabled="disabled" <% } %> />
@@ -42,20 +42,21 @@
                         <input type="text" name="description" id="description" maxlength="255" value="<c:out value="${dataUserById.description}" />" />
                     </div>
                     <div class="form-row"><span class="labelL2">Role</span>
-                        <select name="role" id="role" onchange="handleRoleChange()">
+                        <select name="role" id="role">
                             <option value=""></option>
                             <c:forEach var="item" items="${dataRoleList}">
-                                <option value="${item.role_id}" <c:if test="${item.role_id == dataUserById.role}"> selected="true" </c:if> >${item.role_name}</option>
+                                <option value="${item.role_id}" <c:if test="${item.role_id == dataUserById.role}"> selected="true" </c:if> 
+                                <c:if test="${item.role_enable == 0 || item.role_enable == 2}"> hidden="true" </c:if> >${item.role_name}</option>
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="form-row" id="sub-role-container" style="display: none;">
+                    <div class="form-row" id="sub-role-container">
                         <span class="labelL2">Sub-Role</span>
                         <label style="margin-right: 13px;">
-                            <input type="radio" name="subrole" value="1" <c:if test="${dataUserById.sub_role == '1'}"> checked="true" </c:if> />Checker
+                            <input required type="radio" name="subrole" value="1" <c:if test="${dataUserById.sub_role == '1'}"> checked="true" </c:if> />Checker
                         </label>
                         <label>
-                            <input type="radio" name="subrole" value="2" <c:if test="${dataUserById.sub_role == '2'}"> checked="true" </c:if> />Maker
+                            <input required type="radio" name="subrole" value="2" <c:if test="${dataUserById.sub_role == '2'}"> checked="true" </c:if> />Maker
                         </label>
                     </div>
                     <div class="form-row"><span class="labelL2">Channel</span>
@@ -69,7 +70,7 @@
                     <div class="form-row"><span class="labelL2">Enable</span>
                         <input type="checkbox" name="enable" id="enable" value="1" 
                             <c:if test="${dataUserById.enable == '1'}"> checked="true" </c:if>
-                            <c:if test="${sessionScope.sub_role_user == '2'}"> readonly onclick="return false;" style="accent-color: grey;" </c:if>
+                            <c:if test="${sessionScope.sub_role_user == '2'}"> onclick="return false;" style="accent-color: #ccc;" </c:if>
                         />
                     </div>
 <%--                    <div class="form-row"><span class="labelL2">Auto Disable</span>
@@ -92,29 +93,6 @@
     </c:if>
 </c:forEach>
 </div>
-
-<script>
-    function handleRoleChange() {
-        const roleSelect = document.getElementById("role");
-        const subRoleContainer = document.getElementById("sub-role-container");
-        const subRoleRadios = document.querySelectorAll('input[name="subrole"]');
-
-        if (roleSelect.value === "1") {
-            subRoleContainer.style.display = "block";
-            subRoleRadios.forEach(radio => {
-                radio.setAttribute("required", "required");
-            });
-        } else {
-            subRoleContainer.style.display = "none";
-            subRoleRadios.forEach(radio => {
-                radio.removeAttribute("required");
-                radio.checked = false;
-            });
-        }
-    }
-
-    window.onload = handleRoleChange;
-</script>
 <!--<div id="kaki">
     <p><a href="http://www.vensys.co.id" target="_blank">Copyright &copy; PT. Venturium System Indonesia</a></p>
 </div>-->
