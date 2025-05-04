@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import com.vensys.appcm.model.DataFIA;
+import com.vensys.appcm.model.DataFIAPath;
 import org.apache.log4j.Logger;
 
 /**
@@ -131,6 +132,135 @@ public class DBFIA {
             datas.add(value);
         }
         return datas;
+    }
+    
+    
+    public int getNumberofRowsPathConf() throws Exception {
+        String sql = "SELECT count(id) from sftp_reader_fia_new";
+        ResultSet rs = this.conn.createStatement().executeQuery(sql);
+        rs.next();
+        return rs.getInt(1);
+    }
+    
+    
+    public DataFIAPath getFiaPathById(String id) throws SQLException {
+        DataFIAPath data = new DataFIAPath();
+        String sql = "SELECT id, config_name, host, port, username, password, privatekeytype, privatekeypath, privatekeypassword, path, localpath, transferpath, source, isenable, protocol, clientauthenticationtype, keystorefile, keystorepassword, keystorealias, keyfilepassword\n" +
+"	FROM public.sftp_reader_fia_new where id = ?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, Integer.parseInt(id));
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            data.setId(rs.getInt("id"));
+            data.setConfigName(rs.getString("config_name"));
+            data.setHost(rs.getString("host"));
+            data.setPort(rs.getString("port"));
+            data.setUserName(rs.getString("username"));
+            data.setPassword(rs.getString("password"));
+            data.setPrivateKeyType(rs.getString("privatekeytype"));
+            data.setPrivateKeyPath(rs.getString("privatekeypath"));
+            data.setPrivateKeyPassword(rs.getString("privatekeypassword"));
+            data.setPath(rs.getString("path"));
+            data.setLocalPath(rs.getString("localpath"));
+            data.setTransferPath(rs.getString("transferpath"));
+            data.setSource(rs.getString("source"));
+            data.setIsEnable(rs.getInt("isenable"));
+            data.setProtocol(rs.getString("protocol"));
+            data.setClientAuthenticationType(rs.getString("clientauthenticationtype"));
+            data.setKeyStoreFile(rs.getString("keystorefile"));
+            data.setKeyStorePassword(rs.getString("keystorepassword"));
+            data.setKeyStoreAlias(rs.getString("keystorealias"));
+            data.setKeyFilePassword(rs.getString("keyfilepassword"));
+        }
+        return data;
+    }
+    
+    
+    public List<String[]> getPagesFIAPathAjax(int offset, int numberLimit) throws Exception {
+        List<String[]> datas = new ArrayList<String[]>();
+        String sql = "SELECT id,config_name,host,protocol FROM sftp_reader_fia_new ORDER BY id OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
+//        System.out.println("sql=" + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            String[] value = {
+                rs.getString(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4)
+                };
+            datas.add(value);
+        }
+        return datas;
+    }
+    
+    
+    public void addFIAPath(DataFIAPath data, String mofier, String ip, String comp) {
+        try {
+            String sql = "INSERT INTO public.sftp_reader_fia_new(\n" +
+"	config_name, host, port, username, password, privatekeytype, privatekeypath, privatekeypassword, path, localpath, transferpath, source, isenable, protocol, clientauthenticationtype, keystorefile, keystorepassword, keystorealias, keyfilepassword)\n" +
+"	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            System.out.println(data.getPort().equalsIgnoreCase(""));
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, data.getConfigName());
+            st.setString(2, data.getHost());
+            st.setInt(3, data.getPort().equalsIgnoreCase("") ? 0 : Integer.parseInt(data.getPort()));
+            st.setString(4, data.getUserName());
+            st.setString(5, data.getPassword());
+            st.setString(6, data.getPrivateKeyType());
+            st.setString(7, data.getPrivateKeyPath());
+            st.setString(8, data.getPrivateKeyPassword());
+            st.setString(9, data.getPath());
+            st.setString(10, data.getLocalPath());
+            st.setString(11, data.getTransferPath());
+            st.setString(12, data.getSource());
+            st.setInt(13, data.getIsEnable());
+            st.setString(14, data.getProtocol());
+            st.setString(15, data.getClientAuthenticationType());
+            st.setString(16, data.getKeyStoreFile());
+            st.setString(17, data.getKeyStorePassword());
+            st.setString(18, data.getKeyStoreAlias());
+            st.setString(19, data.getKeyStorePassword());
+            
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        evl.insertDataEvent(mofier, "Tambah Config FIA Path", ip, comp);
+    }
+    
+    public void updateFIAPath(DataFIAPath data, String id, String mofier, String ip, String comp) {
+        try {
+            String sql = "UPDATE public.sftp_reader_fia_new\n" +
+            "	SET config_name=?, host=?, port=?, username=?, password=?, privatekeytype=?, privatekeypath=?, privatekeypassword=?, path=?, localpath=?, transferpath=?, source=?, isenable=?, "
+                    + "protocol=?, clientauthenticationtype=?, keystorefile=?, keystorepassword=?, keystorealias=?, keyfilepassword=?\n" +
+            "	WHERE id = ?;";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, data.getConfigName());
+            st.setString(2, data.getHost());
+            st.setInt(3, data.getPort().equalsIgnoreCase("") ? 0 : Integer.parseInt(data.getPort()));
+            st.setString(4, data.getUserName());
+            st.setString(5, data.getPassword());
+            st.setString(6, data.getPrivateKeyType());
+            st.setString(7, data.getPrivateKeyPath());
+            st.setString(8, data.getPrivateKeyPassword());
+            st.setString(9, data.getPath());
+            st.setString(10, data.getLocalPath());
+            st.setString(11, data.getTransferPath());
+            st.setString(12, data.getSource());
+            st.setInt(13, data.getIsEnable());
+            st.setString(14, data.getProtocol());
+            st.setString(15, data.getClientAuthenticationType());
+            st.setString(16, data.getKeyStoreFile());
+            st.setString(17, data.getKeyStorePassword());
+            st.setString(18, data.getKeyStoreAlias());
+            st.setString(19, data.getKeyStorePassword());
+            st.setInt(20,Integer.parseInt(id));
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        evl.insertDataEvent(mofier, "Ubah Config FIA Path", ip, comp);
     }
     
 
