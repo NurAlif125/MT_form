@@ -95,7 +95,7 @@ public class SCNotification extends HttpServlet {
         } catch (Exception e) {
             out.print("[]");
             e.printStackTrace();
-            System.err.println("SCNotificationList Error: " + e.getMessage());
+            log.error("SCNotificationList Error: " + e.getMessage());
         } finally {
             dbConn.closeConnection();
         }
@@ -131,7 +131,7 @@ public class SCNotification extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             response.getWriter().write("{\"status\":\"error\"}");
-            System.err.println("SCNotificationList maskAsRead Error: " + e.getMessage());
+            log.error("SCNotificationList maskAsRead Error: " + e.getMessage());
         } finally {
             dbConn.closeConnection();
         }

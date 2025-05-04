@@ -95,14 +95,14 @@ public class SCDataRole extends HttpServlet {
                 //dbData2.delete(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //                System.out.println("delete");
                 //data.setTimeout(new Integer(request.getParameter("timeout")));
-                System.out.println("Masuk untuk disable permanent untuk id="+ data.getRole_id());
+//                System.out.println("Masuk untuk disable permanent untuk id="+ data.getRole_id());
                 boolean roleIsUsed = dbData.roleIsUsed(data.getRole_id());
                 System.out.println("sini2"+ roleIsUsed);
                 if (roleIsUsed) {
                     log.info("Role is used By USER");
                     strErrMsg = "Role is used By USER";
                 } else {
-                    System.out.println("MULAI DISABLE");
+//                    System.out.println("MULAI DISABLE");
                     dbData.disablePermanent(data.getRole_id(), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
             }

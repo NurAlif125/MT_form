@@ -103,7 +103,7 @@
 //                    return;
                 } 
                 
-                let tableHTML = `<table border="1" style="width:100% !important; font-size:8pt !important;">
+                let tableHTML = `<table border="0" style="width:100% !important; caption-side: bottom; font-size:8pt !important;border-collapse: collapse; border:1px gray solid;">
                                     <tr style="background:#d6d6d6;">
                                     <th>Type</th>
                                     <th>Location</th>

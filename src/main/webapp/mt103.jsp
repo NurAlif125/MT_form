@@ -38,7 +38,7 @@
                     pageContext.setAttribute("tgl_today", tgl_today);%>
                 <c:set var="tgl_today" value="${tgl_today}" />
 
-                <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
+                <div style="width: 100%; margin: 0 auto; font: 0.85em;">
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
                         <li id="tab-view2"><a href="#" rel="view2">Body</a></li>

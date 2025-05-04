@@ -99,9 +99,9 @@ public class SCUserData extends HttpServlet {
             if (gagalLogin == null) {
                 gagalLogin = "-";
             }
-            notifVer = dbo.getNotificationVer();
+//            notifVer = dbo.getNotificationVer();
 //            System.out.println("notifVer: " + notifVer);
-            notifAuth = dbo.getNotificationAuth();
+//            notifAuth = dbo.getNotificationAuth();
 //            System.out.println("notifAuth: " + notifAuth);
             log.info("processRequest");
         } catch (Exception ex) {

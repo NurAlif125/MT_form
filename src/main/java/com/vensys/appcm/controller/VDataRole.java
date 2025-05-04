@@ -38,7 +38,9 @@ public class VDataRole extends HttpServlet {
         DataRole dataRoleById = new DataRole();
         DBDataRole db = new DBDataRole(dbConn.getConnection());
         String batas = "";
+        List<DataRole> dataRoleListForm = new ArrayList<DataRole>();
         try {
+            dataRoleListForm = db.getAllDataRoleForm();
             dataRoleById = db.getDataRoleById(request.getParameter("role_id"));
 //            batas = dataRoleById.getLimit().toString();
             StringTokenizer st = new StringTokenizer(dataRoleById.getRole_detail(), ",");
@@ -60,6 +62,7 @@ public class VDataRole extends HttpServlet {
             dbConn.closeConnection();
         }
         request.setAttribute("dataRoleById", dataRoleById);
+        request.setAttribute("dataRoleListForm", dataRoleListForm);
 //        request.setAttribute("limit", batas);
         RequestDispatcher view = request.getRequestDispatcher("addrole.jsp");
         view.forward(request, response);
