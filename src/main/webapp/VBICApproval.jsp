@@ -1,6 +1,7 @@
-<%--
-    Document   : VBic
-    Author     : M Abdul Hadi
+<%-- 
+    Document   : VBICApproval
+    Created on : May 4, 2025, 3:40:41 PM
+    Author     : rafli
 --%>
 
 <%@ include file="header.jsp" %>
@@ -13,15 +14,11 @@
 <div id="isi">
     <% int totalDatas = ((Integer) session.getAttribute("numOfBic"));%>
     <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'MEMBER_CODE:LIST'}">
-            <div id="judul">List of BIC
+        <c:if test="${item == 'MEMBER_CODE:APPROVAL'}">
+            <div id="judul">Waiting Approval BIC
                 <c:forEach var="item" items="${role}">
-                    <c:if test="${item == 'MEMBER_CODE:ADD'}">
-                        <a href="mbic.jsp" class="srb2">Add BIC</a>
-                        <a href="uploadbic.jsp" class="srb4">Upload BIC</a>   
-                    </c:if>
-                    <c:if test="${item == 'MEMBER_CODE:APPROVAL'}">
-                        <a href="SCBICApprovalList" class="srb3">Waiting For Approval</a>
+                    <c:if test="${item == 'MEMBER_CODE:LIST'}">
+                        <a href="SCBICList" class="srb3">BIC List</a>
                     </c:if>
                 </c:forEach>
             </div>
@@ -75,7 +72,7 @@
             "scrollCollapse": true,
             "ajax": {
                 'type' : 'POST',
-                'url' : 'AjaxSCBC.jsp',
+                'url' : 'AjaxSCBCApproval.jsp',
                 'data' : function (data){
                     data.offset = $('#select-page').val();
                 }
@@ -109,7 +106,7 @@
             var data = dt.row(this).data();
             
             // move to VBIC by get parameter id_member
-            window.location.href = `VBIC?id_member=`+data[0];
+            window.location.href = `VBICApproval?id_member=`+data[0];
         });
     });
 </script>

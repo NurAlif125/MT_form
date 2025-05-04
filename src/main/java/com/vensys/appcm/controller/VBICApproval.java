@@ -4,9 +4,8 @@
  */
 package com.vensys.appcm.controller;
 
-import com.google.gson.Gson;
 import com.vensys.appcm.dbase.DBBIC;
-import com.vensys.appcm.dbase.DBconnection2;
+import com.vensys.appcm.dbase.DBconnection;
 import java.io.IOException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -17,14 +16,14 @@ import com.vensys.appcm.model.DataBIC;
 
 /**
  *
- * @author hadi
+ * @author rafli
  */
-public class SCBIC extends HttpServlet {
-
-    private static final long serialVersionUID = 1L;
+public class VBICApproval extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -32,41 +31,29 @@ public class SCBIC extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        DBconnection2 dbConn2 = new DBconnection2();
-        DataBIC data = new DataBIC();
-        DBBIC dbData = new DBBIC(dbConn2.getConnection2());
-        Gson gson = new Gson();
-
-        String id_member = request.getParameter("id_member");
-        data.setCode_member(request.getParameter("code_member"));
-        data.setCompany(request.getParameter("company"));
-        data.setAddress(request.getParameter("address"));
-        data.setNote(request.getParameter("note"));
-        String json = gson.toJson(data);
-//        System.out.println("id_member=" + id_member);
-//        if (id_member == null || id_member.isEmpty()) {
-        if (id_member == null ? "null" == null : id_member.equals("null") || id_member.isEmpty()) {
-            dbData.addBic(json);
-//            System.out.println("addBic");
-        } else {
-            int idMember = Integer.parseInt(id_member);
-            dbData.updateBic(json, idMember);
-//            System.out.println("updateBic");
+        DBconnection dbConn = new DBconnection();
+        DataBIC bicById = new DataBIC();
+        DBBIC db = new DBBIC(dbConn.getConnection());
+        try {
+            bicById = db.getBicApprovalById(request.getParameter("id_member"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         try {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
-            dbConn2.closeConnection2();
+            dbConn.closeConnection();
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("SCBICList");
-        dispatcher.forward(request, response);
+        request.setAttribute("bicById", bicById);
+        RequestDispatcher view = request.getRequestDispatcher("mbicapproval.jsp");
+        view.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -78,8 +65,9 @@ public class SCBIC extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -91,12 +79,14 @@ public class SCBIC extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
