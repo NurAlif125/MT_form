@@ -249,7 +249,7 @@ public class DBUserData {
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
             total = rs.getInt(1);
-            System.out.println("total VER: " + total);
+//            System.out.println("total VER: " + total);
         }
         return total;
     }
@@ -264,7 +264,7 @@ public class DBUserData {
         ResultSet rs = st.executeQuery();
         if (rs.next()) {
             total = rs.getInt(1);
-            System.out.println("total AUTH: " + total);
+//            System.out.println("total AUTH: " + total);
         }
         return total;
     }
