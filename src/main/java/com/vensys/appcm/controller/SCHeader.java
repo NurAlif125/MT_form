@@ -80,9 +80,9 @@ public class SCHeader extends HttpServlet implements Serializable {
         try {
             channel = (String) httpSession.getAttribute("channel");
             notifVer = dbo.getNotificationVer();
-            System.out.println("notifVer: " + notifVer);
+//            System.out.println("notifVer: " + notifVer);
             notifAuth = dbo.getNotificationAuth();
-            System.out.println("notifAuth: " + notifAuth);
+//            System.out.println("notifAuth: " + notifAuth);
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
@@ -95,8 +95,8 @@ public class SCHeader extends HttpServlet implements Serializable {
 //                httpSession.setAttribute("headersPajak", headersPajak);
             } else if (flag != null && !flag.isEmpty()) {
                 if (menu == null) {
-                    System.out.println("flag if : " + flag);
-                    System.out.println("flag statusnya adalah :" + flagStatus);
+//                    System.out.println("flag if : " + flag);
+//                    System.out.println("flag statusnya adalah :" + flagStatus);
 //                httpSession.removeAttribute("flagFilter");
                     if (flag.equalsIgnoreCase("VER")) {
                         flag = "MOD";
