@@ -42,7 +42,7 @@
                         <input type="text" name="description" id="description" maxlength="255" value="<c:out value="${dataUserById.description}" />" />
                     </div>
                     <div class="form-row"><span class="labelL2">Role</span>
-                        <select name="role" id="role">
+                        <select name="role" id="role" onchange="handleRoleChange()">
                             <option value=""></option>
                             <c:forEach var="item" items="${dataRoleList}">
                                 <option value="${item.role_id}" <c:if test="${item.role_id == dataUserById.role}"> selected="true" </c:if> 
@@ -50,7 +50,7 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="form-row" id="sub-role-container">
+                    <div class="form-row" id="sub-role-container" style="display: none;">
                         <span class="labelL2">Sub-Role</span>
                         <label style="margin-right: 13px;">
                             <input required type="radio" name="subrole" value="1" <c:if test="${dataUserById.sub_role == '1'}"> checked="true" </c:if> />Checker
@@ -93,6 +93,30 @@
     </c:if>
 </c:forEach>
 </div>
+
+<script>
+    function handleRoleChange() {
+        const roleSelect = document.getElementById("role");
+        const subRoleContainer = document.getElementById("sub-role-container");
+        const subRoleRadios = document.querySelectorAll('input[name="subrole"]');
+
+        if (roleSelect.value === "1") {
+            subRoleContainer.style.display = "block";
+            subRoleRadios.forEach(radio => {
+                radio.setAttribute("required", "required");
+            });
+        } else {
+            subRoleContainer.style.display = "none";
+            subRoleRadios.forEach(radio => {
+                radio.removeAttribute("required");
+                radio.checked = false;
+            });
+        }
+    }
+
+    window.onload = handleRoleChange;
+</script>
+
 <!--<div id="kaki">
     <p><a href="http://www.vensys.co.id" target="_blank">Copyright &copy; PT. Venturium System Indonesia</a></p>
 </div>-->

@@ -263,7 +263,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         String suffix = "COV";
         RequestDispatcher view;
         
-        if (headerById.getNetworktype().contains("MT")) {
+        if (headerById.getNetworktype().contains("MT")) { 
             if (headerById.getMessageType().contains("103") || headerById.getMessageType().contains("200") || headerById.getMessageType().contains("202")) {
                 view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
             } else {

@@ -342,6 +342,9 @@
                                             <c:if test="${iteminc == 'FLOW:Un-Settle'}">
                                                 <li><a href="controllerHeaders?io_type=O&flag=Un-Settle&menu=28">Incoming Un Settle</a></li>
                                             </c:if>
+                                            <c:if test="${iteminc == 'FLOW:Un-Settle'}">
+                                                <li><a href="controllerHeaders?io_type=O&flag=Settle&menu=30">Incoming Settle</a></li>
+                                            </c:if>
                                         </c:forEach>
                                         <!--<li><a href="controllerHeaders?io_type=O&flag=INC-INV&menu=8">Incoming Investigation</a></li>-->
                                     </ul>

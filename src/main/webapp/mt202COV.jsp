@@ -30,7 +30,7 @@
         <c:if test="${item == 'MT:202COV'}">
             <div id="judul">MT 202 COV General Financial Institution Transfer</div>
             <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" onsubmit="return confirm('Do you want to save this MT data?');">
-                <input name="messageType" id="messageType" type="hidden" value="202" />
+                <input name="messageType" id="messageType" type="hidden" value="202COV" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em;">
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>

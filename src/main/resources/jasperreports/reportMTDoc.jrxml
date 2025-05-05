@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="400a589d-f823-491b-821e-d24a987b1823">
 	<property name="ireport.zoom" value="1.1000000000000048"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
-	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
-	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
-	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Title" fontName="Dejavu Sans" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Dejavu Sans" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Dejavu Sans" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Dejavu Sans" fontSize="12"/>
 	<style name="Row" mode="Transparent">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
@@ -54,7 +54,7 @@
 			<staticText>
 				<reportElement style="Title" x="198" y="43" width="147" height="25" uuid="c1847e32-3e51-4069-b037-df7efc19f627"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="SansSerif" size="16" isBold="false"/>
+					<font fontName="Dejavu Sans" size="16" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Transaction Detail]]></text>
 			</staticText>
@@ -92,14 +92,14 @@
 			<staticText>
 				<reportElement style="Title" x="1" y="1" width="443" height="14" uuid="73bcbf59-26d7-4300-afc3-7ca0c72bf6a7"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="Dejavu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[Instance Type and Transmission]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="1" y="40" width="443" height="14" uuid="de9bd73a-814e-4a0a-91e3-abe827368fec"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="Dejavu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[Message Header]]></text>
 			</staticText>
@@ -183,7 +183,7 @@
 			<staticText>
 				<reportElement style="Title" x="2" y="4" width="110" height="14" uuid="11caa75e-1ce1-45a6-9004-7fe507de3281"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="Dejavu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[Message Text]]></text>
 			</staticText>
@@ -214,7 +214,7 @@
 			<staticText>
 				<reportElement style="Title" x="2" y="2" width="110" height="14" uuid="8bfb8d54-2a17-4348-974b-0c1ae732d74e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="Dejavu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[End of Message Text]]></text>
 			</staticText>

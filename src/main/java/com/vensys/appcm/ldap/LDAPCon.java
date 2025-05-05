@@ -99,6 +99,7 @@ public class LDAPCon {
                         new InitialDirContext(env2);
                         
                         log.info("Berhasil Login sebagai: "+admin1DN);
+                        System.out.println("=========Berhasil Login "+admin1DN);
                          validLogin = "success";
 
                     } catch (NamingException e) {

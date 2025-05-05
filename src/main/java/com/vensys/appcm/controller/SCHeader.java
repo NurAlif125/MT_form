@@ -194,6 +194,9 @@ public class SCHeader extends HttpServlet implements Serializable {
                     } else if (flag.equalsIgnoreCase("AML-TERMINATE")) {
                         flag = "AML-TERMINATE";
                         menu = "29";
+                    } else if (flag.equalsIgnoreCase("Settle")) {
+                        flag = "Settle";
+                        menu = "30";
                     } else {
                         flag = "AUTH";
                         menu = "3";
