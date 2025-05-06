@@ -139,6 +139,24 @@ public class DBDataTransaksiOutgoing {
         return header;
     }
     
+    public boolean tagsExists(int id_headers) {
+        try {
+            String selectSql = "SELECT COUNT(*) FROM tags WHERE id_headers = ?";
+            PreparedStatement selectSt = this.conn.prepareStatement(selectSql);
+            selectSt.setInt(1, id_headers);
+            ResultSet selectRs = selectSt.executeQuery();
+            boolean exists = false;
+            if (selectRs.next()) {
+                exists = selectRs.getInt(1) > 0;
+            }
+            return exists;                       
+        } catch (SQLException e) {
+            log.info("tagsExists:" + e.getMessage());
+            System.out.println("tagsExists:" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
     public String getFlagFromQueue(String messType) throws SQLException, Exception {
         log.info("masuk getFlagFromQueue();");
         String flag = "MOD";
