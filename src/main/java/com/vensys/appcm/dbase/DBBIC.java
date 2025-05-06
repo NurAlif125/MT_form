@@ -341,7 +341,7 @@ public class DBBIC {
     public String truncateBICBulk() {
         String result = "Gagal Truncate";
         try {
-            String sql = "truncate table bic";
+            String sql = "truncate table bic restart identity";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.executeUpdate();
         } catch (SQLException e) {
