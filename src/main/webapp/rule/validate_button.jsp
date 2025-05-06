@@ -24,6 +24,14 @@
     }
 
     $(document).ready(function () {
+        $('#approveAll').click(function () {
+           var answer = confirm('Approve All BIC?');
+           return answer;
+        });
+        $('#rejectAll').click(function () {
+            var answer = confirm('Reject All BIC?');
+            return answer;
+        });
         $('#approvebic').click(function () {
             var answer = confirm('Do you want to approve this BIC?');
             return answer;

@@ -57,6 +57,10 @@
                     </thead>                    
                   
                 </table>
+                <div class="btn--group">
+                    <a id="approveAll" name="approveAll" href="SCApproveBIC" class="srb">Approve All</a>
+                    <a id="rejectAll" name="rejectAll" href="SCRejectBIC" class="srb">Reject All</a>
+                </div>
             </div><!--close content-->
         </c:if>
     </c:forEach>

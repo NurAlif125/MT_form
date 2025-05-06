@@ -13,6 +13,7 @@ import com.prowidesoftware.swift.model.mx.dic.Charges7;
 import com.prowidesoftware.swift.model.mx.dic.FinancialInstitutionIdentification18;
 import com.prowidesoftware.swift.model.mx.dic.GroupHeader90;
 import com.prowidesoftware.swift.model.mx.dic.OrganisationIdentification29;
+import com.prowidesoftware.swift.model.mx.dic.OriginalTransactionReference28;
 import com.prowidesoftware.swift.model.mx.dic.Party38Choice;
 import com.prowidesoftware.swift.model.mx.dic.Party40Choice;
 import com.prowidesoftware.swift.model.mx.dic.PartyIdentification135;
@@ -931,8 +932,22 @@ public class rulePacs004_2024 {
                         }
                     }
                 }
+                
+                OriginalTransactionReference28 orgnlTxRef = txInf.getOrgnlTxRef();
+                if (orgnlTxRef != null) {
+                    ActiveOrHistoricCurrencyAndAmount intrBkSttlmAmtOTR = orgnlTxRef.getIntrBkSttlmAmt();
+                    if (intrBkSttlmAmtOTR != null) {
+                        if (orgnlIntrBkSttlmAmt != null) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/OrgnlTxRef/IntrBkSttlmAmt\"><td>If TransactionInformation/OriginalInterbankSettlementAmount is present, then OriginalTransactionReference/InterbankSettlementAmount must not be used.</td><td>PmtRtr/TxInf/OrgnlTxRef/IntrBkSttlmAmt</td></tr>");
+                        } else {
+                            String ccyIntrBkSttlmAmtOTR = intrBkSttlmAmtOTR.getCcy();
+                            if (ccyIntrBkSttlmAmtOTR.equalsIgnoreCase("XAU") || ccyIntrBkSttlmAmtOTR.equalsIgnoreCase("XAG") || ccyIntrBkSttlmAmtOTR.equalsIgnoreCase("XPD") || ccyIntrBkSttlmAmtOTR.equalsIgnoreCase("XPT")) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/OrgnlTxRef/IntrBkSttlmAmt/Ccy\"><td></td><td>PmtRtr/TxInf/OrgnlTxRef/IntrBkSttlmAmt/Ccy</td></tr>");
+                            }
+                        }
+                    }
+                }
             }
-
         }
     }
 }

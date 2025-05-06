@@ -4,25 +4,26 @@
  */
 package com.vensys.appcm.controller;
 
+import com.google.gson.Gson;
 import com.vensys.appcm.dbase.DBBIC;
 import com.vensys.appcm.dbase.DBconnection2;
-import java.io.IOException;
+import com.vensys.appcm.model.DataBIC;
 import jakarta.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.vensys.appcm.model.DataBIC;
-import java.sql.SQLException;
-import java.util.logging.Level;
+import java.util.List;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author rafli
  */
-public class SCBICApproval extends HttpServlet {
-    
+public class SCApproveBIC extends HttpServlet {
+
     Logger log = Logger.getLogger(getClass().getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,31 +35,17 @@ public class SCBICApproval extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         DBconnection2 dbConn2 = new DBconnection2();
         DataBIC data = new DataBIC();
-        DataBIC datas = new DataBIC();
         DBBIC dbData = new DBBIC(dbConn2.getConnection2());
+        Gson gson = new Gson();
         
-        String id_member = request.getParameter("id_member");
-        String action = request.getParameter("approvebic") != null ? "APPROVE" : 
-                   request.getParameter("rejectbic") != null ? "REJECT" : null;
-        data.setCode_member(request.getParameter("code_member"));
-        data.setCompany(request.getParameter("company"));
-        data.setAddress(request.getParameter("address"));
-        data.setNote(request.getParameter("note"));
-        
-        if (action.equalsIgnoreCase("APPROVE")) {
-            log.info("Approving BIC");
-            dbData.addDataAfterApproval(data, Integer.parseInt(id_member));
-        } else if (action.equalsIgnoreCase("REJECT")) {
-            data = dbData.getBicById(id_member);
-            if (data.getCode_member() == null && data.getCompany() == null) {
-                dbData.deletePermanentBICApproval(Integer.parseInt(id_member));
-            } else {
-                dbData.deleteBICApproval(Integer.parseInt(id_member));
-            }
+        List<DataBIC> datas = dbData.selectAll();
+        if (datas.size() > 0) {
+            dbData.approveAll(datas);
         }
+        log.info("approve all BIC");
         
         try {
         } catch (Exception ex) {
@@ -82,11 +69,7 @@ public class SCBICApproval extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(SCBICApproval.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -100,11 +83,7 @@ public class SCBICApproval extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(SCBICApproval.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
