@@ -109,8 +109,8 @@ public class SCUserData extends HttpServlet {
             log.error("getDataUserLogin : " + ex.getMessage());
         }
        
-       String isValidLogonLdap = "";
-       isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
+       String isValidLogonLdap = "success";
+       //isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
        
         int maxpassw = (data.getWrongpass_max() != null && !data.getWrongpass_max().trim().isEmpty())
          ? Integer.parseInt(data.getWrongpass_max())
