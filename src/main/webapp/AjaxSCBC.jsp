@@ -22,21 +22,26 @@
 
 <%
 // Maximum total data that avail to show
-final int maxData = 5000;
+    final int maxData = 5000;
+    int offsetPage;
 
 // set offsetpage based on page numbers
-int offsetPage = request.getParameter("offset") == null ? 0 : Integer.parseInt(request.getParameter("offset"));
+    if (request.getParameter("öffset") == null) {
+        offsetPage = 0;
+    } else {
+        offsetPage = Integer.parseInt(request.getParameter("offset"));
+    }
 
 // create connection
-DBconnection dbConn = new DBconnection();
-DBBIC db = new DBBIC(dbConn.getConnection());
+    DBconnection dbConn = new DBconnection();
+    DBBIC db = new DBBIC(dbConn.getConnection());
 
 // get data from data base by provided paremeters
-List<String[]> bic = db.getPagesBicAjax((offsetPage * maxData), maxData);
+    List<String[]> bic = db.getPagesBicAjax((offsetPage * maxData), maxData);
 
 // convert datas to json
-String jsonResult = new Gson().toJson(bic);
+    String jsonResult = new Gson().toJson(bic);
 
 // show the json
-out.print("{\"data\" : " + jsonResult + "}"); 
+    out.print("{\"data\" : " + jsonResult + "}");
 %>
