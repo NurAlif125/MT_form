@@ -315,18 +315,13 @@ public class DBBIC {
         return datas;
     }
 
-    public void addBICBulk(List<DataBIC> data) {
-        String sql = "INSERT INTO bic (code_member,company,address,note)"
-                + "VALUES (?,?,?,?)";
+    public void addBICBulk(List<String> data) {
+        String sql = "INSERT INTO bic(need_approve) VALUES (?::jsonb)";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             this.conn.setAutoCommit(false);
-            for (DataBIC temp : data) {
-                st.setString(1, temp.getCode_member());
-                st.setString(2, temp.getCompany());
-                st.setString(3, temp.getAddress());
-                st.setString(4, temp.getNote());
-                //st.setString(5, temp.getModification_flag());
+            for (String temp : data) {
+                st.setString(1, temp);
                 st.addBatch();
             }
             int[] result = st.executeBatch();
