@@ -111,6 +111,8 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             httpSession.setAttribute("nama_core", namaCore);
         }
         try {
+            CHeader headermt = new CHeader(); 
+            headermt.wifeParser(headerById.getMessageType(),Integer.parseInt(request.getParameter("id")));
             tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
         } catch (Exception ex) {
             ex.printStackTrace();
