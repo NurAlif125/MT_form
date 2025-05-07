@@ -134,28 +134,32 @@ public class SCUserData extends HttpServlet {
             strErrMsg = "Invalid Username or Password";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+//            dispatcher.forward(request, response);
+            response.sendRedirect("login.jsp");
             log.info("login.jsp");
             return;
         } else if(isValidLogonLdap.equalsIgnoreCase("nothing user")){
             strErrMsg = "Username is not registered in LDAP, please contact administrator";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+//            dispatcher.forward(request, response);
+            response.sendRedirect("login.jsp");
             log.info("login.jsp");
             return;
         } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
             strErrMsg = "Unable to connect to LDAP";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+//            dispatcher.forward(request, response);
+            response.sendRedirect("login.jsp");
             log.info("login.jsp");
             return;
         } else if(isValidLogonLdap.equalsIgnoreCase("")){
             strErrMsg = "Unable to connect to LDAP!";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
-            dispatcher.forward(request, response);
+//            dispatcher.forward(request, response);
+            response.sendRedirect("login.jsp");
             log.info("login.jsp");
             return;
         }

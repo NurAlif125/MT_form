@@ -137,7 +137,7 @@
                                     <hr/>
 
                                     <!-- OF57 -->
-                                    <div class="form-row"><span class="label_body">MF57</span><span class="label">Account With Institution</span>
+                                    <div class="form-row"><span class="label_body">MF57</span><span class="label"><a style="color:red; text-decoration:none">*</a>Account With Institution</span>
                                         <select id="type_of57_" name="type_of57_" input_type="MF57 Account With Institution" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="a">A - Account With Inst - BIC</option>

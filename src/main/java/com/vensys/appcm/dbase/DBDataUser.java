@@ -68,14 +68,15 @@ public class DBDataUser {
 //        System.out.println("user_id" + user_id);
         try {
 //            String sql = "UPDATE [user] SET name=?,description=?,role=?,enable=? WHERE user_id=?";
-            String sql = "UPDATE users SET name=?,description=?,role=?,channel=?,enable=? WHERE user_id=?";
+            String sql = "UPDATE users SET name=?,description=?,role=?,sub_role=?,channel=?,enable=? WHERE user_id=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getName());     //name
             st.setString(2, data.getDescription());     //description
             st.setInt(3, data.getRole());     //role
-            st.setString(4, data.getChannel());
-            st.setInt(5, data.getEnable());     //enable
-            st.setString(6, user_id); //user_id
+            st.setInt(4, data.getSub_role()); 
+            st.setString(5, data.getChannel());
+            st.setInt(6, data.getEnable());     //enable
+            st.setString(7, user_id); //user_id
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {

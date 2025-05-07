@@ -61,6 +61,7 @@
                 <% } else if (menu.equalsIgnoreCase("27")) { %> Incoming Waiting AML
                 <% } else if (menu.equalsIgnoreCase("28")) { %> Incoming Un Settle 
                 <% } else if (menu.equalsIgnoreCase("29")) { %> Waiting AML Confirmation 
+                <% } else if (menu.equalsIgnoreCase("30")) { %> Settle 
                 <% } %>
                 Transactions 
             </div>
