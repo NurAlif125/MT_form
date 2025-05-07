@@ -4,8 +4,9 @@
  */
 package com.vensys.appcm.controller;
 
+import com.google.gson.Gson;
 import com.vensys.appcm.dbase.DBBIC;
-import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -48,10 +49,11 @@ public class SCUploadBIC extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, FileUploadException, SQLException {
          HttpSession session = request.getSession();
-        DBconnection dbConn = new DBconnection();
-        DBBIC db = new DBBIC(dbConn.getConnection());
+        DBconnection2 dbConn = new DBconnection2();
+        DBBIC db = new DBBIC(dbConn.getConnection2());
+        Gson gson = new Gson();
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        List<DataBIC> dataList = new ArrayList<>();
+        List<String> dataList = new ArrayList<>();
         log.info("cek masuk");
         if (isMultipart) {
             try {
@@ -100,7 +102,8 @@ public class SCUploadBIC extends HttpServlet {
                     dataBIC.setCompany(tokens[7]);
                     dataBIC.setAddress(tokens[6]);
                     dataBIC.setNote(tokens[9]);
-                    dataList.add(dataBIC);
+                    String json = gson.toJson(dataBIC);
+                    dataList.add(json);
                 }
                 db.truncateBICBulk();
                 db.addBICBulk(dataList);

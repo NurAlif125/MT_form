@@ -52,6 +52,14 @@
         <servlet-name>SCPrintAuditTrail</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCPrintAuditTrail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCApproveBIC</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCApproveBIC</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCRejectBIC</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCRejectBIC</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCFIA</servlet-name>
         <url-pattern>/SCFIA</url-pattern>
@@ -918,6 +926,14 @@
     <servlet-mapping>
         <servlet-name>SCPrintAuditTrail</servlet-name>
         <url-pattern>/SCPrintAuditTrail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCApproveBIC</servlet-name>
+        <url-pattern>/SCApproveBIC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCRejectBIC</servlet-name>
+        <url-pattern>/SCRejectBIC</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

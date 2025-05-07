@@ -73,7 +73,7 @@ public class DBBIC {
     public void addDataAfterApproval(DataBIC data, int id_member) {
         try {
             log.info("addDataAfterApprovalBIC");
-            String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ? WHERE id_member = ?";
+            String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getCode_member());
             st.setString(2, data.getCompany());
@@ -315,18 +315,13 @@ public class DBBIC {
         return datas;
     }
 
-    public void addBICBulk(List<DataBIC> data) {
-        String sql = "INSERT INTO bic (code_member,company,address,note)"
-                + "VALUES (?,?,?,?)";
+    public void addBICBulk(List<String> data) {
+        String sql = "INSERT INTO bic(need_approve) VALUES (?::jsonb)";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             this.conn.setAutoCommit(false);
-            for (DataBIC temp : data) {
-                st.setString(1, temp.getCode_member());
-                st.setString(2, temp.getCompany());
-                st.setString(3, temp.getAddress());
-                st.setString(4, temp.getNote());
-                //st.setString(5, temp.getModification_flag());
+            for (String temp : data) {
+                st.setString(1, temp);
                 st.addBatch();
             }
             int[] result = st.executeBatch();
@@ -342,11 +337,91 @@ public class DBBIC {
             this.log.error(e.getMessage());
         }
     }
+    
+    public List<DataBIC> selectAll() {
+        List<DataBIC> data = new ArrayList<DataBIC>();
+        String sql = "SELECT id_member, need_approve FROM bic WHERE need_approve IS NOT NULL";
+        Gson gson = new Gson();
+        try {
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                DataBIC datas = new DataBIC();
+                datas = gson.fromJson(rs.getString(2), DataBIC.class);
+                datas.setId_member(rs.getInt(1));
+                data.add(datas);
+            }
+        } catch (Exception e) {
+            try {
+                this.conn.rollback();
+            } catch (SQLException ex) {
+                this.log.error(ex.getMessage());
+            }
+            e.printStackTrace();
+            this.log.error(e.getMessage());
+        }
+        return data;
+    }
+    
+    public List<DataBIC> selectForReject() {
+        List<DataBIC> data = new ArrayList<DataBIC>();
+        String sql = "SELECT id_member, code_member, company, address, note, need_approve FROM bic WHERE need_approve IS NOT NULL";
+        try {
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                DataBIC datas = new DataBIC();
+                datas.setId_member(rs.getInt(1));
+                datas.setCode_member(rs.getString(2));
+                datas.setCompany(rs.getString(3));
+                datas.setAddress(rs.getString(4));
+                datas.setNote(rs.getString(5));
+                data.add(datas);
+            }
+        } catch (Exception e) {
+            try {
+                this.conn.rollback();
+            } catch (SQLException ex) {
+                this.log.error(ex.getMessage());
+            }
+            e.printStackTrace();
+            this.log.error(e.getMessage());
+        }
+        
+        return data;
+    }
+    
+    public void approveAll(List<DataBIC> data) {
+        String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
+        try {
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            this.conn.setAutoCommit(false);
+            for (DataBIC temp : data) {
+               st.setString(1, temp.getCode_member());
+               st.setString(2, temp.getCompany());
+               st.setString(3, temp.getAddress());
+               st.setString(4, temp.getNote());
+               st.setInt(5, temp.getId_member());
+               st.addBatch();
+            }
+            int[] result = st.executeBatch();
+            log.info("The number of rows updated: " + result.length);
+            conn.commit();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                log.error(ex.getMessage());
+            }
+            e.printStackTrace();
+            log.error(e.getMessage());
+        }
+    }
 
     public String truncateBICBulk() {
         String result = "Gagal Truncate";
         try {
-            String sql = "truncate table bic";
+            String sql = "truncate table bic restart identity";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.executeUpdate();
         } catch (SQLException e) {
