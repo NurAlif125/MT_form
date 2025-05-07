@@ -192,7 +192,7 @@
                                     <hr/>
 
                                     <!-- MF50 -->
-                                    <div class="form-row"><span class="label_body">MF50</span><span class="label">Ordering Customer</span>
+                                    <div class="form-row"><span class="label_body">MF50</span><span class="label"><a style="color:red; text-decoration:none">*</a>Ordering Customer</span>
                                         <select id="type_mf50_ordering_customer" name="type_mf50_ordering_customer" class="mandatory" input_type="MF50 Ordering Customer" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="a">A - BIC</option>
@@ -550,7 +550,7 @@
                                     <hr/>
 
                                     <!-- M59/59A -->
-                                    <div class="form-row"><span class="label_body">MF59</span><span class="label">Beneficiary Customer</span>
+                                    <div class="form-row"><span class="label_body">MF59</span><span class="label"><a style="color:red; text-decoration:none">*</a>Beneficiary Customer</span>
                                         <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="Of59A Beneficiary Customer" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="59">59 - Name and Address</option>
@@ -703,7 +703,7 @@
                                     <hr/>
 
                                     <!-- OF71A -->
-                                    <div class="form-row"><span class="label_body">MF71A</span><span class="label">Details of Charges</span>
+                                    <div class="form-row"><span class="label_body">MF71A</span><span class="label"><a style="color:red; text-decoration:none">*</a>Details of Charges</span>
                                         <select id="_210_of71a_details_charges" name="_210_of71a_details_charges" class="mandatory" input_type="MF71A Detail Charges" location="Body">
                                             <option value="">choose a code</option>
                                             <option value="OUR" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='OUR'}"> selected="true" </c:if></c:if></c:forEach>>OUR</option> <!-- - Ordering Customer-->

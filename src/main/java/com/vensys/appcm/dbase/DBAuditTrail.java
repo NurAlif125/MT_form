@@ -8,6 +8,7 @@ import com.vensys.appcm.model.DataAuditTrail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,13 +31,18 @@ public class DBAuditTrail {
                 "case when UPPER(b.io_type) = 'I' then 'Outgoing' else 'Incoming' end io_type, \n" +
                 "a.status_header, a.user_login, a.ip_access, a.comp_name, b.useredit,\n" +
                 "b.receiveraddress, b.userentry, b.flag, b.komentar, b.source, b.tanggal\n" +
-                "FROM header_status a INNER JOIN headers b ON a.id_headers = b.id_headers"+   
-                " WHERE tanggal BETWEEN ? AND ?";
+                " FROM header_status a INNER JOIN headers b ON a.id_headers = b.id_headers WHERE b.tanggal BETWEEN ? AND ? ";
 //    System.out.println("getAllDataHistoryLogin : " + sql);
 
     PreparedStatement st = this.conn.prepareStatement(sql);
     st.setTimestamp(1, java.sql.Timestamp.valueOf(date_from+" 00:00:00"));
     st.setTimestamp(2, java.sql.Timestamp.valueOf(date_end + " 23:59:00"));
+    
+    System.out.println("SQL Params: " + date_from + " 00:00:00 s/d " + date_end + " 23:59:59");
+
+//    st.setTimestamp(1, Timestamp.valueOf(date_from.trim() + " 00:00:00"));
+//    st.setTimestamp(2, Timestamp.valueOf(date_end.trim() + " 23:59:59"));
+
 
     ResultSet rs = st.executeQuery();
     while (rs.next()) {
@@ -61,7 +67,7 @@ public class DBAuditTrail {
 }
 
 
-    public ArrayList<DataAuditTrail> getAllDataHistoryLoginByUser(String date_from, String date_end, String user_id) throws Exception {
+    public ArrayList<DataAuditTrail> getAllDataAuditTrailByUser(String date_from, String date_end, String user_id) throws Exception {
         ArrayList<DataAuditTrail> datas = new ArrayList<DataAuditTrail>();
         String sql = "SELECT b.messagetype, b.logicalterminal, \n" +
                     "case when UPPER(b.io_type) = 'I' then 'Outgoing' else 'Incoming' end io_type, \n" +

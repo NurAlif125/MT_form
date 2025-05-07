@@ -52,13 +52,17 @@ public class SCPrintAuditTrail extends HttpServlet {
         ServletOutputStream servletOutputStream = response.getOutputStream();
         File reportFile = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportAuditTrail.jasper"));
         byte[] bytes = null;
+        
+//        System.out.println("Jumlah data: " + dataAuditTrail.size());
+
+        
         try {
             if (user_idlog == "null" || user_idlog.equals("") || user_idlog.isEmpty()) {
                 dataAuditTrail = dbAudit.getAllDataAuditTrail(date_from, date_end);
             } else {
-                dataAuditTrail = dbAudit.getAllDataHistoryLoginByUser(date_from, date_end, user_idlog);
+                dataAuditTrail = dbAudit.getAllDataAuditTrailByUser(date_from, date_end, user_idlog);
             }
-
+            
             Map model = new HashMap();
             model.put("username", (String) session.getAttribute("user_id"));
             bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), model, new JRBeanCollectionDataSource(dataAuditTrail));
@@ -74,6 +78,7 @@ public class SCPrintAuditTrail extends HttpServlet {
             e.printStackTrace(printWriter);
             response.setContentType("text/plain");
             response.getOutputStream().print(stringWriter.toString());
+            System.out.println("Report Audit Trail Report: "+e.getMessage());
         } finally {
             dbConn.closeConnection();
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a1b4253-a7d2-4759-bfb2-2dcac345c58f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a1b4253-a7d2-4759-bfb2-2dcac345c58f">
 	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -56,7 +56,7 @@ INNER JOIN headers b ON a.id_headers = b.id_headers]]>
 				<imageExpression><![CDATA["cmrtgs.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement key="staticText" style="Title" x="319" y="25" width="170" height="49" uuid="ed9d39a9-73af-4582-b368-d93190d51e16"/>
+				<reportElement key="staticText" style="Title" x="319" y="26" width="170" height="49" uuid="ed9d39a9-73af-4582-b368-d93190d51e16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="20" isBold="false"/>
 				</textElement>
