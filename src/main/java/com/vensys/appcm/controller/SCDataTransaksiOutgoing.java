@@ -115,10 +115,13 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     log.info("masuk sini 183");
 //                    if (flagStatus.equalsIgnoreCase("MOD")) {
                     if (action_type.equalsIgnoreCase("Save")) {
+                        if (messageType.contains("cov")) {
+                            data.setBlock3("119:COV;");
+                        }
                         if (!data.getBlock3().contains("121:")) {
                             log.info("masuk sini 185");
                             String uetr = UUID.randomUUID().toString();
-                            data.setBlock3("121:" + uetr + ";");
+                            data.setBlock3(data.getBlock3() + "121:" + uetr + ";");
 
                         } else {
                             data.setBlock3(data.getBlock3().replace("111:009;", ""));
@@ -127,10 +130,13 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 } else {
                     log.info("masuk else 196 " + data.getBlock3());
                     if (action_type.equalsIgnoreCase("Save")) {
+                        if (messageType.contains("cov")) {
+                            data.setBlock3("119:COV;");
+                        }
                         if (!data.getBlock3().contains("121:")) {
                             log.info("masuk sini 198");
                             String uetr = UUID.randomUUID().toString();
-                            data.setBlock3("121:" + uetr + ";");
+                            data.setBlock3(data.getBlock3() + "121:" + uetr + ";");
                         } else {
                             data.setBlock3(data.getBlock3().replace("111:009;", ""));
                         }
