@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import com.vensys.appcm.model.DataMXText;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -29,6 +30,7 @@ import com.vensys.appcm.model.DataMXText;
 public class DBMXText {
 
     Connection conn;
+    Logger log = Logger.getLogger(getClass().getName());
 
     public DBMXText(Connection conn) {
         this.conn = conn;
@@ -39,7 +41,6 @@ public class DBMXText {
     public DataMXText getMxTextById(int id_headers) throws SQLException {
         DataMXText data = new DataMXText();
         String sql = "SELECT id_headers, final_mx, modify_mx, final_mt FROM mx_text WHERE id_headers='" + id_headers + "'";
-        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

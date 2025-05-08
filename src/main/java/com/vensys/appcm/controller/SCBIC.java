@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataBIC;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,7 +23,7 @@ import com.vensys.appcm.model.DataBIC;
 public class SCBIC extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
+    Logger log = Logger.getLogger(getClass().getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -48,14 +49,15 @@ public class SCBIC extends HttpServlet {
 //        if (id_member == null || id_member.isEmpty()) {
         if (id_member == null ? "null" == null : id_member.equals("null") || id_member.isEmpty()) {
             dbData.addBic(json);
-//            System.out.println("addBic");
+            log.info("addBic");
         } else {
             int idMember = Integer.parseInt(id_member);
             dbData.updateBic(json, idMember);
-//            System.out.println("updateBic");
+            log.info("updateBic");
         }
         try {
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             ex.printStackTrace();
         } finally {
             dbConn2.closeConnection2();

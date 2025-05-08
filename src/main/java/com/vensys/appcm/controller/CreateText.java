@@ -87,7 +87,7 @@ public class CreateText {
         List<TagDB> tags = new ArrayList<TagDB>();
 //        String sql = "SELECT tag, count(detail) FROM tags WHERE id_headers='" + headerId + "' group by tag";
         String sql = "SELECT tag, count(detail) as cnt, min(urutan) as urutan FROM tags WHERE id_headers='" + headerId + "' group by tag order by urutan";
-//        System.out.println("sql=" + sql);
+//        log.info("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -103,7 +103,7 @@ public class CreateText {
     public List<String> getAppendTag(Integer headerId, String tag) throws Exception {
         List<String> str = new ArrayList<String>();
         String sql = "SELECT detail FROM tags WHERE id_headers=" + headerId + " AND tag='" + tag + "' ORDER BY urutan";
-//        System.out.println("sql=" + sql);
+//        log.info("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -118,7 +118,7 @@ public class CreateText {
         String fileName = "MT" + mt + "_" + dbHTML + "_" + id + ".txt";
         SFTP sftp = new SFTP();        
         FileWriter fstream = null;
-        System.out.println("fileName:" + fileName);
+        log.info("fileName:" + fileName);
 //        if (io_type.equalsIgnoreCase("I")) {
 //            fstream = new FileWriter(getOutDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + "_" + source + ".txt");
 //        } else {
@@ -126,7 +126,7 @@ public class CreateText {
 //        }     
         String filePath =  getLocalDir() + "/" + fileName; 
         fstream = new FileWriter(filePath);                   
-        System.out.println("filePath: " + filePath);
+        log.info("filePath: " + filePath);
 
         BufferedWriter out = new BufferedWriter(fstream);
         out.write(fin);
@@ -138,7 +138,7 @@ public class CreateText {
     public void createTextFileMX(String fin, String type, int id, String io_type, String source) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
         String fileName = type + "_" + dbHTML + "_" + id + ".xml";
-        //System.out.println("cek dbHMTL: " + dbHTML);
+        //log.info("cek dbHMTL: " + dbHTML);
         SFTP sftp = new SFTP();        
         FileWriter fstream = null;
 //        if (io_type.equalsIgnoreCase("I")) {
@@ -180,7 +180,7 @@ public class CreateText {
         msg.setBlock1(sb1);
         msg.setBlock2(sb2_i);
         String block3 = header.getBlock3();
-//        System.out.println("block3==" + block3);
+//        log.info("block3==" + block3);
         if (block3 != null && block3.contains(";")) {
             log.info("block3 : " + block3);
             msg.setBlock3(new SwiftBlock3());
@@ -194,9 +194,9 @@ public class CreateText {
         int k = 0;
         String multiLine = "";
         String strLine = "";
-        System.out.println("header nyaa: " + header.getId_headers());
-        System.out.println("166");
-        System.out.println("ini mt nya woe : " + header.getMessageType());
+        log.info("header nyaa: " + header.getId_headers());
+        log.info("166");
+        log.info("ini mt nya woe : " + header.getMessageType());
         if (header.getMessageType().equalsIgnoreCase("199")) {
             String sql = "SELECT tag, detail, tagName FROM tags WHERE id_headers='" + header.getId_headers() + "' ORDER BY urutan";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -260,10 +260,10 @@ public class CreateText {
             for (int i = 0; i < tagDB.size(); i++) {
                 List<String> str = getAppendTag(header.getId_headers(), tagDB.get(i).getTag());
                 if (tagDB.get(i).getTag().equalsIgnoreCase("71F")) {
-                    System.out.println("masuk sini ovasae");
+                    log.info("masuk sini ovasae");
                     for (int j = 0; j < str.size(); j++) {
-                        System.out.println("str " + str.get(j));
-                        System.out.println("masuk sini ova j=" + j + " k=" + k);
+                        log.info("str " + str.get(j));
+                        log.info("masuk sini ova j=" + j + " k=" + k);
                         k++;
 
                         multiLine += str.get(j);
@@ -383,7 +383,7 @@ public class CreateText {
                 fin = srv.getFIN(msg);
             }
         }
-        System.out.println("fin: " + fin);
+        log.info("fin: " + fin);
 //        fin = srv.getFIN(msg); //20190923 dikomen karean diatas ada replace
         fin = fin.replace(":CMOMSG:", "");//20231227 ditambah ini untuk hapus CMOMSG
         return fin;
@@ -420,7 +420,7 @@ public class CreateText {
                 hasilHitung = Integer.parseInt(rs.getString("n"));
             }
         } catch (SQLException e) {
-            System.out.print("Error SQL ArrayLengthTags: " + e.getMessage());
+            log.error("Error SQL ArrayLengthTags: " + e.getMessage());
         }
         return hasilHitung;
     }
@@ -507,7 +507,7 @@ public class CreateText {
         String temp = "";
         for (int i = 0; i < arrData.length; i++) {
             if (arrData[i].length() <= col) {
-                System.out.println("kadieuuuu... " + arrData[i]);
+                log.info("kadieuuuu... " + arrData[i]);
                 temp += arrData[i] + "\r\n";
             } else {
                 int sisa = arrData[i].length() % col;

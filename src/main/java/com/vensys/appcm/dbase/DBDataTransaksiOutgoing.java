@@ -70,7 +70,7 @@ public class DBDataTransaksiOutgoing {
             }
 
         } catch (Exception e) {
-            System.out.println("ID : " + e);
+            log.error("ID : " + e);
         }
         return id;
     }
@@ -127,9 +127,9 @@ public class DBDataTransaksiOutgoing {
                 header = rs.getString("id_headers");
             }
         } catch (SQLException e) {
-            System.out.println("SQLState: " + e.getSQLState());
-            System.out.println("Error Code: " + e.getErrorCode());
-            System.out.println("Message: " + e.getMessage());
+            log.error("SQLState: " + e.getSQLState());
+            log.error("Error Code: " + e.getErrorCode());
+            log.error("Message: " + e.getMessage());
             e.printStackTrace();
         }
 
@@ -152,7 +152,7 @@ public class DBDataTransaksiOutgoing {
             return exists;                       
         } catch (SQLException e) {
             log.info("tagsExists:" + e.getMessage());
-            System.out.println("tagsExists:" + e.getMessage());
+            log.error("tagsExists:" + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -272,7 +272,7 @@ public class DBDataTransaksiOutgoing {
             st = this.conn.prepareStatement(sql);
             st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error moveJournalHistory : " + e.toString());
+            log.error("Error moveJournalHistory : " + e.toString());
         }
     }
     
@@ -375,7 +375,7 @@ public class DBDataTransaksiOutgoing {
                 var body = mapHeadAmdBody.get("body");
                 var head = mapHeadAmdBody.get("header");
                 String channel = mapHeadAmdBody.get("channel");
-                System.out.println("Body JSON "+body);
+//                System.out.println("Body JSON "+body);
                 
                 // merubah json ke object prowide
                 var bodyMessage = AbstractMX.fromJson(body);
@@ -387,7 +387,7 @@ public class DBDataTransaksiOutgoing {
                 
                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
                 
-                System.out.println(finalMX.get("final_mx"));
+//                System.out.println(finalMX.get("final_mx"));
                 
                 ct.createTextFileMX(finalMX.get("final_mx"),variant,id_headers, "I", channel);
             } else {
@@ -497,7 +497,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(1, flag);  //flag/
             st.setInt(2, id_headers);   //id_headers/
             st.executeUpdate();
-            System.out.println("benderanya " + flag);
+            log.info("benderanya " + flag);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -777,10 +777,10 @@ public class DBDataTransaksiOutgoing {
                 st.executeUpdate();
 //                System.out.println("success add : " + tagsKey);
             } catch (SQLException e) {
-                System.out.print("Error SQL MT: " + e.getMessage());
+                log.error("Error SQL MT: " + e.getMessage());
             }
         } catch (SQLException swl) {
-            System.out.print("Error SQL MT: " + swl.getMessage());
+            log.error("Error SQL MT: " + swl.getMessage());
         }
     }
 
@@ -856,7 +856,7 @@ public class DBDataTransaksiOutgoing {
             st.setInt(5, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
-                System.out.println("Update Flag to:" + flag);
+                log.info("Update Flag to:" + flag);
                 updateDataHeaderStatus(flag, tanggal_transaksi, id_headers, user_id, ip_access, comp_name);
             }
         } catch (SQLException e) {
@@ -876,7 +876,7 @@ public class DBDataTransaksiOutgoing {
             st.setInt(3, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
-                System.out.println("Update Flag to:" + flag);
+                log.info("Update Flag to:" + flag);
                 updateDataHeaderStatus(flag, tanggal_transaksi, id_headers, user_id, ip_access, comp_name);
             }
         } catch (SQLException e) {
@@ -945,9 +945,9 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()) {
                 json = rs.getString(1);
             }
-            System.out.println("json_tag: " + json);
+//            System.out.println("json_tag: " + json);
         } catch (SQLException e) {
-            System.out.println("Error getTagsMX: " + e.getMessage());
+            log.error("Error getTagsMX: " + e.getMessage());
         }
         return json;
     }
@@ -975,8 +975,8 @@ public class DBDataTransaksiOutgoing {
             name = name.replace("1/", "");
             name = name.replaceAll("2/.*", "");
             acc = acc.replaceAll("/", "");
-            System.out.println("ACC=" + acc);
-            System.out.println("Name=" + name);
+            log.info("ACC=" + acc);
+            log.info("Name=" + name);
             String sql = "UPDATE verified_account set verified = '1', verified_date=LOCALTIMESTAMP where acc = ? and \"nameFromTrx\"= ? ";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, acc);

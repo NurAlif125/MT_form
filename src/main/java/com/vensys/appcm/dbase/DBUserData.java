@@ -16,6 +16,7 @@ import java.util.Date;
 import jakarta.servlet.http.HttpServletRequest;
 import com.vensys.appcm.model.DataLogin;
 import com.vensys.appcm.model.DataUser;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,6 +26,7 @@ public class DBUserData {
 
     Connection conn;
     int countid = 0;
+    Logger log = Logger.getLogger(getClass().getName());
 
     public DBUserData(Connection conn) {
         this.conn = conn;
@@ -72,7 +74,7 @@ public class DBUserData {
 
     public DataLogin selectLastLoginGagal(String user_id) throws SQLException {
         DataLogin data = new DataLogin();
-        System.out.println("selectLastLoginGagal");
+        log.info("selectLastLoginGagal");
         String sql = "select time_login FROM login_history where status_login='0' And user_id='" + user_id + "' order by time_login desc limit 1";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);

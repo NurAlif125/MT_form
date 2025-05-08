@@ -81,8 +81,6 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 
         String dataXml = request.getParameter("dataXML");
 
-        System.out.println("Data XML \r\b" + dataXml);
-
         DataHeaderTransaksi data = new DataHeaderTransaksi();
         Header datas = new Header();
 

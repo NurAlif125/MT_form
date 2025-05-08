@@ -32,8 +32,9 @@ import com.vensys.appcm.model.Header;
 import com.vensys.appcm.model.HeaderStatus;
 import com.vensys.appcm.model.TagDB;
 import java.math.BigDecimal;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 
 /**
  *
@@ -44,6 +45,7 @@ public class DBHeader {
     Connection conn;
     private String tag;
     private String detail;
+    Logger log = Logger.getLogger(getClass().getName());
 
     public DBHeader(Connection conn) {
         this.conn = conn;
@@ -106,7 +108,6 @@ public class DBHeader {
                 + "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers AND (t32d.tagName like '%mf32a_date%' OR t32d.tagName like '%mf62f_date%' OR t32d.tagName like '%mf62m_date%' OR t32d.tagName like '%mf32a_value_date%') "
                 + "WHERE hd.id_headers=hds.id_headers AND isDuplicate=0 " + where
                 + " ORDER BY tanggal DESC";
-        System.out.println("sql getAllHeaderReport = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         // kalo mau ada total nominal ack, nack, incok, incnok
@@ -293,7 +294,6 @@ public class DBHeader {
 //                + "receiverAddress,tanggal,flag,branch FROM headers,header_status "
 //                + "WHERE headers.id_headers=header_status.id_headers AND " + where
 //                + " AND isDuplicate=0 ORDER BY tanggal DESC";
-        System.out.println("sql getAllHeaderReport = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -424,7 +424,6 @@ public class DBHeader {
 //                + "receiverAddress,tanggal,flag,branch FROM headers,header_status "
 //                + "WHERE headers.id_headers=header_status.id_headers AND " + where
 //                + " AND isDuplicate=0 ORDER BY tanggal DESC";
-        System.out.println("sql getAllHeaderReport = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -562,7 +561,6 @@ public class DBHeader {
                 + "AND isDuplicate=0 "
                 + "AND (t32d.detail IS NULL OR (t32d.detail between '" + value_date + "' and '" + value_date_end + "')) "
                 + where + " ORDER BY tanggal DESC";
-        System.out.println("sql getAllHeaderReportxls = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -670,7 +668,6 @@ public class DBHeader {
         ArrayList<Header> headers = new ArrayList<Header>();
         String sql = "SELECT id_headers,logicalTerminal,messageType,receiverAddress,flag "
                 + "FROM headers WHERE id_headers='" + id + "'";
-        System.out.println("sql printMTNota = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -977,9 +974,7 @@ public class DBHeader {
 //        now.add(Calendar.MONTH, -1);
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
 //        System.out.println("tanggal_transaksi_sebulan : "+tanggal_transaksi_sebulan);
-System.out.println("Session ID: " + httpSession.getId());
         List<String> list = (ArrayList) httpSession.getAttribute("role");
-        System.out.println("role: " + list);
 //        for (int i = 0; i < list.size(); i++) {
 //            System.out.println("data=" + i + "=" + list.get(i));
 //        }
@@ -1104,7 +1099,6 @@ System.out.println("Session ID: " + httpSession.getId());
                      h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
                 + "ORDER BY tanggal DESC";
-        System.out.println("sql header....= " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1442,7 +1436,6 @@ System.out.println("Session ID: " + httpSession.getId());
 "                     h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,\n" +
 "                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy\n" +
 "                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE (" + where + ") AND h.isDuplicate!=1 ORDER BY h.tanggal DESC";
-        System.out.println("SQLresult : " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1520,7 +1513,6 @@ System.out.println("Session ID: " + httpSession.getId());
 //                + "FROM headers " + prefix + " h\n"
 //                + "left join tags t32c ON t32c.id_headers = h.id_headers AND (t32c.tagName like '%mf32a_currency%')\n"
 //                + "WHERE h.id_headers='" + headerId + "'";
-        System.out.println("getHeaderById : " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1643,7 +1635,6 @@ System.out.println("Session ID: " + httpSession.getId());
                 + "LEFT JOIN bic lt ON lt.code_member = concat(SUBSTRING(logicalTerminal,0,9), SUBSTRING(logicalTerminal,10,3))\n"
                 + "LEFT JOIN bic ri ON ri.code_member = concat(SUBSTRING(receiverAddress,0,9), SUBSTRING(receiverAddress,10,3))\n"
                 + "where id_headers=" + headerId;
-        System.out.println("getLTRI: " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1659,7 +1650,6 @@ System.out.println("Session ID: " + httpSession.getId());
 //                + "SET @bic = (select detail from tags where tag='53a' and tagName='_121_of53a_identifier_code' and id_headers='" + headerId + "') "
 //                + "select * from bic where code_member like '%' +@bic+ '%'";
         String sql = "select * from bic where code_member = select detail from tags where tag='53a' and tagName='_121_of53a_identifier_code' and id_headers='" + headerId + "'";
-        System.out.println("getsenderbank: " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1717,7 +1707,6 @@ System.out.println("Session ID: " + httpSession.getId());
     public String ambilTag20(int headerId, String prefix) throws SQLException {
         String data = "";
         String sql = "SELECT detail FROM " + prefix + "tags WHERE id_headers=" + headerId + " AND tag='20'";
-        System.out.println("sqlambil20=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1861,7 +1850,6 @@ System.out.println("Session ID: " + httpSession.getId());
     public String ambilTag53a_identifier_code(int headerId) throws SQLException {
         StringBuffer data = new StringBuffer();
         String sql = "SELECT detail FROM tags WHERE id_headers=" + headerId + " AND tagName like '%of53a_identifier_code' ORDER BY urutan ASC";
-        System.out.println("sql ambilTag53a_identifier_code =" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1888,7 +1876,6 @@ System.out.println("Session ID: " + httpSession.getId());
     public String ambilTag57a_identifier_code(int headerId) throws SQLException {
         StringBuffer data = new StringBuffer();
         String sql = "SELECT detail FROM tags WHERE id_headers=" + headerId + " AND tagName like '%of57a_identifier_code' ORDER BY urutan ASC";
-        System.out.println("sql ambilTag57a_identifier_code =" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1901,7 +1888,6 @@ System.out.println("Session ID: " + httpSession.getId());
     public String ambilTag59_name_address(int headerId) throws SQLException {
         StringBuffer data = new StringBuffer();
         String sql = "SELECT detail FROM tags WHERE id_headers=" + headerId + " AND tagName like '%mf59_name_address' ORDER BY urutan ASC";
-        System.out.println("sql ambilTag59_name_address =" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -2075,7 +2061,6 @@ System.out.println("Session ID: " + httpSession.getId());
                 + "where t.id_headers = h.id_headers and h.io_type = '" + io_type + "' and tag='32a' AND tagName like '%mf32a_amount' "
                 + "AND h.receiverAddress like '" + bic + "%' AND (flag='AUTH' OR flag='TEXT' OR flag='ACK' OR flag='NACK') AND "
                 + "h.tanggal BETWEEN '" + tanggal1 + "' AND '" + tanggal2 + " 23:59'  and isduplicate=0";
-        System.out.println("sql getNominalBIC: " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -2088,7 +2073,6 @@ System.out.println("Session ID: " + httpSession.getId());
     public String getDailyTrx(String flag, String tanggal1, String tanggal2, String currency, String flag2) throws Exception {
         String nominal = "";
         String sql = "exec dailyTrx @date1 = '" + tanggal1 + "', @date2 = '" + tanggal2 + "', @curr = '" + currency + "', @flag = '" + flag + "',@flag2 = '" + flag2 + "'  ";
-        System.out.println("sql getDailyTrx: " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -2103,7 +2087,6 @@ System.out.println("Session ID: " + httpSession.getId());
     public String getDailyTrxInvRtr(String flag, String tanggal1, String tanggal2, String currency) throws Exception {
         String nominal = "";
         String sql = "exec dailyTrxInv @date1 = '" + tanggal1 + "', @date2 = '" + tanggal2 + "', @curr = '" + currency + "', @flag = '" + flag + "' ";
-        System.out.println("sql getDailyTrxInvRtr: " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -2287,7 +2270,7 @@ System.out.println("Session ID: " + httpSession.getId());
                 return dataEssentialFieldPacs008;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBHeader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBHeader.class.getName()).log(Level.ERROR, null, ex);
         }
         return null;
     }
@@ -2370,13 +2353,12 @@ System.out.println("Session ID: " + httpSession.getId());
              return dataEssentialFieldPacs009;
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBHeader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBHeader.class.getName()).log(Level.ERROR, null, ex);
         }
         return null;
     }
     
     public Collection<Header> printMXDocPacs008(String id) throws SQLException, Exception {
-            System.out.println("printMXDoc() id: " +id);
             ArrayList<Header> headers = new ArrayList<Header>();
             DecimalFormat df = new DecimalFormat("#,###.####");
             String sql = "SELECT \n" +
@@ -2495,7 +2477,6 @@ System.out.println("Session ID: " + httpSession.getId());
                 data += "Instruction Id\t\t\t: " + rs.getString(67) + "\n";
                 data += "Interbank Settlement Date\t\t: " + rs.getString(17) + "\n";
                 data += "Currency\t\t\t: " + rs.getString(18) + "\n";
-                System.out.println("isinya:" + rs.getString(19));
                 data += "Interbank Settlement Amount\t: " + df.format(new BigDecimal(rs.getString(19))) + "\n";
                 data += "Charges\t\t\t\t: " + rs.getString(20) + "\n";
                 String instrCurr = rs.getString(21);
@@ -2832,7 +2813,6 @@ System.out.println("Session ID: " + httpSession.getId());
             return headers;
         }
           public Collection<Header> printMXDocPacs009(String id) throws SQLException, Exception {
-            System.out.println("printMXDocPacs009() id:" + id);
             ArrayList<Header> headers = new ArrayList<Header>();
             DecimalFormat df = new DecimalFormat("#,###.####");
             String sql = "SELECT logicalTerminal,messageType,receiverAddress,messagePriority,   \n" +
@@ -3024,7 +3004,6 @@ System.out.println("Session ID: " + httpSession.getId());
     public ArrayList<Header> getAllHeaderReport(String status, String io_type, String mt_type, String value_date, String date_from, String date_end, String flag, String filter, String cust_curr, String value_date_end, String channel) throws SQLException {
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
-        System.out.println("CHANNEL2="+channel);
         formatRp.setCurrencySymbol("");
         formatRp.setMonetaryDecimalSeparator(',');
         formatRp.setGroupingSeparator('.');
@@ -3136,7 +3115,6 @@ System.out.println("Session ID: " + httpSession.getId());
                     "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE " 
                 + " isDuplicate=0 " + where
                 + " ORDER BY tanggal DESC";
-        System.out.println("sql getAllHeaderReport = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         

@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import com.vensys.appcm.model.DataMTText;
+import org.apache.log4j.Logger;
 
 
 /**
@@ -30,7 +31,8 @@ import com.vensys.appcm.model.DataMTText;
 public class DBMTText {
 
     Connection conn;
-
+    Logger log = Logger.getLogger(getClass().getName());
+    
     public DBMTText(Connection conn) {
         this.conn = conn;
     }
@@ -40,7 +42,6 @@ public class DBMTText {
     public DataMTText getMxTextById(int id_headers) throws SQLException {
         DataMTText data = new DataMTText();
         String sql = "SELECT *  FROM mx_text WHERE id_headers='" + id_headers + "'";
-        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -56,7 +57,6 @@ public class DBMTText {
     public DataMTText getMtTextById(int id_headers) throws SQLException {
         DataMTText data = new DataMTText();
         String sql = "SELECT id_headers, modify_mt, final_mt, final_mx FROM mt_text WHERE id_headers='" + id_headers + "'";
-        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

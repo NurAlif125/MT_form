@@ -52,7 +52,6 @@ public class DBconnection2 {
                 Class.forName(DRIVER);
                 conn2 = DriverManager.getConnection(URL, USER, PASS);
                 log.info("Database connection 2 established");
-                System.out.println("Database connection 2 established");
             } else {
                 log.error("db.properties file not found in the classpath");
                 // Handle this situation accordingly

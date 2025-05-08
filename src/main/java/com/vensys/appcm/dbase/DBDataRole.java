@@ -208,7 +208,7 @@ public class DBDataRole {
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setInt(1, role_id);
         st.executeUpdate();
-        System.out.println(st);
+//        System.out.println(st);
         evl.insertDataEvent(modifier, "Disable Permanent role", ip, comp);
         evl.updateLogUser(modifier, "role", tanggal);
     }

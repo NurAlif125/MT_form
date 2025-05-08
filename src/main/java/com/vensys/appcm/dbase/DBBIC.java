@@ -36,18 +36,21 @@ public class DBBIC {
     public void addBic(String json) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
+            log.info("addBIC");
             String sql = "INSERT INTO bic(need_approve) VALUES (?::jsonb)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, json);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
+            log.error(e.getMessage());
             e.printStackTrace();
         }
     }
 
     public void deleteBICApproval(int id_member) {
         try {
+            log.info("deleteBICApproval");
             String sql = "UPDATE bic SET need_approve = NULL WHERE id_member = ?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setInt(1, id_member);

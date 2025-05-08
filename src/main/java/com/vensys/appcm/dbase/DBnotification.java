@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,7 @@ import java.util.Map;
 public class DBnotification {
     Connection conn;
     int countid = 0;
+    Logger log = Logger.getLogger(getClass().getName());
 
     public DBnotification(Connection conn) {
         this.conn = conn;
@@ -85,13 +87,13 @@ public class DBnotification {
 //            int rowsAffected = st.executeUpdate();
 //            return rowsAffected > 0;
 //        } catch (SQLException e) {
-//            System.err.println("SQL Error in markAsReadNotif:");
-//            System.err.println("- SQL: " + sql);
-//            System.err.println("- Parameters: userId=" + userId + 
+//            log.error("SQL Error in markAsReadNotif:");
+//            log.error("- SQL: " + sql);
+//            log.error("- Parameters: userId=" + userId + 
 //                             ", readIdNotif=" + readIdNotif);
-//            System.err.println("- Error Code: " + e.getErrorCode());
-//            System.err.println("- SQL State: " + e.getSQLState());
-//            System.err.println("- Message: " + e.getMessage());
+//            log.error("- Error Code: " + e.getErrorCode());
+//            log.error("- SQL State: " + e.getSQLState());
+//            log.error("- Message: " + e.getMessage());
 //
 //            // Re-throw the exception after logging
 //            throw e;
@@ -121,13 +123,13 @@ public class DBnotification {
             int rowsAffected = st.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            System.err.println("SQL Error in markAsReadNotif:");
-            System.err.println("- SQL: " + sql);
-            System.err.println("- Parameters: userId=" + userId + 
+            log.error("SQL Error in markAsReadNotif:");
+            log.error("- SQL: " + sql);
+            log.error("- Parameters: userId=" + userId + 
                              ", readIdNotif=" + readIdNotif);
-            System.err.println("- Error Code: " + e.getErrorCode());
-            System.err.println("- SQL State: " + e.getSQLState());
-            System.err.println("- Message: " + e.getMessage());
+            log.error("- Error Code: " + e.getErrorCode());
+            log.error("- SQL State: " + e.getSQLState());
+            log.error("- Message: " + e.getMessage());
 
             // Re-throw the exception after logging
             throw e;

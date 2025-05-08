@@ -89,6 +89,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         BusinessAppHdrV02 appHeader;
         
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
+            log.info("process pacs.004");
             if (flag.equalsIgnoreCase("MOD") || flag.equalsIgnoreCase("CVT-MOD")) {
                 String newFlag = "";
                 if (flag.equalsIgnoreCase("MOD")) {
@@ -165,6 +166,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
+            log.info("process pacs.008");
             if (flag.equalsIgnoreCase("MOD") || flag.equalsIgnoreCase("CVT-MOD")) {
                 String newFlag = "";
                 if (flag.equalsIgnoreCase("MOD")) {
@@ -226,7 +228,6 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 dataMXpacs008.setAppHdr(appHeader);
                 String newXML = dataMXpacs008.message(mxConfiguration);
-                System.out.println("newXML: " + newXML);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
                 String newJson = dataMXpacs008.toJson();
@@ -242,6 +243,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
+            log.info("process pacs.009");
             if (flag.equalsIgnoreCase("MOD") || flag.equalsIgnoreCase("CVT-MOD")) {
                 String newFlag = "";
                 if (flag.equalsIgnoreCase("MOD")) {
@@ -303,7 +305,6 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 dataMXpacs009.setAppHdr(appHeader);
                 String newXML = dataMXpacs009.message(mxConfiguration);
-                System.out.println("newXML: " + newXML);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
                 String newJson = dataMXpacs009.toJson();
