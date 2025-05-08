@@ -18,9 +18,10 @@ import com.prowidesoftware.swift.model.Tag;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBMTText;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import com.vensys.appcm.model.DataMTText;
 import com.vensys.appcm.model.TagDB;
-
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.StringTokenizer;
@@ -30,10 +31,12 @@ import java.util.StringTokenizer;
  * @author AplDev2
  */
 public class CHeader {    
-//    Logger log = Logger.getLogger(CHeader.class);
+    Logger log = Logger.getLogger(CHeader.class);
     TagDB tag = new TagDB();
     DBconnection dbConn = new DBconnection();
+    DBconnection2 dbConn2 = new DBconnection2();
     DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn.getConnection());
+    DBDataTransaksiOutgoing dBDataTransaksiOutgoing2 = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
     int count21 = 0, count32b = 0;
     int count50k = 0, count52a = 0, count57a = 0;
     int count59 = 0, count70 = 0, count77b = 0, count72 = 0;
@@ -111,24 +114,24 @@ public class CHeader {
 
             // cek jika data tags sudah ada maka keluar proses
             boolean tagsExists = dBDataTransaksiOutgoing.tagsExists(id);
-            System.out.println("testcheader::");
+//            log.info("testcheader::");
             if (tagsExists) return;
 
             DataMTText textById = new DataMTText();
-            System.out.println("textById::" + textById);
+            log.info("textById::" + textById);
             
             try {
                 DBMTText db = new DBMTText(dbConn.getConnection());
                 textById = db.getMtTextById(id);
             } catch (SQLException e) {
-                System.out.println("Error wifeParser: " + e.getMessage());
+                log.info("Error wifeParser: " + e.getMessage());
                 e.printStackTrace();
                 return;
             }
             String fin = textById.getModify_mt();
             if (fin == null || fin =="") return;
             fin.replaceAll("\\{1:F21.*.1:F01", "\\{1:F01");
-            System.out.println("fin nyaeta :" + fin);
+            log.info("fin nya:" + fin);
             SwiftMessage msg = SwiftMessage.parse(fin);
             SwiftBlock3 sb3 = msg.getBlock3();
             SwiftBlock4 sb4 = msg.getBlock4();
@@ -147,7 +150,7 @@ public class CHeader {
                     }
                     sb.append(tagName + ":" + tagValue + ";");
                 }
-                System.out.println("cover " + cover);
+                log.info("cover " + cover);
             }            
             
             
@@ -163,10 +166,10 @@ public class CHeader {
                     mt202.tagMT202(sb4, id);
                 }
             } 
-//            log.info("wifeParser() is successfully");
+            log.info("wifeParser() is successfully");
             
         } catch (IOException e) {
-//            log.error("wifeParser() failed: " + e.getMessage(), e);            
+            log.error("wifeParser() failed: " + e.getMessage(), e);            
         }
     }
 
@@ -387,7 +390,7 @@ public class CHeader {
             count77b = count77b + 1;
         } else {
             readBlock4(arr[0], tagName, tagValue);
-            // System.out.println("else");
+            // log.info("else");
         }
     }
 
@@ -506,14 +509,14 @@ public class CHeader {
                     if (a == 0) {
                         readBlock4(arr[0 + a], tagName, dataTag[a]);
                     } else {
-                        System.out.println("data tag A :" + dataTag[a]);
+                        log.info("data tag A :" + dataTag[a]);
                         for (int b = 0; b < 2; b++) {
                             if (b == 0) {
                                 readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(0, 1));
-                                System.out.println("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
+                                log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
                             } else {
                                 readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(2));
-                                System.out.println("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
+                                log.info("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
                             }
                             count59f = count59f + 1;
                         }
@@ -523,15 +526,15 @@ public class CHeader {
             } else {
                 String[] dataTag = tagValue.split("\r\n");
                 for (int a = 0; a < dataTag.length; a++) {
-                    System.out.println("data tag A :" + dataTag[a]);
+                    log.info("data tag A :" + dataTag[a]);
                     for (int b = 0; b < 2; b++) {//20200408
                         count59f = count59f + 1;
                         if (b == 0) {
                             readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(0, 1));
-                            System.out.println("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
+                            log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
                         } else {
                             readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(2));
-                            System.out.println("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
+                            log.info("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
                         }
 //                        count59f = count59f + 1;
                     }
@@ -550,10 +553,10 @@ public class CHeader {
                         for (int b = 0; b < 2; b++) {
                             if (b == 0) {
                                 readBlock4(arr[0 + a + count50f], tagName, dataTag[a].substring(0, 1));
-                                //System.out.println("data tag B :" + dataTag[a].substring(0, 1) + "#" + count50f);
+                                //log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count50f);
                             } else {
                                 readBlock4(arr[0 + a + count50f], tagName, dataTag[a].substring(2));
-                                // System.out.println("data tag B :" + dataTag[a].substring(2) + "#" + count50f);
+                                // log.info("data tag B :" + dataTag[a].substring(2) + "#" + count50f);
                             }
                             count50f = count50f + 1;
                         }
@@ -563,15 +566,15 @@ public class CHeader {
             } else {
                 String[] dataTag = tagValue.split("\r\n");
                 for (int a = 0; a < dataTag.length; a++) {
-                    System.out.println("data tag A :" + dataTag[a]);
+                    log.info("data tag A :" + dataTag[a]);
                     for (int b = 0; b < 2; b++) {//20200408
                         count50f = count50f + 1;
                         if (b == 0) {
                             readBlock4(arr[0 + a + count50f], tagName, dataTag[a].substring(0, 1));
-                            System.out.println("data tag B :" + dataTag[a].substring(0, 1) + "#" + count50f);
+                            log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count50f);
                         } else {
                             readBlock4(arr[0 + a + count50f], tagName, dataTag[a].substring(2));
-                            System.out.println("data tag B :" + dataTag[a].substring(2) + "#" + count50f);
+                            log.info("data tag B :" + dataTag[a].substring(2) + "#" + count50f);
                         }
                     }
                     count50f = count50f - 1;
@@ -621,7 +624,7 @@ public class CHeader {
             count52c=count52c+1;
         }else {
             readBlock4(arr[0], tagName, tagValue);
-            //System.out.println("else");
+            //log.info("else");
         }
     }
 
@@ -651,7 +654,7 @@ public class CHeader {
             i++;
         }
         if (tagValue.contains("/") || tagValue.contains("//")) {
-            System.out.println("Ada /:" + tagValue);
+            log.info("Ada /:" + tagValue);
             StringTokenizer st_ = new StringTokenizer(tagValue, "/");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];
@@ -670,7 +673,7 @@ public class CHeader {
     //    method split data block4 dan insert ke DB
     public void readBlock4(String tags, String tagName, String tagValue) {
         // lewatin kalo ga ada id_headers
-        System.out.println("readBlock4:id_headers:" + this.id_headers);
+        log.info("readBlock4:id_headers:" + this.id_headers);
         if (this.id_headers == -1) return;       
         
         if (tags.startsWith("_")) {
@@ -687,20 +690,20 @@ public class CHeader {
             tag.setTagName(tags);   //tagName
 //            log.info("tagValue readblock4 " + tagValue);
             if (tagName.contains("15")) {
-                System.out.println("masuk tagName 15");
+                log.info("masuk tagName 15");
                 try {
                     dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), "", tag.getTagName().trim(),this.id_headers);
                 } catch (Exception ex) {
-                    System.out.println("Error 15A:" + ex.getMessage());
+                    log.error("Error 15A:" + ex.getMessage());
                     ex.printStackTrace();
                 }
             } else {
                 if (!tagValue.equals("")) {
-                    System.out.println("masuk tagName kosong");
+                    log.info("masuk tagName kosong");
                     try {
                         dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), tag.getDetail().trim(), tag.getTagName().trim(),this.id_headers);
                     } catch (Exception ex) {
-                        System.out.println("Error 15B:" + ex.getMessage());
+                        log.error("Error 15B:" + ex.getMessage());
                         ex.printStackTrace();
                     }
                 }
@@ -733,7 +736,7 @@ public class CHeader {
             i++;
         }
         if (tagValue.contains("/") || tagValue.contains("/")) {
-            System.out.println("Ada /:" + tagValue);
+            log.info("Ada /:" + tagValue);
             StringTokenizer st_ = new StringTokenizer(tagValue, "/");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];
@@ -758,7 +761,7 @@ public class CHeader {
             i++;
         }
         if (tagValue.contains("/")) {
-            System.out.println("Ada /:" + tagValue);
+            log.info("Ada /:" + tagValue);
             StringTokenizer st_ = new StringTokenizer(tagValue, "/");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];
@@ -766,8 +769,8 @@ public class CHeader {
                 arr_[j] = st_.nextToken();
                 j++;
             }
-//            System.out.println("arr_[0]:" + arr_[0]);
-//            System.out.println("arr_[1]:" + arr_[1]);
+//            log.info("arr_[0]:" + arr_[0]);
+//            log.info("arr_[1]:" + arr_[1]);
             readBlock4(arr[0], tagName, arr_[0]);
             readBlock4(arr[1], tagName, arr_[1]);
         } else if(tagName.equalsIgnoreCase("30F")&&checkSeqD320==5){

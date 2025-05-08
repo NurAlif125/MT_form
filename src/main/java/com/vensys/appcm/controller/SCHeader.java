@@ -20,6 +20,7 @@ import com.vensys.appcm.model.Header;
 import com.vensys.appcm.model.ResultHeader;
 import com.vensys.appcm.myutils.HistoryPaging;
 import java.io.Serializable;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -30,6 +31,7 @@ public class SCHeader extends HttpServlet implements Serializable {
     private static final long serialVersionUID = 1L;
     private static String CONTROLLERHEADERS = "controllerHeaders.jsp";
     private static String RESULTHEADERS = "resultHeaders.jsp";
+    Logger log = Logger.getLogger(getClass().getName());
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,7 +46,7 @@ public class SCHeader extends HttpServlet implements Serializable {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String io_type = request.getParameter("io_type");
-
+        log.info("SCHEADER:");
         String sender_logical_terminal = request.getParameter("sender_logical_terminal");
         String receiver_institution = request.getParameter("receiver_institution");
         String mt_type = request.getParameter("mt_type");
@@ -58,11 +60,11 @@ public class SCHeader extends HttpServlet implements Serializable {
         String amount = request.getParameter("amount");
         String find = request.getParameter("find");
         String flag = request.getParameter("flag");
-        System.out.println("flag: " + flag);
+        log.info("flag: " + flag);
         String status = request.getParameter("status");
-        System.out.println("status: " + status);
+        log.info("status: " + status);
         String menu = request.getParameter("menu");
-        System.out.println("menu: " + menu);
+        log.info("menu: " + menu);
         String forward = "";
         int notifVer = 0;
         int notifAuth = 0;
@@ -75,18 +77,18 @@ public class SCHeader extends HttpServlet implements Serializable {
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         List<ResultHeader> resultHeader = new ArrayList<ResultHeader>();
         String flagStatus = (String) httpSession.getAttribute("flagStatus");
-        System.out.println("flagStatus: " + flagStatus);
+        log.info("flagStatus: " + flagStatus);
         String channel = "";
         try {
             channel = (String) httpSession.getAttribute("channel");
             notifVer = dbo.getNotificationVer();
-//            System.out.println("notifVer: " + notifVer);
+//            log.info("notifVer: " + notifVer);
             notifAuth = dbo.getNotificationAuth();
-//            System.out.println("notifAuth: " + notifAuth);
+//            log.info("notifAuth: " + notifAuth);
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
-                System.out.println("masuk sini");
+                log.info("masuk sini");
                 headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);// 2025-01-07
 //                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -95,8 +97,8 @@ public class SCHeader extends HttpServlet implements Serializable {
 //                httpSession.setAttribute("headersPajak", headersPajak);
             } else if (flag != null && !flag.isEmpty()) {
                 if (menu == null) {
-//                    System.out.println("flag if : " + flag);
-//                    System.out.println("flag statusnya adalah :" + flagStatus);
+//                    log.info("flag if : " + flag);
+//                    log.info("flag statusnya adalah :" + flagStatus);
 //                httpSession.removeAttribute("flagFilter");
                     if (flag.equalsIgnoreCase("VER")) {
                         flag = "MOD";
@@ -216,7 +218,7 @@ public class SCHeader extends HttpServlet implements Serializable {
                     httpSession.setAttribute("flagFilter", flag);
 //                    }
                 } else {
-                    System.out.println("flag else : " + flag);
+                    log.info("flag else : " + flag);
 //                httpSession.removeAttribute("flagFilter");
                     headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
 //                    headers = bBHeaders.getAllHeader(httpSession, io_type, httpSession.getAttribute("flagFilter").toString());
@@ -229,7 +231,7 @@ public class SCHeader extends HttpServlet implements Serializable {
 
 //                httpSession.setAttribute("headersPajak", headersPajak);
             } else {
-                System.out.println("masuk sini else");
+                log.info("masuk sini else");
                 // ditambahkan rel_reference pada 20151001 by Azan
                 // sender_logical_terminal => sender_bank dan receiver_institution => receiver_bank
                 String db_type = request.getParameter("db_type");
@@ -244,9 +246,10 @@ public class SCHeader extends HttpServlet implements Serializable {
                     httpSession.removeAttribute("flagFilter");
                 }
             }
-            System.out.println("menunyaaaa.... " + menu);
+            log.info("menunyaaaa.... " + menu);
 
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             ex.printStackTrace();
         } finally {
             dbConn.closeConnection();

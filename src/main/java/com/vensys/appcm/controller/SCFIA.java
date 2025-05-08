@@ -6,6 +6,7 @@ package com.vensys.appcm.controller;
 
 import com.vensys.appcm.dbase.DBFIA;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataFIA;
 import jakarta.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,7 +24,8 @@ import jakarta.servlet.http.HttpSession;
 public class SCFIA extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
+    Logger log = Logger.getLogger(getClass().getName());
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -33,9 +36,9 @@ public class SCFIA extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        DBconnection dbConn = new DBconnection();
+        DBconnection2 dbConn = new DBconnection2();
         DataFIA data = new DataFIA();
-        DBFIA dbData = new DBFIA(dbConn.getConnection());
+        DBFIA dbData = new DBFIA(dbConn.getConnection2());
         HttpSession session = request.getSession();
 
         String id = request.getParameter("id");
@@ -46,15 +49,18 @@ public class SCFIA extends HttpServlet {
         data.setSourceto(request.getParameter("sourceto"));
         data.setIsenable(parseIntSafe(request.getParameter("isenable"),0));
         if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
+            log.info("add config FIA");
             dbData.addFIA(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         } else {
+            log.info("update config FIA");
             dbData.updateFIA(data, id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         }
         try {
         } catch (Exception ex) {
+            log.error(ex.getMessage());
             ex.printStackTrace();
         } finally {
-            dbConn.closeConnection();
+            dbConn.closeConnection2();
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCFIAList");
         dispatcher.forward(request, response);

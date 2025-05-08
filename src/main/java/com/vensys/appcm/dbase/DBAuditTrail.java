@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -19,6 +20,7 @@ import java.util.Map;
  */
 public class DBAuditTrail {
     
+    Logger log = Logger.getLogger(getClass().getName());
     Connection conn;
 
     public DBAuditTrail(Connection conn) {
@@ -38,7 +40,7 @@ public class DBAuditTrail {
     st.setTimestamp(1, java.sql.Timestamp.valueOf(date_from+" 00:00:00"));
     st.setTimestamp(2, java.sql.Timestamp.valueOf(date_end + " 23:59:00"));
     
-    System.out.println("SQL Params: " + date_from + " 00:00:00 s/d " + date_end + " 23:59:59");
+    log.info("SQL Params: " + date_from + " 00:00:00 s/d " + date_end + " 23:59:59");
 
 //    st.setTimestamp(1, Timestamp.valueOf(date_from.trim() + " 00:00:00"));
 //    st.setTimestamp(2, Timestamp.valueOf(date_end.trim() + " 23:59:59"));

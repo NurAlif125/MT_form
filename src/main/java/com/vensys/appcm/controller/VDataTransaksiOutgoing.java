@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -39,7 +37,7 @@ import com.vensys.appcm.model.DataMTText;
 import com.vensys.appcm.model.HeaderStatus;
 import com.vensys.appcm.model.TagDB;
 import com.vensys.appcm.model.Header;
-
+import org.apache.log4j.Logger;
 import com.vensys.appcm.dbase.DBMXText;
 import com.vensys.appcm.model.DataMXText;
 import com.vensys.appcm.model.EssentialFieldPacs008;
@@ -52,7 +50,8 @@ import org.apache.commons.lang.StringEscapeUtils;
 public class VDataTransaksiOutgoing extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
+    
+    Logger log = Logger.getLogger(getClass().getName());
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -125,7 +124,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         }
 
         try {
-            System.out.println("masuk gettextbyid");
+            log.info("masuk gettextbyid");
             
             if (headerById.getMessageType().contains("pacs") || headerById.getMessageType().contains("camt")) {
                 textById = dbText.getMxTextById(Integer.parseInt(request.getParameter("id")));
@@ -359,7 +358,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(VDataTransaksiOutgoing.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex.getMessage());
         }
     }
 
@@ -377,7 +376,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (Exception ex) {
-            Logger.getLogger(VDataTransaksiOutgoing.class.getName()).log(Level.SEVERE, null, ex);
+            log.error(ex.getMessage());
         }
     }
 
