@@ -280,7 +280,7 @@
                                     <hr/>
 
                                     <!-- OF58 -->
-                                    <div class="form-row"><span class="label_body">MF58</span><span class="label">Beneficiary Institution</span>
+                                    <div class="form-row"><span class="label_body">MF58</span><span class="label"><a style="color:red; text-decoration:none">*</a>Beneficiary Institution</span>
                                         <select id="type_of58_" name="type_of58_" input_type="Of58" location="Body" input_type="MF58 Beneficiary Institution" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="a">A - Beneficiary Inst - BIC</option>

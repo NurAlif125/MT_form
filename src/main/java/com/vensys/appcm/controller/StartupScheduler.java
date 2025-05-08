@@ -79,7 +79,7 @@ public class StartupScheduler implements ServletContextListener {
                 int affected1 = conn1.prepareStatement(sql).executeUpdate();
                 //int affected2 = conn2.prepareStatement(sql).executeUpdate();
 
-                System.out.println(" DB1 - Jumlah user dinonaktifkan: " + affected1);
+//                System.out.println(" ] " + affected1);
                 //System.out.println("✅ DB2 - Jumlah user dinonaktifkan: " + affected2);
 
             } catch (Exception ex) {

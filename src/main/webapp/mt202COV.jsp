@@ -30,7 +30,7 @@
         <c:if test="${item == 'MT:202COV'}">
             <div id="judul">MT 202 COV General Financial Institution Transfer</div>
             <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" onsubmit="return confirm('Do you want to save this MT data?');">
-                <input name="messageType" id="messageType" type="hidden" value="202" />
+                <input name="messageType" id="messageType" type="hidden" value="202COV" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em;">
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
@@ -281,7 +281,7 @@
                             <hr/>
                             
                             <!-- OF58 -->
-                            <div class="form-row"><span class="label_body">MF58</span><span class="label">Beneficiary Institution</span>
+                            <div class="form-row"><span class="label_body">MF58</span><span class="label"><a style="color:red; text-decoration:none">*</a>Beneficiary Institution</span>
                                 <select id="type_of58_" name="type_of58_" input_type="MF58 Beneficiary Institution" location="Body">
                                     <option value="">choose a type</option>
                                     <option value="a">A - Beneficiary Inst - BIC</option>
@@ -320,7 +320,7 @@
                             <h2 class="header-title">Mandatory Sequence B Underlying Customer Credit Transfer Details</h2>
                             
                             <!-- MF50 -->
-                            <div class="form-row"><span class="label_body">MF50</span><span class="label">Ordering Customer</span>
+                            <div class="form-row"><span class="label_body">MF50</span><span class="label"><a style="color:red; text-decoration:none">*</a>Ordering Customer</span>
                                 <select id="type_mf50_ordering_customer" name="type_mf50_ordering_customer" class="mandatory" input_type="MF50 Ordering Customer" location="Body">
                                     <option value="">choose a type</option>
                                     <option value="a">A - BIC</option>
@@ -549,7 +549,7 @@
                             <hr/>
                             
                             <!--MF59-->
-                            <div class="form-row"><span class="label_body">MF59</span><span class="label">Beneficiary Customer</span>
+                            <div class="form-row"><span class="label_body">MF59</span><span class="label"><a style="color:red; text-decoration:none">*</a>Beneficiary Customer</span>
                                 <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="MF59 Beneficiary Customer" location="Body">
                                     <option value="">choose a type</option>
                                     <option value="59">59 - Name and Address</option>

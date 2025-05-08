@@ -67,6 +67,7 @@
                         <label>Incoming Reject Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-REJECT-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-REJECT-CNF'}"> checked="true" </c:if> </c:forEach> /></label>
                         <label>Incoming Waiting AML <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-AML" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-AML'}"> checked="true" </c:if> </c:forEach> /></label>
                         <label>Incoming Un Settle <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:Un-Settle" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:Un-Settle'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Incoming Settle <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:Settle" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:Settle'}"> checked="true" </c:if> </c:forEach> /></label>
                         <label>Waiting AML Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:AML-TERMINATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:AML-TERMINATE'}"> checked="true" </c:if> </c:forEach> /></label>
                     </div>
                     <div class="form-row"><span class="labelL">Menu</span>

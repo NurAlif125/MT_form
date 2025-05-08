@@ -31,7 +31,7 @@
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MENU:REPORTING'}">
             <div id="judul">Audit Trail Report</div>
-            <form id="form1" name="form1" method="post" action="SCPrintUserLogin" target="_blank">
+            <form id="form1" name="form1" method="post" action="SCPrintAuditTrail" target="_blank">
                 <% Date tgl_today = new java.util.Date();
                             pageContext.setAttribute("tgl_today", tgl_today);%>
                 <c:set var="tgl_today" value="${tgl_today}" />
