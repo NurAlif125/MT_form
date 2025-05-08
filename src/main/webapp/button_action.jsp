@@ -179,7 +179,93 @@
             <input type="button" name="verified" id="verified" value="Verifiy" />
         </c:if>--%>
         <%}%>
+        <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
+        <c:if test="${item == 'FLOW:CREATE'}">
+            <input type="hidden" name="flag" id="flag" value="CVT-VER" />
+            <input type="hidden" name="action_type" id="action_type" value="save" />
+            <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
+            <script>
+                var nodeIsGenerator = document.getElementById("generator-farras")
+
+                var nodeReceiverInstitution = document.getElementById("receiver_institution")
+                var nodeLogicalTerminal = document.getElementById("sender_logical_terminal")
+
+                console.log(nodeReceiverInstitution)
+                console.log(nodeLogicalTerminal)
+
+                if (nodeIsGenerator) {
+                    var nodeForm = document.getElementById("form1")
+
+                    nodeForm.addEventListener("submit", function (e) {
+                        console.log("testing")
+                        e.preventDefault()
+                        var xml = htmlToXML(nodeForm)
+                        console.log(xml)
+
+                        var existingInputs = document.getElementsByName("dataXML")
+                        existingInputs.forEach(input => input.parentNode.removeChild(input))
+
+                        // buat element untuk menampung data XML
+                        var input = document.createElement("input")
+
+                        input.setAttribute("id", "dataXML")
+                        input.setAttribute("name", "dataXML")
+                        input.setAttribute("type", "hidden")
+                        input.setAttribute("value", xml)
+                        nodeForm.appendChild(input)
+                        let sender = $('#sender_logical_terminal').val();
+                        let receiver = $('#receiver_institution').val();
+                        let messType = $('#messageType').val();
+                        console.log("Input dataXML telah ditambahkan:", input)
+                        document.getElementById("errorInformationTable").innerHTML= '';
+                        kirimData(xml, sender, receiver, messType)
+                        
+                        $("#tab-view-validate").removeAttr("hidden");
+                        $("#view1, #view2").css("display", "none");
+                        $("#view7").css("display", "block");
+                        $('#tab-view1').removeClass("selected").removeAttr('class');
+                        $('#tab-view2').removeClass("selected").removeAttr('class');
+                        $('#tab-validate').addClass("selected");
+                    })
+                    console.log("Ini XML")
+
+                    function kirimData(input, sender, receiver, messType) {
+                        fetch("SCValidateMX", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            body: "dataXML=" + encodeURIComponent(input)+ "&sender="+encodeURIComponent(sender)+"&receiver="+encodeURIComponent(receiver)+"&messageType="+encodeURIComponent(messType)
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            if (data.trim() === "null" || data.trim() === "") {
+                                console.log("Data kosong, form akan dikirim...")
+                                nodeForm.submit()
+                            } else {
+                                validateHeader();
+                                document.getElementById("errorInformationTable").innerHTML += data;
+                                console.log(data)         
+                                clickFocusValidate();
+                            }
+                        })
+                        .catch(error => console.error("Error:", error))
+                    }
+                } else {
+                    console.log("Ini MT")
+                }
+            </script>
+        </c:if>
+        <%--<c:if test="${item == 'FLOW:VER'}">
+            <input type="button" name="verified" id="verified" value="Verifiy" />
+        </c:if>--%>
+        <%}%>
         <% if (session.getAttribute("flagStatus").equals("VER")) {%>
+        <c:if test="${item == 'FLOW:AUTH'}">
+            <input type="button" name="authorized" id="authorized" value="Authorize" />
+        </c:if>
+        <%}%>
+        <% if (session.getAttribute("flagStatus").equals("CVT-VER")) {%>
         <c:if test="${item == 'FLOW:AUTH'}">
             <input type="button" name="authorized" id="authorized" value="Authorize" />
         </c:if>
@@ -276,7 +362,7 @@
             <input type="button" name="returinv" id="returinv" value="Retur" />
         </c:if>
         <% }%>
-        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
+        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("CVT-MOD") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
         <c:if test="${item == 'FLOW:REJECT'}">
             <input type="button" name="reject" id="reject" value="Reject" />
         </c:if>
