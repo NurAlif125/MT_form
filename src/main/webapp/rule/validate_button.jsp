@@ -135,7 +135,9 @@
         $('#back').click(function () {
             //    var answer = confirm('Do you want to back to previous page..!!');
             //    if(answer){
-            parent.history.back();
+//            parent.history.back();
+            window.history.back();
+
             //        return false;
             //    }
         });

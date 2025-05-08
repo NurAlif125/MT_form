@@ -8,6 +8,35 @@
 <%@ include file="rule/validate_user.jsp" %>
 <script src="js/mt.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css" />
+<style>
+  .suggestions {
+    margin-left: 80px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width:150px;
+    background: white;
+    z-index: 10;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .show-border {
+      border: 1px solid #ccc;
+  }
+
+  .suggestions .suggestion-item {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  .suggestions .suggestion-item:hover {
+    background-color: #f0f0f0;
+  }
+</style>
+
+
 <div id="isi">
 <c:forEach var="item" items="${role}">
     <c:if test="${item == 'USER:ADD'}">
@@ -67,6 +96,19 @@
                         </c:forEach>
                         </select>
                     </div>
+                     
+<!--                    <div class="form-row"><span class="labelL2">BIC</span>
+                        <div class="autocomplete-container" style="position: relative;">
+                          <input type="text" id="searchBIC" name="biccode" placeholder="BIC...">
+                          <div id="dataSource" style="display: none;">
+                            <c:forEach var="itemBic" items="${dataBicProp}">
+                              <div class="bic-item">${itemBic}</div>
+                            </c:forEach>
+                          </div>
+                          <div id="suggestions" class="suggestions"></div>
+                        </div>
+                    </div>-->
+                     
                     <div class="form-row"><span class="labelL2">Enable</span>
                         <input type="checkbox" name="enable" id="enable" value="1" 
                             <c:if test="${dataUserById.enable == '1'}"> checked="true" </c:if>
@@ -116,6 +158,47 @@
 
     window.onload = handleRoleChange;
 </script>
+
+<script>
+  const input = document.getElementById('searchBIC');
+  const suggestionsContainer = document.getElementById('suggestions');
+
+  // Ambil data dari elemen yang diloop oleh JSTL
+  const allItems = Array.from(document.querySelectorAll('#dataSource .bic-item')).map(div => div.textContent);
+
+  input.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase();
+    suggestionsContainer.innerHTML = '';
+
+    if (!query) return;
+
+    const filtered = allItems.filter(item => item.toLowerCase().includes(query));
+
+    filtered.forEach(item => {
+      const div = document.createElement('div');
+      div.classList.add('suggestion-item');
+      div.textContent = item;
+      div.onclick = () => {
+        input.value = item;
+        suggestionsContainer.innerHTML = '';
+      };
+      suggestionsContainer.appendChild(div);
+    });
+  });
+  
+    if (filtered.length > 0) {
+      suggestionsContainer.classList.add('show-border');
+    } else {
+      suggestionsContainer.classList.remove('show-border');
+    }
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.autocomplete-container')) {
+      suggestionsContainer.innerHTML = '';
+    }
+  });
+</script>
+
 
 <!--<div id="kaki">
     <p><a href="http://www.vensys.co.id" target="_blank">Copyright &copy; PT. Venturium System Indonesia</a></p>

@@ -143,7 +143,7 @@
                     
                     <div class="form-row">
                         <span class="labelL3">Source</span>
-                        <input autocomplete="off" type="text" name="source" id="source" maxlength="50" value="<c:out value='${fiaById.source}' />" /> 
+                        <input autocomplete="off" style="width:300px;" type="text" name="source" id="source" maxlength="255" value="<c:out value='${fiaById.source}' />" /> 
                     </div>
                     
                     <div class="form-row">
