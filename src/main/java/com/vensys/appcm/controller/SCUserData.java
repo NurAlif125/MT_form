@@ -67,6 +67,7 @@ public class SCUserData extends HttpServlet {
         List<DataNostro> dataNostroList = new ArrayList<DataNostro>();
         List<DataCurrency> dataCurrList = new ArrayList<DataCurrency>();
         String[] dataChannel = null;
+//        String[] dataBicProp = null;
 //        List<DataNostro> dataNos = new ArrayList<DataNostro>();
         String user_id = request.getParameter("username");
         String password = request.getParameter("password");
@@ -211,6 +212,7 @@ public class SCUserData extends HttpServlet {
                                     data.setWrongpass(0);
                                     dbo.updatewrongpass(data);
                                     dataChannel = getChannel().split(",");
+//                                    dataBicProp = getBicProp().split(",");
                                     log.info("getAllDataRole");
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
@@ -229,6 +231,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("role", replicationManager.getRoles());
                                 session.setAttribute("dataRoleList", dataRoleList);
                                 session.setAttribute("dataChannel", dataChannel);
+//                                session.setAttribute("dataBicProp", dataBicProp);
 
                                 session.setAttribute("flagStatus", "");
                                 session.setAttribute("timeout", dataRole.getTimeout());
@@ -326,6 +329,13 @@ public class SCUserData extends HttpServlet {
         prop.load(inputStream);
         return prop.getProperty("channel");
     }
+    
+//    public String getBicProp() throws IOException {
+//        Properties prop = new Properties();
+//        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+//        prop.load(inputStream);
+//        return prop.getProperty("bic");
+//    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
