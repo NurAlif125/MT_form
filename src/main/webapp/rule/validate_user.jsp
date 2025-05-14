@@ -15,16 +15,16 @@
             },
             messages: {
                 name: {
-                    required: "Full Name harus diisi..!!"
+                    required: "Full Name must be filled..!!"
                 },
                 username: {
-                    required: "User ID harus diisi..!!"
+                    required: "User ID must be filled..!!"
                 },
                 password: {
-                    required: "Password harus diisi..!!"
+                    required: "Password must be filled..!!"
                 },
                 role: {
-                    required: "Role harus diisi..!!"
+                    required: "Role must be filled..!!"
                 }
             },
             errorPlacement: function(error,element){

@@ -81,7 +81,7 @@ public class SCDataRole extends HttpServlet {
             if (duplicate) {
                 strErrMsg = "Role Already Exist!!";//belum beres
             } else {
-                dbData2.addDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                dbData2.addDataRole(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), role_enable);
             }
 
             log.info("addDataRole");

@@ -29,16 +29,17 @@ public class DBDataRole {
 
     DBEventLog evl = new DBEventLog(conn);
     String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-    public void addDataRole(DataRole data, String modifier, String ip, String comp) {
+    public void addDataRole(DataRole data, String modifier, String ip, String comp, String isEnabledRole) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO roles (role_name,role_detail,role_desc,timeout) VALUES (?,?,?,?)";
+            String sql = "INSERT INTO roles (role_name,role_detail,role_enable,role_desc,timeout) VALUES (?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
 //            BigDecimal bd = new BigDecimal(data.getLimit());
             st.setString(1, data.getRole_name()); //role_name
             st.setString(2, data.getRole_detail());     //role_detail
-            st.setString(3, data.getRole_desc());     //role_desc
-            st.setInt(4, data.getTimeout());
+            st.setInt(3, Integer.valueOf(isEnabledRole));     //role_enable
+            st.setString(4, data.getRole_desc());     //role_desc
+            st.setInt(5, data.getTimeout());
 //            st.setBigDecimal(4, bd);
 //            System.out.println(st);
             st.executeUpdate();
@@ -181,7 +182,7 @@ public class DBDataRole {
         boolean datas = false;
         String sql = "SELECT role_name FROM roles WHERE role_name = '"+role_name+"' ORDER BY role_id ASC";
 //        String sql = "select id_account from account_penagihan";
-        System.out.println("sql cek duplicate role_name = " + sql);
+//        System.out.println("sql cek duplicate role_name = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

@@ -84,7 +84,7 @@
                 {
                     "targets": 1,  // Kolom kedua (BIC)
                     "render": function(data, type, row) {
-                        return '<span style="color: #28787C; font-weight: bold;">'+data+'</span>';
+                        return '<span style="color: #28787C; font-weight: bold; cursor:pointer; text-decoration:underline;">'+data+'</span>';
                     }
                 },
                 {

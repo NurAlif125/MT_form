@@ -83,7 +83,7 @@
                             </c:if>
                         </c:forEach>
                     </c:if>
-                    <table id="example" class="display nowrap" style="width:100%">
+                    <table id="example" class="display nowrap" style="width:100%; overflow-x: scroll;">
                         <thead>
                             <tr>
                                 <%--                        <c:if test="${flagFilter == 'VER'}">

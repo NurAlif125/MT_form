@@ -246,7 +246,7 @@ public class SCHeader extends HttpServlet implements Serializable {
                     httpSession.removeAttribute("flagFilter");
                 }
             }
-            log.info("menunyaaaa.... " + menu);
+//            log.info("menunyaaaa.... " + menu);
 
         } catch (Exception ex) {
             log.error(ex.getMessage());

@@ -75,7 +75,17 @@ public class LDAPCon {
                 log.info("base DN: " +base_DN);
 
                 NamingEnumeration<SearchResult> results = ctx.search(base_DN, searchFilter, searchControls);
-
+//                NamingEnumeration<SearchResult> results = null;
+//                try {
+//                    results = ctx.search(base_DN, searchFilter, searchControls);
+//                } catch (NamingException se) {
+//                    log.error("Search LDAP gagal: " + se.getMessage());
+//                    validLogin = "nothing user";
+//                    log.info("tidak ditemukan di LDAP"+ searchFilter);
+//                    System.out.println("tidak ditemukan di LDAP"+ searchFilter);
+//                    return validLogin;
+//                }
+                
                 if (results.hasMore()) {
                     SearchResult admin1Data = results.next();
                     String admin1DN = admin1Data.getNameInNamespace();
@@ -135,7 +145,7 @@ public class LDAPCon {
             return validLogin;
     }
 
-    public String cekUserAdd(String userToSearch, String username, String password) {
+    public String cekUserAdd(String userToSearch) {
        readConfigProperties();
 
             String searchUser = "";

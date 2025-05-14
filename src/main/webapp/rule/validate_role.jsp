@@ -12,7 +12,7 @@
             },
             messages: {
                 role_name: {
-                    required: "Role Name harus diisi!"
+                    required: "Role Name must be filled..!!"
                 }
             },
             errorPlacement: function(error,element){
@@ -30,7 +30,7 @@
             },
             messages: {
                 batas: {
-                    required: "Limit harus diisi!"
+                    required: "Limit must be filled..!!"
                 }
             },
             errorPlacement: function(error,element){
