@@ -58,8 +58,10 @@
                   
                 </table>
                 <div class="btn--group">
+                    <c:if test="${sessionScope.sub_role_user == '1'}">
                     <a id="approveAll" name="approveAll" href="SCApproveBIC" class="srb">Approve All</a>
                     <a id="rejectAll" name="rejectAll" href="SCRejectBIC" class="srb">Reject All</a>
+                    </c:if>
                 </div>
             </div><!--close content-->
         </c:if>

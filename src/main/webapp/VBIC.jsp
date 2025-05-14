@@ -17,8 +17,10 @@
             <div id="judul">List of BIC
                 <c:forEach var="item" items="${role}">
                     <c:if test="${item == 'MEMBER_CODE:ADD'}">
-                        <a href="mbic.jsp" class="srb2">Add BIC</a>
-                        <a href="uploadbic.jsp" class="srb4">Upload BIC</a>   
+                        <c:if test="${sessionScope.sub_role_user == '2'}">
+                            <a href="mbic.jsp" class="srb2">Add BIC</a>
+                            <a href="uploadbic.jsp" class="srb4">Upload BIC</a>
+                        </c:if>
                     </c:if>
                     <c:if test="${item == 'MEMBER_CODE:APPROVAL'}">
                         <a href="SCBICApprovalList" class="srb3">Waiting For Approval</a>
