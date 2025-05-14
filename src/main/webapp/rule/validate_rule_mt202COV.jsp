@@ -190,7 +190,7 @@
          $("#btn-validate").click(function () {
             let isValid = $("#form1").valid(); 
             if (isValid) {
-                alert("Semua input valid!");
+                alert("All inputs are valid!");
             } 
         });
 
@@ -200,7 +200,7 @@
             if (isValid) {  
                 $("#form1").submit(); 
             } else {
-                alert("Masih ada error! Harap perbaiki sebelum menyimpan.");
+                alert("There are still errors! Please fix them before saving.");
             }
         });
         

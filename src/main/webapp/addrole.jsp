@@ -25,7 +25,7 @@
                         <input type="text" name="role_name" id="role_name" maxlength="255" value="<c:out value='${dataRoleById.role_name}' />" />
                     </div>
                     <div class="form-row"><span class="labelL">Role Enable</span>
-                        <input type="checkbox" name="role_enable" id="role_enable" value="1"
+                        <input type="checkbox" name="role_enable" id="role_enable"
                             <c:if test="${dataRoleById.role_enable == '1'}"> checked="true" </c:if> 
                             <c:if test="${sessionScope.sub_role_user == '2'}"> onclick="return false;" 
                                 style="accent-color: #ccc;" </c:if>

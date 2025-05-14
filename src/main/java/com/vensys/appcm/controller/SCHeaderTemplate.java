@@ -42,7 +42,7 @@ public class SCHeaderTemplate extends HttpServlet {
             headersTemplate = bBHeaderTemplate.getAllHeaderTemplate(httpSession);
             forward = CONTROLLERHEADERS + "?menu=" + menu;
             httpSession.setAttribute("headersTemplate", headersTemplate);
-            System.out.println("menunyaaaa.... " + menu);
+//            System.out.println("menunyaaaa.... " + menu);
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

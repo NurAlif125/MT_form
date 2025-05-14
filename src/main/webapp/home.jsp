@@ -5,6 +5,17 @@
 -->
 
 <%@ include file="header.jsp" %>
+<%
+    int timeout = 300;
+    if (session.getAttribute("timeout") != null) {
+        timeout = Integer.parseInt(session.getAttribute("timeout").toString());
+    }
+
+    response.setHeader("Cache-Control", "private, must-revalidate, max-age=" + timeout);
+    response.setHeader("Pragma", ""); 
+    response.setDateHeader("Expires", System.currentTimeMillis() + (timeout * 1000));
+%>
+
 <div id="isi">
     <div class="welcome">
         <h1>Welcome to Click Messenger</h1>

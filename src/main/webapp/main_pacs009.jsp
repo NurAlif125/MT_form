@@ -15,7 +15,7 @@
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MX:pacs00900108'}">
             <div id="judul">PACS.009.001.08 Financial Institution Credit Transfer V08</div>
-            <form id="form1" name="form1" method="post" action="SCDataTransaksiOutgoingPlainMX" onsubmit="return confirm('Do you want to save this MX?');">
+            <form id="form1" name="form1" method="post" action="SCDataTransaksiOutgoingPlainMX">
                 <input name="messageType" id="messageType" type="hidden" value="pacs00900108" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em;">
                     <ul class="tabs">
