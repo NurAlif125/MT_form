@@ -275,10 +275,11 @@ public class DBBIC {
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
+        int i = 1;
         while (rs.next()) {
 
             String[] value = {
-                rs.getString(1),
+                String.valueOf(i++),
                 rs.getString(2),
                 rs.getString(3),
                 rs.getString(4),
@@ -295,6 +296,7 @@ public class DBBIC {
             String sql = "SELECT id_member,need_approve FROM bic WHERE need_approve IS NOT NULL ORDER BY id_member OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
             PreparedStatement st = this.conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
+            int i = 1;
             while (rs.next()) {
                 String jsonData = rs.getString(2);
                 if (jsonData == null || jsonData.trim().isEmpty()) {
@@ -303,7 +305,7 @@ public class DBBIC {
                 DataBIC data = gson.fromJson(jsonData, DataBIC.class);
 
                 String[] value = {
-                    rs.getString(1),
+                    String.valueOf(i++),
                     data.getCode_member(),
                     data.getCompany(),
                     data.getAddress(),
