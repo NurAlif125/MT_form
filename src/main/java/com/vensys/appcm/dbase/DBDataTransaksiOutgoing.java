@@ -133,7 +133,7 @@ public class DBDataTransaksiOutgoing {
             e.printStackTrace();
         }
 
-        addDataHeaderStatus("MOD", user_id, ip_access, comp_name);
+        addDataHeaderStatus("VER", user_id, ip_access, comp_name);
         evl.insertDataEvent(user_id, "Membuat transaksi baru", ip_access, comp_name);
         evl.updateLogUser(user_id, "trx", timestampString);
         return header;

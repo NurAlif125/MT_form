@@ -105,7 +105,7 @@ public class SCUploadBIC extends HttpServlet {
                     String json = gson.toJson(dataBIC);
                     dataList.add(json);
                 }
-                db.truncateBICBulk();
+                //db.truncateBICBulk();
                 db.addBICBulk(dataList);
                 //db.insertBICFromTemp();
                 //db.deleteBICBulk();
