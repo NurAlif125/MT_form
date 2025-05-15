@@ -59,7 +59,7 @@ public class DBBIC {
             log.error(e);
         }
     }
-    
+
     public void deletePermanentBICApproval(int id_member) {
         try {
             log.info("Deleting BIC from approval");
@@ -77,21 +77,21 @@ public class DBBIC {
         try {
             log.info("addDataAfterApprovalBIC");
 //            String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
-            String sql = "MERGE INTO bic AS target\n" +
-                        "USING (\n" +
-                        "    VALUES \n" +
-                        "    (?, ?, ?, ?, '{}'::jsonb)\n" +
-                        ") AS source(code_member, company, address, note, need_approve)\n" +
-                        "ON target.code_member = source.code_member\n" +
-                        "WHEN MATCHED THEN\n" +
-                        "    UPDATE SET \n" +
-                        "        company = source.company,\n" +
-                        "        address = source.address,\n" +
-                        "        note = source.note,\n" +
-                        "        need_approve = source.need_approve\n" +
-                        "WHEN NOT MATCHED THEN\n" +
-                        "    INSERT (code_member, company, address, note, need_approve)\n" +
-                        "    VALUES (source.code_member, source.company, source.address, source.note, source.need_approve)";
+            String sql = "MERGE INTO bic AS target\n"
+                    + "USING (\n"
+                    + "    VALUES \n"
+                    + "    (?, ?, ?, ?, '{}'::jsonb)\n"
+                    + ") AS source(code_member, company, address, note, need_approve)\n"
+                    + "ON target.code_member = source.code_member\n"
+                    + "WHEN MATCHED THEN\n"
+                    + "    UPDATE SET \n"
+                    + "        company = source.company,\n"
+                    + "        address = source.address,\n"
+                    + "        note = source.note,\n"
+                    + "        need_approve = source.need_approve\n"
+                    + "WHEN NOT MATCHED THEN\n"
+                    + "    INSERT (code_member, company, address, note, need_approve)\n"
+                    + "    VALUES (source.code_member, source.company, source.address, source.note, source.need_approve)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getCode_member());
             st.setString(2, data.getCompany());
@@ -357,7 +357,7 @@ public class DBBIC {
             this.log.error(e.getMessage());
         }
     }
-    
+
     public List<DataBIC> selectAll() {
         List<DataBIC> data = new ArrayList<DataBIC>();
         String sql = "SELECT id_member, need_approve FROM bic WHERE need_approve IS NOT NULL";
@@ -382,7 +382,7 @@ public class DBBIC {
         }
         return data;
     }
-    
+
     public List<DataBIC> selectForReject() {
         List<DataBIC> data = new ArrayList<DataBIC>();
         String sql = "SELECT id_member, code_member, company, address, note, need_approve FROM bic WHERE need_approve IS NOT NULL";
@@ -407,22 +407,37 @@ public class DBBIC {
             e.printStackTrace();
             this.log.error(e.getMessage());
         }
-        
+
         return data;
     }
-    
+
     public void approveAll(List<DataBIC> data) {
-        String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
+//        String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
+        String sql = "MERGE INTO bic AS target\n"
+                + "USING (\n"
+                + "    VALUES \n"
+                + "    (?, ?, ?, ?, '{}'::jsonb)\n"
+                + ") AS source(code_member, company, address, note, need_approve)\n"
+                + "ON target.code_member = source.code_member\n"
+                + "WHEN MATCHED THEN\n"
+                + "    UPDATE SET \n"
+                + "        company = source.company,\n"
+                + "        address = source.address,\n"
+                + "        note = source.note,\n"
+                + "        need_approve = source.need_approve\n"
+                + "WHEN NOT MATCHED THEN\n"
+                + "    INSERT (code_member, company, address, note, need_approve)\n"
+                + "    VALUES (source.code_member, source.company, source.address, source.note, source.need_approve)";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             this.conn.setAutoCommit(false);
             for (DataBIC temp : data) {
-               st.setString(1, temp.getCode_member());
-               st.setString(2, temp.getCompany());
-               st.setString(3, temp.getAddress());
-               st.setString(4, temp.getNote());
-               st.setInt(5, temp.getId_member());
-               st.addBatch();
+                st.setString(1, temp.getCode_member());
+                st.setString(2, temp.getCompany());
+                st.setString(3, temp.getAddress());
+                st.setString(4, temp.getNote());
+                st.setInt(5, temp.getId_member());
+                st.addBatch();
             }
             int[] result = st.executeBatch();
             log.info("The number of rows updated: " + result.length);
