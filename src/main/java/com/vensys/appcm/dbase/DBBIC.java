@@ -76,7 +76,22 @@ public class DBBIC {
     public void addDataAfterApproval(DataBIC data, int id_member) {
         try {
             log.info("addDataAfterApprovalBIC");
-            String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
+//            String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
+            String sql = "MERGE INTO bic AS target\n" +
+                        "USING (\n" +
+                        "    VALUES \n" +
+                        "    (?, ?, ?, ?, '{}'::jsonb)\n" +
+                        ") AS source(code_member, company, address, note, need_approve)\n" +
+                        "ON target.code_member = source.code_member\n" +
+                        "WHEN MATCHED THEN\n" +
+                        "    UPDATE SET \n" +
+                        "        company = source.company,\n" +
+                        "        address = source.address,\n" +
+                        "        note = source.note,\n" +
+                        "        need_approve = source.need_approve\n" +
+                        "WHEN NOT MATCHED THEN\n" +
+                        "    INSERT (code_member, company, address, note, need_approve)\n" +
+                        "    VALUES (source.code_member, source.company, source.address, source.note, source.need_approve)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getCode_member());
             st.setString(2, data.getCompany());

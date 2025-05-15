@@ -118,6 +118,11 @@
                     nodeForm.addEventListener("submit", function (e) {
                         console.log("testing")
                         e.preventDefault()
+                        
+                        if (!confirm("Do you want to save this MX?")) {
+                            return; 
+                        }
+                        
                         var xml = htmlToXML(nodeForm)
                         console.log(xml)
 
@@ -199,6 +204,10 @@
                     nodeForm.addEventListener("submit", function (e) {
                         console.log("testing")
                         e.preventDefault()
+                        
+                        if (!confirm("Do you want to save this MX?")) {
+                            return; // user klik "Batal", keluar tanpa menyimpan
+                        }
                         var xml = htmlToXML(nodeForm)
                         console.log(xml)
 
@@ -435,6 +444,9 @@
                     nodeForm.addEventListener("submit", function (e) {
                         console.log("testing")
                         e.preventDefault()
+                        if (!confirm("Do you want to save this MX?")) {
+                            return; 
+                        }
                         var xml = htmlToXML(nodeForm)
                         console.log(xml)
 

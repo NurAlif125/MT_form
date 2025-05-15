@@ -58,8 +58,10 @@
                   
                 </table>
                 <div class="btn--group">
+                    <c:if test="${sessionScope.sub_role_user == '1'}">
                     <a id="approveAll" name="approveAll" href="SCApproveBIC" class="srb">Approve All</a>
                     <a id="rejectAll" name="rejectAll" href="SCRejectBIC" class="srb">Reject All</a>
+                    </c:if>
                 </div>
             </div><!--close content-->
         </c:if>
@@ -85,7 +87,7 @@
                 {
                     "targets": 1,  // Kolom kedua (BIC)
                     "render": function(data, type, row) {
-                        return '<span style="color: #28787C; font-weight: bold;">'+data+'</span>';
+                        return '<span style="color: #28787C; font-weight: bold; cursor:pointer; text-decoration:underline;">'+data+'</span>';
                     }
                 },
                 {

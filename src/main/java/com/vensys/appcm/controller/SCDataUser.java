@@ -98,7 +98,7 @@ public class SCDataUser extends HttpServlet {
         String user_session = (String) session.getAttribute("user_id");
         String pass_session = (String) session.getAttribute("password");
         String isValidLogonLdap = "";
-        isValidLogonLdap = ldapCon.cekUserAdd(request.getParameter("username"), user_session, pass_session);
+        isValidLogonLdap = ldapCon.cekUserAdd(request.getParameter("username"));
         
         if (user_id == null ? "null" == null : user_id.equals("null") || user_id.isEmpty()) {
             try {

@@ -50,6 +50,9 @@ public class SCLogout extends HttpServlet {
         System.out.println("Session attributes are missing: user_id, ip_access, or comp_name is null.");
     }
     session.invalidate();
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
     session = request.getSession();
     session.setAttribute("errorMsglogin", "You have been logged out.");
 
