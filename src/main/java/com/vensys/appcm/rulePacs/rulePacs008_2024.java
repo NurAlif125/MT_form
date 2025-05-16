@@ -45,7 +45,7 @@ public class rulePacs008_2024 {
         if (!validationRuleComment.isEmpty()) {
             return validationRuleComment.stream().collect(Collectors.joining(""));
         }
-        return null;
+        return "";
     }
 
     public void runRules(String logicalTerminal, String receiverAddress) {

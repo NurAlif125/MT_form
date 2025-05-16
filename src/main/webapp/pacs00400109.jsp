@@ -2312,6 +2312,35 @@
             dateFormat: "H:i:S",
             time_24hr: true,
             minuteIncrement: 1,
-            noCalendar: true
+            noCalendar: true,
+            utc: true
+        });
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        function generateuetr() {
+            const uuid = generateUUID();
+            const inputField = document.getElementById("UETR");
+            inputField.value = uuid;
+            inputField.setAttribute("value", uuid);
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusInput = document.getElementById("status"); // Ambil elemen status
+            const form = document.getElementById("form1"); // Ambil elemen form
+
+            if ((statusInput && statusInput.value === "INC" && form) || (statusInput && statusInput.value === "VER" && form) || (statusInput && statusInput.value === "AUTH" && form) || (statusInput && statusInput.value === "CVT-VER" && form) || (statusInput && statusInput.value === "WAITING-AML" && form) || (statusInput && statusInput.value === "REJECT" && form) || (statusInput && statusInput.value === "RESEND" && form)) {
+                const allInputs = form.elements; // Ambil semua elemen dalam form sekali saja
+                for (let input of allInputs) {
+                    if (input.tagName === "SELECT" || input.tagName === "BUTTON") {
+                        input.disabled = true;
+                    } else {
+                        input.readOnly = true;
+                    }
+                }
+            }
         });
     </script>

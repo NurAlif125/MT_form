@@ -49,7 +49,7 @@ public class rulePacs004_2024 {
         if (!validationRuleComment.isEmpty()) {
             return validationRuleComment.stream().collect(Collectors.joining(""));
         }
-        return null;
+        return "";
     }
 
     public void runRules(String logicalTerminal, String receiverAddress) {
@@ -1477,9 +1477,9 @@ public class rulePacs004_2024 {
                 BigDecimal amtRtrdInstdAmt = rtrdInstdAmt.getValue();
                 String ccyRtrdInstdAmt = rtrdInstdAmt.getCcy();
                 String ccyRtrdIntrBkSttlmAmt = txInf.getRtrdIntrBkSttlmAmt().getCcy();
-                if (ccyRtrdInstdAmt.equalsIgnoreCase(ccyRtrdIntrBkSttlmAmt) && xchgRate == null) {
+                if (!ccyRtrdInstdAmt.equalsIgnoreCase(ccyRtrdIntrBkSttlmAmt) && xchgRate == null) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/XchgRate\"><td>If ReturnedInstructedAmount is present and the currency is different from the currency in ReturnedInterbankSettlementAmount, then ExchangeRate must be present.</td><td>PmtRtr/TxInf/XchgRate</td></tr>");
-                } else if (!ccyRtrdInstdAmt.equalsIgnoreCase(ccyRtrdIntrBkSttlmAmt) && xchgRate != null) {
+                } else if (ccyRtrdInstdAmt.equalsIgnoreCase(ccyRtrdIntrBkSttlmAmt) && xchgRate != null) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/XchgRate\"><td>If ReturnedInstructedAmount is present and the currency is the same as the currency in ReturnedInterbankSettlementAmount, then ExchangeRate is not allowed.</td><td>PmtRtr/TxInf/XchgRate</td></tr>");
                 }
             }
