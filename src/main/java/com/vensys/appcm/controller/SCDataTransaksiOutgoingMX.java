@@ -151,16 +151,16 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 dataMXpacs004.setAppHdr(appHeader);
                 String newXML = dataMXpacs004.message(mxConfiguration);
-                dBTrx2.updateMXText(newXML, headers.getId_headers());
+                dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
                 String newJson = dataMXpacs004.toJson();
-                dBTrx2.updateTagsMXText(newJson, headers.getId_headers());
+                dBTrx2.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
                 
-                if (flag.equalsIgnoreCase("MOD")) {
-                    int doUpdate = dBTrx2.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                if(flag.equalsIgnoreCase("MOD")) {
+                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
-                    int doUpdate = dBTrx2.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
                 
