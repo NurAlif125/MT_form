@@ -317,7 +317,7 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND flag='MOD'";
         } else if (flag.equalsIgnoreCase("AUTH")) {
             log.info("flagnya auth 220");
-            flag_before = " AND flag='VER'";
+            flag_before = " AND (flag='VER' or flag='CVT-VER')";
         } else if (flag.equalsIgnoreCase("TEXT")) {
             flag_before = " AND flag='AUTH'";
         } // diubah menjadi INC-WAIT setelah save data nasabah 20180413

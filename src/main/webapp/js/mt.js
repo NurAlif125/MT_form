@@ -73,7 +73,7 @@ function cek_koma(obj) {
     }
     if (koma == false)
     {
-        if (obj.value.length > 1) {
+        if (obj.value.length > 0) {
             obj.value = obj.value + ",";
         }
     }

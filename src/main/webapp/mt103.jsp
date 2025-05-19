@@ -129,7 +129,7 @@
                             </div>
 
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency Code</span>
-                                <input type="text" name="_061_mf32a_currency" id="_061_mf32a_currency" class="mandatory" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" name="_061_mf32a_currency" id="_061_mf32a_currency" class="mandatory" onkeypress="return textonly(event)" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>                             
                                         <input type="text" name="_062_mf32a_amount" id="_062_mf32a_amount" class="mandatory" onpaste="return false" ondrop="return false" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)" />
@@ -158,7 +158,7 @@
 
                                     <!-- OF33B -->
                                     <div class="form-row"><span class="label_body">OF33B</span><span class="label">Currency</span>
-                                        <input type="text" name="_070_of33b_currency" id="_070_of33b_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_070_of33b_currency" id="_070_of33b_currency" onkeypress="return textonly(event)" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
                                         <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" onblur="cek_koma(this)" />
@@ -506,7 +506,7 @@
 
                                     <!-- OF57 -->
                                     <div class="form-row"><span class="label_body">OF57</span><span class="label">Account With Institution</span>
-                                        <select id="type_of57_" name="type_of57_" class="mandatory">
+                                        <select id="type_of57_" name="type_of57_">
                                             <option value="">choose a type</option>
                                             <!--                                         - Account With Inst-->
                                             <option value="a">A - BIC</option>
@@ -880,7 +880,7 @@
 
                                     <!-- OF71G -->
                                     <div class="form-row"><span class="label_body">OF71G</span><span class="label">Currency</span>
-                                        <input type="text" name="_230_of71g_currency" id="_230_of71g_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of71g_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_230_of71g_currency" id="_230_of71g_currency" onkeypress="return textonly(event)" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of71g_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
                                         <input type="text" name="_231_of71g_amount" id="_231_of71g_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_231_of71g_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_koma(this)" />
