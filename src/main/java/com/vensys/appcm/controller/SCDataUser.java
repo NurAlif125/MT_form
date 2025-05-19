@@ -85,6 +85,7 @@ public class SCDataUser extends HttpServlet {
         data.setRole(Integer.parseInt(role));
         data.setSub_role(Integer.parseInt(role_id));
         data.setChannel(request.getParameter("channel"));
+        data.setUser_bic(request.getParameter("user_bic"));
         data.setEnable(Integer.parseInt(enable));
 //        data.setAuto_disable(Integer.parseInt(auto_disable));
 //        data.setIdpassword(Integer.parseInt(idPass));

@@ -96,6 +96,15 @@
                         </c:forEach>
                         </select>
                     </div>
+                        
+                    <div class="form-row"><span class="labelL2">BIC</span>
+                        <select name="user_bic" id="user_bic">
+                            <option value="">All BIC</option>
+                        <c:forEach var="item1" items="${dataBicProp}">
+                            <option value="${item1}"<c:if test="${item1 == dataUserById.user_bic}"> selected="true" </c:if>>${item1}</option>
+                        </c:forEach>
+                        </select>
+                    </div>
                      
 <!--                    <div class="form-row"><span class="labelL2">BIC</span>
                         <div class="autocomplete-container" style="position: relative;">

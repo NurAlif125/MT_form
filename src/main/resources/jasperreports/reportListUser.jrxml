@@ -18,8 +18,10 @@
 	</style>
 	<parameter name="username" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT [user_id], name, role_name, batas, enable, last_login, last_activity
-FROM [user] LEFT JOIN roles ON role = role_id]]>
+		<![CDATA[SELECT user_id, name, role_name, enable, last_login, last_activity, channel 
+FROM users as u 
+LEFT JOIN roles as r 
+ON u.role = r.role_id ]]>
 	</queryString>
 	<field name="user_id" class="java.lang.String"/>
 	<field name="name" class="java.lang.String"/>
@@ -27,6 +29,7 @@ FROM [user] LEFT JOIN roles ON role = role_id]]>
 	<field name="enable" class="java.lang.Integer"/>
 	<field name="last_login" class="java.lang.String"/>
 	<field name="last_activity" class="java.lang.String"/>
+	<field name="channel" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -79,22 +82,22 @@ FROM [user] LEFT JOIN roles ON role = role_id]]>
 				<text><![CDATA[Name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="273" y="0" width="99" height="15" forecolor="#736343" uuid="dd9cc282-7536-4153-86ce-86f493e01d43"/>
+				<reportElement style="Column header" x="273" y="0" width="77" height="15" forecolor="#736343" uuid="dd9cc282-7536-4153-86ce-86f493e01d43"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<text><![CDATA[Role]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="372" y="0" width="138" height="15" forecolor="#736343" uuid="a142abb7-331d-4361-b7a5-8afc2ecd8268"/>
+				<reportElement style="Column header" x="421" y="0" width="114" height="15" forecolor="#736343" uuid="a142abb7-331d-4361-b7a5-8afc2ecd8268"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="510" y="0" width="147" height="15" forecolor="#736343" uuid="c62cbad0-24ac-4395-be99-e43c1b40098a"/>
+				<reportElement style="Column header" x="534" y="0" width="137" height="15" forecolor="#736343" uuid="c62cbad0-24ac-4395-be99-e43c1b40098a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Last Login]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="657" y="0" width="145" height="15" forecolor="#736343" uuid="21c45422-24c5-42d1-a095-d53c3a05d6d3"/>
+				<reportElement style="Column header" x="670" y="0" width="132" height="15" forecolor="#736343" uuid="21c45422-24c5-42d1-a095-d53c3a05d6d3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Las Activity]]></text>
 			</staticText>
@@ -102,6 +105,11 @@ FROM [user] LEFT JOIN roles ON role = role_id]]>
 				<reportElement style="Column header" x="1" y="0" width="30" height="15" forecolor="#736343" uuid="73df8916-a9a4-4f7e-a2e8-dbc6ad8569b3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="350" y="0" width="71" height="15" forecolor="#736343" uuid="bf5f4af3-c383-478c-938e-06bbcb41c698"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Channel]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -124,21 +132,21 @@ FROM [user] LEFT JOIN roles ON role = role_id]]>
 					<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="273" y="0" width="99" height="15" uuid="b1e44529-5696-4f01-853a-cbc298cce310"/>
+					<reportElement style="Detail" x="273" y="0" width="77" height="15" uuid="b1e44529-5696-4f01-853a-cbc298cce310"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{role_name}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="510" y="0" width="147" height="15" uuid="480161fa-09ec-4f8f-a11b-a93576c1af13"/>
+					<reportElement style="Detail" x="534" y="0" width="137" height="15" uuid="480161fa-09ec-4f8f-a11b-a93576c1af13"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{last_login}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="657" y="0" width="145" height="15" uuid="123b14d1-4d01-42aa-8bd6-0998e69a9e45"/>
+					<reportElement style="Detail" x="670" y="0" width="132" height="15" uuid="123b14d1-4d01-42aa-8bd6-0998e69a9e45"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
@@ -151,13 +159,20 @@ FROM [user] LEFT JOIN roles ON role = role_id]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="372" y="0" width="138" height="15" uuid="12aa7f0b-18ba-4dd4-b39d-162565ce4913"/>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement style="Detail" x="421" y="0" width="114" height="15" uuid="12aa7f0b-18ba-4dd4-b39d-162565ce4913"/>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{enable}.intValue() == 1 ? "Enable" : 
                                             ($F{enable}.intValue() == 2 ? "Disable Permanent" : "Disable")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="349" y="0" width="71" height="15" uuid="0ae2540f-08b1-446c-9ee9-c97c83e163f7"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{channel}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
