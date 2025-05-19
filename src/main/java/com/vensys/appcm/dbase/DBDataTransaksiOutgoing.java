@@ -317,7 +317,7 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND flag='MOD'";
         } else if (flag.equalsIgnoreCase("AUTH")) {
             log.info("flagnya auth 220");
-            flag_before = " AND flag='VER'";
+            flag_before = " AND (flag='VER' or flag='CVT-VER')";
         } else if (flag.equalsIgnoreCase("TEXT")) {
             flag_before = " AND flag='AUTH'";
         } // diubah menjadi INC-WAIT setelah save data nasabah 20180413
@@ -346,7 +346,8 @@ public class DBDataTransaksiOutgoing {
       
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "UPDATE headers SET flag=?,isDuplicate=0,tanggal=LOCALTIMESTAMP WHERE id_headers=?";
+//            String sql = "UPDATE headers SET flag=?,isDuplicate=0,tanggal=LOCALTIMESTAMP WHERE id_headers=?";
+            String sql = "UPDATE headers SET flag=?,isDuplicate=0 WHERE id_headers=?";
             sql += flag_before;
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, flag);  //flag/
@@ -436,7 +437,8 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND flag='INC-NSTP'";
         }
         try {
-            String sql = "UPDATE headers SET flag=?,special_rate=?,tanggal=LOCALTIMESTAMP,branch=?,special_rate_multi=? WHERE id_headers=?";
+//            String sql = "UPDATE headers SET flag=?,special_rate=?,tanggal=LOCALTIMESTAMP,branch=?,special_rate_multi=? WHERE id_headers=?";
+            String sql = "UPDATE headers SET flag=?,special_rate=?,branch=?,special_rate_multi=? WHERE id_headers=?";
             sql += flag_before;
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, flag);
@@ -476,7 +478,8 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND flag='INC-NSTP'";
         }
         try {
-            String sql = "UPDATE headers SET flag=?,tanggal=LOCALTIMESTAMP,branch=? WHERE id_headers=?";
+//            String sql = "UPDATE headers SET flag=?,tanggal=LOCALTIMESTAMP,branch=? WHERE id_headers=?";
+            String sql = "UPDATE headers SET flag=?,branch=? WHERE id_headers=?";
             sql += flag_before;
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, flag);
@@ -581,7 +584,8 @@ public class DBDataTransaksiOutgoing {
     public void updateStatusDuplicate(Integer id_headers, String userId, String ipAccess, String compName, String comment) {
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 //        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2,komentar=? WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
-        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2, tanggal = LOCALTIMESTAMP WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
+//        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2, tanggal = LOCALTIMESTAMP WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
+        String sql = "UPDATE headers SET flag='REJECT',isDuplicate=2 WHERE id_headers=? AND flag NOT IN ('INC-STL', 'INC-CRDT', 'ACK', 'INC-CNF', 'INC-SPOK') ";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
 //            st.setString(1, comment);   //comment
@@ -847,13 +851,13 @@ public class DBDataTransaksiOutgoing {
         int update = 0;
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "UPDATE headers set receiverAddress=?, flag=?,tanggal=? where flag =? and id_headers=?";
+            String sql = "UPDATE headers set receiverAddress=?, flag=? where flag =? and id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, responder.toUpperCase());
             st.setString(2, flag);
-            st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
-            st.setString(4, flag_before);
-            st.setInt(5, id_headers);
+//            st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
+            st.setString(3, flag_before);
+            st.setInt(4, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
                 log.info("Update Flag to:" + flag);
@@ -869,11 +873,11 @@ public class DBDataTransaksiOutgoing {
         int update = 0;
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "UPDATE headers set flag=?,tanggal=? where id_headers=?";
+            String sql = "UPDATE headers set flag=? where id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, flag);
-            st.setTimestamp(2, new java.sql.Timestamp(new java.util.Date().getTime()));
-            st.setInt(3, id_headers);
+//            st.setTimestamp(2, new java.sql.Timestamp(new java.util.Date().getTime()));
+            st.setInt(2, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
                 log.info("Update Flag to:" + flag);

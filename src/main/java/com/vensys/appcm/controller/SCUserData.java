@@ -266,7 +266,7 @@ public class SCUserData extends HttpServlet {
 //                            strErrMsg = "User ID or password is incorrect";
                             if (data.getWrongpass() >= 3) {
                                  dbo.updateenable(data);
-                                strErrMsg = "Username is not active, Please Contact the Administrator";
+                                strErrMsg = "Username is disable. Please Contact the Administrator";
                             }
                             session.setAttribute("errormsg", strErrMsg);
                         } else {
@@ -307,7 +307,7 @@ public class SCUserData extends HttpServlet {
                     }
                 }
             } else {
-                strErrMsg = "Username is not active, Please Contact the Administrator";
+                strErrMsg = "Username is disable. Please Contact the Administrator";
                 session.setAttribute("errormsg", strErrMsg);
                 dispatcher = request.getRequestDispatcher("login.jsp");
                 response.sendRedirect("login.jsp");

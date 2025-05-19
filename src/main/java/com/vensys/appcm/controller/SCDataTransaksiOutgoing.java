@@ -212,7 +212,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 //                dBDataTransaksiOutgoing.cleanDataTag(id);
             } else {
                 System.out.println("baris 266");
-                if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equalsIgnoreCase("INC-HOLD") || flagStatus.equalsIgnoreCase("INC-WAIT")) {//191202 ditambah if //191227 ditambah inc-wait
+                if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equalsIgnoreCase("CVT-MOD") || flagStatus.equalsIgnoreCase("INC-HOLD") || flagStatus.equalsIgnoreCase("INC-WAIT")) {//191202 ditambah if //191227 ditambah inc-wait
                     log.info("baris 268");
                     dBDataTransaksiOutgoing2.cleanDataTag(Integer.parseInt(id));
                     log.info("baris 270");

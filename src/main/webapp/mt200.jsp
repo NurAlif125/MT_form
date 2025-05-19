@@ -31,6 +31,10 @@
             <div id="judul">MT 200 Financial Institution Transfer for its Own Account</div>
             <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" onsubmit="return confirm('Do you want to save this MT data?');">
                 <input name="messageType" id="messageType" type="hidden" value="200" />
+                <% Date tgl_today = new java.util.Date();
+                    pageContext.setAttribute("tgl_today", tgl_today);%>
+                <c:set var="tgl_today" value="${tgl_today}" />
+                
                 <div style="width: 100%; margin: 0 auto; font: 0.85em;">
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
@@ -50,19 +54,26 @@
                         <div id="view2" class="tabcontent">
                             <!-- MF20 -->
                             <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red; text-decoration:none">*</a>Transaction Reference Number</span>
-                                <input type="text" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" maxlength="16" input_type="MF20 Sender Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                <input type="text" class="mandatory" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" maxlength="16" input_type="MF20 Sender Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <hr/>
 
                                     <!-- MF32A -->
-                                    <div class="form-row"><span class="label_body">MF32A</span><span class="label"><a style="color:red; text-decoration:none">*</a>Value Date</span>
-                                        <input type="text" name="_060_mf32a_date" id="_060_mf32a_date" maxlength="6" input_type="MF32A Date" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_060_mf32a_date'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                    <div class="form-row"><span class="label_body">MF32A</span><span class="label"><a style="color:red;text-decoration:none">*</a>Value Date</span>
+                                    <c:choose>
+                                    <c:when test = "${headerById.id_headers == null}">
+                                        <input type="text" name="_060_mf32a_date" id="_060_mf32a_date" class="mandatory" maxlength="6" value="<fmt:formatDate pattern='yyMMdd' value='${tgl_today}' />" />
+                                    </c:when>
+                                    <c:otherwise>
+                                        <input type="text" name="_060_mf32a_date" id="_060_mf32a_date" class="mandatory" maxlength="6" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_060_mf32a_date'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                    </c:otherwise>
+                                    </c:choose>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Currency Code</span>
-                                        <input type="text" name="_061_mf32a_currency" id="_061_mf32a_currency" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" class="mandatory" onkeypress="return textonly(event)" name="_061_mf32a_currency" id="_061_mf32a_currency" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Amount</span>
-                                        <input type="text" name="_062_mf32a_amount" id="_062_mf32a_amount" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)"  ondrop="return false;" onpaste="return false;" />
+                                        <input type="text" class="mandatory" name="_062_mf32a_amount" id="_062_mf32a_amount" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)"  ondrop="return false;" onpaste="return false;" />
                                         <!--//untuk menampilkan uang dalam block ditambahkan pada 20151007-->    
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
@@ -97,7 +108,7 @@
                                     <!-- OF53 -->
                                     <!--Party Identifier-->
                                     <div class="form-row"><span class="label_body">OF53B</span><span class="label">Party Identifier</span>
-                                        <input type="text" name="_123_of53b_party_identifier" id="_123_of53b_party_identifier" maxlength="34" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_123_of53b_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                        <input type="text" name="_123_of53b_party_identifier" id="_123_of53b_party_identifier" onblur="cek_slash(this)" maxlength="34" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_123_of53b_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
                                     <!--Location-->
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Location</span>
@@ -116,7 +127,7 @@
                                         </select>
                                         <div id="div_of56a_">
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                                <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                                <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
                                                 <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="OF56A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
@@ -127,7 +138,7 @@
                                         </div>
                                         <div id="div_of56d_">
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                                <input type="text" name="_164_of56d_party_identifier" id="_164_of56d_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_164_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                                <input type="text" name="_164_of56d_party_identifier" id="_164_of56d_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_164_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Name and Address</span>
                                                 <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_165_of56d_name_address" id="_165_of56d_name_address" input_type="OF56D Name Address" location="Body" > <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_165_of56d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -138,7 +149,7 @@
 
                                     <!-- OF57 -->
                                     <div class="form-row"><span class="label_body">MF57</span><span class="label"><a style="color:red; text-decoration:none">*</a>Account With Institution</span>
-                                        <select id="type_of57_" name="type_of57_" input_type="MF57 Account With Institution" location="Body">
+                                        <select class="mandatory" id="type_of57_" name="type_of57_" input_type="MF57 Account With Institution" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="a">A - Account With Inst - BIC</option>
                                             <option value="b">B - Account With Inst - Location</option>
@@ -146,7 +157,7 @@
                                         </select>
                                         <div id="div_of57a_">
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                                <input type="text" name="_170_of57a_party_identifier" id="_170_of57a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_170_of57a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
+                                                <input type="text" name="_170_of57a_party_identifier" id="_170_of57a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_170_of57a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
                                                 <input type="text" name="_171_of57a_identifier_code" id="_171_of57a_identifier_code" maxlength="11" input_type="OF57A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
@@ -157,7 +168,7 @@
                                 </div>
                                 <div id="div_of57b_">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                        <input type="text" name="_173_of57b_party_identifier" id="_173_of57b_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_173_of57b_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
+                                        <input type="text" name="_173_of57b_party_identifier" id="_173_of57b_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_173_of57b_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Location</span>
                                                 <input type="text" name="_174_of57b_location" id="_174_of57b_location" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_174_of57b_location'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
@@ -165,7 +176,7 @@
                                         </div>
                                         <div id="div_of57d_">
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                                <input type="text" name="_176_of57d_party_identifier" id="_176_of57d_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_176_of57d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                                <input type="text" name="_176_of57d_party_identifier" id="_176_of57d_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_176_of57d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Name and Address</span>
                                                 <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_177_of57d_name_address" id="_177_of57d_name_address" input_type="MF57D Name Address" location="Body" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_177_of57d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
