@@ -35,7 +35,7 @@ public class DBUserData {
     public DataUser getUserDataById(String str) throws SQLException {
         DataUser data = new DataUser();
 
-        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,idrulepass,wrongpass,enable,sub_role,channel FROM users WHERE user_id=?";
+        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,idrulepass,wrongpass,enable,sub_role,channel,user_bic FROM users WHERE user_id=?";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, str);
@@ -54,6 +54,7 @@ public class DBUserData {
             data.setEnable(rs.getInt(10));
             data.setSub_role(rs.getInt(11));
             data.setChannel(rs.getString(12));
+            data.setUser_bic(rs.getString(13));
         }
         return data;
     }

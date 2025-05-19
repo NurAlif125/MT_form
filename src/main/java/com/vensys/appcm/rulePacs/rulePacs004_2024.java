@@ -187,8 +187,7 @@ public class rulePacs004_2024 {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>PmtRtr/TxInf/InstgAgt</td></tr>");
                     } else {
                         if (logicalTerminal != null) {
-                            String logicalTerminal1 = logicalTerminal.substring(0, 11);
-                            if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal1)) {
+                            if (!bicInstgAgt.equalsIgnoreCase(logicalTerminal)) {
                                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstgAgt/FinInstnId/BICFI\"><td>\"From\" BIC must match \"Instructing Agent\"</td><td>PmtRtr/TxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
                             }
                         }

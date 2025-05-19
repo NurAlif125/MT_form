@@ -10,15 +10,35 @@
     <c:choose>
         <c:when test="${headerById.io_type == null}">
             <select name="sender_logical_terminal" id="sender_logical_terminal">
-                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
-                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>
-                </select>
+                <c:choose>
+                    <c:when test="${sessionScope.user_bic eq null or sessionScope.user_bic eq 'null'}">
+                        <c:forEach var="item1" items="${sessionScope.dataBicProp}">
+                            <option value="${item1}" <c:if test="${item1 == sessionScope.user_bic}">selected="true"</c:if>>${item1}</option>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
+                    </c:otherwise>
+                </c:choose>
+<!--                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
+                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>-->
+            </select>
         </c:when>
         <c:when test="${headerById.io_type == 'I'}">
             <select name="sender_logical_terminal" id="sender_logical_terminal">
-                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
-                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>
-                </select>
+                <c:choose>
+                    <c:when test="${sessionScope.user_bic eq null or sessionScope.user_bic eq 'null'}">
+                        <c:forEach var="item1" items="${sessionScope.dataBicProp}">
+                            <option value="${item1}" <c:if test="${item1 == sessionScope.user_bic}">selected="true"</c:if>>${item1}</option>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
+                    </c:otherwise>
+                </c:choose>
+<!--                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
+                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>-->
+            </select>
         </c:when>
         <c:otherwise>
             <input type="text" name="sender_logical_terminal" id="sender_logical_terminal" maxlength="12" minlength="12" autocomplete="off" <c:choose><c:when test="${empty headerById.logicalTerminal}">value=""</c:when><c:otherwise>value="${headerById.logicalTerminal}"</c:otherwise></c:choose> />

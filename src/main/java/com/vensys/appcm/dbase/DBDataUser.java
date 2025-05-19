@@ -43,7 +43,7 @@ public class DBDataUser {
     public void addDataUser(DataUser data, String mofier, String ip, String comp) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new,sub_role,channel) VALUES (?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new,sub_role,channel,user_bic) VALUES (?,?,?,?,?,?,?,?,?,?)";
 //            String sql = "INSERT INTO [user] (user_id,name,description,role,enable) VALUES (?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id()); //user_id
@@ -55,6 +55,7 @@ public class DBDataUser {
             st.setInt(7, 1);
             st.setInt(8, data.getSub_role());
             st.setString(9, data.getChannel());
+            st.setString(10, data.getUser_bic());
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -68,7 +69,7 @@ public class DBDataUser {
 //        System.out.println("user_id" + user_id);
         try {
 //            String sql = "UPDATE [user] SET name=?,description=?,role=?,enable=? WHERE user_id=?";
-            String sql = "UPDATE users SET name=?,description=?,role=?,sub_role=?,channel=?,enable=? WHERE user_id=?";
+            String sql = "UPDATE users SET name=?,description=?,role=?,sub_role=?,channel=?,enable=?,user_bic=? WHERE user_id=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getName());     //name
             st.setString(2, data.getDescription());     //description
@@ -76,7 +77,8 @@ public class DBDataUser {
             st.setInt(4, data.getSub_role()); 
             st.setString(5, data.getChannel());
             st.setInt(6, data.getEnable());     //enable
-            st.setString(7, user_id); //user_id
+            st.setString(7, data.getUser_bic()); //user_id
+            st.setString(8, user_id); //user_id
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -115,7 +117,7 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser() throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id ORDER BY user_id ASC";
-        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name,usr.channel FROM users AS usr \n" +
+        String sql = "SELECT usr.user_id,usr.name,usr.user_mt_routing,usr.description,usr.role,usr.enable,rl.role_name,usr.channel,usr.user_bic FROM users AS usr \n" +
 "LEFT JOIN roles AS rl ON usr.role=rl.role_id \n" +
 "WHERE usr.enable !=2\n" +
 "ORDER BY usr.user_id ASC";
@@ -134,6 +136,7 @@ public class DBDataUser {
             data.setEnable(rs.getInt(6));     //enable
             data.setRole_name(rs.getString(7));     //role_name
             data.setChannel(rs.getString(8));
+            data.setUser_bic(rs.getString(9));
             datas.add(data);
         }
         return datas;
@@ -142,7 +145,7 @@ public class DBDataUser {
     public List<DataUser> getAllDataUser(String user_id, String name, String description) throws Exception {
         List<DataUser> datas = new ArrayList<DataUser>();
 //        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,role_name FROM [user] LEFT JOIN roles ON role=role_id "
-        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,role_name,channel FROM users LEFT JOIN roles ON role=role_id "
+        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,role_name,channel,user_bic FROM users LEFT JOIN roles ON role=role_id "
                 + "WHERE user_id LIKE '%" + user_id + "%' AND name LIKE '%" + name + "%' "
                 + "AND description LIKE '%" + description + "%' " + "ORDER BY user_id ASC";
 //        System.out.println("sql 2 = " + sql);
@@ -160,6 +163,7 @@ public class DBDataUser {
             data.setEnable(rs.getInt(6));     //enable
             data.setRole_name(rs.getString(7));     //role_name
             data.setChannel(rs.getString(8));
+            data.setUser_bic(rs.getString(9));
             datas.add(data);
         }
         return datas;
@@ -167,7 +171,7 @@ public class DBDataUser {
 
     public DataUser getDataUserById(String user_id) throws SQLException {
         DataUser data = new DataUser();
-        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,sub_role,channel FROM users WHERE user_id=?";
+        String sql = "SELECT user_id,name,password,status_new,user_mt_routing,description,role,enable,sub_role,channel,user_bic FROM users WHERE user_id=?";
 //        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable FROM [user] WHERE user_id='" + user_id + "'";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -184,6 +188,7 @@ public class DBDataUser {
             data.setEnable(rs.getInt(8));     //enable
             data.setSub_role(rs.getInt(9));     //enable
             data.setChannel(rs.getString(10));
+            data.setUser_bic(rs.getString(11));
         }
         return data;
     }
@@ -219,7 +224,7 @@ public class DBDataUser {
             data.setEnable(rs.getInt(4));     //enable
             data.setLast_login(replaceNull(rs.getString(5)));
             data.setLast_activity(replaceNull(rs.getString(6)));
-            data.setChannel(rs.getString(7));
+            data.setChannel(replaceNullChannel(rs.getString(7)));
             datas.add(data);
         }
         return datas;
@@ -233,6 +238,16 @@ public class DBDataUser {
         st.executeUpdate();
         evl.insertDataEvent(mofier, "Hapus user", ip, comp);
         evl.updateLogUser(mofier, "user", tanggal);
+    }
+    
+    public String replaceNullChannel(String data) {
+        String result;
+        if (data == null) {
+            result = "";
+        } else {
+            result = data;
+        }
+        return result;
     }
 
     public String replaceNull(String data) {
