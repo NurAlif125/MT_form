@@ -1081,10 +1081,20 @@ public class DBHeader {
             where += " AND flag='INC-AML' ";
         } else if (flag.equalsIgnoreCase("Un-Settle")) { 
             where += " AND flag='Un-Settle' ";
-        } else if (flag.equalsIgnoreCase("Settle")) { 
-            where += " AND flag='Settle' ";
+        } else if (flag.equalsIgnoreCase("SETTLE")) { 
+            where += " AND flag='SETTLE' ";
         } else if (flag.equalsIgnoreCase("AML-TERMINATE")) { 
             where += " AND flag='AML-TERMINATE' ";
+        } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) { 
+            where += " AND flag='UNSETTLE-INC' ";
+        } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) { 
+            where += " AND flag='UNSETTLE-OUT' ";
+        } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) { 
+            where += " AND flag='WAITING-SAA-CNF' ";
+        } else if (flag.equalsIgnoreCase("AML-FAILED")) { 
+            where += " AND flag='AML-FAILED' ";
+        } else if (flag.equalsIgnoreCase("AML-FAILED-CNF")) { 
+            where += " AND flag='AML-FAILED-CNF' ";
         } else {
             where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
         }

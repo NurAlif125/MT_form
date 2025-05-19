@@ -53,15 +53,22 @@
                 <% } else if (menu.equalsIgnoreCase("19")) { %> Incoming Adjustment
                 <% } else if (menu.equalsIgnoreCase("20")) { %> Modify Convert
                 <% } else if (menu.equalsIgnoreCase("21")) { %> Verify Convert
-                <% } else if (menu.equalsIgnoreCase("22")) { %> Waiting AML
+                <% } else if (menu.equalsIgnoreCase("22")) { %> Reject AML
                 <% } else if (menu.equalsIgnoreCase("23")) { %> Incoming Convert
                 <% } else if (menu.equalsIgnoreCase("24")) { %> Incoming
                 <% } else if (menu.equalsIgnoreCase("25")) { %> Incoming Convert Confirmation
-                <% } else if (menu.equalsIgnoreCase("26")) { %> Incoming Reject Confirmation
-                <% } else if (menu.equalsIgnoreCase("27")) { %> Incoming Waiting AML
-                <% } else if (menu.equalsIgnoreCase("28")) { %> Incoming Un Settle 
-                <% } else if (menu.equalsIgnoreCase("29")) { %> Waiting AML Confirmation 
-                <% } else if (menu.equalsIgnoreCase("30")) { %> Settle 
+                <% } else if (menu.equalsIgnoreCase("26")) { %> Incoming Reject AML
+                <% } else if (menu.equalsIgnoreCase("27")) { %> Incoming Reject AML Confirmation
+                <% } else if (menu.equalsIgnoreCase("28")) { %> Incoming Resend to AML
+                <% } else if (menu.equalsIgnoreCase("29")) { %> Incoming Resend to AML Confirmation
+                <% } else if (menu.equalsIgnoreCase("30")) { %> Incoming Resend to Channel
+                <% } else if (menu.equalsIgnoreCase("31")) { %> Incoming Resend to Channel Confirmation
+                <% } else if (menu.equalsIgnoreCase("32")) { %> Incoming Settle
+                <% } else if (menu.equalsIgnoreCase("33")) { %> Failed to Send to SAA
+                <% } else if (menu.equalsIgnoreCase("34")) { %> Failed to Send to SAA Confirmation
+                <% } else if (menu.equalsIgnoreCase("35")) { %> Reject AML Confirmation
+                <% } else if (menu.equalsIgnoreCase("36")) { %> Failed to Send to AML
+                <% } else if (menu.equalsIgnoreCase("37")) { %> Failed to Send to AML Confirmation
                 <% } %>
                 Transactions 
             </div>

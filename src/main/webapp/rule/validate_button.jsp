@@ -39,8 +39,9 @@
         $('#rejectbic').click(function () {
             var answer = confirm('Do you want to reject this BIC?');
             return answer;
-        })
-        $('#reject').click(function () {
+        });
+        $('#reject_true').click(function () {
+            console.log("click this");
             var answer = confirm('Do you want to reject this MT..!!');
             if (answer) {
 //                document.location.href = 'SCRejectAction?id=' + $('#id').val() + '&operator_comment=' + $('#operator_comment').val();
@@ -49,6 +50,14 @@
             }
         });
         $('#modified').click(function () {
+            var answer = confirm('Do you want to modified this MT..!!');
+            if (answer) {
+//                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val() + '&komentar=' + $('#operator_comment').val();
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+                //printMTDoc('SCPrintMTDoc?id='+$('#id').val());
+            }
+        });
+        $('#resend2saa').click(function () {
             var answer = confirm('Do you want to modified this MT..!!');
             if (answer) {
 //                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val() + '&komentar=' + $('#operator_comment').val();

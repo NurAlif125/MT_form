@@ -173,6 +173,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         } else {
                             System.out.println("flag req selain ver and mod");
                             dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
+                            
                             if ((flagStatus.equalsIgnoreCase("VER") && flag.equalsIgnoreCase("MOD")) || (flagStatus.equalsIgnoreCase("CVT-VER") && flag.equalsIgnoreCase("CVT-MOD"))) {
                                 log.info("kadieuu flag selain mod 146");
                                 dBDataTransaksiOutgoing2.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), flagStatus);
@@ -185,6 +186,9 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         log.info("SCDataTransaksiOutgoing-elseif-1");
                         dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing("INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                     } else {
+                        if(request.getParameter("flag").equalsIgnoreCase("INC-SPRT")){
+                            dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing("WAITING-SAA-CNF", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
+                        }
                         if (request.getParameter("flag").equalsIgnoreCase("INC-SPRT")) {
                             log.info("flagstatus 161 " + flagStatus);
                             String special_rate = request.getParameter("special_rate");
@@ -194,6 +198,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                                 branch_101 = request.getParameter("branch_101");
                             }
                         } else {
+                            //new flag 19-05-2025
                             dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                         }
                     }

@@ -56,11 +56,11 @@ INNER JOIN headers b ON a.id_headers = b.id_headers]]>
 				<imageExpression><![CDATA["cmrtgs.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement key="staticText" style="Title" x="319" y="26" width="170" height="49" uuid="ed9d39a9-73af-4582-b368-d93190d51e16"/>
+				<reportElement key="staticText" style="Title" x="256" y="26" width="321" height="49" uuid="ed9d39a9-73af-4582-b368-d93190d51e16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="20" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Audit Trail]]></text>
+				<text><![CDATA[Audit Trail Transaction]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="0" y="0" width="262" height="16" uuid="4a95d343-2a17-4b3e-bc06-26e4aba0b52e">

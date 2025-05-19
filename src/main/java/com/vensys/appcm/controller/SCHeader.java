@@ -184,21 +184,36 @@ public class SCHeader extends HttpServlet implements Serializable {
                     } else if (flag.equalsIgnoreCase("RESEND-CNF")) {
                         flag = "RESEND-CNF";
                         menu = "25";
-                    } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) {
-                        flag = "INC-REJECT-CNF";
-                        menu = "26";
                     } else if (flag.equalsIgnoreCase("INC-AML")) {
                         flag = "INC-AML";
-                        menu = "27";
-                    } else if (flag.equalsIgnoreCase("Un-Settle")) { 
-                        flag = "Un-Settle";
-                        menu = "28";
+                        menu = "26";
                     } else if (flag.equalsIgnoreCase("AML-TERMINATE")) {
                         flag = "AML-TERMINATE";
+                        menu = "27";
+                    } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
+                        flag = "INC-AML-FAILED";
+                        menu = "28";
+                    } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) {
+                        flag = "INC-AML-FAILED-CNF";
                         menu = "29";
-                    } else if (flag.equalsIgnoreCase("Settle")) {
-                        flag = "Settle";
+                    } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) {
+                        flag = "UNSETTLE-INC";
                         menu = "30";
+                    } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) {
+                        flag = "INC-RESEND-CNF";
+                        menu = "31";
+                    } else if (flag.equalsIgnoreCase("SETTLE")) {
+                        flag = "SETTLE";
+                        menu = "32";
+                    } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) {
+                        flag = "UNSETTLE-OUT";
+                        menu = "33";
+                    } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) {
+                        flag = "WAITING-SAA-CNF";
+                        menu = "34";
+                    } else if (flag.equalsIgnoreCase("WAITING-AML")) {
+                        flag = "WAITING-AML";
+                        menu = "35";
                     } else {
                         flag = "AUTH";
                         menu = "3";
