@@ -1630,10 +1630,10 @@ public class DBHeader {
     // ditambahkan pada 20191230 untuk mengetahui nama logical terminal dan receiverinsr
     public String getLTRI(String headerId) throws Exception {
         String result = "";
-        String sql = "select logicalTerminal, lt.company, receiverAddress, concat(ri.company, ' ' , ri.address), io_type\n"
+        String sql = "select logicalTerminal, COALESCE(lt.company, '') as ltAddress, receiverAddress, concat(ri.company, ' ' , ri.address), io_type\n"
                 + "from headers \n"
-                + "LEFT JOIN bic lt ON lt.code_member = concat(SUBSTRING(logicalTerminal,0,9), SUBSTRING(logicalTerminal,10,3))\n"
-                + "LEFT JOIN bic ri ON ri.code_member = concat(SUBSTRING(receiverAddress,0,9), SUBSTRING(receiverAddress,10,3))\n"
+                + "LEFT JOIN bic lt ON lt.code_member = logicalTerminal\n"
+                + "LEFT JOIN bic ri ON ri.code_member = receiverAddress\n"
                 + "where id_headers=" + headerId;
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();

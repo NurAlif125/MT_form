@@ -76,33 +76,53 @@ public class DBBIC {
     public void addDataAfterApproval(DataBIC data, int id_member) {
         try {
             log.info("addDataAfterApprovalBIC");
-//            String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
-            String sql = "MERGE INTO bic AS target\n"
-                    + "USING (\n"
-                    + "    VALUES \n"
-                    + "    (?, ?, ?, ?, '{}'::jsonb)\n"
-                    + ") AS source(code_member, company, address, note, need_approve)\n"
-                    + "ON target.code_member = source.code_member\n"
-                    + "WHEN MATCHED THEN\n"
-                    + "    UPDATE SET \n"
-                    + "        company = source.company,\n"
-                    + "        address = source.address,\n"
-                    + "        note = source.note,\n"
-                    + "        need_approve = source.need_approve\n"
-                    + "WHEN NOT MATCHED THEN\n"
-                    + "    INSERT (code_member, company, address, note, need_approve)\n"
-                    + "    VALUES (source.code_member, source.company, source.address, source.note, source.need_approve)";
-            PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setString(1, data.getCode_member());
-            st.setString(2, data.getCompany());
-            st.setString(3, data.getAddress());
-            st.setString(4, data.getNote());
-            st.setInt(5, id_member);
-            st.executeUpdate();
-            log.info("success add data BIC");
+            boolean isFind = isDuplicate(data.getCode_member());
+            if (!isFind) {
+                String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
+//            String sql = "MERGE INTO bic AS target\n"
+//                    + "USING (VALUES (?, ?, ?, ?, '{}'::jsonb))\n"
+//                    + "AS source(code_member, company, address, note, need_approve)\n"
+//                    + "ON (target.code_member = source.code_member AND target.id_member = ?)\n"
+//                    + "WHEN MATCHED THEN\n"
+//                    + "DELETE\n"
+//                    + "WHEN NOT MATCHED THEN\n"
+//                    + "INSERT (code_member, company, address, note, need_approve)\n"
+//                    + "VALUES (source.code_member, source.company, source.address, source.note, NULL)";
+                PreparedStatement st = this.conn.prepareStatement(sql);
+                st.setString(1, data.getCode_member());
+                st.setString(2, data.getCompany());
+                st.setString(3, data.getAddress());
+                st.setString(4, data.getNote());
+                st.setInt(5, id_member);
+                st.executeUpdate();
+                log.info("success add data BIC");
+            } else {
+                deletePermanentBICApproval(id_member);
+                log.info("BIC duplicate!");
+            }
         } catch (SQLException e) {
             log.error(e);
         }
+    }
+
+    public boolean isDuplicate(String bic) {
+        boolean isFind = false;
+
+        try {
+            String sql = "SELECT code_member FROM bic WHERE code_member = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, bic);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                isFind = true;
+                log.info("BIC duplikat!");
+                break;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isFind;
     }
 
     public void updateBic(String json, int id_member) {
@@ -298,7 +318,9 @@ public class DBBIC {
                 rs.getString(2),
                 rs.getString(3),
                 rs.getString(4),
-                rs.getString(5),};
+                rs.getString(5),
+                rs.getString(1)
+            };
             datas.add(value);
         }
         return datas;
@@ -324,7 +346,8 @@ public class DBBIC {
                     data.getCode_member(),
                     data.getCompany(),
                     data.getAddress(),
-                    data.getNote()
+                    data.getNote(),
+                    rs.getString(1)
                 };
 
                 datas.add(value);
@@ -336,7 +359,19 @@ public class DBBIC {
     }
 
     public void addBICBulk(List<String> data) {
-        String sql = "INSERT INTO bic(need_approve) VALUES (?::jsonb)";
+//        String sql = "INSERT INTO bic(need_approve) VALUES (?::jsonb)";
+        String sql = "MERGE INTO bic AS target\n"
+                + "USING (\n"
+                + "    VALUES \n"
+                + "    (?::jsonb)\n"
+                + ") AS source(need_approve)\n"
+                + "ON target.need_approve->>'code_member' = source.need_approve->>'code_member'  \n"
+                + "WHEN MATCHED THEN\n"
+                + "    UPDATE SET \n"
+                + "        need_approve = source.need_approve\n"
+                + "WHEN NOT MATCHED THEN\n"
+                + "    INSERT (need_approve)\n"
+                + "    VALUES (source.need_approve::jsonb)";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             this.conn.setAutoCommit(false);
@@ -412,32 +447,37 @@ public class DBBIC {
     }
 
     public void approveAll(List<DataBIC> data) {
-//        String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
-        String sql = "MERGE INTO bic AS target\n"
-                + "USING (\n"
-                + "    VALUES \n"
-                + "    (?, ?, ?, ?, '{}'::jsonb)\n"
-                + ") AS source(code_member, company, address, note, need_approve)\n"
-                + "ON target.code_member = source.code_member\n"
-                + "WHEN MATCHED THEN\n"
-                + "    UPDATE SET \n"
-                + "        company = source.company,\n"
-                + "        address = source.address,\n"
-                + "        note = source.note,\n"
-                + "        need_approve = source.need_approve\n"
-                + "WHEN NOT MATCHED THEN\n"
-                + "    INSERT (code_member, company, address, note, need_approve)\n"
-                + "    VALUES (source.code_member, source.company, source.address, source.note, source.need_approve)";
+        String sql = "UPDATE bic SET code_member = ?, company = ?, address = ?, note = ?, need_approve = NULL WHERE id_member = ?";
+//        String sql = "MERGE INTO bic AS target\n"
+//                + "USING (\n"
+//                + "    VALUES \n"
+//                + "    (?, ?, ?, ?, '{}'::jsonb)\n"
+//                + ") AS source(code_member, company, address, note, need_approve)\n"
+//                + "ON target.code_member = source.code_member\n"
+//                + "WHEN MATCHED THEN\n"
+//                + "    UPDATE SET \n"
+//                + "        company = source.company,\n"
+//                + "        address = source.address,\n"
+//                + "        note = source.note,\n"
+//                + "        need_approve = source.need_approve\n"
+//                + "WHEN NOT MATCHED THEN\n"
+//                + "    INSERT (code_member, company, address, note, need_approve)\n"
+//                + "    VALUES (source.code_member, source.company, source.address, source.note, source.need_approve)";
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             this.conn.setAutoCommit(false);
             for (DataBIC temp : data) {
-                st.setString(1, temp.getCode_member());
-                st.setString(2, temp.getCompany());
-                st.setString(3, temp.getAddress());
-                st.setString(4, temp.getNote());
-                st.setInt(5, temp.getId_member());
-                st.addBatch();
+                boolean isFind = isDuplicate(temp.getCode_member());
+                if (!isFind) {
+                    st.setString(1, temp.getCode_member());
+                    st.setString(2, temp.getCompany());
+                    st.setString(3, temp.getAddress());
+                    st.setString(4, temp.getNote());
+                    st.setInt(5, temp.getId_member());
+                    st.addBatch();
+                } else {
+                    deletePermanentBICApproval(temp.getId_member());
+                }
             }
             int[] result = st.executeBatch();
             log.info("The number of rows updated: " + result.length);

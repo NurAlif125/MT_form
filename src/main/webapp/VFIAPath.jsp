@@ -44,6 +44,8 @@
                             <th>Config Name</th>
                             <th>Host</th>
                             <th>Protocol</th>
+                            <th>Path</th>
+                            <th>Local Path</th>
                         </tr>
                     </thead>                    
                   

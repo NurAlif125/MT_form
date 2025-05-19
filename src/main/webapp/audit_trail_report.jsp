@@ -30,7 +30,7 @@
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MENU:REPORTING'}">
-            <div id="judul">Audit Trail Report</div>
+            <div id="judul">Audit Trail Transaction Report</div>
             <form id="form1" name="form1" method="post" action="SCPrintAuditTrail" target="_blank">
                 <% Date tgl_today = new java.util.Date();
                             pageContext.setAttribute("tgl_today", tgl_today);%>
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="form-row-action">
-                    <input type="submit" name="print" id="print" value="View" />
+                    <input type="submit" name="print" id="print" value="Export" />
                     <input type="reset" name="reset" id="reset" value="Reset" />
                 </div>
             </form>

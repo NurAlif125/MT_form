@@ -112,7 +112,7 @@
             var data = dt.row(this).data();
             
             // move to VBIC by get parameter id_member
-            window.location.href = `VBICApproval?id_member=`+data[0];
+            window.location.href = `VBICApproval?id_member=`+data[5];
         });
     });
 </script>
