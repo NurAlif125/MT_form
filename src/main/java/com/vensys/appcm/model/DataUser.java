@@ -39,6 +39,15 @@ public class DataUser {
     private String email;
     private int idDepartment;
     private String channel;
+    private String user_bic;
+
+    public String getUser_bic() {
+        return user_bic;
+    }
+
+    public void setUser_bic(String user_bic) {
+        this.user_bic = user_bic;
+    }
 
     public String getChannel() {
         return channel;

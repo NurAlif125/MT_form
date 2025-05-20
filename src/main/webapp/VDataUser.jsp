@@ -52,6 +52,7 @@
                             <th>User Id</th>
                             <th>Name</th>
                             <th>Channel</th>
+                            <th>BIC</th>
                             <th>Description</th>
                             <th>Role</th>
                             <th>Status</th>
@@ -67,6 +68,7 @@
                             <td><a href="VDataUser?user_id=${item.user_id}">${item.user_id}</a></td>
                             <td>${item.name}</td>
                             <td>${item.channel}</td>
+                            <td>${item.user_bic}</td>
                             <td>${item.description}</td>
                             <td>${item.role_name}</td>
                         <c:choose>

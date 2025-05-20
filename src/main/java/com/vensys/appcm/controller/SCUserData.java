@@ -67,7 +67,7 @@ public class SCUserData extends HttpServlet {
         List<DataNostro> dataNostroList = new ArrayList<DataNostro>();
         List<DataCurrency> dataCurrList = new ArrayList<DataCurrency>();
         String[] dataChannel = null;
-//        String[] dataBicProp = null;
+        String[] dataBicProp = null;
 //        List<DataNostro> dataNos = new ArrayList<DataNostro>();
         String user_id = request.getParameter("username");
         String password = request.getParameter("password");
@@ -83,11 +83,13 @@ public class SCUserData extends HttpServlet {
         session.removeAttribute("role");
         String[] gs = null;
         String channel = "";
+        String userBIC = "";
 //        List <Nst> nsts = null;
        try {
 //            data = dbo.getUserDataByIdLDAP(user_id);
             data = dbo.getUserDataById(user_id);
             channel = data.getChannel();
+            userBIC = data.getUser_bic();
             gs = dbg.getGeneralSetting();
 //            dataLogin = dbo.selectLastLoginBerhasil(user_id);
             dataLogin = dbo.selectLastLoginBerhasil(user_id);
@@ -210,6 +212,11 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("hostname", gs[0]);
                                 session.setAttribute("appVersion", gs[1]);
                                 session.setAttribute("channel", channel);
+                                if (String.valueOf(data.getUser_bic()).equals("") || String.valueOf(data.getUser_bic()) == null) { 
+                                    session.setAttribute("user_bic", "null");
+                                } else {
+                                    session.setAttribute("user_bic", String.valueOf(data.getUser_bic()));
+                                }
                                 dbo2.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
                                 evl.updateLogUser(user_id, "login", tanggal);
                                 try {
@@ -218,7 +225,7 @@ public class SCUserData extends HttpServlet {
                                     data.setWrongpass(0);
                                     dbo.updatewrongpass(data);
                                     dataChannel = getChannel().split(",");
-//                                    dataBicProp = getBicProp().split(",");
+                                    dataBicProp = getBicProp().split(",");
                                     log.info("getAllDataRole");
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
@@ -237,7 +244,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("role", replicationManager.getRoles());
                                 session.setAttribute("dataRoleList", dataRoleList);
                                 session.setAttribute("dataChannel", dataChannel);
-//                                session.setAttribute("dataBicProp", dataBicProp);
+                                session.setAttribute("dataBicProp", dataBicProp);
 
                                 session.setAttribute("flagStatus", "");
                                 session.setAttribute("timeout", dataRole.getTimeout());
@@ -341,12 +348,12 @@ public class SCUserData extends HttpServlet {
         return prop.getProperty("channel");
     }
     
-//    public String getBicProp() throws IOException {
-//        Properties prop = new Properties();
-//        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
-//        prop.load(inputStream);
-//        return prop.getProperty("bic");
-//    }
+    public String getBicProp() throws IOException {
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("bic");
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
