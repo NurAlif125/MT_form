@@ -280,7 +280,7 @@ public class rulePacs008_2024 {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>Charge information is mandatory if CRED is present – if no charges are taken, Zero must be used in \"Amount\" (any agent in the payment chain).</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgBr</td></tr>");
         }
 
-        if ((chrgBr == ChargeBearerType1Code.DEBT && chrgsInf.size() > 1) || (chrgBr == ChargeBearerType1Code.DEBT && chrgsInf.isEmpty())) {
+        if (chrgBr == ChargeBearerType1Code.DEBT && chrgsInf.size() > 1) {
             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>If \"Charge Bearer/DEBT\" is present, then only one occurrence of \"Charge Information\" is allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf</td></tr>");
         }
 
