@@ -340,8 +340,8 @@
                                                 </c:if>
                                             </c:forEach>
                                             <c:forEach var="iteminc" items="${role}">
-                                                <c:if test="${iteminc == 'FLOW:AML-TERMINATE'}">
-                                                    <li><a href="controllerHeaders?io_type=O&flag=AML-TERMINATE&menu=27">Incoming Reject AML Confirmation</a></li>
+                                                <c:if test="${iteminc == 'FLOW:AML-TERMINATE-IN'}">
+                                                    <li><a href="controllerHeaders?io_type=O&flag=AML-TERMINATE-IN&menu=27">Incoming Reject AML Confirmation</a></li>
                                                 </c:if>
                                                 <c:if test="${iteminc == 'FLOW:INC-AML-FAILED'}">
                                                     <li><a href="controllerHeaders?io_type=O&flag=INC-AML-FAILED&menu=28">Incoming Resend to AML</a></li>
@@ -399,8 +399,8 @@
                                             </c:if>
                                         </c:forEach>
                                         <c:forEach var="item" items="${role}">
-                                            <c:if test="${item == 'FLOW:AML-TERMINATE'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=AML-TERMINATE&menu=35">Reject AML Confirmation</a></li>
+                                            <c:if test="${item == 'FLOW:AML-TERMINATE-OUT'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=AML-TERMINATE-OUT&menu=36">Reject AML Confirmation</a></li>
                                             </c:if>
                                         </c:forEach>  
                                         <c:forEach var="item" items="${role}">

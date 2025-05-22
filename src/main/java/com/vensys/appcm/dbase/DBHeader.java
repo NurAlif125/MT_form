@@ -1083,8 +1083,10 @@ public class DBHeader {
             where += " AND flag='Un-Settle' ";
         } else if (flag.equalsIgnoreCase("SETTLE")) { 
             where += " AND flag='SETTLE' ";
-        } else if (flag.equalsIgnoreCase("AML-TERMINATE")) { 
-            where += " AND flag='AML-TERMINATE' ";
+        } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) { 
+            where += " AND flag='AML-TERMINATE-IN' ";
+        } else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) { 
+            where += " AND flag='AML-TERMINATE-OUT' ";
         } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) { 
             where += " AND flag='UNSETTLE-INC' ";
         } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) { 

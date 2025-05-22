@@ -187,8 +187,8 @@ public class SCHeader extends HttpServlet implements Serializable {
                     } else if (flag.equalsIgnoreCase("INC-AML")) {
                         flag = "INC-AML";
                         menu = "26";
-                    } else if (flag.equalsIgnoreCase("AML-TERMINATE")) {
-                        flag = "AML-TERMINATE";
+                    } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) {
+                        flag = "AML-TERMINATE-IN";
                         menu = "27";
                     } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
                         flag = "INC-AML-FAILED";
@@ -214,6 +214,9 @@ public class SCHeader extends HttpServlet implements Serializable {
                     } else if (flag.equalsIgnoreCase("WAITING-AML")) {
                         flag = "WAITING-AML";
                         menu = "35";
+                    }  else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) {
+                        flag = "AML-TERMINATE-OUT";
+                        menu = "36";
                     } else {
                         flag = "AUTH";
                         menu = "3";
