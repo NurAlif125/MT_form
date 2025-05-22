@@ -119,12 +119,12 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         appHeader.setFr(new Party44Choice());
         appHeader.getFr().setFIId(new BranchAndFinancialInstitutionIdentification6());
         appHeader.getFr().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
-        appHeader.getFr().getFIId().getFinInstnId().setBICFI(logicalTerminal);
+        appHeader.getFr().getFIId().getFinInstnId().setBICFI(logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12));
 
         appHeader.setTo(new Party44Choice());
         appHeader.getTo().setFIId(new BranchAndFinancialInstitutionIdentification6());
         appHeader.getTo().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
-        appHeader.getTo().getFIId().getFinInstnId().setBICFI(receiverAddress);
+        appHeader.getTo().getFIId().getFinInstnId().setBICFI(receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12));
 
         if (messType.contains("cov")) {
             appHeader.setBizSvc(getBizSvcCov());
