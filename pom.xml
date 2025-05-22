@@ -548,10 +548,7 @@
             <artifactId>jsch</artifactId>
             <version>0.1.55</version>
         </dependency>-->
-<<<<<<< HEAD
-=======
         
->>>>>>> adc99e8 (add menu flag)
         <!-- https://mvnrepository.com/artifact/com.github.mwiede/jsch -->
         <dependency>
             <groupId>com.github.mwiede</groupId>

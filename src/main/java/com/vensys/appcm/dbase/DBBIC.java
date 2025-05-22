@@ -360,20 +360,6 @@ public class DBBIC {
 
     public void addBICBulk(List<String> data) {
 //        String sql = "INSERT INTO bic(need_approve) VALUES (?::jsonb)";
-<<<<<<< HEAD
-        String sql = "MERGE INTO bic AS target\n"
-                + "USING (\n"
-                + "    VALUES \n"
-                + "    (?::jsonb)\n"
-                + ") AS source(need_approve)\n"
-                + "ON target.need_approve->>'code_member' = source.need_approve->>'code_member'  \n"
-                + "WHEN MATCHED THEN\n"
-                + "    UPDATE SET \n"
-                + "        need_approve = source.need_approve\n"
-                + "WHEN NOT MATCHED THEN\n"
-                + "    INSERT (need_approve)\n"
-                + "    VALUES (source.need_approve::jsonb)";
-=======
           String sql = "MERGE INTO bic AS target\n" +
                         "USING (\n" +
                         "    VALUES \n" +
@@ -386,7 +372,6 @@ public class DBBIC {
                         "WHEN NOT MATCHED THEN\n" +
                         "    INSERT (need_approve)\n" +
                         "    VALUES (source.need_approve::jsonb)";
->>>>>>> adc99e8 (add menu flag)
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             this.conn.setAutoCommit(false);
