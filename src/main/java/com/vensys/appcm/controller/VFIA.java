@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataFIA;
+import java.util.List;
 
 /**
  *
@@ -27,12 +28,15 @@ public class VFIA extends HttpServlet {
         DBconnection dbConn = new DBconnection();
         DataFIA fiaById = new DataFIA();
         DBFIA db = new DBFIA(dbConn.getConnection());
+        List<String> dataSource = null;
         try {
+            System.out.println("masuk ke servletxx");
             fiaById = db.getFiaById(request.getParameter("id"));
+            dataSource = db.getSourcefromSftpReaderFia();
         } catch (Exception ex) {
+            System.out.println("error di servletxx");
             ex.printStackTrace();
         }
-
         try {
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -40,6 +44,7 @@ public class VFIA extends HttpServlet {
             dbConn.closeConnection();
         }
         request.setAttribute("fiaById", fiaById);
+        request.setAttribute("dataSource", dataSource);
         RequestDispatcher view = request.getRequestDispatcher("mfia.jsp");
         view.forward(request, response);
     }
