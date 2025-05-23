@@ -14,7 +14,15 @@
                 <div id="tabs-1" class="formBody">
                     <div class="form-row">
                         <span class="labelL2">Source</span>
-                        <input type="text" name="source" id="source" maxlength="12" value="<c:out value='${fiaById.source}' />" /> 
+                        <!-- <input type="text" name="source" id="source" value="<c:out value='${fiaById.source}' />" />  -->
+                        <select name="source" id="source">
+                            <c:out value='${fiaById.source}' />
+                            <c:forEach var="item1" items="${dataSource}">
+                                <option value="${item1}"
+                                    <c:if test="${item1 == fiaById.source}">selected="true"</c:if>>
+                                    ${item1}
+                                </option>                            </c:forEach>
+                        </select>
                     </div>
 
                     <div class="form-row">

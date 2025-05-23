@@ -538,7 +538,12 @@
                 document.location.href = 'ServletControllerDataTransaksiIncoming?flag=INC-STLHOLD&id=' + $('#id').val();
             }
         });
-
+        $('#ResendFIA').click(function () {
+            var answer = confirm('Do you want to Resend this..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=FIA-FAILED&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
         $('#upload').click(function () {//20191231 ditambah search cover
             var answer = confirm('Do you want to upload this file ?');
             return answer

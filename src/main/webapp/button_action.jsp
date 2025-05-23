@@ -265,6 +265,7 @@
                 }
             </script>
         </c:if>
+        
         <%--<c:if test="${item == 'FLOW:VER'}">
             <input type="button" name="verified" id="verified" value="Verifiy" />
         </c:if>--%>
@@ -536,6 +537,11 @@
         <% }%>
         <!-- ... existing code ... -->
         <!--end 20180417-->
+        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
+            <c:if test="${item == 'FLOW:FIA-RESEND'}">
+                <input type="button" name="ResendFIA" id="ResendFIA" value="Resend FIA" />
+            </c:if>
+        <% }%>
 
              <% if ((request.getParameter("idlt") != null) ) {%>
         <c:if test="${item == 'FLOW:LTUPDATE'}">

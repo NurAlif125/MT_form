@@ -113,7 +113,7 @@ public class CreateText {
         return str;
     }
 
-    public void createTextFile(String fin, String mt, String source, int id, String io_type) throws IOException {
+    public void createTextFile(String fin, String mt, String source, int id, String io_type, String user_id, String ip_access, String comp_name) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());            
         String fileName = "MT" + mt + "_" + dbHTML + "_" + id + ".txt";
         SFTP sftp = new SFTP();        
@@ -132,10 +132,10 @@ public class CreateText {
         out.write(fin);
         out.close();
         log.info("createTextFile : " + "MT" + mt + "_" + dbHTML + "_" + id + ".txt");
-        sftp.uploadToSftp("MT",fileName);
+        sftp.uploadToSftp("MT",fileName, id, user_id, ip_access, comp_name);
     }
     
-    public void createTextFileMX(String fin, String type, int id, String io_type, String source) throws IOException {
+    public void createTextFileMX(String fin, String type, int id, String io_type, String source, String user_id, String ip_access, String comp_name) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
         String fileName = type + "_" + dbHTML + "_" + id + ".xml";
         //log.info("cek dbHMTL: " + dbHTML);
@@ -154,7 +154,7 @@ public class CreateText {
         out.write(fin);
         out.close();
         log.info("createTextFile : " +  type + "_" + dbHTML + "_" + id + ".txt");
-        sftp.uploadToSftp("MX",fileName);
+        sftp.uploadToSftp("MX", fileName, id, user_id, ip_access, comp_name);
     }
 
     public String createFinalMT(Header header) throws SQLException, Exception {
@@ -425,7 +425,7 @@ public class CreateText {
         return hasilHitung;
     }
 
-    public void getFinalMT(int id, String io_type) throws IOException {
+    public void getFinalMT(int id, String io_type, String user_id, String ip_access, String comp_name) throws IOException {
         String fin = "";
         String source = "";
         String mt = "";
@@ -447,7 +447,7 @@ public class CreateText {
         fin = fin.replace("}\r", "}");       //}\r dengan }
 //        }
         log.info("finnya nyaeta {" + fin + "]");
-        createTextFile(fin, mt, source, id, io_type);
+        createTextFile(fin, mt, source, id, io_type, user_id, ip_access, comp_name);
 //        if (mt.substring(0, 1).equalsIgnoreCase("4")) {
 //            source = "BTR";
 //            createTextFile(fin, mt, source, id);

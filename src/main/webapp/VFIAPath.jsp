@@ -42,10 +42,12 @@
                         <tr>
                             <th>No</th>
                             <th>Config Name</th>
+                            <th>Source</th>
                             <th>Host</th>
                             <th>Protocol</th>
                             <th>Path</th>
                             <th>Local Path</th>
+                            <th>Transfer Path</th>
                         </tr>
                     </thead>                    
                   
