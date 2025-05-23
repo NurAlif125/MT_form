@@ -217,6 +217,12 @@ public class SCHeader extends HttpServlet implements Serializable {
                     }  else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) {
                         flag = "AML-TERMINATE-OUT";
                         menu = "36";
+                    } else if (flag.equalsIgnoreCase("FIA-FAILED")) {
+                        flag = "FIA-FAILED";
+                        menu = "38";
+                    } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
+                        flag = "FIA-FAILED-CNF";
+                        menu = "39";
                     } else {
                         flag = "AUTH";
                         menu = "3";

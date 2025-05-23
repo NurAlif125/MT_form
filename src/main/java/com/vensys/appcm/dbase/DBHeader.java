@@ -1097,6 +1097,10 @@ public class DBHeader {
             where += " AND flag='AML-FAILED' ";
         } else if (flag.equalsIgnoreCase("AML-FAILED-CNF")) { 
             where += " AND flag='AML-FAILED-CNF' ";
+        } else if (flag.equalsIgnoreCase("FIA-FAILED")) { 
+            where += " AND flag='FIA-FAILED' ";
+        } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) { 
+            where += " AND flag='FIA-FAILED-CNF' ";
         } else {
             where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
         }

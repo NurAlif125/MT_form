@@ -386,6 +386,14 @@
                                             </c:if>
                                         </c:forEach>
                                         <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:FIA-FAILED'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=FIA-FAILED&menu=38">Failed to Send to FIA</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:FIA-FAILED-CNF'}">
+                                                <li><a href="controllerHeaders?io_type=I&flag=FIA-FAILED-CNF&menu=39">Failed to Send to FIA Confirmation</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'FLOW:UNSETTLE-OUT'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=UNSETTLE-OUT&menu=33">Failed to Send to SAA</a></li>
                                             </c:if>

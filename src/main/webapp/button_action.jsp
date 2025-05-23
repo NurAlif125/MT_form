@@ -278,7 +278,7 @@
         <%}%>
         <!--OUTGOING (BUTTON PADA SEBELAH KIRI)-->
         <% if (session.getAttribute("flagStatus").equals("VER")) {%>
-            <c:if test="${item == 'FLOW:AUTH'}">
+            <c:if test="${item == 'FLOW:VER'}">
                 <input type="button" name="reject" id="reject_true" value="Reject" />
                 <input type="button" name="modified" id="modified" value="Modify" />
                 <input type="button" name="authorized" id="authorized" value="Authorize" />

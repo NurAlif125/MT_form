@@ -69,6 +69,8 @@
                 <% } else if (menu.equalsIgnoreCase("35")) { %> Reject AML Confirmation
                 <% } else if (menu.equalsIgnoreCase("36")) { %> Failed to Send to AML
                 <% } else if (menu.equalsIgnoreCase("37")) { %> Failed to Send to AML Confirmation
+                <% } else if (menu.equalsIgnoreCase("38")) { %> Failed to Send to FIA
+                <% } else if (menu.equalsIgnoreCase("39")) { %> Failed to Send to FIA Confirmation
                 <% } %>
                 Transactions 
             </div>
