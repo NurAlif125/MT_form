@@ -364,6 +364,8 @@
                                                 <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Authorize</a></li>
                                             </c:if>
                                         </c:forEach>    
+                                                <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Failed to Send to FIA</a></li>
+                                                <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Failed to Send to FIA Confirmation</a></li>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'FLOW:WAITING-AML'}">
                                                 <li><a href="controllerHeaders?io_type=I&flag=WAITING-AML&menu=22">Waiting AML</a></li>
