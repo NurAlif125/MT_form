@@ -69,8 +69,7 @@
                         <label>Print <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:PRINT" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:PRINT'}"> checked="true" </c:if></c:forEach> /></label>
                         <!--<label>Incoming <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC'}"> checked="true" </c:if></c:forEach> /></label>-->
                         <label>Incoming Transaction <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC'}"> checked="true" </c:if> </c:forEach> /></label>
-                        <label>FIA RESEND <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:FIA-RESEND" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:FIA-RESEND'}"> checked="true" </c:if> </c:forEach> /></label>
-                    </div>
+                     </div>
                     <div class="form-row"><span class="labelL">&nbsp;</span>
                         <label>Incoming Convert <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:INC-CVT" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:INC-CVT'}"> checked="true" </c:if> </c:forEach> /></label>
                         <label>Incoming Convert Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:RESEND-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:RESEND-CNF'}"> checked="true" </c:if> </c:forEach> /></label>

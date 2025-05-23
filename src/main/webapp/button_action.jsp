@@ -550,8 +550,16 @@
         <!-- ... existing code ... -->
         <!--end 20180417-->
         <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
-            <c:if test="${item == 'FLOW:FIA-RESEND'}">
-                <input type="button" name="ResendFIA" id="ResendFIA" value="Resend FIA" />
+            <c:if test="${item == 'FLOW:FIA-FAILED'}">
+                <input type="button" name="ResendFIA" id="ResendFIA" value="Resend to FIA" />
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>
+        <% }%>
+        
+        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED-CNF")) { %>
+            <c:if test="${item == 'FLOW:FIA-FAILED-CNF'}">
+                <input type="button" name="approve_fia" id="approve_fia" value="Approve" />
+                <input type="button" name="reject" id="reject_true" value="Reject" />
             </c:if>
         <% }%>
 
@@ -573,6 +581,12 @@
             <c:if test="${sessionScope.sub_role_user == '1'}">
                 <input type="button" name="printed" id="printed" value="Print" />
                 <input type="button" name="export" id="btn-export" value="Export" />
+            </c:if>
+        <% }%>
+        
+         <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
+            <c:if test="${item == 'FLOW:FIA-FAILED'}">
+                <input type="button" name="printed" id="printed" value="Print" />
             </c:if>
         <% }%>
         
