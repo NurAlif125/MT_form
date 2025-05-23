@@ -1392,13 +1392,13 @@ public class DBHeader {
         if (sender_reference == null || sender_reference.isEmpty()) {
             where += "";
         } else {
-            where += " AND t20.detail LIKE '%" + sender_reference + "%'";
+            where += " AND td.trans_reference LIKE '%" + sender_reference + "%'";
         }
         // ditambahkan rel_reference pada 20151102 by Azan
         if (rel_reference == null || rel_reference.isEmpty()) {
             where += "";
         } else {
-            where += " AND t21.detail LIKE '%" + rel_reference + "%'";
+            where += " AND td.trans_related_reference LIKE '%" + rel_reference + "%'";
         }
 //        if (sender_bank == null || sender_bank.isEmpty()) {
 //            where += "";
@@ -1414,12 +1414,12 @@ public class DBHeader {
         if (currency_code == null || currency_code.isEmpty()) {
             where += "";
         } else {
-            where += " AND t32c.detail LIKE '%" + currency_code + "%'";
+            where += " AND td.trans_ccy '%" + currency_code + "%'";
         }
         if (amount == null || amount.isEmpty()) {
             where += "";
         } else {
-            where += " AND t32a.detail LIKE '%" + amount + "%'";
+            where += " AND td.trans_amount LIKE '%" + amount + "%'";
         }
         if (db_type.equalsIgnoreCase("backup")) {
             prefix = "a";
