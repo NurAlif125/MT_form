@@ -167,7 +167,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                             </fieldset>
-                                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/SttlmInf/SttlmAcct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/SttlmInf/SttlmAcct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/SttlmInf/SttlmAcct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -398,7 +398,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1Acct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1Acct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1Acct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value);
@@ -537,7 +537,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2Acct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2Acct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -673,7 +673,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3Acct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3Acct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -708,7 +708,7 @@
                                 <legend>InstructingAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section id="FICdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
+                                        <section id="FICdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI"><input type="text" minlength="8" maxlength="11" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value");
             }
@@ -735,7 +735,7 @@
                                 <legend>InstructedAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section id="FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
+                                        <section id="FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI"><input type="text" minlength="8" maxlength="11" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -860,7 +860,7 @@
                         }
                         ;' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt1Acct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt1Acct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt1Acct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -997,7 +997,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt2Acct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt2Acct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt2Acct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -1144,7 +1144,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt3Acct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt3Acct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/IntrmyAgt3Acct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -1273,7 +1273,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/DbtrAcct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/DbtrAcct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/DbtrAcct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -1405,7 +1405,7 @@
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/DbtrAgtAcct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/DbtrAgtAcct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/DbtrAgtAcct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -1554,7 +1554,7 @@
                         this.setAttribute("value", this.value); } else {
                         this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/CdtrAgtAcct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/CdtrAgtAcct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Currency</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/CdtrAgtAcct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value);
@@ -1688,7 +1688,7 @@
                         this.setAttribute("value", this.value); } else {
                         this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                                     </fieldset>
-                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/CdtrAcct/Ccy"><input type="text" maxlength="3" onchange='if (this.value) {
+                                    <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/CdtrAcct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -1785,6 +1785,22 @@
             const inputField = document.getElementById("UETR");
             inputField.value = uuid;
             inputField.setAttribute("value", uuid);
+        }
+
+        function textonly(e) {
+            var code;
+            if (!e)
+                var e = window.event;
+            if (e.keyCode)
+                code = e.keyCode;
+            else if (e.which)
+                code = e.which;
+            var character = String.fromCharCode(code);
+
+            var AllowRegex = /^[\ba-zA-Z\s-]$/;
+            if (AllowRegex.test(character))
+            return true;
+            return false;
         }
 
         document.addEventListener("DOMContentLoaded", function () {
