@@ -103,14 +103,14 @@
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
-
-                            <c:if test="${item == 'FIACONF:LIST'}">
-                                <li><a href="SCFIAList">FIA Configuration</a></li>
+                            <c:if test="${item == 'FIAPATHCONF:LIST'}">
+                                <li><a href="SCFIAPathList">FIA Path Configuration</a></li>
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'FIAPATHCONF:LIST'}">
-                                <li><a href="SCFIAPathList">FIA Path Configuration</a></li>
+
+                            <c:if test="${item == 'FIACONF:LIST'}">
+                                <li><a href="SCFIAList">FIA Configuration</a></li>
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
@@ -516,6 +516,7 @@
                             <th class="tbl-th-notif" style="width:10px; cursor:pointer;"><input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes()"></th>
                             <th class="tbl-th-notif">title</th>
                             <th class="tbl-th-notif">message</th>
+                            <th class="tbl-th-notif">Dates</th>
                         </tr>
                     </thead>
                     <tbody id="notifList" class="tbl-body-notif">
