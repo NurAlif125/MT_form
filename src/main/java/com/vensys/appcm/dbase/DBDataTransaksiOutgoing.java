@@ -342,6 +342,12 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='INC-STL')";
         } else if (flag.equalsIgnoreCase("INC-ADJ")) {
             flag_before = " AND (flag='INC-WAIT')";
+        } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
+            flag_before = " AND (flag='FIA-FAILED')";
+//            flag_before = " AND (flag='FIA-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("FIA-RESEND")) {
+//            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-FAILED')";
+            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-RESEND')";
         }
       
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -364,7 +370,7 @@ public class DBDataTransaksiOutgoing {
         updateDataHeaderStatus(flag, id_headers, user_id, ip_access, comp_name);
         // penmabahn unutk force inc-OK ' || (flag.equalsIgnoreCase("INC-OK") && flagStatus.equalsIgnoreCase("INC-NOK"))' 16 sept 2015
         // INC-NOK diubah menjadi INC-WAIT 20180413
-        if ((flag.equalsIgnoreCase("AUTH") && AUTH) || (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || (flag.equalsIgnoreCase("INC-STL") && AUTH) || (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || (flag.equalsIgnoreCase("INC-RSTL") && AUTH)) {
+        if ((flag.equalsIgnoreCase("AUTH") && AUTH) || (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || (flag.equalsIgnoreCase("INC-STL") && AUTH) || (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || (flag.equalsIgnoreCase("INC-RSTL") && AUTH) || (flag.equalsIgnoreCase("FIA-RESEND") && AUTH) ) {
             CreateText ct = new CreateText(conn);
             
             // Harus mengetahui dulu apakah MX atau MT
@@ -390,12 +396,12 @@ public class DBDataTransaksiOutgoing {
                 
 //                System.out.println(finalMX.get("final_mx"));
                 
-                ct.createTextFileMX(finalMX.get("final_mx"),variant,id_headers, "I", channel);
+                ct.createTextFileMX(finalMX.get("final_mx"),variant,id_headers, "I", channel, user_id, ip_access, comp_name);
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
     //            CreateTextNew ctn = new CreateTextNew(conn);
-                ct.getFinalMT(id_headers, io_type);
+                ct.getFinalMT(id_headers, io_type, user_id, ip_access, comp_name);
             }
         }
     }
@@ -619,6 +625,7 @@ public class DBDataTransaksiOutgoing {
 
     public void updateDataHeaderStatus(String status_header, Integer id_headers, String user_login, String ip_access, String comp_name) {
         log.info("updateDataHeaderStatus");
+        log.info("statusHeader:"+status_header);
         try {
             String sql = "INSERT INTO header_status(id_headers,status_header,status_tanggal,user_login,ip_access,comp_name) VALUES (?,?,LOCALTIMESTAMP,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
