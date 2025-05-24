@@ -286,11 +286,63 @@
             </c:if>
         <%}%>
         
+        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
+            <c:if test="${item == 'FLOW:FIA-FAILED'}">
+                <input type="button" name="ResendFIA" id="ResendFIA" value="Resend to FIA" />
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>
+        <% }%>
+        
+        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED-CNF")) { %>
+            <c:if test="${item == 'FLOW:FIA-FAILED-CNF'}">
+                <input type="button" name="approve_fia" id="approve_fia" value="Approve" />
+                <input type="button" name="reject" id="reject_true" value="Reject" />
+            </c:if>
+        <% }%>
+        
         <% if (session.getAttribute("flagStatus").equals("UNSETTLE-OUT")) {%>
             <c:if test="${item == 'FLOW:UNSETTLE-OUT'}">
                 <input type="button" name="resend2saa" id="resend2saa" value="Resend to SAA" />
+                <input type="button" name="printed" id="printed" value="Print" />
             </c:if>
         <%}%>
+        
+        <% if (session.getAttribute("flagStatus").equals("WAITING-SAA-CNF")) { %>
+            <c:if test="${item == 'FLOW:WAITING-SAA-CNF'}">
+                <input type="button" name="approve_wait_saa_resend" id="approve_wait_saa_resend" value="Approve" />
+                <input type="button" name="reject_saa_cnf" id="reject_saa_cnf" value="Reject" />
+            </c:if>
+        <% }%>
+        
+        <% if (session.getAttribute("flagStatus").equals("WAITING-AML")) { %>
+            <c:if test="${item == 'FLOW:WAITING-AML'}">
+                <input type="button" name="reject_wait_aml" id="reject_wait_aml" value="Reject" />
+            </c:if>
+        <% }%>
+        
+        <% if (session.getAttribute("flagStatus").equals("AML-TERMINATE-OUT")) { %>
+            <c:if test="${item == 'FLOW:AML-TERMINATE-OUT'}">
+                <input type="button" name="reject_wait_aml" id="approve_aml_reject" value="Approve" />
+                <input type="button" name="reject_wait_aml" id="reject_wait_aml_out" value="Reject" />
+            </c:if>
+        <% }%>
+        
+        <% if (session.getAttribute("flagStatus").equals("AML-FAILED")) { %>
+            <c:if test="${item == 'FLOW:AML-FAILED'}">
+                <input type="button" name="resend2aml" id="resend2aml" value="Resend to AML" />
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>
+        <% }%>
+        
+        <% if (session.getAttribute("flagStatus").equals("AML-FAILED-CNF")) { %>
+            <c:if test="${item == 'FLOW:AML-FAILED-CNF'}">
+                <input type="button" name="reject_wait_aml" id="approve_aml_resend" value="Approve" />
+                <input type="button" name="reject_wait_aml" id="reject_aml_failed" value="Reject" />
+            </c:if>
+        <% }%>
+        
+        
+        
         <% if (session.getAttribute("flagStatus").equals("CVT-VER")) {%>
         <c:if test="${item == 'FLOW:AUTH'}">
             <input type="button" name="authorized" id="authorized" value="Authorize" />
@@ -549,20 +601,6 @@
         <% }%>
         <!-- ... existing code ... -->
         <!--end 20180417-->
-        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
-            <c:if test="${item == 'FLOW:FIA-FAILED'}">
-                <input type="button" name="ResendFIA" id="ResendFIA" value="Resend to FIA" />
-                <input type="button" name="printed" id="printed" value="Print" />
-            </c:if>
-        <% }%>
-        
-        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED-CNF")) { %>
-            <c:if test="${item == 'FLOW:FIA-FAILED-CNF'}">
-                <input type="button" name="approve_fia" id="approve_fia" value="Approve" />
-                <input type="button" name="reject" id="reject_true" value="Reject" />
-            </c:if>
-        <% }%>
-
              <% if ((request.getParameter("idlt") != null) ) {%>
         <c:if test="${item == 'FLOW:LTUPDATE'}">
             <input type="hidden" id="idlt" name="idlt" value="${param.idlt}" />
@@ -589,12 +627,6 @@
                 <input type="button" name="printed" id="printed" value="Print" />
             </c:if>
         <% }%>
-        
-        <% if (session.getAttribute("flagStatus").equals("UNSETTLE-OUT")) {%>
-            <c:if test="${item == 'FLOW:UNSETTLE-OUT'}">
-                <input type="button" name="printed" id="printed" value="Print" />
-            </c:if>
-        <%}%>
             
             <% if (request.getParameter("id") != null) {%>
             <% if (session.getAttribute("flagStatus").equals("MOD")) {%>
