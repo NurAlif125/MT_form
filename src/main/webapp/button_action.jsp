@@ -19,6 +19,7 @@
 
 <div class="form-row-action container_">
     <div class="btn--group">
+    <c:set var="renderedButtonSave" value="false" scope="page" />
     <c:forEach var="item" items="${role}">
         <% if (request.getParameter("id") != null) {%>
         <% if (session.getAttribute("flagFilter") == null) {%>
@@ -199,10 +200,15 @@
         </c:if>--%>
         <%}%>
         <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
-            <c:if test="${item == 'FLOW:CVT-MOD'}">
-                <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
-                <input type="button" name="printed" id="printed" value="Print" />
+            <c:if test="${item == 'FLOW:CREATE'}">
+                <c:set var="renderedButtonSave" value="true" scope="page" />
             </c:if>
+            <c:if test="${item == 'FLOW:CVT-MOD'}">
+                <c:if test="${not renderedButtonSave}">
+                    <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
+                </c:if>
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>   
         <%}%>
         <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
         <c:if test="${item == 'FLOW:CREATE'}">
