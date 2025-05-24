@@ -235,11 +235,31 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             String ltri = bBHeaders.getLTRI(request.getParameter("id"));
             String[] arrLtri = ltri.split("#");
             if (arrLtri[4].equalsIgnoreCase("O")) { //20200106
-                logicalTerminal = arrLtri[3];
-                receiverInstitution = arrLtri[1];
+                if (!arrLtri[3].isEmpty()) {
+                    logicalTerminal = arrLtri[3];
+                } else {
+                    logicalTerminal = "";
+                }
+                
+                if (!arrLtri[1].isEmpty()) {
+                    receiverInstitution = arrLtri[1];
+                } else {
+                    receiverInstitution = "";
+                }
+                
             } else {
-                logicalTerminal = arrLtri[1];
-                receiverInstitution = arrLtri[3];
+                if (!arrLtri[1].isEmpty()) {
+                    logicalTerminal = arrLtri[1];
+                } else {
+                    logicalTerminal = "";
+                }
+                
+                if (!arrLtri[3].isEmpty()) {
+                    receiverInstitution = arrLtri[3];
+                } else {
+                    receiverInstitution = "";
+                }
+                
             }
         } catch (Exception ex) {
             ex.printStackTrace();
