@@ -344,6 +344,8 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='INC-WAIT')";
         } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             flag_before = " AND (flag='FIA-FAILED')";
+        } else if (flag.equalsIgnoreCase("FIA-RESEND")) {
+            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-FAILED')";
         }
       
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
