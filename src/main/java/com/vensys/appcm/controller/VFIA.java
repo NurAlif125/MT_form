@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataFIA;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,25 +27,35 @@ public class VFIA extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DBconnection dbConn = new DBconnection();
-        DataFIA fiaById = new DataFIA();
+        //DataFIA fiaById = new DataFIA();
+        DataFIA fiaById = null;
         DBFIA db = new DBFIA(dbConn.getConnection());
         List<String> dataSource = null;
+        List<String> selectedSourceToList = new ArrayList<>();
         try {
-            System.out.println("masuk ke servletxx");
-            fiaById = db.getFiaById(request.getParameter("id"));
+            String id = request.getParameter("id");
+            if (id != null && !id.trim().isEmpty()) {
+                fiaById = db.getFiaById(id);
+                String selectedStr = fiaById.getSourceto();
+                if (selectedStr != null && !selectedStr.trim().isEmpty()) {
+                    for (String val : selectedStr.split(",")) {
+                        selectedSourceToList.add(val.trim());
+                    }
+                }
+            } else {
+                fiaById = new DataFIA(); 
+            }
             dataSource = db.getSourcefromSftpReaderFia();
         } catch (Exception ex) {
             System.out.println("error di servletxx");
             ex.printStackTrace();
-        }
-        try {
-        } catch (Exception ex) {
-            ex.printStackTrace();
         } finally {
             dbConn.closeConnection();
         }
+
         request.setAttribute("fiaById", fiaById);
         request.setAttribute("dataSource", dataSource);
+        request.setAttribute("selectedSourceToList", selectedSourceToList);
         RequestDispatcher view = request.getRequestDispatcher("mfia.jsp");
         view.forward(request, response);
     }

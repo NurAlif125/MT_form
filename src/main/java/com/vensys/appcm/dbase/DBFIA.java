@@ -276,7 +276,6 @@ public class DBFIA {
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             String source = rs.getString("source");
-            System.out.println(" - Found source: " + source);
             sources.add(source);
         }
         return sources;

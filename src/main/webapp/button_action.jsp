@@ -19,14 +19,22 @@
 
 <div class="form-row-action container_">
     <div class="btn--group">
+    <c:set var="renderedButtonSave" value="false" scope="page" />
     <c:forEach var="item" items="${role}">
         <% if (request.getParameter("id") != null) {%>
         <% if (session.getAttribute("flagFilter") == null) {%>
         <% } else { %>
         <% if (session.getAttribute("flagStatus").equals("NACK")) {%>
-        <c:if test="${item == 'FLOW:MOD'}">
-            <input type="button" name="modified" id="modified" value="Modify" />
-        </c:if>
+            <c:if test="${item == 'FLOW:NACK'}">
+                <!-- <input type="button" name="modified" id="modified" value="Modify" /> -->
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>
+        <% }%>
+        <% if (session.getAttribute("flagStatus").equals("ACK")) {%>
+            <c:if test="${item == 'FLOW:ACK'}">
+                <!-- <input type="button" name="modified" id="modified" value="Modify" /> -->
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>
         <% }%>
         <% if (session.getAttribute("flagStatus").equals("INC-WAIT")) {%>
         <c:if test="${item == 'FLOW:INC'}">
@@ -190,6 +198,17 @@
         <%--<c:if test="${item == 'FLOW:VER'}">
             <input type="button" name="verified" id="verified" value="Verifiy" />
         </c:if>--%>
+        <%}%>
+        <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
+            <c:if test="${item == 'FLOW:CREATE'}">
+                <c:set var="renderedButtonSave" value="true" scope="page" />
+            </c:if>
+            <c:if test="${item == 'FLOW:CVT-MOD'}">
+                <c:if test="${not renderedButtonSave}">
+                    <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
+                </c:if>
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>   
         <%}%>
         <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
         <c:if test="${item == 'FLOW:CREATE'}">
@@ -436,11 +455,11 @@
             <input type="button" name="returinv" id="returinv" value="Retur" />
         </c:if>
         <% }%>
-        <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("CVT-MOD") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
+        <!-- <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("CVT-MOD") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
         <c:if test="${item == 'FLOW:REJECT'}">
             <input type="button" name="reject" id="reject" value="Reject" hidden />
         </c:if>
-        <% }%>
+        <% }%> -->
         <!--INC-NSTP-->
         <% if (session.getAttribute("flagStatus").equals("INC-NSTP")) {%>
         <c:if test="${item == 'FLOW:INC'}">
@@ -601,6 +620,28 @@
         <% }%>
         <!-- ... existing code ... -->
         <!--end 20180417-->
+        <% if (session.getAttribute("flagStatus").equals("AML-FAILED-CNF")) { %>
+            <c:if test="${item == 'FLOW:AML-FAILED-CNF'}">
+                <input type="button" name="approve_aml" id="approve_aml" value="Approve" />
+                <input type="button" name="reject" id="reject_true" value="Reject" />
+            </c:if>
+        <% }%>        
+
+        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
+            <c:if test="${item == 'FLOW:FIA-FAILED'}">
+                <input type="button" name="ResendFIA" id="ResendFIA" value="Resend to FIA" />
+                <input type="button" name="printed" id="printed" value="Print" />
+            </c:if>
+        <% }%>
+        
+        <% if (session.getAttribute("flagStatus").equals("FIA-FAILED-CNF")) { %>
+            <c:if test="${item == 'FLOW:FIA-FAILED-CNF'}">
+                <input type="button" name="ApproveFIA" id="ApproveFIA" value="Approve" />
+                <input type="button" name="reject" id="reject_true" value="Reject" />
+            </c:if>
+        <% }%>
+
+
              <% if ((request.getParameter("idlt") != null) ) {%>
         <c:if test="${item == 'FLOW:LTUPDATE'}">
             <input type="hidden" id="idlt" name="idlt" value="${param.idlt}" />
