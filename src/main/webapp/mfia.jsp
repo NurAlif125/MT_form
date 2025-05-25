@@ -96,7 +96,7 @@
                             </div>
                         </div>                        
                     </div>
-                    <input type="hidden" name="selectedValuesSourceTo" id="selectedValuesSourceTo" />
+                    <input type="hidden" name="selectedValuesSourceTo" id="selectedValuesSourceTo" value="<c:out value='${fiaById.sourceto}' />" />
                     <div class="form-row">
                         <span class="labelL2">Enable</span>
                         <label for="isenable_checkbox">
