@@ -74,12 +74,12 @@ public class SCPrintPDF extends HttpServlet {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("user_id");
 
-        String pdfDirectoryPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "ReportCM";
-        Files.createDirectories(Paths.get(pdfDirectoryPath));
-        String pdfFileName = "Report_PDF_" + userId + ".pdf";
-        String pdfFilePath = pdfDirectoryPath + File.separator + pdfFileName;
-        String ServerName = request.getServerName();
-        int ServerPort = request.getServerPort();
+//        String pdfDirectoryPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + "ReportCM";
+//        Files.createDirectories(Paths.get(pdfDirectoryPath));
+//        String pdfFileName = "Report_PDF_" + userId + ".pdf";
+//        String pdfFilePath = pdfDirectoryPath + File.separator + pdfFileName;
+//        String ServerName = request.getServerName();
+//        int ServerPort = request.getServerPort();
         
         exportPDF(response, requestData, userId);
 
