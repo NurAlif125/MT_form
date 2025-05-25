@@ -13,7 +13,7 @@
                 <c:choose>
                     <c:when test="${sessionScope.user_bic eq null or sessionScope.user_bic eq 'null'}">
                         <c:forEach var="item1" items="${sessionScope.dataBicProp}">
-                            <option value="${item1}" <c:if test="${item1 == sessionScope.user_bic}">selected="true"</c:if>>${item1}</option>
+                            <option value="${item1}" <c:if test="${item1 == sessionScope.user_bic or item1==headerById.logicalTerminal}">selected="true"</c:if>>${item1}</option>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
@@ -29,7 +29,7 @@
                 <c:choose>
                     <c:when test="${sessionScope.user_bic eq null or sessionScope.user_bic eq 'null'}">
                         <c:forEach var="item1" items="${sessionScope.dataBicProp}">
-                            <option value="${item1}" <c:if test="${item1 == sessionScope.user_bic}">selected="true"</c:if>>${item1}</option>
+                            <option value="${item1}" <c:if test="${item1 == sessionScope.user_bic or item1==headerById.logicalTerminal}">selected="true"</c:if>>${item1}</option>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
