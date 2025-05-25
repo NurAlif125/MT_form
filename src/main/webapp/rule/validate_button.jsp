@@ -278,6 +278,25 @@
             //    }
         });
         $('#print_pdf').click(function () {
+            var answer = confirm('Do you want to report as PDF format..!!');
+            if (answer) {
+                var url = 'SCPrintPDF?' +
+                    'io_type=' + encodeURIComponent($('#io_type').val()) +
+                    '&mt_type=' + encodeURIComponent($('#mt_type').val()) +
+                    '&date_from=' + encodeURIComponent($('#date_from').val()) +
+                    '&date_end=' + encodeURIComponent($('#date_end').val()) +
+                    '&flag=' + encodeURIComponent($('#flag').val()) +
+                    '&value_date=' + encodeURIComponent($('#value_date').val()) +
+                    '&value_date_end=' + encodeURIComponent($('#value_date_end').val()) +
+                    '&cust_curr=' + encodeURIComponent($('#cust_curr').val()) +
+                    '&channel=' + encodeURIComponent($('#channel').val());
+
+                // Buka di tab baru langsung tanpa AJAX
+                window.open(url, '_blank');
+            }
+        });
+
+        $('#print_pdf_old').click(function () {
             var answer = confirm('Do you to report as PDF format..!!');
             if (answer) {
                 var requestData = {
@@ -307,7 +326,8 @@
                         if (response.status === "Processing") {
                             $('#status_message').html(
                                     'Your PDF is being generated. <br> <a href="' + response.download_url + '" target="_blank">Click here to download when ready</a>'
-                                    );
+                            );
+                            window.open(response.download_url, '_blank');
                         }
                     },
                     error: function () {
