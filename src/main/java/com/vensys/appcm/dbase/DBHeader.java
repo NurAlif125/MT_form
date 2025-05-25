@@ -1434,12 +1434,12 @@ public class DBHeader {
         if (currency_code == null || currency_code.isEmpty()) {
             where += "";
         } else {
-            where += " AND td.trans_ccy '%" + currency_code + "%'";
+            where += " AND td.trans_ccy LIKE '%" + currency_code + "%'";
         }
         if (amount == null || amount.isEmpty()) {
             where += "";
         } else {
-            where += " AND td.trans_amount LIKE '%" + amount + "%'";
+            where += " AND td.trans_amount::text LIKE '%" + amount + "%'";
         }
         if (db_type.equalsIgnoreCase("backup")) {
             prefix = "a";
