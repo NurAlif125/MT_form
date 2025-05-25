@@ -1,7 +1,9 @@
 package com.vensys.appcm.controller;
 
 import com.jcraft.jsch.*;
+import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import com.vensys.appcm.model.DataSFTP;
 import com.vensys.appcm.myutils.Encryptor;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +31,10 @@ public class SFTP {
         readSFTPProperties();
     }
 
-    public void uploadToSftp(String MXorMT, String remoteFileName) {
+    public void uploadToSftp(String MXorMT, String remoteFileName,int id, String user_id, String ip_access, String comp_name) {
+        DBconnection2 dbConn2 = new DBconnection2();
+        DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
+        
         JSch jsch = new JSch();
         Session session = null;
         ChannelSftp channelSftp = null;
@@ -62,8 +67,8 @@ public class SFTP {
             channelSftp.put(localFilePath + "/" + remoteFileName, remoteDir);
             log.info("SFTP upload successful: {}", remoteFileName);
         } catch (Exception e) {
-            System.out.println("error:"+e);
-            log.error("SFTP upload failed", e);
+            log.error("SFTP upload failed", e);            
+            dBDataTransaksiOutgoing.updateFlagAfterValidate("FIA-FAILED", id, user_id, ip_access, comp_name);
         } finally {
             disconnectQuietly(channelSftp, session);
         }

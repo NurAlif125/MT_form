@@ -62,6 +62,7 @@ function fetchNotificationList() {
             data.forEach((notif) => {
                  let title = notif.title ? notif.title.trim() : "";
                 let message = notif.message ? notif.message.trim() : "";
+                let dates_at = notif.created_at ? notif.created_at.trim() : "";
 
 
                let row = $("<tr>").addClass("tbl-tr-notif").attr("onclick", "showDetail('"+message+"')");;
@@ -74,8 +75,9 @@ function fetchNotificationList() {
                 );
                 let titleCell = $("<td>").addClass("tbl-td-notif").text(title);
                 let messageCell = $("<td>").addClass("tbl-td-notif").html(message);
+                let dates = $("<td>").addClass("tbl-td-notif").text(dates_at);
 
-                row.append(checkboxCell, titleCell, messageCell);
+                row.append(checkboxCell, titleCell, messageCell, dates);
                 notifList.append(row);
             });
         }

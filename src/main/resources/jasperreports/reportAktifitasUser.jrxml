@@ -42,7 +42,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="22" isBold="false"/>
 				</textElement>
-				<text><![CDATA[User Activity]]></text>
+				<text><![CDATA[Audit Trail User]]></text>
 			</staticText>
 			<textField isBlankWhenNull="false">
 				<reportElement key="textField" x="0" y="0" width="262" height="16" uuid="4baeb903-1b31-4840-9031-deac006e51ac">

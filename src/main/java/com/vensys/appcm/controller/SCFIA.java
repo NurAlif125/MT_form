@@ -46,7 +46,7 @@ public class SCFIA extends HttpServlet {
         data.setMtormx(request.getParameter("mtormx"));
         data.setNeedcheckaml(parseIntSafe(request.getParameter("needcheckaml"),0));
         data.setNeedconverted(parseIntSafe(request.getParameter("needconverted"),0));        
-        data.setSourceto(request.getParameter("sourceto"));
+        data.setSourceto(request.getParameter("selectedValuesSourceTo"));
         data.setIsenable(parseIntSafe(request.getParameter("isenable"),0));
         if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
             log.info("add config FIA");

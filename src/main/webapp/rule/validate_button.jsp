@@ -39,9 +39,10 @@
         $('#rejectbic').click(function () {
             var answer = confirm('Do you want to reject this BIC?');
             return answer;
-        })
-        $('#reject').click(function () {
-            var answer = confirm('Do you want to reject this MT..!!');
+        });
+        $('#reject_true').click(function () {
+            console.log("click this");
+            var answer = confirm('Do you want to Reject this Message..!!');
             if (answer) {
 //                document.location.href = 'SCRejectAction?id=' + $('#id').val() + '&operator_comment=' + $('#operator_comment').val();
                 document.location.href = 'SCRejectAction?id=' + $('#id').val();
@@ -49,13 +50,148 @@
             }
         });
         $('#modified').click(function () {
-            var answer = confirm('Do you want to modified this MT..!!');
+            var answer = confirm('Do you want to modified this Message..!!');
             if (answer) {
 //                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val() + '&komentar=' + $('#operator_comment').val();
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
                 //printMTDoc('SCPrintMTDoc?id='+$('#id').val());
             }
         });
+        $('#resend2saa').click(function () {
+            var answer = confirm('Do you want to modified this Message..!!');
+            if (answer) {
+//                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val() + '&komentar=' + $('#operator_comment').val();
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=WAITING-SAA-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#approve_wait_saa_resend').click(function () {
+            var answer = confirm('Do you want to Approve this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=WAITING-SAA-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_saa_cnf').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=UNSETTLE-OUT&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_wait_aml').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AML-TERMINATE-OUT&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_wait_aml_out').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=WAITING-AML&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#resend2cvt_in').click(function () {
+            var answer = confirm('Do you want to Resend this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=RESEND-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_inc_cvt').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AML-TERMINATE-IN&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#approve_cvt_resend').click(function () {
+            var answer = confirm('Do you want to Approve this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-CVT-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_inc_aml').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-AML&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_true_acc_in').click(function () {
+            console.log("click this");
+            var answer = confirm('Do you want to Approve Reject this MT..!!');
+            if (answer) {
+                document.location.href = 'SCRejectAction?id=' + $('#id').val();
+            }
+        });
+        $('#resend2aml_in').click(function () {
+            var answer = confirm('Do you want to Resend this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-AML-FAILED-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#resend2aml_out').click(function () {
+            var answer = confirm('Do you want to Resend this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AML-FAILED-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#approve_aml_resend').click(function () {
+            var answer = confirm('Do you want to Approve this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AML-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_aml_failed').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AML-FAILED&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#save_cvt_mod').click(function () {
+            var answer = confirm('Do you want to Save this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=CVT-VER&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_cvt_mod').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=CVT-MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#approve_cvt_ver_resend').click(function () {
+            var answer = confirm('Do you want to Approve this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=CVT-VER-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#approve_resend_aml_in').click(function () {
+            var answer = confirm('Do you want to Resend this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-AML-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_inc_aml_failed').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-AML-FAILED&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#resend2channel_in').click(function () {
+            var answer = confirm('Do you want to Resend this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-RESEND-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        }); 
+        $('#approve_inc_resend').click(function () {
+            var answer = confirm('Do you want to Approve this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        }); 
+        $('#reject_unsettle_inc').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=UNSETTLE-INC&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        }); 
+        
         $('#verified').click(function () {
             var answer = confirm('Do you want to verified this MT..!!');
             if (answer) {
@@ -142,6 +278,25 @@
             //    }
         });
         $('#print_pdf').click(function () {
+            var answer = confirm('Do you want to report as PDF format..!!');
+            if (answer) {
+                var url = 'SCPrintPDF?' +
+                    'io_type=' + encodeURIComponent($('#io_type').val()) +
+                    '&mt_type=' + encodeURIComponent($('#mt_type').val()) +
+                    '&date_from=' + encodeURIComponent($('#date_from').val()) +
+                    '&date_end=' + encodeURIComponent($('#date_end').val()) +
+                    '&flag=' + encodeURIComponent($('#flag').val()) +
+                    '&value_date=' + encodeURIComponent($('#value_date').val()) +
+                    '&value_date_end=' + encodeURIComponent($('#value_date_end').val()) +
+                    '&cust_curr=' + encodeURIComponent($('#cust_curr').val()) +
+                    '&channel=' + encodeURIComponent($('#channel').val());
+
+                // Buka di tab baru langsung tanpa AJAX
+                window.open(url, '_blank');
+            }
+        });
+
+        $('#print_pdf_old').click(function () {
             var answer = confirm('Do you to report as PDF format..!!');
             if (answer) {
                 var requestData = {
@@ -171,7 +326,8 @@
                         if (response.status === "Processing") {
                             $('#status_message').html(
                                     'Your PDF is being generated. <br> <a href="' + response.download_url + '" target="_blank">Click here to download when ready</a>'
-                                    );
+                            );
+                            window.open(response.download_url, '_blank');
                         }
                     },
                     error: function () {
@@ -538,7 +694,24 @@
                 document.location.href = 'ServletControllerDataTransaksiIncoming?flag=INC-STLHOLD&id=' + $('#id').val();
             }
         });
-
+        $('#ResendFIA').click(function () {
+            var answer = confirm('Do you want to Resend this..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=FIA-FAILED-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#ApproveFIA').click(function () {
+            var answer = confirm('Do you want to Resend this..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=FIA-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_fia_failed').click(function () {
+            var answer = confirm('Do you want to Reject this Message..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=FIA-FAILED&id=' + $('#id').val() + '&messageType=' + $('#messageType').val(); 
+            }
+        });
         $('#upload').click(function () {//20191231 ditambah search cover
             var answer = confirm('Do you want to upload this file ?');
             return answer
