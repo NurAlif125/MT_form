@@ -1079,8 +1079,10 @@ public class DBHeader {
             where += " AND flag='INC-REJECT-CNF' ";
         } else if (flag.equalsIgnoreCase("INC-AML")) { 
             where += " AND flag='INC-AML' ";
-        } else if (flag.equalsIgnoreCase("Un-Settle")) { 
-            where += " AND flag='Un-Settle' ";
+        } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) { 
+            where += " AND flag='INC-AML-FAILED' ";
+        } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) { 
+            where += " AND flag='INC-AML-FAILED-CNF' ";
         } else if (flag.equalsIgnoreCase("SETTLE")) { 
             where += " AND flag='SETTLE' ";
         } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) { 
@@ -1089,6 +1091,8 @@ public class DBHeader {
             where += " AND flag='AML-TERMINATE-OUT' ";
         } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) { 
             where += " AND flag='UNSETTLE-INC' ";
+        } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) { 
+            where += " AND flag='INC-RESEND-CNF' ";
         } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) { 
             where += " AND flag='UNSETTLE-OUT' ";
         } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) { 

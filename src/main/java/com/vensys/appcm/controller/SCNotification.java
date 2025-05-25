@@ -122,7 +122,7 @@ public class SCNotification extends HttpServlet {
         try {
             DBnotification notif = new DBnotification(dbConn.getConnection());
             boolean readNotifications = notif.markAsReadNotif(userId, roleId, readIdNotif);
-            System.out.println("hasilllll======="+readNotifications);
+//            System.out.println("hasilllll======="+readNotifications);
             if (readNotifications) {
                 response.getWriter().write("{\"status\":\"success\"}");
             } else {

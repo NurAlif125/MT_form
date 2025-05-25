@@ -344,8 +344,10 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='INC-WAIT')";
         } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             flag_before = " AND (flag='FIA-FAILED')";
-        } else if (flag.equalsIgnoreCase("FIA-RESEND")) {
-            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-FAILED')";
+//            flag_before = " AND (flag='FIA-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("FIA-RESEND")) {
+//            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-FAILED')";
+            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-RESEND')";
         }
       
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -368,7 +370,7 @@ public class DBDataTransaksiOutgoing {
         updateDataHeaderStatus(flag, id_headers, user_id, ip_access, comp_name);
         // penmabahn unutk force inc-OK ' || (flag.equalsIgnoreCase("INC-OK") && flagStatus.equalsIgnoreCase("INC-NOK"))' 16 sept 2015
         // INC-NOK diubah menjadi INC-WAIT 20180413
-        if ((flag.equalsIgnoreCase("AUTH") && AUTH) || (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || (flag.equalsIgnoreCase("INC-STL") && AUTH) || (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || (flag.equalsIgnoreCase("INC-RSTL") && AUTH) || flag.equalsIgnoreCase("FIA-FAILED") && AUTH ) {
+        if ((flag.equalsIgnoreCase("AUTH") && AUTH) || (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || (flag.equalsIgnoreCase("INC-STL") && AUTH) || (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || (flag.equalsIgnoreCase("INC-RSTL") && AUTH) || (flag.equalsIgnoreCase("FIA-RESEND") && AUTH) ) {
             CreateText ct = new CreateText(conn);
             
             // Harus mengetahui dulu apakah MX atau MT

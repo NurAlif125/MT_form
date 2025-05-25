@@ -180,7 +180,7 @@ public class DBFIA {
     
     public List<String[]> getPagesFIAPathAjax(int offset, int numberLimit) throws Exception {
         List<String[]> datas = new ArrayList<String[]>();
-        String sql = "SELECT id,config_name,source,host,protocol,path,localpath,transferpath FROM sftp_reader_fia_new ORDER BY id OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
+        String sql = "SELECT id,config_name,source,host,case when protocol = '' OR protocol is null then 'MFT' else protocol end protocol,path,localpath,transferpath FROM sftp_reader_fia_new ORDER BY id OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
