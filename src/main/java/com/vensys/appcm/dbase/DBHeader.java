@@ -1110,7 +1110,7 @@ public class DBHeader {
         }
                 
         if (channel != null && !channel.isBlank()) {
-            where += " AND source = '" + channel + "'";
+            where += " AND source LIKE '%" + channel + "%'";
         }
         List<Header> headers = new ArrayList<Header>();
         String sql = """
@@ -1445,10 +1445,8 @@ public class DBHeader {
             prefix = "a";
         }
         
-        if (channel.equalsIgnoreCase("")) {
-            
-        } else {
-            where += " AND source = '" + channel + "'";
+        if (channel != null && !channel.isBlank()) {
+            where += " AND source LIKE '%" + channel + "%'";
         }
 //        List<ResultHeader> datas = new ArrayList<ResultHeader>();
         List<Header> datas = new ArrayList<Header>();
