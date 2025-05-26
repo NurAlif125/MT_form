@@ -92,7 +92,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             data.setSender_logical_terminal(request.getParameter("sender_logical_terminal"));
             data.setMessageType(messageType);
             header.setMessageType(messageType);
-            data.setFlag("MOD");
+            data.setFlag("VER");
             data.setReceiver_institution(request.getParameter("receiver_institution"));
             data.setPriority(request.getParameter("priority"));
             data.setMonitoring(request.getParameter("monitoring"));
