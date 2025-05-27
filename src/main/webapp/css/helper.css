@@ -789,3 +789,7 @@ table tbody a:hover{
 .form-row-action-right{
     margin-left: auto;
 }
+
+.dataTables_wrapper {
+    overflow-x: auto !important;
+}
