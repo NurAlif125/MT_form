@@ -108,7 +108,7 @@ public class DBDataTransaksiOutgoing {
                 st.setString(16, data.getFlag()); //flag
             }
             st.setString(17, "SRC:MANUAL"); //user edit 
-            st.setString(18, user_id); //template name 
+            st.setString(18, ""); //template name 
             st.setInt(19, 0); //flag template 
             st.setString(20, ""); //sender input name 
             st.setString(21, ""); //MIR date
