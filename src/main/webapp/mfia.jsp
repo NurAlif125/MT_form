@@ -17,6 +17,10 @@
     .dual-listbox button {
         padding: 5px 10px;
     }
+    #targetSourceTo option {
+        background-color: #f0f0f0;
+        color: black;
+    }
 </style>
 <div id="isi">
     <c:forEach var="roleItem" items="${role}">
