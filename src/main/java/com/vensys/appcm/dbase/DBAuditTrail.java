@@ -32,8 +32,10 @@ public class DBAuditTrail {
     String sql = "SELECT b.messagetype, b.logicalterminal, \n" +
                 "case when UPPER(b.io_type) = 'I' then 'Outgoing' else 'Incoming' end io_type, \n" +
                 "a.status_header, a.user_login, a.ip_access, a.comp_name, b.useredit,\n" +
-                "b.receiveraddress, b.userentry, b.flag, b.komentar, b.source, b.tanggal\n" +
-                " FROM header_status a INNER JOIN headers b ON a.id_headers = b.id_headers WHERE b.tanggal BETWEEN ? AND ? ";
+                "b.receiveraddress, b.userentry, b.flag, "
+            + "case when b.komentar LIKE '%<?xml version%' then '' else b.komentar end komentar, "
+            + "b.source, b.tanggal\n" +
+                " FROM header_status a INNER JOIN headers b ON a.id_headers = b.id_headers WHERE b.tanggal BETWEEN ? AND ? ORDER BY a.id_headers DESC, a.status_tanggal ASC";
 //    System.out.println("getAllDataHistoryLogin : " + sql);
 
     PreparedStatement st = this.conn.prepareStatement(sql);
@@ -76,7 +78,7 @@ public class DBAuditTrail {
                     "a.status_header, a.user_login, a.ip_access, a.comp_name, b.useredit,\n" +
                     "b.receiveraddress, b.userentry, b.flag, b.komentar, b.source, b.tanggal\n" +
                     "FROM header_status a INNER JOIN headers b ON a.id_headers = b.id_headers"
-                + " WHERE tanggal BETWEEN ? AND ? AND user_login=? ";
+                + " WHERE tanggal BETWEEN ? AND ? AND user_login=? ORDER BY a.id_headers DESC, a.status_tanggal ASC";
     //    System.out.println("getAllDataHistoryLogin : " + sql);
 
         PreparedStatement st = this.conn.prepareStatement(sql);
