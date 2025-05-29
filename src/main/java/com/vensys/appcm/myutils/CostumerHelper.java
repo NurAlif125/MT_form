@@ -167,27 +167,37 @@ public class CostumerHelper {
         if (messageType.contains("pacs.008")){
             MxPacs00800108 bodyMX = MxPacs00800108.fromJson(body);
             String xmlBodyMX = bodyMX.message(conf).replaceFirst("<\\?xml version=\"1.0\" encoding=\"UTF-8\" \\?>", "");
+            xmlBodyMX = xmlBodyMX.replace("<RequestPayload>", "");
+            xmlBodyMX = xmlBodyMX.replace("</RequestPayload>", "");
             String fullBody = saaHeader.replace("ONLY-SAA-HEADERS", xmlBodyMX);
             return fullBody;
         }else if(messageType.contains("pacs.004")){
             MxPacs00400109 bodyMX = MxPacs00400109.fromJson(body);
             String xmlBodyMX = bodyMX.message(conf).replaceFirst("<\\?xml version=\"1.0\" encoding=\"UTF-8\" \\?>", "");
+            xmlBodyMX = xmlBodyMX.replace("<RequestPayload>", "");
+            xmlBodyMX = xmlBodyMX.replace("</RequestPayload>", "");
             String fullBody = saaHeader.replace("ONLY-SAA-HEADERS", xmlBodyMX);
             return fullBody;
         }
         else if(messageType.contains("pacs.009")){
             MxPacs00900108 bodyMX = MxPacs00900108.fromJson(body);
             String xmlBodyMX = bodyMX.message(conf).replaceFirst("<\\?xml version=\"1.0\" encoding=\"UTF-8\" \\?>", "");
+            xmlBodyMX = xmlBodyMX.replace("<RequestPayload>", "");
+            xmlBodyMX = xmlBodyMX.replace("</RequestPayload>", "");
             String fullBody = saaHeader.replace("ONLY-SAA-HEADERS", xmlBodyMX);
             return fullBody;
         } else if(messageType.contains("camt.056")){
             MxCamt05600108 bodyMX = MxCamt05600108.fromJson(body);
             String xmlBodyMX = bodyMX.message(conf).replaceFirst("<\\?xml version=\"1.0\" encoding=\"UTF-8\" \\?>", "");
+            xmlBodyMX = xmlBodyMX.replace("<RequestPayload>", "");
+            xmlBodyMX = xmlBodyMX.replace("</RequestPayload>", "");
             String fullBody = saaHeader.replace("ONLY-SAA-HEADERS", xmlBodyMX);
             return fullBody;
         } else if(messageType.contains("camt.029")){
             MxCamt02900109 bodyMX = MxCamt02900109.fromJson(body);
             String xmlBodyMX = bodyMX.message(conf).replaceFirst("<\\?xml version=\"1.0\" encoding=\"UTF-8\" \\?>", "");
+            xmlBodyMX = xmlBodyMX.replace("<RequestPayload>", "");
+            xmlBodyMX = xmlBodyMX.replace("</RequestPayload>", "");
             String fullBody = saaHeader.replace("ONLY-SAA-HEADERS", xmlBodyMX);
             return fullBody;
         }
