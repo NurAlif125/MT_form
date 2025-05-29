@@ -187,8 +187,8 @@
         <div class="modal-head">
             <span class="close">&times;</span>
         </div>
-        <div class="modal-content">
-            <table class="modal-table" style="border:1px solid black">
+        <div class="modal-content" style="height: 60vh !important; width:780px !important; overflow-y: auto;">
+<!--            <table class="modal-table" style="border:1px solid black">
                 <tr>
                     <th colspan="6">INCOMING</th>
                 </tr>
@@ -272,7 +272,7 @@
                     <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
                     <td>Retur</td>
                 </tr>
-                <!--                <tr>
+                                <tr>
                                     <td>10</td>
                                     <td>INC-NSTP</td>
                                     <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
@@ -287,10 +287,10 @@
                                     <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
                                     <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
                                     <td>Transaksi berhasil dijurnal di core</td>
-                                </tr>-->
-            </table>
-            <br/>
-            <table class="modal-table" style="border:1px solid black">
+                                </tr>
+            </table>-->
+            <!--<br/>-->
+<!--            <table class="modal-table" style="border:1px solid black">
                 <tr>
                     <th colspan="8">OUTGOING</th>
                 </tr>
@@ -353,6 +353,201 @@
                     <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
                     <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
                     <td>Gagal validasi oleh SWIFT</td>
+                </tr>
+            </table>-->
+            <table class="modal-table" style="border:1px solid black">
+                <tr>
+                    <th colspan="6">INCOMING</th>
+                </tr>
+                <tr>
+                    <td>No</td>
+                    <td>Status</td>
+                    <td>Menu</td>
+                    <td>Kondisi</td>
+                    <td>Keterangan</td>
+                    <td>Alur</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>INC-CVT</td>
+                    <td>Incoming Convert</td>
+                    <td>Flag transaksi incoming gagal konversi</td>
+                    <td>FIA gagal konversi transaksi Incoming</td>
+                    <td>INC-CVT &#10141; RESEND-CNF</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>RESEND-CNF</td>
+                    <td>Incoming Convert Confirmation</td>
+                    <td>Flag transaksi incoming yang dikirim kembali dan perlu approval checker</td>
+                    <td>User maker mengirim kembali incoming ke FIA untuk di konversi. Pada status ini sebelum dilempar ke FIA user checker harus approve terlebih dahulu</td>
+                    <td>Approve : INC-CVT-RESEND<br>Reject : INC-CVT</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>INC-AML</td>
+                    <td>Incoming Reject AML</td>
+                    <td>Flag transaksi incoming yang sudah dilempar ke AML</td>
+                    <td>Transaksi incoming yang sudah dilempar ke AML</td>
+                    <td>INC-AML &#10141; AML-TERMINATE-INC</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>AML-TERMINATE-INC</td>
+                    <td>Incoming Reject AML Confirmation</td>
+                    <td>Flag transaksi incoming yang direject oleh user maker dan butuh konfirmasi oleh user checker</td>
+                    <td>Transaksi incoming yang direject oleh user maker dan butuh konfirmasi oleh user checker apakah transaksi di tersebut di reject atau tidak. Jika tidak maka status transaksi akan dikembalikan pada status sebelumnya</td>
+                    <td>Approve : REJECT<br>Reject : INC-AML</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>INC-AML-FAILED</td>
+                    <td>Incoming Resend to AML</td>
+                    <td>Flag transaksi incoming yang gagal kirim ke AML</td>
+                    <td>Transaksi incoming yang dikirim kembali ke AML oleh maker</td>
+                    <td>INC-AML-FAILED &#10141; INC-AML-FAILED-CNF</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>INC-AML-FAILED-CNF</td>
+                    <td>Incoming Resend to AML Confirmation</td>
+                    <td>Flag transaksi incoming yang dikirim kembali oleh maker dan perlu konfirmasi checker</td>
+                    <td>Transaksi incoming yang dikirim kembali oleh maker harus disapprove oleh checker</td>
+                    <td>Approve : INC-AML-RESEND<br>Reject : INC-AML-FAILED</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>UNSETTLE-INC</td>
+                    <td>Incoming Resend to Channel</td>
+                    <td>Flag transaksi incoming yang dikirim kembali ke Channel</td>
+                    <td>Transaksi incoming yang gagal kekirim ke Channel dan akan dikirim kembali</td>
+                    <td>UNSETTLE-INC &#10141; INC-RESEND-CNF</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>INC-RESEND-CNF</td>
+                    <td>Incoming Resend to Channel Confirmation</td>
+                    <td>Flag transaksi incoming yang dikirim kembali oleh maker dan perlu konfirmasi checker</td>
+                    <td>Transaksi incoming yang dikirim kembali oleh maker harus disapprove oleh checker</td>
+                    <td>Approve : INC-RESEND<br>Reject : UNSETTLE-INC</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>SETTLE</td>
+                    <td>Incoming SETTLE</td>
+                    <td>Transaksi incoming yang berhasil kekirim ke Channel</td>
+                    <td>Transaksi Incoming berhasil dikirim ke Channel</td>
+                    <td>SETTLE</td>
+                </tr>
+            </table>
+                <br>
+            <table class="modal-table" style="border:1px solid black">
+                <tr>
+                    <th colspan="6">OUTGOING</th>
+                </tr>
+                <tr>
+                    <td>Nomor</td>
+                    <td>Status</td>
+                    <td>Menu</td>
+                    <td>Kondisi</td>
+                    <td>Keterangan</td>
+                    <td>Alur</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>FIA-FAILED</td>
+                    <td>Failed to Send to FIA</td>
+                    <td>Transaksi outgoing yang dikirim kembali ke FIA oleh maker</td>
+                    <td>Flag transaksi outgoing yang gagal kirim ke FIA</td>
+                    <td>FIA-FAILED &#10141; FIA-FAILED-CNF</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>FIA-FAILED-CNF</td>
+                    <td>Failed to Send to FIA Confirmation</td>
+                    <td>Transaksi outgoing yang dikirim kembali oleh maker harus disapprove oleh checker</td>
+                    <td>Flag transaksi outgoing yang dikirim kembali oleh maker dan perlu konfirmasi checker</td>
+                    <td>Approve : FIA-FAILED-RESEND<br>Reject : FIA-FAILED</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>WAITING-AML</td>
+                    <td>Reject AML</td>
+                    <td>Transaksi Outgoing yang sudah dilempar ke AML dan menunggu jawaban jika tidak ada jawaban user dapat melakukan reject.</td>
+                    <td>Flag Transaksi Outgoing sedang menunggu jawaban dari AML</td>
+                    <td>WAITING-AML &#10141; AML-TERMINATE-OUT</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>AML-TERMINATE-OUT</td>
+                    <td>Reject AML Confirmation</td>
+                    <td>Transaksi Incoming atau Outgoing yang belum mendapatkan jawaban dari AML dan diterminal oleh user</td>
+                    <td>Flag transaksi outgoing yang direject oleh user maker dan butuh konfirmasi oleh user checker</td>
+                    <td>Approve : REJECT<br>Reject : WAITING-AML</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>AML-FAILED</td>
+                    <td>Failed to Send to AML</td>
+                    <td>Transaksi outgoing yang dikirim kembali ke AML oleh maker</td>
+                    <td>Flag transaksi outgoing yang gagal kirim ke AML</td>
+                    <td>AML-FAILED &#10141; AML-FAILED-CNF</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>AML-FAILED-CNF</td>
+                    <td>Failed to Send to AML Confirmation</td>
+                    <td>Transaksi outgoing yang dikirim kembali oleh maker harus disapprove oleh checker</td>
+                    <td>Flag transaksi outgoing yang dikirim kembali oleh maker dan perlu konfirmasi checker</td>
+                    <td>Approve : ML-RESEND<br>Reject : AML-FAILED</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>UNSETTLE-OUT</td>
+                    <td>Failed to Send to SAA</td>
+                    <td>Transaksi outgoing yang gagal kekirim ke SAA dan akan dikirim kembali</td>
+                    <td>Flag transaksi outgoing yang dikirim kembali ke SAA</td>
+                    <td>UNSETTLE-OUT &#10141; WAITING-SAA-CNF</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>WAITING-SAA- CNF</td>
+                    <td>Failed to Send to SAA Confirmation</td>
+                    <td>Transaksi outgoing yang dikirim kembali oleh maker harus disapprove oleh checker</td>
+                    <td>Flag transaksi outgoing yang dikirim kembali oleh maker dan perlu konfirmasi checker</td>
+                    <td>Approve : WAITING-SAA-RESEND<br>Reject : UNSETTLE-OUT</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>CVT-MOD</td>
+                    <td>Modify Convert</td>
+                    <td>Transaksi outgoing yang dapat dimodifikasi oleh user maker karena outgoing gagal dikonversi</td>
+                    <td>Flag transaksi outgoing yang gagal konversi</td>
+                    <td>CVT-MOD &#10141; CVT-VER</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>CVT-VER</td>
+                    <td>Verify Convert</td>
+                    <td>Transaksi yang sedang dalam tahap verifikasi pada tingkat user checker dan dapat dikirimkan kembali ke fia untuk proses konversi (Transaksi sudah tidak dapat dimodifikasi)</td>
+                    <td>Flag transaksi outgoing yang gagal konversi dalam tahap verifikasi</td>
+                    <td>Approve : CVT-VER-RESEND<br>Reject : CVT-MOD</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td>ACK</td>
+                    <td>Acknowledge (ACK)</td>
+                    <td>ACK Response message sama dengan outgoing message</td>
+                    <td>Acknowledge (Transaksi Outgoing sudah mendapatkan balikan dari SAA dengan status ACK)</td>
+                    <td>ACK</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td>NACK</td>
+                    <td>No Acknowledge (NACK)</td>
+                    <td>NACK Response message sama dengan Outgoing Message</td>
+                    <td>No Acknowledge (Transaksi Outgoing sudah mendapatkan balikan dari SAA dengan status NACK)</td>
+                    <td>NACK</td>
                 </tr>
             </table>
         </div>
@@ -417,7 +612,7 @@
 
     // When the user clicks the button, open the modal 
     btn.onclick = function () {
-//        modal.style.display = "block"; //hide sementara sampai flag final
+        modal.style.display = "block"; 
     }
 
     // When the user clicks on <span> (x), close the modal

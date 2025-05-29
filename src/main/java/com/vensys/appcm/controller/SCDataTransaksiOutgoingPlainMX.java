@@ -107,7 +107,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         }
         data.setFlag("VER");
 //        data.setBlock3(UUID.randomUUID().toString());
-        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"));
+        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), messType);
 
         MxWriteConfiguration mxConfiguration = new MxWriteConfiguration();
         mxConfiguration.documentPrefix = null;

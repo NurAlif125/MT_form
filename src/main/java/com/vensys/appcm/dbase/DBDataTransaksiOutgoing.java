@@ -75,7 +75,7 @@ public class DBDataTransaksiOutgoing {
         return id;
     }
 
-    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel) {
+    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel, String reference) {
         String header = "";
         // Mendapatkan string format tanggal dan Timestamp secara langsung
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -134,7 +134,7 @@ public class DBDataTransaksiOutgoing {
         }
 
         addDataHeaderStatus("VER", user_id, ip_access, comp_name);
-        evl.insertDataEvent(user_id, "Membuat transaksi baru", ip_access, comp_name);
+        evl.insertDataEvent(user_id, "Membuat transaksi baru "+data.getMessageType()+" "+reference, ip_access, comp_name);
         evl.updateLogUser(user_id, "trx", timestampString);
         return header;
     }
@@ -265,8 +265,9 @@ public class DBDataTransaksiOutgoing {
     public void moveJournalHistory(String req) {  // 20180417 penambahan untuk memindahkan jurnal history
         try {
             String sql = "INSERT INTO bak_journal_history (request,datetime) "
-                    + "SELECT request,datetime FROM journal_history WHERE request='" + req + "'";
+                    + "SELECT request,datetime FROM journal_history WHERE request=? ";
             PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, req);
             st.executeUpdate();
             sql = "DELETE FROM journal_history WHERE request='" + req + "'";
             st = this.conn.prepareStatement(sql);
@@ -538,10 +539,11 @@ public class DBDataTransaksiOutgoing {
                 + "deliveryMonitoring, bankingPriority, mur, komentar, block3, flag, io_type, sessionNumber, "
                 + "sequenceNumber, COALESCE(networkType, 'MT') AS networkType, komentar, tanggal, "
                 + "senderInputTime, MIRLogicalTerminal, receiverOutputDate, receiverOutputTime, source "
-                + "FROM headers WHERE id_headers = '" + headerId + "'";
+                + "FROM headers WHERE id_headers = ?";
 
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, headerId);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             header.setLogicalTerminal(rs.getString(1));
@@ -571,9 +573,10 @@ public class DBDataTransaksiOutgoing {
 
     public List<TagDB> getAllTagById(String headerId) throws Exception {
         List<TagDB> tags = new ArrayList<TagDB>();
-        String sql = "SELECT urutan,tag,detail,tagName,info FROM tags WHERE id_headers='" + headerId + "'";
+        String sql = "SELECT urutan,tag,detail,tagName,info FROM tags WHERE id_headers=?";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, headerId);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             TagDB tag = new TagDB();

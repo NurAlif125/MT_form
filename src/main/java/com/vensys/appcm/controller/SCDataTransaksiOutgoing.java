@@ -85,7 +85,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         DBDataTransaksiOutgoing dBDataTransaksiOutgoing2 = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
         String dataXml = request.getParameter("dataXML");
 
-        log.info("SCData Transaksi Outgoign Awalan");
+//        log.info("SCData Transaksi Outgoign Awalan");
         if (idsToUpdate == null) {
             //data header
             log.info("sender1: " + request.getParameter("sender_logical_terminal"));
@@ -147,7 +147,16 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             System.out.println("flagStatus: " + flagStatus);
             System.out.println("flag: " + request.getParameter("flag"));
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"));
+                String reference = "";
+                if (!messageType.contains("pacs") || !messageType.contains("camt")) {
+                    reference = "Sender Reference: "+request.getParameter("_010_mf20_sender_reference");
+                } else {
+//                    MX
+//                    reference = "Reciver Institution:"+request.getParameter("receiver_institution");
+                    reference = "";
+                }
+                
+                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference);
                 log.info("lastInsertedID " + lastInsertedID);
             } else {
                 if (io_typeStatus.equalsIgnoreCase("I")) {
