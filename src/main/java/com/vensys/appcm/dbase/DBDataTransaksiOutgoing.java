@@ -344,11 +344,20 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='INC-WAIT')";
         } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             flag_before = " AND (flag='FIA-FAILED')";
-//            flag_before = " AND (flag='FIA-FAILED-CNF')";
         }  else if (flag.equalsIgnoreCase("FIA-RESEND")) {
-//            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-FAILED')";
             flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-RESEND')";
+        }  else if (flag.equalsIgnoreCase("AML-RESEND")) {
+            flag_before = " AND (flag='AML-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("WAITING-SAA-RESEND")) {
+            flag_before = " AND (flag='WAITING-SAA-CNF')";
+        }  else if (flag.equalsIgnoreCase("DDA-RESEND")) {
+            flag_before = " AND (flag='DDA-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("INTEL-RESEND")) {
+            flag_before = " AND (flag='INTEL-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("REM-RESEND")) {
+            flag_before = " AND (flag='REM-FAILED-CNF')";
         }
+        
       
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
@@ -370,7 +379,24 @@ public class DBDataTransaksiOutgoing {
         updateDataHeaderStatus(flag, id_headers, user_id, ip_access, comp_name);
         // penmabahn unutk force inc-OK ' || (flag.equalsIgnoreCase("INC-OK") && flagStatus.equalsIgnoreCase("INC-NOK"))' 16 sept 2015
         // INC-NOK diubah menjadi INC-WAIT 20180413
-        if ((flag.equalsIgnoreCase("AUTH") && AUTH) || (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || (flag.equalsIgnoreCase("INC-STL") && AUTH) || (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || (flag.equalsIgnoreCase("INC-RSTL") && AUTH) || (flag.equalsIgnoreCase("FIA-RESEND") && AUTH) ) {
+        if (
+            (flag.equalsIgnoreCase("AUTH") && AUTH) || 
+            (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || 
+            (flag.equalsIgnoreCase("INC-STL") && AUTH) || 
+            (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || 
+            (flag.equalsIgnoreCase("INC-RSTL") && AUTH) || 
+            (flag.equalsIgnoreCase("FIA-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("AML-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("WAITING-SAA-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INTEL-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("REM-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("DDA-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("CVT-VER-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-AML-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH)
+            ) {
             CreateText ct = new CreateText(conn);
             
             // Harus mengetahui dulu apakah MX atau MT
@@ -396,12 +422,12 @@ public class DBDataTransaksiOutgoing {
                 
 //                System.out.println(finalMX.get("final_mx"));
                 
-                ct.createTextFileMX(finalMX.get("final_mx"),variant,id_headers, "I", channel, user_id, ip_access, comp_name);
+                ct.createTextFileMX(finalMX.get("final_mx"),variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
     //            CreateTextNew ctn = new CreateTextNew(conn);
-                ct.getFinalMT(id_headers, io_type, user_id, ip_access, comp_name);
+                ct.getFinalMT(id_headers, io_type, flag, user_id, ip_access, comp_name);
             }
         }
     }
