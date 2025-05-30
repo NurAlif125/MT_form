@@ -125,10 +125,12 @@ public class DBNegaraSuspect {
     
     public List<String> cekDataDuplicateCountry(String kode_negara, String nama_negara) throws SQLException {
         List<String> datas = new ArrayList<String>();
-        String sql = "SELECT t.kode_negara,t.nama_negara FROM negara_suspect AS t WHERE  t.kode_negara = '"+kode_negara+"'  AND t.nama_negara = '"+nama_negara+"' ORDER BY kode_negara ASC";
+        String sql = "SELECT t.kode_negara,t.nama_negara FROM negara_suspect AS t WHERE  t.kode_negara = ? AND t.nama_negara = ? ORDER BY kode_negara ASC";
 //        String sql = "select id_account from account_penagihan";
         System.out.println("sql cek Data Duplicate Acc Penagih = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, kode_negara);
+        st.setString(2, nama_negara);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             datas.add(rs.getString(1));

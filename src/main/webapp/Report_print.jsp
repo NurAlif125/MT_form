@@ -72,19 +72,17 @@
                     <div class="form-row"><span class="labelL2">Channel</span>
                         <select name="channel" id="channel">
                             <option value="">All</option>
-                            <option value="NCBS">NCBS</option>
-                            <option value="BANK_TRADE">BANK TRADE</option>
-                            <option value="TSA">TSA</option>
-                            <option value="FRONT_ARENA">FRONT ARENA</option>
-                            <option value="CUSTODY">CUSTODY</option>
-                            <option value="AML">AML</option>
+                            <c:forEach var="item1" items="${dataChannel}">
+                                <option value="${item1}"<c:if test="${item1 == dataUserById.channel}"> selected="true" </c:if>>${item1}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-row"><span class="labelL2">Status</span>
                         <jsp:scriptlet>
-                                    //String[] flags = new String[]{"MOD", "VER", "AUTH", "TEXT", "ACK", "NACK", "RACK" ,"INC-OK", "INC-NOK", "INC-ROK", "INC-WAIT" };
-                                    String[] flags = new String[]{"MOD", "VER", "AUTH", "TEXT", "INC-OK", "INC-NOK", "ACK", "NACK", "INC-WAIT", "INC-STL", "INC-RSTL", "INC-HOLD", "INC-INV", "INC-RTR", "INC-CNF", "INC-ADJ", "INC-SPOK", "INC-NSTP", "INC-SPRT", "REJECT"};
-                                    //String[] flags = new String[]{"ACK", "NACK", "INC-OK", "INC-NOK" };
+                                    String[] flags = new String[]{"MOD", "VER", "AUTH", "FIA-FAILED", "FIA-FAILED-CNF", "FIA-RESEND", "UNSETTLE-OUT", "WAITING-SAA-CNF", "WAITING-SAA-RESEND",
+                                        "WAITING-AML", "AML-TERMINATE-OUT", "REJECT", "AML-FAILED", "AML-FAILED-CNF", "AML-RESEND", "CVT-MOD", "CVT-VER", "CVT-VER-RESEND",
+                                        "ACK", "NACK", "INC-CVT", "RESEND-CNF", "INC-CVT-RESEND", "INC-AML", "AML-TERMINATE-IN", "INC-AML-FAILED", "INC-AML-FAILED-CNF", "INC-AML-RESEND",
+                                    "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE"};
                                     pageContext.setAttribute("flags", flags);
                         </jsp:scriptlet>
                         <select name="flag" id="flag">

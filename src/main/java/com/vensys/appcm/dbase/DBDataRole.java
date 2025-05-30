@@ -180,10 +180,11 @@ public class DBDataRole {
     
     public boolean cekDataDuplicateRole(String role_name) throws SQLException {
         boolean datas = false;
-        String sql = "SELECT role_name FROM roles WHERE role_name = '"+role_name+"' ORDER BY role_id ASC";
+        String sql = "SELECT role_name FROM roles WHERE role_name = ? ORDER BY role_id ASC";
 //        String sql = "select id_account from account_penagihan";
 //        System.out.println("sql cek duplicate role_name = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, role_name);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             datas = true;

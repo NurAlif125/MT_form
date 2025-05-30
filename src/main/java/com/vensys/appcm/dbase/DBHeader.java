@@ -3028,113 +3028,243 @@ public class DBHeader {
 
         kursIndonesia.setDecimalFormatSymbols(formatRp);
         ArrayList<Header> headers = new ArrayList<Header>();
-        String where = "";
+//        String where = "";
         Double amountAck = 0.0;
         Double amountNack = 0.0;
-        if (io_type.equalsIgnoreCase("IO")) {//20190926
-            where += "";
-        } else if (io_type.equalsIgnoreCase("I")) {
-            where += " AND io_type = 'I'";
-        } else {
-            where += " AND io_type = 'O'";
-        }
-        
-        if (mt_type == null || mt_type.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND messageType = '" + mt_type + "'";
-        }
-//        System.out.println("### flag ### = " + flag);
-        if (flag == null || flag.isEmpty()) {
-            where += "";
-        } else {
-            // diganti menjadi = asalnya like 20150930
-            where += " AND flag = '" + flag + "'";
-        }
-        
-        if (cust_curr != null && !cust_curr.isEmpty()) {
-            where += " AND t32c.detail = '" + cust_curr + "'";
-        }
-        
-        if ( filter == null) {
-            where += "";
-        } else if (filter.equals("1")) {
-            where += " AND block3 like '%111:009;%'";
-        } else if (filter.equals("0")) {
-            where += " AND block3 not like '%111:009;%'";
-        }else{
-            where += "";
-        }
-        
-        if ( channel == null) {
-            where += "";
-        } else{
-            where += "";
-        }
+//        if (io_type.equalsIgnoreCase("IO")) {//20190926
+//            where += "";
+//        } else if (io_type.equalsIgnoreCase("I")) {
+//            where += " AND io_type = 'I'";
+//        } else {
+//            where += " AND io_type = 'O'";
+//        }
+//        
+//        if (mt_type == null || mt_type.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND messageType = '" + mt_type + "'";
+//        }
+////        System.out.println("### flag ### = " + flag);
+//        if (flag == null || flag.isEmpty()) {
+//            where += "";
+//        } else {
+//            // diganti menjadi = asalnya like 20150930
+//            where += " AND flag = '" + flag + "'";
+//        }
+//        
+//        if (cust_curr != null && !cust_curr.isEmpty()) {
+//            where += " AND t32c.detail = '" + cust_curr + "'";
+//        }
+//        
+//        if ( filter == null) {
+//            where += "";
+//        } else if (filter.equals("1")) {
+//            where += " AND block3 like '%111:009;%'";
+//        } else if (filter.equals("0")) {
+//            where += " AND block3 not like '%111:009;%'";
+//        }else{
+//            where += "";
+//        }
+//        
+//        if ( channel == null) {
+//            where += "";
+//        } else{
+//            where += " AND source = '"+channel+"'";
+//        }
+//
+//        where += " AND CAST(hd.tanggal as DATE) BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:59'"; //20200213
+//        String sql = "SELECT DISTINCT \n" +
+//                    "    hd.id_headers, \n" +
+//                    "    hd.messageType,\n" +
+//                    "    hd.logicalTerminal,\n" +
+//                    "    hd.io_type,\n" +
+//                    "    hd.receiverAddress,\n" +
+//                    "    hd.tanggal,\n" +
+//                    "    hd.flag, \n" +
+//                    "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
+//"                    SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
+//"                    RIGHT(t32d.detail, 2), '') AS vdate,\n" +
+//                    "\n" +
+//                    "    -- REF --\n" +
+//                    "    COALESCE(\n" +
+//                    "        t20.detail, \n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].pmtId.instrId'), -- pacs.008\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.grpHdr.msgId'), -- pacs.004\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].pmtId.instrId'), -- pacs.009\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.rsltnOfInvstgtn.assgnmt.id'), -- camt.029\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrAcctRpt.rpt[0].id'), -- camt.052\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrStmt.stmt[0].id'), -- camt.053\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.undrlyg[0].txInf[0]._case.id'), -- camt.056\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.assgnmt.id'), -- camt.056\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtStsRpt.grpHdr.msgId'),\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.ntfctn.id'),\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.grpHdr.msgId'),\n" +
+//                    "                 JSON_VALUE(mx.json_tag,'$.cstmrPmtCxlReq.assgnmt.id')\n" +
+//                    "        )))))))))))) as ref,\n" +
+//                    "\n" +
+//                    "    -- Currency\n" +
+//                    "    COALESCE(\n" +
+//                    "        t32c.detail, \n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy'), -- pacs.008\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.ccy'),  -- pacs.004\n" +
+//                    "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy')  -- pacs.009\n" +
+//                    "        ))\n" +
+//                    "    ) as curr,\n" +
+//                    "\n" +
+//                    "    -- Amount\n" +
+//                    "    COALESCE(\n" +
+//                    "        t32.detail, \n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value'), -- pacs.008\n" +
+//                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.value'), -- pacs.004\n" +
+//                    "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value') -- pacs.009\n" +
+//                    "        ))\n" +
+//                    "    ) as amount,\n" +
+//                    "\n" +
+//                    "hd.source\n" +
+//                    "FROM headers as hd \n" +
+//                    "--LEFT JOIN header_status hds ON hds.id_headers = hd.id_headers \n" +
+//                    "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
+//                    "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
+//                    "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
+//                    "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
+//                    "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
+//                    "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
+//                    "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
+//                    "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE " 
+//                + " isDuplicate=0 " + where
+//                + " ORDER BY tanggal DESC";
+//        PreparedStatement st = this.conn.prepareStatement(sql);
+//        ResultSet rs = st.executeQuery();
 
-        where += " AND CAST(hd.tanggal as DATE) BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:59'"; //20200213
-        String sql = "SELECT DISTINCT \n" +
-                    "    hd.id_headers, \n" +
-                    "    hd.messageType,\n" +
-                    "    hd.logicalTerminal,\n" +
-                    "    hd.io_type,\n" +
-                    "    hd.receiverAddress,\n" +
-                    "    hd.tanggal,\n" +
-                    "    hd.flag, \n" +
-                    "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
-"                    SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
-"                    RIGHT(t32d.detail, 2), '') AS vdate,\n" +
-                    "\n" +
-                    "    -- REF --\n" +
-                    "    COALESCE(\n" +
-                    "        t20.detail, \n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].pmtId.instrId'), -- pacs.008\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.grpHdr.msgId'), -- pacs.004\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].pmtId.instrId'), -- pacs.009\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.rsltnOfInvstgtn.assgnmt.id'), -- camt.029\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrAcctRpt.rpt[0].id'), -- camt.052\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrStmt.stmt[0].id'), -- camt.053\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.undrlyg[0].txInf[0]._case.id'), -- camt.056\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.assgnmt.id'), -- camt.056\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtStsRpt.grpHdr.msgId'),\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.ntfctn.id'),\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.grpHdr.msgId'),\n" +
-                    "                 JSON_VALUE(mx.json_tag,'$.cstmrPmtCxlReq.assgnmt.id')\n" +
-                    "        )))))))))))) as ref,\n" +
-                    "\n" +
-                    "    -- Currency\n" +
-                    "    COALESCE(\n" +
-                    "        t32c.detail, \n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy'), -- pacs.008\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.ccy'),  -- pacs.004\n" +
-                    "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy')  -- pacs.009\n" +
-                    "        ))\n" +
-                    "    ) as curr,\n" +
-                    "\n" +
-                    "    -- Amount\n" +
-                    "    COALESCE(\n" +
-                    "        t32.detail, \n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value'), -- pacs.008\n" +
-                    "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.value'), -- pacs.004\n" +
-                    "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value') -- pacs.009\n" +
-                    "        ))\n" +
-                    "    ) as amount,\n" +
-                    "\n" +
-                    "hd.source\n" +
-                    "FROM headers as hd \n" +
-                    "--LEFT JOIN header_status hds ON hds.id_headers = hd.id_headers \n" +
-                    "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
-                    "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
-                    "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
-                    "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
-                    "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
-                    "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
-                    "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
-                    "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE " 
-                + " isDuplicate=0 " + where
-                + " ORDER BY tanggal DESC";
-        PreparedStatement st = this.conn.prepareStatement(sql);
-        ResultSet rs = st.executeQuery();
+            StringBuilder where = new StringBuilder(" isDuplicate=0 ");
+            List<Object> params = new ArrayList<>();
+
+            // io_type condition
+            if (io_type != null && !io_type.equalsIgnoreCase("IO")) {
+                if (io_type.equalsIgnoreCase("I")) {
+                    where.append(" AND io_type = ?");
+                    params.add("I");
+                } else {
+                    where.append(" AND io_type = ?");
+                    params.add("O");
+                }
+            }
+
+            // mt_type condition
+            if (mt_type != null && !mt_type.isEmpty()) {
+                where.append(" AND messageType = ?");
+                params.add(mt_type);
+            }
+
+            // flag condition
+            if (flag != null && !flag.isEmpty()) {
+                where.append(" AND flag = ?");
+                params.add(flag);
+            }
+
+            // cust_curr condition
+            if (cust_curr != null && !cust_curr.isEmpty()) {
+                where.append(" AND t32c.detail = ?");
+                params.add(cust_curr);
+            }
+
+            // filter condition
+            if (filter != null) {
+                if (filter.equals("1")) {
+                    where.append(" AND block3 like ?");
+                    params.add("%111:009;%");
+                } else if (filter.equals("0")) {
+                    where.append(" AND block3 not like ?");
+                    params.add("%111:009;%");
+                }
+            }
+
+            // channel condition
+            if (channel != null && !channel.isEmpty()) {
+                where.append(" AND source = ?");
+                params.add(channel);
+            }
+
+            // date range condition (harus selalu ada)
+            where.append(" AND CAST(hd.tanggal as DATE) BETWEEN ? AND ?");
+            params.add(java.sql.Date.valueOf(date_from));  // pastikan format yyyy-MM-dd
+            params.add(java.sql.Timestamp.valueOf(date_end + " 23:59:59"));
+
+            // SQL lengkap
+            String sql = "SELECT DISTINCT \n" +
+                "    hd.id_headers, \n" +
+                "    hd.messageType,\n" +
+                "    hd.logicalTerminal,\n" +
+                "    hd.io_type,\n" +
+                "    hd.receiverAddress,\n" +
+                "    hd.tanggal,\n" +
+                "    hd.flag, \n" +
+                "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
+                "        SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
+                "        RIGHT(t32d.detail, 2), '') AS vdate,\n" +
+                "    -- REF --\n" +
+                "    COALESCE(\n" +
+                "        t20.detail, \n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].pmtId.instrId'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.grpHdr.msgId'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].pmtId.instrId'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.rsltnOfInvstgtn.assgnmt.id'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrAcctRpt.rpt[0].id'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrStmt.stmt[0].id'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.undrlyg[0].txInf[0]._case.id'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.assgnmt.id'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtStsRpt.grpHdr.msgId'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.ntfctn.id'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.grpHdr.msgId'),\n" +
+                "                 JSON_VALUE(mx.json_tag,'$.cstmrPmtCxlReq.assgnmt.id')\n" +
+                "        )))))))))))) as ref,\n" +
+                "    -- Currency\n" +
+                "    COALESCE(\n" +
+                "        t32c.detail, \n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.ccy'),\n" +
+                "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy')\n" +
+                "        ))\n" +
+                "    ) as curr,\n" +
+                "    -- Amount\n" +
+                "    COALESCE(\n" +
+                "        t32.detail, \n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value'),\n" +
+                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.value'),\n" +
+                "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value')\n" +
+                "        ))\n" +
+                "    ) as amount,\n" +
+                "hd.source\n" +
+                "FROM headers as hd \n" +
+                "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
+                "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
+                "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
+                "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
+                "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
+                "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
+                "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
+                "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE "
+                + where.toString() + " ORDER BY tanggal DESC";
+
+            System.out.println(sql);
+            PreparedStatement st = this.conn.prepareStatement(sql);
+
+            // set parameters ke prepared statement
+            for (int i = 0; i < params.size(); i++) {
+                Object param = params.get(i);
+                if (param instanceof String) {
+                    st.setString(i + 1, (String) param);
+                } else if (param instanceof java.sql.Date) {
+                    st.setDate(i + 1, (java.sql.Date) param);
+                } else if (param instanceof java.sql.Timestamp) {
+                    st.setTimestamp(i + 1, (java.sql.Timestamp) param);
+                } else {
+                    st.setObject(i + 1, param);
+                }
+            }
+
+            ResultSet rs = st.executeQuery();
+
         
         while (rs.next()) {
             Header header = new Header();
