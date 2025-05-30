@@ -226,7 +226,7 @@
                                     <!-- OF56 -->
                                     <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
                                         <select id="type_of56_" name="type_of56_">
-                                            <option value="">choose a type</option>
+                                            <option value="" <c:forEach var="item" items="${role}"> <c:if test="${item == 'FLOW:CREATE'}">selected</c:if> </c:forEach>>choose a type</option>
                                             <option value="a">A - Intermediary Inst - BIC</option>
                                             <option value="d">D - Intermediary Inst - Name and Address</option>
                                         </select>
