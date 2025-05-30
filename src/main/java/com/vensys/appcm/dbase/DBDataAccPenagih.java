@@ -148,10 +148,12 @@ public class DBDataAccPenagih {
     
     public List<String> cekDataDuplicateAccPenagih2(String swift_code, String account) throws SQLException {
         List<String> datas = new ArrayList<String>();
-        String sql = "SELECT t.swift_code,t.account FROM account_penagihan AS t WHERE  t.swift_code = '"+swift_code+"'  AND t.account = '"+account+"' ORDER BY account ASC";
+        String sql = "SELECT t.swift_code,t.account FROM account_penagihan AS t WHERE  t.swift_code = ?  AND t.account = ? ORDER BY account ASC";
 //        String sql = "select id_account from account_penagihan";
-        System.out.println("sql cek Data Duplicate Acc Penagih = " + sql);
+//        System.out.println("sql cek Data Duplicate Acc Penagih = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, swift_code);
+        st.setString(2, account);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             datas.add(rs.getString(1)+"#"+rs.getString(2));

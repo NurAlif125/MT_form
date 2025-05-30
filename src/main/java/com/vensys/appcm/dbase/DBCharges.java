@@ -143,10 +143,11 @@ public class DBCharges {
     
     public List<String> cekDataDuplicateChanges(String currency) throws SQLException {
         List<String> datas = new ArrayList<String>();
-        String sql = "SELECT t.currency,t.charges FROM charges AS t WHERE  t.currency = '"+currency+"' ORDER BY charges ASC";
+        String sql = "SELECT t.currency,t.charges FROM charges AS t WHERE  t.currency = ? ORDER BY charges ASC";
 //        String sql = "select id_account from account_penagihan";
-        System.out.println("sql cek Data Duplicate Acc Penagih = " + sql);
+//        System.out.println("sql cek Data Duplicate Acc Penagih = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, currency);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             datas.add(rs.getString(1));
