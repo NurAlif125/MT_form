@@ -78,7 +78,10 @@
             <div class="form-row"><span class="labelL">Status</span>
                 <% if (session.getAttribute("flagFilter") == null) { %>
                     <%
-                        String[] flags = new String[]{"MOD", "VER", "AUTH", "TEXT", "INC-OK", "INC-NOK", "ACK", "NACK", "INC-WAIT", "INC-STL", "INC-RSTL", "INC-HOLD", "INC-INV", "INC-RTR", "INC-CNF", "INC-ADJ", "INC-SPOK", "INC-NSTP", "INC-SPRT", "REJECT"};
+                        String[] flags = new String[]{"MOD", "VER", "AUTH", "FIA-FAILED", "FIA-FAILED-CNF", "FIA-RESEND", "UNSETTLE-OUT", "WAITING-SAA-CNF", "WAITING-SAA-RESEND",
+                            "WAITING-AML", "AML-TERMINATE-OUT", "REJECT", "AML-FAILED", "AML-FAILED-CNF", "AML-RESEND", "CVT-MOD", "CVT-VER", "CVT-VER-RESEND",
+                            "ACK", "NACK", "INC-CVT", "RESEND-CNF", "INC-CVT-RESEND", "INC-AML", "AML-TERMINATE-IN", "INC-AML-FAILED", "INC-AML-FAILED-CNF", "INC-AML-RESEND",
+                        "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE"};
                         pageContext.setAttribute("flags", flags);
                     %>
                     <select name="status" id="status">

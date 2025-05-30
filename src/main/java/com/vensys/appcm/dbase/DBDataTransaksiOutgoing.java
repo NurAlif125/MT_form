@@ -196,7 +196,7 @@ public class DBDataTransaksiOutgoing {
             String sql = "UPDATE headers SET applicationId=?,serviceId=?,logicalTerminal=?,"
                     + "sessionNumber=?,sequenceNumber=?,io_type=?,messageType=?,receiverAddress=?,messagePriority=?,"
                     + "deliveryMonitoring=?,obsolescencePeriod=?,bankingPriority=?,mur=?,komentar=?,"
-                    + "flag=?,userEdit=?,templateName=?,flagTemplate=?,senderInputTime=?,MIRDate=?,"
+                    + "flag=?,userEdit=?,flagTemplate=?,senderInputTime=?,MIRDate=?,"
                     + "MIRLogicalTerminal=?,MIRSessionNumber=?,MIRSequenceNumber=?,receiverOutputDate=?,"
                     + "receiverOutputTime=?,block3=? WHERE id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -222,18 +222,18 @@ public class DBDataTransaksiOutgoing {
 //            st.setString(15, "SRC:MANUAL");   //userEntry/
             
 
-            st.setString(17, "");   //templateName//
-            st.setInt(18, 0);   //flagTemplate//
-            st.setString(19, "");   //senderInputTime//
-            st.setString(20, "");   //MIRDate//
-            st.setString(21, "");   //MIRLogicalTerminal//
+//            st.setString(17, "");   //templateName//
+            st.setInt(17, 0);   //flagTemplate//
+            st.setString(18, "");   //senderInputTime//
+            st.setString(19, "");   //MIRDate//
+            st.setString(20, "");   //MIRLogicalTerminal//
 
-            st.setString(22, "");   //MIRSessionNumber//
-            st.setString(23, "");   //MIRSequenceNumber//
-            st.setString(24, "");   //receiverOutputDate//
-            st.setString(25, "");   //receiverOutputTime//
-            st.setString(26, data.getBlock3());   //block3/
-            st.setInt(27, id_headers);
+            st.setString(21, "");   //MIRSessionNumber//
+            st.setString(22, "");   //MIRSequenceNumber//
+            st.setString(23, "");   //receiverOutputDate//
+            st.setString(24, "");   //receiverOutputTime//
+            st.setString(25, data.getBlock3());   //block3/
+            st.setInt(26, id_headers);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
