@@ -105,6 +105,16 @@ public class Header {
     private String mxdetail;
     
     private String channel;
+    
+    private String isDuplicate;
+
+    public String getIsDuplicate() {
+        return isDuplicate;
+    }
+
+    public void setIsDuplicate(String isDuplicate) {
+        this.isDuplicate = isDuplicate;
+    }
 
     public String getChannel() {
         return channel;

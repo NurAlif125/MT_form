@@ -1516,6 +1516,7 @@ public class DBHeader {
                     "    flag, \n" +
                     "    io_type, \n" +
                     "    branch, \n" +
+                    "    isduplicate, \n" +
                     "    COALESCE(t32c.detail, json_tag->'fiToFICstmrCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'ccy') AS curr,\n" +
                     "    COALESCE(networkType, 'MT') as networkType\n" +
                     "FROM \n" +
@@ -1553,6 +1554,7 @@ public class DBHeader {
             header.setBranch(rs.getString(12));
             header.setTag32Currency(rs.getString(13));
             header.setNetworktype(rs.getString("networktype"));
+            header.setIsDuplicate(rs.getString("isduplicate"));
         }
         return header;
     }
