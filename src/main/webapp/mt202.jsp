@@ -226,7 +226,7 @@
                                     <!-- OF56 -->
                                     <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
                                         <select id="type_of56_" name="type_of56_">
-                                            <option value="" <c:forEach var="item" items="${role}"> <c:if test="${item == 'FLOW:CREATE'}">selected</c:if> </c:forEach>>choose a type</option>
+                                            <option value="" <% if("true".equals(request.getParameter("create"))) { out.write("selected='selected'"); }%> >choose a type</option>
                                             <option value="a">A - Intermediary Inst - BIC</option>
                                             <option value="d">D - Intermediary Inst - Name and Address</option>
                                         </select>
@@ -234,7 +234,7 @@
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                 <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Identifier Code</span>
+                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
                                                 <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="56A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
@@ -245,7 +245,7 @@
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                 <input type="text" name="_164_of56d_party_identifier" id="_164_of56d_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_164_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Name and Address</span>
+                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Name and Address</span>
                                                 <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_165_of56d_name_address" id="_165_of56d_name_address" input_type="56D Name and Address" location="Body" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_165_of56d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                             </div>
                                         </div>
