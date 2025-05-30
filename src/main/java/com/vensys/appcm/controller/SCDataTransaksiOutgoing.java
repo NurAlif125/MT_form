@@ -109,13 +109,13 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
             //end of the code
             //UETR
-            if (messageType.equals("103") || messageType.equals("202")) {//191227 ditambah uetr
+            if (messageType.equals("103") || messageType.contains("202") || messageType.equals("200")) {//191227 ditambah uetr
                 log.info("masuk sini 181");
                 if (flagStatus.length() > 0) {
                     log.info("masuk sini 183");
 //                    if (flagStatus.equalsIgnoreCase("MOD")) {
                     if (action_type.equalsIgnoreCase("Save")) {
-                        if (messageType.contains("cov")) {
+                        if (messageType.contains("COV")) {
                             data.setBlock3("119:COV;");
                         }
                         if (!data.getBlock3().contains("121:")) {
@@ -130,7 +130,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 } else {
                     log.info("masuk else 196 " + data.getBlock3());
                     if (action_type.equalsIgnoreCase("Save")) {
-                        if (messageType.contains("cov")) {
+                        if (messageType.contains("COV")) {
                             data.setBlock3("119:COV;");
                         }
                         if (!data.getBlock3().contains("121:")) {

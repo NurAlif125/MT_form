@@ -188,7 +188,7 @@
                                                 <!--<li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202COV'}">
-                                                <li><a onclick="userTrackMenuClick('202 COV - General Financial Institution Transfer')" href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
+                                                <li><a onclick="userTrackMenuClick('202 COV - General Financial Institution Transfer')" href="mt202COV.jsp?create=true">202 COV - General Financial Institution Transfer</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
@@ -243,19 +243,19 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:pacs00400109'}">
-                                                <li><a onclick="userTrackMenuClick('PACS.004.001.09 - Payment Return V09')" href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.004.001.09 - Payment Return V09')" href="main_pacs004.jsp?create=true">PACS.004.001.09 - Payment Return V09</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00800108'}">
-                                                <li><a onclick="userTrackMenuClick('PACS.008.001.08 - FI To FI Customer Credit Transfer V08')" href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.008.001.08 - FI To FI Customer Credit Transfer V08')" href="main_pacs008.jsp?create=true">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108'}">
-                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08 - Financial Institution Credit Transfer V08')" href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08 - Financial Institution Credit Transfer V08')" href="main_pacs009.jsp?create=true">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108cov'}">
-                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08COV - Financial Institution Credit Transfer V08')" href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08COV - Financial Institution Credit Transfer V08')" href="main_pacs009cov.jsp?create=true">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108adv'}">
-                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08ADV - Financial Institution Credit Transfer V08')" href="main_pacs009adv.jsp">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08ADV - Financial Institution Credit Transfer V08')" href="main_pacs009adv.jsp?create=true">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
