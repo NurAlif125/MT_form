@@ -507,30 +507,57 @@
         }
 
         //of56_a_d
-        if ($("#_160_of56a_party_identifier").val() != "" || $("#_161_of56a_identifier_code").val() != ""){
-            $("#type_of56_").val("a").attr("selected",true);
-            $("#div_of56a_").show();
-            $("#div_of56d_").hide();
-            $("#_160_of56a_party_identifier").attr("disabled", false);
-            $("#_161_of56a_identifier_code").attr("disabled", false);
-            $("#_164_of56d_party_identifier").attr("disabled", true);
-            $("#_165_of56d_name_address").attr("disabled", true);
-        } else if ($("#_164_of56d_party_identifier").val() != "" || $("#_165_of56d_name_address").val() != ""){
-            $("#type_of56_").val("d").attr("selected",true);
-            $("#div_of56a_").hide();
-            $("#div_of56d_").show();
-            $("#_160_of56a_party_identifier").attr("disabled", true);
-            $("#_161_of56a_identifier_code").attr("disabled", true);
-            $("#_164_of56d_party_identifier").attr("disabled", false);
-            $("#_165_of56d_name_address").attr("disabled", false);
-        } else{
-            $("#div_of56a_").hide();
-            $("#div_of56d_").hide();
-            $("#_160_of56a_party_identifier").attr("disabled", true);
-            $("#_161_of56a_identifier_code").attr("disabled", true);
-            $("#_164_of56d_party_identifier").attr("disabled", true);
-            $("#_165_of56d_name_address").attr("disabled", true);
-        }
+//        if ($("#_160_of56a_party_identifier").val() != "" || $("#_161_of56a_identifier_code").val() != ""){
+//            $("#type_of56_").val("a").attr("selected",true);
+//            $("#div_of56a_").show();
+//            $("#div_of56d_").hide();
+//            $("#_160_of56a_party_identifier").attr("disabled", false);
+//            $("#_161_of56a_identifier_code").attr("disabled", false);
+//            $("#_164_of56d_party_identifier").attr("disabled", true);
+//            $("#_165_of56d_name_address").attr("disabled", true);
+//        } else if ($("#_164_of56d_party_identifier").val() != "" || $("#_165_of56d_name_address").val() != ""){
+//            $("#type_of56_").val("d").attr("selected",true);
+//            $("#div_of56a_").hide();
+//            $("#div_of56d_").show();
+//            $("#_160_of56a_party_identifier").attr("disabled", true);
+//            $("#_161_of56a_identifier_code").attr("disabled", true);
+//            $("#_164_of56d_party_identifier").attr("disabled", false);
+//            $("#_165_of56d_name_address").attr("disabled", false);
+//        } else{
+//            $("#div_of56a_").hide();
+//            $("#div_of56d_").hide();
+//            $("#_160_of56a_party_identifier").attr("disabled", true);
+//            $("#_161_of56a_identifier_code").attr("disabled", true);
+//            $("#_164_of56d_party_identifier").attr("disabled", true);
+//            $("#_165_of56d_name_address").attr("disabled", true);
+//        }
+        
+        // of56_a_d
+if ($("#_160_of56a_party_identifier").val() != "" || $("#_161_of56a_identifier_code").val() != ""){
+    $("#type_of56_").val("a").attr("selected",true);
+    $("#div_of56a_").show();
+    $("#div_of56d_").hide();
+    $("#_160_of56a_party_identifier").attr("disabled", false);
+    $("#_161_of56a_identifier_code").attr("disabled", false);
+    $("#_164_of56d_party_identifier").attr("disabled", true);
+    $("#_165_of56d_name_address").attr("disabled", true);
+} else if ($("#_164_of56d_party_identifier").val() != "" || $("#_165_of56d_name_address").val() != ""){
+    $("#type_of56_").val("d").attr("selected",true);
+    $("#div_of56a_").hide();
+    $("#div_of56d_").show();
+    $("#_160_of56a_party_identifier").attr("disabled", true);
+    $("#_161_of56a_identifier_code").attr("disabled", true);
+    $("#_164_of56d_party_identifier").attr("disabled", false);
+    $("#_165_of56d_name_address").attr("disabled", false);
+} else {
+    $("#div_of56a_").hide();
+    $("#div_of56d_").hide();
+    $("#_160_of56a_party_identifier").attr("disabled", true);
+    $("#_161_of56a_identifier_code").attr("disabled", true);
+    $("#_164_of56d_party_identifier").attr("disabled", true);
+    $("#_165_of56d_name_address").attr("disabled", true);
+}
+
 
         //of57_a_b_d
         if ($("#_170_of57a_party_identifier").val() != "" || $("#_171_of57a_identifier_code").val() != ""){
