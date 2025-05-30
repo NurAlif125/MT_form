@@ -356,6 +356,8 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='INTEL-FAILED-CNF')";
         }  else if (flag.equalsIgnoreCase("REM-RESEND")) {
             flag_before = " AND (flag='REM-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("CVT-VER-RESEND")) {
+            flag_before = " AND (flag='CVT-VER')";            
         }
         
       
