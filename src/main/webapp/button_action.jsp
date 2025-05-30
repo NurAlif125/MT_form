@@ -21,19 +21,37 @@
     <div class="btn--group">
     <c:set var="renderedButtonSave" value="false" scope="page" />
     <c:forEach var="item" items="${role}">
-        <% if (request.getParameter("id") != null) {%>
+        <% if (request.getParameter("id") != null && session.getAttribute("isDuplicate").equals("0")) {%>
         <% if (session.getAttribute("flagFilter") == null) {%>
         <% } else { %>
         <% if (session.getAttribute("flagStatus").equals("NACK")) {%>
             <c:if test="${item == 'FLOW:NACK'}">
                 <!-- <input type="button" name="modified" id="modified" value="Modify" /> -->
-                <input type="button" name="printed" id="printed" value="Print" />
+                <!--<input type="button" name="printed" id="printed" value="Print" />-->
+                <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
             </c:if>
         <% }%>
         <% if (session.getAttribute("flagStatus").equals("ACK")) {%>
             <c:if test="${item == 'FLOW:ACK'}">
                 <!-- <input type="button" name="modified" id="modified" value="Modify" /> -->
-                <input type="button" name="printed" id="printed" value="Print" />
+                <!--<input type="button" name="printed" id="printed" value="Print" />-->
+                <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
             </c:if>
         <% }%>
         <% if (session.getAttribute("flagStatus").equals("INC-WAIT")) {%>
@@ -133,7 +151,16 @@
         
         <% if (session.getAttribute("flagStatus").equals("SETTLE")) {%>
         <c:if test="${item == 'FLOW:SETTLE'}">
-            <input type="button" name="printed" id="printed" value="Print" />
+            <!--<input type="button" name="printed" id="printed" value="Print" />-->
+            <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
         </c:if>
         <% }%>
         
@@ -142,7 +169,16 @@
         
         <% if (session.getAttribute("flagStatus").equals("MOD")) {%>
         <c:if test="${item == 'FLOW:MOD'}">
-            <input type="button" name="printed" id="printed" value="Print" />
+            <!--<input type="button" name="printed" id="printed" value="Print" />-->
+            <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
         </c:if>
         <% }%>
         
@@ -359,7 +395,16 @@
         <% if (session.getAttribute("flagStatus").equals("CVT-MOD")){%>
         <c:if test="${item == 'FLOW:CVT-MOD'}">
             <!--<input type="butto //n" name="save_cvt_mod" id="save_cvt_mod" value="Save" />-->
-            <input type="button" name="printed" id="printed" value="Print" />
+            <!--<input type="button" name="printed" id="printed" value="Print" />-->
+            <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
         </c:if>
         <%}%>
         
@@ -375,20 +420,46 @@
                 <input type="button" name="reject" id="reject_true" value="Reject" />
                 <input type="button" name="modified" id="modified" value="Modify" />
                 <input type="button" name="authorized" id="authorized" value="Authorize" />
-                <input type="button" name="printed" id="printed" value="Print" />
+                <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
             </c:if>
         <%}%>
         
         <% if (session.getAttribute("flagStatus").equals("AUTH")) {%>
             <c:if test="${item == 'FLOW:AUTH'}">
-                <input type="button" name="printed" id="printed" value="Print" />
+                <!--<input type="button" name="printed" id="printed" value="Print" />-->
+                <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
             </c:if>
         <%}%>
         
         <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
             <c:if test="${item == 'FLOW:FIA-FAILED'}">
                 <input type="button" name="ResendFIA" id="ResendFIA" value="Resend to FIA" />
-                <input type="button" name="printed" id="printed" value="Print" />
+                <!--<input type="button" name="printed" id="printed" value="Print" />-->
+                <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
             </c:if>
         <% }%>
        
@@ -396,7 +467,16 @@
         <% if (session.getAttribute("flagStatus").equals("UNSETTLE-OUT")) {%>
             <c:if test="${item == 'FLOW:UNSETTLE-OUT'}">
                 <input type="button" name="resend2saa" id="resend2saa" value="Resend to SAA" />
-                <input type="button" name="printed" id="printed" value="Print" />
+                <!--<input type="button" name="printed" id="printed" value="Print" />-->
+                <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
             </c:if>
         <%}%>
         
@@ -423,7 +503,16 @@
         <% if (session.getAttribute("flagStatus").equals("AML-FAILED")) { %>
             <c:if test="${item == 'FLOW:AML-FAILED'}">
                 <input type="button" name="resend2aml_out" id="resend2aml_out" value="Resend to AML" />
-                <input type="button" name="printed" id="printed" value="Print" />
+                <!--<input type="button" name="printed" id="printed" value="Print" />-->
+                <c:choose>
+                <c:when test="${headerById.networktype== 'MT'}">
+                    <input type="button" name="printed" id="printed" value="Print" />
+                </c:when>
+                <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
+                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
+                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                </c:when>
+            </c:choose>
             </c:if>
         <% }%>
         
@@ -544,21 +633,18 @@
         <c:if test="${item == 'FLOW:PRINT'}">
 
             <c:choose>
-                <c:when test="${headerById.networktype== null}">
-                    <!--<input type="button" name="printed" id="printed" value="Print" />-->
-                    <!--<input type="button" name="printedmx" id="printedmx" value="Print" />-->
-                </c:when>
                 <c:when test="${headerById.networktype== 'MT'}">
                     <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 </c:when>
                 <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
-                    <input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/> 
-                    <input type="button" name="printedmx" id="printedmx" value="Print" />
+                    <!--<input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/>--> 
+                    <!--<input type="button" name="printedmx" id="printedmx" value="Print" />-->
                 </c:when>
             </c:choose>
 
         </c:if>
         <% } else {%>
+        <% if (session.getAttribute("isDuplicate").equals("0")) {%>
         <c:if test="${item == 'FLOW:CREATE'}">
             <input type="hidden" name="action_type" id="action_type" value="save" />
             <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
@@ -644,6 +730,7 @@
             </c:forEach>    
             <% } %>
         </c:if>
+        <% } %>
         <% } %>
         <!--20180417 untuk resend ack dan incominig-->
         <% if (session.getAttribute("flagStatus").equals("ACK") || session.getAttribute("flagStatus").equals("RACK")) {%>
