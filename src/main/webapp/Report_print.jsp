@@ -97,9 +97,9 @@
                 <div class="form-row-action">
                     <!--                    <input type="button" name="print_pdf_out" id="print_pdf_out" value="PrintPDF Outgoing" />
                                         <input type="button" name="print_pdf_in" id="print_pdf_in" value="PrintPDF Incoming" />-->
-                    <input type="button" name="print_pdf" id="print_pdf" value="View PDF" />
-                    <input type="button" name="print_xls" id="print_xls" value="View XLS" />
-                    <input type="button" name="print_csv" id="print_csv" value="View CSV" />
+                    <input type="button" name="print_pdf" id="print_pdf" value="Export PDF" />
+                    <input type="button" name="print_xls" id="print_xls" value="Export XLS" />
+                    <input type="button" name="print_csv" id="print_csv" value="Export CSV" />
                     <input type="reset" name="reset" id="reset" value="Reset" />
                 </div>
             </form>
