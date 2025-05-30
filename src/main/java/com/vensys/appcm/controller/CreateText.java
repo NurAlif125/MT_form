@@ -173,6 +173,9 @@ public class CreateText {
         sb1.setSequenceNumber(header.getSequenceNumber());
 
         sb2_i.setInput(Boolean.TRUE);
+        if (header.getMessageType().equalsIgnoreCase("202COV")) {
+            header.setMessageType("202");
+        }
         sb2_i.setMessageType(header.getMessageType());
         sb2_i.setReceiverAddress(header.getReceiverAddress());
         sb2_i.setMessagePriority(header.getMessagePriority());
