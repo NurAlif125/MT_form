@@ -424,8 +424,8 @@ public class DBDataTransaksiOutgoing {
                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
                 
 //                System.out.println(finalMX.get("final_mx"));
+                ct.createTextFileMX(fullMessage,variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
                 
-                ct.createTextFileMX(fullMessage,variant,id_headers, "I", channel, user_id, ip_access, comp_name);
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
