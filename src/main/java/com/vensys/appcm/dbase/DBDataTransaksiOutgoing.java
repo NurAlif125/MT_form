@@ -571,7 +571,7 @@ public class DBDataTransaksiOutgoing {
 
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
-        st.setString(1, headerId);
+        st.setInt(1, Integer.parseInt(headerId));
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             header.setLogicalTerminal(rs.getString(1));
@@ -871,13 +871,14 @@ public class DBDataTransaksiOutgoing {
         return update;
     }
     
-    public int updateTagsMXText (String json, int id_headers) throws SQLException, Exception {
+    public int updateTagsMXText (String json, String headersaa, int id_headers) throws SQLException, Exception {
         int update = 0;
         try {
-            String sql = "UPDATE tags_mx set json_tag=?::jsonb where id_headers=?";
+            String sql = "UPDATE tags_mx set json_tag=?::jsonb, header_saa=? where id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, json);
-            st.setInt(2, id_headers);
+            st.setString(2, headersaa);
+            st.setInt(3, id_headers);
             update = st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -885,17 +886,18 @@ public class DBDataTransaksiOutgoing {
         return update;
     }
     
-    public int updateFlagMX(String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name) throws SQLException, Exception {
+    public int updateFlagMX(String lt, String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name) throws SQLException, Exception {
         int update = 0;
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "UPDATE headers set receiverAddress=?, flag=? where flag =? and id_headers=?";
+            String sql = "UPDATE headers set logicalTerminal=?, receiverAddress=?, flag=? where flag =? and id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setString(1, responder.toUpperCase());
-            st.setString(2, flag);
+            st.setString(1, lt.toUpperCase());
+            st.setString(2, responder.toUpperCase());
+            st.setString(3, flag);
 //            st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
-            st.setString(3, flag_before);
-            st.setInt(4, id_headers);
+            st.setString(4, flag_before);
+            st.setInt(5, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
                 log.info("Update Flag to:" + flag);

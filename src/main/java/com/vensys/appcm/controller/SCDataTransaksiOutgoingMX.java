@@ -42,6 +42,8 @@ import com.vensys.appcm.model.Header;
 import com.vensys.appcm.myutils.HistoryPaging;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
+import java.io.InputStream;
+import java.util.Properties;
 import org.apache.log4j.Logger;
 
 /**
@@ -76,6 +78,9 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         String flag = headers.getFlag();
         String receiverAddress = request.getParameter("receiver_institution");
         String logicalTerminal = request.getParameter("sender_logical_terminal");
+        String dnSender = "o=" + logicalTerminal.substring(9, 12).toLowerCase() + ",o=" + logicalTerminal.substring(0, 8).toLowerCase() + ",o=swift";
+        String dnReceiver = "o=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
+        String service = getService();
         
         String dataXml = request.getParameter("dataXML");
         
@@ -153,14 +158,17 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 String newXML = dataMXpacs004.message(mxConfiguration);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
+                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
+                
                 String newJson = dataMXpacs004.toJson();
-                dBTrx2.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
+                dBTrx2.updateTagsMXText(newJson, saaHeader, Integer.parseInt(idHeaders));
                 
                 if(flag.equalsIgnoreCase("MOD")) {
-                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
-                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
                 
@@ -230,14 +238,17 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 String newXML = dataMXpacs008.message(mxConfiguration);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
+                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
+                
                 String newJson = dataMXpacs008.toJson();
-                dBTrx2.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
+                dBTrx2.updateTagsMXText(newJson, saaHeader, Integer.parseInt(idHeaders));
                 
                 if(flag.equalsIgnoreCase("MOD")) {
-                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
-                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
                 
@@ -307,14 +318,17 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 String newXML = dataMXpacs009.message(mxConfiguration);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
+                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
+                
                 String newJson = dataMXpacs009.toJson();
-                dBTrx2.updateTagsMXText(newJson, Integer.parseInt(idHeaders));
+                dBTrx2.updateTagsMXText(newJson, saaHeader, Integer.parseInt(idHeaders));
                 
                 if(flag.equalsIgnoreCase("MOD")) {
-                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
-                    int doUpdate = dBTrx.updateFlagMX(receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
                         (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
                 
@@ -324,6 +338,14 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         dbConn2.closeConnection2();
         String pagingHistory = HistoryPaging.getPagingHistory(request, response);
         response.sendRedirect("controllerHeaders?" + pagingHistory);
+    }
+    
+    public String getService() throws IOException {
+        log.info("getService");
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("service");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
