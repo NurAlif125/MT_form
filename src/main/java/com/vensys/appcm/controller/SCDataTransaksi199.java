@@ -187,7 +187,7 @@ public class SCDataTransaksi199 extends HttpServlet {
             log.info("setelah create final MT STL");
             log.info("after add data tag confirmation kredit payment");
         } else if (request.getParameter("flag").equalsIgnoreCase("INC-WAIT") || request.getParameter("flag").equalsIgnoreCase("INC-RTR")) {
-            System.out.println(request.getParameter("flag") + " PROCESS");
+            // System.out.println(request.getParameter("flag") + " PROCESS");
             int write = dBDataTransaksiOutgoing.checkWriteSession();
             int returnId_headers;//20220207 untuk nampung last id_headers
             if (true) {
@@ -245,7 +245,7 @@ public class SCDataTransaksi199 extends HttpServlet {
         
         // Tambahkan header dari pacs008
         header199.setBlock3("121:".concat(header103.getBlock3()).concat(";"));
-        System.out.println("The Block 3 : "+header103.getBlock3());
+        // System.out.println("The Block 3 : "+header103.getBlock3());
         
         dBDataTransaksiOutgoing.addDataTransaksiInvestigasi(header199, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
         var seq = CostumerHelper.getTheLastSeqNew(dBDataTransaksiOutgoing);
@@ -259,11 +259,11 @@ public class SCDataTransaksi199 extends HttpServlet {
         var valueDate = essentialsFieldPacs0080108.valueDateMTFormat();
         var amount = essentialsFieldPacs0080108.amount();
         
-        System.out.println("essentialsFieldPacs0080108 : "+essentialsFieldPacs0080108);
-        System.out.println("_011_of21_related_reference : "+_011_of21_related_reference);
-        System.out.println("currency : "+currency);
-        System.out.println("valueDate : "+valueDate);
-        System.out.println("amount : "+amount);
+        // System.out.println("essentialsFieldPacs0080108 : "+essentialsFieldPacs0080108);
+        // System.out.println("_011_of21_related_reference : "+_011_of21_related_reference);
+        // System.out.println("currency : "+currency);
+        // System.out.println("valueDate : "+valueDate);
+        // System.out.println("amount : "+amount);
         
         
         
@@ -348,7 +348,7 @@ public class SCDataTransaksi199 extends HttpServlet {
 
         var seq = CostumerHelper.getTheLastSeqNew(dBDataTransaksiOutgoing);
 
-        System.out.println("199_114 ");
+        // System.out.println("199_114 ");
         dBDataTransaksiOutgoing.createDataInvestigasi(Integer.parseInt(id), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
 //            DataInvestigation dataInv = dBDataTransaksiOutgoing.getDataInv(id);
         log.info("add data transaksi investigasi");
@@ -416,8 +416,8 @@ public class SCDataTransaksi199 extends HttpServlet {
     protected String mt199CommentByCondition(Header header103, String currency, String valueDate, String amount){
         log.info("Choose Narative condition MT199 Investigation");
         
-        System.out.println("Komen : "+header103.getKomentar());
-        System.out.println("Flag : "+header103.getFlag());
+        // System.out.println("Komen : "+header103.getKomentar());
+        // System.out.println("Flag : "+header103.getFlag());
         var komentarInvalidAccountNumber = "ATTN: " + currency + " FT INVESTIGATIONS." + "\r\n"
                 + "." + "\r\n"
                 + "REFER TO YOUR PACS.008 DD " + valueDate + " WITH ABOVE REF\r\n"
@@ -510,7 +510,7 @@ public class SCDataTransaksi199 extends HttpServlet {
 
         // Buat object prowide
         MT103 mt103 = new MT103(mtText.get("final_mt"));
-        System.out.println("Data " + mt103.getField20().getValue());
+        // System.out.println("Data " + mt103.getField20().getValue());
 
         List<TagDB> tags103 = dBDataTransaksiOutgoing.getAllTagById(idTransaction);
         DataHeaderTransaksi header199 = new DataHeaderTransaksi();
@@ -571,7 +571,7 @@ public class SCDataTransaksi199 extends HttpServlet {
             if (blok3.contains("433:")) {
                 blok3 = blok3.replace(blok3.substring(blok3.indexOf("433:")), "");
             }
-            System.out.println("blok3 nyaeta : " + blok3);
+            // System.out.println("blok3 nyaeta : " + blok3);
             //-------
 //                                    header199_2.setBlock3(header103.getBlock3().substring(header103.getBlock3().indexOf("121:")));
             header199_2.setBlock3(blok3);
@@ -740,7 +740,7 @@ public class SCDataTransaksi199 extends HttpServlet {
                 if (blok3.contains("433:")) {
                     blok3.replace(blok3.substring(blok3.indexOf("433:")), "");
                 }
-                System.out.println("blok3 nyaeta : " + blok3);
+                // System.out.println("blok3 nyaeta : " + blok3);
                 //-------
 //                                    header202.setBlock3(header103.getBlock3().substring(header103.getBlock3().indexOf("121:")));
                 header202.setBlock3(blok3);
@@ -990,7 +990,7 @@ public class SCDataTransaksi199 extends HttpServlet {
         Map<String, String> mtText = dBDataTransaksiOutgoing.getMxFromById(Integer.parseInt(idTransaction));
         String bodyMX = mtText.get("bodyMX");
         if (bodyMX == null || bodyMX.isEmpty()) {
-            System.out.println("bodyMX is null or empty. Unable to parse JSON.");
+            // System.out.println("bodyMX is null or empty. Unable to parse JSON.");
             throw new IllegalArgumentException("bodyMX is null or empty. Unable to parse JSON.");
         }
         // Buat object prowide
@@ -999,7 +999,7 @@ public class SCDataTransaksi199 extends HttpServlet {
         String amount2 = mxPacs.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getValue().toString();
         String valueDate2 = CostumerHelper.xmlGregorianCalenderToMTFormatString(mxPacs.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt());
 
-        System.out.println("Data " + mxPacs.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId());
+        // System.out.println("Data " + mxPacs.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId().getInstrId());
 
         List<TagDB> tags103 = dBDataTransaksiOutgoing.getAllTagById(idTransaction);
         DataHeaderTransaksi header199 = new DataHeaderTransaksi();

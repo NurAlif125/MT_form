@@ -271,7 +271,7 @@ public class SCPrintRecon extends HttpServlet {
                 sheet.addCell(statusHost2);
 
             }
-            System.out.println(recon.size());
+            // System.out.println(recon.size());
             int bigRecon = recon.size() < recon2.size() ? recon2.size() : recon.size();
             sheet.mergeCells(1, bigRecon + 13, 15, bigRecon + 13);//report footer
             Label reportFooter = new Label(1, bigRecon + 13, "REPORT FOOTER", blueCellFormat);

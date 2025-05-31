@@ -68,9 +68,9 @@ public class SCPrintPDF extends HttpServlet {
         requestData.put("cust_curr", request.getParameter("cust_curr"));
         requestData.put("channel", request.getParameter("channel"));
 
-        System.out.println("Channel="+request.getParameter("channel"));
+        // System.out.println("Channel="+request.getParameter("channel"));
 //        System.out.println("filter filter="+ request.getParameter("filter_msg"));
-        System.out.println("filter filter="+ filterMsg);
+        // System.out.println("filter filter="+ filterMsg);
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("user_id");
 
@@ -135,9 +135,9 @@ public class SCPrintPDF extends HttpServlet {
             model.put("username", userId);
             model.put("status", requestData.get("status"));
             
-            System.out.println("Header size: " + headers.size());
-            System.out.println("Report file path: " + reportFile.getAbsolutePath());
-            System.out.println("Report file exists: " + reportFile.exists());
+            // System.out.println("Header size: " + headers.size());
+            // System.out.println("Report file path: " + reportFile.getAbsolutePath());
+            // System.out.println("Report file exists: " + reportFile.exists());
 
 
             byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), model, new JRBeanCollectionDataSource(headers));
@@ -201,7 +201,7 @@ public class SCPrintPDF extends HttpServlet {
                 bytes = JasperRunManager.runReportToPdf(reportFileOut.getPath(), model, new JRBeanCollectionDataSource(headers));
 
             } else {*/
-                System.out.println("TIGA");
+                // System.out.println("TIGA");
                 headers = bBHeaders.getAllHeaderReport(requestData.get("status"), requestData.get("io_type"), requestData.get("mt_type"),
                         requestData.get("value_date"), requestData.get("date_from"), requestData.get("date_end"),
                         requestData.get("flag"), requestData.get("filter_msg"), requestData.get("cust_curr"), requestData.get("value_date_end"), requestData.get("channel"));
@@ -215,8 +215,8 @@ public class SCPrintPDF extends HttpServlet {
             String pdfFileName = new File(pdfFilePath).getName();
             String downloadUrl = "http://" + ServerName + ":" + ServerPort + getServletContext().getContextPath() + "/download?file=" + pdfFileName;
 
-            System.out.println("PDF generated successfully: " + pdfFilePath);
-            System.out.println("Download URL: " + downloadUrl);
+            // System.out.println("PDF generated successfully: " + pdfFilePath);
+            // System.out.println("Download URL: " + downloadUrl);
 
         } catch (Exception e) {
             e.printStackTrace();

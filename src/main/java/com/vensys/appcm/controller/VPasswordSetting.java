@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataPasswordSetting;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -22,6 +23,7 @@ import com.vensys.appcm.model.DataPasswordSetting;
 public class VPasswordSetting extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    Logger log = Logger.getLogger(getClass().getName());
 
     /**
      * Processes requests for both HTTP
@@ -42,7 +44,8 @@ public class VPasswordSetting extends HttpServlet {
         try {
             dataUserById = db.getDataPasswordSettingById(Integer.parseInt(idPassword));
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            // System.out.println(ex.toString());
+            log.info("Exceptio: "+ex.toString());
         } finally {
             dbConn.closeConnection();
         }

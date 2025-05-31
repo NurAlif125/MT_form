@@ -232,13 +232,13 @@ public class CreateTextNew {
         } else {
             // log.info("masukelse");
             for (int i = 0; i < tagDB.size(); i++) {
-                System.out.println("baris 227");
+                // System.out.println("baris 227");
                 List<String> str = getAppendTag(header.getId_headers(), tagDB.get(i).getTag());
                 if (tagDB.get(i).getTag().equalsIgnoreCase("71F")) {
-                    System.out.println("masuk sini ovasae");
+                    // System.out.println("masuk sini ovasae");
                     for (int j = 0; j < str.size(); j++) {
-                        System.out.println("str " + str.get(j));
-                        System.out.println("masuk sini ova j=" + j + " k=" + k);
+                        // System.out.println("str " + str.get(j));
+                        // System.out.println("masuk sini ova j=" + j + " k=" + k);
                         k++;
 
                         multiLine += str.get(j);
@@ -287,13 +287,13 @@ public class CreateTextNew {
                     }
                 } else {
                     if (str.size() == 1) {
-                        System.out.println("baris 282");
+                        // System.out.println("baris 282");
                         if (tagDB.get(i).getTag().equalsIgnoreCase("70")) {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), wrapString(str.get(0), 4, 35)));
-                            System.out.println("ct 287");
+                            // System.out.println("ct 287");
                         } else if (tagDB.get(i).getTag().equalsIgnoreCase("50K") || tagDB.get(i).getTag().equalsIgnoreCase("59") || tagDB.get(i).getTag().equalsIgnoreCase("58D") || tagDB.get(i).getTag().equalsIgnoreCase("53D") || tagDB.get(i).getTag().equalsIgnoreCase("57D") || tagDB.get(i).getTag().equalsIgnoreCase("52D") || tagDB.get(i).getTag().equalsIgnoreCase("50B") || tagDB.get(i).getTag().equalsIgnoreCase("50") || tagDB.get(i).getTag().equalsIgnoreCase("39C") || tagDB.get(i).getTag().equalsIgnoreCase("41D") || tagDB.get(i).getTag().equalsIgnoreCase("42D") || tagDB.get(i).getTag().equalsIgnoreCase("42M") || tagDB.get(i).getTag().equalsIgnoreCase("42P") || tagDB.get(i).getTag().equalsIgnoreCase("51B") || tagDB.get(i).getTag().equalsIgnoreCase("54D") || tagDB.get(i).getTag().equalsIgnoreCase("56D") || tagDB.get(i).getTag().equalsIgnoreCase("82D") || tagDB.get(i).getTag().equalsIgnoreCase("87D") || tagDB.get(i).getTag().equalsIgnoreCase("83D") || tagDB.get(i).getTag().equalsIgnoreCase("29A") || tagDB.get(i).getTag().equalsIgnoreCase("84D") || tagDB.get(i).getTag().equalsIgnoreCase("85D") || tagDB.get(i).getTag().equalsIgnoreCase("88D") || tagDB.get(i).getTag().equalsIgnoreCase("86D") || tagDB.get(i).getTag().equalsIgnoreCase("50F") || tagDB.get(i).getTag().equalsIgnoreCase("55D")) {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), wrapString(str.get(0), 4, 35)));
-                            System.out.println("ct 290");
+                            // System.out.println("ct 290");
                         } else if (tagDB.get(i).getTag().equalsIgnoreCase("42C") || tagDB.get(i).getTag().equalsIgnoreCase("77B")) {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), wrapString(str.get(0), 3, 35)));
                         } else if (tagDB.get(i).getTag().equalsIgnoreCase("79") || tagDB.get(i).getTag().equalsIgnoreCase("79Z")) {
@@ -314,7 +314,7 @@ public class CreateTextNew {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0)));
                         }
                     } else if (str.size() == 2) {
-                        System.out.println("else if 294");
+                        // System.out.println("else if 294");
                         if (tagDB.get(i).getTag().equalsIgnoreCase("27") || tagDB.get(i).getTag().equalsIgnoreCase("39A") || tagDB.get(i).getTag().equalsIgnoreCase("40E")) {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0) + "/" + str.get(1)));
                         } else if (tagDB.get(i).getTag().equalsIgnoreCase("48") || tagDB.get(i).getTag().equalsIgnoreCase("73R") || tagDB.get(i).getTag().equalsIgnoreCase("73S") || tagDB.get(i).getTag().equalsIgnoreCase("23X")) {
@@ -333,25 +333,25 @@ public class CreateTextNew {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0) + "\r\n" + str.get(1)));
                         }
                     } else if (str.size() == 3) {
-                        System.out.println("else if 311");
+                        // System.out.println("else if 311");
                         msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0) + str.get(1) + str.get(2)));
                     } else if (str.size() == 4) {
-                        System.out.println("else if 313");
+                        // System.out.println("else if 313");
                         if (tagDB.get(i).getTag().equalsIgnoreCase("71F")) {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0) + str.get(1)));
                         } else {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0) + "\r\n" + str.get(1) + "\r\n" + str.get(2) + str.get(3)));
                         }
                     } else if (str.size() == 5) {
-                        System.out.println("else if 320");
+                        // System.out.println("else if 320");
                         msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0) + str.get(1) + str.get(2) + str.get(3) + str.get(4)));
                     }
                 }
             }
         }
-        System.out.println("326");
+        // System.out.println("326");
         fin = srv.getFIN(msg);
-        System.out.println("323");
+        // System.out.println("323");
         return fin;
     }
 
@@ -365,7 +365,8 @@ public class CreateTextNew {
                 hasilHitung = Integer.parseInt(rs.getString("n"));
             }
         } catch (SQLException e) {
-            System.out.print("Error SQL ArrayLengthTags: " + e.getMessage());
+            // System.out.print("Error SQL ArrayLengthTags: " + e.getMessage());
+            log.error("Error SQL ArrayLengthTags: " + e.getMessage());
         }
         return hasilHitung;
     }
@@ -495,7 +496,7 @@ public class CreateTextNew {
                                 strLine = "";
                             }
                         } else {
-                            System.out.println("tag:" + tag);
+                            // System.out.println("tag:" + tag);
                             msg.getBlock4().append(new Tag(tag.toUpperCase(), detail.toUpperCase()));
                         }
                     }
@@ -694,7 +695,7 @@ public class CreateTextNew {
                                 msg.getBlock4().append(new Tag(tag.toUpperCase(), wrapString(detail, 6, 35)));
                             } else {
                                 // log.info("kadieeuuu 22D" + detail);
-                                System.out.println("tag:" + tag);
+                                // System.out.println("tag:" + tag);
                                 msg.getBlock4().append(new Tag(tag.toUpperCase(), detail));
                             }
                         }
@@ -768,8 +769,8 @@ public class CreateTextNew {
                             if (tag.equalsIgnoreCase("77L") || tag.equalsIgnoreCase("77U")) {
                                 msg.getBlock4().append(new Tag(tag.toUpperCase(), wrapString(detail, 150, 65))); //150 baris 65 karakter/kesamping
                             } else {
-                                log.info("kadieeuuu 22D" + detail);
-                                System.out.println("tag:" + tag);
+                                // log.info("kadieeuuu 22D" + detail);
+                                // System.out.println("tag:" + tag);
                                 msg.getBlock4().append(new Tag(tag.toUpperCase(), detail));
                             }
                         }

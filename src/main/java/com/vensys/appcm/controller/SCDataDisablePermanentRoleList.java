@@ -49,8 +49,8 @@ public class SCDataDisablePermanentRoleList extends HttpServlet {
         DBDataRole db = new DBDataRole(dbConn.getConnection());
        try{
             List<DataRole> disablePermanentRole = db.getAllDisableDataRole();
-              System.out.println("data role disable : "+disablePermanentRole);
-              System.out.println("eusi role disablenateh aya :"+disablePermanentRole.size());
+            //   System.out.println("data role disable : "+disablePermanentRole);
+            //   System.out.println("eusi role disablenateh aya :"+disablePermanentRole.size());
             httpSession.setAttribute("disablerole", disablePermanentRole); //kirim data ke FE (yang dalam kutip)
         }catch(Exception ex) {
             ex.printStackTrace();

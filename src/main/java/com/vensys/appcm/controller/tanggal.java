@@ -39,9 +39,9 @@ public class tanggal {
             
             String hasil = String.valueOf(daysBetween(cal1, cal2));
             
-            System.out.println("Tanggal Awal  = " +stglAwal);
-            System.out.println("Tanggal Akhir = " +stglAkhir);
-            System.out.println("Selisih: " +hasil+ " hari");
+            // System.out.println("Tanggal Awal  = " +stglAwal);
+            // System.out.println("Tanggal Akhir = " +stglAkhir);
+            // System.out.println("Selisih: " +hasil+ " hari");
             
         } catch (ParseException e) {
         }

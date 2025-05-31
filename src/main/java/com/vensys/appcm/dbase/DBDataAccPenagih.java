@@ -90,7 +90,7 @@ public class DBDataAccPenagih {
         String sql = "SELECT id_account, currency, swift_code, account FROM account_penagihan "
                 + "WHERE currency LIKE '%" + currency + "%' AND swift_code LIKE '%" + swift_code + "%' "
                 + "AND account LIKE '%" + account + "%' " + "ORDER BY currency ASC";
-        System.out.println("sql 2 = " + sql);
+        // System.out.println("sql 2 = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

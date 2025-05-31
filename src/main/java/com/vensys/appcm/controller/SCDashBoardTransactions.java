@@ -58,7 +58,7 @@ public class SCDashBoardTransactions extends HttpServlet {
         String begDateInsert = request.getParameter("insert_date_from");
         String endDateInsert = request.getParameter("insert_date_end");
         String io_type = request.getParameter("io_type");
-        System.out.println("::: Tipe Dashboard ALL -> " + io_type);
+        // System.out.println("::: Tipe Dashboard ALL -> " + io_type);
       
         try {  
             Date begDateTypeDate = begDate == null ? null : new SimpleDateFormat("yyyy-MM-dd").parse(begDate);
@@ -83,7 +83,7 @@ public class SCDashBoardTransactions extends HttpServlet {
         Collections.sort(ccyDistincy);
         
         for (String flagSatuan : flags){
-            System.out.println("Flag nya coy : "+flagSatuan);
+            // System.out.println("Flag nya coy : "+flagSatuan);
             
             DataDashBoardTransactions tempData = dBDataDashBoardTransactions.findDataDashBoardTransactionsByTag(flagSatuan,begDate,endDate,begDateInsert,endDateInsert,ccyDistincy,io_type);
             
@@ -129,7 +129,7 @@ public class SCDashBoardTransactions extends HttpServlet {
         }
         
         for (DataDashBoardTransactions dataSout : datas){
-            System.out.println("Ini datanya sample : "+dataSout.getFlag());
+            // System.out.println("Ini datanya sample : "+dataSout.getFlag());
         }
         
         // ini buat kirim apakah ada datanya atau tida
@@ -140,8 +140,8 @@ public class SCDashBoardTransactions extends HttpServlet {
             request.setAttribute("isEmpty",false);
         }
         
-        System.out.println("Beg Date "+begDate);
-        System.out.println("End Date "+endDate);
+        // System.out.println("Beg Date "+begDate);
+        // System.out.println("End Date "+endDate);
         
         
         
@@ -151,7 +151,7 @@ public class SCDashBoardTransactions extends HttpServlet {
         request.setAttribute("dataDashboard", datas);
         request.setAttribute("dataSumSlipAmount", dataSum);
         request.setAttribute("io_type",io_type);
-        System.out.println(":::: io_type"+io_type);
+        // System.out.println(":::: io_type"+io_type);
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCDashBoardTransactions.jsp");
         dispatcher.forward(request, response);
         

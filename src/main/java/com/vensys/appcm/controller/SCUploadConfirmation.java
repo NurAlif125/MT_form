@@ -96,7 +96,7 @@ public class SCUploadConfirmation extends HttpServlet {
                 String tag57Acc;
                 String tag57Bic;
                 rows = sheet.getPhysicalNumberOfRows();
-                System.out.println("rows nyaeta :" + rows);
+                // System.out.println("rows nyaeta :" + rows);
                 for (int i = 1; i < rows; i++) {
                     // log.info("cetakkk ....." + i);
                     // log.info("masuk for");

@@ -118,7 +118,7 @@ public class SCDataTransaksi299 extends HttpServlet {
                 }
             }
 
-            System.out.println("blok3 nyaeta : " + blok3);
+            // System.out.println("blok3 nyaeta : " + blok3);
             //-------
             header299.setBlock3(blok3);
             //end

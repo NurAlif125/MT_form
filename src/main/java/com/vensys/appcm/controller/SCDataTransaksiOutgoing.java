@@ -144,8 +144,8 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 }
             }
 
-            System.out.println("flagStatus: " + flagStatus);
-            System.out.println("flag: " + request.getParameter("flag"));
+            // System.out.println("flagStatus: " + flagStatus);
+            // System.out.println("flag: " + request.getParameter("flag"));
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                 String reference = "";
                 if (!messageType.contains("pacs") || !messageType.contains("camt")) {
@@ -166,7 +166,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                             dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         }
                     } else {
-                        System.out.println("flag req ada");
+                        // System.out.println("flag req ada");
                         if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equals("CVT-MOD")) {
                             log.info("flag req mod");
                             if (request.getParameter("sender_logical_terminal") == null) {
@@ -180,7 +180,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 //                            System.out.println("flag req ver");
 //                            dBDataTransaksiOutgoing.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         } else {
-                            System.out.println("flag req selain ver and mod");
+                            // System.out.println("flag req selain ver and mod");
                             dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
                             
                             if ((flagStatus.equalsIgnoreCase("VER") && flag.equalsIgnoreCase("MOD")) || (flagStatus.equalsIgnoreCase("CVT-VER") && flag.equalsIgnoreCase("CVT-MOD"))) {
@@ -225,13 +225,13 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
 //                dBDataTransaksiOutgoing.cleanDataTag(id);
             } else {
-                System.out.println("baris 266");
+                // System.out.println("baris 266");
                 if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equalsIgnoreCase("CVT-MOD") || flagStatus.equalsIgnoreCase("INC-HOLD") || flagStatus.equalsIgnoreCase("INC-WAIT")) {//191202 ditambah if //191227 ditambah inc-wait
                     log.info("baris 268");
                     dBDataTransaksiOutgoing2.cleanDataTag(Integer.parseInt(id));
                     log.info("baris 270");
                 }
-                System.out.println("baris 272");
+                // System.out.println("baris 272");
             }
             if (!flagStatus.equalsIgnoreCase("INC-NSTP")) {
                 while (names.hasMoreElements()) {
@@ -289,7 +289,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                                 }
                             } else {
                                 if (!tag.getDetail().isEmpty()) {
-                                    System.out.println(tag.getUrutan() + tag.getDetail() + tag.getTag() + tag.getTagName());
+                                    // System.out.println(tag.getUrutan() + tag.getDetail() + tag.getTag() + tag.getTagName());
                                     dBDataTransaksiOutgoing2.addDataTag(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
                                 }
                             }

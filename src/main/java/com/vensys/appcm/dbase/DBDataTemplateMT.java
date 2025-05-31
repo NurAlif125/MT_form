@@ -45,7 +45,8 @@ public class DBDataTemplateMT {
             }
 
         } catch (Exception e) {
-            System.out.println("ID TEMPLATE : " + e);
+            // System.out.println("ID TEMPLATE : " + e);
+            log.error("ID TEMPLATE : " + e);
         }
         return id;
     }
@@ -104,10 +105,12 @@ public class DBDataTemplateMT {
                 st.setString(6, info);  //info
                 st.executeUpdate();
             } catch (SQLException e) {
-                System.out.print("Error SQL MT: " + e.getMessage());
+                // System.out.print("Error SQL MT: " + e.getMessage());
+                log.info("Error SQL MT: " + e.getMessage());
             }
         } catch (SQLException swl) {
-            System.out.print("Error SQL MT: " + swl.getMessage());
+            // System.out.print("Error SQL MT: " + swl.getMessage());
+            log.info("Error SQL MT: " + swl.getMessage());
         }
     }
 

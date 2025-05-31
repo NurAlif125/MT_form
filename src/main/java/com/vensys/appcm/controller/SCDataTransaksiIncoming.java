@@ -113,7 +113,7 @@ public class SCDataTransaksiIncoming extends HttpServlet {
 //                    }
 //                }
             } else {
-                System.out.println("masuk else nama_core");
+                // System.out.println("masuk else nama_core");
                 dBDataTransaksiOutgoing.updateVerifiedAccount(acct, name);
                 Integer idTemp = Integer.parseInt(id);
                 String namaCore = dBDataTransaksiOutgoing.getVerifiedAccName(acct);

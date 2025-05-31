@@ -71,7 +71,7 @@ public class DBDataAccBalance {
     public List<DataAccBalance> getAllDataAccBalance() throws Exception {
         List<DataAccBalance> datas = new ArrayList<>();
         String sql = "SELECT id_account, account, value_date, balance, always_send, sequence_stmt, sequence_date FROM account_balance";
-        System.out.println("getAllDataAccBalance 70 " + sql);
+        // System.out.println("getAllDataAccBalance 70 " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -95,7 +95,7 @@ public class DBDataAccBalance {
                 + "AND balance LIKE '%" + balance + "%' AND always_send LIKE '%" + always_send + "%' "
                 + "AND sequence_stmt LIKE '%" + sequence_stmt + "%' AND sequence_date LIKE '%" + sequence_date + "%' "
                 + "ORDER BY currency ASC";
-        System.out.println("getAllDataAccBalance 85 " + sql);
+        // System.out.println("getAllDataAccBalance 85 " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -115,7 +115,7 @@ public class DBDataAccBalance {
     public DataAccBalance getDataAccBalanceById(String id_account) throws SQLException {
         DataAccBalance data = new DataAccBalance();
         String sql = "SELECT id_account, account, value_date, balance, always_send, sequence_stmt, sequence_date FROM account_balance WHERE id_account='" + id_account + "'";
-        System.out.println("getDataAccBalanceById 109 " + sql);
+        // System.out.println("getDataAccBalanceById 109 " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

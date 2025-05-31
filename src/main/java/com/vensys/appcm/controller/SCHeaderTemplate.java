@@ -32,7 +32,7 @@ public class SCHeaderTemplate extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String forward = "";
         String menu = request.getParameter("menu");
-        System.out.println("menu: " + menu);
+        // System.out.println("menu: " + menu);
         HttpSession httpSession = request.getSession();
         DBconnection dbConn = new DBconnection();
         DBUserData dbo = new DBUserData(dbConn.getConnection());

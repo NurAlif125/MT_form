@@ -47,7 +47,7 @@ public class SCPrintMXDoc extends HttpServlet {
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         Collection<Header> headers = new ArrayList<Header>();
         String messageType = request.getParameter("messageType");
-        System.out.println("cek printmx" + messageType);
+        // System.out.println("cek printmx" + messageType);
         ServletOutputStream servletOutputStream = response.getOutputStream();
         File reportFile = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportMXDoc.jasper"));
         byte[] bytes = null;

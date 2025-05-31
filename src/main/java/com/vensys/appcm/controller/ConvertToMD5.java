@@ -44,14 +44,14 @@ public class ConvertToMD5 {
         String ref = "FT2022304P9KA;1";
         String passMD5=convert.convert(pass);
         sample = sample.replaceAll(":", "");
-        System.out.println("sample nyate "+sample);
+        // System.out.println("sample nyate "+sample);
 //        System.out.println("ref: "+ref.substring(0, ref.indexOf(";")));
-        System.out.println("Pass MD5:"+passMD5);
+        // System.out.println("Pass MD5:"+passMD5);
    
         BigDecimal amount = new BigDecimal(27606.12);
         BigDecimal ttsell = new BigDecimal(1.36);
         
-        System.out.println("Hasil :" +amount.divide(ttsell,2 ,RoundingMode.CEILING));
+        // System.out.println("Hasil :" +amount.divide(ttsell,2 ,RoundingMode.CEILING));
     }
     
     
