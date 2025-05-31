@@ -48,7 +48,7 @@ public class DBDataFeeRemit {
     public void updateDataFeeRemit(DataFeeRemit data, int fee_id, String mofier, String ip, String comp) {
         try {
             String sql = "UPDATE fee_remittance SET currency=?,fee_amount=? WHERE fee_id=?";
-            System.out.println("update fee remit " + sql);
+            // System.out.println("update fee remit " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getCurrency());
             st.setBigDecimal(2, data.getFee_amount());

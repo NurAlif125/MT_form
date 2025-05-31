@@ -113,7 +113,7 @@ public class SCDataTransaksiIncoming extends HttpServlet {
 //                    }
 //                }
             } else {
-                System.out.println("masuk else nama_core");
+                // System.out.println("masuk else nama_core");
                 dBDataTransaksiOutgoing.updateVerifiedAccount(acct, name);
                 Integer idTemp = Integer.parseInt(id);
                 String namaCore = dBDataTransaksiOutgoing.getVerifiedAccName(acct);
@@ -245,7 +245,7 @@ public class SCDataTransaksiIncoming extends HttpServlet {
             String type = request.getParameter("type");
             dBDataTransaksiOutgoing.updateTag59Name(Integer.parseInt(id), custName, type);
             dBDataTransaksiOutgoing.updateTag59Acc(Integer.parseInt(id), custAcc, type);
-            log.info("kadieu... APPROVEADJ ");
+            // log.info("kadieu... APPROVEADJ ");
             dBDataTransaksiOutgoing.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
 //            if (cust_curr.equalsIgnoreCase("IDR")) {
             if (amt.compareTo(stpLimit) == 1) {

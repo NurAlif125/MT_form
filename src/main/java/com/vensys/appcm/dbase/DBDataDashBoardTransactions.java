@@ -40,8 +40,8 @@ public class DBDataDashBoardTransactions {
 
     public List<String> findAllPosibleTagByCharges(String io_type, String begDateInsert, String endDateInsert) {
 
-        System.out.println(begDateInsert);
-        System.out.println(endDateInsert);
+        // System.out.println(begDateInsert);
+        // System.out.println(endDateInsert);
 
         List<String> values = new ArrayList<>();
         String sql = "";
@@ -52,7 +52,7 @@ public class DBDataDashBoardTransactions {
             } else {
                 sql = "select distinct(flag) from viewReportOutCharges where (CAST(tanggal as DATE) BETWEEN ? AND ?)";
             }
-            System.out.println("sql findAllPosibleTagByCharges " + sql);
+            // System.out.println("sql findAllPosibleTagByCharges " + sql);
             PreparedStatement st = this.conn.prepareCall(sql);
             st.setString(1, begDateInsert);
             st.setString(2, endDateInsert);
@@ -71,8 +71,8 @@ public class DBDataDashBoardTransactions {
 
     public List<String> findAllPosibleTagByInsertDate(String io_type, String begDateInsert, String endDateInsert) {
 
-        System.out.println(begDateInsert);
-        System.out.println(endDateInsert);
+        // System.out.println(begDateInsert);
+        // System.out.println(endDateInsert);
 
         List<String> values = new ArrayList<>();
         String sql = "";
@@ -83,7 +83,7 @@ public class DBDataDashBoardTransactions {
             } else {
                 sql = "select distinct(flag) from viewReportOutFTI where (CAST(tanggal as DATE) BETWEEN ? AND ?)";
             }
-            System.out.println("sql findAllPosibleTagByInsertDate " + sql);
+            // System.out.println("sql findAllPosibleTagByInsertDate " + sql);
             PreparedStatement st = this.conn.prepareCall(sql);
             st.setString(1, begDateInsert);
             st.setString(2, endDateInsert);
@@ -102,9 +102,9 @@ public class DBDataDashBoardTransactions {
 
     //public List<String> findAllPosibleTag(String begDate, String endDate, String begDateInsert, String endDateInsert){
     public List<String> findAllPosibleTag(String begDate, String endDate, String begDateInsert, String endDateInsert, String io_type) {
-        System.out.println(begDate);
-        System.out.println(endDate);
-        System.out.println(begDateInsert);
+        // System.out.println(begDate);
+        // System.out.println(endDate);
+        // System.out.println(begDateInsert);
 
         List<String> values = new ArrayList<>();
         String sql = "";
@@ -115,7 +115,7 @@ public class DBDataDashBoardTransactions {
                 sql = "select distinct(flag) from viewReportOutAll where (dateValue BETWEEN ? AND ? OR dateValue='--') AND (CAST(tanggal AS DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE))";
             }
 
-            System.out.println("sql findAllPosibleTag: " + sql);
+            // System.out.println("sql findAllPosibleTag: " + sql);
             //String sql = "select distinct(flag) from viewReport where (dateValue BETWEEN ? AND ? OR dateValue='--') AND (CAST(tanggal as DATE) BETWEEN ? AND ?)";
             PreparedStatement st = this.conn.prepareCall(sql);
             st.setString(1, begDate);
@@ -146,7 +146,7 @@ public class DBDataDashBoardTransactions {
                 sql = "select distinct(ccy) from viewReportOutAll where (dateValue BETWEEN ? AND ? OR dateValue='--') AND (CAST(tanggal as DATE) BETWEEN CAST(? AS DATE) AND CAST(? AS DATE))";
             }            
             //String sql = "select distinct(ccy) from viewReport where (dateValue BETWEEN ? AND ? OR dateValue='--') AND (CAST(tanggal as DATE) BETWEEN ? AND ?)";
-            System.out.println("sql findAllPosibleCcy : " + sql);
+            // System.out.println("sql findAllPosibleCcy : " + sql);
             PreparedStatement st = this.conn.prepareCall(sql);
             st.setString(1, begDate);
             st.setString(2, endDate);
@@ -260,7 +260,7 @@ public class DBDataDashBoardTransactions {
 //        }
     public DataDashBoardTransactions findDataDashBoardTransactionsByTag(String flag, String begDate, String endDate,
             String begDateInsert, String endDateInsert, List<String> ccyDistincy, String io_type) {
-        System.out.println("start findDataDashBoardTransactionsByTag");
+        // System.out.println("start findDataDashBoardTransactionsByTag");
 
         DataDashBoardTransactions tempData = new DataDashBoardTransactions();
         String sql = "";
@@ -277,7 +277,7 @@ public class DBDataDashBoardTransactions {
             /*String sql = "select flag, ccy, count(ccy) as slip, sum(valCcy) as val from viewReport\n" +
                 "where flag = ? and (dateValue BETWEEN ? AND ? OR dateValue='--') AND (CAST(tanggal as DATE) BETWEEN ? AND ?)\n" +
                 "group by ccy,flag";*/
-            System.out.println("sql findDataDashBoardTransactionsByTag" + sql);
+            // System.out.println("sql findDataDashBoardTransactionsByTag" + sql);
             PreparedStatement st = this.conn.prepareCall(sql);
             st.setString(1, flag);
             st.setString(2, begDate);
@@ -294,7 +294,7 @@ public class DBDataDashBoardTransactions {
                 if (tempData.getFlag() == null) {
                     tempData.setFlag(rs.getString("flag"));
                 }
-                System.out.println(rs.getString("flag"));
+                // System.out.println(rs.getString("flag"));
                 // Sisanya masukan data yang lainnya
                 // dan
                 // Hanya memasukan sesuai urutan
@@ -302,11 +302,11 @@ public class DBDataDashBoardTransactions {
 
                     // check sesuai urutan ccy
                     if (ccyUrutan.equalsIgnoreCase(rs.getString("ccy"))) {
-                        System.out.println("Ada data : " + ccyUrutan + " (" + rs.getString("slip") + ")");
+                        // System.out.println("Ada data : " + ccyUrutan + " (" + rs.getString("slip") + ")");
                         tempData.addSlipAmountAndCCY(rs.getString("ccy"), rs.getString("slip"), rs.getString("val"));
                     } else {
                         // Jadikan angka null maka disini
-                        System.out.println("Tidak ada data " + ccyUrutan);
+                        // System.out.println("Tidak ada data " + ccyUrutan);
                         tempData.addSlipAmountAndCCY(ccyUrutan, "0", "0.00");
                     }
 
@@ -323,7 +323,7 @@ public class DBDataDashBoardTransactions {
 
     //public Map<String, Map<String,String>> findSumSlipAmount (String begDate, String endDate, String begDateInsert,String endDateInsert){
     public Map<String, Map<String, String>> findSumSlipAmount(String begDate, String endDate, String begDateInsert, String endDateInsert, String io_type) {
-        System.out.println("start findSumSlipAmount");
+        // System.out.println("start findSumSlipAmount");
 
         Map<String, Map<String, String>> sumData = new HashMap<String, Map<String, String>>();
         String sql = "";
@@ -342,7 +342,7 @@ public class DBDataDashBoardTransactions {
                         + "group by ccy";
             }
             // String sql = "select ccy,count(ccy) as sumSlip, sum(valCcy) as sumAmount from viewReport where (dateValue BETWEEN ? AND ? OR dateValue='--') AND (CAST(tanggal as DATE) BETWEEN ? AND ?) group by ccy";
-            System.out.println("sql findSumSlipAmount: " + sql);
+            // System.out.println("sql findSumSlipAmount: " + sql);
             PreparedStatement st = this.conn.prepareCall(sql);
             st.setString(1, begDate);
             st.setString(2, endDate);

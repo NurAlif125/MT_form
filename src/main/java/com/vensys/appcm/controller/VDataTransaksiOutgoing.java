@@ -125,7 +125,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         }
 
         try {
-            log.info("masuk gettextbyid");
+            // log.info("masuk gettextbyid");
             
             if (headerById.getMessageType().contains("pacs") || headerById.getMessageType().contains("camt")) {
                 textById = dbText.getMxTextById(Integer.parseInt(request.getParameter("id")));

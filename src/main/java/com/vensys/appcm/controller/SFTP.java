@@ -42,7 +42,7 @@ public class SFTP {
         String remoteDestinationDir = "";
         Session session = null;
         ChannelSftp channelSftp = null;
-        System.out.println("MMMflag:" + flag);
+        // System.out.println("MMMflag:" + flag);
         try {
             session = prepareSession(jsch);
 
@@ -61,8 +61,8 @@ public class SFTP {
             List<String> pathList = Arrays.asList(sftpReSendPath.split(","));
             List<String> flagList = Arrays.asList(sftpReSendFlag.split(","));
 
-            System.out.println("sftpReSendPath:" + sftpReSendPath);
-            System.out.println("sftpReSendFlag:" + sftpReSendFlag);
+            // System.out.println("sftpReSendPath:" + sftpReSendPath);
+            // System.out.println("sftpReSendFlag:" + sftpReSendFlag);
 
             Map<String, String> flagToPathMap = new HashMap<>();
             for (int i = 0; i < flagList.size(); i++) {

@@ -39,11 +39,11 @@ public class SCDataTemplateMT extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Request URL: " + request.getRequestURL());
+        // System.out.println("Request URL: " + request.getRequestURL());
         Enumeration<String> parameterNames = request.getParameterNames();
         while (parameterNames.hasMoreElements()) {
             String paramName = parameterNames.nextElement();
-            System.out.println(paramName + ": " + request.getParameter(paramName));
+            // System.out.println(paramName + ": " + request.getParameter(paramName));
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         HttpSession session = request.getSession();
@@ -63,7 +63,7 @@ public class SCDataTemplateMT extends HttpServlet {
         String isDelete = request.getParameter("isdelete");
         String messageType = request.getParameter("messageType");
         String mt = request.getParameter("mt");
-        System.out.println("sender1: " + request.getParameter("sender_logical_terminal"));
+        // System.out.println("sender1: " + request.getParameter("sender_logical_terminal"));
         String sender = request.getParameter("sender_logical_terminal");
         String lastInsertedID = "";
         int cek = 0;
@@ -88,7 +88,7 @@ public class SCDataTemplateMT extends HttpServlet {
 
         if (id == null || id.equals("null") || id.isEmpty()) {
             lastInsertedID = dBDataTemplateMT2.addDataTemplateMT(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
-            System.out.println(lastInsertedID);
+            // System.out.println(lastInsertedID);
         } else if (isDelete != null) {
             if (isDelete.equals("true")) {
                 try {

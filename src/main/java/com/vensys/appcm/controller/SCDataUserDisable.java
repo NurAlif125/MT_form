@@ -54,8 +54,8 @@ public class SCDataUserDisable extends HttpServlet {
         
         try{
             List<DataUser> disablePermanentUser = dbData.getAllDataUserDisable();
-              log.info("data user disable : "+disablePermanentUser);
-              log.info("eusi disablenateh aya :"+disablePermanentUser.size());
+            //   log.info("data user disable : "+disablePermanentUser);
+            //   log.info("eusi disablenateh aya :"+disablePermanentUser.size());
             httpsession.setAttribute("datadisable", disablePermanentUser); //kirim data ke FE (yang dalam kutip)
         }catch(Exception ex) {
             ex.printStackTrace();

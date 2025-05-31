@@ -57,7 +57,7 @@ public class SCResetPassword extends HttpServlet {
         c.add(Calendar.MONTH, 1);  // number of days to add
         String cd = sdf.format(dt);
         String ed = sdf.format(c.getTime());  // dt is now the new date
-        System.out.println(cd + " " + ed);
+        // System.out.println(cd + " " + ed);
         // is user is not exist then add user
         data.setCreate_date(cd);
         data.setExpired_date(ed);
