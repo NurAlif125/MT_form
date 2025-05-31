@@ -98,8 +98,8 @@ public class SCUploadConfirmation extends HttpServlet {
                 rows = sheet.getPhysicalNumberOfRows();
                 System.out.println("rows nyaeta :" + rows);
                 for (int i = 1; i < rows; i++) {
-                    log.info("cetakkk ....." + i);
-                    log.info("masuk for");
+                    // log.info("cetakkk ....." + i);
+                    // log.info("masuk for");
                     row = sheet.getRow(i);
                     HSSFDataFormatter df = new HSSFDataFormatter();
                     noref = row.getCell(0).toString();
@@ -295,7 +295,7 @@ public class SCUploadConfirmation extends HttpServlet {
                                             log.info("id header mt191: " + dBDataTransaksiOutgoing.id_headers());
                                             dBDataTransaksiOutgoing.addMTText(ct.createFinalMT(ct.getHeaderById(dBDataTransaksiOutgoing.id_headers())), dBDataTransaksiOutgoing.id_headers());
                                             ct.getFinalMT(dBDataTransaksiOutgoing.id_headers(), "I", "", (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name") );
-                                            log.info("after add datatag penagihan");
+                                            // log.info("after add datatag penagihan");
                                         }
 
                                     }
@@ -359,7 +359,7 @@ public class SCUploadConfirmation extends HttpServlet {
                                             + "//" + currency + amount);
                                     tag199.setTagName("_012_mf79_narrative");
                                     tags199.add(tag199);
-                                    log.info("before add datatag investigasi");
+                                    // log.info("before add datatag investigasi");
                                     for (int a = 0; a < tags199.size(); a++) {
                                         //                        log.info("before add datatag retur if");
                                         dBDataTransaksiOutgoing.addDataTag199(tags199.get(a).getUrutan(), tags199.get(a).getTag(), tags199.get(a).getDetail(), tags199.get(a).getTagName());
@@ -370,11 +370,11 @@ public class SCUploadConfirmation extends HttpServlet {
                                     log.info("id header mt199: " + dBDataTransaksiOutgoing.id_headers());
                                     dBDataTransaksiOutgoing.addMTText(ct.createFinalMT(ct.getHeaderById(dBDataTransaksiOutgoing.id_headers())), dBDataTransaksiOutgoing.id_headers());
                                     ct.getFinalMT(dBDataTransaksiOutgoing.id_headers(), "I", "", (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
-                                    log.info("after add data tag confirmation kredit payment");
+                                    // log.info("after add data tag confirmation kredit payment");
 
                                 } else {
-                                    log.info("bukan OUR");
-                                    log.info("get confirmation kredit payment"); // 20190903
+                                    // log.info("bukan OUR");
+                                    // log.info("get confirmation kredit payment"); // 20190903
                                     dBDataTransaksiOutgoing.createReturTransaksiOutgoing("INC-CNF", Integer.parseInt(id), row.getCell(15) + "|" + row.getCell(16), noref.substring(0, noref.indexOf(";")));
                                     Header header103 = dBDataTransaksiOutgoing.getHeaderById(id);
                                     List<TagDB> tags103 = dBDataTransaksiOutgoing.getAllTagById(id);
@@ -400,7 +400,7 @@ public class SCUploadConfirmation extends HttpServlet {
                                     dBDataTransaksiOutgoing.addDataTransaksiInvestigasi(header199);
                                     dBDataTransaksiOutgoing.createDataInvestigasi(Integer.parseInt(id));
 //                                    DataInvestigation dataInv = dBDataTransaksiOutgoing.getDataInv(id);
-                                    log.info("add data transaksi kredit payment");
+                                    // log.info("add data transaksi kredit payment");
                                     String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
                                     //            String dataRtr = dBDataTransaksiOutgoing.getSeqRetur(tanggal_transaksi);
                                     String currDate = new SimpleDateFormat("yyMMdd").format(new Date());
@@ -463,13 +463,13 @@ public class SCUploadConfirmation extends HttpServlet {
                                     log.info("after add data tag confirmation kredit payment");
                                 }
                             }
-                            log.info("perulangan");
+                            // log.info("perulangan");
                         }
                     } else {
                         log.info("MT103 tidak ditemukan");
                     }
                 }
-                log.info("berhaasil");
+                // log.info("berhaasil");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("upload_confirmation.jsp?status=y126");
                 dispatcher.forward(request, response);
             } catch (Exception e) {

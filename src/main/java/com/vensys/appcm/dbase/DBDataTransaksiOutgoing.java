@@ -1997,8 +1997,8 @@ public class DBDataTransaksiOutgoing {
     }
 
     public void updateLock(int value, int id_headers, String user) {
-        log.info("grrrrr");
-        log.info("masuk updateLock#" + value + "#" + user + "#" + id_headers);
+        // log.info("grrrrr");
+        // log.info("masuk updateLock#" + value + "#" + user + "#" + id_headers);
         try {
             String sql = "update headers set isLock =?, usedBy=? where id_headers=? ";
             PreparedStatement st = this.conn.prepareStatement(sql);

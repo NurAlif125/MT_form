@@ -131,7 +131,7 @@ public class CHeader {
             String fin = textById.getModify_mt();
             if (fin == null || fin =="") return;
             fin.replaceAll("\\{1:F21.*.1:F01", "\\{1:F01");
-            log.info("fin nya:" + fin);
+            // log.info("fin nya:" + fin);
             SwiftMessage msg = SwiftMessage.parse(fin);
             SwiftBlock3 sb3 = msg.getBlock3();
             SwiftBlock4 sb4 = msg.getBlock4();
@@ -150,7 +150,7 @@ public class CHeader {
                     }
                     sb.append(tagName + ":" + tagValue + ";");
                 }
-                log.info("cover " + cover);
+                // log.info("cover " + cover);
             }            
             
             
@@ -509,14 +509,14 @@ public class CHeader {
                     if (a == 0) {
                         readBlock4(arr[0 + a], tagName, dataTag[a]);
                     } else {
-                        log.info("data tag A :" + dataTag[a]);
+                        // log.info("data tag A :" + dataTag[a]);
                         for (int b = 0; b < 2; b++) {
                             if (b == 0) {
                                 readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(0, 1));
-                                log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
+                                // log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
                             } else {
                                 readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(2));
-                                log.info("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
+                                // log.info("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
                             }
                             count59f = count59f + 1;
                         }
@@ -526,15 +526,15 @@ public class CHeader {
             } else {
                 String[] dataTag = tagValue.split("\r\n");
                 for (int a = 0; a < dataTag.length; a++) {
-                    log.info("data tag A :" + dataTag[a]);
+                    // log.info("data tag A :" + dataTag[a]);
                     for (int b = 0; b < 2; b++) {//20200408
                         count59f = count59f + 1;
                         if (b == 0) {
                             readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(0, 1));
-                            log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
+                            // log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count59f);
                         } else {
                             readBlock4(arr[0 + a + count59f], tagName, dataTag[a].substring(2));
-                            log.info("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
+                            // log.info("data tag B :" + dataTag[a].substring(2) + "#" + count59f);
                         }
 //                        count59f = count59f + 1;
                     }
@@ -566,15 +566,15 @@ public class CHeader {
             } else {
                 String[] dataTag = tagValue.split("\r\n");
                 for (int a = 0; a < dataTag.length; a++) {
-                    log.info("data tag A :" + dataTag[a]);
+                    // log.info("data tag A :" + dataTag[a]);
                     for (int b = 0; b < 2; b++) {//20200408
                         count50f = count50f + 1;
                         if (b == 0) {
                             readBlock4(arr[0 + a + count50f], tagName, dataTag[a].substring(0, 1));
-                            log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count50f);
+                            // log.info("data tag B :" + dataTag[a].substring(0, 1) + "#" + count50f);
                         } else {
                             readBlock4(arr[0 + a + count50f], tagName, dataTag[a].substring(2));
-                            log.info("data tag B :" + dataTag[a].substring(2) + "#" + count50f);
+                            // log.info("data tag B :" + dataTag[a].substring(2) + "#" + count50f);
                         }
                     }
                     count50f = count50f - 1;
@@ -654,7 +654,7 @@ public class CHeader {
             i++;
         }
         if (tagValue.contains("/") || tagValue.contains("//")) {
-            log.info("Ada /:" + tagValue);
+            // log.info("Ada /:" + tagValue);
             StringTokenizer st_ = new StringTokenizer(tagValue, "/");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];
@@ -673,7 +673,7 @@ public class CHeader {
     //    method split data block4 dan insert ke DB
     public void readBlock4(String tags, String tagName, String tagValue) {
         // lewatin kalo ga ada id_headers
-        log.info("readBlock4:id_headers:" + this.id_headers);
+        // log.info("readBlock4:id_headers:" + this.id_headers);
         if (this.id_headers == -1) return;       
         
         if (tags.startsWith("_")) {
@@ -690,7 +690,7 @@ public class CHeader {
             tag.setTagName(tags);   //tagName
 //            log.info("tagValue readblock4 " + tagValue);
             if (tagName.contains("15")) {
-                log.info("masuk tagName 15");
+                // log.info("masuk tagName 15");
                 try {
                     dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), "", tag.getTagName().trim(),this.id_headers);
                 } catch (Exception ex) {
@@ -699,7 +699,7 @@ public class CHeader {
                 }
             } else {
                 if (!tagValue.equals("")) {
-                    log.info("masuk tagName kosong");
+                    // log.info("masuk tagName kosong");
                     try {
                         dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), tag.getDetail().trim(), tag.getTagName().trim(),this.id_headers);
                     } catch (Exception ex) {
@@ -736,7 +736,7 @@ public class CHeader {
             i++;
         }
         if (tagValue.contains("/") || tagValue.contains("/")) {
-            log.info("Ada /:" + tagValue);
+            // log.info("Ada /:" + tagValue);
             StringTokenizer st_ = new StringTokenizer(tagValue, "/");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];

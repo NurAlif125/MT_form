@@ -82,7 +82,7 @@ public class SCDataTransaksi199 extends HttpServlet {
         String tgl_trx = new SimpleDateFormat("yyMMddHHmm").format(new Date());
         String tglToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         if (request.getParameter("flag").equalsIgnoreCase("INC-INV")) {
-            log.info("Investigate"); // 20190826
+            // log.info("Investigate"); // 20190826
             Header header103 = dBDataTransaksiOutgoing.getHeaderById(id);
             dBDataTransaksiOutgoing.createReturTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             
@@ -214,12 +214,12 @@ public class SCDataTransaksi199 extends HttpServlet {
 //                  response.sendRedirect("controllerHeaders?" + pagingHistory);
             } else {
                 dBDataTransaksiOutgoing.updateWriteSession(0);
-                log.info("session is used by reader");
+                // log.info("session is used by reader");
             }
         }
 
         dbConn.closeConnection();
-        log.info("kadieuuuuuu....");
+        // log.info("kadieuuuuuu....");
 //        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
         dispatcher.forward(request, response);
@@ -546,11 +546,11 @@ public class SCDataTransaksi199 extends HttpServlet {
         log.info("masuk mt 103");
 
         DataCharges charges2 = dBDataTransaksiOutgoing.getCharges("USD");
-        log.info("sebelum cek chargessss...");
+        // log.info("sebelum cek chargessss...");
         if (charges2.getCharges() == null) {
-            log.info("kadarieu kadarieu.....");
+            // log.info("kadarieu kadarieu.....");
         } else {
-            log.info("setelah masuk chargesssss....");
+            // log.info("setelah masuk chargesssss....");
 
             //InsyaAllah nanti part 2, -> dipakai 240111
             //MT 199 TIPE 2
@@ -1018,9 +1018,9 @@ public class SCDataTransaksi199 extends HttpServlet {
         DataCharges charges2 = dBDataTransaksiOutgoing.getCharges("USD");
         log.info("sebelum cek chargessss...");
         if (charges2.getCharges() == null) {
-            log.info("kadarieu kadarieu.....");
+            // log.info("kadarieu kadarieu.....");
         } else {
-            log.info("setelah masuk chargesssss....");
+            // log.info("setelah masuk chargesssss....");
 
             //MT 199 TIPE 2
             List<TagDB> tags199_2 = new ArrayList<TagDB>();

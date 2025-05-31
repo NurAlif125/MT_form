@@ -3193,62 +3193,125 @@ public class DBHeader {
             params.add(java.sql.Timestamp.valueOf(date_end + " 23:59:59"));
 
             // SQL lengkap
+//            String sql = "SELECT DISTINCT \n" +
+//                "    hd.id_headers, \n" +
+//                "    hd.messageType,\n" +
+//                "    hd.logicalTerminal,\n" +
+//                "    hd.io_type,\n" +
+//                "    hd.receiverAddress,\n" +
+//                "    hd.tanggal,\n" +
+//                "    hd.flag, \n" +
+//                "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
+//                "        SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
+//                "        RIGHT(t32d.detail, 2), '') AS vdate,\n" +
+//                "    -- REF --\n" +
+//                "    COALESCE(\n" +
+//                "        t20.detail, \n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].pmtId.instrId'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.grpHdr.msgId'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].pmtId.instrId'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.rsltnOfInvstgtn.assgnmt.id'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrAcctRpt.rpt[0].id'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrStmt.stmt[0].id'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.undrlyg[0].txInf[0]._case.id'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.assgnmt.id'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtStsRpt.grpHdr.msgId'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.ntfctn.id'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.grpHdr.msgId'),\n" +
+//                "                 JSON_VALUE(mx.json_tag,'$.cstmrPmtCxlReq.assgnmt.id')\n" +
+//                "        )))))))))))) as ref,\n" +
+//                "    -- Currency\n" +
+//                "    COALESCE(\n" +
+//                "        t32c.detail, \n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.ccy'),\n" +
+//                "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy')\n" +
+//                "        ))\n" +
+//                "    ) as curr,\n" +
+//                "    -- Amount\n" +
+//                "    COALESCE(\n" +
+//                "        t32.detail, \n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value'),\n" +
+//                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.value'),\n" +
+//                "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value')\n" +
+//                "        ))\n" +
+//                "    ) as amount,\n" +
+//                "hd.source\n" +
+//                "FROM headers as hd \n" +
+//                "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
+//                "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
+//                "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
+//                "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
+//                "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
+//                "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
+//                "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
+//                "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE "
+//                + where.toString() + " ORDER BY tanggal DESC";
             String sql = "SELECT DISTINCT \n" +
-                "    hd.id_headers, \n" +
-                "    hd.messageType,\n" +
-                "    hd.logicalTerminal,\n" +
-                "    hd.io_type,\n" +
-                "    hd.receiverAddress,\n" +
-                "    hd.tanggal,\n" +
-                "    hd.flag, \n" +
-                "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
-                "        SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
-                "        RIGHT(t32d.detail, 2), '') AS vdate,\n" +
-                "    -- REF --\n" +
-                "    COALESCE(\n" +
-                "        t20.detail, \n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].pmtId.instrId'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.grpHdr.msgId'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].pmtId.instrId'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.rsltnOfInvstgtn.assgnmt.id'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrAcctRpt.rpt[0].id'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.bkToCstmrStmt.stmt[0].id'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.undrlyg[0].txInf[0]._case.id'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtCxlReq.assgnmt.id'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFIPmtStsRpt.grpHdr.msgId'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.ntfctn.id'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.ntfctnToRcv.grpHdr.msgId'),\n" +
-                "                 JSON_VALUE(mx.json_tag,'$.cstmrPmtCxlReq.assgnmt.id')\n" +
-                "        )))))))))))) as ref,\n" +
-                "    -- Currency\n" +
-                "    COALESCE(\n" +
-                "        t32c.detail, \n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.ccy'),\n" +
-                "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.ccy')\n" +
-                "        ))\n" +
-                "    ) as curr,\n" +
-                "    -- Amount\n" +
-                "    COALESCE(\n" +
-                "        t32.detail, \n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.fiToFICstmrCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value'),\n" +
-                "        COALESCE(JSON_VALUE(mx.json_tag,'$.pmtRtr.txInf[0].rtrdIntrBkSttlmAmt.value'),\n" +
-                "                 JSON_VALUE(mx.json_tag,'$.fiCdtTrf.cdtTrfTxInf[0].intrBkSttlmAmt.value')\n" +
-                "        ))\n" +
-                "    ) as amount,\n" +
-                "hd.source\n" +
-                "FROM headers as hd \n" +
-                "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
-                "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
-                "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
-                "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
-                "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
-                "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
-                "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
-                "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE "
-                + where.toString() + " ORDER BY tanggal DESC";
-
-            System.out.println(sql);
+                        "    hd.id_headers, \n" +
+                        "    hd.messageType,\n" +
+                        "    hd.logicalTerminal,\n" +
+                        "    hd.io_type,\n" +
+                        "    hd.receiverAddress,\n" +
+                        "    hd.tanggal,\n" +
+                        "    hd.flag, \n" +
+                        "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
+                        "                    SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
+                        "                    RIGHT(t32d.detail, 2), '') AS vdate,\n" +
+                        "\n" +
+                        "    -- REF --\n" +
+                        "    COALESCE(\n" +
+                        "        t20.detail, \n" +
+                        "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,pmtId,instrId}', -- pacs.008\n" +
+                        "        COALESCE(mx.json_tag #>> '{pmtRtr,grpHdr,msgId}', -- pacs.004\n" +
+                        "        COALESCE(mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,pmtId,instrId}', -- pacs.009\n" +
+                        "        COALESCE(mx.json_tag #>> '{rsltnOfInvstgtn,assgnmt,id}', -- camt.029\n" +
+                        "        COALESCE(mx.json_tag #>> '{bkToCstmrAcctRpt,rpt,0,id}', -- camt.052\n" +
+                        "        COALESCE(mx.json_tag #>> '{bkToCstmrStmt,stmt,0,id}', -- camt.053\n" +
+                        "        COALESCE(mx.json_tag #>> '{fiToFIPmtCxlReq,undrlyg,0,txInf,0,_case,id}', -- camt.056\n" +
+                        "        COALESCE(mx.json_tag #>> '{fiToFIPmtCxlReq,assgnmt,id}', -- camt.056\n" +
+                        "        COALESCE(mx.json_tag #>> '{fiToFIPmtStsRpt,grpHdr,msgId}',\n" +
+                        "        COALESCE(mx.json_tag #>> '{ntfctnToRcv,ntfctn,id}',\n" +
+                        "        COALESCE(mx.json_tag #>> '{ntfctnToRcv,grpHdr,msgId}',\n" +
+                        "                 mx.json_tag #>> '{cstmrPmtCxlReq,assgnmt,id}'\n" +
+                        "        )))))))))))) as ref,\n" +
+                        "\n" +
+                        "    -- Currency\n" +
+                        "    COALESCE(\n" +
+                        "        t32c.detail, \n" +
+                        "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,ccy}', -- pacs.008\n" +
+                        "        COALESCE(mx.json_tag #>> '{pmtRtr,txInf,0,rtrdIntrBkSttlmAmt,ccy}',  -- pacs.004\n" +
+                        "                 mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,ccy}'  -- pacs.009\n" +
+                        "        ))\n" +
+                        "    ) as curr,\n" +
+                        "\n" +
+                        "    -- Amount\n" +
+                        "    COALESCE(\n" +
+                        "        t32.detail, \n" +
+                        "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,value}', -- pacs.008\n" +
+                        "        COALESCE(mx.json_tag #>> '{pmtRtr,txInf,0,rtrdIntrBkSttlmAmt,value}', -- pacs.004\n" +
+                        "                 mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,value}' -- pacs.009\n" +
+                        "        ))\n" +
+                        "    ) as amount,\n" +
+                        "\n" +
+                        "    hd.source\n" +
+                        "\n" +
+                        "FROM headers as hd \n" +
+                        "\n" +
+                        "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
+                        "\n" +
+                        "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
+                        "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
+                        "\n" +
+                        "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
+                        "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
+                        "\n" +
+                        "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
+                        "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
+                        "\n" +
+                        "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers \n" +
+                        "WHERE "+ where.toString() +" ORDER BY tanggal DESC;";
+//            System.out.println(sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
 
             // set parameters ke prepared statement

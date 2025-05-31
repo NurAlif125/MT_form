@@ -209,7 +209,7 @@ public class SCDataTransaksi299 extends HttpServlet {
 
         }
         dbConn.closeConnection();
-        log.info("kadieuuuuuu....");
+        // log.info("kadieuuuuuu....");
 //        }
         RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
         dispatcher.forward(request, response);

@@ -230,7 +230,7 @@ public class CreateTextNew {
         } else if (header.getMessageType().equalsIgnoreCase("767")) { //metode baca MT767
             dataMT767(msg, header.getId_headers(), tagDB);
         } else {
-            log.info("masukelse");
+            // log.info("masukelse");
             for (int i = 0; i < tagDB.size(); i++) {
                 System.out.println("baris 227");
                 List<String> str = getAppendTag(header.getId_headers(), tagDB.get(i).getTag());
@@ -637,7 +637,7 @@ public class CreateTextNew {
                     if (!detail.equals("")) {
                         log.info("awal akhir " + nilaiAwal + nilaiAkhir);
                         if (ArrayLengthTags700an(tag, nilaiAwal, nilaiAkhir, id) == 2) {
-                            log.info("tag anu kadieu " + tag + detail);
+                            // log.info("tag anu kadieu " + tag + detail);
                             k++;
                             if (k == 2) {
 //                                if (tag.equalsIgnoreCase("27") || tag.equalsIgnoreCase("40C")) {
@@ -647,7 +647,7 @@ public class CreateTextNew {
                                     strLine = "";
                                 } else {
 //                                    Tag59 dkk [lebih dari 1 baris] masuk kesini
-                                    log.info("cek tag sini 442 " + tag);
+                                    // log.info("cek tag sini 442 " + tag);
                                     strLine = "\r\n";
                                 }
                             }
@@ -693,7 +693,7 @@ public class CreateTextNew {
                             } else if (tag.equalsIgnoreCase("71D")) {
                                 msg.getBlock4().append(new Tag(tag.toUpperCase(), wrapString(detail, 6, 35)));
                             } else {
-                                log.info("kadieeuuu 22D" + detail);
+                                // log.info("kadieeuuu 22D" + detail);
                                 System.out.println("tag:" + tag);
                                 msg.getBlock4().append(new Tag(tag.toUpperCase(), detail));
                             }
@@ -706,7 +706,7 @@ public class CreateTextNew {
     }
 
     public SwiftBlock4 dataMT767(SwiftMessage msg, int id, List<TagDB> tagDB) throws SQLException, Exception {
-        log.info("masuk767");
+        // log.info("masuk767");
         String strLine = "";
         String multiLine = "";
         int nilaiAwal = 0;
