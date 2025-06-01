@@ -77,7 +77,7 @@
             <div id="rowsearch">
                 <a href="List_scr.jsp" class="btnLink">Advance search</a>
                 <div class="my-navigation">
-                    <div class="simple-help"><a id="myBtn" ><img class="img-help" src="images/help.png"/></a></div>
+                    <div class="simple-help"><a id="myBtn" style="cursor:pointer;" ><img class="img-help" src="images/help.png"/></a></div>
                 </div>
             </div>
             <br/>
@@ -188,178 +188,11 @@
             <span class="close">&times;</span>
         </div>
         <div class="modal-content" style="height: 60vh !important; width:780px !important; overflow-y: auto;">
-<!--            <table class="modal-table" style="border:1px solid black">
-                <tr>
-                    <th colspan="6">INCOMING</th>
-                </tr>
-                <tr>
-                    <td>Nomor</td>
-                    <td>Status</td>
-                    <td>Cover Dana</td>
-                    <td>Rekening</td>
-                    <td>Nama</td>
-                    <td>Keterangan</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>INC</td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td>Tidak dikirim ke Core</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>INC-NOK</td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
-                    <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
-                    <td>Tidak dikirim ke Core (Belum ada Cover Dana)</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>INC-OK</td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td>Rekening & nama benar (Belum ada Cover Dana)</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>INC-WAIT</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
-                    <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
-                    <td>INC-NOK yang memiliki Cover Dana, Perlu approval user</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>INC-STL</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td>Berhasil dikirim ke Core</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>INC-RSTL</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td>Berhasil dikirim ke Core (Kirim ulang)</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>INC-INV</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
-                    <td>Approval User (Investigasi atau Retur)</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>INC-HOLD</td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td>Belum dapat informasi rekening dari TWS</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>INC-RTR</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
-                    <td><img class="img-check" src="images/wrong.png" style="height:13px"/></td>
-                    <td>Retur</td>
-                </tr>
-                                <tr>
-                                    <td>10</td>
-                                    <td>INC-NSTP</td>
-                                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                                    <td>Nominal lebih dari batas STP</td>
-                                </tr>
-                                <tr>
-                                    <td>11</td>
-                                    <td>INC-CRDT</td>
-                                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                                    <td>Transaksi berhasil dijurnal di core</td>
-                                </tr>
-            </table>-->
-            <!--<br/>-->
-<!--            <table class="modal-table" style="border:1px solid black">
-                <tr>
-                    <th colspan="8">OUTGOING</th>
-                </tr>
-                <tr>
-                    <td>Nomor</td>
-                    <td>Status</td>
-                    <td>Modifikasi</td>
-                    <td>Verifikasi</td>
-                    <td>Otorisasi</td>
-                    <td>Berhasil</td>
-                    <td>Gagal</td>
-                    <td>Keterangan</td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>MOD</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td>Menunggu Verifikasi dan masih dapat diedit</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>VER</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td>Menunggu Otorisasi</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>AUTH</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td>Manunggu konfirmasi ACK/NACK</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>ACK</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td>Berhasil divalidasi oleh SWIFT</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>NACK</td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td><img class="img-check" src="images/minus.png" style="height:15px"/></td>
-                    <td><img class="img-check" src="images/yes.png" style="height:20px"/></td>
-                    <td>Gagal validasi oleh SWIFT</td>
-                </tr>
-            </table>-->
             <table class="modal-table" style="border:1px solid black">
                 <tr>
-                    <th colspan="6">INCOMING</th>
+                    <th colspan="6" style="background: #20696d;color: #ffffff;">INCOMING</th>
                 </tr>
-                <tr>
+                <tr style="font-weight:bold;">
                     <td>No</td>
                     <td>Status</td>
                     <td>Menu</td>
@@ -443,10 +276,10 @@
                 <br>
             <table class="modal-table" style="border:1px solid black">
                 <tr>
-                    <th colspan="6">OUTGOING</th>
+                    <th colspan="6" style="background: #20696d;color: #ffffff;">OUTGOING</th>
                 </tr>
-                <tr>
-                    <td>Nomor</td>
+                <tr style="font-weight:bold;">
+                    <td>No</td>
                     <td>Status</td>
                     <td>Menu</td>
                     <td>Kondisi</td>
@@ -511,7 +344,7 @@
                 </tr>
                 <tr>
                     <td>8</td>
-                    <td>WAITING-SAA- CNF</td>
+                    <td>WAITING-SAA-CNF</td>
                     <td>Failed to Send to SAA Confirmation</td>
                     <td>Transaksi outgoing yang dikirim kembali oleh maker harus disapprove oleh checker</td>
                     <td>Flag transaksi outgoing yang dikirim kembali oleh maker dan perlu konfirmasi checker</td>
@@ -548,6 +381,72 @@
                     <td>NACK Response message sama dengan Outgoing Message</td>
                     <td>No Acknowledge (Transaksi Outgoing sudah mendapatkan balikan dari SAA dengan status NACK)</td>
                     <td>NACK</td>
+                </tr>
+            </table>
+                <br>
+            <table class="modal-table" style="border:1px solid black">
+                <tr>
+                    <th colspan="3" style="background: #20696d;color: #ffffff;">FLAG SEMENTARA</th>
+                </tr>
+                <tr style="font-weight:bold;">
+                    <td>No</td>
+                    <td>Status</td>
+                    <td>Keterangan</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>OUT</td>
+                    <td>Flag awal transaksi outgoing yang ditarik dari channel oleh FIA</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>INC</td>
+                    <td>Flag awal transaksi  incoming dari SAA ke fia</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>AML-CLEAN</td>
+                    <td>Response AML yang cocok dengan transaksi incoming atau outgoing dengan flag INC-AML atau WAITING-AML</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>INC-RESEND</td>
+                    <td>Status transaksi incoming yang dikirim ulang karena gagal terkirim ke channel</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>WAITING-SAA</td>
+                    <td>Transaksi outgoing yang sudah terkirim ke SAA dan sedang menunggu jawaban ACK/NACK</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>CVT-VER-RESEND</td>
+                    <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi outgoing karena gagal konversi ke SAA</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>INC-AML-RESEND</td>
+                    <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi incoming gagal kirim ke AML</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>INC-CVT-RESEND</td>
+                    <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi incoming karena gagal konversi ke Channel</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>WAITING-SAA-RESEND</td>
+                    <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi gagal kirim ke SAA</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>AML-RESEND</td>
+                    <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi outgong gagal kirim ke AML</td>
+                </tr>
+				<tr>
+                    <td>11</td>
+                    <td>FIA-RESEND</td>
+                    <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi gagal kirim ke FIA</td>
                 </tr>
             </table>
         </div>
