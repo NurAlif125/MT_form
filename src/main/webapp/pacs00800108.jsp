@@ -1225,7 +1225,7 @@
                                 <legend>InstructingAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="8" maxlength="11" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="11" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -1250,7 +1250,7 @@
                                 <legend>InstructedAgent</legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification</legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="8" maxlength="11" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="11" maxlength="11" onchange='if (this.value) {
             this.setAttribute("value", this.value);
         } else {
             this.removeAttribute("value");
