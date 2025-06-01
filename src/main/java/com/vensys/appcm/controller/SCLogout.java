@@ -47,7 +47,8 @@ public class SCLogout extends HttpServlet {
     if (userId != null && ipAccess != null && compName != null) {
         dbo.insertDataLogin(userId, "0", ipAccess, compName, tanggal, "1");
     } else {
-        System.out.println("Session attributes are missing: user_id, ip_access, or comp_name is null.");
+        // System.out.println("Session attributes are missing: user_id, ip_access, or comp_name is null.");
+//        log.info("Session attributes are missing: user_id, ip_access, or comp_name is null.");
     }
     session.invalidate();
     response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -59,7 +60,7 @@ public class SCLogout extends HttpServlet {
     // Lakukan sesuatu dengan userObj jika tidak null
     if (userObj != null) {
         String user = userObj.toString();
-        System.out.println("Logged out user: " + user);
+        // System.out.println("Logged out user: " + user);
     }
 
     // Redirect ke login.jsp

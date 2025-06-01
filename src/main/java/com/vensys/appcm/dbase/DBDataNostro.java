@@ -71,7 +71,7 @@ public class DBDataNostro {
             st.setString(8, data.getCity());
             st.setString(9, data.getCountry());
             st.setInt(10, id_member);
-            System.out.println("sql update Nostro = " + sql);
+            // System.out.println("sql update Nostro = " + sql);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {

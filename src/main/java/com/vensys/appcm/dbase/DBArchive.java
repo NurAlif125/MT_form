@@ -33,7 +33,7 @@ public class DBArchive {
     public List<Archive> getAllData(String action) throws SQLException {
         List<Archive> backups = new ArrayList<>();
         String sql = "SELECT TOP 20 id,task,user_id,action,date_action FROM backup_history where action='" + action + "' ORDER BY date_action DESC";
-        System.out.println("getalldata: " + sql);
+        // System.out.println("getalldata: " + sql);
         PreparedStatement ps = this.conn.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -73,7 +73,7 @@ public class DBArchive {
                     + "FROM [DBCMAR].[dbo].[headers] "
                     + "WHERE CAST(tanggal as date) BETWEEN '" + tanggal1 + "' AND '" + tanggal2 + "' AND flag not in ('MOD', 'VER');"
                     + "SET IDENTITY_INSERT [DBCM].[dbo].[headers] OFF";
-            System.out.println("restoreDataHeader: " + sql);
+            // System.out.println("restoreDataHeader: " + sql);
             PreparedStatement ps = this.conn.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {
@@ -132,7 +132,7 @@ public class DBArchive {
     public void archiveDataMTText(String tanggal1, String tanggal2) {
         try {
             String sql = "INSERT INTO [DBCMAR].[dbo].[mt_text] SELECT t.id_headers,modify_mt,final_mt FROM mt_text t, headers h WHERE t.id_headers=h.id_headers  AND CAST(h.tanggal as date) BETWEEN '" + tanggal1 + "' AND '" + tanggal2 + "' AND h.flag not in ('MOD', 'VER', 'AUTH', 'NACK', 'INC-WAIT', 'INC-NOK', 'INC-OK', 'INC-INV', 'INC-HOLD')";
-            System.out.println("archiveDataMTText cetak : " + sql);
+            // System.out.println("archiveDataMTText cetak : " + sql);
             PreparedStatement ps = this.conn.prepareStatement(sql);
             ps.executeUpdate();
             
@@ -147,7 +147,7 @@ public class DBArchive {
             String sql = "SET IDENTITY_INSERT [DBCMAR].[dbo].[investigation] ON;"
                     + " INSERT INTO [DBCMAR].[dbo].[investigation] (id_investigate,id_headers,id_relation) SELECT id_investigate,t.id_headers,id_relation FROM investigation t, headers h WHERE t.id_headers=h.id_headers  AND CAST(h.tanggal as date) BETWEEN '" + tanggal1 + "' AND '" + tanggal2 + "' AND h.flag not in ('MOD', 'VER', 'AUTH', 'NACK', 'INC-WAIT', 'INC-NOK', 'INC-OK', 'INC-INV', 'INC-HOLD');"
                     + "SET IDENTITY_INSERT [DBCMAR].[dbo].[investigation] OFF";
-            System.out.println("archiveDataInv cetak : " + sql);
+            // System.out.println("archiveDataInv cetak : " + sql);
             PreparedStatement ps = this.conn.prepareStatement(sql);
             ps.executeUpdate();
         } catch (Exception e) {

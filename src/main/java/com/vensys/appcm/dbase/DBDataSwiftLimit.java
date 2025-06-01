@@ -35,7 +35,7 @@ public class DBDataSwiftLimit {
     public void addDataSwiftLimit(DataSwiftLimit data, String mofier, String ip, String comp) {
         try {
             String sql = "INSERT INTO swift_go_limit (currency, amount, updateby, updatedate) VALUES (?,?,?,LOCALTIMESTAMP)";
-            System.out.println("SQL addDataSwiftLimit " + sql);
+            // System.out.println("SQL addDataSwiftLimit " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getCurrency());
             st.setBigDecimal(2, data.getAmount());
@@ -86,7 +86,7 @@ public class DBDataSwiftLimit {
     public DataSwiftLimit getSwiftLimitById(int limit_id) throws SQLException {
         DataSwiftLimit data = new DataSwiftLimit();
         String sql = "SELECT limit_id, currency, amount, updateby, updatedate FROM swift_go_limit WHERE limit_id='" + limit_id + "'";
-        System.out.println("getSwiftLimitById : " + sql);
+        // System.out.println("getSwiftLimitById : " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -102,7 +102,7 @@ public class DBDataSwiftLimit {
     public void updateDataSwiftLimit(DataSwiftLimit data, int limit_id, String mofier, String ip, String comp) {
         try {
             String sql = "UPDATE swift_go_limit SET currency=?, amount=?, updateby=?, updatedate=LOCALTIMESTAMP WHERE limit_id=?";
-            System.out.println("updateDataSwiftLimit : " + sql);
+            // System.out.println("updateDataSwiftLimit : " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getCurrency());
             st.setBigDecimal(2, data.getAmount());

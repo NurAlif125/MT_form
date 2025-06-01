@@ -17,6 +17,7 @@ import com.vensys.appcm.model.DataCOT;
 import java.sql.Time;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,6 +26,7 @@ import java.sql.SQLException;
 public class DBDataCOT {
 
     Connection conn;
+    Logger log = Logger.getLogger(getClass().getName());
 
     public DBDataCOT(Connection conn) {
         this.conn = conn;
@@ -37,28 +39,29 @@ public class DBDataCOT {
         String sql = "UPDATE cut_of SET waktu = ?, waktu_end = ?, update_date = NOW(), update_by = ?, sandi = ?, description = ? where id_sandi = ?";
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             st.setTime(1, data.getWaktu());
-            System.out.println("dapet waktu g >> " + data.getWaktu());
+            // System.out.println("dapet waktu g >> " + data.getWaktu());
             st.setTime(2, data.getWaktu_end());
-            System.out.println("ini waktu end nya >> " + data.getWaktu_end());
+            // System.out.println("ini waktu end nya >> " + data.getWaktu_end());
 //            st.setString(3, this.tanggal);
             st.setString(3, data.getUpdate_by());
-            System.out.println("Ini mod nyaa >> " + data.getUpdate_by());
+            // System.out.println("Ini mod nyaa >> " + data.getUpdate_by());
             st.setString(4, data.getSandi());
-            System.out.println("sandi nya >> " + data.getSandi());
+            // System.out.println("sandi nya >> " + data.getSandi());
             st.setString(5, data.getDeskripsi());
-            System.out.println("deskripsi >> " + data.getDeskripsi());
+            // System.out.println("deskripsi >> " + data.getDeskripsi());
             st.setInt(6, data.getId_sandi());
-            System.out.println("id sandi nya >> " + data.getId_sandi());
-             System.out.println(data.getUpdateDate());
-            System.out.println("sql update cut of = " + sql);
+            // System.out.println("id sandi nya >> " + data.getId_sandi());
+            //  System.out.println(data.getUpdateDate());
+            // System.out.println("sql update cut of = " + sql);
             int rowsUpdated = st.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Update successful.");
+                // System.out.println("Update successful.");
             } else {
-                System.out.println("No rows updated.");
+                // System.out.println("No rows updated.");
             }
         } catch (SQLException e) {
-            System.out.println("dbase.DBDataCOT.updateDataCOT() : " + e.getMessage());
+            // System.out.println("dbase.DBDataCOT.updateDataCOT() : " + e.getMessage());
+            log.info("dbase.DBDataCOT.updateDataCOT() : " + e.getMessage());
         }
         evl.insertDataEvent(modifier, "Ubah Cut Of Time", ip, comp);
 //        evl.updateLogUser(modifier, "Cut Of Time", tanggal);
@@ -132,16 +135,19 @@ public class DBDataCOT {
             st.setString(4, data.getDeskripsi() != null ? data.getDeskripsi() : "");
             st.setString(5, creator);
             st.setString(6, this.tanggal);
-            System.out.println("sql add cut of = " + sql);
+            // System.out.println("sql add cut of = " + sql);
 
             int rowsInserted = st.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("Insert successful.");
+                // System.out.println("Insert successful.");
+                log.info("Insert successful.");
             } else {
-                System.out.println("No rows inserted.");
+                // System.out.println("No rows inserted.");
+                log.info("No rows inserted.");
             }
         } catch (SQLException e) {
-            System.out.println("dbase.DBDataCOT.insertDataCOT() : " + e.getMessage());
+            // System.out.println("dbase.DBDataCOT.insertDataCOT() : " + e.getMessage());
+            log.info("dbase.DBDataCOT.insertDataCOT() : " + e.getMessage());
         }
         evl.insertDataEvent(creator, "Tambah Cut Of Time", ip, comp);
         evl.updateLogUser(creator, "Cut Of Time", tanggal);
@@ -154,12 +160,15 @@ public class DBDataCOT {
 
             int rowsDeleted = st.executeUpdate();
             if (rowsDeleted > 0) {
-                System.out.println("Delete successful.");
+                // System.out.println("Delete successful.");
+                log.info("Delete successful.");
             } else {
-                System.out.println("No rows deleted.");
+                // System.out.println("No rows deleted.");
+                log.info("No rows deleted.");
             }
         } catch (SQLException e) {
-            System.out.println("dbase.DBDataCOT.removeDataCOT() : " + e.getMessage());
+            // System.out.println("dbase.DBDataCOT.removeDataCOT() : " + e.getMessage());
+            log.info("dbase.DBDataCOT.removeDataCOT() : " + e.getMessage());
         }
         evl.insertDataEvent(modifier, "Hapus Cut Of Time", ip, comp);
         evl.updateLogUser(modifier, "Cut Of Time", tanggal);
@@ -168,7 +177,7 @@ public class DBDataCOT {
     public List<String> cekDataDuplicateCOT(String sandi) throws SQLException {
         List<String> datas = new ArrayList<String>();
         String sql = "SELECT t.sandi FROM cut_of AS t WHERE  t.sandi = '" + sandi + "' ORDER BY id_sandi ASC";
-        System.out.println("sql cek Data Duplicate cutof = " + sql);
+        // System.out.println("sql cek Data Duplicate cutof = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

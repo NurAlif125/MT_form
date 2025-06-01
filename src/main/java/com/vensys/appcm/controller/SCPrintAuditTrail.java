@@ -78,7 +78,7 @@ public class SCPrintAuditTrail extends HttpServlet {
             e.printStackTrace(printWriter);
             response.setContentType("text/plain");
             response.getOutputStream().print(stringWriter.toString());
-            System.out.println("Report Audit Trail Report: "+e.getMessage());
+            // System.out.println("Report Audit Trail Report: "+e.getMessage());
         } finally {
             dbConn.closeConnection();
         }

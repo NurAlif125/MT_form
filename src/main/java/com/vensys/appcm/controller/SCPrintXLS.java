@@ -54,13 +54,13 @@ public class SCPrintXLS extends HttpServlet {
         DBconnection dbConn = new DBconnection();
         ArrayList<Header> headers = new ArrayList<Header>();
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
-        System.out.println("Channel="+channel2);
+        // System.out.println("Channel="+channel2);
 
         try {
-            System.out.println("before tgl " + value_date_end);
+            // System.out.println("before tgl " + value_date_end);
             headers = bBHeaders.getAllHeaderReport(status_f,io_type,mt_type, value_date, date_from, date_end, flag, filter, currency, value_date_end, channel2);
 //            headers = bBHeaders.getAllHeaderReportXls(mt_type, flag, value_date, date_from, date_end, io_type, value_date_end, filter, currency);
-            System.out.println("after tgl");
+            // System.out.println("after tgl");
 
             ServletOutputStream sos = response.getOutputStream();
 

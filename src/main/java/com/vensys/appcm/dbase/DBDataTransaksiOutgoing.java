@@ -1027,7 +1027,8 @@ public class DBDataTransaksiOutgoing {
             st.setString(2, name);
             st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error Update Verified Account 599: " + e.getMessage());
+            // System.out.println("Error Update Verified Account 599: " + e.getMessage());
+            log.error("Error Update Verified Account 599: " + e.getMessage());
         }
     }
 
@@ -1042,9 +1043,10 @@ public class DBDataTransaksiOutgoing {
 //                nama = rs.getString("1");
                 nama = rs.getString("nameFromCore");
             }
-            System.out.println("Nama wuer:" + nama);
+            // System.out.println("Nama wuer:" + nama);
         } catch (SQLException e) {
-            System.out.println("Error Select Verified Account by Acc: " + e.getMessage());
+            // System.out.println("Error Select Verified Account by Acc: " + e.getMessage());
+            log.info("Error Select Verified Account by Acc: " + e.getMessage());
         }
         return nama;
     }
@@ -1056,13 +1058,14 @@ public class DBDataTransaksiOutgoing {
 //20190923 ditambah or karena ada 59f
             String sql = "Select detail from tags where id_headers='" + id + "' and (tagName='_180_mf59_account' or tagName='_185_mf59f_account')";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            System.out.println("sqlgetTag59Account103 : " + sql);
+            // System.out.println("sqlgetTag59Account103 : " + sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 rekening = rs.getString("detail");
             }
         } catch (SQLException e) {
-            System.out.println("Error Select Verified Account by id: " + e.getMessage());
+            // System.out.println("Error Select Verified Account by id: " + e.getMessage());
+            log.info("Error Select Verified Account by id: " + e.getMessage());
         }
         rekening = rekening.replace("/", "");
         return rekening;
@@ -1091,7 +1094,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59AccName " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Name: " + e.getMessage());
+            // System.out.println("Error Update Tag Name: " + e.getMessage());
+            log.info("Error Update Tag Name: " + e.getMessage());
         }
     }
 
@@ -1109,7 +1113,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59Acc " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Name: " + e.getMessage());
+            // System.out.println("Error Update Tag Name: " + e.getMessage());
+            log.info("Error Update Tag Name: " + e.getMessage());
         }
     }
 
@@ -1122,9 +1127,10 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()) {
                 type = rs.getString(1);
             }
-            System.out.println("type :" + type);
+            // System.out.println("type :" + type);
         } catch (SQLException e) {
-            System.out.println("Error type by Acc: " + e.getMessage());
+            // System.out.println("Error type by Acc: " + e.getMessage());
+            log.info("Error type by Acc: " + e.getMessage());
         }
         return type;
     }
@@ -1138,9 +1144,10 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()) {
                 type = rs.getString(1);
             }
-            System.out.println("type :" + type);
+            // System.out.println("type :" + type);
         } catch (SQLException e) {
-            System.out.println("Error type by Acc: " + e.getMessage());
+            // System.out.println("Error type by Acc: " + e.getMessage());
+            log.info("Error type by Acc: " + e.getMessage());
         }
         return type;
     }
@@ -1159,7 +1166,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59NameInfo " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Info: " + e.getMessage());
+            // System.out.println("Error Update Tag Info: " + e.getMessage());
+            log.info("Error Update Tag Info: " + e.getMessage());
         }
     }
 
@@ -1177,7 +1185,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59AccInfo " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Info: " + e.getMessage());
+            // System.out.println("Error Update Tag Info: " + e.getMessage());
+            log.info("Error Update Tag Info: " + e.getMessage());
         }
     }
 
@@ -1430,7 +1439,7 @@ public class DBDataTransaksiOutgoing {
     public DataCharges getCharges(String curr) throws SQLException {
         DataCharges dataSeq = new DataCharges();
         String sql = "SELECT id_charges, currency, charges FROM charges WHERE currency='" + curr + "'";
-        System.out.println("sql=" + sql);
+        // System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1574,12 +1583,12 @@ public class DBDataTransaksiOutgoing {
 //        System.out.println("tags : " + tags);
         try {
             String sql = "SELECT account FROM account_penagihan WHERE swift_code like '%" + bic.substring(0, 8) + "%'";
-            System.out.println("akun penagihan " + sql);
+            // System.out.println("akun penagihan " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 rowID = (rs.getString("account"));
-                System.out.println(sql + " == " + rowID);
+                // System.out.println(sql + " == " + rowID);
             }
         } catch (Exception es) {
             es.printStackTrace();
@@ -1594,7 +1603,7 @@ public class DBDataTransaksiOutgoing {
                     + "LEFT JOIN investigation i ON i.id_relation = a.id_headers\n"
                     + "WHERE i.id_headers = ?\n"
                     + "AND a.tag = '20'";
-            System.out.println("get ID Header 103 " + sql);
+            // System.out.println("get ID Header 103 " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setInt(1, Integer.parseInt(id));
             ResultSet rs = st.executeQuery();
@@ -1997,8 +2006,8 @@ public class DBDataTransaksiOutgoing {
     }
 
     public void updateLock(int value, int id_headers, String user) {
-        log.info("grrrrr");
-        log.info("masuk updateLock#" + value + "#" + user + "#" + id_headers);
+        // log.info("grrrrr");
+        // log.info("masuk updateLock#" + value + "#" + user + "#" + id_headers);
         try {
             String sql = "update headers set isLock =?, usedBy=? where id_headers=? ";
             PreparedStatement st = this.conn.prepareStatement(sql);

@@ -146,7 +146,7 @@ public void updateDataCounterRate(DataCounterRate data, String id, String mofier
             datar.add(data);
         }
 
-        System.out.println("isi datana " + datar);
+        // System.out.println("isi datana " + datar);
         return datar;
     }
 
@@ -184,7 +184,7 @@ public void updateDataCounterRate(DataCounterRate data, String id, String mofier
     public boolean cekDataDuplicateBycurrency(String currency, String against_currency, String tanggal) throws SQLException, ParseException {
         boolean data = false;
         String sql = "SELECT t.currency FROM counter_rate AS t WHERE t.currency =? AND t.against_currency=? AND t.tanggal=?";
-        System.out.println("sql cek Data Duplicate Currency = " + sql);
+        // System.out.println("sql cek Data Duplicate Currency = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, currency);
         st.setString(2, against_currency);

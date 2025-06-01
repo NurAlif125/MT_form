@@ -99,7 +99,7 @@ public class SCDataRole extends HttpServlet {
                 boolean roleIsUsed = dbData.roleIsUsed(data.getRole_id());
                 log.info("role used: "+ roleIsUsed);
                 if (roleIsUsed) {
-                    log.info("Role is used By USER");
+                    // log.info("Role is used By USER");
                     strErrMsg = "Role is used By USER";
                 } else {
 //                    System.out.println("MULAI DISABLE");

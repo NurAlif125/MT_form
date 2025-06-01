@@ -50,12 +50,12 @@ public class SCGeneralSetting extends HttpServlet {
         data.setMT192(request.getParameter("mt192"));
         data.setMT196(request.getParameter("mt196"));
         data.setMT950(request.getParameter("mt950"));
-        System.out.println("id"+id);
+        // System.out.println("id"+id);
         if (id == null || id.equals("null") || id.isEmpty()) {
-            System.out.println("masuk id null");
+            // System.out.println("masuk id null");
             data = dbData.getDataGS();
         } else {
-            System.out.println("masuk id not null");
+            // System.out.println("masuk id not null");
             data.setId(Integer.parseInt(id));
             int update = dbData.updateDataGS(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             if (update > 0) {

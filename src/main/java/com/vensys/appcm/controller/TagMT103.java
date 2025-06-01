@@ -26,7 +26,7 @@ public class TagMT103 {
                 tags = mt103.getMf20() ;
                 this.ch.readBlock4(tags, tagName, tagValue);
                 tagValue20 = tagValue;
-                System.out.println("tag20: " + tagValue20);
+                // System.out.println("tag20: " + tagValue20);
             } else if (tagName.equalsIgnoreCase("23B")) {
                 tags = mt103.getMf23b();
                 this.ch.readBlock4(tags, tagName, tagValue);

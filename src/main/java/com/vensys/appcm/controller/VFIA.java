@@ -47,7 +47,7 @@ public class VFIA extends HttpServlet {
             }
             dataSource = db.getSourcefromSftpReaderFia();
         } catch (Exception ex) {
-            System.out.println("error di servletxx");
+            // System.out.println("error di servletxx");
             ex.printStackTrace();
         } finally {
             dbConn.closeConnection();

@@ -47,7 +47,8 @@ public class DBDataMT {
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("dbase.DBDataMT.addDataMT() : " + e.getMessage());
+            // System.out.println("dbase.DBDataMT.addDataMT() : " + e.getMessage());
+            log.error("dbase.DBDataMT.addDataMT() : " + e.getMessage());
         }
         evl.insertDataEvent(modifier, "Tambah MT", ip, comp);
         evl.updateLogUser(modifier, "MT", tanggal);
@@ -64,7 +65,8 @@ public class DBDataMT {
             st.setInt(4, data.getId());
             st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("dbase.DBDataMT.updateDataMT() : " + e.getMessage());
+            // System.out.println("dbase.DBDataMT.updateDataMT() : " + e.getMessage());
+            log.error("dbase.DBDataMT.updateDataMT() : " + e.getMessage());
         }
         evl.insertDataEvent(modifier, "Ubah MT", ip, comp);
         evl.updateLogUser(modifier, "MT", tanggal);
