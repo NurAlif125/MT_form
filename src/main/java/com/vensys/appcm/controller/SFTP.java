@@ -58,6 +58,20 @@ public class SFTP {
                 throw new IllegalArgumentException("Flag is required and cannot be blank.");
             }
             
+            // jika FIA RESEND ada kmungkinan dari flag CVT-VER-RESEND,INTEL-RESEND,REM-RESEND,DDA-RESEND,WAITING-SAA-RESEND,AML-RESEND
+            if ("FIA-RESEND".equalsIgnoreCase(flag)) {
+
+                String templateName = dBDataTransaksiOutgoing.getTemplateNameHeaders(id);
+                System.out.println("templateName: " + templateName);
+                if (templateName == null || templateName.trim().isEmpty()) {
+                    System.out.println("templateName is null or empty, setting flag to null");
+                    flag = null;
+                } else {
+                    System.out.println("templateName else");
+                    flag = "CVT-VER-RESEND"; // placeholder aja, biar pakai folder resend karena smua resend satu folder
+                }
+            }            
+
             List<String> pathList = Arrays.asList(sftpReSendPath.split(","));
             List<String> flagList = Arrays.asList(sftpReSendFlag.split(","));
 
