@@ -204,7 +204,9 @@ public class rulePacs004_2024 {
                     if (bicInstdAgt == null || bicInstdAgt.equalsIgnoreCase("") || bicInstdAgt.isEmpty()) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstdAgt\"><td>InstructedAgent is mandatory!</td><td>PmtRtr/TxInf/InstdAgt</td></tr>");
                     } else {
-                        if (receiverAddress != null) {
+                        if (receiverAddress == null || receiverAddress.equalsIgnoreCase("")) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                        } else {
                             String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
                             if (!bicInstdAgt.equals(receiverAddress1)) {
                                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
