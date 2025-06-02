@@ -2125,4 +2125,22 @@ public class DBDataTransaksiOutgoing {
         }
         return update;
     }
+
+    public String getTemplateNameHeaders(Integer id_headers) throws SQLException, Exception {
+        String sql = "SELECT templatename FROM headers WHERE id_headers = ? ";
+        String templatename = null;
+        try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+            st.setInt(1, id_headers);
+
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    templatename = rs.getString("templatename");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return templatename;    
+    }    
 }
