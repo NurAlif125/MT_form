@@ -51,8 +51,8 @@
                             <option value="0">Non Swift Go</option>
                         </select>
                     </div>
-                    <div class="form-row"><span class="labelL2">MT</span>
-                        <input type="text" name="mt_type" id="mt_type" value="" size="3" />
+                    <div class="form-row"><span class="labelL2">Message Type</span>
+                        <input type="text" name="mt_type" id="mt_type" value="" size="17" />
                     </div>
                     <div class="form-row"><span class="labelL2">Date From</span>
                         <input type="text" name="date_from" id="date_from" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${tgl_today}" />" size="10" />
@@ -61,7 +61,7 @@
                         <input type="text" name="date_end" id="date_end" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${tgl_today}" />" size="10" />
                     </div>
                     <div class="form-row"><span class="labelL2">Currency</span>
-                        <input type="text" name="cust_curr" id="cust_curr" value="" size="3" />
+                        <input type="text" onkeyup="this.value = this.value.toUpperCase();" maxlength="3" name="cust_curr" id="cust_curr" value="" size="3" />
                     </div>
                     <div class="form-row"><span class="labelL2">Value Date From</span>
                         <input type="text" name="value_date" id="value_date" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" />

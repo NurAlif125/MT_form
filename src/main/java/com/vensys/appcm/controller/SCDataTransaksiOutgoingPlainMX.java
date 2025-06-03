@@ -75,8 +75,8 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         String receiverAddress = request.getParameter("receiver_institution");
         String logicalTerminal = request.getParameter("sender_logical_terminal");
         String messType = request.getParameter("messageType");
-        String dnSender = "o=" + logicalTerminal.substring(9, 12).toLowerCase() + ",o=" + logicalTerminal.substring(0, 8).toLowerCase() + ",o=swift";
-        String dnReceiver = "o=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
+        String dnSender = "ou=" + logicalTerminal.substring(9, 12).toLowerCase() + ",o=" + logicalTerminal.substring(0, 8).toLowerCase() + ",o=swift";
+        String dnReceiver = "ou=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
         String service = getService();
 
         log.info("The receiver address : " + receiverAddress);
