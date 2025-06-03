@@ -336,7 +336,7 @@
                                             </c:forEach>
                                             <c:forEach var="iteminc" items="${role}">
                                                 <c:if test="${iteminc == 'FLOW:INC-AML'}">
-                                                    <li><a onclick="userTrackMenuClick('Incoming Reject AML')" href="controllerHeaders?io_type=O&flag=INC-AML&menu=27">Incoming Reject AML</a></li>
+                                                    <li><a onclick="userTrackMenuClick('Incoming Reject AML')" href="controllerHeaders?io_type=O&flag=INC-AML&menu=26">Incoming Reject AML</a></li>
                                                 </c:if>
                                             </c:forEach>
                                             <c:forEach var="iteminc" items="${role}">
@@ -408,7 +408,7 @@
                                         </c:forEach>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'FLOW:AML-TERMINATE-OUT'}">
-                                                <li><a onclick="userTrackMenuClick('Reject AML Confirmation')" href="controllerHeaders?io_type=I&flag=AML-TERMINATE-OUT&menu=36">Reject AML Confirmation</a></li>
+                                                <li><a onclick="userTrackMenuClick('Reject AML Confirmation')" href="controllerHeaders?io_type=I&flag=AML-TERMINATE-OUT&menu=35">Reject AML Confirmation</a></li>
                                             </c:if>
                                         </c:forEach>  
                                         <c:forEach var="item" items="${role}">
