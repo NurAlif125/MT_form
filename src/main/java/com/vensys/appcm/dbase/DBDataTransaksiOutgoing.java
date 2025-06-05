@@ -736,6 +736,16 @@ public class DBDataTransaksiOutgoing {
             log.info("Error Delete Tag:" + e.getMessage());
         }
     }
+    public void cleanDataTrxDetail(int id_headers) {
+        try {
+            String sql = "DELETE FROM trx_detail WHERE id_headers = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id_headers);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.info("Error Delete trx_detail:" + e.getMessage());
+        }
+    }
 
     public void updateDataTag(int urutan, String tag, String detail, String tagName, int id_headers) {
         try {

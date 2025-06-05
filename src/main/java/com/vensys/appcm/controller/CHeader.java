@@ -117,9 +117,10 @@ public class CHeader {
 //            log.info("testcheader::");
             //if (tagsExists) return;
 
-            // ==== delete data tags dulu baru insert data tags baru =================
+            // ==== delete data tags dan trx_detail dulu baru insert data tags baru =================
             dBDataTransaksiOutgoing2.cleanDataTag(id);
-            // =======================================================================
+            dBDataTransaksiOutgoing2.cleanDataTrxDetail(id);
+            // ======================================================================================
             
             DataMTText textById = new DataMTText();
             log.info("textById::" + textById);
