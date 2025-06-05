@@ -110,12 +110,16 @@ public class VDataTransaksiOutgoing extends HttpServlet {
 //            System.out.println("Rekening:" + rekening);
             httpSession.setAttribute("nama_core", namaCore);
         }
-        try {
-            CHeader headermt = new CHeader(); 
-            headermt.wifeParser(headerById.getMessageType(),Integer.parseInt(request.getParameter("id")));
-            tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        String typeMT = headerById.getMessageType();
+        if ("103".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT)) {
+            try {
+                System.out.println("Message Type: " + headerById.getMessageType());
+                CHeader headermt = new CHeader(); 
+                headermt.wifeParser(headerById.getMessageType(),Integer.parseInt(request.getParameter("id")));
+                tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         try {
