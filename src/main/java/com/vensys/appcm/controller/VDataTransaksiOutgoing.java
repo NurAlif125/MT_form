@@ -116,12 +116,12 @@ public class VDataTransaksiOutgoing extends HttpServlet {
                 System.out.println("Message Type: " + headerById.getMessageType());
                 CHeader headermt = new CHeader(); 
                 headermt.wifeParser(headerById.getMessageType(),Integer.parseInt(request.getParameter("id")));
-                tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
+                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
-
+        tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
         try {
             header_status = bBHeaders.getAllHeaderStatus(request.getParameter("id"), prefix);
         } catch (Exception ex) {

@@ -678,13 +678,16 @@ public class DBDataTransaksiOutgoing {
     public void addDataTag(int urutan, String tag, String detail, String tagName, int id) {
 //        int id = id_headers();
         try {
-            String sql = "INSERT INTO tags(urutan,id_headers,tag,detail,tagName,info) VALUES (?,'" + id + "',?,?,?,?)";
+            String sql = "INSERT INTO tags(urutan,id_headers,tag,detail,tagName,info) VALUES (?,?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
+            
             st.setInt(1, urutan);
-            st.setString(2, tag);
-            st.setString(3, detail);
-            st.setString(4, tagName);
-            st.setString(5, "");
+            st.setInt(2,id);
+            st.setString(3, tag);
+            st.setString(4, detail);
+            st.setString(5, tagName);
+            st.setString(6, "");
+            System.out.println("addDataTag : " + st.toString());
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {

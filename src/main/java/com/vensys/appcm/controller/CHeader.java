@@ -162,14 +162,12 @@ public class CHeader {
             if (messageType.equalsIgnoreCase("103")) {
                 TagMT103 mt103 = new TagMT103(this);
                 mt103.tagMT103(sb4, id);
+            } else if (messageType.equalsIgnoreCase("202COV")) {
+                TagMT202COV mt202COV = new TagMT202COV(this);
+                mt202COV.tagMT202COV(sb4, id);
             } else if (messageType.equalsIgnoreCase("202")) {
-                if (cover) {
-                    TagMT202COV mt202COV = new TagMT202COV(this);
-                    mt202COV.tagMT202COV(sb4, id);
-                } else {
-                    TagMT202 mt202 = new TagMT202(this);
-                    mt202.tagMT202(sb4, id);
-                }
+                TagMT202 mt202 = new TagMT202(this);
+                mt202.tagMT202(sb4, id);
             } 
             log.info("wifeParser() is successfully");
             
