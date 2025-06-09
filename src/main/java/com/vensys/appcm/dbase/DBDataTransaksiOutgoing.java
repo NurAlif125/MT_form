@@ -141,15 +141,28 @@ public class DBDataTransaksiOutgoing {
     
     public boolean tagsExists(int id_headers) {
         try {
-            String selectSql = "SELECT COUNT(*) FROM tags WHERE id_headers = ?";
+            String selectSql = "SELECT id_headers FROM tags WHERE id_headers = ? LIMIT 1";
             PreparedStatement selectSt = this.conn.prepareStatement(selectSql);
             selectSt.setInt(1, id_headers);
-            ResultSet selectRs = selectSt.executeQuery();
-            boolean exists = false;
-            if (selectRs.next()) {
-                exists = selectRs.getInt(1) > 0;
+            try (ResultSet rs = selectSt.executeQuery()) {
+                return rs.next();
             }
-            return exists;                       
+        } catch (SQLException e) {
+            log.info("tagsExists:" + e.getMessage());
+            log.error("tagsExists:" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean tags20Exists(int id_headers) {
+        try {
+            String selectSql = "SELECT id_headers FROM tags WHERE id_headers = ? and tag='20' LIMIT 1";
+            PreparedStatement selectSt = this.conn.prepareStatement(selectSql);
+            selectSt.setInt(1, id_headers);
+            try (ResultSet rs = selectSt.executeQuery()) {
+                return rs.next();
+            }
         } catch (SQLException e) {
             log.info("tagsExists:" + e.getMessage());
             log.error("tagsExists:" + e.getMessage());
@@ -687,7 +700,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(4, detail);
             st.setString(5, tagName);
             st.setString(6, "");
-            System.out.println("addDataTag : " + st.toString());
+            // System.out.println("addDataTag : " + st.toString());
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {

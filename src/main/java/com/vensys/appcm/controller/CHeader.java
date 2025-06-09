@@ -113,13 +113,14 @@ public class CHeader {
             this.setIdHeaders(id);
 
             // cek jika data tags sudah ada maka keluar proses
-            //boolean tagsExists = dBDataTransaksiOutgoing.tagsExists(id);
+            boolean tagsExists = dBDataTransaksiOutgoing.tagsExists(id);
+            boolean tags20Exists = dBDataTransaksiOutgoing.tags20Exists(id);
 //            log.info("testcheader::");
-            //if (tagsExists) return;
+            if (tagsExists && tags20Exists) return;
 
             // ==== delete data tags dan trx_detail dulu baru insert data tags baru =================
-            dBDataTransaksiOutgoing2.cleanDataTag(id);
-            dBDataTransaksiOutgoing2.cleanDataTrxDetail(id);
+            //dBDataTransaksiOutgoing2.cleanDataTag(id);
+            //dBDataTransaksiOutgoing2.cleanDataTrxDetail(id);
             // ======================================================================================
             
             DataMTText textById = new DataMTText();
@@ -141,6 +142,16 @@ public class CHeader {
             SwiftBlock3 sb3 = msg.getBlock3();
             SwiftBlock4 sb4 = msg.getBlock4();
                   
+            System.out.println("tagExists::" + tagsExists);
+            System.out.println("tags20Exists::" + tags20Exists);
+            if (tagsExists && !tags20Exists) {
+                //System.out.println("tags 20 not exists, insert tags 20");
+                String noRefTag20 = sb4.getTagValue("20");
+                //System.out.println("noRefTag20::" + noRefTag20);
+                readBlock4("_010_mf20_sender_reference","20",noRefTag20);
+                //System.out.println("insert tags 20");
+                return;
+            }
             boolean cover = false;
             if (sb3 == null) {
             } else {
@@ -676,7 +687,7 @@ public class CHeader {
     //    method split data block4 dan insert ke DB
     public void readBlock4(String tags, String tagName, String tagValue) {
         // lewatin kalo ga ada id_headers
-        // log.info("readBlock4:id_headers:" + this.id_headers);
+        log.info("readBlock4:id_headers:" + this.id_headers);
         if (this.id_headers == -1) return;       
         
         if (tags.startsWith("_")) {

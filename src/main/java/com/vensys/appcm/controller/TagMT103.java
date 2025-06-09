@@ -18,8 +18,8 @@ public class TagMT103 {
     }
     public void tagMT103( SwiftBlock4 sb4, int idHeader)  {
         mt103 = atributeMT103.getAtributeMT103();        
-        System.out.println("tagMT103: " + new Gson().toJson(mt103));
-        System.out.println("tagMT103: " + sb4.getTags().size());
+        // System.out.println("tagMT103: " + new Gson().toJson(mt103));
+        // System.out.println("tagMT103: " + sb4.getTags().size());
         log.info("tagMT103: " + new Gson().toJson(mt103));
         log.info("tagMT103: " + sb4.getTags().size());
         String tagValue20 = "";
@@ -31,7 +31,7 @@ public class TagMT103 {
                 tags = mt103.getMf20() ;
                 this.ch.readBlock4(tags, tagName, tagValue);
                 tagValue20 = tagValue;
-                System.out.println("tag20: " + tagValue20);
+                // System.out.println("tag20: " + tagValue20);
                 log.info("tag20: " + tagValue20);
             } else if (tagName.equalsIgnoreCase("23B")) {
                 tags = mt103.getMf23b();
