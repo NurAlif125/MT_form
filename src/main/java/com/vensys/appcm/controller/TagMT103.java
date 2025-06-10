@@ -5,7 +5,10 @@ import com.prowidesoftware.swift.model.Tag;
 import com.vensys.appcm.attribute.AMT103;
 import com.vensys.appcm.model.MT103;
 import com.google.gson.Gson;    
+import org.apache.log4j.Logger;
+
 public class TagMT103 { 
+    Logger log = Logger.getLogger(getClass().getName());
     MT103 mt103 = new MT103();    
     AMT103 atributeMT103 = new AMT103();
     CHeader ch;    
@@ -17,6 +20,8 @@ public class TagMT103 {
         mt103 = atributeMT103.getAtributeMT103();        
         // System.out.println("tagMT103: " + new Gson().toJson(mt103));
         // System.out.println("tagMT103: " + sb4.getTags().size());
+        log.info("tagMT103: " + new Gson().toJson(mt103));
+        log.info("tagMT103: " + sb4.getTags().size());
         String tagValue20 = "";
         for (Tag t : sb4.getTags()) {
             String tagName = t.getName();
@@ -27,6 +32,7 @@ public class TagMT103 {
                 this.ch.readBlock4(tags, tagName, tagValue);
                 tagValue20 = tagValue;
                 // System.out.println("tag20: " + tagValue20);
+                log.info("tag20: " + tagValue20);
             } else if (tagName.equalsIgnoreCase("23B")) {
                 tags = mt103.getMf23b();
                 this.ch.readBlock4(tags, tagName, tagValue);
