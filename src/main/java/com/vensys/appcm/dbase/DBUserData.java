@@ -61,8 +61,9 @@ public class DBUserData {
 
     public DataLogin selectLastLoginBerhasil(String user_id) throws SQLException {
         DataLogin data = new DataLogin();
-        String sql = "select time_login FROM login_history where status_login='1' And user_id='" + user_id + "' order by time_login desc limit 1";
+        String sql = "select time_login FROM login_history where status_login='1' And user_id=? order by time_login desc limit 1";
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
@@ -76,9 +77,10 @@ public class DBUserData {
     public DataLogin selectLastLoginGagal(String user_id) throws SQLException {
         DataLogin data = new DataLogin();
         log.info("selectLastLoginGagal");
-        String sql = "select time_login FROM login_history where status_login='0' And user_id='" + user_id + "' order by time_login desc limit 1";
+        String sql = "select time_login FROM login_history where status_login='0' And user_id=? order by time_login desc limit 1";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {
@@ -162,8 +164,9 @@ public class DBUserData {
         boolean isValid = true;
         String p;
         String md5_password = new ConvertToMD5().convert(password);
-        String sql = "SELECT history_pass FROM password_history where user_id='" + user_id + "' order by id_history";
+        String sql = "SELECT history_pass FROM password_history where user_id=? order by id_history";
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, user_id);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             p = rs.getString("history_pass");
@@ -201,9 +204,10 @@ public class DBUserData {
     public DataUser getUserLdapById(String str) throws SQLException {
         DataUser data = new DataUser();
 
-        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,auto_disable FROM ldap_user WHERE user_id='" + str + "'";
+        String sql = "SELECT user_id,name,user_mt_routing,description,role,enable,auto_disable FROM ldap_user WHERE user_id=? ";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, str);
         ResultSet rs = st.executeQuery();
 
         while (rs.next()) {

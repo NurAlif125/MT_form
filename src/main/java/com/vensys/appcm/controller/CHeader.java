@@ -113,15 +113,10 @@ public class CHeader {
             this.setIdHeaders(id);
 
             // cek jika data tags sudah ada maka keluar proses
-            //boolean tagsExists = dBDataTransaksiOutgoing.tagsExists(id);
+            boolean tagsExists = dBDataTransaksiOutgoing.tagsExists(id);
 //            log.info("testcheader::");
-            //if (tagsExists) return;
+            if (tagsExists) return;
 
-            // ==== delete data tags dan trx_detail dulu baru insert data tags baru =================
-            dBDataTransaksiOutgoing2.cleanDataTag(id);
-            dBDataTransaksiOutgoing2.cleanDataTrxDetail(id);
-            // ======================================================================================
-            
             DataMTText textById = new DataMTText();
             log.info("textById::" + textById);
             

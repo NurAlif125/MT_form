@@ -219,6 +219,7 @@ public class SCUserData extends HttpServlet {
                                 }
                                 dbo2.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
                                 evl.updateLogUser(user_id, "login", tanggal);
+                                evl.insertDataEvent(user_id, "User Login", ip_access, comp_name);
                                 try {
                                     dataRole = dboRole.getDataRoleById(String.valueOf(data.getRole()));
                                     dataRoleList = dboRole.getAllDataRole();

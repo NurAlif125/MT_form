@@ -145,16 +145,14 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             }
 
             // System.out.println("flagStatus: " + flagStatus);
-            // System.out.println("flag: " + request.getParameter("flag"));
+//            // System.out.println("flag: " + request.getParameter("flag"));
+//                System.out.println("=============================message type: "+messageType);
+//                System.out.println("========================= Reference : "+request.getParameter("instrId"));
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                 String reference = "";
                 if (!messageType.contains("pacs") || !messageType.contains("camt")) {
-                    reference = "Sender Reference: "+request.getParameter("_010_mf20_sender_reference");
-                } else {
-//                    MX
-//                    reference = "Reciver Institution:"+request.getParameter("receiver_institution");
-                    reference = "";
-                }
+                    reference = "Reference: "+request.getParameter("_010_mf20_sender_reference");
+                } 
                 
                 lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference);
                 log.info("lastInsertedID " + lastInsertedID);
