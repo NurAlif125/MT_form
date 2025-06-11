@@ -1017,7 +1017,7 @@ public class DBHeader {
             where += "(AND io_type='O' OR io_type='I') ";
         }
         if (flag == null || flag.isEmpty()) {
-            where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("MOD")) {
             where += " AND flag='MOD'";
         } else if (flag.equalsIgnoreCase("VER")) {
@@ -1029,17 +1029,17 @@ public class DBHeader {
         } else if (flag.equalsIgnoreCase("AUTH") || flag.equalsIgnoreCase("TEXT")) {
             where += " AND (flag='AUTH' OR flag='TEXT')";
         } else if (flag.equalsIgnoreCase("ACK")) {
-            where += " AND flag='ACK' AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='ACK' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-WAIT")) {
             where += " AND flag='INC-WAIT'";
         } else if (flag.equalsIgnoreCase("INC-STL")) {
-            where += " AND flag='INC-STL' AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='INC-STL' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-RSTL")) {
-            where += " AND flag='INC-RSTL' AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='INC-RSTL' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-INV")) {
             where += " AND flag='INC-INV' ";
         } else if (flag.equalsIgnoreCase("INC-RTR")) {
-            where += " AND flag='INC-RTR' AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='INC-RTR' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-OK")) {
             where += " AND flag='INC-OK'";
         } else if (flag.equalsIgnoreCase("INC-NOK")) {
@@ -1053,9 +1053,9 @@ public class DBHeader {
         } else if (flag.equalsIgnoreCase("INC-SPRT")) {
             where += " AND flag='INC-SPRT' ";
         } else if (flag.equalsIgnoreCase("ACK")) {
-            where += " AND flag='ACK' AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='ACK' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-CNF")) {
-            where += " AND flag='INC-CNF' AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='INC-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-ADJ")) {
             where += " AND flag='INC-ADJ' ";
         } else if (flag.equalsIgnoreCase("INC")) {
@@ -1106,7 +1106,7 @@ public class DBHeader {
         } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) { 
             where += " AND flag='FIA-FAILED-CNF' ";
         } else {
-            where += " AND CAST(tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         }
                 
         if (channel != null && !channel.isBlank()) {
@@ -1119,6 +1119,8 @@ public class DBHeader {
                      h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
                 + "ORDER BY tanggal DESC";
+        
+        System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1232,7 +1234,7 @@ public class DBHeader {
         List<Header> headers = new ArrayList<Header>();
         String sql = "SELECT DISTINCT headers.id_headers,messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,"
                 + "receiverAddress,tanggal, headers.id_headers,flag FROM headers,header_status "
-                + "WHERE headers.id_headers=header_status.id_headers AND CAST(headers.tanggal as date) = '" + tanggal_transaksi_sebulan + "' AND (" + where + ") "
+                + "WHERE headers.id_headers=header_status.id_headers AND TO_CHAR(headers.tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "' AND (" + where + ") "
                 + "AND isDuplicate!=1 AND messageType='202' ORDER BY tanggal DESC";
 //        System.out.println("sql getAllHeaderPajak=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -1276,7 +1278,7 @@ public class DBHeader {
         String sql = "SELECT DISTINCT headers.id_headers, messageType,logicalTerminal,sessionNumber,sequenceNumber,io_type,"
                 + "receiverAddress,tanggal,headers.id_headers,flag FROM headers,header_status "
                 + "WHERE headers.id_headers=header_status.id_headers "
-                + "AND isDuplicate=0 AND io_type='O' AND messageType='202' AND CAST(headers.tanggal as date) ='" + dDay.format(tanggal) + "' ORDER BY tanggal DESC";
+                + "AND isDuplicate=0 AND io_type='O' AND messageType='202' AND TO_CHAR(headers.tanggal, 'YYYY-MM-DD') ='" + dDay.format(tanggal) + "' ORDER BY tanggal DESC";
 //        System.out.println("sql retur=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -1309,7 +1311,7 @@ public class DBHeader {
         List<Header> headers = new ArrayList<Header>();
         String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,"
                 + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + "WHERE CAST(h.tanggal as date) = '" + dDay.format(tanggal) + "' "
+                + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = '" + dDay.format(tanggal) + "' "
                 + "AND h.isduplicate=1 ORDER BY tanggal DESC";
 //        System.out.println("sql getAllHeaderDuplicate = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -1343,7 +1345,7 @@ public class DBHeader {
         String sql = "SELECT DISTINCT h.id_headers,h.messageType,h.logicalTerminal,h.sessionNumber,h.sequenceNumber,h.io_type,"
                 + "h.receiverAddress,h.tanggal,h.flag,trx.trans_reference "
                 + "FROM headers h INNER JOIN header_status hs ON h.id_headers = hs.id_headers LEFT JOIN trx_detail trx ON trx.id_headers = h.id_headers "
-                + "WHERE h.isDuplicate = 2 AND hs.status_header = 'REJECT' AND CAST(hs.status_tanggal AS DATE) = '" + dDay.format(tanggal) + "' ORDER BY h.tanggal DESC";
+                + "WHERE h.isDuplicate = 2 AND hs.status_header = 'REJECT' AND TO_CHAR(hs.status_tanggal, 'YYYY-MM-DD') = '" + dDay.format(tanggal) + "' ORDER BY h.tanggal DESC";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -1400,7 +1402,7 @@ public class DBHeader {
         if (date_from == null || date_from.isEmpty() || date_end == null || date_end.isEmpty()) {
             where += "";
         } else {
-            where += " AND CAST(h.tanggal as DATE) BETWEEN '" + date_from + "' AND '" + date_end + "'";
+            where += " AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN '" + date_from + "' AND '" + date_end + "'";
         }
         if (status == null || status.isEmpty()) {
             where += "";
@@ -1989,7 +1991,7 @@ public class DBHeader {
     public int getFlagStatus(String flag, String tanggal1, String tanggal2) throws Exception {
         int jumlah = 0;
         //where STR_TO_DATE(tanggal,'%Y-%m-%d')='tanggal dari cm'
-        String sql = "select * FROM headers where flag='" + flag + "' and CAST(tanggal as date) BETWEEN '" + tanggal1 + "' AND '" + tanggal2 + " 23:59' and isduplicate=0;";
+        String sql = "select * FROM headers where flag='" + flag + "' and TO_CHAR(tanggal, 'YYYY-MM-DD') BETWEEN '" + tanggal1 + "' AND '" + tanggal2 + " 23:59' and isduplicate=0;";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
