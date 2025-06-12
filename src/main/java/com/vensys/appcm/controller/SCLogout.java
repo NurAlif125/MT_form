@@ -4,8 +4,10 @@
  */
 package com.vensys.appcm.controller;
 
+import com.vensys.appcm.dbase.DBEventLog;
 import com.vensys.appcm.dbase.DBUserData;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.Connection;
 
 /**
  *
@@ -23,6 +26,12 @@ import jakarta.servlet.http.HttpSession;
 public class SCLogout extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+//    Connection conn;
+//    DBEventLog evl = new DBEventLog(conn);
+//    
+//    public SCLogout(Connection conn) {
+//        this.conn = conn;
+//    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,7 +45,13 @@ public class SCLogout extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     HttpSession session = request.getSession();
     DBconnection dbConn = new DBconnection();
+    DBconnection2 dbConn2 = new DBconnection2();
     DBUserData dbo = new DBUserData(dbConn.getConnection());
+    DBEventLog dbEvl = new DBEventLog(dbConn2.getConnection2());
+    
+    String user_id = (String) session.getAttribute("user_id");
+    String ip_access = (String) session.getAttribute("ip_access");
+    String comp_name = (String) session.getAttribute("comp_name");
     Object userObj = session.getAttribute("user");
     String userId = session.getAttribute("user_id") != null ? session.getAttribute("user_id").toString() : null;
     String ipAccess = session.getAttribute("ip_access") != null ? session.getAttribute("ip_access").toString() : null;
@@ -56,11 +71,22 @@ public class SCLogout extends HttpServlet {
     response.setDateHeader("Expires", 0);
     session = request.getSession();
     session.setAttribute("errorMsglogin", "You have been logged out.");
+    
+    try {
+        dbEvl.insertDataEvent(user_id, "User Logout", ip_access, comp_name);
+    } catch (Exception e) {
+        e.printStackTrace(); // atau gunakan logger
+        System.out.println("error"+ e.getMessage());
+    }
+
+    
+//    evl.insertDataEvent(user_id, "User Logout", ip_access, comp_name);
 
     // Lakukan sesuatu dengan userObj jika tidak null
     if (userObj != null) {
         String user = userObj.toString();
         // System.out.println("Logged out user: " + user);
+//        evl.insertDataEvent(user_id, "User Logout", ip_access, comp_name);
     }
 
     // Redirect ke login.jsp
