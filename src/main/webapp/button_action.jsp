@@ -3,7 +3,7 @@
     Update on  : Sept 16, 2015, 9:28:00 PM
 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <style>
     .container_ {
         display: flex;

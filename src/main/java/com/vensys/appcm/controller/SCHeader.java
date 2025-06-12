@@ -60,11 +60,11 @@ public class SCHeader extends HttpServlet implements Serializable {
         String amount = request.getParameter("amount");
         String find = request.getParameter("find");
         String flag = request.getParameter("flag");
-        log.info("flag: " + flag);
+//        log.info("flag: " + flag);
         String status = request.getParameter("status");
-        log.info("status: " + status);
+//        log.info("status: " + status);
         String menu = request.getParameter("menu");
-        log.info("menu: " + menu);
+//        log.info("menu: " + menu);
         String forward = "";
         int notifVer = 0;
         int notifAuth = 0;
@@ -77,7 +77,7 @@ public class SCHeader extends HttpServlet implements Serializable {
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         List<ResultHeader> resultHeader = new ArrayList<ResultHeader>();
         String flagStatus = (String) httpSession.getAttribute("flagStatus");
-        log.info("flagStatus: " + flagStatus);
+//        log.info("flagStatus: " + flagStatus);
         String channel = "";
         try {
             channel = (String) httpSession.getAttribute("channel");
@@ -88,7 +88,7 @@ public class SCHeader extends HttpServlet implements Serializable {
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
-                log.info("masuk sini");
+//                log.info("masuk sini");
                 headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);// 2025-01-07
 //                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -255,7 +255,7 @@ public class SCHeader extends HttpServlet implements Serializable {
 
 //                httpSession.setAttribute("headersPajak", headersPajak);
             } else {
-                log.info("masuk sini else");
+//                log.info("masuk sini else");
                 // ditambahkan rel_reference pada 20151001 by Azan
                 // sender_logical_terminal => sender_bank dan receiver_institution => receiver_bank
                 String db_type = request.getParameter("db_type");

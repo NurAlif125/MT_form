@@ -526,3 +526,75 @@
         }
     }
 </script>
+
+<script>
+    $(document).ready(function () {
+    var table = $('#example').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: 'SCHeader',
+            type: 'POST'
+        },
+        scrollX: true,
+        initComplete: function () {
+            // Search realtime untuk tiap kolom
+            this.api().columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change clear', function () {
+                    if (that.search() !== this.value) {
+                        that.search(this.value).draw();
+                    }
+                });
+            });
+        }
+    });
+});
+
+</script>
+
+<script>
+$(document).ready(function() {
+  var table = $('#example').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: {
+      url: 'SCHeader', // servlet yang sama
+      type: 'POST'
+    },
+    scrollX: true,
+    columns: [
+      { data: 'no' },
+      { data: 'messageType' },
+      { data: 'io_type' },
+      { data: 'sequenceNumber' },
+      { data: 'logicalTerminal' },
+      { data: 'receiverAddress' },
+      { data: 'trans_reference',
+        render: (data, type, row) =>
+          `<a href="ViewDataTransaksiOutgoing?id=${row.id_headers}">${data}</a>`
+      },
+      { data: 'trans_related_reference' },
+      { data: 'trans_date_value' },
+      { data: 'trans_ccy' },
+      { data: 'trans_amount', className: 'text-right' },
+      { data: 'tanggal' },
+      { data: 'flag' },
+      { data: 'source' },
+      { data: null, orderable: false,
+        render: row => `<a href="ViewDataTransaksiOutgoing?id=${row.id_headers}">view</a>`
+      }
+    ],
+    initComplete: function() {
+      this.api().columns().every(function() {
+        var col = this;
+        $('input', col.footer()).on('keyup change clear', function() {
+          if (col.search() !== this.value) {
+            col.search(this.value).draw();
+          }
+        });
+      });
+    }
+  });
+});
+</script>
