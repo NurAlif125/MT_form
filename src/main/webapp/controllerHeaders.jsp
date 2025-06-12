@@ -526,29 +526,3 @@
         }
     }
 </script>
-
-<script>
-    $(document).ready(function () {
-    var table = $('#example').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: 'SCHeader',
-            type: 'POST'
-        },
-        scrollX: true,
-        initComplete: function () {
-            // Search realtime untuk tiap kolom
-            this.api().columns().every(function () {
-                var that = this;
-                $('input', this.footer()).on('keyup change clear', function () {
-                    if (that.search() !== this.value) {
-                        that.search(this.value).draw();
-                    }
-                });
-            });
-        }
-    });
-});
-
-</script>
