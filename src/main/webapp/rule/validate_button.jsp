@@ -454,7 +454,20 @@
                 //printMTDoc('SCPrintMTDoc?id='+$('#id').val());
             }
         });
-
+        $('#modified_ver').click(function () {
+            var answer = confirm('Do you want to Send this MT..!!');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=CVT-MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
+        $('#reject_ver').click(function () {
+            var answer = confirm('Do you want to reject this MT..!!');
+            if (answer) {
+//                document.location.href = 'SCRejectAction?id=' + $('#id').val() + '&operator_comment=' + $('#operator_comment').val();
+                document.location.href = 'SCRejectAction?id=' + $('#id').val();
+                //printMTDoc('SCPrintMTDoc?id='+$('#id').val());
+            }
+        });
         $('#backup').click(function () {
             var answer = confirm('Do you want to backup the data?');
             if (answer) {
