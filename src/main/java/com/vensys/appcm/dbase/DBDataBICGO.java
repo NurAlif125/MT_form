@@ -34,7 +34,7 @@ public class DBDataBICGO {
     public void addBicGo(DataBICSwiftGo data, String mofier, String ip, String comp) {
         try {
             String sql = "INSERT INTO swift_go_bic (swift_code, company, updateby, updatedate) VALUES (?,?,?,LOCALTIMESTAMP)";
-            System.out.println("SQL addBicGo " + sql);
+            // System.out.println("SQL addBicGo " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getSwift_code());
             st.setString(2, data.getCompany());
@@ -117,7 +117,7 @@ public class DBDataBICGO {
     public DataBICSwiftGo getBicGoById(int swift_id) throws SQLException {
         DataBICSwiftGo data = new DataBICSwiftGo();
         String sql = "SELECT swift_id, swift_code, company, updateby, updatedate FROM swift_go_bic WHERE swift_id='" + swift_id + "'";
-        System.out.println("getBicGoById : " + sql);
+        // System.out.println("getBicGoById : " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

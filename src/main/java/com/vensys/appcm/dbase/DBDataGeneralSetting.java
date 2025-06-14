@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,7 @@ public class DBDataGeneralSetting {
     Connection conn;
     DBEventLog evl = new DBEventLog(conn);
     String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    Logger log = Logger.getLogger(getClass().getName());
     public DBDataGeneralSetting(Connection conn) {
         DBconnection dbConn = new DBconnection();
         this.conn = dbConn.getConnection();
@@ -37,7 +39,8 @@ public class DBDataGeneralSetting {
                 result[1] = rs.getString(2);
             }
         } catch (SQLException swl) {
-            System.out.print("Error SQL getGeneralSetting " + swl.getMessage());
+            // System.out.print("Error SQL getGeneralSetting " + swl.getMessage());
+            log.info("Error SQL getGeneralSetting " + swl.getMessage());
         }
         return result;
     }
@@ -78,7 +81,8 @@ public class DBDataGeneralSetting {
             st.setInt(3, data.getId());
             result = st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error updateDataGS : " + e.getMessage());
+            // System.out.println("Error updateDataGS : " + e.getMessage());
+            log.error("Error updateDataGS : " + e.getMessage());
         }
         evl.insertDataEvent(modifier, "Ubah General Setting", ip, comp);
         evl.updateLogUser(modifier, "General Setting", tanggal);

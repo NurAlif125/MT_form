@@ -113,7 +113,7 @@ public class CreateText {
         return str;
     }
 
-    public void createTextFile(String fin, String mt, String source, int id, String io_type) throws IOException {
+    public void createTextFile(String fin, String mt, String source, int id, String io_type, String flag, String user_id, String ip_access, String comp_name) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());            
         String fileName = "MT" + mt + "_" + dbHTML + "_" + id + ".txt";
         SFTP sftp = new SFTP();        
@@ -132,10 +132,10 @@ public class CreateText {
         out.write(fin);
         out.close();
         log.info("createTextFile : " + "MT" + mt + "_" + dbHTML + "_" + id + ".txt");
-        sftp.uploadToSftp("MT",fileName);
+        sftp.uploadToSftp("MT",fileName, id, flag, user_id, ip_access, comp_name);
     }
     
-    public void createTextFileMX(String fin, String type, int id, String io_type, String source) throws IOException {
+    public void createTextFileMX(String fin, String type, int id, String io_type, String source, String flag, String user_id, String ip_access, String comp_name) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
         String fileName = type + "_" + dbHTML + "_" + id + ".xml";
         //log.info("cek dbHMTL: " + dbHTML);
@@ -154,7 +154,7 @@ public class CreateText {
         out.write(fin);
         out.close();
         log.info("createTextFile : " +  type + "_" + dbHTML + "_" + id + ".txt");
-        sftp.uploadToSftp("MX",fileName);
+        sftp.uploadToSftp("MX", fileName, id, flag, user_id, ip_access, comp_name);
     }
 
     public String createFinalMT(Header header) throws SQLException, Exception {
@@ -173,6 +173,9 @@ public class CreateText {
         sb1.setSequenceNumber(header.getSequenceNumber());
 
         sb2_i.setInput(Boolean.TRUE);
+        if (header.getMessageType().equalsIgnoreCase("202COV")) {
+            header.setMessageType("202");
+        }
         sb2_i.setMessageType(header.getMessageType());
         sb2_i.setReceiverAddress(header.getReceiverAddress());
         sb2_i.setMessagePriority(header.getMessagePriority());
@@ -194,9 +197,9 @@ public class CreateText {
         int k = 0;
         String multiLine = "";
         String strLine = "";
-        log.info("header nyaa: " + header.getId_headers());
-        log.info("166");
-        log.info("ini mt nya woe : " + header.getMessageType());
+        // log.info("header nyaa: " + header.getId_headers());
+        // log.info("166");
+        // log.info("ini mt nya woe : " + header.getMessageType());
         if (header.getMessageType().equalsIgnoreCase("199")) {
             String sql = "SELECT tag, detail, tagName FROM tags WHERE id_headers='" + header.getId_headers() + "' ORDER BY urutan";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -260,10 +263,10 @@ public class CreateText {
             for (int i = 0; i < tagDB.size(); i++) {
                 List<String> str = getAppendTag(header.getId_headers(), tagDB.get(i).getTag());
                 if (tagDB.get(i).getTag().equalsIgnoreCase("71F")) {
-                    log.info("masuk sini ovasae");
+                    // log.info("masuk sini ovasae");
                     for (int j = 0; j < str.size(); j++) {
-                        log.info("str " + str.get(j));
-                        log.info("masuk sini ova j=" + j + " k=" + k);
+                        // log.info("str " + str.get(j));
+                        // log.info("masuk sini ova j=" + j + " k=" + k);
                         k++;
 
                         multiLine += str.get(j);
@@ -275,7 +278,7 @@ public class CreateText {
                     }
                 } else if (tagDB.get(i).getTag().equalsIgnoreCase("59F") || tagDB.get(i).getTag().equalsIgnoreCase("50F")) {
                     for (int j = 0; j < str.size(); j++) {
-                        log.info("sini 243.... ");
+                        // log.info("sini 243.... ");
                         k++;//12
                         if (str.size() % 2 == 1) {
                             if (k == 1) {
@@ -338,7 +341,7 @@ public class CreateText {
                         } else if (tagDB.get(i).getTag().equalsIgnoreCase("77A")) {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), wrapString(str.get(0), 20, 35)));
                         } else if (tagDB.get(i).getTag().equalsIgnoreCase("om")) {//20231227 ditambah ini untuk generate notag
-                            log.info("masuk sini om" + str.get(0));
+                            // log.info("masuk sini om" + str.get(0));
                             msg.getBlock4().append(new Tag("CMOMSG", str.get(0)));
                         } else {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0)));
@@ -383,7 +386,7 @@ public class CreateText {
                 fin = srv.getFIN(msg);
             }
         }
-        log.info("fin: " + fin);
+        // log.info("fin: " + fin);
 //        fin = srv.getFIN(msg); //20190923 dikomen karean diatas ada replace
         fin = fin.replace(":CMOMSG:", "");//20231227 ditambah ini untuk hapus CMOMSG
         return fin;
@@ -425,7 +428,7 @@ public class CreateText {
         return hasilHitung;
     }
 
-    public void getFinalMT(int id, String io_type) throws IOException {
+    public void getFinalMT(int id, String io_type, String flag, String user_id, String ip_access, String comp_name) throws IOException {
         String fin = "";
         String source = "";
         String mt = "";
@@ -446,8 +449,8 @@ public class CreateText {
         fin = fin.replace("}\r\n", "}");       //}\r dengan }
         fin = fin.replace("}\r", "}");       //}\r dengan }
 //        }
-        log.info("finnya nyaeta {" + fin + "]");
-        createTextFile(fin, mt, source, id, io_type);
+        // log.info("finnya nyaeta {" + fin + "]");
+        createTextFile(fin, mt, source, id, io_type, flag, user_id, ip_access, comp_name);
 //        if (mt.substring(0, 1).equalsIgnoreCase("4")) {
 //            source = "BTR";
 //            createTextFile(fin, mt, source, id);
@@ -507,7 +510,7 @@ public class CreateText {
         String temp = "";
         for (int i = 0; i < arrData.length; i++) {
             if (arrData[i].length() <= col) {
-                log.info("kadieuuuu... " + arrData[i]);
+                // log.info("kadieuuuu... " + arrData[i]);
                 temp += arrData[i] + "\r\n";
             } else {
                 int sisa = arrData[i].length() % col;
@@ -540,7 +543,7 @@ public class CreateText {
         }
         for (int i = 0; i < finalLoop; i++) {
             if (arrData[i].startsWith(":")) {
-                log.info("kadieu finalString");
+                // log.info("kadieu finalString");
                 arrData[i] = arrData[i].replace(arrData[i].substring(0, 1), "");
             }
             finalString += arrData[i];

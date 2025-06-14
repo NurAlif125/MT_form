@@ -45,7 +45,7 @@ public class SCRestore extends HttpServlet {
         String date_end = request.getParameter("date_end");
         String user = (String) httpSession.getAttribute("user_id");
         String action = request.getParameter("action");
-        System.out.println("action : " + action);
+        // System.out.println("action : " + action);
         String act = "2";
         String forward = "";
         DBconnection dbConn = new DBconnection();

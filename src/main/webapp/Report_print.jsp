@@ -51,8 +51,8 @@
                             <option value="0">Non Swift Go</option>
                         </select>
                     </div>
-                    <div class="form-row"><span class="labelL2">MT</span>
-                        <input type="text" name="mt_type" id="mt_type" value="" size="3" />
+                    <div class="form-row"><span class="labelL2">Message Type</span>
+                        <input type="text" name="mt_type" id="mt_type" value="" size="17" />
                     </div>
                     <div class="form-row"><span class="labelL2">Date From</span>
                         <input type="text" name="date_from" id="date_from" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${tgl_today}" />" size="10" />
@@ -61,7 +61,7 @@
                         <input type="text" name="date_end" id="date_end" value="<fmt:formatDate pattern="yyyy-MM-dd" value="${tgl_today}" />" size="10" />
                     </div>
                     <div class="form-row"><span class="labelL2">Currency</span>
-                        <input type="text" name="cust_curr" id="cust_curr" value="" size="3" />
+                        <input type="text" onkeyup="this.value = this.value.toUpperCase();" maxlength="3" name="cust_curr" id="cust_curr" value="" size="3" />
                     </div>
                     <div class="form-row"><span class="labelL2">Value Date From</span>
                         <input type="text" name="value_date" id="value_date" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" />
@@ -72,19 +72,17 @@
                     <div class="form-row"><span class="labelL2">Channel</span>
                         <select name="channel" id="channel">
                             <option value="">All</option>
-                            <option value="NCBS">NCBS</option>
-                            <option value="BANK_TRADE">BANK TRADE</option>
-                            <option value="TSA">TSA</option>
-                            <option value="FRONT_ARENA">FRONT ARENA</option>
-                            <option value="CUSTODY">CUSTODY</option>
-                            <option value="AML">AML</option>
+                            <c:forEach var="item1" items="${dataChannel}">
+                                <option value="${item1}"<c:if test="${item1 == dataUserById.channel}"> selected="true" </c:if>>${item1}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div class="form-row"><span class="labelL2">Status</span>
                         <jsp:scriptlet>
-                                    //String[] flags = new String[]{"MOD", "VER", "AUTH", "TEXT", "ACK", "NACK", "RACK" ,"INC-OK", "INC-NOK", "INC-ROK", "INC-WAIT" };
-                                    String[] flags = new String[]{"MOD", "VER", "AUTH", "TEXT", "INC-OK", "INC-NOK", "ACK", "NACK", "INC-WAIT", "INC-STL", "INC-RSTL", "INC-HOLD", "INC-INV", "INC-RTR", "INC-CNF", "INC-ADJ", "INC-SPOK", "INC-NSTP", "INC-SPRT", "REJECT"};
-                                    //String[] flags = new String[]{"ACK", "NACK", "INC-OK", "INC-NOK" };
+                                    String[] flags = new String[]{"MOD", "VER", "AUTH", "FIA-FAILED", "FIA-FAILED-CNF", "FIA-RESEND", "UNSETTLE-OUT", "WAITING-SAA-CNF", "WAITING-SAA-RESEND",
+                                        "WAITING-AML", "AML-TERMINATE-OUT", "REJECT", "AML-FAILED", "AML-FAILED-CNF", "AML-RESEND", "CVT-MOD", "CVT-VER", "CVT-VER-RESEND",
+                                        "ACK", "NACK", "INC-CVT", "RESEND-CNF", "INC-CVT-RESEND", "INC-AML", "AML-TERMINATE-IN", "INC-AML-FAILED", "INC-AML-FAILED-CNF", "INC-AML-RESEND",
+                                    "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE"};
                                     pageContext.setAttribute("flags", flags);
                         </jsp:scriptlet>
                         <select name="flag" id="flag">
@@ -99,9 +97,9 @@
                 <div class="form-row-action">
                     <!--                    <input type="button" name="print_pdf_out" id="print_pdf_out" value="PrintPDF Outgoing" />
                                         <input type="button" name="print_pdf_in" id="print_pdf_in" value="PrintPDF Incoming" />-->
-                    <input type="button" name="print_pdf" id="print_pdf" value="View PDF" />
-                    <input type="button" name="print_xls" id="print_xls" value="View XLS" />
-                    <input type="button" name="print_csv" id="print_csv" value="View CSV" />
+                    <input type="button" name="print_pdf" id="print_pdf" value="Export PDF" />
+                    <input type="button" name="print_xls" id="print_xls" value="Export XLS" />
+                    <input type="button" name="print_csv" id="print_csv" value="Export CSV" />
                     <input type="reset" name="reset" id="reset" value="Reset" />
                 </div>
             </form>

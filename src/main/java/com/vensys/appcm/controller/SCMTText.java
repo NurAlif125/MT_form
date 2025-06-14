@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataMTText;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -25,6 +26,8 @@ import com.vensys.appcm.model.DataMTText;
 public class SCMTText extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    
+    Logger log = Logger.getLogger(getClass().getName());
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -42,7 +45,7 @@ public class SCMTText extends HttpServlet {
             textById = db.getMtTextById(Integer.parseInt(request.getParameter("id_headers")));
             String before = textById.getModify_mt();
             String after = textById.getFinal_mt();
-            System.out.println("woi");
+            // System.out.println("woi");
             boolean areEqual = true;
             int lineNum = 1;
             while (before != null || after != null){
@@ -57,11 +60,14 @@ public class SCMTText extends HttpServlet {
                 lineNum++;
             }
             if(areEqual){
-                System.out.println("Two files have same content.");
+                // System.out.println("Two files have same content.");
+                log.info("Two files have same content.");
             }
             else{
-                System.out.println("Two files have different content. They differ at line "+lineNum);
-                System.out.println("File1 has "+before+" and File2 has "+after+" at line "+lineNum);
+                // System.out.println("Two files have different content. They differ at line "+lineNum);
+                // System.out.println("File1 has "+before+" and File2 has "+after+" at line "+lineNum);
+                 log.info("Two files have different content. They differ at line "+lineNum);
+                log.info("File1 has "+before+" and File2 has "+after+" at line "+lineNum);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

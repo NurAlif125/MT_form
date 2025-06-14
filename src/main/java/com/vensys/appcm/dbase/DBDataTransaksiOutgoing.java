@@ -75,7 +75,7 @@ public class DBDataTransaksiOutgoing {
         return id;
     }
 
-    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel) {
+    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel, String reference) {
         String header = "";
         // Mendapatkan string format tanggal dan Timestamp secara langsung
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -108,7 +108,7 @@ public class DBDataTransaksiOutgoing {
                 st.setString(16, data.getFlag()); //flag
             }
             st.setString(17, "SRC:MANUAL"); //user edit 
-            st.setString(18, user_id); //template name 
+            st.setString(18, ""); //template name 
             st.setInt(19, 0); //flag template 
             st.setString(20, ""); //sender input name 
             st.setString(21, ""); //MIR date
@@ -134,22 +134,35 @@ public class DBDataTransaksiOutgoing {
         }
 
         addDataHeaderStatus("VER", user_id, ip_access, comp_name);
-        evl.insertDataEvent(user_id, "Membuat transaksi baru", ip_access, comp_name);
+        evl.insertDataEvent(user_id, "Membuat transaksi baru "+data.getMessageType()+" "+reference, ip_access, comp_name);
         evl.updateLogUser(user_id, "trx", timestampString);
         return header;
     }
     
     public boolean tagsExists(int id_headers) {
         try {
-            String selectSql = "SELECT COUNT(*) FROM tags WHERE id_headers = ?";
+            String selectSql = "SELECT id_headers FROM tags WHERE id_headers = ? LIMIT 1";
             PreparedStatement selectSt = this.conn.prepareStatement(selectSql);
             selectSt.setInt(1, id_headers);
-            ResultSet selectRs = selectSt.executeQuery();
-            boolean exists = false;
-            if (selectRs.next()) {
-                exists = selectRs.getInt(1) > 0;
+            try (ResultSet rs = selectSt.executeQuery()) {
+                return rs.next();
             }
-            return exists;                       
+        } catch (SQLException e) {
+            log.info("tagsExists:" + e.getMessage());
+            log.error("tagsExists:" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean tags20Exists(int id_headers) {
+        try {
+            String selectSql = "SELECT id_headers FROM tags WHERE id_headers = ? and tag='20' LIMIT 1";
+            PreparedStatement selectSt = this.conn.prepareStatement(selectSql);
+            selectSt.setInt(1, id_headers);
+            try (ResultSet rs = selectSt.executeQuery()) {
+                return rs.next();
+            }
         } catch (SQLException e) {
             log.info("tagsExists:" + e.getMessage());
             log.error("tagsExists:" + e.getMessage());
@@ -196,7 +209,7 @@ public class DBDataTransaksiOutgoing {
             String sql = "UPDATE headers SET applicationId=?,serviceId=?,logicalTerminal=?,"
                     + "sessionNumber=?,sequenceNumber=?,io_type=?,messageType=?,receiverAddress=?,messagePriority=?,"
                     + "deliveryMonitoring=?,obsolescencePeriod=?,bankingPriority=?,mur=?,komentar=?,"
-                    + "flag=?,userEdit=?,templateName=?,flagTemplate=?,senderInputTime=?,MIRDate=?,"
+                    + "flag=?,userEdit=?,flagTemplate=?,senderInputTime=?,MIRDate=?,"
                     + "MIRLogicalTerminal=?,MIRSessionNumber=?,MIRSequenceNumber=?,receiverOutputDate=?,"
                     + "receiverOutputTime=?,block3=? WHERE id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -222,18 +235,18 @@ public class DBDataTransaksiOutgoing {
 //            st.setString(15, "SRC:MANUAL");   //userEntry/
             
 
-            st.setString(17, "");   //templateName//
-            st.setInt(18, 0);   //flagTemplate//
-            st.setString(19, "");   //senderInputTime//
-            st.setString(20, "");   //MIRDate//
-            st.setString(21, "");   //MIRLogicalTerminal//
+//            st.setString(17, "");   //templateName//
+            st.setInt(17, 0);   //flagTemplate//
+            st.setString(18, "");   //senderInputTime//
+            st.setString(19, "");   //MIRDate//
+            st.setString(20, "");   //MIRLogicalTerminal//
 
-            st.setString(22, "");   //MIRSessionNumber//
-            st.setString(23, "");   //MIRSequenceNumber//
-            st.setString(24, "");   //receiverOutputDate//
-            st.setString(25, "");   //receiverOutputTime//
-            st.setString(26, data.getBlock3());   //block3/
-            st.setInt(27, id_headers);
+            st.setString(21, "");   //MIRSessionNumber//
+            st.setString(22, "");   //MIRSequenceNumber//
+            st.setString(23, "");   //receiverOutputDate//
+            st.setString(24, "");   //receiverOutputTime//
+            st.setString(25, data.getBlock3());   //block3/
+            st.setInt(26, id_headers);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -265,8 +278,9 @@ public class DBDataTransaksiOutgoing {
     public void moveJournalHistory(String req) {  // 20180417 penambahan untuk memindahkan jurnal history
         try {
             String sql = "INSERT INTO bak_journal_history (request,datetime) "
-                    + "SELECT request,datetime FROM journal_history WHERE request='" + req + "'";
+                    + "SELECT request,datetime FROM journal_history WHERE request=? ";
             PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, req);
             st.executeUpdate();
             sql = "DELETE FROM journal_history WHERE request='" + req + "'";
             st = this.conn.prepareStatement(sql);
@@ -342,7 +356,24 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='INC-STL')";
         } else if (flag.equalsIgnoreCase("INC-ADJ")) {
             flag_before = " AND (flag='INC-WAIT')";
+        } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
+            flag_before = " AND (flag='FIA-FAILED')";
+        }  else if (flag.equalsIgnoreCase("FIA-RESEND")) {
+            flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-RESEND')";
+        }  else if (flag.equalsIgnoreCase("AML-RESEND")) {
+            flag_before = " AND (flag='AML-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("WAITING-SAA-RESEND")) {
+            flag_before = " AND (flag='WAITING-SAA-CNF')";
+        }  else if (flag.equalsIgnoreCase("DDA-RESEND")) {
+            flag_before = " AND (flag='DDA-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("INTEL-RESEND")) {
+            flag_before = " AND (flag='INTEL-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("REM-RESEND")) {
+            flag_before = " AND (flag='REM-FAILED-CNF')";
+        }  else if (flag.equalsIgnoreCase("CVT-VER-RESEND")) {
+            flag_before = " AND (flag='CVT-VER')";            
         }
+        
       
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
@@ -364,7 +395,24 @@ public class DBDataTransaksiOutgoing {
         updateDataHeaderStatus(flag, id_headers, user_id, ip_access, comp_name);
         // penmabahn unutk force inc-OK ' || (flag.equalsIgnoreCase("INC-OK") && flagStatus.equalsIgnoreCase("INC-NOK"))' 16 sept 2015
         // INC-NOK diubah menjadi INC-WAIT 20180413
-        if ((flag.equalsIgnoreCase("AUTH") && AUTH) || (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || (flag.equalsIgnoreCase("INC-STL") && AUTH) || (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || (flag.equalsIgnoreCase("INC-RSTL") && AUTH)) {
+        if (
+            (flag.equalsIgnoreCase("AUTH") && AUTH) || 
+            (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || 
+            (flag.equalsIgnoreCase("INC-STL") && AUTH) || 
+            (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || 
+            (flag.equalsIgnoreCase("INC-RSTL") && AUTH) || 
+            (flag.equalsIgnoreCase("FIA-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("AML-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("WAITING-SAA-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INTEL-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("REM-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("DDA-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("CVT-VER-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-AML-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH)
+            ) {
             CreateText ct = new CreateText(conn);
             
             // Harus mengetahui dulu apakah MX atau MT
@@ -389,13 +437,13 @@ public class DBDataTransaksiOutgoing {
                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
                 
 //                System.out.println(finalMX.get("final_mx"));
+                ct.createTextFileMX(fullMessage,variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
                 
-                ct.createTextFileMX(finalMX.get("final_mx"),variant,id_headers, "I", channel);
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
     //            CreateTextNew ctn = new CreateTextNew(conn);
-                ct.getFinalMT(id_headers, io_type);
+                ct.getFinalMT(id_headers, io_type, flag, user_id, ip_access, comp_name);
             }
         }
     }
@@ -532,10 +580,11 @@ public class DBDataTransaksiOutgoing {
                 + "deliveryMonitoring, bankingPriority, mur, komentar, block3, flag, io_type, sessionNumber, "
                 + "sequenceNumber, COALESCE(networkType, 'MT') AS networkType, komentar, tanggal, "
                 + "senderInputTime, MIRLogicalTerminal, receiverOutputDate, receiverOutputTime, source "
-                + "FROM headers WHERE id_headers = '" + headerId + "'";
+                + "FROM headers WHERE id_headers = ?";
 
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, Integer.parseInt(headerId));
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             header.setLogicalTerminal(rs.getString(1));
@@ -565,9 +614,10 @@ public class DBDataTransaksiOutgoing {
 
     public List<TagDB> getAllTagById(String headerId) throws Exception {
         List<TagDB> tags = new ArrayList<TagDB>();
-        String sql = "SELECT urutan,tag,detail,tagName,info FROM tags WHERE id_headers='" + headerId + "'";
+        String sql = "SELECT urutan,tag,detail,tagName,info FROM tags WHERE id_headers=?";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, headerId);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             TagDB tag = new TagDB();
@@ -619,6 +669,7 @@ public class DBDataTransaksiOutgoing {
 
     public void updateDataHeaderStatus(String status_header, Integer id_headers, String user_login, String ip_access, String comp_name) {
         log.info("updateDataHeaderStatus");
+        log.info("statusHeader:"+status_header);
         try {
             String sql = "INSERT INTO header_status(id_headers,status_header,status_tanggal,user_login,ip_access,comp_name) VALUES (?,?,LOCALTIMESTAMP,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -640,13 +691,16 @@ public class DBDataTransaksiOutgoing {
     public void addDataTag(int urutan, String tag, String detail, String tagName, int id) {
 //        int id = id_headers();
         try {
-            String sql = "INSERT INTO tags(urutan,id_headers,tag,detail,tagName,info) VALUES (?,'" + id + "',?,?,?,?)";
+            String sql = "INSERT INTO tags(urutan,id_headers,tag,detail,tagName,info) VALUES (?,?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
+            
             st.setInt(1, urutan);
-            st.setString(2, tag);
-            st.setString(3, detail);
-            st.setString(4, tagName);
-            st.setString(5, "");
+            st.setInt(2,id);
+            st.setString(3, tag);
+            st.setString(4, detail);
+            st.setString(5, tagName);
+            st.setString(6, "");
+            // System.out.println("addDataTag : " + st.toString());
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -696,6 +750,16 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
         } catch (SQLException e) {
             log.info("Error Delete Tag:" + e.getMessage());
+        }
+    }
+    public void cleanDataTrxDetail(int id_headers) {
+        try {
+            String sql = "DELETE FROM trx_detail WHERE id_headers = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id_headers);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.info("Error Delete trx_detail:" + e.getMessage());
         }
     }
 
@@ -833,13 +897,14 @@ public class DBDataTransaksiOutgoing {
         return update;
     }
     
-    public int updateTagsMXText (String json, int id_headers) throws SQLException, Exception {
+    public int updateTagsMXText (String json, String headersaa, int id_headers) throws SQLException, Exception {
         int update = 0;
         try {
-            String sql = "UPDATE tags_mx set json_tag=?::jsonb where id_headers=?";
+            String sql = "UPDATE tags_mx set json_tag=?::jsonb, header_saa=? where id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, json);
-            st.setInt(2, id_headers);
+            st.setString(2, headersaa);
+            st.setInt(3, id_headers);
             update = st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -847,17 +912,18 @@ public class DBDataTransaksiOutgoing {
         return update;
     }
     
-    public int updateFlagMX(String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name) throws SQLException, Exception {
+    public int updateFlagMX(String lt, String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name) throws SQLException, Exception {
         int update = 0;
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "UPDATE headers set receiverAddress=?, flag=? where flag =? and id_headers=?";
+            String sql = "UPDATE headers set logicalTerminal=?, receiverAddress=?, flag=? where flag =? and id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setString(1, responder.toUpperCase());
-            st.setString(2, flag);
+            st.setString(1, lt.toUpperCase());
+            st.setString(2, responder.toUpperCase());
+            st.setString(3, flag);
 //            st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
-            st.setString(3, flag_before);
-            st.setInt(4, id_headers);
+            st.setString(4, flag_before);
+            st.setInt(5, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
                 log.info("Update Flag to:" + flag);
@@ -987,7 +1053,8 @@ public class DBDataTransaksiOutgoing {
             st.setString(2, name);
             st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error Update Verified Account 599: " + e.getMessage());
+            // System.out.println("Error Update Verified Account 599: " + e.getMessage());
+            log.error("Error Update Verified Account 599: " + e.getMessage());
         }
     }
 
@@ -1002,9 +1069,10 @@ public class DBDataTransaksiOutgoing {
 //                nama = rs.getString("1");
                 nama = rs.getString("nameFromCore");
             }
-            System.out.println("Nama wuer:" + nama);
+            // System.out.println("Nama wuer:" + nama);
         } catch (SQLException e) {
-            System.out.println("Error Select Verified Account by Acc: " + e.getMessage());
+            // System.out.println("Error Select Verified Account by Acc: " + e.getMessage());
+            log.info("Error Select Verified Account by Acc: " + e.getMessage());
         }
         return nama;
     }
@@ -1016,13 +1084,14 @@ public class DBDataTransaksiOutgoing {
 //20190923 ditambah or karena ada 59f
             String sql = "Select detail from tags where id_headers='" + id + "' and (tagName='_180_mf59_account' or tagName='_185_mf59f_account')";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            System.out.println("sqlgetTag59Account103 : " + sql);
+            // System.out.println("sqlgetTag59Account103 : " + sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 rekening = rs.getString("detail");
             }
         } catch (SQLException e) {
-            System.out.println("Error Select Verified Account by id: " + e.getMessage());
+            // System.out.println("Error Select Verified Account by id: " + e.getMessage());
+            log.info("Error Select Verified Account by id: " + e.getMessage());
         }
         rekening = rekening.replace("/", "");
         return rekening;
@@ -1051,7 +1120,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59AccName " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Name: " + e.getMessage());
+            // System.out.println("Error Update Tag Name: " + e.getMessage());
+            log.info("Error Update Tag Name: " + e.getMessage());
         }
     }
 
@@ -1069,7 +1139,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59Acc " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Name: " + e.getMessage());
+            // System.out.println("Error Update Tag Name: " + e.getMessage());
+            log.info("Error Update Tag Name: " + e.getMessage());
         }
     }
 
@@ -1082,9 +1153,10 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()) {
                 type = rs.getString(1);
             }
-            System.out.println("type :" + type);
+            // System.out.println("type :" + type);
         } catch (SQLException e) {
-            System.out.println("Error type by Acc: " + e.getMessage());
+            // System.out.println("Error type by Acc: " + e.getMessage());
+            log.info("Error type by Acc: " + e.getMessage());
         }
         return type;
     }
@@ -1098,9 +1170,10 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()) {
                 type = rs.getString(1);
             }
-            System.out.println("type :" + type);
+            // System.out.println("type :" + type);
         } catch (SQLException e) {
-            System.out.println("Error type by Acc: " + e.getMessage());
+            // System.out.println("Error type by Acc: " + e.getMessage());
+            log.info("Error type by Acc: " + e.getMessage());
         }
         return type;
     }
@@ -1119,7 +1192,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59NameInfo " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Info: " + e.getMessage());
+            // System.out.println("Error Update Tag Info: " + e.getMessage());
+            log.info("Error Update Tag Info: " + e.getMessage());
         }
     }
 
@@ -1137,7 +1211,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
             log.info("updateTag59AccInfo " + sql + "# " + nama + "# " + id_headers + "# " + type);
         } catch (SQLException e) {
-            System.out.println("Error Update Tag Info: " + e.getMessage());
+            // System.out.println("Error Update Tag Info: " + e.getMessage());
+            log.info("Error Update Tag Info: " + e.getMessage());
         }
     }
 
@@ -1390,7 +1465,7 @@ public class DBDataTransaksiOutgoing {
     public DataCharges getCharges(String curr) throws SQLException {
         DataCharges dataSeq = new DataCharges();
         String sql = "SELECT id_charges, currency, charges FROM charges WHERE currency='" + curr + "'";
-        System.out.println("sql=" + sql);
+        // System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1534,12 +1609,12 @@ public class DBDataTransaksiOutgoing {
 //        System.out.println("tags : " + tags);
         try {
             String sql = "SELECT account FROM account_penagihan WHERE swift_code like '%" + bic.substring(0, 8) + "%'";
-            System.out.println("akun penagihan " + sql);
+            // System.out.println("akun penagihan " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 rowID = (rs.getString("account"));
-                System.out.println(sql + " == " + rowID);
+                // System.out.println(sql + " == " + rowID);
             }
         } catch (Exception es) {
             es.printStackTrace();
@@ -1554,7 +1629,7 @@ public class DBDataTransaksiOutgoing {
                     + "LEFT JOIN investigation i ON i.id_relation = a.id_headers\n"
                     + "WHERE i.id_headers = ?\n"
                     + "AND a.tag = '20'";
-            System.out.println("get ID Header 103 " + sql);
+            // System.out.println("get ID Header 103 " + sql);
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setInt(1, Integer.parseInt(id));
             ResultSet rs = st.executeQuery();
@@ -1957,8 +2032,8 @@ public class DBDataTransaksiOutgoing {
     }
 
     public void updateLock(int value, int id_headers, String user) {
-        log.info("grrrrr");
-        log.info("masuk updateLock#" + value + "#" + user + "#" + id_headers);
+        // log.info("grrrrr");
+        // log.info("masuk updateLock#" + value + "#" + user + "#" + id_headers);
         try {
             String sql = "update headers set isLock =?, usedBy=? where id_headers=? ";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -2076,4 +2151,22 @@ public class DBDataTransaksiOutgoing {
         }
         return update;
     }
+
+    public String getTemplateNameHeaders(Integer id_headers) throws SQLException, Exception {
+        String sql = "SELECT templatename FROM headers WHERE id_headers = ? ";
+        String templatename = null;
+        try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+            st.setInt(1, id_headers);
+
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    templatename = rs.getString("templatename");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return templatename;    
+    }    
 }

@@ -4,52 +4,56 @@
  */
 package com.vensys.appcm.controller;
 
+import com.google.gson.Gson;
+import com.vensys.appcm.dbase.DBEventLog;
 import java.io.IOException;
-import com.vensys.appcm.dbase.DBHeaderTemplate;
-import com.vensys.appcm.dbase.DBUserData;
-import com.vensys.appcm.dbase.DBconnection;
-import java.util.ArrayList;
-import java.util.List;
-import jakarta.servlet.RequestDispatcher;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import com.vensys.appcm.model.HeaderTemplate;
+import java.sql.Connection;
 
 /**
  *
- * @author rahma
+ * @author HP PROBOOK 430 G8
  */
-public class SCHeaderTemplate extends HttpServlet {
+@WebServlet(name = "SCUserLogMenuActivity", urlPatterns = {"/SCUserLogMenuActivity"})
+public class SCUserLogMenuActivity extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
-    private static String CONTROLLERHEADERS = "HeaderTemplates.jsp";
-    
+    Connection conn;
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String forward = "";
-        String menu = request.getParameter("menu");
-        // System.out.println("menu: " + menu);
-        HttpSession httpSession = request.getSession();
-        DBconnection dbConn = new DBconnection();
-        DBUserData dbo = new DBUserData(dbConn.getConnection());
-        List<HeaderTemplate> headersTemplate = new ArrayList<HeaderTemplate>();
-        DBHeaderTemplate bBHeaderTemplate = new DBHeaderTemplate(dbConn.getConnection());
-        try {          
-            headersTemplate = bBHeaderTemplate.getAllHeaderTemplate(httpSession);
-            forward = CONTROLLERHEADERS + "?menu=" + menu;
-            httpSession.setAttribute("headersTemplate", headersTemplate);
-//            System.out.println("menunyaaaa.... " + menu);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            dbConn.closeConnection();
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        Gson gson = new Gson();
+        String menuName = request.getParameter("menu_name");
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("user_id");
+        String roleId = (String) session.getAttribute("role_id");
+        String ipAccess = (String) session.getAttribute("ip_access");
+        String compName = (String) session.getAttribute("comp_name");
+        DBEventLog evl = new DBEventLog(conn);
+        
+        if (userId == null || roleId == null) {
+            out.print("{\"error\":401,\"message\":\"Session expired or unauthorized access\"}");
+            return;
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
-        dispatcher.forward(request, response);
+        evl.insertDataEvent(userId, "Membuka menu "+menuName, ipAccess, compName);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

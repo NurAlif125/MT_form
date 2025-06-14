@@ -81,7 +81,7 @@ public class SCUploadStmt extends HttpServlet {
 
         // constructs the folder where uploaded file will be stored
         String uploadFolder = dirUploadStmt;
-        System.out.println("uploadFolder: " + uploadFolder);
+        // System.out.println("uploadFolder: " + uploadFolder);
 
         // Create a new file upload handler
         ServletFileUpload upload = new ServletFileUpload(factory);

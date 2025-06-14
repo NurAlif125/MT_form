@@ -75,6 +75,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         String receiverAddress = request.getParameter("receiver_institution");
         String logicalTerminal = request.getParameter("sender_logical_terminal");
         String messType = request.getParameter("messageType");
+        String dnSender = "ou=" + logicalTerminal.substring(9, 12).toLowerCase() + ",o=" + logicalTerminal.substring(0, 8).toLowerCase() + ",o=swift";
+        String dnReceiver = "ou=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
+        String service = getService();
 
         log.info("The receiver address : " + receiverAddress);
         log.info("The logical terminal : " + logicalTerminal);
@@ -107,14 +110,21 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         }
         data.setFlag("VER");
 //        data.setBlock3(UUID.randomUUID().toString());
-        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"));
+        String reference = "";
+        if(messType.contains("008") || messType.contains("009")) {
+            reference = "Reference : "+request.getParameter("instrId");
+        } else if (messType.contains("004")) {
+            reference = "Reference : "+request.getParameter("rtrId");
+        } 
+        
+        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference);
 
         MxWriteConfiguration mxConfiguration = new MxWriteConfiguration();
         mxConfiguration.documentPrefix = null;
         mxConfiguration.headerPrefix = null;
 
-        String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>  <Saa:DataPDU xmlns:Saa=\"urn:swift:saa:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwSec=\"urn:swift:snl:ns.SwSec\">   <Saa:Revision>2.0.13</Saa:Revision>   <Saa:Header></Saa:Header>   <Saa:Body>ONLY-SAA-HEADERS</Saa:Body></Saa:DataPDU>  ";
-
+        String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>  <Saa:DataPDU xmlns:Saa=\"urn:swift:saa:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwSec=\"urn:swift:snl:ns.SwSec\">   <Saa:Revision>2.0.13</Saa:Revision>   <Saa:Header>THIS-IS-SAA-HEADER</Saa:Header>   <Saa:Body>ONLY-SAA-HEADERS</Saa:Body></Saa:DataPDU>  ";
+        
         BusinessAppHdrV02 appHeader = new BusinessAppHdrV02();
         appHeader.setFr(new Party44Choice());
         appHeader.getFr().setFIId(new BranchAndFinancialInstitutionIdentification6());
@@ -176,6 +186,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
+            
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
 
             dataMXpacs004.setAppHdr(appHeader);
 
@@ -194,7 +207,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
                 log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
@@ -243,6 +256,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
+            
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
 
             dataMXpacs008.setAppHdr(appHeader);
 
@@ -261,7 +277,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
                 log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
@@ -310,6 +326,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
+            
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
 
             dataMXpacs009.setAppHdr(appHeader);
 
@@ -328,14 +347,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
+                // log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
                     dBTrx2.updateDuplikat(idDupe.get(ld));
                     log.info("sini 249");
                 }
-                log.info("masuk if 270");
+                // log.info("masuk if 270");
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.053")) {
             appHeader.setMsgDefIdr("camt.053.001.08");
@@ -376,6 +395,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
+            
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
 
             dataMXcamt053.setAppHdr(appHeader);
 
@@ -384,14 +406,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05300108) abstractMX).toJson(), saaHeader);
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
                 log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
                     dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
+                    // log.info("sini 249");
                 }
-                log.info("masuk if 270");
+                // log.info("masuk if 270");
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.055")) {
             appHeader.setMsgDefIdr("camt.055.001.08");
@@ -432,6 +454,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
+            
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
 
             dataMXcamt055.setAppHdr(appHeader);
 
@@ -440,14 +465,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05500108) abstractMX).toJson(), saaHeader);
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
+                // log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
                     dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
+                    // log.info("sini 249");
                 }
-                log.info("masuk if 270");
+                // log.info("masuk if 270");
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.056")) {
             appHeader.setMsgDefIdr("camt.056.001.08");
@@ -488,6 +513,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
+            
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
 
             dataMXcamt056.setAppHdr(appHeader);
 
@@ -496,14 +524,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05600108) abstractMX).toJson(), saaHeader);
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
+                // log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
                     dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
+                    // log.info("sini 249");
                 }
-                log.info("masuk if 270");
+                // log.info("masuk if 270");
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.107")) {
             appHeader.setMsgDefIdr("camt.107.001.01");
@@ -544,6 +572,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 dBTrx2.updateSequence(dateUpdate, seq);
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
+            
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
 
             dataMXcamt107.setAppHdr(appHeader);
 
@@ -552,14 +583,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10700101) abstractMX).toJson(), saaHeader);
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
+                // log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
                     dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
+                    // log.info("sini 249");
                 }
-                log.info("masuk if 270");
+                // log.info("masuk if 270");
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.108")) {
             appHeader.setMsgDefIdr("camt.108.001.01");
@@ -601,6 +632,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
                 appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
             }
 
+            String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + returnId_headers + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+            saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
+            
             dataMXcamt108.setAppHdr(appHeader);
 
             dBTrx2.addMXText(dataMXcamt108.message(mxConfiguration), returnId_headers);
@@ -608,14 +642,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10800101) abstractMX).toJson(), saaHeader);
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
-            log.info("panjang dupe nya.... " + lengthIdDupe);
+            // log.info("panjang dupe nya.... " + lengthIdDupe);
             if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
+                // log.info("246 masuk if");
                 for (int ld = 1; ld < lengthIdDupe; ld++) {
                     dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
+                    // log.info("sini 249");
                 }
-                log.info("masuk if 270");
+                // log.info("masuk if 270");
             }
         }
 
@@ -647,6 +681,14 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
         prop.load(inputStream);
         return prop.getProperty("bizSvcAdv");
+    }
+    
+    public String getService() throws IOException {
+        log.info("getService");
+        Properties prop = new Properties();
+        InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
+        prop.load(inputStream);
+        return prop.getProperty("service");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

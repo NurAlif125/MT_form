@@ -71,7 +71,7 @@ public class DBDataNostro {
             st.setString(8, data.getCity());
             st.setString(9, data.getCountry());
             st.setInt(10, id_member);
-            System.out.println("sql update Nostro = " + sql);
+            // System.out.println("sql update Nostro = " + sql);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -156,9 +156,10 @@ public class DBDataNostro {
     
     public List<String> cekDataDuplicateNostro(String swift_code) throws SQLException {
         List<String> datas = new ArrayList<String>();
-        String sql = "SELECT t.swift_code FROM nostro AS t WHERE  t.swift_code = '"+swift_code+"' ORDER BY id_member ASC";
+        String sql = "SELECT t.swift_code FROM nostro AS t WHERE  t.swift_code = ? ORDER BY id_member ASC";
         System.out.println("sql cek Data Duplicate Nostro = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, swift_code);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             datas.add(rs.getString(1));

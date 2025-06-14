@@ -50,7 +50,7 @@ public class SCPrintAuditTrail extends HttpServlet {
         ArrayList<DataAuditTrail> dataAuditTrail = new ArrayList<DataAuditTrail>();
         DBAuditTrail dbAudit = new DBAuditTrail(dbConn.getConnection());
         ServletOutputStream servletOutputStream = response.getOutputStream();
-        File reportFile = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportAuditTrail.jasper"));
+        File reportFile = new File(getServletConfig().getServletContext().getRealPath("/WEB-INF/reports/reportAuditTrailTransaction.jasper"));
         byte[] bytes = null;
         
 //        System.out.println("Jumlah data: " + dataAuditTrail.size());
@@ -78,7 +78,7 @@ public class SCPrintAuditTrail extends HttpServlet {
             e.printStackTrace(printWriter);
             response.setContentType("text/plain");
             response.getOutputStream().print(stringWriter.toString());
-            System.out.println("Report Audit Trail Report: "+e.getMessage());
+            // System.out.println("Report Audit Trail Report: "+e.getMessage());
         } finally {
             dbConn.closeConnection();
         }

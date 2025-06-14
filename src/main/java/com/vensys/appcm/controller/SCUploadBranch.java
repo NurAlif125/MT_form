@@ -88,10 +88,10 @@ public class SCUploadBranch extends HttpServlet {
 //                String tag57Acc;
 //                String tag57Bic;
                 rows = sheet.getPhysicalNumberOfRows();
-                System.out.println("rows nyaeta :" + rows);
+                // System.out.println("rows nyaeta :" + rows);
                 for (int i = 1; i < rows; i++) {
-                    log.info("cetakkk ....." + i);
-                    log.info("masuk for");
+                    // log.info("cetakkk ....." + i);
+                    // log.info("masuk for");
                     row = sheet.getRow(i);
                     HSSFDataFormatter df = new HSSFDataFormatter();
                     noref = row.getCell(0).toString();
@@ -143,7 +143,7 @@ public class SCUploadBranch extends HttpServlet {
                     }
                     
                 }
-                log.info("berhaasil");
+                // log.info("berhaasil");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("upload_branch.jsp?status=y126");
                 dispatcher.forward(request, response);
             } catch (Exception e) {

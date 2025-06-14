@@ -173,17 +173,18 @@ public class DBDataRole {
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setInt(1, role_id);
         st.executeUpdate();
-        System.out.println(st);
+        // System.out.println(st);
         evl.insertDataEvent(modifier, "Hapus role", ip, comp);
         evl.updateLogUser(modifier, "role", tanggal);
     }
     
     public boolean cekDataDuplicateRole(String role_name) throws SQLException {
         boolean datas = false;
-        String sql = "SELECT role_name FROM roles WHERE role_name = '"+role_name+"' ORDER BY role_id ASC";
+        String sql = "SELECT role_name FROM roles WHERE role_name = ? ORDER BY role_id ASC";
 //        String sql = "select id_account from account_penagihan";
 //        System.out.println("sql cek duplicate role_name = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, role_name);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             datas = true;
@@ -200,7 +201,7 @@ public class DBDataRole {
         while (rs.next()) {
             datas = true;
         }
-        System.out.println("sini"+ datas);
+        // System.out.println("sini"+ datas);
         return datas;
     }
     
@@ -226,7 +227,7 @@ public class DBDataRole {
             data.setRole_desc(rs.getString(2));     //role_desc
             data.setTimeout(rs.getInt(3));  //timeout
             data.setDisable_permanent(rs.getDate(4));//timeout
-            System.out.println("data tanggal disble ="+ data.getDisable_permanent());
+            // System.out.println("data tanggal disble ="+ data.getDisable_permanent());
             datas.add(data);
         }
         

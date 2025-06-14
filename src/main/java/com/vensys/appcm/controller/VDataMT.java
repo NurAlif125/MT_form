@@ -43,13 +43,15 @@ public class VDataMT extends HttpServlet {
             dataMTById = db.getDataMTById(id);
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println("errr view data MT : " + ex.getMessage());
+            // System.out.println("errr view data MT : " + ex.getMessage());
+//            log.info("errr view data MT : " + ex.getMessage());
         }
 
         try {
         } catch (Exception ex) {
             ex.printStackTrace();
-            System.out.println("errr view data MT : " + ex.getMessage());
+            // System.out.println("errr view data MT : " + ex.getMessage());
+//            log.info("errr view data MT : " + ex.getMessage());
         } finally {
             dbConn.closeConnection();
         }

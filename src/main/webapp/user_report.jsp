@@ -22,7 +22,7 @@
                 </div>
 <!--                <div class="form-row"><span class="labelL2">&nbsp;</span>-->
                 <div class="form-row-action">
-                    <input type="button" name="print_pdfu" id="print_pdfu" value="View" />
+                    <input type="button" name="print_pdfu" id="print_pdfu" value="Export" />
 <!--                    <input type="button" name="print_xlsu" id="print_xlsu" value="View XLS" />-->
 <!--                    <input type="reset" name="reset" id="reset" value="Reset" />-->
                 </div>

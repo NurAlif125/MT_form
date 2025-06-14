@@ -76,7 +76,7 @@ public class VDataTemplateMT extends HttpServlet {
                 }
             }
 
-            System.out.println("id: " + request.getParameter("idlt"));
+            // System.out.println("id: " + request.getParameter("idlt"));
             httpSession.setAttribute("messageType", templateById.getMessageType());
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -50,7 +50,7 @@ public class SCPrintCSV extends HttpServlet {
         String channel = request.getParameter("channel");
         String status= request.getParameter("status")+"";
         
-        System.out.println("Channel="+channel);
+        // System.out.println("Channel="+channel);
         
         HttpSession session = request.getSession();
         DBconnection dbConn = new DBconnection();
@@ -89,7 +89,8 @@ public class SCPrintCSV extends HttpServlet {
             outputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.toString());
+            // System.out.println(e.toString());
+//            log.info(e.printStackTrace());
         } finally {
             dbConn.closeConnection();
         }

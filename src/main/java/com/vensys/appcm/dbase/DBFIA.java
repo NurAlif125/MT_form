@@ -180,7 +180,7 @@ public class DBFIA {
     
     public List<String[]> getPagesFIAPathAjax(int offset, int numberLimit) throws Exception {
         List<String[]> datas = new ArrayList<String[]>();
-        String sql = "SELECT id,config_name,host,protocol,path,localpath FROM sftp_reader_fia_new ORDER BY id OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
+        String sql = "SELECT id,config_name,source,host,case when protocol = '' OR protocol is null then 'MFT' else protocol end protocol,path,localpath,transferpath FROM sftp_reader_fia_new ORDER BY id OFFSET " + offset + " ROWS FETCH NEXT " + numberLimit + " ROWS ONLY";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -191,7 +191,9 @@ public class DBFIA {
                 rs.getString(3),
                 rs.getString(4),
                 rs.getString(5),
-                rs.getString(6)
+                rs.getString(6),
+                rs.getString(7),
+                rs.getString(8)
                 };
             datas.add(value);
         }
@@ -267,6 +269,16 @@ public class DBFIA {
         evl.insertDataEvent(mofier, "Ubah Config FIA Path", ip, comp);
     }
     
-
+    public List<String> getSourcefromSftpReaderFia() throws SQLException {
+        List<String> sources = new ArrayList<>();
+        String sql = "SELECT source FROM public.sftp_reader_fia_new ORDER BY 1";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            String source = rs.getString("source");
+            sources.add(source);
+        }
+        return sources;
+    }
 }
 

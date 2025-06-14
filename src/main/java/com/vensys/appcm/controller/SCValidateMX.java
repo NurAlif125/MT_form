@@ -55,43 +55,43 @@ public class SCValidateMX extends HttpServlet {
             rulePacs008_2024 rulepacs008 = new rulePacs008_2024 (dataMXpacs008);
             rulepacs008.runRules(logicalTerminal, receiverAddress);
             String errorRulePacs008 = rulepacs008.getErrorRule();
-            System.out.println(errorRulePacs008);
+            // System.out.println(errorRulePacs008);
             out.print(errorRulePacs008);
-            System.out.println(gson.toJson(errorRulePacs008));
+            // System.out.println(gson.toJson(errorRulePacs008));
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
             if (messType.contains("cov")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
                 rulePacs009Cov_2024 rulepacs009cov = new rulePacs009Cov_2024 (dataMXpacs009);
                 rulepacs009cov.runRules(logicalTerminal, receiverAddress);
                 String errorRulePacs009cov = rulepacs009cov.getErrorRule();
-                System.out.println(errorRulePacs009cov);
+                // System.out.println(errorRulePacs009cov);
                 out.print(errorRulePacs009cov);
-                System.out.println(gson.toJson(errorRulePacs009cov));
+                // System.out.println(gson.toJson(errorRulePacs009cov));
             } else if (messType.contains("adv")) {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
                 rulePacs009adv_2024 rulepacs009adv = new rulePacs009adv_2024 (dataMXpacs009);
                 rulepacs009adv.runRules(logicalTerminal, receiverAddress);
                 String errorRulePacs009adv = rulepacs009adv.getErrorRule();
-                System.out.println(errorRulePacs009adv);
+                // System.out.println(errorRulePacs009adv);
                 out.print(errorRulePacs009adv);
-                System.out.println(gson.toJson(errorRulePacs009adv));
+                // System.out.println(gson.toJson(errorRulePacs009adv));
             } else {
                 MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
                 rulePacs009_2024 rulepacs009 = new rulePacs009_2024 (dataMXpacs009);
                 rulepacs009.runRules(logicalTerminal, receiverAddress);
                 String errorRulePacs009 = rulepacs009.getErrorRule();
-                System.out.println(errorRulePacs009);
+                // System.out.println(errorRulePacs009);
                 out.print(errorRulePacs009);
-                System.out.println(gson.toJson(errorRulePacs009));
+                // System.out.println(gson.toJson(errorRulePacs009));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
             MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;
             rulePacs004_2024 rulepacs004 = new rulePacs004_2024 (dataMXpacs004);
             rulepacs004.runRules(logicalTerminal, receiverAddress);
             String errorRulePacs004 = rulepacs004.getErrorRule();
-            System.out.println(errorRulePacs004);
+            // System.out.println(errorRulePacs004);
             out.print(errorRulePacs004);
-            System.out.println(gson.toJson(errorRulePacs004));
+            // System.out.println(gson.toJson(errorRulePacs004));
         }
     }
 

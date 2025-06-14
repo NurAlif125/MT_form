@@ -81,12 +81,12 @@
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                            <li><a href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
+                                <li><a onclick="userTrackMenuClick('Summary Incoming')" href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                            <li><a href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
+                            <li><a onclick="userTrackMenuClick('Summary Outgoing')" href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
                             </c:if>
                         </c:forEach>
                     </ul>
@@ -99,18 +99,18 @@
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MEMBER_CODE:LIST'}">
-                                <li><a href="SCBICList">BIC</a></li>
+                                <li><a onclick="userTrackMenuClick('BIC')" href="SCBICList">BIC</a></li>
+                            </c:if>
+                        </c:forEach>
+                        <c:forEach var="item" items="${role}">
+                            <c:if test="${item == 'FIAPATHCONF:LIST'}">
+                                <li><a onclick="userTrackMenuClick('FIA Path Configuration')" href="SCFIAPathList">FIA Path Configuration</a></li>
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
 
                             <c:if test="${item == 'FIACONF:LIST'}">
-                                <li><a href="SCFIAList">FIA Configuration</a></li>
-                            </c:if>
-                        </c:forEach>
-                        <c:forEach var="item" items="${role}">
-                            <c:if test="${item == 'FIAPATHCONF:LIST'}">
-                                <li><a href="SCFIAPathList">FIA Path Configuration</a></li>
+                                <li><a onclick="userTrackMenuClick('FIA Configuration')" href="SCFIAList">FIA Configuration</a></li>
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
@@ -129,12 +129,12 @@
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'ROLE:LIST'}">
-                                <li><a href="SCDataRoleList">Role</a></li>
+                                <li><a onclick="userTrackMenuClick('Role')" href="SCDataRoleList">Role</a></li>
                             </c:if>
                         </c:forEach>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'USER:LIST'}">
-                                <li><a href="SCDataUserList">User</a></li>
+                                <li><a onclick="userTrackMenuClick('User')" href="SCDataUserList">User</a></li>
                             </c:if>
                         </c:forEach>
                     </ul>
@@ -143,8 +143,8 @@
         </c:forEach>
         <c:forEach var="item" items="${role}">
             <c:if test="${item == 'MENU:DUPLICATE'}">
-                <li><a href="SCDuplicate">Duplicate</a></li>
-                <li><a href="SCReject">Rejected</a></li>
+                <li><a onclick="userTrackMenuClick('Duplicate')" href="SCDuplicate">Duplicate</a></li>
+                <li><a onclick="userTrackMenuClick('Rejected')" href="SCReject">Rejected</a></li>
                 </c:if>
             </c:forEach>
             <c:forEach var="item" items="${role}">
@@ -164,7 +164,7 @@
                                                  <li><a href="mt191.jsp">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
                                                  </c:if>--%>
                                             <c:if test="${item == 'MT:103'}">
-                                                <li><a href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
+                                                <li><a onclick="userTrackMenuClick('103 - Single Customer Credit Transfer')" href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:199'}">
                                                 <!--<li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>-->
@@ -179,16 +179,16 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MT:200'}">
-                                                <li><a href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>
+                                                <li><a onclick="userTrackMenuClick('200 - Financial Institution Transfer for its Own Account')" href="mt200.jsp?create=true">200 - Financial Institution Transfer for its Own Account</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202'}">
-                                                <li><a href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
+                                                <li><a onclick="userTrackMenuClick('202 - General Financial Institution Transfer')" href="mt202.jsp?create=true">202 - General Financial Institution Transfer</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MT:210'}">
                                                 <!--<li><a href="mt210.jsp?create=true">210 - Notice to Receive </a></li>-->
                                                 </c:if>
                                                 <c:if test="${item == 'MT:202COV'}">
-                                                <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
+                                                <li><a onclick="userTrackMenuClick('202 COV - General Financial Institution Transfer')" href="mt202COV.jsp?create=true">202 COV - General Financial Institution Transfer</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
@@ -243,19 +243,19 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:pacs00400109'}">
-                                                <li><a href="main_pacs004.jsp">PACS.004.001.09 - Payment Return V09</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.004.001.09 - Payment Return V09')" href="main_pacs004.jsp?create=true">PACS.004.001.09 - Payment Return V09</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00800108'}">
-                                                <li><a href="main_pacs008.jsp">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.008.001.08 - FI To FI Customer Credit Transfer V08')" href="main_pacs008.jsp?create=true">PACS.008.001.08 - FI To FI Customer Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108'}">
-                                                <li><a href="main_pacs009.jsp">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08 - Financial Institution Credit Transfer V08')" href="main_pacs009.jsp?create=true">PACS.009.001.08 - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108cov'}">
-                                                <li><a href="main_pacs009cov.jsp">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08COV - Financial Institution Credit Transfer V08')" href="main_pacs009cov.jsp?create=true">PACS.009.001.08COV - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:pacs00900108adv'}">
-                                                <li><a href="main_pacs009adv.jsp">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('PACS.009.001.08ADV - Financial Institution Credit Transfer V08')" href="main_pacs009adv.jsp?create=true">PACS.009.001.08ADV - Financial Institution Credit Transfer V08</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
@@ -286,7 +286,7 @@
                         </li>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'FLOW:LTCREATE'}">
-                                <li><a href="ControllerHeaderTemplate">Template List</a></li>
+                                <li><a onclick="userTrackMenuClick('Template List')" href="ControllerHeaderTemplate">Template List</a></li>
                                 </c:if>
                             </c:forEach>
                     </ul>
@@ -297,7 +297,7 @@
             <c:if test="${item == 'MENU:LIST_TRANSACTIONS'}">
                 <li><span class="dir">Process</span>
                     <ul>
-                        <li><a href="controllerHeaders">Message List</a></li>
+                        <li><a onclick="userTrackMenuClick('Message List')" href="controllerHeaders">Message List</a></li>
                             <c:forEach var="item" items="${role}">
                                 <c:if test="${(item == 'TYPE:OUTGOING_INCOMING') || (item == 'TYPE:INCOMING')}">
                                 <li><span class="dir">Incoming</span>
@@ -305,7 +305,7 @@
                                         <!--<li><a href="controllerHeaders?io_type=O&flag=INC-HOLD&menu=11">Incoming Hold</a></li>-->
                                             <c:forEach var="iteminc" items="${role}">
                                                 <c:if test="${iteminc == 'FLOW:INC-TRX'}">
-                                                    <li><a href="controllerHeaders?io_type=O&flag=INC&menu=24">Incoming Transaction</a></li>
+                                                    <li><a onclick="userTrackMenuClick('Incoming Transaction')" href="controllerHeaders?io_type=O&flag=INC&menu=24">Incoming Transaction</a></li>
                                                 </c:if>
                                             </c:forEach>
                                             <c:forEach var="iteminc" items="${role}">
@@ -328,22 +328,43 @@
                                                 <!--<li><a href="controllerHeaders?io_type=O&flag=INC-NSTP&menu=17">Incoming Big Amount</a></li>-->
                                             </c:if>
                                             <c:if test="${iteminc == 'FLOW:INC-CVT'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-CVT&menu=23">Incoming Convert</a></li>
+                                                <li><a onclick="userTrackMenuClick('Incoming Convert')" href="controllerHeaders?io_type=O&flag=INC-CVT&menu=23">Incoming Convert</a></li>
                                             </c:if>
                                             <c:if test="${iteminc == 'FLOW:RESEND-CNF'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=RESEND-CNF&menu=25">Incoming Convert Confirmation</a></li>
+                                                <li><a onclick="userTrackMenuClick('Incoming Convert Confirmation')" href="controllerHeaders?io_type=O&flag=RESEND-CNF&menu=25">Incoming Convert Confirmation</a></li>
                                             </c:if>
-                                            <c:if test="${iteminc == 'FLOW:INC-REJECT-CNF'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-REJECT-CNF&menu=26">Incoming Reject Confirmation</a></li>
-                                            </c:if>
-                                            <c:if test="${iteminc == 'FLOW:INC-AML'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=INC-AML&menu=27">Incoming Waiting AML</a></li>
+                                            </c:forEach>
+                                            <c:forEach var="iteminc" items="${role}">
+                                                <c:if test="${iteminc == 'FLOW:INC-AML'}">
+                                                    <li><a onclick="userTrackMenuClick('Incoming Reject AML')" href="controllerHeaders?io_type=O&flag=INC-AML&menu=26">Incoming Reject AML</a></li>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:forEach var="iteminc" items="${role}">
+                                                <c:if test="${iteminc == 'FLOW:AML-TERMINATE-IN'}">
+                                                    <li><a onclick="userTrackMenuClick('Incoming Reject AML Confirmation')" href="controllerHeaders?io_type=O&flag=AML-TERMINATE-IN&menu=27">Incoming Reject AML Confirmation</a></li>
+                                                </c:if>
+                                                <c:if test="${iteminc == 'FLOW:INC-AML-FAILED'}">
+                                                    <li><a onclick="userTrackMenuClick('Incoming Resend to AML')" href="controllerHeaders?io_type=O&flag=INC-AML-FAILED&menu=28">Incoming Resend to AML</a></li>
+                                                </c:if>
+                                                <c:if test="${iteminc == 'FLOW:INC-AML-FAILED-CNF'}">
+                                                    <li><a onclick="userTrackMenuClick('Incoming Resend to AML Confirmation')" href="controllerHeaders?io_type=O&flag=INC-AML-FAILED-CNF&menu=29">Incoming Resend to AML Confirmation</a></li>
+                                                </c:if>
+                                                <c:if test="${iteminc == 'FLOW:UNSETTLE-INC'}">
+                                                    <li><a onclick="userTrackMenuClick('Incoming Resend to Channel')" href="controllerHeaders?io_type=O&flag=UNSETTLE-INC&menu=30">Incoming Resend to Channel</a></li>
+                                                </c:if>
+                                                <c:if test="${iteminc == 'FLOW:INC-RESEND-CNF'}">
+                                                    <li><a onclick="userTrackMenuClick('Incoming Resend to Channel Confirmation')" href="controllerHeaders?io_type=O&flag=INC-RESEND-CNF&menu=31">Incoming Resend to Channel Confirmation</a></li>
+                                                </c:if>
+                                            </c:forEach>
+                                            <c:forEach var="iteminc" items="${role}">
+                                                <c:if test="${iteminc == 'FLOW:INC-REJECT-CNF'}">
+                                                <!--<li><a href="controllerHeaders?io_type=O&flag=INC-REJECT-CNF&menu=26">Incoming Reject Confirmation</a></li>-->
                                             </c:if>
                                             <c:if test="${iteminc == 'FLOW:Un-Settle'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=Un-Settle&menu=28">Incoming Un Settle</a></li>
+                                                <!--<li><a href="controllerHeaders?io_type=O&flag=Un-Settle&menu=28">Incoming Un Settle</a></li>-->
                                             </c:if>
-                                            <c:if test="${iteminc == 'FLOW:Un-Settle'}">
-                                                <li><a href="controllerHeaders?io_type=O&flag=Settle&menu=30">Incoming Settle</a></li>
+                                            <c:if test="${iteminc == 'FLOW:SETTLE'}">
+                                                <li><a onclick="userTrackMenuClick('Incoming Settle')" href="controllerHeaders?io_type=O&flag=SETTLE&menu=32">Incoming Settle</a></li>
                                             </c:if>
                                         </c:forEach>
                                         <!--<li><a href="controllerHeaders?io_type=O&flag=INC-INV&menu=8">Incoming Investigation</a></li>-->
@@ -355,39 +376,61 @@
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'FLOW:MOD'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=MOD&menu=1">Modification</a></li>
+                                                <li><a onclick="userTrackMenuClick('Modification')" href="controllerHeaders?io_type=I&flag=MOD&menu=1">Modification</a></li>
                                             </c:if>
                                             <c:if test="${item == 'FLOW:VER'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=VER&menu=2">Verification</a></li>
+                                                <li><a onclick="userTrackMenuClick('Verification')" href="controllerHeaders?io_type=I&flag=VER&menu=2">Verification</a></li>
                                             </c:if>
                                             <c:if test="${item == 'FLOW:AUTH'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Authorize</a></li>
-                                            </c:if>
-                                        </c:forEach>    
-                                                <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Failed to Send to FIA</a></li>
-                                                <li><a href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Failed to Send to FIA Confirmation</a></li>
-                                        <c:forEach var="item" items="${role}">
-                                            <c:if test="${item == 'FLOW:WAITING-AML'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=WAITING-AML&menu=22">Waiting AML</a></li>
+                                                <li><a onclick="userTrackMenuClick('Authorize')" href="controllerHeaders?io_type=I&flag=AUTH&menu=3">Authorize</a></li>
                                             </c:if>
                                         </c:forEach>
                                         <c:forEach var="item" items="${role}">
-                                            <c:if test="${item == 'FLOW:AML-TERMINATE'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=AML-TERMINATE&menu=29">Waiting AML Confirmation</a></li>
+                                            <c:if test="${item == 'FLOW:FIA-FAILED'}">
+                                                <li><a onclick="userTrackMenuClick('Failed to Send to FIA')" href="controllerHeaders?io_type=I&flag=FIA-FAILED&menu=38">Failed to Send to FIA</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:FIA-FAILED-CNF'}">
+                                                <li><a onclick="userTrackMenuClick('Failed to Send to FIA Confirmation')" href="controllerHeaders?io_type=I&flag=FIA-FAILED-CNF&menu=39">Failed to Send to FIA Confirmation</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:UNSETTLE-OUT'}">
+                                                <li><a onclick="userTrackMenuClick('Failed to Send to SAA')" href="controllerHeaders?io_type=I&flag=UNSETTLE-OUT&menu=33">Failed to Send to SAA</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:WAITING-SAA-CNF'}">
+                                                <li><a onclick="userTrackMenuClick('Failed to Send to SAA Confirmation')" href="controllerHeaders?io_type=I&flag=WAITING-SAA-CNF&menu=34">Failed to Send to SAA Confirmation</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:WAITING-AML'}">
+                                                <li><a onclick="userTrackMenuClick('Reject AML')" href="controllerHeaders?io_type=I&flag=WAITING-AML&menu=22">Reject AML</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:AML-TERMINATE-OUT'}">
+                                                <li><a onclick="userTrackMenuClick('Reject AML Confirmation')" href="controllerHeaders?io_type=I&flag=AML-TERMINATE-OUT&menu=35">Reject AML Confirmation</a></li>
                                             </c:if>
                                         </c:forEach>  
                                         <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'FLOW:AML-FAILED'}">
+                                                <li><a onclick="userTrackMenuClick('Failed to Send to AML')" href="controllerHeaders?io_type=I&flag=AML-FAILED&menu=36">Failed to Send to AML</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'FLOW:AML-FAILED-CNF'}">
+                                                <li><a onclick="userTrackMenuClick('Failed to Send to AML Confirmation')" href="controllerHeaders?io_type=I&flag=AML-FAILED-CNF&menu=37">Failed to Send to AML Confirmation</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                        <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'FLOW:CVT-MOD'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-MOD&menu=20">Modify Convert</a></li>
+                                                <li><a onclick="userTrackMenuClick('Modify Convert')" href="controllerHeaders?io_type=I&flag=CVT-MOD&menu=20">Modify Convert</a></li>
                                             </c:if>
                                             <c:if test="${item == 'FLOW:CVT-VER'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=CVT-VER&menu=21">Verify Convert</a></li>
+                                                <li><a onclick="userTrackMenuClick('Verify Convert')" href="controllerHeaders?io_type=I&flag=CVT-VER&menu=21">Verify Convert</a></li>
                                             </c:if>
                                             <c:if test="${item == 'FLOW:ACK'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=ACK&menu=13">ACK</a></li>
+                                                <li><a onclick="userTrackMenuClick('ACK')" href="controllerHeaders?io_type=I&flag=ACK&menu=13">ACK</a></li>
                                             </c:if>
                                             <c:if test="${item == 'FLOW:NACK'}">
-                                                <li><a href="controllerHeaders?io_type=I&flag=NACK&menu=5">NACK</a></li>
+                                                <li><a onclick="userTrackMenuClick('NACK')" href="controllerHeaders?io_type=I&flag=NACK&menu=5">NACK</a></li>
                                             </c:if>
                                             <c:if test="${item == 'FLOW:ERR'}">
                                                 <!--<li><a href="controllerHeaders?io_type=I&flag=ERR&menu=16">Error</a></li>-->
@@ -402,7 +445,7 @@
                             </c:if--%>
                             <!--20230718 tambah menu-->
                             <c:if test="${(item == 'MENU:UPLOADSTMT')}">
-                                <li><a href="upload_stmt.jsp">Upload MT950</a></li>
+                                <li><a onclick="userTrackMenuClick('Upload MT950')" href="upload_stmt.jsp">Upload MT950</a></li>
                                 </c:if>
                             </c:forEach>
                     </ul>
@@ -411,11 +454,11 @@
             <c:if test="${(item == 'MENU:REPORTING')}">
                 <li><span class="dir">Reporting</span>
                     <ul>
-                        <li><a href="Report_print.jsp">Transaction</a></li>
+                        <li><a onclick="userTrackMenuClick('Transaction')" href="Report_print.jsp">Transaction</a></li>
                         <!--<li><a href="role_report.jsp">Role</a></li>-->
-                        <li><a href="user_report.jsp">User</a></li>
-                        <li><a href="user_activity_report.jsp">User Activity</a></li>
-                        <li><a href="audit_trail_report.jsp">Audit Trail</a></li>
+                        <li><a onclick="userTrackMenuClick('User')" href="user_report.jsp">User</a></li>
+                        <li><a onclick="userTrackMenuClick('Audit Trail User')" href="user_activity_report.jsp">Audit Trail User</a></li>
+                        <li><a onclick="userTrackMenuClick('Audit Trail Transaction')" href="audit_trail_report.jsp">Audit Trail Transaction</a></li>
                         <!--<li><a href="user_login_report.jsp">User Login</a></li>-->
                         <!--<li><a href="SCNostroListReconcile">Recon</a></li>-->
                     </ul>
@@ -424,18 +467,18 @@
             <c:if test="${(item == 'MENU:HOUSEKEEPING')}">
                 <li><span class="dir">House Keeping</span>
                     <ul>
-                        <li><a href="SCArchive">Archive</a></li>
-                        <li><a href="SCRestore">Restore</a></li>
+                        <li><a onclick="userTrackMenuClick('Archive')" href="SCArchive">Archive</a></li>
+                        <li><a onclick="userTrackMenuClick('Restore')" href="SCRestore">Restore</a></li>
                     </ul>
                 </li>
             </c:if>
             <c:if test="${item == 'MENU:CONTACT'}">
-                <li><a href="contact.jsp">Contact Us</a></li>
+                <li><a onclick="userTrackMenuClick('Contact Us')" href="contact.jsp">Contact Us</a></li>
                 </c:if>
             </c:forEach>
                 
                 <div onclick="openModal()" class="notif-container" style="float: right;">
-                    <span class="link-notif">Notif</span>
+                    <span onclick="userTrackMenuClick('Notifications')" class="link-notif">Notif</span>
                     <span id="notifCount" class="notif-badge"></span>
                 </div>
     </ul>
@@ -473,6 +516,7 @@
                             <th class="tbl-th-notif" style="width:10px; cursor:pointer;"><input type="checkbox" id="checkAll" onclick="toggleAllCheckboxes()"></th>
                             <th class="tbl-th-notif">title</th>
                             <th class="tbl-th-notif">message</th>
+                            <th class="tbl-th-notif">Dates</th>
                         </tr>
                     </thead>
                     <tbody id="notifList" class="tbl-body-notif">
@@ -497,5 +541,23 @@
     
     
     <%@ include file="NotificationControl.jsp" %>
+    
+    <script>
+        function userTrackMenuClick(menu_name) {
+//            console.log("Menu "+menu_name)
+            fetch("SCUserLogMenuActivity", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "menu_name=" + encodeURIComponent(menu_name)
+        })
+            .then(response => response.text())
+            .then(data => {
+                
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
  
     </body>

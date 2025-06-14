@@ -97,6 +97,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
 //            System.out.println("id: " + request.getParameter("id"));
             httpSession.setAttribute("io_typeStatus", headerById.getIo_type());
             httpSession.setAttribute("messageType", headerById.getMessageType());
+            httpSession.setAttribute("isDuplicate", headerById.getIsDuplicate());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -109,14 +110,18 @@ public class VDataTransaksiOutgoing extends HttpServlet {
 //            System.out.println("Rekening:" + rekening);
             httpSession.setAttribute("nama_core", namaCore);
         }
-        try {
-            CHeader headermt = new CHeader(); 
-            headermt.wifeParser(headerById.getMessageType(),Integer.parseInt(request.getParameter("id")));
-            tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        String typeMT = headerById.getMessageType();
+        if ("103".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT)) {
+            try {
+                System.out.println("Message Type: " + headerById.getMessageType());
+                CHeader headermt = new CHeader(); 
+                headermt.wifeParser(headerById.getMessageType(),Integer.parseInt(request.getParameter("id")));
+                
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
-
+        tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
         try {
             header_status = bBHeaders.getAllHeaderStatus(request.getParameter("id"), prefix);
         } catch (Exception ex) {
@@ -124,7 +129,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         }
 
         try {
-            log.info("masuk gettextbyid");
+            // log.info("masuk gettextbyid");
             
             if (headerById.getMessageType().contains("pacs") || headerById.getMessageType().contains("camt")) {
                 textById = dbText.getMxTextById(Integer.parseInt(request.getParameter("id")));
@@ -235,11 +240,31 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             String ltri = bBHeaders.getLTRI(request.getParameter("id"));
             String[] arrLtri = ltri.split("#");
             if (arrLtri[4].equalsIgnoreCase("O")) { //20200106
-                logicalTerminal = arrLtri[3];
-                receiverInstitution = arrLtri[1];
+                if (!arrLtri[3].isEmpty()) {
+                    logicalTerminal = arrLtri[3];
+                } else {
+                    logicalTerminal = "";
+                }
+                
+                if (!arrLtri[1].isEmpty()) {
+                    receiverInstitution = arrLtri[1];
+                } else {
+                    receiverInstitution = "";
+                }
+                
             } else {
-                logicalTerminal = arrLtri[1];
-                receiverInstitution = arrLtri[3];
+                if (!arrLtri[1].isEmpty()) {
+                    logicalTerminal = arrLtri[1];
+                } else {
+                    logicalTerminal = "";
+                }
+                
+                if (!arrLtri[3].isEmpty()) {
+                    receiverInstitution = arrLtri[3];
+                } else {
+                    receiverInstitution = "";
+                }
+                
             }
         } catch (Exception ex) {
             ex.printStackTrace();

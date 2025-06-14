@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4b02f95e-2c0f-4b1d-9218-e8dad04368c9">
 	<property name="ireport.zoom" value="0.75"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<style name="Title" fontName="Courier New" pdfFontName="Courier" pdfEncoding="Cp1252" isPdfEmbedded="false" fontSize="50"  isBold="true"/>
-	<style name="SubTitle" forecolor="#736343" fontName="Courier New" pdfFontName="Courier" pdfEncoding="Cp1252" isPdfEmbedded="false" fontSize="18"/>
-	<style name="Column header" forecolor="#666666" fontName="Courier New" pdfFontName="Courier" pdfEncoding="Cp1252" isPdfEmbedded="false" fontSize="10" isBold="true"/>
-	<style name="Detail" fontName="Courier New" pdfFontName="Courier" pdfEncoding="Cp1252" isPdfEmbedded="false" fontSize="8"/>
+	<style name="Title" fontName="DejaVu Sans" fontSize="50" isBold="true" pdfFontName="DejaVu Sans" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="SubTitle" forecolor="#736343" fontName="DejaVu Sans" fontSize="18" pdfFontName="DejaVu Sans" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Column header" forecolor="#666666" fontName="DejaVu Sans" fontSize="10" isBold="true" pdfFontName="DejaVu Sans" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+	<style name="Detail" fontName="DejaVu Sans" fontSize="8" pdfFontName="DejaVu Sans" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 	<style name="Row" mode="Transparent">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
-			<style backcolor="#E6DAC3" pdfFontName="Courier" pdfEncoding="Cp1252" isPdfEmbedded="false" fontName="Courier New"/>
+			<style backcolor="#E6DAC3" fontName="DejaVu Sans" pdfFontName="DejaVu Sans" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 		</conditionalStyle>
 	</style>
 	<parameter name="username" class="java.lang.String"/>
@@ -29,7 +28,7 @@
 	<field name="tag32Amount" class="java.lang.String"/>
 	<field name="tag32Currency" class="java.lang.String"/>
 	<field name="tag32Date" class="java.lang.String"/>
-        <field name="source" class="java.lang.String"/>
+	<field name="source" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -45,14 +44,14 @@
 			<staticText>
 				<reportElement style="Title" x="320" y="20" width="200" height="49" uuid="548378c6-79bc-468d-b9a3-faab27bcc539"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Courier New" pdfFontName="Courier" pdfEncoding="Cp1252" isPdfEmbedded="false" size="18" isBold="false"/>
+					<font fontName="DejaVu Sans" size="18" isBold="false" pdfFontName="DejaVu Sans" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Transaction List]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="1" width="262" height="16" uuid="5a052030-6eb9-4f07-bc47-b77060705b8c"/>
 				<textElement textAlignment="Left">
-					<font fontName="Courier New" pdfFontName="Courier" pdfEncoding="Cp1252" isPdfEmbedded="false" size="10" isBold="false"/>
+					<font fontName="DejaVu Sans" size="10" isBold="false" pdfFontName="DejaVu Sans" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Printed by : "+$P{username}]]></textFieldExpression>
 			</textField>
@@ -69,53 +68,53 @@
 					<pen lineWidth="0.5" lineColor="#999999"/>
 				</graphicElement>
 			</line>
-                        <staticText>
+			<staticText>
 				<reportElement style="Column header" x="0" y="0" width="30" height="15" forecolor="#736343" uuid="2ec2d548-308c-43ba-8df3-643f3800cbcd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="30" y="0" width="50" height="15" forecolor="#736343" uuid="96bbd9cc-0a3e-46ad-884e-e72a600871be"/>
+				<reportElement style="Column header" x="30" y="0" width="54" height="15" forecolor="#736343" uuid="96bbd9cc-0a3e-46ad-884e-e72a600871be"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[CHANNEL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="80" y="0" width="50" height="15" forecolor="#736343" uuid="3e8ce6f2-7a1f-4f04-856a-267949b6d94b"/>
+				<reportElement style="Column header" x="96" y="0" width="50" height="15" forecolor="#736343" uuid="3e8ce6f2-7a1f-4f04-856a-267949b6d94b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[MT/MX]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="130" y="0" width="40" height="15" forecolor="#736343" uuid="faa9e9cd-2ca4-4135-aa09-b14b655160a2"/>
+				<reportElement style="Column header" x="154" y="0" width="40" height="15" forecolor="#736343" uuid="faa9e9cd-2ca4-4135-aa09-b14b655160a2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[I/O]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="160" y="0" width="100" height="15" forecolor="#736343" uuid="53df53ba-119f-4ff3-9a44-5e74ddf341fd"/>
+				<reportElement style="Column header" x="187" y="0" width="100" height="15" forecolor="#736343" uuid="53df53ba-119f-4ff3-9a44-5e74ddf341fd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[SENDER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="270" y="0" width="100" height="15" forecolor="#736343" uuid="07576cbf-8b87-433a-831b-31e76b8aa26f"/>
+				<reportElement style="Column header" x="267" y="0" width="100" height="15" forecolor="#736343" uuid="07576cbf-8b87-433a-831b-31e76b8aa26f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[RECEIVER]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="380" y="0" width="60" height="15" forecolor="#736343" uuid="f154be4f-4420-4083-b111-a1703b514dd7"/>
+				<reportElement style="Column header" x="361" y="0" width="66" height="15" forecolor="#736343" uuid="f154be4f-4420-4083-b111-a1703b514dd7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[REFERENCE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="450" y="0" width="110" height="15" forecolor="#736343" uuid="c1d9bad1-1e9c-47c8-bc28-61cfa43d7959"/>
+				<reportElement style="Column header" x="429" y="0" width="110" height="15" forecolor="#736343" uuid="c1d9bad1-1e9c-47c8-bc28-61cfa43d7959"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[CREATION DATE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="550" y="0" width="70" height="15" forecolor="#736343" uuid="ee03d06d-c100-4419-afab-e5a4d501c1c7"/>
+				<reportElement style="Column header" x="543" y="0" width="70" height="15" forecolor="#736343" uuid="ee03d06d-c100-4419-afab-e5a4d501c1c7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[VALUE DATE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="620" y="0" width="50" height="15" forecolor="#736343" uuid="374896ed-ea6c-4208-a785-1f81de785eab"/>
+				<reportElement style="Column header" x="616" y="0" width="64" height="15" forecolor="#736343" uuid="374896ed-ea6c-4208-a785-1f81de785eab"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[CURRENCY]]></text>
 			</staticText>
@@ -124,14 +123,13 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[AMOUNT]]></text>
 			</staticText>
-                        <staticText>
+			<staticText>
 				<reportElement style="Column header" x="750" y="0" width="52" height="15" forecolor="#736343" uuid="7c6a1d37-80e6-440b-9c1a-3cfb5a9fa3c4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[STATUS]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
-	
 	<detail>
 		<band height="15" splitType="Stretch">
 			<frame>
@@ -143,64 +141,64 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 				</textField>
-                                <textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="30" y="0" width="50" height="15" uuid="21d54110-469a-4647-b58e-ceebf6294529"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="30" y="0" width="54" height="15" uuid="21d54110-469a-4647-b58e-ceebf6294529"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{source}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="80" y="0" width="50" height="15" uuid="205feebe-ec5b-43fa-a6be-b06f14b105f5"/>
+					<reportElement style="Detail" x="96" y="0" width="50" height="15" uuid="205feebe-ec5b-43fa-a6be-b06f14b105f5"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{messageType}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="130" y="0" width="40" height="15" uuid="018b95a3-3c47-452e-8fc7-f85006af4574"/>
+					<reportElement style="Detail" x="154" y="0" width="40" height="15" uuid="018b95a3-3c47-452e-8fc7-f85006af4574"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{io_type}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="160" y="0" width="100" height="15" uuid="bb3d6883-259a-4600-ac59-fecd96e96855"/>
+					<reportElement style="Detail" x="187" y="0" width="100" height="15" uuid="bb3d6883-259a-4600-ac59-fecd96e96855"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{logicalTerminal}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="270" y="0" width="100" height="15" uuid="f7c07608-e342-4832-b403-f8cf00d9869c"/>
+					<reportElement style="Detail" x="267" y="0" width="100" height="15" uuid="f7c07608-e342-4832-b403-f8cf00d9869c"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{receiverAddress}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="380" y="0" width="60" height="15" uuid="18dd4f00-ce28-4b8f-b7fd-fd37e8f6fdc1"/>
+					<reportElement style="Detail" x="361" y="0" width="66" height="15" uuid="18dd4f00-ce28-4b8f-b7fd-fd37e8f6fdc1"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tag20}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="450" y="0" width="110" height="15" uuid="0d73707b-e814-4488-bd1e-6173e43bd0b6"/>
+					<reportElement style="Detail" x="429" y="0" width="110" height="15" uuid="0d73707b-e814-4488-bd1e-6173e43bd0b6"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
 				</textField>
-                                <textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="550" y="0" width="70" height="15" uuid="155958d7-b671-4bc9-b8f7-52147c71262b"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="543" y="0" width="70" height="15" uuid="155958d7-b671-4bc9-b8f7-52147c71262b"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tag32Date}]]></textFieldExpression>
 				</textField>
-                                <textField isStretchWithOverflow="true">
-					<reportElement style="Detail" x="620" y="0" width="50" height="15" uuid="c7a7a600-ad82-489f-91f8-03fb3d93e1c1"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="616" y="0" width="64" height="15" uuid="c7a7a600-ad82-489f-91f8-03fb3d93e1c1"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
@@ -208,14 +206,14 @@
 				</textField>
 				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="670" y="0" width="80" height="15" uuid="e203f063-1a8c-47ea-a4e2-28fbdc784765"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{tag32Amount}]]></textFieldExpression>
 				</textField>
-                                <textField isStretchWithOverflow="true">
+				<textField isStretchWithOverflow="true">
 					<reportElement style="Detail" x="750" y="0" width="52" height="15" uuid="e203f063-1a8c-47ea-a4e2-28fbdc784766"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{flag}]]></textFieldExpression>

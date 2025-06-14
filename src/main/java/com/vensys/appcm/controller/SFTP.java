@@ -1,12 +1,14 @@
 package com.vensys.appcm.controller;
 
 import com.jcraft.jsch.*;
+import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnection2;
 import com.vensys.appcm.model.DataSFTP;
 import com.vensys.appcm.myutils.Encryptor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import java.util.*;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -24,16 +26,23 @@ public class SFTP {
     private String localFilePath;
     private String mt_folder;
     private String mx_folder;
+    private String remoteDirResend;
+    private String sftpReSendFlag;
+    private String sftpReSendPath;
 
     public SFTP() {
         readSFTPProperties();
     }
 
-    public void uploadToSftp(String MXorMT, String remoteFileName) {
+    public void uploadToSftp(String MXorMT, String remoteFileName,int id, String flag, String user_id, String ip_access, String comp_name) {
+        DBconnection2 dbConn2 = new DBconnection2();
+        DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
+        
         JSch jsch = new JSch();
+        String remoteDestinationDir = "";
         Session session = null;
         ChannelSftp channelSftp = null;
-
+        // System.out.println("MMMflag:" + flag);
         try {
             session = prepareSession(jsch);
 
@@ -45,25 +54,68 @@ public class SFTP {
             channelSftp.connect(10000);
             log.info("SFTP channel opened.");
 
-            if(MXorMT.equalsIgnoreCase("MT")) {
-                remoteDir = remoteDir + mt_folder;
-            } else if (MXorMT.equalsIgnoreCase("MX")) {
-                remoteDir = remoteDir + mx_folder;
-            } else {
-                log.error("Invalid MXorMT value: {}", MXorMT);
-                return;
+            if (flag == null || flag.trim().isEmpty()) {
+                throw new IllegalArgumentException("Flag is required and cannot be blank.");
+            }
+            
+            // jika FIA RESEND ada kmungkinan dari flag CVT-VER-RESEND,INTEL-RESEND,REM-RESEND,DDA-RESEND,WAITING-SAA-RESEND,AML-RESEND
+            if ("FIA-RESEND".equalsIgnoreCase(flag)) {
+
+                String templateName = dBDataTransaksiOutgoing.getTemplateNameHeaders(id);
+                System.out.println("templateName: " + templateName);
+                if (templateName == null || templateName.trim().isEmpty()) {
+                    System.out.println("templateName is null or empty, setting flag to null");
+                    flag = null;
+                } else {
+                    System.out.println("templateName else");
+                    flag = "CVT-VER-RESEND"; // placeholder aja, biar pakai folder resend karena smua resend satu folder
+                }
+            }            
+
+            List<String> pathList = Arrays.asList(sftpReSendPath.split(","));
+            List<String> flagList = Arrays.asList(sftpReSendFlag.split(","));
+
+            // System.out.println("sftpReSendPath:" + sftpReSendPath);
+            // System.out.println("sftpReSendFlag:" + sftpReSendFlag);
+
+            Map<String, String> flagToPathMap = new HashMap<>();
+            for (int i = 0; i < flagList.size(); i++) {
+                if (i < pathList.size()) {
+                    flagToPathMap.put(flagList.get(i), pathList.get(i));
+                }
             }
 
+            String destinationDir = flagToPathMap.get(flag);
+            
+
+            remoteDestinationDir = remoteDirResend + destinationDir;
+            System.out.println("remoteDestinationDir:" + remoteDestinationDir);
+            System.out.println("remoteDir:" + remoteDir);
+            
+            // jika ga ktemu di list flag, maka taro di default folder (remoteDir)
+            if (destinationDir == null) {
+                if(MXorMT.equalsIgnoreCase("MT")) {
+                    remoteDestinationDir = remoteDir + mt_folder;
+                } else if (MXorMT.equalsIgnoreCase("MX")) {
+                    remoteDestinationDir = remoteDir + mx_folder;
+                } else {
+                    log.error("Invalid MXorMT value: {}", MXorMT);
+                    return;
+                }
+            }
+            
             // Upload file
             log.info("Uploading file: {} to {}/{}", localFilePath, remoteDir, remoteFileName);
-            channelSftp.cd(remoteDir);
-            System.out.println("localFilePath / remoteFileName:" + localFilePath + "/" + remoteFileName);
-            System.out.println("remoteDir:" + remoteDir);
-            channelSftp.put(localFilePath + "/" + remoteFileName, remoteDir);
+            System.out.println("remoteDestinationDir:" + remoteDestinationDir);
+            System.out.println("remoteFileName:" + remoteFileName);
+            channelSftp.cd(remoteDestinationDir);
+            System.out.println("local file path:" + localFilePath + "/" + remoteFileName);
+            System.out.println("destination file path:" + remoteDestinationDir + "/" + remoteFileName);
+            channelSftp.put(localFilePath + "/" + remoteFileName, remoteDestinationDir);
             log.info("SFTP upload successful: {}", remoteFileName);
         } catch (Exception e) {
-            System.out.println("error:"+e);
-            log.error("SFTP upload failed", e);
+            log.error("SFTP upload failed", e);            
+            dBDataTransaksiOutgoing.updateFlagAfterValidate("FIA-FAILED", id, user_id, ip_access, comp_name);
         } finally {
             disconnectQuietly(channelSftp, session);
         }
@@ -140,6 +192,9 @@ public class SFTP {
             localFilePath = prop.getProperty("localFilePath");
             mt_folder = prop.getProperty("mt_folder");
             mx_folder = prop.getProperty("mx_folder");
+            remoteDirResend = prop.getProperty("remoteDirResend");
+            sftpReSendFlag = prop.getProperty("sftpReSendFlag");
+            sftpReSendPath = prop.getProperty("sftpReSendPath");
 
         } catch (Exception e) {
             log.error("Failed to read SFTP properties", e);

@@ -60,11 +60,11 @@ public class SCHeader extends HttpServlet implements Serializable {
         String amount = request.getParameter("amount");
         String find = request.getParameter("find");
         String flag = request.getParameter("flag");
-        log.info("flag: " + flag);
+//        log.info("flag: " + flag);
         String status = request.getParameter("status");
-        log.info("status: " + status);
+//        log.info("status: " + status);
         String menu = request.getParameter("menu");
-        log.info("menu: " + menu);
+//        log.info("menu: " + menu);
         String forward = "";
         int notifVer = 0;
         int notifAuth = 0;
@@ -77,7 +77,7 @@ public class SCHeader extends HttpServlet implements Serializable {
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         List<ResultHeader> resultHeader = new ArrayList<ResultHeader>();
         String flagStatus = (String) httpSession.getAttribute("flagStatus");
-        log.info("flagStatus: " + flagStatus);
+//        log.info("flagStatus: " + flagStatus);
         String channel = "";
         try {
             channel = (String) httpSession.getAttribute("channel");
@@ -88,7 +88,7 @@ public class SCHeader extends HttpServlet implements Serializable {
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
-                log.info("masuk sini");
+//                log.info("masuk sini");
                 headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);// 2025-01-07
 //                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -184,21 +184,45 @@ public class SCHeader extends HttpServlet implements Serializable {
                     } else if (flag.equalsIgnoreCase("RESEND-CNF")) {
                         flag = "RESEND-CNF";
                         menu = "25";
-                    } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) {
-                        flag = "INC-REJECT-CNF";
-                        menu = "26";
                     } else if (flag.equalsIgnoreCase("INC-AML")) {
                         flag = "INC-AML";
+                        menu = "26";
+                    } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) {
+                        flag = "AML-TERMINATE-IN";
                         menu = "27";
-                    } else if (flag.equalsIgnoreCase("Un-Settle")) { 
-                        flag = "Un-Settle";
+                    } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
+                        flag = "INC-AML-FAILED";
                         menu = "28";
-                    } else if (flag.equalsIgnoreCase("AML-TERMINATE")) {
-                        flag = "AML-TERMINATE";
+                    } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) {
+                        flag = "INC-AML-FAILED-CNF";
                         menu = "29";
-                    } else if (flag.equalsIgnoreCase("Settle")) {
-                        flag = "Settle";
+                    } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) {
+                        flag = "UNSETTLE-INC";
                         menu = "30";
+                    } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) {
+                        flag = "INC-RESEND-CNF";
+                        menu = "31";
+                    } else if (flag.equalsIgnoreCase("SETTLE")) {
+                        flag = "SETTLE";
+                        menu = "32";
+                    } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) {
+                        flag = "UNSETTLE-OUT";
+                        menu = "33";
+                    } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) {
+                        flag = "WAITING-SAA-CNF";
+                        menu = "34";
+                    } else if (flag.equalsIgnoreCase("WAITING-AML")) {
+                        flag = "WAITING-AML";
+                        menu = "35";
+                    }  else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) {
+                        flag = "AML-TERMINATE-OUT";
+                        menu = "36";
+                    } else if (flag.equalsIgnoreCase("FIA-FAILED")) {
+                        flag = "FIA-FAILED";
+                        menu = "38";
+                    } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
+                        flag = "FIA-FAILED-CNF";
+                        menu = "39";
                     } else {
                         flag = "AUTH";
                         menu = "3";
@@ -231,7 +255,7 @@ public class SCHeader extends HttpServlet implements Serializable {
 
 //                httpSession.setAttribute("headersPajak", headersPajak);
             } else {
-                log.info("masuk sini else");
+//                log.info("masuk sini else");
                 // ditambahkan rel_reference pada 20151001 by Azan
                 // sender_logical_terminal => sender_bank dan receiver_institution => receiver_bank
                 String db_type = request.getParameter("db_type");
