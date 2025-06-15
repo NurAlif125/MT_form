@@ -62,6 +62,10 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
 //        Date now = new Date();
         HttpSession session = request.getSession();
+        
+//        String channel = (String) session.getAttribute("cahnnel");
+//        channel = channel == null || channel.equalsIgnoreCase("") ? "" : "/"+(String) session.getAttribute("cahnnel");
+            
         String id = request.getParameter("id");
         String[] idsToUpdate = request.getParameterValues("chkId");
         String io_typeStatus = (String) session.getAttribute("io_typeStatus");
@@ -169,7 +173,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                             log.info("flag req mod");
                             if (request.getParameter("sender_logical_terminal") == null) {
                                 log.info("sender null");
-                                dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
+                                dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                             } else {
                                 log.info("sender ada");
                                 dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
@@ -179,7 +183,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 //                            dBDataTransaksiOutgoing.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         } else {
                             // System.out.println("flag req selain ver and mod");
-                            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
+                            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
                             
                             if ((flagStatus.equalsIgnoreCase("VER") && flag.equalsIgnoreCase("MOD")) || (flagStatus.equalsIgnoreCase("CVT-VER") && flag.equalsIgnoreCase("CVT-MOD"))) {
                                 // log.info("kadieuu flag selain mod 146");
@@ -191,10 +195,10 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     log.info("SCDataTransaksiOutgoing-else-2 : " + flagStatus);
                     if (request.getParameter("flag") == null) {
                         log.info("SCDataTransaksiOutgoing-elseif-1");
-                        dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing("INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
+                        dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                     } else {
                         if(request.getParameter("flag").equalsIgnoreCase("INC-SPRT")){
-                            dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing("WAITING-SAA-CNF", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
+                            dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "WAITING-SAA-CNF", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                         }
                         if (request.getParameter("flag").equalsIgnoreCase("INC-SPRT")) {
                             log.info("flagstatus 161 " + flagStatus);
@@ -206,7 +210,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                             }
                         } else {
                             //new flag 19-05-2025
-                            dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
+                            dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                         }
                     }
                 }
@@ -336,7 +340,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         } else {
             for (int i = 0; i < idsToUpdate.length; i++) {
                 log.info(idsToUpdate[i]);
-                dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(idsToUpdate[i]), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
+                dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(idsToUpdate[i]), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
             }
         }
         dbConn.closeConnection();

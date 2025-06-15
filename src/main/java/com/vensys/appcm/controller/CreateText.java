@@ -34,6 +34,7 @@ import java.util.StringTokenizer;
 import java.util.logging.Level;
 import com.vensys.appcm.model.Header;
 import com.vensys.appcm.model.TagDB;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
 //import model.Tag;
@@ -113,7 +114,7 @@ public class CreateText {
         return str;
     }
 
-    public void createTextFile(String fin, String mt, String source, int id, String io_type, String flag, String user_id, String ip_access, String comp_name) throws IOException {
+    public void createTextFile(String channel,String fin, String mt, String source, int id, String io_type, String flag, String user_id, String ip_access, String comp_name) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());            
         String fileName = "MT" + mt + "_" + dbHTML + "_" + id + ".txt";
         SFTP sftp = new SFTP();        
@@ -125,6 +126,7 @@ public class CreateText {
 //            fstream = new FileWriter(getIncDir() + "/" + "MT" + mt + "_" + dbHTML + "_" + id + "_" + source + ".txt");
 //        }     
         String filePath =  getLocalDir() + "/" + fileName; 
+        System.out.println("pathnya: "+filePath);
         fstream = new FileWriter(filePath);                   
         log.info("filePath: " + filePath);
 
@@ -132,10 +134,10 @@ public class CreateText {
         out.write(fin);
         out.close();
         log.info("createTextFile : " + "MT" + mt + "_" + dbHTML + "_" + id + ".txt");
-        sftp.uploadToSftp("MT",fileName, id, flag, user_id, ip_access, comp_name);
+        sftp.uploadToSftp(channel, "MT",fileName, id, flag, user_id, ip_access, comp_name);
     }
     
-    public void createTextFileMX(String fin, String type, int id, String io_type, String source, String flag, String user_id, String ip_access, String comp_name) throws IOException {
+    public void createTextFileMX(String channel, String fin, String type, int id, String io_type, String source, String flag, String user_id, String ip_access, String comp_name) throws IOException {
         String dbHTML = new SimpleDateFormat("yyMMdd-HHmmss").format(new Date());
         String fileName = type + "_" + dbHTML + "_" + id + ".xml";
         //log.info("cek dbHMTL: " + dbHTML);
@@ -154,7 +156,7 @@ public class CreateText {
         out.write(fin);
         out.close();
         log.info("createTextFile : " +  type + "_" + dbHTML + "_" + id + ".txt");
-        sftp.uploadToSftp("MX", fileName, id, flag, user_id, ip_access, comp_name);
+        sftp.uploadToSftp(channel, "MX", fileName, id, flag, user_id, ip_access, comp_name);
     }
 
     public String createFinalMT(Header header) throws SQLException, Exception {
@@ -428,7 +430,7 @@ public class CreateText {
         return hasilHitung;
     }
 
-    public void getFinalMT(int id, String io_type, String flag, String user_id, String ip_access, String comp_name) throws IOException {
+    public void getFinalMT(String channel, int id, String io_type, String flag, String user_id, String ip_access, String comp_name) throws IOException {
         String fin = "";
         String source = "";
         String mt = "";
@@ -450,7 +452,7 @@ public class CreateText {
         fin = fin.replace("}\r", "}");       //}\r dengan }
 //        }
         // log.info("finnya nyaeta {" + fin + "]");
-        createTextFile(fin, mt, source, id, io_type, flag, user_id, ip_access, comp_name);
+        createTextFile(channel, fin, mt, source, id, io_type, flag, user_id, ip_access, comp_name);
 //        if (mt.substring(0, 1).equalsIgnoreCase("4")) {
 //            source = "BTR";
 //            createTextFile(fin, mt, source, id);
