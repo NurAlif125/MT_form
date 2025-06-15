@@ -130,9 +130,9 @@ public class SCDataTransaksiIncoming extends HttpServlet {
                 BigDecimal stpLimit = dBDataTransaksiOutgoing.getSTPLimit(curr);
 //                if (cust_curr.equalsIgnoreCase("IDR")) {
                 if (amt.compareTo(stpLimit) == 1) {
-                    dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                    dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"),"INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
                 } else {
-                    dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                    dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
                 }
 //                } else {
 //                    dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
@@ -146,9 +146,9 @@ public class SCDataTransaksiIncoming extends HttpServlet {
             BigDecimal stpLimit = dBDataTransaksiOutgoing.getSTPLimit(curr);
 //            if (cust_curr.equalsIgnoreCase("IDR")) {
             if (amt.compareTo(stpLimit) == 1) {
-                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
             } else {
-                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"),"INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
             }
 //            } else {
 //                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
@@ -160,7 +160,7 @@ public class SCDataTransaksiIncoming extends HttpServlet {
             if (!custName.equals("") && !custAcc.equals("")) {
                 dBDataTransaksiOutgoing.updateTag59NameInfo(Integer.parseInt(id), custName, type);
                 dBDataTransaksiOutgoing.updateTag59AccInfo(Integer.parseInt(id), custAcc, type);
-                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
+                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
             } else {
                 log.info("Rekening dan Nama tidak diisi");
             }
@@ -190,9 +190,9 @@ public class SCDataTransaksiIncoming extends HttpServlet {
                 if (datas.getFlag().equalsIgnoreCase("INC-OK") && relRef103.contains(ref103)) {
 //                    if (cust_curr.equalsIgnoreCase("IDR")) {
                     if (amt.compareTo(stpLimit) == 1) {
-                        dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                        dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
                     } else {
-                        dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                        dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
                     }
 //                    } else {
 //                        dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
@@ -214,11 +214,11 @@ public class SCDataTransaksiIncoming extends HttpServlet {
                         relRef[0] = ref103;
                     }
                     dBDataTransaksiOutgoing.updateInfoRef(relRef[2] + "," + relRef[0], Integer.parseInt(id));
-                    dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
+                    dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
                 }
             }
         } else if (request.getParameter("flag").equalsIgnoreCase("RESENDTEXT")) {
-            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-RSTL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
+            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-RSTL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
         } else if (request.getParameter("flag").equalsIgnoreCase("SETTLE")) {
 //            String amtCurr = dBDataTransaksiOutgoing.getAmount101(Integer.parseInt(id)); //20220121
 //            String[] arAmtCurr = amtCurr.split("#");
@@ -227,7 +227,7 @@ public class SCDataTransaksiIncoming extends HttpServlet {
 //            BigDecimal stpLimit = dBDataTransaksiOutgoing.getSTPLimit(curr);
 //            if (cust_curr.equalsIgnoreCase("IDR")) {
 //            if (amt.compareTo(stpLimit) == 1) {
-            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
 //            } else {
 //                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
 //            }
@@ -249,24 +249,24 @@ public class SCDataTransaksiIncoming extends HttpServlet {
             dBDataTransaksiOutgoing.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
 //            if (cust_curr.equalsIgnoreCase("IDR")) {
             if (amt.compareTo(stpLimit) == 1) {
-                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-NSTP", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
             } else {
-                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
+                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
             }
 //            } else {
 //                dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O"); // 20190412 dipindah
 //            }
         } else if (request.getParameter("flag").equalsIgnoreCase("REJECTADJ")) {
-            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
+            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
         } else if (request.getParameter("flag").equalsIgnoreCase("INC-SPOK") || request.getParameter("flag").equalsIgnoreCase("INC-NSTP")) {
-            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
+            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
         }
         else if (request.getParameter("flag").equalsIgnoreCase("INC-STL")){
             // Maka release trasncation ke backend incoming
-            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing("INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O",networkType); // 20190412 dipindah
+            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-STL", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O",networkType); // 20190412 dipindah
         }
         else {
-            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing(request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
+            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "O");
         }
         
         RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
