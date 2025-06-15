@@ -12,3 +12,4 @@ build.xml
 src/main/resources/db.properties
 
 hs_err_*
+replay_pid*
