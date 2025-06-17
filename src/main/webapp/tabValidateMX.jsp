@@ -86,12 +86,12 @@
                     let input = document.getElementById(inputId);
                     if (input) {
                         if(tabContentGroup == "Header") {
-                            $("#view2, #view7").hide();
+                            $("#view2, #view8").hide();
                             $("#view1").show();
                             $('#tab-view1').addClass("selected");
                             $('#tab-view2, #tab-validate').removeClass("selected").removeAttr('class');
                         } else { //open mesage body or create massage
-                            $("#view1, #view7").hide();
+                            $("#view1, #view8").hide();
                             $("#view2").show();
                             $('#tab-view2').addClass("selected");
                             $('#tab-view1, #tab-validate').removeClass("selected").removeAttr('class');

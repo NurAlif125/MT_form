@@ -34,13 +34,14 @@
                 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
-                        <li><a href="#" rel="view1">Header</a></li>
-                        <li><a href="#" rel="view2">Essential Field</a></li>
-                        <li><a href="#" rel="view3">MX Full</a></li>
-                        <li><a href="#" rel="view4">Log MX Text</a></li>
-                        <li><a href="#" rel="view5">Comment</a></li>
-                        <li><a href="#" rel="view6">Histories</a></li>
-                        <li id="tab-validate" ><a href="#" rel="view7" id="tab-view-validate" hidden>Validate</a></li>
+                        <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
+                        <li id="tab-view2"><a href="#" rel="view2">Essential Field</a></li>
+                        <li id="tab-view3"><a href="#" rel="view3">MX Full</a></li>
+                        <li id="tab-view4"><a href="#" rel="view4">Log MX Text</a></li>
+                        <li id="tab-view5"><a href="#" rel="view5">Comment</a></li>
+                        <li id="tab-view6"><a href="#" rel="view6">Histories</a></li>
+                        <li id="tab-view7"><a href="#" rel="view7">Translation</a></li>
+                        <li id="tab-validate" ><a href="#" rel="view8" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
@@ -69,6 +70,9 @@
                             <%@ include file="history_mt.jsp" %>
                         </div>
                         <div id="view7" class="tabcontent">
+                            <%@ include file="mx_mt.jsp" %>
+                        </div>
+                        <div id="view8" class="tabcontent">
                             <div id="error-container">
                                 <table id="errorInfoTable">
                                     <thead>
