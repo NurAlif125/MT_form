@@ -302,8 +302,8 @@ public class DBDataTransaksiOutgoing {
      * @throws SQLException
      * @throws Exception 
      */
-    public void updateStatusTransaksiOutgoing(String flag, Integer id_headers, String flagStatus, String user_id, String ip_access, String comp_name, String io_type) throws SQLException, Exception {
-        updateStatusTransaksiOutgoing(flag, id_headers,flagStatus,user_id,ip_access,comp_name,io_type,"MT");
+    public void updateStatusTransaksiOutgoing(String channel, String flag, Integer id_headers, String flagStatus, String user_id, String ip_access, String comp_name, String io_type) throws SQLException, Exception {
+        updateStatusTransaksiOutgoing(channel, flag, id_headers,flagStatus,user_id,ip_access,comp_name,io_type,"MT");
     }
 
     /**
@@ -319,7 +319,7 @@ public class DBDataTransaksiOutgoing {
      * @throws SQLException
      * @throws Exception 
      */
-    public void updateStatusTransaksiOutgoing(String flag, Integer id_headers, String flagStatus, String user_id, String ip_access, String comp_name, String io_type, String networkType) throws SQLException, Exception {
+    public void updateStatusTransaksiOutgoing(String getChannel, String flag, Integer id_headers, String flagStatus, String user_id, String ip_access, String comp_name, String io_type, String networkType) throws SQLException, Exception {
 //        boolean TEXT = false;
         boolean AUTH = false;
         String flag_before = "";
@@ -437,13 +437,13 @@ public class DBDataTransaksiOutgoing {
                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
                 
 //                System.out.println(finalMX.get("final_mx"));
-                ct.createTextFileMX(fullMessage,variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
+                ct.createTextFileMX(getChannel, fullMessage,variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
                 
             } else {
                 log.info("STL MT for id_headers "+id_headers);
                 
     //            CreateTextNew ctn = new CreateTextNew(conn);
-                ct.getFinalMT(id_headers, io_type, flag, user_id, ip_access, comp_name);
+                ct.getFinalMT(getChannel, id_headers, io_type, flag, user_id, ip_access, comp_name);
             }
         }
     }

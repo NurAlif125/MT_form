@@ -3,7 +3,7 @@
     Update on  : Sept 16, 2015, 9:28:00 PM
 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <style>
     .container_ {
         display: flex;
@@ -548,7 +548,7 @@
             <% if (session.getAttribute("messageType").equals("103")) {%>
             <input type="button" name="search_cover" id="search_cover" value="Search Cover" /> <!-- 20191231 ditambah search cover -->
             <% }%>  
-            <input type="button" name="reject" id="reject" value="Reject" />
+
             <input type="button" name="recheck" id="recheck" value="Recheck" />
 
         </c:if>
@@ -823,6 +823,9 @@
             </c:if>
             <% } %>
         </c:forEach>
+                 <% if (!session.getAttribute("flagStatus").equals("CVT-VER")) {%>
+                    <input type="button" name="export" id="btn-export" value="Export" />
+                 <% } %>
         
         <!--<input type="button" name="export" id="btn-export" value="Export" />-->
         

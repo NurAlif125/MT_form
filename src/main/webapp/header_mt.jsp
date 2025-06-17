@@ -4,6 +4,7 @@
     Author     : M Abdul Hadi
 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%--<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>--%>
 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
 <div class="form-row"><span class="label_sub"><b>Sender</b></span></div>
 <div class="form-row"><span class="label"><a style="color:red;text-decoration:none">*</a>Sender Logical Terminal</span>
