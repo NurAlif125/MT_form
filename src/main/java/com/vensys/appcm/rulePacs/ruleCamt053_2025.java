@@ -6,13 +6,16 @@ package com.vensys.appcm.rulePacs;
 
 import com.prowidesoftware.swift.model.mx.MxCamt05300108;
 import com.prowidesoftware.swift.model.mx.dic.AccountStatement9;
+import com.prowidesoftware.swift.model.mx.dic.ActiveOrHistoricCurrencyAndAmount;
 import com.prowidesoftware.swift.model.mx.dic.BalanceSubType1Choice;
 import com.prowidesoftware.swift.model.mx.dic.BalanceType10Choice;
 import com.prowidesoftware.swift.model.mx.dic.BalanceType13;
+import com.prowidesoftware.swift.model.mx.dic.CashAccount39;
 import com.prowidesoftware.swift.model.mx.dic.CashBalance8;
 import com.prowidesoftware.swift.model.mx.dic.GroupHeader81;
 import com.prowidesoftware.swift.model.mx.dic.Pagination1;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,8 +43,19 @@ public class ruleCamt053_2025 {
     public void runRules(String logicalTerminal, String receiverAddress) {
         GroupHeader81 grpHdr = this.mxCamt05300108.getBkToCstmrStmt().getGrpHdr();
         if (grpHdr != null) {
+            
+            String msgId = grpHdr.getMsgId();
+            if (msgId == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/GrpHdr/MsgId\"><td>MessageIdentification is mandatory!</td><td>BkToCstmrStmt/GrpHdr/MsgId</td></tr>");
+            }
+            
+            OffsetDateTime creDtTm = grpHdr.getCreDtTm();
+            if (creDtTm == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/GrpHdr/CreDtTm\"><td>CreationDateTime is mandatory!</td><td>BkToCstmrStmt/GrpHdr/CreDtTm</td></tr>");
+            }
+            
             String addtlInf = grpHdr.getAddtlInf();
-            if (addtlInf != null || !addtlInf.equalsIgnoreCase("") || !addtlInf.isEmpty()) {
+            if (addtlInf != null) {
                 if (!addtlInf.equalsIgnoreCase("/EODY/") || !addtlInf.equalsIgnoreCase("/EOWK/") || !addtlInf.equalsIgnoreCase("/EOMH/") || !addtlInf.equalsIgnoreCase("/EOYR/")) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/GrpHdr/AddtlInf\"><td>Camt053 is used for end of cycle statement reporting. This may be used to indicate cycle type.  Where this is used, all statements within this message are of the same type.\r\n/EODY/  for End of Day - Daily Statement\r\n/EOWK/ for End of Week - Weekly Statement\r\n/EOMH/ for End of Month - Monthly Statement\r\n/EOYR/ for End of Year - Yearly Statement</td><td>BkToCstmrStmt/GrpHdr/AddtlInf</td></tr>");
                 }
@@ -150,6 +164,29 @@ public class ruleCamt053_2025 {
             if (elctrncSeqNb == null && lglSeqNb == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/ElctrncSeqNb\"><td>Either \"Electronic Sequence Number\" or \"Legal Sequence Number\" must be present and both are allowed.</td><td>BkToCstmrStmt/Stmt/ElctrncSeqNb</td></tr>");
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/LglSeqNb\"><td>Either \"Electronic Sequence Number\" or \"Legal Sequence Number\" must be present and both are allowed.</td><td>BkToCstmrStmt/Stmt/LglSeqNb</td></tr>");
+            }
+            
+            CashAccount39 acct = stmt.getAcct();
+            if (acct != null) {
+                String ccy = acct.getCcy();
+                if (ccy == null) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/Acct/Ccy\"><td>Currency on Account/Currency is mandatory!</td><td>BkToCstmrStmt/Stmt/Acct/Ccy</td></tr>");
+                }
+            }
+            
+            List<CashBalance8> bal = stmt.getBal();
+            if (bal != null) {
+                for (int i = 0; i < bal.size(); i++) {
+                    ActiveOrHistoricCurrencyAndAmount amt = bal.get(i).getAmt();
+                    if (amt == null) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/Bal/Amt\"><td>Balance/Amount is mandatory!</td><td>BkToCstmrStmt/Stmt/Bal/Amt</td></tr>");
+                    } else {
+                        String ccy = amt.getCcy();
+                        if (ccy == null) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/Bal/Amt/Ccy\"><td>Balance/Amount/Currency is mandatory!</td><td>BkToCstmrStmt/Stmt/Bal/Amt/Ccy</td></tr>");
+                        }
+                    }
+                }
             }
         }
     }

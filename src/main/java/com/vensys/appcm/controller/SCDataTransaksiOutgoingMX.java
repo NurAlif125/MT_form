@@ -333,7 +333,89 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 }
                 
             }
+        } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.053")) {
+            log.info("process camt.053");
+            if (flag.equalsIgnoreCase("MOD") || flag.equalsIgnoreCase("CVT-MOD")) {
+                String newFlag = "";
+                if (flag.equalsIgnoreCase("MOD")) {
+                    newFlag = "VER";
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    newFlag = "CVT-VER";
+                }
+                
+                MxCamt05300108 dataMXcamt053 = (MxCamt05300108) abstractMX;
+                
+                String json = dBTrx.getTagsMX(Integer.parseInt(idHeaders));
+                
+                MxCamt05300108 dataOld = MxCamt05300108.fromJson(json);
+                
+                appHeader = (BusinessAppHdrV02) dataOld.getAppHdr();
+                appHeader.setFr(new Party44Choice());
+                appHeader.getFr().setFIId(new BranchAndFinancialInstitutionIdentification6());
+                appHeader.getFr().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
+                appHeader.getFr().getFIId().getFinInstnId().setBICFI(logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12));
+                
+                appHeader.setTo(new Party44Choice());
+                appHeader.getTo().setFIId(new BranchAndFinancialInstitutionIdentification6());
+                appHeader.getTo().getFIId().setFinInstnId(new FinancialInstitutionIdentification18());
+                appHeader.getTo().getFIId().getFinInstnId().setBICFI(receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12));
+                
+                if (dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getId() != null) {
+                    appHeader.setBizMsgIdr(dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getId());
+                } else {
+                    String seq;
+                    String tglToday = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+                    String seqDB = dBTrx.getSeq();
+                    String[] arSeq = seqDB.split("#");
+                    seq = arSeq[0].trim();
+                    int seqInt = Integer.parseInt(seq);
+                    String sseqint = String.valueOf(seqInt);
+                    String padder = "";
+                    for (int k = 0; k < 3 - sseqint.length(); k++) {
+                        padder += "0";
+                    }
+                    seq = padder + sseqint;
+                    String resetDate = arSeq[1].trim();
+                    SimpleDateFormat tgl = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date1 = tgl.parse(tglToday);
+                    Date date2 = tgl.parse(resetDate);
+                    String dateUpdate = resetDate;
+                    int tahun = Integer.parseInt(tglToday.substring(0, 4));
+                    String bulan = tglToday.substring(5, 7);
+                    String hari = tglToday.substring(8, 10);
+                    if (date1.compareTo(date2) > 0 || date1.compareTo(date2) == 0) {
+                        tahun = tahun + 1;
+                        dateUpdate = String.valueOf(tahun) + "-01-01";
+                        seq = "000";
+                    } else {
+                        dateUpdate = resetDate;
+                    }
+                    dBTrx2.updateSequence(dateUpdate, seq);
+                    appHeader.setBizMsgIdr("BDIN" + tahun + bulan + hari + seq);
+                }
+                
+                dataMXcamt053.setAppHdr(appHeader);
+                String newXML = dataMXcamt053.message(mxConfiguration);
+                dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
+                
+                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
+                
+                String newJson = dataMXcamt053.toJson();
+                dBTrx2.updateTagsMXText(newJson, saaHeader, Integer.parseInt(idHeaders));
+                
+                if(flag.equalsIgnoreCase("MOD")) {
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                    int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                }
+                
+            }
         }
+        
+        
         dbConn.closeConnection();
         dbConn2.closeConnection2();
         String pagingHistory = HistoryPaging.getPagingHistory(request, response);

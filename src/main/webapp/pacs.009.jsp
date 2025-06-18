@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div id="view4" class="tabcontent">
-                            <%@ include file="logTrx_mt.jsp" %>
+                            <%@ include file="logTrx_mx.jsp" %>
                         </div>
                         <div id="view5" class="tabcontent">
                             <%@ include file="comment_mt.jsp" %>

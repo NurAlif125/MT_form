@@ -39,7 +39,6 @@ import java.util.logging.Level;
 import com.vensys.appcm.model.DataHeaderTransaksi;
 import com.vensys.appcm.model.Header;
 import com.vensys.appcm.myutils.HistoryPaging;
-import com.vensys.appcm.rulePacs.rulePacs008;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpSession;
 import java.io.InputStream;
@@ -78,6 +77,13 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         String dnSender = "ou=" + logicalTerminal.substring(9, 12).toLowerCase() + ",o=" + logicalTerminal.substring(0, 8).toLowerCase() + ",o=swift";
         String dnReceiver = "ou=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
         String service = getService();
+        String priority = request.getParameter("priority");
+        
+        if (priority.equalsIgnoreCase("N")) {
+            priority = "NORM";
+        } else if (priority.equalsIgnoreCase("U")) {
+            priority = "HIGH";
+        }
 
         log.info("The receiver address : " + receiverAddress);
         log.info("The logical terminal : " + logicalTerminal);
@@ -98,7 +104,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         }
         data.setSender_logical_terminal(logicalTerminal);
         data.setReceiver_institution(receiverAddress);
-        data.setPriority("N");
+        data.setPriority(priority);
         data.setMonitoring("M");
         data.setBanking_priority("N");
         data.setMur("M");
@@ -143,6 +149,8 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         } else {
             appHeader.setBizSvc(getBizSvc());
         }
+        
+        appHeader.setPrty(data.getPriority());
 
         appHeader.setCreationDate(true);
 
@@ -404,6 +412,15 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt053.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05300108) abstractMX).toJson(), saaHeader);
+            
+            datas.setLogicalTerminal(logicalTerminal);
+            datas.setReceiverAddress(receiverAddress);
+            datas.setTrans_refference(dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getId());
+            datas.setTrans_date_value(dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getNtry().get(0).getValDt().getDt().toString());
+            datas.setTrans_amount(dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getNtry().get(0).getAmt().getValue().toString().replace(",", "."));
+            datas.setTrans_ccy(dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getNtry().get(0).getAmt().getCcy());
+            datas.setMessageType(abstractMX.getMxId().toString());
+            
             List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
             int lengthIdDupe = idDupe.size();
             // log.info("panjang dupe nya.... " + lengthIdDupe);

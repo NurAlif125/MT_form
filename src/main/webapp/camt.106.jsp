@@ -1,6 +1,6 @@
 <%-- 
-    Document   : camt.053
-    Created on : Feb 28, 2025, 10:18:07 AM
+    Document   : camt.106
+    Created on : Jun 18, 2025, 10:34:33 AM
     Author     : rafli
 --%>
 
@@ -27,13 +27,13 @@
 <script type="text/javascript" src="js/validateDate.js"></script>
 <div id="isi">
     <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'MX:camt05300108'}">
-            <div id="judul">CAMT.053.001.08 - Bank To Customer Statement V08</div>
+        <c:if test="${item == 'MX:camt10600102'}">
+            <div id="judul">CAMT.106.001.02 - Charges Payment Request V.17</div>
             <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingMX">
                 <input type="hidden" name="status" id="status" value="${headerById.flag}" />
                 <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
                 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
-                <div style="width: 100%; margin: 0 auto; font: 0.85em;">
+                <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
                         <li id="tab-view2"><a href="#" rel="view2">Essential Field</a></li>
@@ -41,15 +41,14 @@
                         <li id="tab-view4"><a href="#" rel="view4">Log MX Text</a></li>
                         <li id="tab-view5"><a href="#" rel="view5">Comment</a></li>
                         <li id="tab-view6"><a href="#" rel="view6">Histories</a></li>
-                        <li id="tab-view7"><a href="#" rel="view7">Translation</a></li>
-                        <li id="tab-validate"><a href="#" rel="view8" id="tab-view-validate" hidden>Validate</a></li>
+                        <li id="tab-validate" ><a href="#" rel="view7" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
                             <%@ include file="header_mt.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
-                            <%@ include file="camt05300108.jsp" %>
+                            <%@ include file="camt10600102.jsp" %>
                         </div>
                         <div id="view3" class="tabcontent">
                             <div class="form-row">
@@ -71,15 +70,12 @@
                             <%@ include file="history_mt.jsp" %>
                         </div>
                         <div id="view7" class="tabcontent">
-                            <%@ include file="mx_mt.jsp" %>
-                        </div>
-                        <div id="view8" class="tabcontent">
                             <div id="error-container">
                                 <table id="errorInfoTable">
                                     <thead>
                                         <tr>
-                                            <th>Message</th>
-                                            <th>Path</th>
+                                        <th>Message</th>
+                                        <th>Path</th>
                                         </tr>
                                     </thead>
                                     <tbody id="errorInformationTable"></tbody>
@@ -102,7 +98,7 @@
     new DataTree({
         xml: xmldata,
         container: '#mxfull',
-        attrs: 'show',
-        startExpanded: true
+        attrs:'show',
+        startExpanded:true
     });
 </script>
