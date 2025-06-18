@@ -33,7 +33,7 @@
                 <input type="hidden" name="status" id="status" value="${headerById.flag}" />
                 <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
                 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
-                <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
+                <div style="width: 100%; margin: 0 auto; font: 0.85em;">
                     <ul class="tabs">
                         <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
                         <li id="tab-view2"><a href="#" rel="view2">Essential Field</a></li>
@@ -42,7 +42,7 @@
                         <li id="tab-view5"><a href="#" rel="view5">Comment</a></li>
                         <li id="tab-view6"><a href="#" rel="view6">Histories</a></li>
                         <li id="tab-view7"><a href="#" rel="view7">Translation</a></li>
-                        <li id="tab-validate" ><a href="#" rel="view8" id="tab-view-validate" hidden>Validate</a></li>
+                        <li id="tab-validate"><a href="#" rel="view8" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
@@ -78,8 +78,8 @@
                                 <table id="errorInfoTable">
                                     <thead>
                                         <tr>
-                                        <th>Message</th>
-                                        <th>Path</th>
+                                            <th>Message</th>
+                                            <th>Path</th>
                                         </tr>
                                     </thead>
                                     <tbody id="errorInformationTable"></tbody>
@@ -102,7 +102,7 @@
     new DataTree({
         xml: xmldata,
         container: '#mxfull',
-        attrs:'show',
-        startExpanded:true
+        attrs: 'show',
+        startExpanded: true
     });
 </script>
