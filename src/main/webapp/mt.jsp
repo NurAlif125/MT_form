@@ -70,11 +70,7 @@
             </div>
             </div>
         </div>
-        <div class="form-row-action container_">
-            <div class="btn--group">
-                <input type="button" name="back" id="back" value="Back" />
-            </div>
-        </div>
+        <%@ include file="button_action.jsp" %>
     </form>
 </div>
 <script>
