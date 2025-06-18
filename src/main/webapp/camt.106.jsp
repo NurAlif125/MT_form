@@ -1,6 +1,6 @@
 <%-- 
-    Document   : camt.053
-    Created on : Feb 28, 2025, 10:18:07 AM
+    Document   : camt.106
+    Created on : Jun 18, 2025, 10:34:33 AM
     Author     : rafli
 --%>
 
@@ -27,8 +27,8 @@
 <script type="text/javascript" src="js/validateDate.js"></script>
 <div id="isi">
     <c:forEach var="item" items="${role}">
-        <c:if test="${item == 'MX:camt05300108'}">
-            <div id="judul">CAMT.053.001.08 - Bank To Customer Statement V08</div>
+        <c:if test="${item == 'MX:camt10600102'}">
+            <div id="judul">CAMT.106.001.02 - Charges Payment Request V.17</div>
             <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingMX">
                 <input type="hidden" name="status" id="status" value="${headerById.flag}" />
                 <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
@@ -48,7 +48,7 @@
                             <%@ include file="header_mt.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
-                            <%@ include file="camt05300108.jsp" %>
+                            <%@ include file="camt10600102.jsp" %>
                         </div>
                         <div id="view3" class="tabcontent">
                             <div class="form-row">
