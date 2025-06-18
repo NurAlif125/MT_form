@@ -78,6 +78,12 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         String dnReceiver = "ou=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
         String service = getService();
         String priority = request.getParameter("priority");
+        
+        if (priority.equalsIgnoreCase("N")) {
+            priority = "NORM";
+        } else if (priority.equalsIgnoreCase("U")) {
+            priority = "HIGH";
+        }
 
         log.info("The receiver address : " + receiverAddress);
         log.info("The logical terminal : " + logicalTerminal);
