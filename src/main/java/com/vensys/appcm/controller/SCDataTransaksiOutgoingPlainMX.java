@@ -77,6 +77,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         String dnSender = "ou=" + logicalTerminal.substring(9, 12).toLowerCase() + ",o=" + logicalTerminal.substring(0, 8).toLowerCase() + ",o=swift";
         String dnReceiver = "ou=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
         String service = getService();
+        String priority = request.getParameter("priority");
 
         log.info("The receiver address : " + receiverAddress);
         log.info("The logical terminal : " + logicalTerminal);
@@ -97,7 +98,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         }
         data.setSender_logical_terminal(logicalTerminal);
         data.setReceiver_institution(receiverAddress);
-        data.setPriority("N");
+        data.setPriority(priority);
         data.setMonitoring("M");
         data.setBanking_priority("N");
         data.setMur("M");
@@ -142,6 +143,8 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         } else {
             appHeader.setBizSvc(getBizSvc());
         }
+        
+        appHeader.setPrty(data.getPriority());
 
         appHeader.setCreationDate(true);
 
