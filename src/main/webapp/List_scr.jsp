@@ -6,6 +6,7 @@
 <%@ include file="header.jsp" %>
 <%@ include file="rule/validateList_scr.jsp" %>
 <%@ page import="java.util.*" %>
+<%@ page import="jakarta.servlet.RequestDispatcher" %>
 <link rel="stylesheet" href="css/displaytag.css" type="text/css">
 <link rel="stylesheet" href="css/helper.css" type="text/css">
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -18,7 +19,11 @@
 <div id="isi">
     <!-- Tabs -->
     <div id="judul">List Search</div>
-    <form id="form1" name="form1" method="post" action="controllerHeaders?find=yes">
+    <!--<form id="form1" name="form1" method="post" action="controllerHeaders?find=yes">-->
+    <form id="form1" name="form1" method="get" action="controllerHeaders?find=yes">
+    <!--<form id="form1" name="form1" method="post" action="headerData?find=yes">-->
+    <!--<form id="form1" name="form1" method="get" action="headerData">-->
+    <input type="hidden" name="find" value="yes">
         <% Date tgl_today = new java.util.Date();
             pageContext.setAttribute("tgl_today", tgl_today); %>
         <c:set var="tgl_today" value="${tgl_today}" />
@@ -81,7 +86,7 @@
                         String[] flags = new String[]{"MOD", "VER", "AUTH", "FIA-FAILED", "FIA-FAILED-CNF", "FIA-RESEND", "UNSETTLE-OUT", "WAITING-SAA-CNF", "WAITING-SAA-RESEND",
                             "WAITING-AML", "AML-TERMINATE-OUT", "REJECT", "AML-FAILED", "AML-FAILED-CNF", "AML-RESEND", "CVT-MOD", "CVT-VER", "CVT-VER-RESEND",
                             "ACK", "NACK", "INC-CVT", "RESEND-CNF", "INC-CVT-RESEND", "INC-AML", "AML-TERMINATE-IN", "INC-AML-FAILED", "INC-AML-FAILED-CNF", "INC-AML-RESEND",
-                        "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE"};
+                        "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE", "WAITING-SAA", "OUT", "INC", "AML-TERMINATE-IN", "AML-TERMINATE-OUT", "AML-CLEAN"};
                         pageContext.setAttribute("flags", flags);
                     %>
                     <select name="status" id="status">
@@ -116,4 +121,34 @@
             <input type="button" name="back" id="back" value="Back" />
         </div>
     </form>
+            
+            
+<%
+   /*if ("get".equalsIgnoreCase(request.getMethod()) && "yes".equals(request.getParameter("find")) && session.getAttribute("alreadyRedirected") == null) {
+        session.setAttribute("db_type", request.getParameter("db_type"));
+        session.setAttribute("io_type", request.getParameter("io_type"));
+        session.setAttribute("sender_logical_terminal", request.getParameter("sender_logical_terminal"));
+        session.setAttribute("receiver_institution", request.getParameter("receiver_institution"));
+        session.setAttribute("mt_type", request.getParameter("mt_type"));
+        session.setAttribute("date_from", request.getParameter("date_from"));
+        session.setAttribute("date_end", request.getParameter("date_end"));
+        session.setAttribute("status", request.getParameter("status"));
+        session.setAttribute("sender_reference", request.getParameter("sender_reference"));
+        session.setAttribute("rel_reference", request.getParameter("rel_reference"));
+        session.setAttribute("currency_code", request.getParameter("currency_code"));
+        session.setAttribute("amount", request.getParameter("amount"));
+        session.setAttribute("find", request.getParameter("find")); // <-- Tambahkan ini
+//        dispatcher = request.getRequestDispatcher("login.jsp");
+        session.setAttribute("alreadyRedirected", true); // Flag supaya tidak loop
+//        out.flush(); // atau pageContext.getOut().flush();
+//        response.sendRedirect("controllerHeaders?find=yes");
+//        RequestDispatcher rd = request.getRequestDispatcher("controllerHeaders?find=yes");
+//        rd.forward(request, response); 
+        RequestDispatcher dispatcher = null;
+        dispatcher = request.getRequestDispatcher("controllerHeaders.jsp");
+        response.sendRedirect("controllerHeaders.jsp");
+    } */
+%>
 </div>
+
+

@@ -1,52 +1,41 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package com.vensys.appcm.controller;
-
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import com.vensys.appcm.dbase.DBHeader;
 import com.vensys.appcm.dbase.DBUserData;
 import com.vensys.appcm.dbase.DBconnection;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import com.vensys.appcm.model.Header;
 import com.vensys.appcm.model.HeaderSearchCriteria;
 import com.vensys.appcm.model.ResultHeader;
 import com.vensys.appcm.myutils.HistoryPaging;
-import java.io.Serializable;
+import jakarta.servlet.RequestDispatcher;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.Logger;
 
-/**
- *
- * @author Muhammad Abdul Hadi
- */
-public class SCHeader extends HttpServlet implements Serializable {
-
+// Ganti path sesuai kebutuhan
+@WebServlet("/headerData")
+public class HeaderListServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static String CONTROLLERHEADERS = "controllerHeaders.jsp";
     private static String RESULTHEADERS = "resultHeaders.jsp";
     Logger log = Logger.getLogger(getClass().getName());
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String io_type = request.getParameter("io_type");
+  
+        log.info("SCHEADER:");     
         
         HeaderSearchCriteria criteria = new HeaderSearchCriteria();
         criteria.setMtSearch(request.getParameter("columns[1][search][value]"));
@@ -63,30 +52,45 @@ public class SCHeader extends HttpServlet implements Serializable {
         criteria.setFlagSearch(request.getParameter("columns[12][search][value]"));
         criteria.setSourceSearch(request.getParameter("columns[13][search][value]"));
         
-        int offset = 0;
-        int limit = 10; // default limit
-        try {
-            offset = Integer.parseInt(request.getParameter("offset"));
-            limit = Integer.parseInt(request.getParameter("limit"));
-        } catch (Exception e) {
-            // gunakan default jika tidak valid
-        }
-        HttpSession session = request.getSession();
-        session.setAttribute("db_type", request.getParameter("db_type"));
-        session.setAttribute("io_type", request.getParameter("io_type"));
-        session.setAttribute("sender_logical_terminal", request.getParameter("sender_logical_terminal"));
-        session.setAttribute("receiver_institution", request.getParameter("receiver_institution"));
-        session.setAttribute("mt_type", request.getParameter("mt_type"));
-        session.setAttribute("date_from", request.getParameter("date_from"));
-        session.setAttribute("date_end", request.getParameter("date_end"));
-        session.setAttribute("status", request.getParameter("status"));
-        session.setAttribute("sender_reference", request.getParameter("sender_reference"));
-        session.setAttribute("rel_reference", request.getParameter("rel_reference"));
-        session.setAttribute("currency_code", request.getParameter("currency_code"));
-        session.setAttribute("amount", request.getParameter("amount"));
-        session.setAttribute("find", "yes");
+//        System.out.println("mtSearch: " + request.getParameter("columns[1][search][value]"));
+//        System.out.println("ioSearch: " + request.getParameter("columns[2][search][value]"));
+//        System.out.println("seqSearch: " + request.getParameter("columns[3][search][value]"));
+//        System.out.println("logicalSearch: " + request.getParameter("columns[4][search][value]"));
+//        System.out.println("corespondent: " + request.getParameter("columns[5][search][value]"));
+//        System.out.println("refSearch: " + request.getParameter("columns[6][search][value]"));
+//        System.out.println("relRefSearch: " + request.getParameter("columns[7][search][value]"));
+//        System.out.println("valDateSearch: " + request.getParameter("columns[8][search][value]"));
+//        System.out.println("ccySearch: " + request.getParameter("columns[9][search][value]"));
+//        System.out.println("amountSearch: " + request.getParameter("columns[10][search][value]"));
+//        System.out.println("createdDateSearch: " + request.getParameter("columns[11][search][value]"));
+//        System.out.println("flagSearch: " + request.getParameter("columns[12][search][value]"));
+//        System.out.println("sourceSearch: " + request.getParameter("columns[13][search][value]"));
 
-        
+
+
+
+         HttpSession session = request.getSession();
+//        String sender_logical_terminal = session.getAttribute("sender_logical_terminal") != null ? (String) session.getAttribute("sender_logical_terminal") : "";
+//        String receiver_institution = session.getAttribute("receiver_institution") != null ? (String) session.getAttribute("receiver_institution") : "";
+//        String mt_type = session.getAttribute("mt_type") != null ? (String) session.getAttribute("mt_type") : "";
+//        String date_from = session.getAttribute("date_from") != null ? (String) session.getAttribute("date_from") : "";
+//        String date_end = session.getAttribute("date_end") != null ? (String) session.getAttribute("date_end") : "";
+//        System.out.println("=====================");
+//        System.out.println("Date form___ :"+date_from);
+//        String sender_reference = session.getAttribute("sender_reference") != null ? (String) session.getAttribute("sender_reference") : "";
+//        String rel_reference = session.getAttribute("rel_reference") != null ? (String) session.getAttribute("rel_reference") : "";
+//        String currency_code = session.getAttribute("currency_code") != null ? (String) session.getAttribute("currency_code") : "";
+//        String amount = session.getAttribute("amount") != null ? (String) session.getAttribute("amount") : "";
+//        String find = session.getAttribute("find") != null ? (String) session.getAttribute("find") : "";
+//        String status = session.getAttribute("status") != null ? (String) session.getAttribute("status") : "";
+//        String menu = session.getAttribute("menu") != null ? (String) session.getAttribute("menu") : "";
+
+        int draw = Integer.parseInt(request.getParameter("draw"));
+        int start = Integer.parseInt(request.getParameter("start"));
+        int length = Integer.parseInt(request.getParameter("length"));
+        String io_type = request.getParameter("io_type"); // bisa jadi null
+        String flag = request.getParameter("flag"); // bisa jadi null
+        String channel = request.getParameter("channel"); // bisa jadi null
         log.info("SCHEADER:");
         String sender_logical_terminal = request.getParameter("sender_logical_terminal");
         String receiver_institution = request.getParameter("receiver_institution");
@@ -95,13 +99,12 @@ public class SCHeader extends HttpServlet implements Serializable {
         String date_end = request.getParameter("date_end");
         String sender_reference = request.getParameter("sender_reference");
         String rel_reference = request.getParameter("rel_reference"); // ditambahkan pada 20151001 by Azan
-//        String sender_bank = request.getParameter("sender_bank");// ditambahkan pada 20151102 by Azan
-//        String receiver_bank = request.getParameter("receiver_bank");// ditambahkan pada 20151102 by Azan
+        String sender_bank = request.getParameter("sender_bank");// ditambahkan pada 20151102 by Azan
+        String receiver_bank = request.getParameter("receiver_bank");// ditambahkan pada 20151102 by Azan
         String currency_code = request.getParameter("currency_code");
         String amount = request.getParameter("amount");
         String find = request.getParameter("find");
-        String flag = request.getParameter("flag");
-//        log.info("flag: " + flag);
+        log.info("flag: " + flag);
         String status = request.getParameter("status");
 //        log.info("status: " + status);
         String menu = request.getParameter("menu");
@@ -109,17 +112,30 @@ public class SCHeader extends HttpServlet implements Serializable {
         String forward = "";
         int notifVer = 0;
         int notifAuth = 0;
-        HttpSession httpSession = request.getSession();
-//        httpSession.removeAttribute("flagStatus");
+
+//        int offset = 0;
+//        int limit = 10; // default limit
+//        try {
+//            offset = Integer.parseInt(request.getParameter("offset"));
+//            limit = Integer.parseInt(request.getParameter("limit"));
+//        } catch (Exception e) {
+//            // gunakan default jika tidak valid
+//        }
+
+        int pageNumber = (start / length) + 1; // (20 / 10) + 1 = 3
+        int offset = (pageNumber - 1) * length; // (3 - 1) * 10 = 20
+
+//        HttpSession session = request.getSession();
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
         DBconnection dbConn = new DBconnection();
         DBUserData dbo = new DBUserData(dbConn.getConnection());
-        List<Header> headers = new ArrayList<Header>();
-        List<Header> headersPajak = new ArrayList<Header>();
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
-        List<ResultHeader> resultHeader = new ArrayList<ResultHeader>();
+        HttpSession httpSession = request.getSession();
+        
         String flagStatus = (String) httpSession.getAttribute("flagStatus");
 //        log.info("flagStatus: " + flagStatus);
-        String channel = "";
+
         try {
             channel = (String) httpSession.getAttribute("channel");
             notifVer = dbo.getNotificationVer();
@@ -128,21 +144,16 @@ public class SCHeader extends HttpServlet implements Serializable {
 //            log.info("notifAuth: " + notifAuth);
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);
+                DBHeader dbHeader = new DBHeader(dbConn.getConnection());
+                int totalRecords = 0;
+                List<Header> headers = new ArrayList<>();
+                
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
-//                log.info("masuk sini");
-//                headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);// 2025-01-07
-//                headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel, offset, limit, criteria);
-
-
-//                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
-                forward = CONTROLLERHEADERS + "?menu=" + menu;
-                httpSession.setAttribute("headers", headers);
-                httpSession.removeAttribute("flagFilter");
-//                httpSession.setAttribute("headersPajak", headersPajak);
+                headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
+                totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                System.out.println("Total Data"+ String.valueOf(totalRecords));
             } else if (flag != null && !flag.isEmpty()) {
                 if (menu == null) {
-//                    log.info("flag if : " + flag);
-//                    log.info("flag statusnya adalah :" + flagStatus);
 //                httpSession.removeAttribute("flagFilter");
                     if (flag.equalsIgnoreCase("VER")) {
                         flag = "MOD";
@@ -272,42 +283,33 @@ public class SCHeader extends HttpServlet implements Serializable {
                         menu = "3";
                     }
 
-//                headers = bBHeaders.getAllHeader(httpSession, io_type, flag);
-//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
-//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel, offset, limit, criteria);
-//                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
+                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                    System.out.println("Total Data"+ String.valueOf(totalRecords));
+                
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("headers", headers);
                     httpSession.setAttribute("flag", flag);
-//                    if (flag.equalsIgnoreCase("VER")) {
-//                        httpSession.setAttribute("flagFilter", "MOD");
-//                    } else if (flag.equalsIgnoreCase("AUTH")) {
-//                        httpSession.setAttribute("flagFilter", "VER");
-//                    } else if (flag.equalsIgnoreCase("MOD")) {
                     httpSession.setAttribute("flagFilter", flag);
-//                    }
                 } else {
                     log.info("flag else : " + flag);
-//                httpSession.removeAttribute("flagFilter");
-//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
-//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel, offset, limit, criteria);
-//                    headers = bBHeaders.getAllHeader(httpSession, io_type, httpSession.getAttribute("flagFilter").toString());
-//                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
+                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                    System.out.println("Total Data"+ String.valueOf(totalRecords));
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
-                    httpSession.setAttribute("headers", headers);
                     httpSession.setAttribute("flag", flag);
                     httpSession.setAttribute("flagFilter", flag);
                 }
 
-//                httpSession.setAttribute("headersPajak", headersPajak);
             } else {
                 log.info("masuk sini else");
-                // ditambahkan rel_reference pada 20151001 by Azan
-                // sender_logical_terminal => sender_bank dan receiver_institution => receiver_bank
-                String db_type = request.getParameter("db_type");
+                String db_type = request.getParameter("db_type") != null ? request.getParameter("db_type") : "";
+
+                System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
-//                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel);
-//                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, offset, limit, criteria);
+                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria);
+                totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria);
+                System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
                 httpSession.setAttribute("flag", status);
@@ -317,57 +319,76 @@ public class SCHeader extends HttpServlet implements Serializable {
                     httpSession.removeAttribute("flagFilter");
                 }
             }
-//            log.info("menunyaaaa.... " + menu);
+                
 
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-            ex.printStackTrace();
+                JSONArray dataArray = new JSONArray();
+                for (Header h : headers) {
+                    JSONObject obj = new JSONObject();
+                    obj.put("messageType", h.getMessageType());
+                    obj.put("logicalTerminal", h.getLogicalTerminal());
+                    obj.put("sessionNumber", h.getSessionNumber());
+                    obj.put("sequenceNumber", h.getSequenceNumber());
+                    obj.put("io_type", h.getIo_type());
+                    obj.put("receiverAddress", h.getReceiverAddress());
+                    obj.put("tanggal", h.getTanggal());
+                    obj.put("id_headers", h.getId_headers());
+                    obj.put("flag", h.getFlag());
+                    obj.put("block3", h.getBlock3());
+                    obj.put("source", h.getSource());
+                    obj.put("trans_reference", h.getTrans_refference());
+                    obj.put("trans_related_reference", h.getTrans_related_refference());
+                    obj.put("trans_date_value", h.getTrans_date_value());
+                    obj.put("trans_amount", h.getTrans_amount());
+                    obj.put("trans_ccy", h.getTrans_ccy());
+                    dataArray.put(obj);
+                }
+
+                JSONObject jsonResponse = new JSONObject();
+    //            jsonResponse.put("draw", draw);
+    //            jsonResponse.put("recordsTotal", totalRecords);
+    //            jsonResponse.put("recordsFiltered", filteredRecords);
+    //            jsonResponse.put("data", dataArray);
+
+                jsonResponse.put("draw", draw);
+                jsonResponse.put("recordsTotal", totalRecords);
+                jsonResponse.put("recordsFiltered", totalRecords); // PENTING
+                jsonResponse.put("data", dataArray);
+    //            System.out.println("JSON Response: " + jsonResponse.toString());
+                out.print(jsonResponse.toString());
+//            out.print(jsonResponse.toString());
+
+            session.removeAttribute("db_type");
+            session.removeAttribute("io_type");
+            session.removeAttribute("sender_logical_terminal");
+            session.removeAttribute("receiver_institution");
+            session.removeAttribute("mt_type");
+            session.removeAttribute("date_from");
+            session.removeAttribute("date_end");
+            session.removeAttribute("status");
+            session.removeAttribute("sender_reference");
+            session.removeAttribute("rel_reference");
+            session.removeAttribute("currency_code");
+            session.removeAttribute("amount");
+            session.removeAttribute("find");
+        } catch (Exception e) {
+            e.printStackTrace();
+            JSONObject errorResponse = new JSONObject();
+            errorResponse.put("error", "Error fetching data: " + e.getMessage());
+            out.print(errorResponse.toString());
         } finally {
-            dbConn.closeConnection();
+            out.flush();
+            out.close();
         }
-//        RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
-//        dispatcher.forward(request, response);
-        HistoryPaging.getAndSaveAllParameterOnSession(request, response);
-        RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
-        dispatcher.forward(request, response);
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
+    
+     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response); // Handle POST sama seperti GET
+        RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders.jsp?find=yes");
+        dispatcher.forward(request, response);
+
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 }
+
