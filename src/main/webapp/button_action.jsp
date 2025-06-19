@@ -823,7 +823,13 @@
             </c:if>
             <% } %>
         </c:forEach>
-                 <% if (!session.getAttribute("flagStatus").equals("CVT-VER")) {%>
+                 <% if (!session.getAttribute("flagStatus").equals("CVT-VER")
+                 && !session.getAttribute("flagStatus").equals("VER")
+                 && !session.getAttribute("flagStatus").equals("AUTH")
+                 && !session.getAttribute("flagStatus").equals("CVT-MOD")
+                 && !session.getAttribute("flagStatus").equals("CVT-VER")
+                 && !session.getAttribute("flagStatus").equals("MOD")
+                   ) {%>
                     <input type="button" name="export" id="btn-export" value="Export" />
                  <% } %>
         

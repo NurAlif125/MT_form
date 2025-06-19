@@ -122,33 +122,6 @@
         </div>
     </form>
             
-            
-<%
-   /*if ("get".equalsIgnoreCase(request.getMethod()) && "yes".equals(request.getParameter("find")) && session.getAttribute("alreadyRedirected") == null) {
-        session.setAttribute("db_type", request.getParameter("db_type"));
-        session.setAttribute("io_type", request.getParameter("io_type"));
-        session.setAttribute("sender_logical_terminal", request.getParameter("sender_logical_terminal"));
-        session.setAttribute("receiver_institution", request.getParameter("receiver_institution"));
-        session.setAttribute("mt_type", request.getParameter("mt_type"));
-        session.setAttribute("date_from", request.getParameter("date_from"));
-        session.setAttribute("date_end", request.getParameter("date_end"));
-        session.setAttribute("status", request.getParameter("status"));
-        session.setAttribute("sender_reference", request.getParameter("sender_reference"));
-        session.setAttribute("rel_reference", request.getParameter("rel_reference"));
-        session.setAttribute("currency_code", request.getParameter("currency_code"));
-        session.setAttribute("amount", request.getParameter("amount"));
-        session.setAttribute("find", request.getParameter("find")); // <-- Tambahkan ini
-//        dispatcher = request.getRequestDispatcher("login.jsp");
-        session.setAttribute("alreadyRedirected", true); // Flag supaya tidak loop
-//        out.flush(); // atau pageContext.getOut().flush();
-//        response.sendRedirect("controllerHeaders?find=yes");
-//        RequestDispatcher rd = request.getRequestDispatcher("controllerHeaders?find=yes");
-//        rd.forward(request, response); 
-        RequestDispatcher dispatcher = null;
-        dispatcher = request.getRequestDispatcher("controllerHeaders.jsp");
-        response.sendRedirect("controllerHeaders.jsp");
-    } */
-%>
 </div>
 
 

@@ -1397,298 +1397,622 @@ public class DBHeader {
     }
 
 //    public List<ResultHeader> getResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type) throws Exception {
-    public List<Header> getResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, int start, int length, HeaderSearchCriteria criteria) throws Exception {
-        String where = "";
-        String prefix = "";
-        if (io_type == null || io_type.isEmpty()) {
-            where += " (h.io_type='O' OR h.io_type='I')";
-        } else if (io_type.equalsIgnoreCase("i")) {
-            where += " h.io_type='I'";
-        } else if (io_type.equalsIgnoreCase("o")) {
-            where += " h.io_type='O'";
-        } else {
-            where += " (h.io_type='O' OR h.io_type='I')";
-        }
-        if (sender_bank == null || sender_bank.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND logicalTerminal LIKE '%" + sender_bank + "%'";
-        }
-        if (receiver_bank == null || receiver_bank.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND receiverAddress LIKE '%" + receiver_bank + "%'";
-        }
-        if (mt_type == null || mt_type.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND h.messageType LIKE '%" + mt_type + "%'";
-        }
-        if (date_from == null || date_from.isEmpty() || date_end == null || date_end.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN '" + date_from + "' AND '" + date_end + "'";
-        }
-        if (status == null || status.isEmpty()) {
-            where += "";
-        } else {
-            //diganti jadi = pd tgl 20151007
-            where += " AND h.flag = '" + status + "'";
-        }
-//        tags
-        if (sender_reference == null || sender_reference.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_reference LIKE '%" + sender_reference + "%'";
-        }
-        // ditambahkan rel_reference pada 20151102 by Azan
-        if (rel_reference == null || rel_reference.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_related_reference LIKE '%" + rel_reference + "%'";
-        }
+//    public List<Header> getResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, int start, int length, HeaderSearchCriteria criteria) throws Exception {
+//        String where = "";
+//        String prefix = "";
+//        if (io_type == null || io_type.isEmpty()) {
+//            where += " (h.io_type='O' OR h.io_type='I')";
+//        } else if (io_type.equalsIgnoreCase("i")) {
+//            where += " h.io_type='I'";
+//        } else if (io_type.equalsIgnoreCase("o")) {
+//            where += " h.io_type='O'";
+//        } else {
+//            where += " (h.io_type='O' OR h.io_type='I')";
+//        }
 //        if (sender_bank == null || sender_bank.isEmpty()) {
 //            where += "";
 //        } else {
-//            where += " AND t53.detail LIKE '%" + sender_bank + "%'";
+//            where += " AND logicalTerminal LIKE '%" + sender_bank + "%'";
 //        }
 //        if (receiver_bank == null || receiver_bank.isEmpty()) {
 //            where += "";
 //        } else {
-//            where += " AND t57.detail LIKE '%" + receiver_bank + "%'";
+//            where += " AND receiverAddress LIKE '%" + receiver_bank + "%'";
 //        }
-//        end of tambahan 20151102
-        if (currency_code == null || currency_code.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_ccy LIKE '%" + currency_code + "%'";
-        }
-        if (amount == null || amount.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_amount::text LIKE '%" + amount + "%'";
-        }
-        if (db_type.equalsIgnoreCase("backup")) {
-            prefix = "a";
-        }
-        
-        if (channel != null && !channel.isBlank()) {
-            where += " AND source LIKE '%" + channel + "%'";
-        }
-        
-         if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
-            where += " AND messageType ILIKE '%" + criteria.getMtSearch() + "%'";
-        }
-        if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
-            where += " AND io_type ILIKE '%" + criteria.getIoSearch() + "%'";
-        }
-        if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
-            where += " AND sequenceNumber::TEXT ILIKE '%" + criteria.getSeqSearch() + "%'";
-        }
-        if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
-            where += " AND logicalTerminal ILIKE '%" + criteria.getLogicalSearch() + "%'";
-        }
-        if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
-            where += " AND receiverAddress ILIKE '%" + criteria.getReceiverSearch() + "%'";
-        }
-        if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
-            where += " AND trans_reference ILIKE '%" + criteria.getRefSearch() + "%'";
-        }
-        if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
-            where += " AND trans_related_reference ILIKE '%" + criteria.getRelRefSearch() + "%'";
-        }
-        if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
-            where += " AND trans_date_value::TEXT ILIKE '%" + criteria.getValDateSearch() + "%'";
-        }
-        if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
-            where += " AND trans_ccy ILIKE '%" + criteria.getCcySearch() + "%'";
-        }
-        if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
-            where += " AND trans_amount::TEXT ILIKE '%" + criteria.getAmountSearch() + "%'";
-        }
-        if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
-            where += " AND tanggal::TEXT ILIKE '%" + criteria.getCreatedDateSearch() + "%'";
-        }
-        if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
-            where += " AND flag ILIKE '%" + criteria.getFlagSearch() + "%'";
-        }
-        if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
-            where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
-        }
-        
-        
-//        List<ResultHeader> datas = new ArrayList<ResultHeader>();
-        List<Header> datas = new ArrayList<Header>();
-        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,\n" +
-"                     h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,\n" +
-"                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy\n" +
-"                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE (" + where + ") \n"+
-                      " AND h.isDuplicate!=1 ORDER BY h.tanggal DESC OFFSET "+start+" ROWS FETCH NEXT "+length+" ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
-        PreparedStatement st = this.conn.prepareStatement(sql);
-        ResultSet rs = st.executeQuery();
-        while (rs.next()) {
-            Header data = new Header();
-            data.setMessageType(rs.getString(2));
-            data.setLogicalTerminal(rs.getString(3));
-            data.setReceiverAddress(rs.getString(7));
-            if (rs.getString(6).equalsIgnoreCase("i")) {
-                data.setIo_type("Outgoing");
-            } else {
-                data.setIo_type("Incoming");
-            }
-            data.setTanggal(rs.getString(8));
-            data.setId_headers(rs.getInt(1));
-            data.setFlag(rs.getString(10));
-            data.setTrans_refference(rs.getString(14));
-            data.setTrans_related_refference(rs.getString(15));
-            if (rs.getString(17) == null) {
-                data.setTrans_amount("0");
-            } else {
-                data.setTrans_amount(rs.getString(17).replace(",", "."));
-            }
-            data.setTrans_date_value(rs.getString(16));
-            data.setTrans_ccy(rs.getString(18));
-            data.setBlock3(rs.getString(12));
-            data.setSource(rs.getString("source"));
-            data.setSequenceNumber(rs.getString("sequenceNumber"));
-            datas.add(data);
-        }
-        return datas;
-    }
+//        if (mt_type == null || mt_type.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND h.messageType LIKE '%" + mt_type + "%'";
+//        }
+//        if (date_from == null || date_from.isEmpty() || date_end == null || date_end.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN '" + date_from + "' AND '" + date_end + "'";
+//        }
+//        if (status == null || status.isEmpty()) {
+//            where += "";
+//        } else {
+//            //diganti jadi = pd tgl 20151007
+//            where += " AND h.flag = '" + status + "'";
+//        }
+////        tags
+//        if (sender_reference == null || sender_reference.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_reference LIKE '%" + sender_reference + "%'";
+//        }
+//        // ditambahkan rel_reference pada 20151102 by Azan
+//        if (rel_reference == null || rel_reference.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_related_reference LIKE '%" + rel_reference + "%'";
+//        }
+////        if (sender_bank == null || sender_bank.isEmpty()) {
+////            where += "";
+////        } else {
+////            where += " AND t53.detail LIKE '%" + sender_bank + "%'";
+////        }
+////        if (receiver_bank == null || receiver_bank.isEmpty()) {
+////            where += "";
+////        } else {
+////            where += " AND t57.detail LIKE '%" + receiver_bank + "%'";
+////        }
+////        end of tambahan 20151102
+//        if (currency_code == null || currency_code.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_ccy LIKE '%" + currency_code + "%'";
+//        }
+//        if (amount == null || amount.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_amount::text LIKE '%" + amount + "%'";
+//        }
+//        if (db_type.equalsIgnoreCase("backup")) {
+//            prefix = "a";
+//        }
+//        
+//        if (channel != null && !channel.isBlank()) {
+//            where += " AND source LIKE '%" + channel + "%'";
+//        }
+//        
+//         if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
+//            where += " AND messageType ILIKE '%" + criteria.getMtSearch() + "%'";
+//        }
+//        if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
+//            where += " AND io_type ILIKE '%" + criteria.getIoSearch() + "%'";
+//        }
+//        if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
+//            where += " AND sequenceNumber::TEXT ILIKE '%" + criteria.getSeqSearch() + "%'";
+//        }
+//        if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
+//            where += " AND logicalTerminal ILIKE '%" + criteria.getLogicalSearch() + "%'";
+//        }
+//        if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
+//            where += " AND receiverAddress ILIKE '%" + criteria.getReceiverSearch() + "%'";
+//        }
+//        if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
+//            where += " AND trans_reference ILIKE '%" + criteria.getRefSearch() + "%'";
+//        }
+//        if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
+//            where += " AND trans_related_reference ILIKE '%" + criteria.getRelRefSearch() + "%'";
+//        }
+//        if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
+//            where += " AND trans_date_value::TEXT ILIKE '%" + criteria.getValDateSearch() + "%'";
+//        }
+//        if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
+//            where += " AND trans_ccy ILIKE '%" + criteria.getCcySearch() + "%'";
+//        }
+//        if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
+//            where += " AND trans_amount::TEXT ILIKE '%" + criteria.getAmountSearch() + "%'";
+//        }
+//        if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
+//            where += " AND tanggal::TEXT ILIKE '%" + criteria.getCreatedDateSearch() + "%'";
+//        }
+//        if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
+//            where += " AND flag ILIKE '%" + criteria.getFlagSearch() + "%'";
+//        }
+//        if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
+//            where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
+//        }
+//        
+//        
+////        List<ResultHeader> datas = new ArrayList<ResultHeader>();
+//        List<Header> datas = new ArrayList<Header>();
+//        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,\n" +
+//"                     h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,\n" +
+//"                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy\n" +
+//"                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE (" + where + ") \n"+
+//                      " AND h.isDuplicate!=1 ORDER BY h.tanggal DESC OFFSET "+start+" ROWS FETCH NEXT "+length+" ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
+//        PreparedStatement st = this.conn.prepareStatement(sql);
+//        ResultSet rs = st.executeQuery();
+//        while (rs.next()) {
+//            Header data = new Header();
+//            data.setMessageType(rs.getString(2));
+//            data.setLogicalTerminal(rs.getString(3));
+//            data.setReceiverAddress(rs.getString(7));
+//            if (rs.getString(6).equalsIgnoreCase("i")) {
+//                data.setIo_type("Outgoing");
+//            } else {
+//                data.setIo_type("Incoming");
+//            }
+//            data.setTanggal(rs.getString(8));
+//            data.setId_headers(rs.getInt(1));
+//            data.setFlag(rs.getString(10));
+//            data.setTrans_refference(rs.getString(14));
+//            data.setTrans_related_refference(rs.getString(15));
+//            if (rs.getString(17) == null) {
+//                data.setTrans_amount("0");
+//            } else {
+//                data.setTrans_amount(rs.getString(17).replace(",", "."));
+//            }
+//            data.setTrans_date_value(rs.getString(16));
+//            data.setTrans_ccy(rs.getString(18));
+//            data.setBlock3(rs.getString(12));
+//            data.setSource(rs.getString("source"));
+//            data.setSequenceNumber(rs.getString("sequenceNumber"));
+//            datas.add(data);
+//        }
+//        return datas;
+//    }
     
-    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria) throws Exception {
-        String where = "";
-        String prefix = "";
-        if (io_type == null || io_type.isEmpty()) {
-            where += " (h.io_type='O' OR h.io_type='I')";
-        } else if (io_type.equalsIgnoreCase("i")) {
-            where += " h.io_type='I'";
-        } else if (io_type.equalsIgnoreCase("o")) {
-            where += " h.io_type='O'";
-        } else {
-            where += " (h.io_type='O' OR h.io_type='I')";
+    public List<Header> getResultHeader(
+    HttpSession httpSession,
+    String io_type,
+    String sender_bank,
+    String receiver_bank,
+    String mt_type,
+    String date_from,
+    String date_end,
+    String sender_reference,
+    String rel_reference,
+    String currency_code,
+    String amount,
+    String status,
+    String db_type,
+    String channel,
+    int start,
+    int length,
+    HeaderSearchCriteria criteria
+) throws Exception {
+    List<Header> datas = new ArrayList<>();
+    List<Object> parameters = new ArrayList<>();
+
+    StringBuilder where = new StringBuilder("h.isDuplicate != 1");
+
+    // io_type
+    if (io_type == null || io_type.isEmpty()) {
+        where.append(" AND (h.io_type='O' OR h.io_type='I')");
+    } else if (io_type.equalsIgnoreCase("i")) {
+        where.append(" AND h.io_type = ?");
+        parameters.add("I");
+    } else if (io_type.equalsIgnoreCase("o")) {
+        where.append(" AND h.io_type = ?");
+        parameters.add("O");
+    } else {
+        where.append(" AND (h.io_type='O' OR h.io_type='I')");
+    }
+
+    if (sender_bank != null && !sender_bank.isEmpty()) {
+        where.append(" AND h.logicalTerminal ILIKE ?");
+        parameters.add("%" + sender_bank + "%");
+    }
+    if (receiver_bank != null && !receiver_bank.isEmpty()) {
+        where.append(" AND h.receiverAddress ILIKE ?");
+        parameters.add("%" + receiver_bank + "%");
+    }
+    if (mt_type != null && !mt_type.isEmpty()) {
+        where.append(" AND h.messageType ILIKE ?");
+        parameters.add("%" + mt_type + "%");
+    }
+    if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
+        where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
+        parameters.add(date_from);
+        parameters.add(date_end);
+    }
+    if (status != null && !status.isEmpty()) {
+        where.append(" AND h.flag = ?");
+        parameters.add(status);
+    }
+    if (sender_reference != null && !sender_reference.isEmpty()) {
+        where.append(" AND td.trans_reference ILIKE ?");
+        parameters.add("%" + sender_reference + "%");
+    }
+    if (rel_reference != null && !rel_reference.isEmpty()) {
+        where.append(" AND td.trans_related_reference ILIKE ?");
+        parameters.add("%" + rel_reference + "%");
+    }
+    if (currency_code != null && !currency_code.isEmpty()) {
+        where.append(" AND td.trans_ccy ILIKE ?");
+        parameters.add("%" + currency_code + "%");
+    }
+    if (amount != null && !amount.isEmpty()) {
+        where.append(" AND td.trans_amount::TEXT ILIKE ?");
+        parameters.add("%" + amount + "%");
+    }
+    if (channel != null && !channel.isBlank()) {
+        where.append(" AND h.source ILIKE ?");
+        parameters.add("%" + channel + "%");
+    }
+
+    // Dynamic filters dari criteria
+    if (criteria != null) {
+        if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
+            where.append(" AND h.messageType ILIKE ?");
+            parameters.add("%" + criteria.getMtSearch() + "%");
         }
-        if (sender_bank == null || sender_bank.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND logicalTerminal LIKE '%" + sender_bank + "%'";
+        if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
+            where.append(" AND h.io_type ILIKE ?");
+            parameters.add("%" + criteria.getIoSearch() + "%");
         }
-        if (receiver_bank == null || receiver_bank.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND receiverAddress LIKE '%" + receiver_bank + "%'";
+        if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
+            where.append(" AND h.sequenceNumber::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getSeqSearch() + "%");
         }
-        if (mt_type == null || mt_type.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND h.messageType LIKE '%" + mt_type + "%'";
+        if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
+            where.append(" AND h.logicalTerminal ILIKE ?");
+            parameters.add("%" + criteria.getLogicalSearch() + "%");
         }
-        if (date_from == null || date_from.isEmpty() || date_end == null || date_end.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN '" + date_from + "' AND '" + date_end + "'";
+        if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
+            where.append(" AND h.receiverAddress ILIKE ?");
+            parameters.add("%" + criteria.getReceiverSearch() + "%");
         }
-        if (status == null || status.isEmpty()) {
-            where += "";
-        } else {
-            //diganti jadi = pd tgl 20151007
-            where += " AND h.flag = '" + status + "'";
+        if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
+            where.append(" AND td.trans_reference ILIKE ?");
+            parameters.add("%" + criteria.getRefSearch() + "%");
         }
-//        tags
-        if (sender_reference == null || sender_reference.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_reference LIKE '%" + sender_reference + "%'";
+        if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
+            where.append(" AND td.trans_related_reference ILIKE ?");
+            parameters.add("%" + criteria.getRelRefSearch() + "%");
         }
-        // ditambahkan rel_reference pada 20151102 by Azan
-        if (rel_reference == null || rel_reference.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_related_reference LIKE '%" + rel_reference + "%'";
+        if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
+            where.append(" AND td.trans_date_value::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getValDateSearch() + "%");
         }
+        if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
+            where.append(" AND td.trans_ccy ILIKE ?");
+            parameters.add("%" + criteria.getCcySearch() + "%");
+        }
+        if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
+            where.append(" AND td.trans_amount::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getAmountSearch() + "%");
+        }
+        if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
+            where.append(" AND h.tanggal::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getCreatedDateSearch() + "%");
+        }
+        if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
+            where.append(" AND h.flag ILIKE ?");
+            parameters.add("%" + criteria.getFlagSearch() + "%");
+        }
+        if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
+            where.append(" AND h.source ILIKE ?");
+            parameters.add("%" + criteria.getSourceSearch() + "%");
+        }
+    }
+
+    // Final query
+    String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, " +
+                 "h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, " +
+                 "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy " +
+                 "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
+                 "WHERE " + where + " ORDER BY h.tanggal DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+    try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+        int idx = 1;
+        for (Object param : parameters) {
+            st.setObject(idx++, param);
+        }
+        st.setInt(idx++, start);
+        st.setInt(idx, length);
+        
+        String rawSql = sql;
+        for (Object param : parameters) {
+            rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
+        }
+        rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
+        rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
+        System.out.println("Expanded SQL:\n" + rawSql); //cetak hasil query
+
+
+        try (ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Header data = new Header();
+                data.setId_headers(rs.getInt("id_headers"));
+                data.setMessageType(rs.getString("messageType"));
+                data.setLogicalTerminal(rs.getString("logicalTerminal"));
+                data.setSessionNumber(rs.getString("sessionNumber"));
+                data.setSequenceNumber(rs.getString("sequenceNumber"));
+                data.setIo_type("I".equalsIgnoreCase(rs.getString("io_type")) ? "Outgoing" : "Incoming");
+                data.setReceiverAddress(rs.getString("receiverAddress"));
+                data.setTanggal(rs.getString("tanggal"));
+                data.setFlag(rs.getString("flag"));
+                data.setBlock3(rs.getString("block3"));
+                data.setSource(rs.getString("source"));
+                data.setTrans_refference(rs.getString("trans_reference"));
+                data.setTrans_related_refference(rs.getString("trans_related_reference"));
+                data.setTrans_date_value(rs.getString("trans_date_value"));
+                String amt = rs.getString("trans_amount");
+                data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
+                data.setTrans_ccy(rs.getString("trans_ccy"));
+                datas.add(data);
+            }
+        }
+    }
+
+    return datas;
+}
+
+    
+//    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria) throws Exception {
+//        String where = "";
+//        String prefix = "";
+//        if (io_type == null || io_type.isEmpty()) {
+//            where += " (h.io_type='O' OR h.io_type='I')";
+//        } else if (io_type.equalsIgnoreCase("i")) {
+//            where += " h.io_type='I'";
+//        } else if (io_type.equalsIgnoreCase("o")) {
+//            where += " h.io_type='O'";
+//        } else {
+//            where += " (h.io_type='O' OR h.io_type='I')";
+//        }
 //        if (sender_bank == null || sender_bank.isEmpty()) {
 //            where += "";
 //        } else {
-//            where += " AND t53.detail LIKE '%" + sender_bank + "%'";
+//            where += " AND logicalTerminal LIKE '%" + sender_bank + "%'";
 //        }
 //        if (receiver_bank == null || receiver_bank.isEmpty()) {
 //            where += "";
 //        } else {
-//            where += " AND t57.detail LIKE '%" + receiver_bank + "%'";
+//            where += " AND receiverAddress LIKE '%" + receiver_bank + "%'";
 //        }
-//        end of tambahan 20151102
-        if (currency_code == null || currency_code.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_ccy LIKE '%" + currency_code + "%'";
-        }
-        if (amount == null || amount.isEmpty()) {
-            where += "";
-        } else {
-            where += " AND td.trans_amount::text LIKE '%" + amount + "%'";
-        }
-        if (db_type.equalsIgnoreCase("backup")) {
-            prefix = "a";
-        }
-        
-        if (channel != null && !channel.isBlank()) {
-            where += " AND source LIKE '%" + channel + "%'";
-        }
-        
-         if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
-            where += " AND messageType ILIKE '%" + criteria.getMtSearch() + "%'";
-        }
-        if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
-            where += " AND io_type ILIKE '%" + criteria.getIoSearch() + "%'";
-        }
-        if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
-            where += " AND sequenceNumber::TEXT ILIKE '%" + criteria.getSeqSearch() + "%'";
-        }
-        if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
-            where += " AND logicalTerminal ILIKE '%" + criteria.getLogicalSearch() + "%'";
-        }
-        if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
-            where += " AND receiverAddress ILIKE '%" + criteria.getReceiverSearch() + "%'";
-        }
-        if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
-            where += " AND trans_reference ILIKE '%" + criteria.getRefSearch() + "%'";
-        }
-        if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
-            where += " AND trans_related_reference ILIKE '%" + criteria.getRelRefSearch() + "%'";
-        }
-        if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
-            where += " AND trans_date_value::TEXT ILIKE '%" + criteria.getValDateSearch() + "%'";
-        }
-        if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
-            where += " AND trans_ccy ILIKE '%" + criteria.getCcySearch() + "%'";
-        }
-        if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
-            where += " AND trans_amount::TEXT ILIKE '%" + criteria.getAmountSearch() + "%'";
-        }
-        if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
-            where += " AND tanggal::TEXT ILIKE '%" + criteria.getCreatedDateSearch() + "%'";
-        }
-        if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
-            where += " AND flag ILIKE '%" + criteria.getFlagSearch() + "%'";
-        }
-        if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
-            where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
-        }
-        
-//        List<ResultHeader> datas = new ArrayList<ResultHeader>();
-        List<Header> datas = new ArrayList<Header>();
-        String sql = "SELECT count(h.id_headers) \n" +
-"                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE (" + where + ") AND h.isDuplicate!=1";
-        
-//        System.out.pritln("");
-        PreparedStatement st = this.conn.prepareStatement(sql);
-        ResultSet rs = st.executeQuery();
-        int headers = 0;
-        while (rs.next()) {
-           headers = rs.getInt(1);
-        }
-        return headers;
+//        if (mt_type == null || mt_type.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND h.messageType LIKE '%" + mt_type + "%'";
+//        }
+//        if (date_from == null || date_from.isEmpty() || date_end == null || date_end.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN '" + date_from + "' AND '" + date_end + "'";
+//        }
+//        if (status == null || status.isEmpty()) {
+//            where += "";
+//        } else {
+//            //diganti jadi = pd tgl 20151007
+//            where += " AND h.flag = '" + status + "'";
+//        }
+////        tags
+//        if (sender_reference == null || sender_reference.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_reference LIKE '%" + sender_reference + "%'";
+//        }
+//        // ditambahkan rel_reference pada 20151102 by Azan
+//        if (rel_reference == null || rel_reference.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_related_reference LIKE '%" + rel_reference + "%'";
+//        }
+////        if (sender_bank == null || sender_bank.isEmpty()) {
+////            where += "";
+////        } else {
+////            where += " AND t53.detail LIKE '%" + sender_bank + "%'";
+////        }
+////        if (receiver_bank == null || receiver_bank.isEmpty()) {
+////            where += "";
+////        } else {
+////            where += " AND t57.detail LIKE '%" + receiver_bank + "%'";
+////        }
+////        end of tambahan 20151102
+//        if (currency_code == null || currency_code.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_ccy LIKE '%" + currency_code + "%'";
+//        }
+//        if (amount == null || amount.isEmpty()) {
+//            where += "";
+//        } else {
+//            where += " AND td.trans_amount::text LIKE '%" + amount + "%'";
+//        }
+//        if (db_type.equalsIgnoreCase("backup")) {
+//            prefix = "a";
+//        }
+//        
+//        if (channel != null && !channel.isBlank()) {
+//            where += " AND source LIKE '%" + channel + "%'";
+//        }
+//        
+//         if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
+//            where += " AND messageType ILIKE '%" + criteria.getMtSearch() + "%'";
+//        }
+//        if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
+//            where += " AND io_type ILIKE '%" + criteria.getIoSearch() + "%'";
+//        }
+//        if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
+//            where += " AND sequenceNumber::TEXT ILIKE '%" + criteria.getSeqSearch() + "%'";
+//        }
+//        if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
+//            where += " AND logicalTerminal ILIKE '%" + criteria.getLogicalSearch() + "%'";
+//        }
+//        if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
+//            where += " AND receiverAddress ILIKE '%" + criteria.getReceiverSearch() + "%'";
+//        }
+//        if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
+//            where += " AND trans_reference ILIKE '%" + criteria.getRefSearch() + "%'";
+//        }
+//        if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
+//            where += " AND trans_related_reference ILIKE '%" + criteria.getRelRefSearch() + "%'";
+//        }
+//        if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
+//            where += " AND trans_date_value::TEXT ILIKE '%" + criteria.getValDateSearch() + "%'";
+//        }
+//        if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
+//            where += " AND trans_ccy ILIKE '%" + criteria.getCcySearch() + "%'";
+//        }
+//        if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
+//            where += " AND trans_amount::TEXT ILIKE '%" + criteria.getAmountSearch() + "%'";
+//        }
+//        if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
+//            where += " AND tanggal::TEXT ILIKE '%" + criteria.getCreatedDateSearch() + "%'";
+//        }
+//        if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
+//            where += " AND flag ILIKE '%" + criteria.getFlagSearch() + "%'";
+//        }
+//        if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
+//            where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
+//        }
+//        
+////        List<ResultHeader> datas = new ArrayList<ResultHeader>();
+//        List<Header> datas = new ArrayList<Header>();
+//        String sql = "SELECT count(h.id_headers) \n" +
+//"                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE (" + where + ") AND h.isDuplicate!=1";
+//        
+////        System.out.pritln("");
+//        PreparedStatement st = this.conn.prepareStatement(sql);
+//        ResultSet rs = st.executeQuery();
+//        int headers = 0;
+//        while (rs.next()) {
+//           headers = rs.getInt(1);
+//        }
+//        return headers;
+//    }
+    
+    
+   public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria) throws Exception {
+    StringBuilder where = new StringBuilder("WHERE 1=1");
+    List<Object> parameters = new ArrayList<>();
+
+    if (io_type == null || io_type.isEmpty()) {
+        where.append(" AND (h.io_type='O' OR h.io_type='I')");
+    } else if (io_type.equalsIgnoreCase("i")) {
+        where.append(" AND h.io_type=?");
+        parameters.add("I");
+    } else if (io_type.equalsIgnoreCase("o")) {
+        where.append(" AND h.io_type=?");
+        parameters.add("O");
     }
+
+    if (sender_bank != null && !sender_bank.isEmpty()) {
+        where.append(" AND logicalTerminal LIKE ?");
+        parameters.add("%" + sender_bank + "%");
+    }
+
+    if (receiver_bank != null && !receiver_bank.isEmpty()) {
+        where.append(" AND receiverAddress LIKE ?");
+        parameters.add("%" + receiver_bank + "%");
+    }
+
+    if (mt_type != null && !mt_type.isEmpty()) {
+        where.append(" AND h.messageType LIKE ?");
+        parameters.add("%" + mt_type + "%");
+    }
+
+    if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
+        where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
+        parameters.add(date_from);
+        parameters.add(date_end);
+    }
+
+    if (status != null && !status.isEmpty()) {
+        where.append(" AND h.flag = ?");
+        parameters.add(status);
+    }
+
+    if (sender_reference != null && !sender_reference.isEmpty()) {
+        where.append(" AND td.trans_reference LIKE ?");
+        parameters.add("%" + sender_reference + "%");
+    }
+
+    if (rel_reference != null && !rel_reference.isEmpty()) {
+        where.append(" AND td.trans_related_reference LIKE ?");
+        parameters.add("%" + rel_reference + "%");
+    }
+
+    if (currency_code != null && !currency_code.isEmpty()) {
+        where.append(" AND td.trans_ccy LIKE ?");
+        parameters.add("%" + currency_code + "%");
+    }
+
+    if (amount != null && !amount.isEmpty()) {
+        where.append(" AND td.trans_amount::text LIKE ?");
+        parameters.add("%" + amount + "%");
+    }
+
+    if (channel != null && !channel.isBlank()) {
+        where.append(" AND source LIKE ?");
+        parameters.add("%" + channel + "%");
+    }
+
+    // From HeaderSearchCriteria (Datatables column search)
+    if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
+        where.append(" AND messageType ILIKE ?");
+        parameters.add("%" + criteria.getMtSearch() + "%");
+    }
+    if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
+        where.append(" AND io_type ILIKE ?");
+        parameters.add("%" + criteria.getIoSearch() + "%");
+    }
+    if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
+        where.append(" AND sequenceNumber::TEXT ILIKE ?");
+        parameters.add("%" + criteria.getSeqSearch() + "%");
+    }
+    if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
+        where.append(" AND logicalTerminal ILIKE ?");
+        parameters.add("%" + criteria.getLogicalSearch() + "%");
+    }
+    if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
+        where.append(" AND receiverAddress ILIKE ?");
+        parameters.add("%" + criteria.getReceiverSearch() + "%");
+    }
+    if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
+        where.append(" AND trans_reference ILIKE ?");
+        parameters.add("%" + criteria.getRefSearch() + "%");
+    }
+    if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
+        where.append(" AND trans_related_reference ILIKE ?");
+        parameters.add("%" + criteria.getRelRefSearch() + "%");
+    }
+    if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
+        where.append(" AND trans_date_value::TEXT ILIKE ?");
+        parameters.add("%" + criteria.getValDateSearch() + "%");
+    }
+    if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
+        where.append(" AND trans_ccy ILIKE ?");
+        parameters.add("%" + criteria.getCcySearch() + "%");
+    }
+    if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
+        where.append(" AND trans_amount::TEXT ILIKE ?");
+        parameters.add("%" + criteria.getAmountSearch() + "%");
+    }
+    if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
+        where.append(" AND tanggal::TEXT ILIKE ?");
+        parameters.add("%" + criteria.getCreatedDateSearch() + "%");
+    }
+    if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
+        where.append(" AND flag ILIKE ?");
+        parameters.add("%" + criteria.getFlagSearch() + "%");
+    }
+    if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
+        where.append(" AND source ILIKE ?");
+        parameters.add("%" + criteria.getSourceSearch() + "%");
+    }
+
+    String sql = "SELECT count(h.id_headers) FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+               + where.toString() + " AND h.isDuplicate!=1";
+
+    try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+        for (int i = 0; i < parameters.size(); i++) {
+            st.setObject(i + 1, parameters.get(i));
+        }
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+    }
+
+    return 0;
+}
 
     public boolean getResultTag(int headerId, String tag_where, String prefix) throws Exception {
         boolean hasil = false;

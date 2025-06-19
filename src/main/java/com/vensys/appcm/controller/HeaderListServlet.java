@@ -104,7 +104,7 @@ public class HeaderListServlet extends HttpServlet {
         String currency_code = request.getParameter("currency_code");
         String amount = request.getParameter("amount");
         String find = request.getParameter("find");
-        log.info("flag: " + flag);
+//        log.info("flag: " + flag);
         String status = request.getParameter("status");
 //        log.info("status: " + status);
         String menu = request.getParameter("menu");
@@ -292,7 +292,7 @@ public class HeaderListServlet extends HttpServlet {
                     httpSession.setAttribute("flag", flag);
                     httpSession.setAttribute("flagFilter", flag);
                 } else {
-                    log.info("flag else : " + flag);
+//                    log.info("flag else : " + flag);
                     headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
                     totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
                     System.out.println("Total Data"+ String.valueOf(totalRecords));
@@ -302,7 +302,7 @@ public class HeaderListServlet extends HttpServlet {
                 }
 
             } else {
-                log.info("masuk sini else");
+//                log.info("masuk sini else");
                 String db_type = request.getParameter("db_type") != null ? request.getParameter("db_type") : "";
 
                 System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
@@ -372,6 +372,7 @@ public class HeaderListServlet extends HttpServlet {
             session.removeAttribute("find");
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("Error Header Servlet"+e.getMessage());
             JSONObject errorResponse = new JSONObject();
             errorResponse.put("error", "Error fetching data: " + e.getMessage());
             out.print(errorResponse.toString());

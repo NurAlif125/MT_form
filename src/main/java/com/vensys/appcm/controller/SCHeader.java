@@ -287,7 +287,7 @@ public class SCHeader extends HttpServlet implements Serializable {
                     httpSession.setAttribute("flagFilter", flag);
 //                    }
                 } else {
-                    log.info("flag else : " + flag);
+//                    log.info("flag else : " + flag);
 //                httpSession.removeAttribute("flagFilter");
 //                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
 //                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel, offset, limit, criteria);
@@ -301,7 +301,7 @@ public class SCHeader extends HttpServlet implements Serializable {
 
 //                httpSession.setAttribute("headersPajak", headersPajak);
             } else {
-                log.info("masuk sini else");
+//                log.info("masuk sini else");
                 // ditambahkan rel_reference pada 20151001 by Azan
                 // sender_logical_terminal => sender_bank dan receiver_institution => receiver_bank
                 String db_type = request.getParameter("db_type");
