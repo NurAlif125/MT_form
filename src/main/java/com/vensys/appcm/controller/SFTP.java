@@ -6,8 +6,10 @@ import com.vensys.appcm.dbase.DBconnection;
 import com.vensys.appcm.dbase.DBconnection2;
 import com.vensys.appcm.model.DataSFTP;
 import com.vensys.appcm.myutils.Encryptor;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import jakarta.servlet.http.HttpSession;
 import java.util.*;
 import java.io.InputStream;
 import java.util.Properties;
@@ -29,15 +31,15 @@ public class SFTP {
     private String remoteDirResend;
     private String sftpReSendFlag;
     private String sftpReSendPath;
+    private String remoteDirBIC;
 
     public SFTP() {
         readSFTPProperties();
     }
 
-    public void uploadToSftp(String MXorMT, String remoteFileName,int id, String flag, String user_id, String ip_access, String comp_name) {
+    public void uploadToSftp(String channel, String MXorMT, String remoteFileName,int id, String flag, String user_id, String ip_access, String comp_name) {
         DBconnection2 dbConn2 = new DBconnection2();
         DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
-        
         JSch jsch = new JSch();
         String remoteDestinationDir = "";
         Session session = null;
@@ -84,23 +86,30 @@ public class SFTP {
                     flagToPathMap.put(flagList.get(i), pathList.get(i));
                 }
             }
-
             String destinationDir = flagToPathMap.get(flag);
-            
-
+            channel = channel == null || channel.equalsIgnoreCase("") ? "" : channel;
+            String pathResend = channel.equals("") ? "" : "/"+channel+"/";
+            System.out.println(pathResend);
+            //remoteDestinationDir = remoteDirResend + destinationDir + pathResend ;
             remoteDestinationDir = remoteDirResend + destinationDir;
             System.out.println("remoteDestinationDir:" + remoteDestinationDir);
             System.out.println("remoteDir:" + remoteDir);
             
             // jika ga ktemu di list flag, maka taro di default folder (remoteDir)
             if (destinationDir == null) {
-                if(MXorMT.equalsIgnoreCase("MT")) {
-                    remoteDestinationDir = remoteDir + mt_folder;
-                } else if (MXorMT.equalsIgnoreCase("MX")) {
-                    remoteDestinationDir = remoteDir + mx_folder;
+                System.out.println("destinationdir null:" );
+                if(!channel.equals("")) {
+                   System.out.println("remoteDirBIC:" + remoteDirBIC);
+                   remoteDestinationDir = remoteDirBIC + channel;
                 } else {
-                    log.error("Invalid MXorMT value: {}", MXorMT);
-                    return;
+                    if(MXorMT.equalsIgnoreCase("MT")) {
+                        remoteDestinationDir = remoteDir + mt_folder;
+                    } else if (MXorMT.equalsIgnoreCase("MX")) {
+                        remoteDestinationDir = remoteDir + mx_folder;
+                    } else {
+                        log.error("Invalid MXorMT value: {}", MXorMT);
+                        return;
+                    }
                 }
             }
             
@@ -195,6 +204,7 @@ public class SFTP {
             remoteDirResend = prop.getProperty("remoteDirResend");
             sftpReSendFlag = prop.getProperty("sftpReSendFlag");
             sftpReSendPath = prop.getProperty("sftpReSendPath");
+            remoteDirBIC = prop.getProperty("remoteDirBIC");
 
         } catch (Exception e) {
             log.error("Failed to read SFTP properties", e);

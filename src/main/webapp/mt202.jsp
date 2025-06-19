@@ -8,7 +8,7 @@
 <%@ include file="rule/validate_rule_mt202.jsp" %>
 <%@ include file="rule/validateList_scr.jsp" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
 <script src="js/tabcontent.js" type="text/javascript"></script>
 <script src="js/mt.js" type="text/javascript"></script>

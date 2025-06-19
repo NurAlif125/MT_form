@@ -294,7 +294,7 @@ public class SCUploadConfirmation extends HttpServlet {
                                             log.info("create new MT");
                                             log.info("id header mt191: " + dBDataTransaksiOutgoing.id_headers());
                                             dBDataTransaksiOutgoing.addMTText(ct.createFinalMT(ct.getHeaderById(dBDataTransaksiOutgoing.id_headers())), dBDataTransaksiOutgoing.id_headers());
-                                            ct.getFinalMT(dBDataTransaksiOutgoing.id_headers(), "I", "", (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name") );
+                                            ct.getFinalMT((String) session.getAttribute("channel"), dBDataTransaksiOutgoing.id_headers(), "I", "", (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name") );
                                             // log.info("after add datatag penagihan");
                                         }
 
@@ -369,7 +369,7 @@ public class SCUploadConfirmation extends HttpServlet {
                                     log.info("create new MT");
                                     log.info("id header mt199: " + dBDataTransaksiOutgoing.id_headers());
                                     dBDataTransaksiOutgoing.addMTText(ct.createFinalMT(ct.getHeaderById(dBDataTransaksiOutgoing.id_headers())), dBDataTransaksiOutgoing.id_headers());
-                                    ct.getFinalMT(dBDataTransaksiOutgoing.id_headers(), "I", "", (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                                    ct.getFinalMT((String) session.getAttribute("channel"), dBDataTransaksiOutgoing.id_headers(), "I", "", (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                                     // log.info("after add data tag confirmation kredit payment");
 
                                 } else {
@@ -459,7 +459,7 @@ public class SCUploadConfirmation extends HttpServlet {
                                     log.info("create new MT");
                                     log.info("id header mt199: " + dBDataTransaksiOutgoing.id_headers());
                                     dBDataTransaksiOutgoing.addMTText(ct.createFinalMT(ct.getHeaderById(dBDataTransaksiOutgoing.id_headers())), dBDataTransaksiOutgoing.id_headers());
-                                    ct.getFinalMT(dBDataTransaksiOutgoing.id_headers(), "I", "",  (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                                    ct.getFinalMT((String) session.getAttribute("channel"), dBDataTransaksiOutgoing.id_headers(), "I", "",  (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                                     log.info("after add data tag confirmation kredit payment");
                                 }
                             }

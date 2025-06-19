@@ -44,8 +44,12 @@
         <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
         <input type="hidden" name="id" id="id" value="<%= request.getParameter("id")%>" />
         <div style="width:100%; margin: 0 auto; font: 0.85em arial">
+             <ul class="tabs">
+                <li id="tab-view1"><a href="#" rel="view1">Message</a></li>
+                <li id="tab-view2"><a href="#" rel="view2">History</a></li>
+            </ul>
             <div class="tabcontents">
-                <div class="tabcontent">
+                <div id="view1" class="tabcontent">
                     <div class="form-row">
                         <div class="form-cols">
                             <h1>MT</h1>
@@ -57,13 +61,16 @@
                         </div>
                     </div>
                 </div>
+            <div id="view2" class="tabcontent">
+                <div class="form-row" style="padding-top:0; padding-bottom: 0;"><span class="label"></span>
+                    <c:forEach var="item" items="${header_status}">
+                        <c:out value="${item.status_tanggal}"/> : <c:out value="${item.status_header}"/> : <c:out value="${item.user_login}"/> : <c:out value="${item.ip_access}"/> : <c:out value="${item.comp_name}"/><br/>
+                    </c:forEach>
+                </div>
+            </div>
             </div>
         </div>
-        <div class="form-row-action container_">
-            <div class="btn--group">
-                <input type="button" name="back" id="back" value="Back" />
-            </div>
-        </div>
+        <%@ include file="button_action.jsp" %>
     </form>
 </div>
 <script>
