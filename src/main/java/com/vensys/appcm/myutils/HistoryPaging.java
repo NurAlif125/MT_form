@@ -31,14 +31,14 @@ public class HistoryPaging {
         
         Enumeration allParametersName = request.getParameterNames();
         
-        System.out.println("All Parameter get and post name : ");
+//        System.out.println("All Parameter get and post name : ");
         while(allParametersName.hasMoreElements()){
             String parameterName = allParametersName.nextElement().toString();
             String value = request.getParameter(parameterName);
             parameterAndValue.append(parameterName).append("=").append(value).append("&");
         }
         
-        System.out.println(parameterAndValue.toString().trim());
+//        System.out.println(parameterAndValue.toString().trim());
         
         httpSession.setAttribute(PAGGING_HISTORY ,parameterAndValue.toString().trim());
         
