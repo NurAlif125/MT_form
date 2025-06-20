@@ -117,8 +117,8 @@
                                 <!--                        <th>Action</th>-->
                             </tr>
                         </thead>
-
-                        <tbody>
+                        <tbody></tbody>
+<!--                        <tbody>
                             <c:forEach items="${headers}" var="item">
                                 <tr>
                                     <%--c:if test="${flagFilter == 'VER'}">
@@ -154,23 +154,23 @@
                                     <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">view</a></td>
                                 </tr>
                             </c:forEach>
-                        </tbody>
+                        </tbody>-->
                         <tfoot>
                             <tr id="filterRow">
                                 <th></th>
-                                <th><input type="text" class="column-search" placeholder="Search MT"></th>
-                                <th><input type="text" class="column-search" placeholder="Search I/O"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Seq"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Logical"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Corr."></th>
-                                <th><input type="text" class="column-search" placeholder="Search Ref."></th>
-                                <th><input type="text" class="column-search" placeholder="Search Rel. Ref"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Date"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Ccy"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Amount"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Creation"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Status"></th>
-                                <th><input type="text" class="column-search" placeholder="Search Source"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search MT"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search I/O"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Seq"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Logical"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Corr."></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Ref."></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Rel. Ref"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Date"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Ccy"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Amount"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Creation"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Status"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Source"></th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -222,11 +222,11 @@
                     <td>Incoming Reject AML</td>
                     <td>Flag transaksi incoming yang sudah dilempar ke AML</td>
                     <td>Transaksi incoming yang sudah dilempar ke AML</td>
-                    <td>INC-AML &#10141; AML-TERMINATE-INC</td>
+                    <td>INC-AML &#10141; AML-TERMINATE-IN</td>
                 </tr>
                 <tr>
                     <td>4</td>
-                    <td>AML-TERMINATE-INC</td>
+                    <td>AML-TERMINATE-IN</td>
                     <td>Incoming Reject AML Confirmation</td>
                     <td>Flag transaksi incoming yang direject oleh user maker dan butuh konfirmasi oleh user checker</td>
                     <td>Transaksi incoming yang direject oleh user maker dan butuh konfirmasi oleh user checker apakah transaksi di tersebut di reject atau tidak. Jika tidak maka status transaksi akan dikembalikan pada status sebelumnya</td>
@@ -468,34 +468,34 @@
     $('#chkAll').click(function () {
         $('input:checkbox').prop('checked', this.checked);
     });
-    new DataTable('#example', {
-        initComplete: function () {
-            this.api()
-                    .columns()
-                    .every(function () {
-                        let column = this;
-                        let title = column.footer().textContent;
-                        let columnIndex = column.index();
-                        let table = $('#example').DataTable();
-                        let columnCount = table.columns().count();
-
-                        let input = document.createElement('input');
-                        input.placeholder = title;
-
-                        if (columnIndex === 0 || columnIndex === columnCount - 1) {
-                            
-                        } else {
-                            column.footer().replaceChildren(input);
-                        }
-
-                        input.addEventListener('keyup', () => {
-                            if (column.search() !== this.value) {
-                                column.search(input.value).draw();
-                            }
-                        });
-                    });
-        }
-    });
+//    new DataTable('#example', {
+//        initComplete: function () {
+//            this.api()
+//                    .columns()
+//                    .every(function () {
+//                        let column = this;
+//                        let title = column.footer().textContent;
+//                        let columnIndex = column.index();
+//                        let table = $('#example').DataTable();
+//                        let columnCount = table.columns().count();
+//
+//                        let input = document.createElement('input');
+//                        input.placeholder = title;
+//
+//                        if (columnIndex === 0 || columnIndex === columnCount - 1) {
+//                            
+//                        } else {
+//                            column.footer().replaceChildren(input);
+//                        }
+//
+//                        input.addEventListener('keyup', () => {
+//                            if (column.search() !== this.value) {
+//                                column.search(input.value).draw();
+//                            }
+//                        });
+//                    });
+//        }
+//    });
     
     $('#example tfoot tr').appendTo('#example thead');
 </script>
@@ -526,3 +526,121 @@
         }
     }
 </script>
+
+
+<script>
+
+//window.addEventListener("pageshow", function (event) {
+//    if (event.persisted || window.performance && performance.navigation.type === 2) {
+//        location.reload(); // Reload seluruh halaman
+//    }
+//});
+
+    
+$(document).ready(function () {
+//console.log("Document is ready");
+    const fullUrl = window.location.search && window.location.search !== "?" ? window.location.search : '';
+//    console.log(fullUrl);
+
+//    console.log("Table initialized");
+//
+//$('#example').on('error.dt', function(e, settings, techNote, message) {
+//    console.log('DataTables error:', message);
+//});
+
+if ($.fn.DataTable.isDataTable('#example')) {
+    $('#example').DataTable().clear().destroy(); // destroy kalau sudah ada
+}
+    
+    var table = $('#example').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "headerData"+fullUrl,
+            type: "GET",
+            xhrFields: {
+                withCredentials: true 
+             },
+            data: function (d) {
+                d.io_type = $('#io_type_filter').val();
+                d.flag = $('#flag_filter').val();
+                d.channel = $('#channel_filter').val();
+            },
+            dataSrc: function (json) {
+//                console.log("Received JSON:", json);
+                return json.data;
+            }
+        },
+        columns: [
+            { data: null }, // No
+            { data: "messageType" },
+            { data: "io_type" },
+            { data: "sequenceNumber" },
+            { data: "logicalTerminal" },
+            { data: "receiverAddress" },
+            { data: "trans_reference" },
+            { data: "trans_related_reference" },
+            { data: "trans_date_value" },
+            { data: "trans_ccy" },
+            { data: "trans_amount" },
+            { data: "tanggal" },
+            { data: "flag" },
+            { data: "source" },
+            { data: null } // Action
+        ],
+        columnDefs: [
+            {
+                targets: 0,
+                render: function (data, type, row, meta) {
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                }
+            },
+            {
+                targets: 6,
+                render: function (data, type, row, meta) {
+                    return '<a href="ViewDataTransaksiOutgoing?id=' + row.id_headers + '">'+row.trans_reference+'</a>';
+                }
+            },
+            {
+                targets: -1,
+                render: function (data, type, row, meta) {
+                    return '<a href="ViewDataTransaksiOutgoing?id=' + row.id_headers + '">view</a>';
+                }
+            }
+        ]
+        ,initComplete: function () {
+            const api = this.api();
+
+            function debounce(func, delay) {
+                var timeout;
+                return function () {
+                    const context = this;
+                    const args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => func.apply(context, args), delay);
+                };
+            }
+
+            $('#example thead input').each(function () {
+                var colIdx = $(this).parent().index();
+                $(this).on('keyup change', debounce(function () {
+                    var val = this.value;
+                    console.log(' Search column '+colIdx+' = '+val+'');
+                    api.column(colIdx).search(val).draw();
+                }, 800));
+            });
+        }
+    });
+    
+    $('#select-page').on('change', function(){
+           // Reload data
+        console.log ("page changed");
+        $("#example").DataTable().ajax.reload();
+     });
+});
+
+
+</script>
+
+
+

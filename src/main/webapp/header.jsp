@@ -266,27 +266,30 @@
                                             </c:forEach>
                                     </ul>
                                 </li>
-<!--                                <li><span class="dir">Cash Management</span>
+                                <li><span class="dir">Cash Management</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:camt05300108'}">
-                                                <li><a href="main_camt053.jsp">CAMT.053.001.08 - Bank To Customer Statement V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('CAMT.053.001.08 - Bank To Customer Statement V08')" href="main_camt053.jsp?create=true">CAMT.053.001.08 - Bank To Customer Statement V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:camt05500108'}">
-                                                <li><a href="main_camt055.jsp">CAMT.055.001.08 - Customer Payment Cancellation Request V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('CAMT.055.001.08 - Customer Payment Cancellation Request V08')" href="main_camt055.jsp?create=true">CAMT.055.001.08 - Customer Payment Cancellation Request V08</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:camt05600108'}">
-                                                <li><a href="main_camt056.jsp">CAMT.056.001.08 - FI To FI Payment Cancellation Request V08</a></li>
+                                                <li><a onclick="userTrackMenuClick('CAMT.056.001.08 - FI To FI Payment Cancellation Request V08')" href="main_camt056.jsp?create=true">CAMT.056.001.08 - FI To FI Payment Cancellation Request V08</a></li>
+                                                </c:if>
+                                                <c:if test="${item == 'MX:camt10600102'}">
+                                                <li><a onclick="userTrackMenuClick('CAMT.106.001.02 - Charges Payment Request V17')" href="main_camt106.jsp?create=true">CAMT.106.001.02 - Charges Payment Request V17</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:camt10700101'}">
-                                                <li><a href="main_camt107.jsp">CAMT.107.001.01 - Cheque Presentment Notification V01</a></li>
+                                                <li><a onclick="userTrackMenuClick('CAMT.107.001.01 - Cheque Presentment Notification V01')" href="main_camt107.jsp?create=true">CAMT.107.001.01 - Cheque Presentment Notification V01</a></li>
                                                 </c:if>
                                                 <c:if test="${item == 'MX:camt10800101'}">
-                                                <li><a href="main_camt108.jsp">CAMT.108.001.01 - Cheque Cancellation Or Stop Request V01</a></li>
+                                                <li><a onclick="userTrackMenuClick('CAMT.108.001.01 - Cheque Cancellation Or Stop Request V01')" href="main_camt108.jsp?create=true">CAMT.108.001.01 - Cheque Cancellation Or Stop Request V01</a></li>
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
-                                </li>-->
+                                </li>
                             </ul>
 
                         </li>

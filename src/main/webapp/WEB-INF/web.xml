@@ -64,6 +64,10 @@
         <servlet-name>SCUserLogMenuActivity</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCUserLogMenuActivity</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>HeaderListServlet</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.HeaderListServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCFIA</servlet-name>
         <url-pattern>/SCFIA</url-pattern>
@@ -942,6 +946,10 @@
     <servlet-mapping>
         <servlet-name>SCUserLogMenuActivity</servlet-name>
         <url-pattern>/SCUserLogMenuActivity</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HeaderListServlet</servlet-name>
+        <url-pattern>/HeaderListServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

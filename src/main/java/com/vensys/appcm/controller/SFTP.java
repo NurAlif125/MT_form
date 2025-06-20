@@ -87,11 +87,11 @@ public class SFTP {
                 }
             }
             String destinationDir = flagToPathMap.get(flag);
-            
             channel = channel == null || channel.equalsIgnoreCase("") ? "" : channel;
             String pathResend = channel.equals("") ? "" : "/"+channel+"/";
             System.out.println(pathResend);
-            remoteDestinationDir = remoteDirResend + destinationDir+ pathResend ;
+            //remoteDestinationDir = remoteDirResend + destinationDir + pathResend ;
+            remoteDestinationDir = remoteDirResend + destinationDir;
             System.out.println("remoteDestinationDir:" + remoteDestinationDir);
             System.out.println("remoteDir:" + remoteDir);
             
@@ -100,7 +100,7 @@ public class SFTP {
                 System.out.println("destinationdir null:" );
                 if(!channel.equals("")) {
                    System.out.println("remoteDirBIC:" + remoteDirBIC);
-                   remoteDestinationDir = remoteDirBIC + "/" +channel;
+                   remoteDestinationDir = remoteDirBIC + channel;
                 } else {
                     if(MXorMT.equalsIgnoreCase("MT")) {
                         remoteDestinationDir = remoteDir + mt_folder;
