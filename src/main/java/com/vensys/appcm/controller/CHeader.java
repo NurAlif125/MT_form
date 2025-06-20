@@ -5,6 +5,7 @@
 package com.vensys.appcm.controller;
 
 import com.vensys.appcm.controller.TagMT103;
+import com.vensys.appcm.controller.TagMT111;
 import com.vensys.appcm.controller.TagMT202;
 import com.vensys.appcm.controller.TagMT202COV;
 import com.prowidesoftware.swift.model.SwiftBlock1;
@@ -173,6 +174,9 @@ public class CHeader {
             if (messageType.equalsIgnoreCase("103")) {
                 TagMT103 mt103 = new TagMT103(this);
                 mt103.tagMT103(sb4, id);
+            } else if (messageType.equalsIgnoreCase("111")) {
+                TagMT111 mt111 = new TagMT111(this);
+                mt111.tagMT111(sb4, id);
             } else if (messageType.equalsIgnoreCase("202COV")) {
                 TagMT202COV mt202COV = new TagMT202COV(this);
                 mt202COV.tagMT202COV(sb4, id);

@@ -111,7 +111,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             httpSession.setAttribute("nama_core", namaCore);
         }
         String typeMT = headerById.getMessageType();
-        if ("103".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT)) {
+        if ("103".equalsIgnoreCase(typeMT) || "111".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT)) {
             try {
                 System.out.println("Message Type: " + headerById.getMessageType());
                 CHeader headermt = new CHeader(); 
@@ -290,7 +290,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         RequestDispatcher view;
         
         if (headerById.getNetworktype().contains("MT")) { 
-            if (headerById.getMessageType().contains("103") || headerById.getMessageType().contains("200") || headerById.getMessageType().contains("202")) {
+            if (headerById.getMessageType().contains("103") || headerById.getMessageType().contains("111") || headerById.getMessageType().contains("200") || headerById.getMessageType().contains("202")) {
                 view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
             } else {
                 view = request.getRequestDispatcher("mt.jsp");
