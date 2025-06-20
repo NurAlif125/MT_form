@@ -52,7 +52,7 @@ public class DBnotification {
         String sql = "SELECT id_notif, title_msg, msg_body, TO_CHAR(created_at, 'YYYY-MM-DD HH24:MI:SS') as created_at FROM notifications \n" +
                      "WHERE ? = ANY(string_to_array(COALESCE(msg_to_role, ''), ','))\n" +
                      "AND NOT (? = ANY(string_to_array(COALESCE(is_read_userid, ''), ',')))\n" +
-                     " TO_CHAR(created_at, 'YYYY-MM-DD') = TO_CHAR(now(), 'YYYY-MM-DD') ORDER BY created_at DESC;";
+                     " AND TO_CHAR(created_at, 'YYYY-MM-DD') = TO_CHAR(now(), 'YYYY-MM-DD') ORDER BY created_at DESC;";
 
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             st.setString(1, roleId);
