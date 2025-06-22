@@ -623,6 +623,7 @@ if ($.fn.DataTable.isDataTable('#example')) {
 
             $('#example thead input').each(function () {
                 var colIdx = $(this).parent().index();
+//                $(this).on('keyup change', debounce(function () {
                 $(this).on('keyup change', debounce(function () {
                     var val = this.value;
                     console.log(' Search column '+colIdx+' = '+val+'');
