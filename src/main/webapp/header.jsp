@@ -266,7 +266,7 @@
                                             </c:forEach>
                                     </ul>
                                 </li>
-                                <li><span class="dir">Cash Management</span>
+<!--                                <li><span class="dir">Cash Management</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
                                             <c:if test="${item == 'MX:camt05300108'}">
@@ -289,7 +289,7 @@
                                                 </c:if>
                                             </c:forEach>
                                     </ul>
-                                </li>
+                                </li>-->
                             </ul>
 
                         </li>

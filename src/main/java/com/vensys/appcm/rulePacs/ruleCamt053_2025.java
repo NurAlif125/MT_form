@@ -43,17 +43,17 @@ public class ruleCamt053_2025 {
     public void runRules(String logicalTerminal, String receiverAddress) {
         GroupHeader81 grpHdr = this.mxCamt05300108.getBkToCstmrStmt().getGrpHdr();
         if (grpHdr != null) {
-            
+
             String msgId = grpHdr.getMsgId();
-            if (msgId == null) {
+            if (msgId.equalsIgnoreCase("")) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/GrpHdr/MsgId\"><td>MessageIdentification is mandatory!</td><td>BkToCstmrStmt/GrpHdr/MsgId</td></tr>");
             }
-            
+
             OffsetDateTime creDtTm = grpHdr.getCreDtTm();
             if (creDtTm == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/GrpHdr/CreDtTm\"><td>CreationDateTime is mandatory!</td><td>BkToCstmrStmt/GrpHdr/CreDtTm</td></tr>");
             }
-            
+
             String addtlInf = grpHdr.getAddtlInf();
             if (addtlInf != null) {
                 if (!addtlInf.equalsIgnoreCase("/EODY/") || !addtlInf.equalsIgnoreCase("/EOWK/") || !addtlInf.equalsIgnoreCase("/EOMH/") || !addtlInf.equalsIgnoreCase("/EOYR/")) {
@@ -71,63 +71,80 @@ public class ruleCamt053_2025 {
 
             Pagination1 stmtPgntn = stmt.getStmtPgntn();
             if (stmtPgntn != null) {
-                int pgNb = Integer.parseInt(stmtPgntn.getPgNb());
-                if (pgNb == 1) {
-                    int count = 0;
-                    List<CashBalance8> bal = this.mxCamt05300108.getBkToCstmrStmt().getStmt().get(0).getBal();
-                    if (bal != null) {
-                        for (int i = 0; i < bal.size(); i++) {
-                            BalanceType13 tp = bal.get(i).getTp();
-                            if (tp != null) {
-                                BalanceType10Choice cdOrPrtry = tp.getCdOrPrtry();
-                                if (cdOrPrtry != null) {
-                                    String cd = cdOrPrtry.getCd();
-                                    if (cd.equalsIgnoreCase("OPBD")) {
-                                        count++;
+                String pg = stmtPgntn.getPgNb();
+                if (!pg.equalsIgnoreCase("")) {
+                    int pgNb = Integer.parseInt(pg);
+                    if (pgNb == 1) {
+                        int count = 0;
+                        List<CashBalance8> bal = this.mxCamt05300108.getBkToCstmrStmt().getStmt().get(0).getBal();
+                        if (bal != null) {
+                            for (int i = 0; i < bal.size(); i++) {
+                                BalanceType13 tp = bal.get(i).getTp();
+                                if (tp != null) {
+                                    BalanceType10Choice cdOrPrtry = tp.getCdOrPrtry();
+                                    if (cdOrPrtry != null) {
+                                        String cd = cdOrPrtry.getCd();
+                                        if (cd != null) {
+                                            if (cd.equalsIgnoreCase("OPBD")) {
+                                                count++;
+                                            }
+                                        }
                                     }
-                                }
-                                
-                                BalanceSubType1Choice subTp = tp.getSubTp();
-                                if (subTp != null) {
-                                    String cd = subTp.getCd();
-                                    if (count == 2 && cd.equalsIgnoreCase("INTM")) {
-                                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber = 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\" and if Balance/Type/SubType/Code is present, value must be different from \"INTM“.</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
+
+                                    BalanceSubType1Choice subTp = tp.getSubTp();
+                                    if (subTp != null) {
+                                        String cd = subTp.getCd();
+                                        if (cd != null) {
+                                            if (count == 2) {
+                                                if (cd.equalsIgnoreCase("INTM")) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber = 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\" and if Balance/Type/SubType/Code is present, value must be different from \"INTM\".</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
+                                                }
+                                            } else {
+                                                if (cd.equalsIgnoreCase("INTM")) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber = 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\" and if Balance/Type/SubType/Code is present, value must be different from \"INTM\".</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
+                                                }
+                                            }
+                                        }
+                                    } else if (count == 2 && subTp == null) {
+                                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber = 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\"</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
                                     }
-                                } else if (count == 2 && subTp == null) {
-                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber = 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\"</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
                                 }
                             }
                         }
-                    }
-                } else if (pgNb > 1) {
-                    int count = 0;
-                    List<CashBalance8> bal = this.mxCamt05300108.getBkToCstmrStmt().getStmt().get(0).getBal();
-                    if (bal != null) {
-                        for (int i = 0; i < bal.size(); i++) {
-                            BalanceType13 tp = bal.get(i).getTp();
-                            if (tp != null) {
-                                BalanceType10Choice cdOrPrtry = tp.getCdOrPrtry();
-                                if (cdOrPrtry != null) {
-                                    String cd = cdOrPrtry.getCd();
-                                    if (cd.equalsIgnoreCase("OPBD")) {
-                                        count++;
+                    } else if (pgNb > 1) {
+                        int count = 0;
+                        List<CashBalance8> bal = this.mxCamt05300108.getBkToCstmrStmt().getStmt().get(0).getBal();
+                        if (bal != null) {
+                            for (int i = 0; i < bal.size(); i++) {
+                                BalanceType13 tp = bal.get(i).getTp();
+                                if (tp != null) {
+                                    BalanceType10Choice cdOrPrtry = tp.getCdOrPrtry();
+                                    if (cdOrPrtry != null) {
+                                        String cd = cdOrPrtry.getCd();
+                                        if (cd != null) {
+                                            if (cd.equalsIgnoreCase("OPBD")) {
+                                                count++;
+                                            }
+                                        }
                                     }
-                                }
-                                
-                                BalanceSubType1Choice subTp = tp.getSubTp();
-                                if (count == 2 && subTp == null) {
-                                    validationRuleComment.add("<tr class=\"error__class\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber > 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\" and with Balance/Type/SubType/Code = \"INTM\".</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
-                                } else if (count == 2 && subTp != null) {
-                                    String cd = subTp.getCd();
-                                    if (!cd.equalsIgnoreCase("INTM")) {
-                                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber > 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\" and with Balance/Type/SubType/Code = \"INTM\".</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
+
+                                    BalanceSubType1Choice subTp = tp.getSubTp();
+                                    if (count == 2 && subTp == null) {
+                                        validationRuleComment.add("<tr class=\"error__class\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber > 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\" and with Balance/Type/SubType/Code = \"INTM\".</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
+                                    } else if (count == 2 && subTp != null) {
+                                        String cd = subTp.getCd();
+                                        if (cd != null) {
+                                            if (!cd.equalsIgnoreCase("INTM")) {
+                                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/StmtPgntn/PgNb\"><td>If PageNumber > 1 then there must be one and only one occurrence of Balance/Type/CodeOrProprietary/Code with value \"OPBD\" and with Balance/Type/SubType/Code = \"INTM\".</td><td>BkToCstmrStmt/Stmt/StmtPgntn/PgNb</td></tr>");
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-                
+
                 boolean lastPgInd = stmtPgntn.isLastPgInd();
                 if (lastPgInd) {
                     int count = 0;
@@ -143,7 +160,7 @@ public class ruleCamt053_2025 {
                                         count++;
                                     }
                                 }
-                                
+
                                 BalanceSubType1Choice subTp = tp.getSubTp();
                                 if (subTp != null) {
                                     String cd = subTp.getCd();
@@ -158,22 +175,22 @@ public class ruleCamt053_2025 {
                     }
                 }
             }
-            
+
             BigDecimal elctrncSeqNb = stmt.getElctrncSeqNb();
             BigDecimal lglSeqNb = stmt.getLglSeqNb();
             if (elctrncSeqNb == null && lglSeqNb == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/ElctrncSeqNb\"><td>Either \"Electronic Sequence Number\" or \"Legal Sequence Number\" must be present and both are allowed.</td><td>BkToCstmrStmt/Stmt/ElctrncSeqNb</td></tr>");
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/LglSeqNb\"><td>Either \"Electronic Sequence Number\" or \"Legal Sequence Number\" must be present and both are allowed.</td><td>BkToCstmrStmt/Stmt/LglSeqNb</td></tr>");
             }
-            
+
             CashAccount39 acct = stmt.getAcct();
             if (acct != null) {
                 String ccy = acct.getCcy();
-                if (ccy == null) {
+                if (ccy.equalsIgnoreCase("")) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/Acct/Ccy\"><td>Currency on Account/Currency is mandatory!</td><td>BkToCstmrStmt/Stmt/Acct/Ccy</td></tr>");
                 }
             }
-            
+
             List<CashBalance8> bal = stmt.getBal();
             if (bal != null) {
                 for (int i = 0; i < bal.size(); i++) {

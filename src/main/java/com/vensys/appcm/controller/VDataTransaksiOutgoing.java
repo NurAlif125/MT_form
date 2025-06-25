@@ -120,6 +120,13 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+        } else if (typeMT.contains("pacs") || typeMT.contains("camt")) {
+            try {
+                CHeader headermx = new CHeader();
+                headermx.insertJsonTags(headerById.getMessageType(), Integer.parseInt(request.getParameter("id")));
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
         }
         tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
         try {
