@@ -353,12 +353,7 @@
                         document.getElementById("errorInformationTable").innerHTML= '';
                         kirimData(xml, sender, receiver, messType)
                         
-                        $("#tab-view-validate").removeAttr("hidden");
-                        $("#view1, #view2").css("display", "none");
-                        $("#view7").css("display", "block");
-                        $('#tab-view1').removeClass("selected").removeAttr('class');
-                        $('#tab-view2').removeClass("selected").removeAttr('class');
-                        $('#tab-validate').addClass("selected");
+                        
                     })
                     console.log("Ini XML")
 
@@ -378,7 +373,13 @@
                             } else {
                                 validateHeader();
                                 document.getElementById("errorInformationTable").innerHTML += data;
-                                console.log(data)         
+                                console.log(data)
+                                $("#tab-view-validate").removeAttr("hidden");
+                                $("#view1, #view2").css("display", "none");
+                                $("#view8").css("display", "block");
+                                $('#tab-view1').removeClass("selected").removeAttr('class');
+                                $('#tab-view2').removeClass("selected").removeAttr('class');
+                                $('#tab-validate').addClass("selected");
                                 clickFocusValidate();
                             }
                         })
@@ -687,12 +688,7 @@
                         document.getElementById("errorInformationTable").innerHTML= '';
                         kirimData(xml, sender, receiver, messType)
                         
-                        $("#tab-view-validate").removeAttr("hidden");
-                        $("#view1, #view2").css("display", "none");
-                        $("#view7").css("display", "block");
-                        $('#tab-view1').removeClass("selected").removeAttr('class');
-                        $('#tab-view2').removeClass("selected").removeAttr('class');
-                        $('#tab-validate').addClass("selected");
+                        
                     })
                     console.log("Ini XML")
 
@@ -712,7 +708,13 @@
                             } else {
                                 validateHeader();
                                 document.getElementById("errorInformationTable").innerHTML += data;
-                                console.log(data)         
+                                console.log(data)
+                                $("#tab-view-validate").removeAttr("hidden");
+                                $("#view1, #view2").css("display", "none");
+                                $("#view8").css("display", "block");
+                                $('#tab-view1').removeClass("selected").removeAttr('class');
+                                $('#tab-view2').removeClass("selected").removeAttr('class');
+                                $('#tab-validate').addClass("selected");
                                 clickFocusValidate();
                             }
                         })
