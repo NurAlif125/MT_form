@@ -15,6 +15,10 @@ import com.prowidesoftware.swift.model.SwiftBlock3;
 import com.prowidesoftware.swift.model.SwiftBlock4;
 import com.prowidesoftware.swift.model.SwiftMessage;
 import com.prowidesoftware.swift.model.Tag;
+import com.prowidesoftware.swift.model.mx.AbstractMX;
+import com.prowidesoftware.swift.model.mx.MxPacs00400109;
+import com.prowidesoftware.swift.model.mx.MxPacs00800108;
+import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBMTText;
 import com.vensys.appcm.dbase.DBconnection;
@@ -30,7 +34,8 @@ import java.util.StringTokenizer;
  *
  * @author AplDev2
  */
-public class CHeader {    
+public class CHeader {
+
     Logger log = Logger.getLogger(CHeader.class);
     TagDB tag = new TagDB();
     DBconnection dbConn = new DBconnection();
@@ -49,16 +54,16 @@ public class CHeader {
     private int checkSeqF320;
     private int checkSeqD300;
     private int checkSeqB33b;
-    private int count50c =0;
-    private int count50l=0;
-    private int count52c=0;
-    private int count50G=0;
-    private int count50H=0;
-    private int count56a=0;
-    private int count53A=0;
-    private int count58a=0;
-    private int id_headers=-1;
-    
+    private int count50c = 0;
+    private int count50l = 0;
+    private int count52c = 0;
+    private int count50G = 0;
+    private int count50H = 0;
+    private int count56a = 0;
+    private int count53A = 0;
+    private int count58a = 0;
+    private int id_headers = -1;
+
     public int getCheckSeqD320() {
         return checkSeqD320;
     }
@@ -66,6 +71,7 @@ public class CHeader {
     public void setCheckSeqD320(int checkSeqD320) {
         this.checkSeqD320 = checkSeqD320;
     }
+
     public void setCheckSeq767(int checkSeq767) {
         this.checkSeq767 = checkSeq767;
     }
@@ -93,9 +99,11 @@ public class CHeader {
     public void setCheckSeqB33b(int checkSeqB33b) {
         this.checkSeqB33b = checkSeqB33b;
     }
+
     public void setIdHeaders(int id_headers) {
         this.id_headers = id_headers;
     }
+
     public void wifeParser(String messageType, int id) {
         try {
             count21 = 0;
@@ -116,16 +124,17 @@ public class CHeader {
             boolean tagsExists = dBDataTransaksiOutgoing.tagsExists(id);
             boolean tags20Exists = dBDataTransaksiOutgoing.tags20Exists(id);
 //            log.info("testcheader::");
-            if (tagsExists && tags20Exists) return;
+            if (tagsExists && tags20Exists) {
+                return;
+            }
 
             // ==== delete data tags dan trx_detail dulu baru insert data tags baru =================
             //dBDataTransaksiOutgoing2.cleanDataTag(id);
             //dBDataTransaksiOutgoing2.cleanDataTrxDetail(id);
             // ======================================================================================
-            
             DataMTText textById = new DataMTText();
             log.info("textById::" + textById);
-            
+
             try {
                 DBMTText db = new DBMTText(dbConn.getConnection());
                 textById = db.getMtTextById(id);
@@ -135,20 +144,22 @@ public class CHeader {
                 return;
             }
             String fin = textById.getModify_mt();
-            if (fin == null || fin =="") return;
+            if (fin == null || fin == "") {
+                return;
+            }
             fin.replaceAll("\\{1:F21.*.1:F01", "\\{1:F01");
             // log.info("fin nya:" + fin);
             SwiftMessage msg = SwiftMessage.parse(fin);
             SwiftBlock3 sb3 = msg.getBlock3();
             SwiftBlock4 sb4 = msg.getBlock4();
-                  
+
             System.out.println("tagExists::" + tagsExists);
             System.out.println("tags20Exists::" + tags20Exists);
             if (tagsExists && !tags20Exists) {
                 //System.out.println("tags 20 not exists, insert tags 20");
                 String noRefTag20 = sb4.getTagValue("20");
                 //System.out.println("noRefTag20::" + noRefTag20);
-                readBlock4("_010_mf20_sender_reference","20",noRefTag20);
+                readBlock4("_010_mf20_sender_reference", "20", noRefTag20);
                 //System.out.println("insert tags 20");
                 return;
             }
@@ -167,9 +178,8 @@ public class CHeader {
                     sb.append(tagName + ":" + tagValue + ";");
                 }
                 // log.info("cover " + cover);
-            }            
-            
-            
+            }
+
             if (messageType.equalsIgnoreCase("103")) {
                 TagMT103 mt103 = new TagMT103(this);
                 mt103.tagMT103(sb4, id);
@@ -179,11 +189,11 @@ public class CHeader {
             } else if (messageType.equalsIgnoreCase("202")) {
                 TagMT202 mt202 = new TagMT202(this);
                 mt202.tagMT202(sb4, id);
-            } 
+            }
             log.info("wifeParser() is successfully");
-            
+
         } catch (IOException e) {
-            log.error("wifeParser() failed: " + e.getMessage(), e);            
+            log.error("wifeParser() failed: " + e.getMessage(), e);
         }
     }
 
@@ -214,6 +224,7 @@ public class CHeader {
         readBlock4(arr[0], tagName, tagValue.substring(0, 3));
         readBlock4(arr[1], tagName, tagValue.substring(3));
     }
+
     //date, current, amount
     public void splitMT32D(String tags, String tagName, String tagValue) {
         StringTokenizer st = new StringTokenizer(tags, ",");
@@ -227,7 +238,6 @@ public class CHeader {
         readBlock4(arr[1], tagName, tagValue.substring(8, 11));
         readBlock4(arr[2], tagName, tagValue.substring(11));
     }
-
 
     //    method split mark, date, currency, amount
     public void splitBalance(String tags, String tagName, String tagValue) {
@@ -257,6 +267,7 @@ public class CHeader {
         readBlock4(arr[1], tagName, tagValue.substring(1, 4));
         readBlock4(arr[2], tagName, tagValue.substring(4));
     }
+
     public void splitTag25P(String tags, String tagName, String tagValue) {
         StringTokenizer st = new StringTokenizer(tags, ",");
         int i = 0;
@@ -265,13 +276,14 @@ public class CHeader {
             arr[i] = st.nextToken();
             i++;
         }
-        String[] nTagValue= tagValue.split("\r\n");
-        for (int t=0;t< nTagValue.length;t++){
+        String[] nTagValue = tagValue.split("\r\n");
+        for (int t = 0; t < nTagValue.length; t++) {
             readBlock4(arr[t], tagName, nTagValue[t]);
         }
 
         //readBlock4(arr[1], tagName, tagValue.substring(1));
     }
+
     //    method split baris pertama jika ada tanda "/" dan baris berikutnya
     public void splitRowData(String tags, String tagName, String tagValue) {
         StringTokenizer st = new StringTokenizer(tags, ",");
@@ -290,10 +302,10 @@ public class CHeader {
                     arr_[j] = st_.nextToken();
                     j++;
                 }
-                for(int temp=0; temp<j;temp++){
+                for (int temp = 0; temp < j; temp++) {
                     readBlock4(arr[temp], tagName, arr_[temp]);
                 }
-            }else{
+            } else {
                 StringTokenizer st_ = new StringTokenizer(tagValue, "\r\n");
                 int j = 0;
                 String arr_[] = new String[st_.countTokens()];
@@ -317,7 +329,7 @@ public class CHeader {
                 readBlock4(arr[1], tagName, sb.toString());
             }
             //  log.info("tags= " + arr[1] + "=tagName=" + tagName + "=tagValue=" + sb.toString());
-        } else if(tagName.equalsIgnoreCase("23E")||tagName.equalsIgnoreCase("23X")||tagName.equalsIgnoreCase("28C")) {
+        } else if (tagName.equalsIgnoreCase("23E") || tagName.equalsIgnoreCase("23X") || tagName.equalsIgnoreCase("28C")) {
             StringTokenizer st_ = new StringTokenizer(tagValue, "/");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];
@@ -326,10 +338,10 @@ public class CHeader {
 
                 j++;
             }
-            for(int temp=0; temp<j;temp++){
+            for (int temp = 0; temp < j; temp++) {
                 readBlock4(arr[temp], tagName, arr_[temp]);
             }
-        }else if(tagName.equalsIgnoreCase("38J")){
+        } else if (tagName.equalsIgnoreCase("38J")) {
             String value1 = tagValue.substring(0, 1);
             String value2 = tagValue.substring(1);
             readBlock4(arr[0], tagName, value1);
@@ -408,20 +420,20 @@ public class CHeader {
         }
     }
 
-    public void splitMulti(String tags, String tagName, String tagValue,int ch) {
-        if(checkSeqD320 == 1|| checkSeq767==1){
+    public void splitMulti(String tags, String tagName, String tagValue, int ch) {
+        if (checkSeqD320 == 1 || checkSeq767 == 1) {
             temp = 0;
             count50c = 0;
-        }else if(checkSeqD320 ==2 ||  checkSeq767==2){
+        } else if (checkSeqD320 == 2 || checkSeq767 == 2) {
             temp = 2;
             count50c = 1;
-        } else if(checkSeqD320 ==3){
+        } else if (checkSeqD320 == 3) {
             temp = 4;
             count50c = 2;
-        } else if(checkSeqD320 ==4){
+        } else if (checkSeqD320 == 4) {
             temp = 6;
             count50c = 3;
-        } else if(checkSeqD320 ==5){
+        } else if (checkSeqD320 == 5) {
             temp = 8;
             count50c = 4;
         }
@@ -433,12 +445,12 @@ public class CHeader {
             i++;
         }
         //if(tagName.equalsIgnoreCase("53J")||tagName.equalsIgnoreCase("86J")||tagName.equalsIgnoreCase("56J")||tagName.equalsIgnoreCase("57J")||tagName.equalsIgnoreCase("58J")){
-        if(ch==1){
-            readBlock4(arr[0+count50c], tagName, tagValue);
-        }else if(ch==2){
-            readBlock4(arr[0+temp], tagName, tagValue.substring(0, 3));
-            readBlock4(arr[1+temp], tagName, tagValue.substring(3));
-        }else if(ch==3){
+        if (ch == 1) {
+            readBlock4(arr[0 + count50c], tagName, tagValue);
+        } else if (ch == 2) {
+            readBlock4(arr[0 + temp], tagName, tagValue.substring(0, 3));
+            readBlock4(arr[1 + temp], tagName, tagValue.substring(3));
+        } else if (ch == 3) {
             StringTokenizer st_ = new StringTokenizer(tagValue, "/");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];
@@ -446,10 +458,10 @@ public class CHeader {
                 arr_[j] = st_.nextToken();
                 j++;
             }
-            readBlock4(arr[0+temp], tagName, arr_[0]);
-            readBlock4(arr[1+temp], tagName, arr_[1]);
-        }else{
-            if (tagValue.startsWith("/")||tagName.equalsIgnoreCase("24G")) {
+            readBlock4(arr[0 + temp], tagName, arr_[0]);
+            readBlock4(arr[1 + temp], tagName, arr_[1]);
+        } else {
+            if (tagValue.startsWith("/") || tagName.equalsIgnoreCase("24G")) {
                 String[] dataTag = tagValue.split("\r\n");
                 readBlock4(arr[0 + temp], tagName, dataTag[0]);
                 String bic = "";
@@ -466,25 +478,25 @@ public class CHeader {
     public void splitDataMulti(String tags, String tagName, String tagValue) {
         StringTokenizer st = new StringTokenizer(tags, ",");
         int i = 0;
-        temp=0;
+        temp = 0;
         String arr[] = new String[st.countTokens()];
         while (st.hasMoreElements()) {
             arr[i] = st.nextToken();
 //            log.info("arr[" + i + "]" + arr[i]);
             i++;
         }
-        if(tagName.equalsIgnoreCase("50G")){
-            temp=count50G;
-            count50G=count50G+2;
-        }else if(tagName.equalsIgnoreCase("50H")){
-            temp=count50H;
-            count50H=count50H+2;
-        }else if(tagName.equalsIgnoreCase("53A")){
-            temp=count53A;
-            count53A=count53A+2;
-        }else if(tagName.equalsIgnoreCase("57A")){
-            temp=count57a;
-            count57a=count57a+2;
+        if (tagName.equalsIgnoreCase("50G")) {
+            temp = count50G;
+            count50G = count50G + 2;
+        } else if (tagName.equalsIgnoreCase("50H")) {
+            temp = count50H;
+            count50H = count50H + 2;
+        } else if (tagName.equalsIgnoreCase("53A")) {
+            temp = count53A;
+            count53A = count53A + 2;
+        } else if (tagName.equalsIgnoreCase("57A")) {
+            temp = count57a;
+            count57a = count57a + 2;
         }
         if (tagValue.startsWith("/")) {
             String[] dataTag = tagValue.split("\r\n");
@@ -499,6 +511,7 @@ public class CHeader {
             readBlock4(arr[1 + temp], tagName, tagValue);
         }
     }
+
     //    method split baris 1,2,3, dst
     public void splitRowDataMulti(String tags, String tagName, String tagValue) {
         StringTokenizer st = new StringTokenizer(tags, ",");
@@ -509,14 +522,14 @@ public class CHeader {
 //            log.info("arr[" + i + "]" + arr[i]);
             i++;
         }
-        if (tagName.equalsIgnoreCase("21")||tagName.equalsIgnoreCase("58J")||tagName.equalsIgnoreCase("86")) {
+        if (tagName.equalsIgnoreCase("21") || tagName.equalsIgnoreCase("58J") || tagName.equalsIgnoreCase("86")) {
             readBlock4(arr[0 + count21], tagName, tagValue);
             count21 = count21 + 1;
         } else if (tagName.equalsIgnoreCase("32B")) {
             readBlock4(arr[0 + count32b], tagName, tagValue.substring(0, 3));
             readBlock4(arr[1 + count32b], tagName, tagValue.substring(3));
             count32b = count32b + 2;
-        }  else if (tagName.equalsIgnoreCase("59f")) {
+        } else if (tagName.equalsIgnoreCase("59f")) {
             if (tagValue.startsWith("/")) {
                 String[] dataTag = tagValue.split("\r\n");
                 for (int a = 0; a < dataTag.length; a++) {
@@ -595,7 +608,7 @@ public class CHeader {
                 }
             }
             count50f = 9;// untuk mereset ke 0//20200420
-        } else if (tagName.equalsIgnoreCase("11R")||tagName.equalsIgnoreCase("11S")) {
+        } else if (tagName.equalsIgnoreCase("11R") || tagName.equalsIgnoreCase("11S")) {
             StringTokenizer st_ = new StringTokenizer(tagValue, "\r\n");
             int j = 0;
             String arr_[] = new String[st_.countTokens()];
@@ -604,7 +617,7 @@ public class CHeader {
                 j++;
             }
             if (j >= 1) {
-                for(int temp=0; temp<j;temp++){
+                for (int temp = 0; temp < j; temp++) {
                     readBlock4(arr[temp], tagName, arr_[temp]);
                 }
             } else {
@@ -627,16 +640,16 @@ public class CHeader {
             }
             count72 = count72 + 2;
 //            log.info(String.valueOf(count72));
-        } else if (tagName.equalsIgnoreCase("50C")||tagName.equalsIgnoreCase("53J")){
-            readBlock4(arr[0+count50c], tagName, tagValue);
-            count50c=count50c+1;
-        } else if (tagName.equalsIgnoreCase("50L")||tagName.equalsIgnoreCase("56J")){
-            readBlock4(arr[0+count50l], tagName, tagValue);
-            count50l=count50l+1;
-        }else if (tagName.equalsIgnoreCase("52C")||tagName.equalsIgnoreCase("57J")){
-            readBlock4(arr[0+count52c], tagName, tagValue);
-            count52c=count52c+1;
-        }else {
+        } else if (tagName.equalsIgnoreCase("50C") || tagName.equalsIgnoreCase("53J")) {
+            readBlock4(arr[0 + count50c], tagName, tagValue);
+            count50c = count50c + 1;
+        } else if (tagName.equalsIgnoreCase("50L") || tagName.equalsIgnoreCase("56J")) {
+            readBlock4(arr[0 + count50l], tagName, tagValue);
+            count50l = count50l + 1;
+        } else if (tagName.equalsIgnoreCase("52C") || tagName.equalsIgnoreCase("57J")) {
+            readBlock4(arr[0 + count52c], tagName, tagValue);
+            count52c = count52c + 1;
+        } else {
             readBlock4(arr[0], tagName, tagValue);
             //log.info("else");
         }
@@ -688,8 +701,10 @@ public class CHeader {
     public void readBlock4(String tags, String tagName, String tagValue) {
         // lewatin kalo ga ada id_headers
         log.info("readBlock4:id_headers:" + this.id_headers);
-        if (this.id_headers == -1) return;       
-        
+        if (this.id_headers == -1) {
+            return;
+        }
+
         if (tags.startsWith("_")) {
             StringTokenizer st = new StringTokenizer(tags, "_");
             int i = 0;
@@ -706,7 +721,7 @@ public class CHeader {
             if (tagName.contains("15")) {
                 // log.info("masuk tagName 15");
                 try {
-                    dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), "", tag.getTagName().trim(),this.id_headers);
+                    dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), "", tag.getTagName().trim(), this.id_headers);
                 } catch (Exception ex) {
                     log.error("Error 15A:" + ex.getMessage());
                     ex.printStackTrace();
@@ -715,7 +730,7 @@ public class CHeader {
                 if (!tagValue.equals("")) {
                     // log.info("masuk tagName kosong");
                     try {
-                        dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), tag.getDetail().trim(), tag.getTagName().trim(),this.id_headers);
+                        dBDataTransaksiOutgoing.addDataTag(tag.getUrutan(), tag.getTag().trim(), tag.getDetail().trim(), tag.getTagName().trim(), this.id_headers);
                     } catch (Exception ex) {
                         log.error("Error 15B:" + ex.getMessage());
                         ex.printStackTrace();
@@ -787,9 +802,9 @@ public class CHeader {
 //            log.info("arr_[1]:" + arr_[1]);
             readBlock4(arr[0], tagName, arr_[0]);
             readBlock4(arr[1], tagName, arr_[1]);
-        } else if(tagName.equalsIgnoreCase("30F")&&checkSeqD320==5){
+        } else if (tagName.equalsIgnoreCase("30F") && checkSeqD320 == 5) {
             readBlock4(arr[1], tagName, tagValue);
-        }else {
+        } else {
             readBlock4(arr[0], tagName, tagValue);
         }
     }
@@ -802,7 +817,7 @@ public class CHeader {
             arr[i] = st.nextToken();
             i++;
         }
-        if(tagName.equalsIgnoreCase("32H")&&checkSeqD320==5 ){
+        if (tagName.equalsIgnoreCase("32H") && checkSeqD320 == 5) {
             if (tagValue.startsWith("N")) {
                 readBlock4(arr[3], tagName, tagValue.substring(0, 1));
                 readBlock4(arr[4], tagName, tagValue.substring(1, 4));
@@ -811,7 +826,7 @@ public class CHeader {
                 readBlock4(arr[4], tagName, tagValue.substring(0, 3));
                 readBlock4(arr[5], tagName, tagValue.substring(3));
             }
-        }else{
+        } else {
             if (tagValue.startsWith("N")) {
                 readBlock4(arr[0], tagName, tagValue.substring(0, 1));
                 readBlock4(arr[1], tagName, tagValue.substring(1, 4));
@@ -840,6 +855,7 @@ public class CHeader {
         }
 
     }
+
     public void splitMT31D(String tags, String tagName, String tagValue) {
         StringTokenizer st = new StringTokenizer(tags, ",");
         int i = 0;
@@ -852,6 +868,7 @@ public class CHeader {
         readBlock4(arr[1], tagName, tagValue.substring(6));
 
     }
+
     public void splitRowDataEnter(String tags, String tagName, String tagValue) {
         StringTokenizer st = new StringTokenizer(tags, ",");
         int i = 0;
@@ -874,6 +891,46 @@ public class CHeader {
             sb.append(arr_[k] + "\r\n");
         }
         readBlock4(arr[1], tagName, sb.toString());
+    }
+
+    public void insertJsonTags(String mt, int id) {
+        boolean tagsMxExists = dBDataTransaksiOutgoing.tagsMxExists(id_headers);
+
+        if (tagsMxExists) {
+            return;
+        }
+
+        DataMTText textById = new DataMTText();
+        log.info("textById: " + textById);
+
+        try {
+            DBMTText db = new DBMTText(dbConn.getConnection());
+            textById = db.getMxTextById(id);
+        } catch (SQLException e) {
+            log.info("Error wifeParser: " + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+
+        String fin = textById.getFinal_mt();
+        if (fin == null || fin == "") {
+            return;
+        }
+
+        AbstractMX abstractMX = AbstractMX.parse(fin);
+        if (mt.contains("pacs.004")) {
+            MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;
+            dBDataTransaksiOutgoing2.clearTrxDetail(id);
+            dBDataTransaksiOutgoing2.addDataMXTag(String.valueOf(id), ((MxPacs00400109) abstractMX).toJson(), "");
+        } else if (mt.contains("pacs.008")) {
+            MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
+            dBDataTransaksiOutgoing2.clearTrxDetail(id);
+            dBDataTransaksiOutgoing2.addDataMXTag(String.valueOf(id), ((MxPacs00800108) abstractMX).toJson(), "");
+        } else if (mt.contains("pacs.009")) {
+            MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
+            dBDataTransaksiOutgoing2.clearTrxDetail(id);
+            dBDataTransaksiOutgoing2.addDataMXTag(String.valueOf(id), ((MxPacs00900108) abstractMX).toJson(), "");
+        }
     }
 
 }

@@ -1642,8 +1642,17 @@ public class DBHeader {
             parameters.add("%" + criteria.getMtSearch() + "%");
         }
         if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
-            where.append(" AND h.io_type ILIKE ?");
-            parameters.add("%" + criteria.getIoSearch() + "%");
+//            where.append(" AND h.io_type ILIKE ?");
+            where.append(" AND h.io_type = ?");
+            String ioInput = criteria.getIoSearch().trim().toLowerCase();
+//            if ("incoming".contains(ioInput)) {
+            if (ioInput.startsWith("o")) {
+                parameters.add("I");
+//            } else if ("outgoing".contains(ioInput)) {
+            } else if (ioInput.startsWith("i")) {
+                parameters.add("O");
+            } 
+//                parameters.add("%" + criteria.getIoSearch() + "%");
         }
         if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
             where.append(" AND h.sequenceNumber::TEXT ILIKE ?");
@@ -1712,7 +1721,7 @@ public class DBHeader {
         }
         rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
         rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
-        System.out.println("Expanded SQL:\n" + rawSql); //cetak hasil query
+//        System.out.println("Expanded SQL:\n" + rawSql); //cetak hasil query
 
 
         try (ResultSet rs = st.executeQuery()) {
@@ -1950,8 +1959,17 @@ public class DBHeader {
         parameters.add("%" + criteria.getMtSearch() + "%");
     }
     if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
-        where.append(" AND io_type ILIKE ?");
-        parameters.add("%" + criteria.getIoSearch() + "%");
+//            where.append(" AND h.io_type ILIKE ?");
+            where.append(" AND h.io_type = ?");
+            String ioInput = criteria.getIoSearch().trim().toLowerCase();
+//            if ("incoming".contains(ioInput)) {
+            if (ioInput.startsWith("o")) {
+                parameters.add("I");
+//            } else if ("outgoing".contains(ioInput)) {
+            } else if (ioInput.startsWith("i")) {
+                parameters.add("O");
+            } 
+//                parameters.add("%" + criteria.getIoSearch() + "%");
     }
     if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
         where.append(" AND sequenceNumber::TEXT ILIKE ?");
