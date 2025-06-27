@@ -780,25 +780,25 @@
             
         <% if (session.getAttribute("flagStatus").equals("VER")) {%>
             <c:if test="${item == 'FLOW:VER'}">
-                <input type="button" name="export" id="btn-export" value="Export" />
+                <!--<input type="button" name="export" id="btn-export" value="Export" />-->
             </c:if>
         <% }%>
         
         <% if (session.getAttribute("flagStatus").equals("AUTH")) {%>
             <c:if test="${item == 'FLOW:AUTH'}">
-                <input type="button" name="export" id="btn-export" value="Export" />
+                <!--<input type="button" name="export" id="btn-export" value="Export" />-->
             </c:if>
         <%}%>
         
          <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
         <c:if test="${item == 'FLOW:CVT-MOD'}">
-            <input type="button" name="export" id="btn-export" value="Export" />
+            <!--<input type="button" name="export" id="btn-export" value="Export" />-->
         </c:if>
         <%}%>
         
         <% if (session.getAttribute("flagStatus").equals("CVT-VER")) {%>
         <c:if test="${item == 'FLOW:CVT-VER'}">
-            <input type="button" name="export" id="btn-export" value="Export" />
+            <!--<input type="button" name="export" id="btn-export" value="Export" />-->
         </c:if>
         <%}%> 
         
@@ -810,7 +810,7 @@
             <c:if test="${item == 'FLOW:MOD'}">
                 <input type="button" name="validate" id="btn-validate" value="Validate" />
                 <!--<input type="button" name="submit_template" id="submit_template" value="Save As Template">-->
-                <input type="button" name="export" id="export" value="Export">
+                <!--<input type="button" name="export" id="export" value="Export">-->
             </c:if>
             <% } else if (session.getAttribute("flagStatus").equals("CVT-MOD")) { %>
             <c:if test="${item == 'FLOW:CVT-MOD'}">
@@ -825,13 +825,7 @@
             </c:if>
             <% } %>
         </c:forEach>
-                 <% if (!session.getAttribute("flagStatus").equals("CVT-VER")
-                 && !session.getAttribute("flagStatus").equals("VER")
-                 && !session.getAttribute("flagStatus").equals("AUTH")
-                 && !session.getAttribute("flagStatus").equals("CVT-MOD")
-                 && !session.getAttribute("flagStatus").equals("CVT-VER")
-                 && !session.getAttribute("flagStatus").equals("MOD")
-                   ) {%>
+                 <% if (!session.getAttribute("flagStatus").equals("")) {%>
                     <input type="button" name="export" id="btn-export" value="Export" />
                  <% } %>
         
