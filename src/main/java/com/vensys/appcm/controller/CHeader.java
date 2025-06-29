@@ -918,6 +918,7 @@ public class CHeader {
         }
 
         dBDataTransaksiOutgoing2.clearTrxDetail(id);
+        dBDataTransaksiOutgoing2.clearJsonTags(id);
         AbstractMX abstractMX = AbstractMX.parse(fin);
         if (mt.contains("pacs.004")) {
             MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;

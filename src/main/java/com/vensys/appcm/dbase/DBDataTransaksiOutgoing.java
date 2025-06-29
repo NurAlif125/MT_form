@@ -1033,6 +1033,17 @@ public class DBDataTransaksiOutgoing {
         }
     }
     
+    public void clearJsonTags (int id) {
+        try {
+            String sql = "DELETE FROM tags_mx WHERE id_headers = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error("clearTags_MX: " + e.getMessage());
+        }
+    }
+    
     public String getTagsMX (int id) {
         String json = "";
         try {
