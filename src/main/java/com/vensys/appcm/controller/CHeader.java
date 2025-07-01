@@ -899,7 +899,7 @@ public class CHeader {
 
     public void insertJsonTags(String mt, int id) {
         boolean tagsMxExists = dBDataTransaksiOutgoing.tagsMxExists(id_headers);
-
+        
         if (tagsMxExists) {
             return;
         }
@@ -921,18 +921,17 @@ public class CHeader {
             return;
         }
 
+        dBDataTransaksiOutgoing2.clearTrxDetail(id);
+        dBDataTransaksiOutgoing2.clearJsonTags(id);
         AbstractMX abstractMX = AbstractMX.parse(fin);
         if (mt.contains("pacs.004")) {
             MxPacs00400109 dataMXpacs004 = (MxPacs00400109) abstractMX;
-            dBDataTransaksiOutgoing2.clearTrxDetail(id);
             dBDataTransaksiOutgoing2.addDataMXTag(String.valueOf(id), ((MxPacs00400109) abstractMX).toJson(), "");
         } else if (mt.contains("pacs.008")) {
             MxPacs00800108 dataMXpacs008 = (MxPacs00800108) abstractMX;
-            dBDataTransaksiOutgoing2.clearTrxDetail(id);
             dBDataTransaksiOutgoing2.addDataMXTag(String.valueOf(id), ((MxPacs00800108) abstractMX).toJson(), "");
         } else if (mt.contains("pacs.009")) {
             MxPacs00900108 dataMXpacs009 = (MxPacs00900108) abstractMX;
-            dBDataTransaksiOutgoing2.clearTrxDetail(id);
             dBDataTransaksiOutgoing2.addDataMXTag(String.valueOf(id), ((MxPacs00900108) abstractMX).toJson(), "");
         }
     }
