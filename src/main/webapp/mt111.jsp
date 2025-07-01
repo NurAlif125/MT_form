@@ -3,13 +3,15 @@
     Created on : Jun 16, 2025, 09:47:25 AM
     Author     : athiya
 --%>
-
 <%@ include file="header.jsp" %>
 <%@ include file="rule/validate_rule_mt111.jsp" %>
 <%@ include file="rule/validateList_scr.jsp" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%--<%@page contentType="text/html" import="java.util.*" %>--%>
+<%@ page import="java.util.*"%>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
-<script src="js/mt.js" type="text/javascript"></script>
 <script src="js/tabcontent.js" type="text/javascript"></script>
+<script src="js/mt.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/dropdown.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/themes/flickr.com/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
@@ -29,7 +31,7 @@
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MT:111'}">
             <div id="judul">MT 111 Request for Stop Payment of a Cheque</div>
-            <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" onsubmit="return confirm('Do you want to save this MT data?');">
+            <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" autocomplete="off" onsubmit="return confirm('Do you want to save this MT data?');">
                 <input name="messageType" id="messageType" type="hidden" value="111" />
                 <% Date tgl_today = new java.util.Date();
                     pageContext.setAttribute("tgl_today", tgl_today);%>
@@ -48,7 +50,7 @@
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
-                            <%@ include file="header_mt_input.jsp" %>
+                            <%@ include file="header_mt.jsp" %>
                             <%@ include file="special_rate.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
