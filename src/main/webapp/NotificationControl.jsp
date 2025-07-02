@@ -27,7 +27,7 @@ function fetchNotifications() {
             if (previousNotifCount > 0 && currentNotifCount > previousNotifCount) {
                 let countNewNotif = currentNotifCount - previousNotifCount;
 //                alert(`Anda memiliki ${countNewNotif} notifikasi baru!`);
-                console.log("count new notifcation"+countNewNotif)
+//                console.log("count new notifcation"+countNewNotif)
                 Toastify({
                     text: `You Have ${countNewNotif} New Notification!`,
                     duration: 3000,
@@ -40,10 +40,10 @@ function fetchNotifications() {
             sessionStorage.setItem("notifCount", currentNotifCount);
             previousNotifCount = currentNotifCount;
 
-            console.log(currentNotifCount);
+//            console.log(currentNotifCount);
         },
         error: function (xhr, status, error) {
-            console.error("Error fetching notifications:", error);
+//            console.error("Error fetching notifications:", error);
         }
     });
 }
@@ -121,7 +121,7 @@ function markAsRead() {
             return;
         }
         
-        console.log("msg is read: "+checkedNotifs);
+//        console.log("msg is read: "+checkedNotifs);
         
          $.ajax({
                 type: "POST",
@@ -130,19 +130,19 @@ function markAsRead() {
                     readNotif: checkedNotifs.join(',')
                 },
                 success: function (response) {
-                    console.log(response)
-                    console.log(response.status)
+//                    console.log(response)
+//                    console.log(response.status)
                     $('#checkAll').prop('checked', false);
                     if (response.status == "success") {
                         fetchNotificationList()
                         fetchNotifications()
-                        console.log("berhasil read notification")
+//                        console.log("berhasil read notification")
                     } else {
-                        console.log("gagal read notification")
+//                        console.log("gagal read notification")
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error fetching notifications:", error);
+//                    console.error("Error fetching notifications:", error);
                 }
         }); 
 

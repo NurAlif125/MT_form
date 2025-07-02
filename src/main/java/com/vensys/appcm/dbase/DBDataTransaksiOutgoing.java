@@ -154,6 +154,22 @@ public class DBDataTransaksiOutgoing {
             return false;
         }
     }
+    
+    public boolean tagsMxExists (int id_headers) {
+        try {
+            String sql = "SELECT id_headers FROM tags_mx WHERE id_headers = ? LIMIT 1";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id_headers);
+            try (ResultSet rs = st.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            log.info("tagsMxExists: " + e.getMessage());
+            log.error("tagsMxExists: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public boolean tags20Exists(int id_headers) {
         try {
@@ -998,11 +1014,34 @@ public class DBDataTransaksiOutgoing {
             st.setString(3, headerSaa);
             st.setString(4, "");
             st.executeUpdate();
+            log.info("addDataMXTag success");
         } catch (SQLException e) {
 //            e.printStackTrace();
             log.error("addDataTag():" + e.toString());
         }
 
+    }
+    
+    public void clearTrxDetail (int id) {
+        try {
+            String sql = "DELETE FROM trx_detail WHERE id_headers = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error("clearTrxDetail: " + e.getMessage());
+        }
+    }
+    
+    public void clearJsonTags (int id) {
+        try {
+            String sql = "DELETE FROM tags_mx WHERE id_headers = ?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error("clearTags_MX: " + e.getMessage());
+        }
     }
     
     public String getTagsMX (int id) {
