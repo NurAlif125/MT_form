@@ -87,7 +87,7 @@ public class rulePacs004_2024 {
 
             String uetr = txInf.getOrgnlUETR();
             if (uetr == null) {
-                validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/OrgnlUETR\"><td>OriginalUETR is mandatory!</td><td>PmtRtr/TxInf/OrgnlUETR</td></tr>");
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"UETR\"><td>OriginalUETR is mandatory!</td><td>PmtRtr/TxInf/OrgnlUETR</td></tr>");
             }
 
             ActiveOrHistoricCurrencyAndAmount orgnlIntrBkSttlmAmt = txInf.getOrgnlIntrBkSttlmAmt();
@@ -207,8 +207,12 @@ public class rulePacs004_2024 {
                         if (receiverAddress == null || receiverAddress.equalsIgnoreCase("")) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                         } else {
-                            String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
-                            if (!bicInstdAgt.equals(receiverAddress1)) {
+                            if (receiverAddress.length() == 12) {
+                                String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
+                                if (!bicInstdAgt.equals(receiverAddress1)) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                                }
+                            } else {
                                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>PmtRtr/TxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                             }
                         }
@@ -938,7 +942,7 @@ public class rulePacs004_2024 {
                     }
                 }
             }
-            
+
             OriginalTransactionReference28 orgnlTxRef = txInf.getOrgnlTxRef();
             if (orgnlTxRef != null) {
                 ActiveOrHistoricCurrencyAndAmount intrBkSttlmAmtOTR = orgnlTxRef.getIntrBkSttlmAmt();
@@ -1474,7 +1478,7 @@ public class rulePacs004_2024 {
             if (!chrgsInf.isEmpty() && rtrdInstdAmt == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrdInstdAmt\"><td>If ChargesInformation is present, then ReturnedInstructedAmount must be present.</td><td>PmtRtr/TxInf/RtrdInstdAmt</td></tr>");
             }
-            
+
             if (rtrdInstdAmt != null) {
                 BigDecimal amtRtrdInstdAmt = rtrdInstdAmt.getValue();
                 String ccyRtrdInstdAmt = rtrdInstdAmt.getCcy();

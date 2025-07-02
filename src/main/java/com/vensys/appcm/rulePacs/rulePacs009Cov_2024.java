@@ -90,7 +90,7 @@ public class rulePacs009Cov_2024 {
 
                 String uetr = pmtId.getUETR();
                 if (uetr == null || uetr.equalsIgnoreCase("")) {
-                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PmtId/UETR\"><td>UETR is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/PmtId/UETR</td></tr>");
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"UETR\"><td>UETR is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/PmtId/UETR</td></tr>");
                 }
             }
 
@@ -290,8 +290,12 @@ public class rulePacs009Cov_2024 {
                         if (receiverAddress == null || receiverAddress.equalsIgnoreCase("")) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>BAH \"To\" BIC must match \"Instructed Agent\" BIC</td><td>FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                         } else {
-                            String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
-                            if (!bicInstdAgt.equals(receiverAddress1)) {
+                            if (receiverAddress.length() == 12) {
+                                String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
+                                if (!bicInstdAgt.equals(receiverAddress1)) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>BAH \"To\" BIC must match \"Instructed Agent\" BIC</td><td>FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                                }
+                            } else {
                                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>BAH \"To\" BIC must match \"Instructed Agent\" BIC</td><td>FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                             }
                         }
@@ -1263,17 +1267,17 @@ public class rulePacs009Cov_2024 {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/UndrlygCstmrCdtTrf/PrvsInstgAgt2\"><td>If PreviousInstructingAgent3 is present, then PreviousInstructingAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/UndrlygCstmrCdtTrf/PrvsInstgAgt2</td></tr>");
                 }
             }
-            
+
             CashAccount38 cdtrAgtAcct = cdtTrfTxInf.getCdtrAgtAcct();
             if (cdtrAgtAcct != null && cdtrAgt == null) {
                 validationRuleComment.add("<tr class=\"error__row\"input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt\"><td>If CreditorAgentAccount is present, then CreditorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
             }
-            
+
             CashAccount38 dbtrAgtAcct = cdtTrfTxInf.getDbtrAcct();
             if (dbtrAgtAcct != null && dbtrAgt == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt\"><td>If DebtorAgentAccount is present, then DebtorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt</td></tr>");
             }
-            
+
             CashAccount38 intrmyAgt1Acct = cdtTrfTxInf.getIntrmyAgt1Acct();
             if (intrmyAgt1Acct != null && intrmyAgt1 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1\"><td>If IntermediaryAgent1Account is present, then IntermediaryAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1</td></tr>");
@@ -1300,7 +1304,7 @@ public class rulePacs009Cov_2024 {
             if (intrmyAgt3 != null && intrmyAgt2 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2\"><td>If IntermediaryAgent3 is present, then IntermediaryAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2</td></tr>");
             }
-            
+
             CashAccount38 prvsInstgAgt1Acct = cdtTrfTxInf.getPrvsInstgAgt1Acct();
             if (prvsInstgAgt1Acct != null && prvsInstgAgt1 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1\"><td>If PreviousInstructing1Account is present, then PreviousInstructingAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1</td></tr>");

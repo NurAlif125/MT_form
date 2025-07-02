@@ -122,9 +122,13 @@ public class SCHeader extends HttpServlet implements Serializable {
         String channel = "";
         try {
             channel = (String) httpSession.getAttribute("channel");
-            notifVer = dbo.getNotificationVer();
-//            log.info("notifVer: " + notifVer);
-            notifAuth = dbo.getNotificationAuth();
+            if (!channel.equalsIgnoreCase("")) {
+                notifVer = dbo.getNotificationVer(channel);
+                notifAuth = dbo.getNotificationAuth(channel);
+            } else {
+                notifVer = dbo.getNotifVerAll();
+                notifAuth = dbo.getNotifAuthAll();
+            }
 //            log.info("notifAuth: " + notifAuth);
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);

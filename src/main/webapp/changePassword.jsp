@@ -82,7 +82,7 @@ Contain Minimum :
                         <div id="button">
                             <p><input id="Change" type="submit" value="Submit" /> &nbsp;&nbsp;
                                 <!--                    <input type="button" name="back" value="Back" onclick="back();">-->
-                                <a href="ServletControllerLogout" class="log">Cancel</a></p>
+                                <a style="cursor: pointer;" onclick="window.history.back();" class="log">Cancel</a></p>
                         </div>
                         <div id="message">
                             <span class="style1"><div align="center"><c:out value="${errorMsg}"/></div></span>
