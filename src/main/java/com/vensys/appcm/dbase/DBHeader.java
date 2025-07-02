@@ -745,7 +745,7 @@ public class DBHeader {
         return headers;
     }
 
-    public List<Header> getAllHeader(HttpSession httpSession, String io_type, String flag, String channel, int start, int length, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
+    public List<Header> getAllHeader(HttpSession httpSession, String io_type, String flag, String channel, int start, int length, HeaderSearchCriteria criteria, String quicksearch, String sort) throws Exception {
         String where = "";
         String role = "";
         String isDuplicate = "0";
@@ -948,7 +948,7 @@ public class DBHeader {
                      h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,
                      h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
-                + "ORDER BY tanggal DESC OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
+                + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
         System.out.println(sql);
@@ -1595,7 +1595,8 @@ public class DBHeader {
             int start,
             int length,
             HeaderSearchCriteria criteria,
-            String quicksearch
+            String quicksearch,
+            String sort
     ) throws Exception {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
@@ -1742,7 +1743,7 @@ public class DBHeader {
                 + "h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, "
                 + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + "WHERE " + where + " ORDER BY h.tanggal DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+                + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             int idx = 1;
