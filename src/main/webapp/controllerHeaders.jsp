@@ -26,6 +26,21 @@
         box-sizing: border-box;
         padding: 5px;
     }
+    
+    /* Tambah jarak ke kanan teks header */
+    table.dataTable thead th.sorting,
+    table.dataTable thead th.sorting_asc,
+    table.dataTable thead th.sorting_desc {
+      padding-right: 20px !important; /* atur sesuai kebutuhan */
+    }
+
+    /* Tambah jarak pada ikon sort */
+    table.dataTable thead th.sorting:after,
+    table.dataTable thead th.sorting_asc:after,
+    table.dataTable thead th.sorting_desc:after {
+      right: 4px !important; /* geser ikon sort ke kanan */
+    }
+
 
 </style>
 <div id="isi">
@@ -590,6 +605,7 @@
                 {data: null} // Action
             ],
             columnDefs: [
+                { orderable: false, targets: [0, 14] }, // index kolom yang tidak ingin di-sort
                 {
                     targets: 0,
                     render: function (data, type, row, meta) {
