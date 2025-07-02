@@ -104,6 +104,7 @@ public class HeaderListServlet extends HttpServlet {
         String currency_code = request.getParameter("currency_code");
         String amount = request.getParameter("amount");
         String find = request.getParameter("find");
+        String quickSearch = request.getParameter("quicksearch");
 //        log.info("flag: " + flag);
         String status = request.getParameter("status");
 //        log.info("status: " + status);
@@ -138,10 +139,13 @@ public class HeaderListServlet extends HttpServlet {
 
         try {
             channel = (String) httpSession.getAttribute("channel");
-            notifVer = dbo.getNotificationVer();
-//            log.info("notifVer: " + notifVer);
-            notifAuth = dbo.getNotificationAuth();
-//            log.info("notifAuth: " + notifAuth);
+            if (!channel.equalsIgnoreCase("")) {
+                notifVer = dbo.getNotificationVer(channel);
+                notifAuth = dbo.getNotificationAuth(channel);
+            } else {
+                notifVer = dbo.getNotifVerAll();
+                notifAuth = dbo.getNotifAuthAll();
+            }
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);
                 DBHeader dbHeader = new DBHeader(dbConn.getConnection());
@@ -149,8 +153,8 @@ public class HeaderListServlet extends HttpServlet {
                 List<Header> headers = new ArrayList<>();
                 
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
-                headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
-                totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch);
+                totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                 System.out.println("Total Data"+ String.valueOf(totalRecords));
             } else if (flag != null && !flag.isEmpty()) {
                 if (menu == null) {
@@ -283,8 +287,8 @@ public class HeaderListServlet extends HttpServlet {
                         menu = "3";
                     }
 
-                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
-                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch);
+                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                     System.out.println("Total Data"+ String.valueOf(totalRecords));
                 
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -293,8 +297,8 @@ public class HeaderListServlet extends HttpServlet {
                     httpSession.setAttribute("flagFilter", flag);
                 } else {
 //                    log.info("flag else : " + flag);
-                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
-                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch);
+                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                     System.out.println("Total Data"+ String.valueOf(totalRecords));
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("flag", flag);
@@ -307,8 +311,8 @@ public class HeaderListServlet extends HttpServlet {
 
                 System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
-                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria);
-                totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria);
+                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch);
+                totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch);
                 System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
