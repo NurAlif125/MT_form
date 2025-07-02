@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.apache.commons.text.StringEscapeUtils;
 import com.vensys.appcm.dbase.DBHeader;
 import com.vensys.appcm.dbase.DBUserData;
 import com.vensys.appcm.dbase.DBconnection;
@@ -37,11 +38,36 @@ public class HeaderListServlet extends HttpServlet {
   
         log.info("SCHEADER:");  
         // get sort list table
-//        String orderColumnIndex = request.getParameter("order[0][column]");
-//        String orderDir = request.getParameter("order[0][dir]"); // asc / desc
-//        String orderColumnName = request.getParameter("columns[" + orderColumnIndex + "][data]");
+        String orderColumnIndexRaw = request.getParameter("order[0][column]");
+        String orderDirRaw = request.getParameter("order[0][dir]"); // asc / desc
+        // Escape untuk mencegah XSS
+        String orderColumnIndex = StringEscapeUtils.escapeHtml4(orderColumnIndexRaw);
+        String orderDir = StringEscapeUtils.escapeHtml4(orderDirRaw);
+
+        // Validasi angka index
+        if (!orderColumnIndex.matches("\\d+")) {
+            orderColumnIndex = "0"; // default index
+        }
+
+        // Ambil nama kolom
+        String orderColumnNameRaw = request.getParameter("columns[" + orderColumnIndex + "][data]");
+        // Escape juga kolom
+        String orderColumnName = StringEscapeUtils.escapeHtml4(orderColumnNameRaw);
 //        
-//        System.out.println("========= "+orderDir+" === "+orderColumnName);
+        System.out.println("57========= "+orderDir+" === "+orderColumnName);
+        String sort = "", columnName = "";
+        if (orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
+            columnName = "tanggal";
+            sort = "h.tanggal DESC";
+            System.out.println("62========= "+sort);
+        } else {
+//            if(orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
+//                columnName = "tanggal";
+//                System.out.println("66========= "+columnName);
+//            } 
+            sort = "h."+orderColumnName+" "+orderDir;
+            System.out.println("69========= "+sort);
+        }
         
         HeaderSearchCriteria criteria = new HeaderSearchCriteria();
         criteria.setMtSearch(request.getParameter("columns[1][search][value]"));
@@ -159,7 +185,7 @@ public class HeaderListServlet extends HttpServlet {
                 List<Header> headers = new ArrayList<>();
                 
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
-                headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch);
+                headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
                 totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                 System.out.println("Total Data"+ String.valueOf(totalRecords));
             } else if (flag != null && !flag.isEmpty()) {
@@ -293,7 +319,7 @@ public class HeaderListServlet extends HttpServlet {
                         menu = "3";
                     }
 
-                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
                     totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                     System.out.println("Total Data"+ String.valueOf(totalRecords));
                 
@@ -303,7 +329,7 @@ public class HeaderListServlet extends HttpServlet {
                     httpSession.setAttribute("flagFilter", flag);
                 } else {
 //                    log.info("flag else : " + flag);
-                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
                     totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                     System.out.println("Total Data"+ String.valueOf(totalRecords));
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -317,7 +343,7 @@ public class HeaderListServlet extends HttpServlet {
 
                 System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
-                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch);
+                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch, sort);
                 totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch);
                 System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;
