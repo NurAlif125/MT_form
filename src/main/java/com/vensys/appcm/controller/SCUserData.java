@@ -85,7 +85,7 @@ public class SCUserData extends HttpServlet {
         String channel = "";
         String userBIC = "";
 //        List <Nst> nsts = null;
-       try {
+        try {
 //            data = dbo.getUserDataByIdLDAP(user_id);
             data = dbo.getUserDataById(user_id);
             channel = data.getChannel();
@@ -102,36 +102,41 @@ public class SCUserData extends HttpServlet {
             if (gagalLogin == null) {
                 gagalLogin = "-";
             }
-            notifVer = dbo.getNotificationVer();
+            if (!channel.equalsIgnoreCase("")) {
+                notifVer = dbo.getNotificationVer(channel);
+                notifAuth = dbo.getNotificationAuth(channel);
+            } else {
+                notifVer = dbo.getNotifVerAll();
+                notifAuth = dbo.getNotifAuthAll();
+            }
 //            System.out.println("notifVer: " + notifVer);
-            notifAuth = dbo.getNotificationAuth();
 //            System.out.println("notifAuth: " + notifAuth);
             log.info("processRequest");
         } catch (Exception ex) {
             strErrMsg = "Unable to connect to database";
             log.error("getDataUserLogin : " + ex.getMessage());
         }
-       
-       String isValidLogonLdap = "", checkUserLdap = "";
-       checkUserLdap = ldapCon.cekUserAdd(user_id);
-       isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
-       
+
+        String isValidLogonLdap = "", checkUserLdap = "";
+        checkUserLdap = ldapCon.cekUserAdd(user_id);
+        isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
+
 //        int maxpassw = (data.getWrongpass_max() != null && !data.getWrongpass_max().trim().isEmpty())
 //         ? Integer.parseInt(data.getWrongpass_max()): 0;
         int maxpassw = 3;
         if (data.getWrongpass_max() != null && !data.getWrongpass_max().trim().isEmpty()) {
             maxpassw = Integer.parseInt(data.getWrongpass_max());
         }
-        
-       if(checkUserLdap.equalsIgnoreCase("user not found")){
-           strErrMsg = "Username is not registered in LDAP, please contact administrator";
-           session.setAttribute("errormsg", strErrMsg);
-           dispatcher = request.getRequestDispatcher("login.jsp");
-           response.sendRedirect("login.jsp");
-           log.info("login.jsp");
-           return;
-       } else { 
-            if(isValidLogonLdap.equalsIgnoreCase("error user or pass")){
+
+        if (checkUserLdap.equalsIgnoreCase("user not found")) {
+            strErrMsg = "Username is not registered in LDAP, please contact administrator";
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            response.sendRedirect("login.jsp");
+            log.info("login.jsp");
+            return;
+        } else {
+            if (isValidLogonLdap.equalsIgnoreCase("error user or pass")) {
                 if (data.getWrongpass() + 1 >= maxpassw) {
                     dbo.updateenable(data);
                     evl.insertDataEvent(user_id, "Username tidak aktif. user salah password sebanyak 3 kali yang menyebabkan akun tidak aktif", ip_access, comp_name);
@@ -156,9 +161,9 @@ public class SCUserData extends HttpServlet {
 //                         session.setAttribute("errormsg", strErrMsg);
 //                     }
 //                 }     
-                 dbo2.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
+                dbo2.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
 //                 strErrMsg = "Invalid Username or Password";
-                 session.setAttribute("errormsg", strErrMsg);
+                session.setAttribute("errormsg", strErrMsg);
 //                 dispatcher = request.getRequestDispatcher("login.jsp");
 //                 response.sendRedirect("login.jsp");
 //                    dispatcher = request.getRequestDispatcher("login.jsp");
@@ -166,29 +171,29 @@ public class SCUserData extends HttpServlet {
                 response.sendRedirect("login.jsp");
                 log.info("login.jsp");
                 return;
-             } else if(isValidLogonLdap.equalsIgnoreCase("nothing user")){
-                 strErrMsg = "Username is not registered in LDAP, please contact administrator";
-                 session.setAttribute("errormsg", strErrMsg);
-                 dispatcher = request.getRequestDispatcher("login.jsp");
-                 response.sendRedirect("login.jsp");
-                 log.info("login.jsp");
-                 return;
-             } else if(isValidLogonLdap.equalsIgnoreCase("not connect")){
-                 strErrMsg = "Unable to connect to LDAP";
-                 session.setAttribute("errormsg", strErrMsg);
-                 dispatcher = request.getRequestDispatcher("login.jsp");
-                 response.sendRedirect("login.jsp");
-                 log.info("login.jsp");
-                 return;
-             } else if(isValidLogonLdap.equalsIgnoreCase("")){
-                 strErrMsg = "Unable to connect to LDAP!";
-                 session.setAttribute("errormsg", strErrMsg);
-                 dispatcher = request.getRequestDispatcher("login.jsp");
-                 response.sendRedirect("login.jsp");
-                 log.info("login.jsp");
-                 return;
-             }
-       }
+            } else if (isValidLogonLdap.equalsIgnoreCase("nothing user")) {
+                strErrMsg = "Username is not registered in LDAP, please contact administrator";
+                session.setAttribute("errormsg", strErrMsg);
+                dispatcher = request.getRequestDispatcher("login.jsp");
+                response.sendRedirect("login.jsp");
+                log.info("login.jsp");
+                return;
+            } else if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
+                strErrMsg = "Unable to connect to LDAP";
+                session.setAttribute("errormsg", strErrMsg);
+                dispatcher = request.getRequestDispatcher("login.jsp");
+                response.sendRedirect("login.jsp");
+                log.info("login.jsp");
+                return;
+            } else if (isValidLogonLdap.equalsIgnoreCase("")) {
+                strErrMsg = "Unable to connect to LDAP!";
+                session.setAttribute("errormsg", strErrMsg);
+                dispatcher = request.getRequestDispatcher("login.jsp");
+                response.sendRedirect("login.jsp");
+                log.info("login.jsp");
+                return;
+            }
+        }
 
         if (data.getUser_id() != null) {
             if (data.getEnable() == 1) {
@@ -196,7 +201,7 @@ public class SCUserData extends HttpServlet {
 //                    
 //                }
                 boolean isValidLogon = false;
-                
+
                 boolean successLogin = false;
                 boolean changepassword = false;
                 try {
@@ -209,11 +214,10 @@ public class SCUserData extends HttpServlet {
                     isValidLogon = true;
 //                    isValidLogon = dbo.authenticateLogin(user_id, password);
                     isValidLogon = dbo.authenticateUser(user_id);
-                    
-                    
+
                     if (isValidLogon) {
-                        
-                        if (data.getStatus_new() == 1){
+
+                        if (data.getStatus_new() == 1) {
                             successLogin = true;
                             if (successLogin) {
                                 session.setAttribute("user_id", user_id);
@@ -229,7 +233,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("hostname", gs[0]);
                                 session.setAttribute("appVersion", gs[1]);
                                 session.setAttribute("channel", channel);
-                                if (String.valueOf(data.getUser_bic()).equals("") || String.valueOf(data.getUser_bic()) == null) { 
+                                if (String.valueOf(data.getUser_bic()).equals("") || String.valueOf(data.getUser_bic()) == null) {
                                     session.setAttribute("user_bic", "null");
                                 } else {
                                     session.setAttribute("user_bic", String.valueOf(data.getUser_bic()));
@@ -254,9 +258,9 @@ public class SCUserData extends HttpServlet {
                                 while (st.hasMoreElements()) {
                                     list.add(st.nextToken());
                                 }
-                                
+
                                 log.info("Session ID: " + session.getId());
-                                
+
                                 ReplicationManager replicationManager = new ReplicationManager(list);
 
                                 session.setAttribute("role", replicationManager.getRoles());
@@ -283,14 +287,14 @@ public class SCUserData extends HttpServlet {
                     } else {
                         int maxpass = Integer.parseInt(data.getWrongpass_max());
                         dbo.insertDataLogin(user_id, "0", ip_access, comp_name, tanggal, "0");
-                        
+
                         if (data.getWrongpass() < maxpass) {
                             int c = data.getWrongpass() + 1;
                             data.setWrongpass(c);
                             dbo.updatewrongpass(data);
 //                            strErrMsg = "User ID or password is incorrect";
                             if (data.getWrongpass() >= 3) {
-                                 dbo.updateenable(data);
+                                dbo.updateenable(data);
                                 strErrMsg = "Username is disable. Please Contact the Administrator";
                             }
                             session.setAttribute("errormsg", strErrMsg);
@@ -311,7 +315,7 @@ public class SCUserData extends HttpServlet {
 
                 if (successLogin) {
 //                    dispatcher = request.getRequestDispatcher("controllerHeaders");
-                    response.setHeader("Cache-Control", "public, max-age="+String.valueOf(dataRole.getTimeout())+"");
+                    response.setHeader("Cache-Control", "public, max-age=" + String.valueOf(dataRole.getTimeout()) + "");
                     response.setHeader("Pragma", ""); // Kosongkan pragma agar tidak override Cache-Control
                     response.setDateHeader("Expires", System.currentTimeMillis() + dataRole.getTimeout() * 1000); // 5 menit
                     dispatcher = request.getRequestDispatcher("home.jsp");
@@ -358,14 +362,14 @@ public class SCUserData extends HttpServlet {
             log.info("errormsg:" + session.getAttribute("errormsg"));
         }
     }
-    
+
     public String getChannel() throws IOException {
         Properties prop = new Properties();
         InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
         prop.load(inputStream);
         return prop.getProperty("channel");
     }
-    
+
     public String getBicProp() throws IOException {
         Properties prop = new Properties();
         InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");

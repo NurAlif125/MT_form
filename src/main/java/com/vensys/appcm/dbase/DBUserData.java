@@ -246,7 +246,23 @@ public class DBUserData {
 
     }
 
-    public int getNotificationVer() throws Exception {
+    public int getNotificationVer(String channel) throws Exception {
+        int total = 0;
+        Calendar now = Calendar.getInstance();
+        String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
+        String sql = "SELECT count(*) FROM headers WHERE flag='MOD' AND source = ?";
+//        System.out.println("sql=" + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, channel);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            total = rs.getInt(1);
+//            System.out.println("total VER: " + total);
+        }
+        return total;
+    }
+    
+    public int getNotifVerAll() throws Exception {
         int total = 0;
         Calendar now = Calendar.getInstance();
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
@@ -261,7 +277,23 @@ public class DBUserData {
         return total;
     }
 
-    public int getNotificationAuth() throws Exception {
+    public int getNotificationAuth(String channel) throws Exception {
+        int total = 0;
+        Calendar now = Calendar.getInstance();
+        String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
+        String sql = "SELECT count(*) FROM headers WHERE flag='VER' and source = ?";
+//        System.out.println("sql=" + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, channel);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            total = rs.getInt(1);
+//            System.out.println("total AUTH: " + total);
+        }
+        return total;
+    }
+    
+    public int getNotifAuthAll() throws Exception {
         int total = 0;
         Calendar now = Calendar.getInstance();
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
