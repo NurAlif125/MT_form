@@ -35,7 +35,13 @@ public class HeaderListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
   
-        log.info("SCHEADER:");     
+        log.info("SCHEADER:");  
+        // get sort list table
+//        String orderColumnIndex = request.getParameter("order[0][column]");
+//        String orderDir = request.getParameter("order[0][dir]"); // asc / desc
+//        String orderColumnName = request.getParameter("columns[" + orderColumnIndex + "][data]");
+//        
+//        System.out.println("========= "+orderDir+" === "+orderColumnName);
         
         HeaderSearchCriteria criteria = new HeaderSearchCriteria();
         criteria.setMtSearch(request.getParameter("columns[1][search][value]"));
