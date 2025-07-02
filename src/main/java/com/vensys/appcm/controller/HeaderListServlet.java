@@ -54,19 +54,19 @@ public class HeaderListServlet extends HttpServlet {
         // Escape juga kolom
         String orderColumnName = StringEscapeUtils.escapeHtml4(orderColumnNameRaw);
 //        
-        System.out.println("57========= "+orderDir+" === "+orderColumnName);
+//        System.out.println("57========= "+orderDir+" === "+orderColumnName);
         String sort = "", columnName = "";
         if (orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
             columnName = "tanggal";
             sort = "h.tanggal DESC";
-            System.out.println("62========= "+sort);
+//            System.out.println("62========= "+sort);
         } else {
 //            if(orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
 //                columnName = "tanggal";
 //                System.out.println("66========= "+columnName);
 //            } 
             sort = "h."+orderColumnName+" "+orderDir;
-            System.out.println("69========= "+sort);
+//            System.out.println("69========= "+sort);
         }
         
         HeaderSearchCriteria criteria = new HeaderSearchCriteria();

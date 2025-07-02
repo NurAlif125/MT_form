@@ -951,7 +951,7 @@ public class DBHeader {
                 + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
-        System.out.println(sql);
+//        System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -975,7 +975,7 @@ public class DBHeader {
             header.setBlock3(rs.getString(12));
             header.setSource(rs.getString(13));
             header.setTrans_refference(rs.getString(14));
-            System.out.println("Refernce " + rs.getString(14));
+//            System.out.println("Refernce " + rs.getString(14));
             header.setTrans_related_refference(rs.getString(15));
             header.setTrans_amount(rs.getString(17));
             if (rs.getString(17) == null) {
