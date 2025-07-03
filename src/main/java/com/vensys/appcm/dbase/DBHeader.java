@@ -3773,29 +3773,29 @@ public class DBHeader {
         // io_type condition
         if (io_type != null && !io_type.equalsIgnoreCase("IO")) {
             if (io_type.equalsIgnoreCase("I")) {
-                where.append(" AND io_type = ?");
+                where.append(" AND h.io_type = ?");
                 params.add("I");
             } else {
-                where.append(" AND io_type = ?");
+                where.append(" AND h.io_type = ?");
                 params.add("O");
             }
         }
 
         // mt_type condition
         if (mt_type != null && !mt_type.isEmpty()) {
-            where.append(" AND messageType = ?");
+            where.append(" AND h.messageType = ?");
             params.add(mt_type);
         }
 
         // flag condition
         if (flag != null && !flag.isEmpty()) {
-            where.append(" AND flag = ?");
+            where.append(" AND h.flag = ?");
             params.add(flag);
         }
 
         // cust_curr condition
         if (cust_curr != null && !cust_curr.isEmpty()) {
-            where.append(" AND t32c.detail = ?");
+            where.append(" AND trx.trans_ccy = ?");
             params.add(cust_curr);
         }
 
@@ -3812,12 +3812,12 @@ public class DBHeader {
 
         // channel condition
         if (channel != null && !channel.isEmpty()) {
-            where.append(" AND source = ?");
+            where.append(" AND h.source = ?");
             params.add(channel);
         }
 
         // date range condition (harus selalu ada)
-        where.append(" AND CAST(hd.tanggal as DATE) BETWEEN ? AND ?");
+        where.append(" AND CAST(h.tanggal as DATE) BETWEEN ? AND ?");
         params.add(java.sql.Date.valueOf(date_from));  // pastikan format yyyy-MM-dd
         params.add(java.sql.Timestamp.valueOf(date_end + " 23:59:59"));
 
@@ -3876,69 +3876,7 @@ public class DBHeader {
 //                "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
 //                "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE "
 //                + where.toString() + " ORDER BY tanggal DESC";
-        String sql = "SELECT DISTINCT \n"
-                + "    hd.id_headers, \n"
-                + "    hd.messageType,\n"
-                + "    hd.logicalTerminal,\n"
-                + "    hd.io_type,\n"
-                + "    hd.receiverAddress,\n"
-                + "    hd.tanggal,\n"
-                + "    hd.flag, \n"
-                + "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n"
-                + "                    SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n"
-                + "                    RIGHT(t32d.detail, 2), '') AS vdate,\n"
-                + "\n"
-                + "    -- REF --\n"
-                + "    COALESCE(\n"
-                + "        t20.detail, \n"
-                + "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,pmtId,instrId}', -- pacs.008\n"
-                + "        COALESCE(mx.json_tag #>> '{pmtRtr,grpHdr,msgId}', -- pacs.004\n"
-                + "        COALESCE(mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,pmtId,instrId}', -- pacs.009\n"
-                + "        COALESCE(mx.json_tag #>> '{rsltnOfInvstgtn,assgnmt,id}', -- camt.029\n"
-                + "        COALESCE(mx.json_tag #>> '{bkToCstmrAcctRpt,rpt,0,id}', -- camt.052\n"
-                + "        COALESCE(mx.json_tag #>> '{bkToCstmrStmt,stmt,0,id}', -- camt.053\n"
-                + "        COALESCE(mx.json_tag #>> '{fiToFIPmtCxlReq,undrlyg,0,txInf,0,_case,id}', -- camt.056\n"
-                + "        COALESCE(mx.json_tag #>> '{fiToFIPmtCxlReq,assgnmt,id}', -- camt.056\n"
-                + "        COALESCE(mx.json_tag #>> '{fiToFIPmtStsRpt,grpHdr,msgId}',\n"
-                + "        COALESCE(mx.json_tag #>> '{ntfctnToRcv,ntfctn,id}',\n"
-                + "        COALESCE(mx.json_tag #>> '{ntfctnToRcv,grpHdr,msgId}',\n"
-                + "                 mx.json_tag #>> '{cstmrPmtCxlReq,assgnmt,id}'\n"
-                + "        )))))))))))) as ref,\n"
-                + "\n"
-                + "    -- Currency\n"
-                + "    COALESCE(\n"
-                + "        t32c.detail, \n"
-                + "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,ccy}', -- pacs.008\n"
-                + "        COALESCE(mx.json_tag #>> '{pmtRtr,txInf,0,rtrdIntrBkSttlmAmt,ccy}',  -- pacs.004\n"
-                + "                 mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,ccy}'  -- pacs.009\n"
-                + "        ))\n"
-                + "    ) as curr,\n"
-                + "\n"
-                + "    -- Amount\n"
-                + "    COALESCE(\n"
-                + "        t32.detail, \n"
-                + "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,value}', -- pacs.008\n"
-                + "        COALESCE(mx.json_tag #>> '{pmtRtr,txInf,0,rtrdIntrBkSttlmAmt,value}', -- pacs.004\n"
-                + "                 mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,value}' -- pacs.009\n"
-                + "        ))\n"
-                + "    ) as amount,\n"
-                + "\n"
-                + "    hd.source\n"
-                + "\n"
-                + "FROM headers as hd \n"
-                + "\n"
-                + "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n"
-                + "\n"
-                + "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n"
-                + "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n"
-                + "\n"
-                + "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n"
-                + "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n"
-                + "\n"
-                + "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n"
-                + "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n"
-                + "\n"
-                + "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers \n"
+        String sql = "SELECT DISTINCT h.id_headers, h.source, h.messageType, h.io_type, h.logicalTerminal, h.receiverAddress, trx.trans_reference, h.tanggal, COALESCE(trx.trans_date_value, '') as trans_date_value, COALESCE(trx.trans_ccy, '') as trans_ccy, COALESCE(trx.trans_amount, 0) as trans_amount, h.flag FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers \n"
                 + "WHERE " + where.toString() + " ORDER BY tanggal DESC;";
 //            System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -3961,22 +3899,22 @@ public class DBHeader {
 
         while (rs.next()) {
             Header header = new Header();
-            header.setMessageType(rs.getString(2));
-            if (rs.getString(4).equalsIgnoreCase("O")) {
-                header.setLogicalTerminal(rs.getString(5));
-                header.setReceiverAddress(rs.getString(3));
+            header.setMessageType(rs.getString("messageType"));
+            if (rs.getString("io_type").equalsIgnoreCase("O")) {
+                header.setLogicalTerminal(rs.getString("receiverAddress"));
+                header.setReceiverAddress(rs.getString("logicalTerminal"));
             } else {
-                header.setLogicalTerminal(rs.getString(3));
-                header.setReceiverAddress(rs.getString(5));
+                header.setLogicalTerminal(rs.getString("logicalTerminal"));
+                header.setReceiverAddress(rs.getString("receiverAddress"));
             }
-            header.setIo_type(rs.getString(4));
-            header.setTanggal(rs.getString(6));
-            header.setFlag(rs.getString(7));
-            header.setId_headers(rs.getInt(1));
-            header.setTag20(rs.getString("ref"));
-            header.setTag32Date(rs.getString("vdate"));
-            header.setTag32Currency(rs.getString("curr"));
-            header.setTag32Amount(rs.getString("amount"));
+            header.setIo_type(rs.getString("io_type"));
+            header.setTanggal(rs.getString("tanggal"));
+            header.setFlag(rs.getString("flag"));
+            header.setId_headers(rs.getInt("id_headers"));
+            header.setTag20(rs.getString("trans_reference"));
+            header.setTag32Date(rs.getString("trans_date_value"));
+            header.setTag32Currency(rs.getString("trans_ccy"));
+            header.setTag32Amount(rs.getString("trans_amount"));
             header.setSource(rs.getString("source"));
 
             headers.add(header);
