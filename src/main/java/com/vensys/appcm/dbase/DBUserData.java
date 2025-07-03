@@ -250,7 +250,7 @@ public class DBUserData {
         int total = 0;
         Calendar now = Calendar.getInstance();
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
-        String sql = "SELECT count(*) FROM headers WHERE flag='MOD' AND source = ?";
+        String sql = "SELECT count(*) FROM headers WHERE flag='MOD' AND source = ? AND isduplicate = 0";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, channel);
@@ -266,7 +266,7 @@ public class DBUserData {
         int total = 0;
         Calendar now = Calendar.getInstance();
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
-        String sql = "SELECT count(*) FROM headers WHERE flag='MOD'";
+        String sql = "SELECT count(*) FROM headers WHERE flag='MOD' AND isduplicate = 0";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -281,7 +281,7 @@ public class DBUserData {
         int total = 0;
         Calendar now = Calendar.getInstance();
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
-        String sql = "SELECT count(*) FROM headers WHERE flag='VER' and source = ?";
+        String sql = "SELECT count(*) FROM headers WHERE flag='VER' and source = ? AND isduplicate = 0";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, channel);
@@ -297,7 +297,7 @@ public class DBUserData {
         int total = 0;
         Calendar now = Calendar.getInstance();
         String tanggal_transaksi_sebulan = new SimpleDateFormat("yyyy-MM-dd").format(now.getTime());
-        String sql = "SELECT count(*) FROM headers WHERE flag='VER'";
+        String sql = "SELECT count(*) FROM headers WHERE flag='VER' AND isduplicate = 0";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();

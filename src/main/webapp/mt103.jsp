@@ -147,7 +147,7 @@
                                             var number2F = parseFloat(number2r);
                                             var nominal = formatUang(number2F, "");
                                             var nominalStyle = nominal.fontsize(2);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);
@@ -176,7 +176,7 @@
                                             var number2F = parseFloat(number2r);
                                             var nominal = formatUang(number2F, "");
                                             var nominalStyle = nominal.fontsize(2);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);
@@ -738,7 +738,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -770,7 +770,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -802,7 +802,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -834,7 +834,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -866,7 +866,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -898,7 +898,7 @@
                                             var number2F = parseFloat(number2r);
                                             var nominal = formatUang(number2F, "");
                                             var nominalStyle = nominal.fontsize(2);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);
