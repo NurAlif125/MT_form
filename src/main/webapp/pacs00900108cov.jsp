@@ -4,6 +4,9 @@
     Author     : rafli
 --%>
 
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <style type="text/css">
 
     [hidden] {
@@ -110,6 +113,12 @@
 <link rel="stylesheet" href="css/flatpickr.css">
 <meta id="generator-farras" name="generator" content="XSD2HTML2XML v3: https://github.com/MichielCM/xsd2html2xml" data-xsd2html2xml-source='<c:out value='${dataIsoXML}' />'/>
 <script src="js/xml2html_rule.js" type="text/javascript"></script>
+<%
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    String formattedDate = sdf.format(new java.util.Date());
+    pageContext.setAttribute("tgl_today", formattedDate);
+%>
+<c:set var="tgl_today" value="${tgl_today}" />
 
 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Document" data-xsd2html2xml-xpath="/Document">
         <legend>Document</legend>
@@ -122,12 +131,17 @@
             } else {
                 this.removeAttribute("value");
             }
-            ;' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification</span></label></section><section id="FICdtTrf/GrpHdr/CreDtTm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
+            ;' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification</span></label></section><c:choose><c:when test = "${headerById.id_headers == null}"><section id="FICdtTrf/GrpHdr/CreDtTm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/CreDtTm"><input type="text" value="${tgl_today}" class="datetime-local" onchange='if (this.value) {
                         this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
                     } else {
                         this.removeAttribute("value");
                     }
-                    ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="NbOfTxs" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/NbOfTxs"><select onchange='this.childNodes.forEach(function (o) {
+                    ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime</span></label></section></c:when><c:otherwise><section id="FICdtTrf/GrpHdr/CreDtTm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
+                        this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
+                    } else {
+                        this.removeAttribute("value");
+                    }
+                    ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime</span></label></section></c:otherwise></c:choose><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="NbOfTxs" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/NbOfTxs"><select onchange='this.childNodes.forEach(function (o) {
                                 if (o.nodeType == Node.ELEMENT_NODE)
                                     o.removeAttribute("selected"); }); this.children[this.selectedIndex].setAttribute("selected", "selected");' required="required" data-xsd2html2xml-description="NumberOfTransactions"><option value="1">1</option></select><span>NumberOfTransactions</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="SttlmInf" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/SttlmInf">
                                 <legend>SettlementInformation</legend>

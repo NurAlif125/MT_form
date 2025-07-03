@@ -166,10 +166,13 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         log.info("flag req null");
                         if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equalsIgnoreCase("CVT-MOD")) {
                             dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        } else if (flagStatus.equalsIgnoreCase("DUPL")) {
+                            flag = "DUPL-CNF";
+                            dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         }
                     } else {
                         // System.out.println("flag req ada");
-                        if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equals("CVT-MOD")) {
+                        if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equals("CVT-MOD") || flagStatus.equalsIgnoreCase("DUPL")) {
                             log.info("flag req mod");
                             if (request.getParameter("sender_logical_terminal") == null) {
                                 log.info("sender null");

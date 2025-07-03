@@ -237,6 +237,12 @@
                 printMTDoc('SCPrintNota?id=' + $('#id').val());
             }
         });
+        $('#releaseDupl').click(function (){
+            var answer = confirm('Do you want to release this message?');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=DUPL-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
         $('#returned').click(function () {
             var answer = confirm('Do you want to return this MT..!!');
             if (answer) {
