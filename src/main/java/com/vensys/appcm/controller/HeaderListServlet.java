@@ -58,14 +58,14 @@ public class HeaderListServlet extends HttpServlet {
         String sort = "", columnName = "";
         if (orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
             columnName = "tanggal";
-            sort = "h.tanggal DESC";
+            sort = "tanggal DESC";
 //            System.out.println("62========= "+sort);
         } else {
 //            if(orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
 //                columnName = "tanggal";
 //                System.out.println("66========= "+columnName);
 //            } 
-            sort = "h."+orderColumnName+" "+orderDir;
+            sort = orderColumnName+" "+orderDir;
 //            System.out.println("69========= "+sort);
         }
         
