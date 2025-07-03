@@ -879,6 +879,8 @@ public class DBHeader {
             where += " AND flag='FIA-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             where += " AND flag='FIA-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+        } else if (flag.equalsIgnoreCase("DUPL-CNF")) {
+            where += " AND flag='DUPL-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         }
@@ -1358,6 +1360,40 @@ public class DBHeader {
                 + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? "
                 + "AND h.isduplicate=1 ORDER BY tanggal DESC";
+//        System.out.println("sql getAllHeaderDuplicate = " + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1, dDay.format(tanggal));
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            Header header = new Header();
+            header.setMessageType(rs.getString(2));
+            header.setLogicalTerminal(rs.getString(3).toUpperCase());
+            header.setSessionNumber(rs.getString(4));
+            header.setSequenceNumber(rs.getString(5));
+//            header.setIo_type(rs.getString(5));
+            if (rs.getString(6).equalsIgnoreCase("i")) {
+                header.setIo_type("OUTGOING");
+            } else {
+                header.setIo_type("INCOMING");
+            }
+            header.setReceiverAddress(rs.getString(7).toUpperCase());
+            header.setTanggal(rs.getString(8));
+            header.setId_headers(rs.getInt(1));
+            header.setFlag(rs.getString(9));
+            header.setTag20(rs.getString(10));
+            headers.add(header);
+        }
+        return headers;
+    }
+    
+    public List<Header> getAllHeaderDuplicateCNF() throws Exception {
+        Date tanggal = new Date();
+        SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
+        List<Header> headers = new ArrayList<Header>();
+        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,"
+                + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? "
+                + "AND h.flag='DUPL-CNF' ORDER BY tanggal DESC";
 //        System.out.println("sql getAllHeaderDuplicate = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, dDay.format(tanggal));

@@ -347,7 +347,7 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND flag='MOD'";
         } else if (flag.equalsIgnoreCase("AUTH")) {
             log.info("flagnya auth 220");
-            flag_before = " AND (flag='VER' or flag='CVT-VER')";
+            flag_before = " AND (flag='VER' or flag='CVT-VER' or flag='DUPL-CNF')";
         } else if (flag.equalsIgnoreCase("TEXT")) {
             flag_before = " AND flag='AUTH'";
         } // diubah menjadi INC-WAIT setelah save data nasabah 20180413
@@ -388,6 +388,8 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='REM-FAILED-CNF')";
         }  else if (flag.equalsIgnoreCase("CVT-VER-RESEND")) {
             flag_before = " AND (flag='CVT-VER')";            
+        }  else if (flag.equalsIgnoreCase("DUPL-CNF")) {
+            flag_before = " AND (flag='DUPL')";
         }
         
       
@@ -1768,8 +1770,14 @@ public class DBDataTransaksiOutgoing {
     }
 
     public void updateDuplikat(int id_headers) throws Exception {
-        String sql = "update headers set isduplicate = '1' where id_headers = ?";
-        System.out.println("sql updateDuplikat = " + sql);
+        String sql = "update headers set isduplicate = '1', flag = 'DUPL' where id_headers = ?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, id_headers);
+        st.executeUpdate();
+    }
+    
+    public void updateDuplikatCNF (int id_headers) throws Exception {
+        String sql = "update headers set isduplicate = '0' where id_headers = ?";
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setInt(1, id_headers);
         st.executeUpdate();
