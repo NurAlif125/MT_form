@@ -646,8 +646,13 @@
                         api.column(colIdx).search(val).draw();
                     }, 800));
                 });
+                
+                $('#example thead input').on('click', function (e) {
+                    e.stopPropagation(); 
+                });
             }
         });
+        
 
         $('#select-page').on('change', function () {
             // Reload data
