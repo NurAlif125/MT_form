@@ -69,7 +69,7 @@
     <!-- Header -->
     <!--20210405 ditambah host dan appversion-->
     <h1 class="logoAtas"><img class="homePage" src="images/flickr.com/cm.png"/><span>${hostname} (${appVersion})</span></h1>
-    <font class="main-site"><u><%= tglsekarang%></u> <a href="changePassword.jsp" class="adm"><% out.print((String) session.getAttribute("user_id"));%><img src="images/user.png" style="margin-bottom:-2px;" /></a> <a href="ServletControllerLogout" class="log">Logout <img src="images/logout.png" style="margin-bottom:-2px;" /></a> <br>
+    <font class="main-site"><u><%= tglsekarang%></u> <a href="#" class="adm"><% out.print((String) session.getAttribute("user_id"));%><img src="images/user.png" style="margin-bottom:-2px;" /></a> <a href="ServletControllerLogout" class="log">Logout <img src="images/logout.png" style="margin-bottom:-2px;" /></a> <br>
         <p class="last">Last Success Login: <% out.print((String) session.getAttribute("berhasillogin"));%><br>
             Last Failed Login: <% out.print((String) session.getAttribute("gagallogin"));%><br/>
             Transaction to VER: <a style="color:red"><% out.print((Integer) session.getAttribute("notifVer"));%></a>&nbsp; | &nbsp; Transaction to AUTH: <a style="color:red"><% out.print((Integer) session.getAttribute("notifAuth"));%></a></p>
