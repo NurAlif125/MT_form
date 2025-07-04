@@ -86,7 +86,7 @@ public class rulePacs004_2024 {
             }
 
             String uetr = txInf.getOrgnlUETR();
-            if (uetr == null) {
+            if (uetr == null || uetr.equalsIgnoreCase("")) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"UETR\"><td>OriginalUETR is mandatory!</td><td>PmtRtr/TxInf/OrgnlUETR</td></tr>");
             }
 
