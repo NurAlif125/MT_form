@@ -212,6 +212,12 @@
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AUTH&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
         });
+        $('#duplResend').click(function () {
+            var answer = confirm('Do you want to resend this message?');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=DUPL-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
         $('#generated').click(function () {
             var answer = confirm('Do you want to generate text this MT..!!');
             if (answer) {
