@@ -256,7 +256,7 @@
                                     <div class="form-row"><span class="label_body">OF57</span><span class="label">Account With Institution</span>
                                         <select id="type_of57_" name="type_of57_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Account With Inst - BIC</option>
+                                            <option value="a">A - Account With Inst - Party Identifier</option>
                                             <option value="b">B - Account With Inst - Location</option>
                                             <option value="d">D - Account With Inst - Name and Address</option>
                                         </select>
