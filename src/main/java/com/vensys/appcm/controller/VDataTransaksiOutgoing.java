@@ -99,6 +99,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             httpSession.setAttribute("io_typeStatus", headerById.getIo_type());
             httpSession.setAttribute("messageType", headerById.getMessageType());
             httpSession.setAttribute("isDuplicate", headerById.getIsDuplicate());
+            httpSession.setAttribute("userEntry", headerById.getUserEntry());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

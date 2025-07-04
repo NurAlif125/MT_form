@@ -531,12 +531,19 @@
             </c:if>
             <%}%>
 
-            <% if (session.getAttribute("flagStatus").equals("DUPL-CNF")) { %>
+            <% if (session.getAttribute("flagStatus").equals("DUPL-CNF")) { 
+                if (session.getAttribute("userEntry").equals("SRC:MANUAL")) {%>
             <c:if test="${item == 'FLOW:DUPL-CNF'}">
                 <input type="button" name="authorized" id="authorized" value="Approve" />
                 <input type="button" name="reject" id="reject_true" value="Reject" />
             </c:if>
-            <% } %>
+            <% } else if (session.getAttribute("userEntry").equals("SRC:FIA")) { %>
+            <c:if test="${item == 'FLOW:DUPL-CNF'}">
+                <input type="button" name="duplResend" id="duplResend" value="Approve" />
+                <input type="button" name="reject" id="reject_true" value="Reject" />
+            </c:if>
+            <% }
+              } %>
 
             <% if (session.getAttribute("flagStatus").equals("AUTH")) {%>
             <c:if test="${item == 'FLOW:TEXT'}">

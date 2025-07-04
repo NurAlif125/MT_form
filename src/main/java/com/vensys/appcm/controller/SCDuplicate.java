@@ -40,9 +40,10 @@ public class SCDuplicate extends HttpServlet {
         DBconnection dbConn = new DBconnection();
         List<Header> duplicate = new ArrayList<Header>();
         DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
+        String channel = httpSession.getAttribute("channel").toString();
         try {
             log.info("processRequest");
-            duplicate = bBHeaders.getAllHeaderDuplicate();
+            duplicate = bBHeaders.getAllHeaderDuplicate(channel);
             httpSession.setAttribute("duplicate", duplicate);
             httpSession.setAttribute("flagFilter", "MOD");
 //            httpSession.setAttribute("headers", duplicate);
