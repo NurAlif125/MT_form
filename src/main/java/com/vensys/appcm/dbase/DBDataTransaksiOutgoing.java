@@ -390,6 +390,8 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='CVT-VER')";            
         }  else if (flag.equalsIgnoreCase("DUPL-CNF")) {
             flag_before = " AND (flag='DUPL')";
+        }  else if (flag.equalsIgnoreCase("DUPL-RESEND")) {
+            flag_before = " AND (flag='DUPL-CNF')";
         }
         
       
@@ -429,7 +431,8 @@ public class DBDataTransaksiOutgoing {
             (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
             (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
             (flag.equalsIgnoreCase("INC-AML-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH)
+            (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("DUPL-RESEND")) && AUTH
             ) {
             CreateText ct = new CreateText(conn);
             

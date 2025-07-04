@@ -1352,13 +1352,17 @@ public class DBHeader {
         return headers;
     }
 
-    public List<Header> getAllHeaderDuplicate() throws Exception {
+    public List<Header> getAllHeaderDuplicate(String channel) throws Exception {
         Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
         List<Header> headers = new ArrayList<Header>();
+        String where = "";
+        if (!channel.equalsIgnoreCase("")) {
+            where += " AND h.source = '" + channel + "' ";
+        }
         String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,"
                 + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? "
+                + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? " + where
                 + "AND h.isduplicate=1 ORDER BY tanggal DESC";
 //        System.out.println("sql getAllHeaderDuplicate = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -1386,13 +1390,17 @@ public class DBHeader {
         return headers;
     }
     
-    public List<Header> getAllHeaderDuplicateCNF() throws Exception {
+    public List<Header> getAllHeaderDuplicateCNF(String channel) throws Exception {
         Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
         List<Header> headers = new ArrayList<Header>();
+        String where = "";
+        if (!channel.equalsIgnoreCase("")) {
+            where += " AND h.source = '" + channel + "'";
+        }
         String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,"
                 + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? "
+                + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? " + where
                 + "AND h.flag='DUPL-CNF' ORDER BY tanggal DESC";
 //        System.out.println("sql getAllHeaderDuplicate = " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
@@ -2149,7 +2157,8 @@ public class DBHeader {
                 + "    branch, \n"
                 + "    isduplicate, \n"
                 + "    COALESCE(t32c.detail, json_tag->'fiToFICstmrCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'ccy') AS curr,\n"
-                + "    COALESCE(networkType, 'MT') as networkType\n"
+                + "    COALESCE(networkType, 'MT') as networkType,\n"
+                + "    userentry "
                 + "FROM \n"
                 + "    headers h\n"
                 + "LEFT JOIN \n"
@@ -2186,6 +2195,7 @@ public class DBHeader {
             header.setTag32Currency(rs.getString(13));
             header.setNetworktype(rs.getString("networktype"));
             header.setIsDuplicate(rs.getString("isduplicate"));
+            header.setUserEntry(rs.getString("userentry"));
         }
         return header;
     }
