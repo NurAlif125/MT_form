@@ -28,10 +28,9 @@ case when UPPER(b.io_type) = 'I' then 'Outgoing' else 'Incoming' end io_type,
 a.status_header, a.user_login, a.ip_access, a.comp_name, b.useredit,
 b.receiveraddress, b.userentry, b.flag, 
 case when b.komentar LIKE '%<?xml version%' then '' else b.komentar end komentar, 
-b.source, b.tanggal
+b.source, a.status_tanggal as tanggal
 FROM header_status a 
-INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, a.status_tanggal asc
-]]>
+INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, a.status_tanggal asc]]>
 	</queryString>
 	<field name="messagetype" class="java.lang.String"/>
 	<field name="logicalterminal" class="java.lang.String"/>

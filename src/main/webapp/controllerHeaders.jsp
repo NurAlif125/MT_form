@@ -551,6 +551,10 @@
 //    }
 //});
 
+function escapeHtml(text) {
+    return $('<div>').text(text).html();
+}
+
 
     $(document).ready(function () {
 //console.log("Document is ready");
@@ -615,13 +619,13 @@
                 {
                     targets: 6,
                     render: function (data, type, row, meta) {
-                        return '<a href="ViewDataTransaksiOutgoing?id=' + row.id_headers + '">' + row.trans_reference + '</a>';
+                        return '<a href="ViewDataTransaksiOutgoing?id=' + encodeURIComponent(row.id_headers) + '">' + escapeHtml(row.trans_reference) + '</a>';
                     }
                 },
                 {
                     targets: -1,
                     render: function (data, type, row, meta) {
-                        return '<a href="ViewDataTransaksiOutgoing?id=' + row.id_headers + '">view</a>';
+                        return '<a href="ViewDataTransaksiOutgoing?id=' + encodeURIComponent(row.id_headers) + '">view</a>';
                     }
                 }
             ]
