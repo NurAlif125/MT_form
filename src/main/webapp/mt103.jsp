@@ -509,7 +509,7 @@
                                         <select id="type_of57_" name="type_of57_">
                                             <option value="">choose a type</option>
                                             <!--                                         - Account With Inst-->
-                                            <option value="a">A - BIC</option>
+                                            <option value="a">A - Party Identifier</option>
                                             <option value="b">B - Location</option>
                                             <option value="c">C - Institution</option>
                                             <option value="d">D - Name and Address</option>
