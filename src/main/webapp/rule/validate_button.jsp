@@ -231,6 +231,12 @@
                 printMTDoc('SCPrintMTDoc?id=' + $('#id').val());
             }
         });
+        $('#btn-export').click(function () {
+            var answer = confirm('Do you want to export this message to txt file?');
+            if (answer) {
+                document.location.href = 'SCExport?id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
         $('#printedmx').click(function () {
             var answer = confirm('Do you want to print this Message?');
             if (answer) {
