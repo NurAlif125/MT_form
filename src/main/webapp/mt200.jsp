@@ -70,7 +70,7 @@
                                     </c:choose>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Currency Code</span>
-                                        <input type="text" class="mandatory" onkeypress="return textonly(event)" name="_061_mf32a_currency" id="_061_mf32a_currency" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" class="mandatory" onkeypress="return textonly(event)" name="_061_mf32a_currency" id="_061_mf32a_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Amount</span>
                                         <input type="text" class="mandatory" name="_062_mf32a_amount" id="_062_mf32a_amount" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)"  ondrop="return false;" onpaste="return false;" />
@@ -96,7 +96,7 @@
 //                                                document.write(nominalStylec);
 //                                            }
                                             var nominalStyle = nominal.fontsize(5);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);
