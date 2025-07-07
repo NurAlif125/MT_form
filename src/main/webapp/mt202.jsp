@@ -151,7 +151,7 @@
                                     <div class="form-row"><span class="label_body">OF53</span><span class="label">Sender's Correspondent</span>
                                         <select id="type_of53_" name="type_of53_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Sender's Correspondent - BIC</option>
+                                            <option value="a">A - Sender's Correspondent - Identifier Code</option>
                                             <option value="b">B - Sender's Correspondent - Location</option>
                                             <option value="d">D - Sender's Correspondent - Name and Address</option>
                                         </select>
@@ -189,7 +189,7 @@
                                     <div class="form-row"><span class="label_body">OF54</span><span class="label">Receiver's Correspondent</span>
                                         <select id="type_of54_" name="type_of54_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Receiver's Correspondent - BIC</option>
+                                            <option value="a">A - Receiver's Correspondent - Identifier Code</option>
                                             <option value="b">B - Receiver's Correspondent - Location</option>
                                             <option value="d">D - Receiver's Correspondent - Name and Address</option>
                                         </select>
@@ -227,7 +227,7 @@
                                     <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
                                         <select id="type_of56_" name="type_of56_">
                                             <option value="" <% if("true".equals(request.getParameter("create"))) { out.write("selected='selected'"); }%> >choose a type</option>
-                                            <option value="a">A - Intermediary Inst - BIC</option>
+                                            <option value="a">A - Intermediary Inst - Identifier Code</option>
                                             <option value="d">D - Intermediary Inst - Name and Address</option>
                                         </select>
                                         <div id="div_of56a_">
@@ -256,7 +256,7 @@
                                     <div class="form-row"><span class="label_body">OF57</span><span class="label">Account With Institution</span>
                                         <select id="type_of57_" name="type_of57_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Account With Inst - Party Identifier</option>
+                                            <option value="a">A - Account With Inst - Identifier Code</option>
                                             <option value="b">B - Account With Inst - Location</option>
                                             <option value="d">D - Account With Inst - Name and Address</option>
                                         </select>
@@ -294,7 +294,7 @@
                                     <div class="form-row"><span class="label_body">MF58</span><span class="label"><a style="color:red; text-decoration:none">*</a>Beneficiary Institution</span>
                                         <select class="mandatory" id="type_of58_" name="type_of58_" input_type="Of58" location="Body" input_type="MF58 Beneficiary Institution" location="Body">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Beneficiary Inst - BIC</option>
+                                            <option value="a">A - Beneficiary Inst - Identifier Code</option>
                                             <option value="d">D - Beneficiary Inst - Name and Address</option>
                                         </select>
                                         <div id="div_of58a_">

@@ -26,6 +26,7 @@
                             <th>Reference</th>
                             <th>Creation date</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -37,9 +38,10 @@
                             <td>${item.io_type}</td>
                             <td>${item.logicalTerminal}</td>
                             <td>${item.receiverAddress}</td>
-                            <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">${item.tag20}</a></td>
+                            <td><a href="ViewDataTransaksiOutgoing?id=<c:out value="${item.id_headers}"/>"><c:out value="${item.tag20}"/></a></td>
                             <td>${item.tanggal}</td>
                             <td>${item.flag}</td>
+                            <td><a href="ViewDataTransaksiOutgoing?id=<c:out value="${item.id_headers}"/>">View</a></td>
                         </tr>
                     </c:forEach>
                     </tbody>
@@ -55,6 +57,9 @@
             "columnDefs": [
                 {
                     "className": "dt-head-left", "targets": "_all"
+                },
+                {
+                    orderable: false, targets: [0, 8]
                 }
             ]
         });
