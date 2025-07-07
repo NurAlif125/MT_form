@@ -113,7 +113,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             httpSession.setAttribute("nama_core", namaCore);
         }
         String typeMT = headerById.getMessageType();
-        if ("103".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT)) {
+        if ("103".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT) || "200".equalsIgnoreCase(typeMT)) {
             try {
                 System.out.println("Message Type: " + headerById.getMessageType());
                 CHeader headermt = new CHeader();
