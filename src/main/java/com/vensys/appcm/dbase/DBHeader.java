@@ -799,9 +799,9 @@ public class DBHeader {
         if (flag == null || flag.isEmpty()) {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("MOD")) {
-            where += " AND flag='MOD' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='MOD' ";
         } else if (flag.equalsIgnoreCase("VER")) {
-            where += " AND flag='VER' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='VER' ";
 //        } else if (flag.equalsIgnoreCase("AUTH")) {
 //            where += " AND flag='AUTH' AND CAST(h.tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
 //        } else if (flag.equalsIgnoreCase("TEXT")) {
@@ -947,7 +947,7 @@ public class DBHeader {
         List<Header> headers = new ArrayList<Header>();
         String sql = """
                      SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,
-                     h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,
+                     h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.id_headers, h.flag, h.isDuplicate,
                      h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
                 + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
@@ -1055,9 +1055,9 @@ public class DBHeader {
         if (flag == null || flag.isEmpty()) {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("MOD")) {
-            where += " AND flag='MOD' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='MOD' ";
         } else if (flag.equalsIgnoreCase("VER")) {
-            where += " AND flag='VER' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='VER' ";
 //        } else if (flag.equalsIgnoreCase("AUTH")) {
 //            where += " AND flag='AUTH' AND CAST(h.tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
 //        } else if (flag.equalsIgnoreCase("TEXT")) {
@@ -1784,7 +1784,7 @@ public class DBHeader {
 
         // Final query
         String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
-                + "h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, "
+                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, h.source, "
                 + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";

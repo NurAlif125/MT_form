@@ -654,6 +654,14 @@ function escapeHtml(text) {
                 $('#example thead input').on('click', function (e) {
                     e.stopPropagation(); 
                 });
+                
+                //ctrl+a
+                $('#example thead input').on('keydown', function (e) {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+                        e.preventDefault();
+                        this.select();
+                    }
+                });
             }
         });
         
