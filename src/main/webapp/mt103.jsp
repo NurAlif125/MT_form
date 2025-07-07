@@ -195,7 +195,7 @@
                                     <div class="form-row"><span class="label_body">MF50</span><span class="label"><a style="color:red; text-decoration:none">*</a>Ordering Customer</span>
                                         <select id="type_mf50_ordering_customer" name="type_mf50_ordering_customer" class="mandatory" input_type="MF50 Ordering Customer" location="Body">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - BIC</option>
+                                            <option value="a">A - Identifier Code</option>
                                             <option value="f">F - Number/Name and Address Details</option>
                                             <option value="k">K - Name and Address</option>
                                         </select>
@@ -328,7 +328,7 @@
                                     <div class="form-row"><span class="label_body">OF52 </span><span class="label">Ordering Institution</span>
                                         <select id="type_of52_" name="type_of52_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Ordering Institution - BIC</option>
+                                            <option value="a">A - Ordering Institution - Identifier Code</option>
                                             <option value="d">D - Ordering Institution - Name and Address</option>
                                         </select>
                                         <div id="div_of52a_">
@@ -357,7 +357,7 @@
                                     <div class="form-row"><span class="label_body">OF53</span><span class="label">Sender's Correspondent</span>
                                         <select id="type_of53_" name="type_of53_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - BIC</option>
+                                            <option value="a">A - Identifier Code</option>
                                             <option value="b">B - Location</option>
                                             <option value="d">D - Name and Address</option>
                                         </select>
@@ -395,7 +395,7 @@
                                     <div class="form-row"><span class="label_body">OF54</span><span class="label">Receiver's Correspondent</span>
                                         <select id="type_of54_" name="type_of54_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Receiver's Correspondent - BIC</option>
+                                            <option value="a">A - Receiver's Correspondent - Identifier Code</option>
                                             <option value="b">B - Receiver's Correspondent - Location</option>
                                             <option value="d">D - Receiver's Correspondent - Name and Address</option>
                                         </select>
@@ -433,7 +433,7 @@
                                     <div class="form-row"><span class="label_body">OF55</span><span class="label">Third Reimbursement Institution</span>
                                         <select id="type_of55_" name="type_of55_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Third Reimbursement Inst - BIC</option>
+                                            <option value="a">A - Third Reimbursement Inst - Identifier Code</option>
                                             <option value="b">B - Third Reimbursement Inst - Location</option>
                                             <option value="d">D - Third Reimbursement Inst - Name and Address</option>
                                         </select>
@@ -471,7 +471,7 @@
                                     <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
                                         <select id="type_of56_" name="type_of56_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Intermediary Inst - BIC</option>
+                                            <option value="a">A - Intermediary Inst - Identifier Code</option>
                                             <option value="c">C - Intermediary Inst - Institution</option>
                                             <option value="d">D - Intermediary Inst - Name and Address</option>
                                         </select>
@@ -509,7 +509,7 @@
                                         <select id="type_of57_" name="type_of57_">
                                             <option value="">choose a type</option>
                                             <!--                                         - Account With Inst-->
-                                            <option value="a">A - Party Identifier</option>
+                                            <option value="a">A - Identifier Code</option>
                                             <option value="b">B - Location</option>
                                             <option value="c">C - Institution</option>
                                             <option value="d">D - Name and Address</option>
@@ -554,7 +554,7 @@
                                         <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="Of59A Beneficiary Customer" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="59">59 - Name and Address</option>
-                                            <option value="59a">59A - BIC</option>
+                                            <option value="59a">59A - Identifier Code</option>
                                             <option value="59f">59F - Number/Name and Address Details</option>
                                         </select>
                                         <div id="div_mf59_">
