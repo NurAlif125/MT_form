@@ -109,7 +109,7 @@
                 <input type="text" name="rel_reference" id="rel_reference" /> [ex.RelRef0001]
             </div>
             <div class="form-row"><span class="labelL">Currency Code</span>
-                <input type="text" name="currency_code" id="currency_code" size="3" /> [ex.IDR]
+                <input type="text" name="currency_code" id="currency_code" size="3" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" /> [ex.IDR]
             </div>
             <div class="form-row"><span class="labelL">Amount</span>
                 <input type="text" name="amount" id="amount" /> [ex.1000,05]
