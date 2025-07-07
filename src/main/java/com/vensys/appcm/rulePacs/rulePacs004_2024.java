@@ -69,19 +69,19 @@ public class rulePacs004_2024 {
         PaymentTransaction112 txInf = this.mxPacs00400109.getPmtRtr().getTxInf().get(0);
         if (txInf != null) {
             String rtrId = txInf.getRtrId();
-            if (rtrId == null) {
+            if (rtrId == null || rtrId.equalsIgnoreCase("")) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrId\"><td>ReturnIdentification is mandatory!</td><td>PmtRtr/TxInf/RtrId</td></tr>");
             }
 
             String orgnlInstrId = txInf.getOrgnlInstrId();
-            if (orgnlInstrId != null) {
+            if (orgnlInstrId != null || orgnlInstrId.equalsIgnoreCase("")) {
                 if (orgnlInstrId.startsWith("/") || orgnlInstrId.endsWith("/") || orgnlInstrId.contains("//")) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/OrgnlInstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><td>PmtRtr/TxInf/OrgnlInstrId</td></tr>");
                 }
             }
 
             String orgnlEnd2EndId = txInf.getOrgnlEndToEndId();
-            if (orgnlEnd2EndId == null) {
+            if (orgnlEnd2EndId == null || orgnlEnd2EndId.equalsIgnoreCase("")) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/OrgnlEndToEndId\"><td>OriginalEndToEndIdentification is mandatory!</td><td>PmtRtr/TxInf/OrgnlEndToEndId</td></tr>");
             }
 
@@ -115,6 +115,11 @@ public class rulePacs004_2024 {
                         }
                     }
                 }
+            }
+            
+            LocalDate intrBkSttlmDt = txInf.getIntrBkSttlmDt();
+            if (intrBkSttlmDt == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/IntrBkSttlmDt\"><td>InterBankSettlementDate is mandatory!</td><td>PmtRtr/TxInf/IntrBkSttlmDt</td></tr>");
             }
 
             ChargeBearerType1Code chrgBr = txInf.getChrgBr();
