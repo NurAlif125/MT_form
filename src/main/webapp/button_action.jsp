@@ -846,7 +846,7 @@
             <% } %>
         </c:forEach>
         <% if (!session.getAttribute("flagStatus").equals("")) {%>
-        <input type="button" name="export" id="btn-export" value="Export" />
+        <input type="button" name="btn-export" id="btn-export" value="Export" />
         <% } %>
 
         <!--<input type="button" name="export" id="btn-export" value="Export" />-->
