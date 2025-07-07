@@ -122,7 +122,7 @@
                                     <div class="form-row"><span class="label_body">OF52 </span><span class="label">Ordering Institution</span>
                                         <select id="type_of52_" name="type_of52_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Ordering Institution - BIC</option>
+                                            <option value="a">A - Ordering Institution - Identifier Code</option>
                                             <option value="d">D - Ordering Institution - Name and Address</option>
                                         </select>
                                         <div id="div_of52a_">
