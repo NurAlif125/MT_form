@@ -238,7 +238,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 }
                 // System.out.println("baris 272");
             }
-            if (!flagStatus.equalsIgnoreCase("INC-NSTP")) {
+            if (!flagStatus.equalsIgnoreCase("INC-NSTP") || !flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
                 while (names.hasMoreElements()) {
                     tags = names.nextElement().toString();
                     if (tags.startsWith("_")) {
@@ -328,7 +328,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 //                        dBDataTransaksiOutgoing2.updateMXText(dataXml, Integer.parseInt(id));
                     } else {
                         log.info("update data MT");
-                        if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
+                        if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || !flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
                             dBDataTransaksiOutgoing2.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
                         } else {
                             dBDataTransaksiOutgoing2.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
