@@ -131,7 +131,7 @@
                                         <input type="text" name="_110_of52a_party_identifier" id="_110_of52a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_110_of52a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_111_of52a_identifier_code" id="_111_of52a_identifier_code" maxlength="11" input_type="Of52A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_111_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_111_of52a_identifier_code" id="_111_of52a_identifier_code" maxlength="11" input_type="Of52A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_111_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_112_of52a_address" id="_112_of52a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_112_of52a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -161,7 +161,7 @@
                                         <input type="text" name="_120_of53a_party_identifier" id="_120_of53a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_120_of53a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_121_of53a_identifier_code" id="_121_of53a_identifier_code" maxlength="11" input_type="MF53A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_121_of53a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_121_of53a_identifier_code" id="_121_of53a_identifier_code" maxlength="11" input_type="MF53A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_121_of53a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea disabled="true"><c:out value="${senderBank}" /></textarea>
@@ -199,7 +199,7 @@
                                         <input type="text" name="_130_of54a_party_identifier" id="_130_of54a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_130_of54a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_131_of54a_identifier_code" id="_131_of54a_identifier_code" maxlength="11" input_type="OF54A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_131_of54a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_131_of54a_identifier_code" id="_131_of54a_identifier_code" maxlength="11" input_type="OF54A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_131_of54a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_132_of54a_address" id="_132_of54a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_132_of54a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -236,7 +236,7 @@
                                         <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="OF56A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="OF56A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_162_of56a_address" id="_162_of56a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_162_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -266,7 +266,7 @@
                                         <input type="text" name="_170_of57a_party_identifier" id="_170_of57a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_170_of57a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_171_of57a_identifier_code" id="_171_of57a_identifier_code" maxlength="11" input_type="OF57A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_171_of57a_identifier_code" id="_171_of57a_identifier_code" maxlength="11" input_type="OF57A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea disabled="true"><c:out value="${receiverBank}" /></textarea>
@@ -303,7 +303,7 @@
                                         <input type="text" name="_180_of58a_party_identifier" id="_180_of58a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_180_of58a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_181_of58a_identifier_code" id="_181_of58a_identifier_code" maxlength="11" input_type="OF58A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_181_of58a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_181_of58a_identifier_code" id="_181_of58a_identifier_code" maxlength="11" input_type="OF58A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_181_of58a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea disabled="true"><c:out value="${receiverBank}" /></textarea>
@@ -343,7 +343,7 @@
                                         <input type="text" name="_240_mf50a_account" id="_240_mf50a_account" maxlength="35" input_type="MF50A Account" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_240_mf50a_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_241_mf50a_identifier_code" id="_241_mf50a_identifier_code" maxlength="11" input_type="MF50A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_241_mf50a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_241_mf50a_identifier_code" id="_241_mf50a_identifier_code" maxlength="11" input_type="MF50A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_241_mf50a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_242_mf50a_address" id="_242_mf50a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_242_mf50a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -463,7 +463,7 @@
                                         <input type="text" name="_260_of52a_party_identifier" id="_260_of52a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_260_of52a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_261_of52a_identifier_code" id="_261_of52a_identifier_code" maxlength="11" input_type="OF52A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_261_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_261_of52a_identifier_code" id="_261_of52a_identifier_code" maxlength="11" input_type="OF52A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_261_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_262_of52a_address" id="_262_of52a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_262_of52a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -493,7 +493,7 @@
                                         <input type="text" name="_270_of56a_party_identifier" id="_270_of56a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_270_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_271_of56a_identifier_code" id="_271_of56a_identifier_code" maxlength="11" input_type="OF56A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_271_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" name="_271_of56a_identifier_code" id="_271_of56a_identifier_code" maxlength="11" input_type="OF56A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_271_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_272_of56a_address" id="_272_of56a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_272_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -529,7 +529,7 @@
                                         <input type="text" name="_280_of57a_party_identifier" id="_280_of57a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_280_of57a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_281_of57a_identifier_code" id="_281_of57a_identifier_code" maxlength="11" input_type="OF57A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_281_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_281_of57a_identifier_code" id="_281_of57a_identifier_code" maxlength="11" input_type="OF57A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_281_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea disabled="true"><c:out value="${receiverBank}" /></textarea>
@@ -604,7 +604,7 @@
                                         <input type="text" name="_292_mf59a_account" id="_292_mf59a_account" maxlength="35" size="40" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_292_mf59a_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                        <input type="text" name="_293_mf59a_identifier_code" id="_293_mf59a_identifier_code" maxlength="11" input_type="MF59A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_293_mf59a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_293_mf59a_identifier_code" id="_293_mf59a_identifier_code" maxlength="11" input_type="MF59A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_293_mf59a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea cols="33" rows="4" maxlength="132" style="resize:none;" name="_294_mf59a_address" id="_294_mf59a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_294_mf59a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -718,7 +718,7 @@
                             
                             <!-- OF33B -->
                             <div class="form-row"><span class="label_body">OF33B</span><span class="label">Currency</span>
-                                <input type="text" onkeypress="return textonly(event)" name="_070_of33b_currency" id="_070_of33b_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="return textonly(event)" name="_070_of33b_currency" id="_070_of33b_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
                                 <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" onblur="cek_koma(this)" />
