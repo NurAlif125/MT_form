@@ -74,7 +74,7 @@ public class rulePacs004_2024 {
             }
 
             String orgnlInstrId = txInf.getOrgnlInstrId();
-            if (orgnlInstrId != null || orgnlInstrId.equalsIgnoreCase("")) {
+            if (orgnlInstrId != null) {
                 if (orgnlInstrId.startsWith("/") || orgnlInstrId.endsWith("/") || orgnlInstrId.contains("//")) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/OrgnlInstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><td>PmtRtr/TxInf/OrgnlInstrId</td></tr>");
                 }

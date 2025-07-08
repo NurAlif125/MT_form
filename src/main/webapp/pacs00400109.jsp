@@ -108,6 +108,9 @@
         input[disabled="disabled"] {
             background-color: #ECCFD1;
         }
+        input[data-xsd2html2xml-description="BICFI"] {
+                text-transform: uppercase;
+        }
     </style>
     <script src="js/flatpickr.js"></script>
     <link rel="stylesheet" href="css/flatpickr.css">
