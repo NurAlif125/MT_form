@@ -845,7 +845,7 @@
             </c:if>
             <% } %>
         </c:forEach>
-        <% if (!session.getAttribute("flagStatus").equals("")) {%>
+        <% if (!session.getAttribute("flagStatus").equals("") || !session.getAttribute("flagStatus").toString().trim().isEmpty()) {%>
         <input type="button" name="btn-export" id="btn-export" value="Export" />
         <% } %>
 
