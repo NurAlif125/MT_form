@@ -1646,9 +1646,7 @@ public class DBHeader {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
 
-//        StringBuilder where = new StringBuilder("h.isDuplicate = 0");
-        StringBuilder where = new StringBuilder("1 = 1");
-
+        StringBuilder where = new StringBuilder("h.isDuplicate = 0");
         // io_type
         if (io_type == null || io_type.isEmpty()) {
             where.append(" AND (h.io_type='O' OR h.io_type='I')");
@@ -1969,7 +1967,7 @@ public class DBHeader {
 //        return headers;
 //    }
     public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
-        StringBuilder where = new StringBuilder("WHERE 1=1");
+        StringBuilder where = new StringBuilder("WHERE h.isDuplicate = 0");
         List<Object> parameters = new ArrayList<>();
 
         if (io_type == null || io_type.isEmpty()) {
