@@ -1248,7 +1248,7 @@
                                 <legend>InstructingAgent <a style="color:red;text-decoration:none">*</a></legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="11" maxlength="11" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="12" maxlength="12" id="instructingAgent" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/ClrSysMmbId">
                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -1273,7 +1273,7 @@
                                 <legend>InstructedAgent <a style="color:red;text-decoration:none">*</a></legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId">
                                         <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend>
-                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="11" maxlength="11" onchange='if (this.value) {
+                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" id="FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI" tabindex="-1"><input type="text" minlength="12" maxlength="12" id="instructedAgent" onchange='if (this.value) {
             this.setAttribute("value", this.value);
         } else {
             this.removeAttribute("value");
@@ -4081,4 +4081,49 @@
                 }
             }
         });
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll('input[data-xsd2html2xml-description="BICFI"]', 'input[data-xsd2html2xml-description="Currency"]', 'input[data-xsd2html2xml-description="AnyBIC"]');
+    inputs.forEach(function(input) {
+        input.addEventListener("input", function () {
+            this.value = this.value.toUpperCase();
+        });
+    });
+});
+
+        document.addEventListener("DOMContentLoaded", function() {
+    const input = document.getElementById('instructingAgent');
+    input.addEventListener("blur", function () {
+        let value = input.value.trim().toUpperCase();
+        input.value = value; // Update ke uppercase
+
+        if (value.length === 12) {
+            const part1 = value.substring(0, 8);
+            const part2 = value.substring(9, 12);
+            const newValue = part1 + part2;
+            input.value = newValue;
+            console.log("BICFI setelah diproses:", newValue);
+        } else if (value.length > 0) {
+            alert('BICFI must be 12 characters (contoh: BDINIDJAXXXX)');
+        }
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const input = document.getElementById('instructedAgent');
+    input.addEventListener("blur", function () {
+        let value = input.value.trim().toUpperCase();
+        input.value = value; // Update ke uppercase
+
+        if (value.length === 12) {
+            const part1 = value.substring(0, 8);
+            const part2 = value.substring(9, 12);
+            const newValue = part1 + part2;
+            input.value = newValue;
+            console.log("BICFI setelah diproses:", newValue);
+        } else if (value.length > 0) {
+            alert('BICFI must be 12 characters (contoh: BDINIDJAXXXX)');
+        }
+    });
+});
     </script>
