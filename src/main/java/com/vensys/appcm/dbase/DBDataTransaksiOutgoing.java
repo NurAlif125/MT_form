@@ -1738,7 +1738,7 @@ public class DBDataTransaksiOutgoing {
         try {
             String sql = "SELECT DISTINCT h.id_headers, messageType, logicalTerminal, sessionNumber, sequenceNumber, io_type,\n"
                     + "receiverAddress, tanggal, flag, isDuplicate, trx.trans_reference, trx.trans_related_reference, trx.trans_date_value, trx.trans_amount,\n"
-                    + "trx.trans_ccy FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers WHERE logicalTerminal = ? AND receiverAddress = ? AND trx.trans_reference = ?\n"
+                    + "trx.trans_ccy FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers WHERE logicalTerminal = ? AND receiverAddress = ? AND lower(trx.trans_reference) = ?\n"
                     + "AND trx.trans_date_value::date = ?::date AND trx.trans_amount = ? AND trx.trans_ccy = ? AND messageType = ?\n"
                     + "AND tanggal > CURRENT_DATE AND io_type = 'I' ORDER BY h.id_headers";
             log.info("trans_reference & trans_date_value" + data.getTrans_refference() + " # " + data.getTrans_date_value());
@@ -1747,7 +1747,7 @@ public class DBDataTransaksiOutgoing {
             log.info("logical terminal : " + data.getLogicalTerminal());
             st.setString(2, data.getReceiverAddress());
             log.info("receiver Address : " + data.getReceiverAddress());
-            st.setString(3, data.getTrans_refference());
+            st.setString(3, data.getTrans_refference().toLowerCase());
             log.info("trans_reference : " + data.getTrans_refference());
             if (data.getTrans_date_value().length() == 6) {
                 st.setString(4, "20" + data.getTrans_date_value().substring(0, 2) + "-" + data.getTrans_date_value().substring(2, 4) + "-" + data.getTrans_date_value().substring(4, 6));

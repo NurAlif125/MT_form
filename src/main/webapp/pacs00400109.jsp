@@ -108,7 +108,8 @@
         input[disabled="disabled"] {
             background-color: #ECCFD1;
         }
-        input[data-xsd2html2xml-description="BICFI"] {
+        input[data-xsd2html2xml-description="BICFI"], input[data-xsd2html2xml-description="Currency"],
+        input[data-xsd2html2xml-description="AnyBIC"]{
                 text-transform: uppercase;
         }
     </style>
