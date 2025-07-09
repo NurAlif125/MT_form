@@ -187,7 +187,7 @@
 
                                     <!-- OF36 -->
                                     <div class="form-row"><span class="label_body">OF36</span><span class="label">Exchange Rate</span>
-                                        <input type="text" name="_080_of36_rate" id="_080_of36_rate" maxlength="12" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_080_of36_rate'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_080_of36_rate" id="_080_of36_rate" maxlength="12" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_080_of36_rate'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_080_of36_rate');" onblur="cek_koma(this)" />
                                     </div>
                                     <hr/>
 
