@@ -111,6 +111,9 @@
     input[data-xsd2html2xml-description="BICFI"] {
         text-transform: uppercase;
     }
+    input[data-xsd2html2xml-description="Currency"] {
+        text-transform: uppercase;
+    }
 </style>
 <script src="js/flatpickr.js"></script>
 <link rel="stylesheet" href="css/flatpickr.css">
@@ -1431,7 +1434,7 @@
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">IntermediaryAgent3Account</button></section><section id="FICdtTrf/CdtTrfTxInf/Dbtr" tabindex="-1"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dbtr" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Dbtr">
                                 <legend>Debtor <a style="color:red;text-decoration:none">*</a></legend>
                                 <section id="FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId" tabindex="-1"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId">
-                                        <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend>
+                                        <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend><p>If BICFI is present, then (Name and Postal Address) is NOT allowed (other elements remain optional)</p><p>If BICFI is absent then Name is mandatory and it is recommended to also provide the Postal Address.</p>
                                         <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/ClrSysMmbId">
@@ -1840,7 +1843,7 @@
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CreditorAgentAccount</button></section><section id="FICdtTrf/CdtTrfTxInf/Cdtr" tabindex="-1"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Cdtr" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Cdtr">
                                 <legend>Creditor <a style="color:red;text-decoration:none">*</a></legend>
                                 <section id="FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId" tabindex="-1"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId">
-                                        <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend>
+                                        <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend><p>If BICFI is present, then (Name and Postal Address) is NOT allowed (other elements remain optional)</p><p>If BICFI is absent then Name is mandatory and it is recommended to also provide the Postal Address.</p>
                                         <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/ClrSysMmbId">

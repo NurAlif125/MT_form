@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 public class SCExport extends HttpServlet {
 
     Logger log = Logger.getLogger(getClass().getName());
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,25 +44,28 @@ public class SCExport extends HttpServlet {
         DBMTText dbText = new DBMTText(dbConn.getConnection());
         DBDataTransaksiOutgoing dbOut = new DBDataTransaksiOutgoing(dbConn.getConnection());
         DataMTText textById = new DataMTText();
-        
+
         String id = request.getParameter("id");
         String messageType = request.getParameter("messageType");
-        
+
         if (messageType.contains("pacs") || messageType.contains("camt")) {
             try {
                 Header header = dbOut.getHeaderById(id);
                 textById = dbText.getMxTextById(Integer.parseInt(request.getParameter("id")));
-                String message = textById.getFinal_mt();
-                
+                String message = textById.getFinal_mx();
+
+                if (message == null) {
+                    message = "";
+                }
                 OutputStream out = response.getOutputStream();
                 String headerKey = "Content-Disposition";
                 String headerValue = String.format("attachment; filename=\"" + header.getMessageType() + "_" + id + ".txt");
                 response.setHeader(headerKey, headerValue);
-                
+
                 OutputStream outputStream = response.getOutputStream();
                 outputStream.write(message.getBytes());
                 outputStream.close();
-                
+
             } catch (Exception e) {
                 log.error(e.getMessage());
             }
@@ -70,15 +74,19 @@ public class SCExport extends HttpServlet {
                 Header header = dbOut.getHeaderById(id);
                 textById = dbText.getMtTextById(Integer.parseInt(request.getParameter("id")));
                 String message = textById.getFinal_mt();
-                
+
+                if (message == null) {
+                    message = "";
+                }
                 OutputStream out = response.getOutputStream();
                 String headerKey = "Content-Disposition";
                 String headerValue = String.format("attachment; filename=\"" + header.getMessageType() + "_" + id + ".txt");
                 response.setHeader(headerKey, headerValue);
-                
+
                 OutputStream outputStream = response.getOutputStream();
                 outputStream.write(message.getBytes());
                 outputStream.close();
+
             } catch (Exception e) {
                 log.error(e.getMessage());
             }

@@ -111,6 +111,12 @@
     input[data-xsd2html2xml-description="BICFI"] {
         text-transform: uppercase;
     }
+    input[data-xsd2html2xml-description="Currency"] {
+        text-transform: uppercase;
+    }
+    input[data-xsd2html2xml-description="AnyBIC"] {
+        text-transform: uppercase;
+    }
 </style>
 <script src="js/flatpickr.js"></script>
 <link rel="stylesheet" href="css/flatpickr.css">
@@ -1952,7 +1958,7 @@
         ;' required="required" pattern="[A-Z]{2,2}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="CountryOfResidence"><span>CountryOfResidence<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CountryOfResidence</button></section>
                             </fieldset>
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">InitiatingParty</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dbtr" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr" id="FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr" tabindex="-1">
-                                <legend>Debtor <a style="color:red;text-decoration:none">*</a></legend>
+                                <legend>Debtor <a style="color:red;text-decoration:none">*</a></legend><p>If Identification/AnyBIC is present, then (Name and Postal Address) is NOT allowed (other elements remain optional)</p><p>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address.</p>
                                 <section id="FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm"><input type="text" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value");
@@ -2415,7 +2421,7 @@
                                     <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Proxy</button></section>
                             </fieldset>
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CreditorAgentAccount</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Cdtr" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr" id="FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr" tabindex="-1">
-                                <legend>Creditor <a style="color:red;text-decoration:none">*</a></legend>
+                                <legend>Creditor <a style="color:red;text-decoration:none">*</a></legend><p>If Identification/AnyBIC is present, then (Name and Postal Address) is NOT allowed (other elements remain optional)</p><p>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address.</p>
                                 <section id="FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm"><input type="text" onchange='if (this.value) {
             this.setAttribute("value", this.value); } else {
             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ !#$%&\*=^_`\{\|\}~&quot;;<>@\[\\\]]+" maxlength="140" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Name"><span>Name<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Name</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PstlAdr" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr" id="FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr" tabindex="-1">
