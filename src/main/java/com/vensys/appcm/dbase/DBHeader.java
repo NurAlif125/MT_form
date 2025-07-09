@@ -625,7 +625,8 @@ public class DBHeader {
                 + "FROM headers WHERE id_headers=? ";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
-        st.setString(1, id);
+        int idx = Integer.parseInt(id);
+        st.setInt(1, idx);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             Header header = new Header();
