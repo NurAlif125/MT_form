@@ -1646,7 +1646,8 @@ public class DBHeader {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
 
-        StringBuilder where = new StringBuilder("h.isDuplicate != 1");
+//        StringBuilder where = new StringBuilder("h.isDuplicate = 0");
+        StringBuilder where = new StringBuilder("1 = 1");
 
         // io_type
         if (io_type == null || io_type.isEmpty()) {
