@@ -128,6 +128,8 @@
                                 <th>Creation date</th>
                                 <th>Status</th>
                                 <th>Source</th>
+                                <th>Create By</th>
+                                <th>Approve By</th>
                                 <th>Action</th>
                                 <!--                        <th>Action</th>-->
                             </tr>
@@ -186,6 +188,8 @@
                                 <th><input type="text" class="column-search" placeholder_="Search Creation"></th>
                                 <th><input type="text" class="column-search" placeholder_="Search Status"></th>
                                 <th><input type="text" class="column-search" placeholder_="Search Source"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Createby"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Approveby"></th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -606,6 +610,8 @@ function escapeHtml(text) {
                 {data: "tanggal"},
                 {data: "flag"},
                 {data: "source"},
+                {data: "createby"},
+                {data: "approveby"},
                 {data: null} // Action
             ],
             columnDefs: [

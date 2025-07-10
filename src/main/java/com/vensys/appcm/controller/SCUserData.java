@@ -84,12 +84,14 @@ public class SCUserData extends HttpServlet {
         String[] gs = null;
         String channel = "";
         String userBIC = "";
+        String namaUser = "";
 //        List <Nst> nsts = null;
         try {
 //            data = dbo.getUserDataByIdLDAP(user_id);
             data = dbo.getUserDataById(user_id);
             channel = data.getChannel();
             userBIC = data.getUser_bic();
+            namaUser = data.getName();
             gs = dbg.getGeneralSetting();
 //            dataLogin = dbo.selectLastLoginBerhasil(user_id);
             dataLogin = dbo.selectLastLoginBerhasil(user_id);
@@ -233,6 +235,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("hostname", gs[0]);
                                 session.setAttribute("appVersion", gs[1]);
                                 session.setAttribute("channel", channel);
+                                session.setAttribute("nameUser", namaUser);
                                 if (String.valueOf(data.getUser_bic()).equals("") || String.valueOf(data.getUser_bic()) == null) {
                                     session.setAttribute("user_bic", "null");
                                 } else {

@@ -75,15 +75,15 @@ public class DBDataTransaksiOutgoing {
         return id;
     }
 
-    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel, String reference) {
+    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel, String reference, String nameUser) {
         String header = "";
         // Mendapatkan string format tanggal dan Timestamp secara langsung
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String timestampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
         try {
-            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source) \n"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
+            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source, createby, approveby) \n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
                     + "RETURNING id_headers;";
             PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -121,6 +121,8 @@ public class DBDataTransaksiOutgoing {
             st.setString(28, "SRC:MANUAL"); //user entry
             st.setString(29, data.getNetworkType()); //networktype
             st.setString(30, channel);
+            st.setString(31, nameUser);
+            st.setString(32, "--");
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -303,6 +305,18 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
         } catch (SQLException e) {
             log.error("Error moveJournalHistory : " + e.toString());
+        }
+    }
+    
+    public void updateApproved(String nameUser, int id) {
+        try {
+            String sql = "UPDATE headers SET approveby = ? WHERE id_headers =?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, nameUser);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Error updateApproved: " + e.getMessage());
         }
     }
     
