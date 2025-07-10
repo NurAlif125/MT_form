@@ -1376,7 +1376,7 @@ public class DBHeader {
             where += " AND h.source = '" + channel + "' ";
         }
         String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,"
-                + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? " + where
                 + "AND h.isduplicate=1 ORDER BY tanggal DESC";
 //        System.out.println("sql getAllHeaderDuplicate = " + sql);

@@ -1742,8 +1742,8 @@ public class DBDataTransaksiOutgoing {
         return datas;
     }
 
-    public List<Integer> cekDuplikatID(Header data) throws Exception {
-        List<Integer> dupe = new ArrayList<Integer>();
+    public boolean cekDuplikatID(Header data) throws Exception {
+        boolean dupe = false;
         SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyy");
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = originalFormat.parse(data.getTrans_date_value());
@@ -1754,7 +1754,7 @@ public class DBDataTransaksiOutgoing {
                     + "receiverAddress, tanggal, flag, isDuplicate, trx.trans_reference, trx.trans_related_reference, trx.trans_date_value, trx.trans_amount,\n"
                     + "trx.trans_ccy FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers WHERE logicalTerminal = ? AND receiverAddress = ? AND lower(trx.trans_reference) = ?\n"
                     + "AND trx.trans_date_value::date = ?::date AND trx.trans_amount = ? AND trx.trans_ccy = ? AND messageType = ?\n"
-                    + "AND tanggal > CURRENT_DATE AND io_type = 'I' ORDER BY h.id_headers";
+                    + "AND tanggal > CURRENT_DATE AND io_type = 'I' AND isDuplicate = '0' ORDER BY h.id_headers";
             log.info("trans_reference & trans_date_value" + data.getTrans_refference() + " # " + data.getTrans_date_value());
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getLogicalTerminal());
@@ -1777,7 +1777,7 @@ public class DBDataTransaksiOutgoing {
             log.info("messageType : " + data.getMessageType());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                dupe.add(rs.getInt(1));
+                dupe = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
