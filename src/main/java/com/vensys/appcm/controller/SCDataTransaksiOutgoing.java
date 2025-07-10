@@ -158,7 +158,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     reference = "Reference: "+request.getParameter("_010_mf20_sender_reference");
                 } 
                 
-                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference);
+                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference, (String) session.getAttribute("nameUser"));
                 log.info("lastInsertedID " + lastInsertedID);
             } else {
                 if (io_typeStatus.equalsIgnoreCase("I")) {
@@ -186,8 +186,10 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 //                            dBDataTransaksiOutgoing.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         } else {
                             // System.out.println("flag req selain ver and mod");
-                            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
-                            
+                            dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
+                            if (flag.equalsIgnoreCase("AUTH")) {
+                                dBDataTransaksiOutgoing2.updateApproved((String) session.getAttribute("nameUser"), Integer.parseInt(id));
+                            }
                             if ((flagStatus.equalsIgnoreCase("VER") && flag.equalsIgnoreCase("MOD")) || (flagStatus.equalsIgnoreCase("CVT-VER") && flag.equalsIgnoreCase("CVT-MOD"))) {
                                 // log.info("kadieuu flag selain mod 146");
                                 dBDataTransaksiOutgoing2.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), flagStatus);

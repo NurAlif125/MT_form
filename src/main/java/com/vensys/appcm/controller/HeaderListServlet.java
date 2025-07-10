@@ -83,6 +83,8 @@ public class HeaderListServlet extends HttpServlet {
         criteria.setCreatedDateSearch(request.getParameter("columns[11][search][value]"));
         criteria.setFlagSearch(request.getParameter("columns[12][search][value]"));
         criteria.setSourceSearch(request.getParameter("columns[13][search][value]"));
+        criteria.setCreateby(request.getParameter("columns[14][search][value]"));
+        criteria.setApproveby(request.getParameter("columns[15][search][value]"));
         
 //        System.out.println("mtSearch: " + request.getParameter("columns[1][search][value]"));
 //        System.out.println("ioSearch: " + request.getParameter("columns[2][search][value]"));
@@ -376,6 +378,8 @@ public class HeaderListServlet extends HttpServlet {
                     obj.put("trans_date_value", h.getTrans_date_value());
                     obj.put("trans_amount", h.getTrans_amount());
                     obj.put("trans_ccy", h.getTrans_ccy());
+                    obj.put("createby", h.getCreateby());
+                    obj.put("approveby", h.getApproveby());
                     dataArray.put(obj);
                 }
 
