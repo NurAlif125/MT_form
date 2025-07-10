@@ -950,7 +950,7 @@ public class DBHeader {
                      SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,
                      h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.id_headers, h.flag, h.isDuplicate,
                      h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
-                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
+                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
                 + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
@@ -1003,7 +1003,7 @@ public class DBHeader {
     }
 
     public int countAllHeader(HttpSession httpSession, String io_type, String flag, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
-        String where = "";
+        String where = " ";
         String role = "";
         String isDuplicate = "0";
         Calendar now = Calendar.getInstance();
@@ -1202,7 +1202,7 @@ public class DBHeader {
         int headers = 0;
         String sql = """
                      SELECT count(h.id_headers)
-                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
+                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
                 + "--ORDER BY tanggal DESC --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
@@ -1646,7 +1646,7 @@ public class DBHeader {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
 
-        StringBuilder where = new StringBuilder("h.isDuplicate = 0");
+        StringBuilder where = new StringBuilder("(h.isDuplicate = 0 AND h.flag NOT IN ('DUPL-CNF', 'DUPL')) ");
         // io_type
         if (io_type == null || io_type.isEmpty()) {
             where.append(" AND (h.io_type='O' OR h.io_type='I')");
@@ -1797,12 +1797,13 @@ public class DBHeader {
             st.setInt(idx++, start);
             st.setInt(idx, length);
 
-            String rawSql = sql;
-            for (Object param : parameters) {
-                rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
-            }
-            rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
-            rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
+            //check hasil query
+//            String rawSql = sql;
+//            for (Object param : parameters) {
+//                rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
+//            }
+//            rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
+//            rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
 //        System.out.println("Expanded SQL:\n" + rawSql); //cetak hasil query
 
             try (ResultSet rs = st.executeQuery()) {
@@ -1967,7 +1968,7 @@ public class DBHeader {
 //        return headers;
 //    }
     public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
-        StringBuilder where = new StringBuilder("WHERE h.isDuplicate = 0");
+        StringBuilder where = new StringBuilder("WHERE (h.isDuplicate = 0 AND h.flag NOT IN ('DUPL-CNF', 'DUPL')) ");
         List<Object> parameters = new ArrayList<>();
 
         if (io_type == null || io_type.isEmpty()) {
@@ -2110,13 +2111,29 @@ public class DBHeader {
         }
 
         String sql = "SELECT count(h.id_headers) FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + where.toString() + " AND h.isDuplicate!=1";
+                + where.toString() + "";
 
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             for (int i = 0; i < parameters.size(); i++) {
                 st.setObject(i + 1, parameters.get(i));
             }
             ResultSet rs = st.executeQuery();
+            
+//              int idx = 1;
+//            for (Object param : parameters) {
+//                st.setObject(idx++, param);
+//            }
+////            st.setInt(idx++, start);
+////            st.setInt(idx, length);
+//
+//            String rawSql = sql;
+//            for (Object param : parameters) {
+//                rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
+//            }
+////            rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
+////            rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
+//        System.out.println("Expanded Count SQL:\n" + rawSql); //cetak hasil query
+            
             if (rs.next()) {
                 return rs.getInt(1);
             }
