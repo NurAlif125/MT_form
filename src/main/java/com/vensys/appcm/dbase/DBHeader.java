@@ -944,12 +944,18 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
         }
+        if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+            where += " AND createby ILIKE '%" + criteria.getCreateby() + "%'";
+        }
+        if (criteria.getApproveby()  != null && !criteria.getApproveby().isEmpty()) {
+            where += " AND approveby ILIKE '%" + criteria.getApproveby() + "%'";
+        }
 
         List<Header> headers = new ArrayList<Header>();
         String sql = """
                      SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,
                      h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.id_headers, h.flag, h.isDuplicate,
-                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
+                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
                 + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
@@ -988,6 +994,8 @@ public class DBHeader {
             }
             header.setTrans_date_value(rs.getString(16));
             header.setTrans_ccy(rs.getString(18));
+            header.setCreateby(rs.getString(19));
+            header.setApproveby(rs.getString(20));
 
 //            header.setTrans_ccy(rs.getString(15));
 //            header.setTag20(rs.getString(12));
@@ -1197,6 +1205,12 @@ public class DBHeader {
         }
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
+        }
+        if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+            where += " AND createby ILIKE '%" + criteria.getCreateby() + "%'";
+        }
+        if (criteria.getApproveby() != null && !criteria.getApproveby().isEmpty()) {
+            where += " AND approveby ILIKE '%" + criteria.getApproveby() + "%'";
         }
 
         int headers = 0;
@@ -1780,12 +1794,20 @@ public class DBHeader {
                 where.append(" AND h.source ILIKE ?");
                 parameters.add("%" + criteria.getSourceSearch() + "%");
             }
+            if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+                where.append(" AND h.createby ILIKE ?");
+                parameters.add("%" + criteria.getCreateby() + "%");
+            }
+            if (criteria.getApproveby() != null && !criteria.getApproveby().isEmpty()) {
+                where.append(" AND h.approveby ILIKE ?");
+                parameters.add("%" + criteria.getApproveby() + "%");
+            }
         }
 
         // Final query
         String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
                 + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, h.source, "
-                + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy "
+                + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
@@ -1826,6 +1848,8 @@ public class DBHeader {
                     String amt = rs.getString("trans_amount");
                     data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
                     data.setTrans_ccy(rs.getString("trans_ccy"));
+                    data.setCreateby(rs.getString("createby"));
+                    data.setApproveby(rs.getString("approveby"));
                     datas.add(data);
                 }
             }
@@ -2108,6 +2132,14 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             where.append(" AND source ILIKE ?");
             parameters.add("%" + criteria.getSourceSearch() + "%");
+        }
+        if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+            where.append(" AND createby ILIKE ?");
+            parameters.add("%" + criteria.getCreateby() + "%");
+        }
+        if (criteria.getApproveby() != null && !criteria.getApproveby().isEmpty()) {
+            where.append(" AND approveby ILIKE ?");
+            parameters.add("%" + criteria.getApproveby() + "%");
         }
 
         String sql = "SELECT count(h.id_headers) FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "

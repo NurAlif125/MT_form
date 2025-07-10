@@ -236,10 +236,11 @@
             if (answer) {
                 var finalMT1 = $('#beforeConvert').val();
                 var finalMT2 = $('#afterConvert').val();
-                if ((finalMT1 && finalMT1.trim() !== "") || (finalMT2 && finalMT2.trim() !== "")) {
+                var finalMT3 = $('#mxview2').val();
+                if ((finalMT1 && finalMT1.trim() !== "") || (finalMT2 && finalMT2.trim() !== "") || (finalMT3 && finalMT3.trim() !== "")) {
                     document.location.href = 'SCExport?id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
                 } else {
-                    alert("MT format from this transaction is not available yet!");
+                    alert("MT format for this transaction is not available yet!");
                 }
             }
         });

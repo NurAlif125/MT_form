@@ -52,6 +52,8 @@ public class Header {
     private String tag32AmountOnly;
     private String tag32Date;
     private String tag32Currency;
+    private String createby;
+    private String approveby;
 //    sender
     private String tag53a_identifier_code;
     private String tag50k_name_address;
@@ -195,7 +197,7 @@ public class Header {
             String flagTemplate, String senderInputTime, String MIRDate, String MIRLogicalTerminal, 
             String MIRSessionNumber, String MIRSequenceNumber, String receiverOutputDate, 
             String receiverOutputTime, String block3, String tag20, String status_header, 
-            String channel) {
+            String channel, String createby, String approveby) {
         this.id_headers = id_headers;
         this.applicationId = applicationId;
         this.serviceId = applicationId;
@@ -228,6 +230,24 @@ public class Header {
         this.tag20 = tag20;
         this.status_header = status_header;
         this.channel = channel;
+        this.createby = createby;
+        this.approveby = approveby;
+    }
+
+    public String getCreateby() {
+        return createby;
+    }
+
+    public void setCreateby(String createby) {
+        this.createby = createby;
+    }
+
+    public String getApproveby() {
+        return approveby;
+    }
+
+    public void setApproveby(String approveby) {
+        this.approveby = approveby;
     }
 
     public String getSource() {
