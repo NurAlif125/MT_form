@@ -308,15 +308,9 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                     int id_headers = dBDataTransaksiOutgoing.id_headers();
                     log.info("create new MT");
-                    List<Integer> idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
-                    int lengthIdDupe = idDupe.size();
-                    log.info("panjang dupe nya.... " + lengthIdDupe);
-                    if (lengthIdDupe > 1) {
-                        log.info("246 masuk if");
-                        for (int ld = 1; ld < lengthIdDupe; ld++) {
-                            dBDataTransaksiOutgoing2.updateDuplikat(idDupe.get(ld));
-                            log.info("sini 249");
-                        }
+                    boolean idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
+                    if (idDupe) {
+                        dBDataTransaksiOutgoing2.updateDuplikat(id_headers);
                         // log.info("masuk if 270");
                     }
                     if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
