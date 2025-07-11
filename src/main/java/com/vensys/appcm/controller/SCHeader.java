@@ -62,6 +62,8 @@ public class SCHeader extends HttpServlet implements Serializable {
         criteria.setCreatedDateSearch(request.getParameter("columns[11][search][value]"));
         criteria.setFlagSearch(request.getParameter("columns[12][search][value]"));
         criteria.setSourceSearch(request.getParameter("columns[13][search][value]"));
+        criteria.setCreateby(request.getParameter("columns[14][search][value]"));
+        criteria.setApproveby(request.getParameter("columns[15][search][value]"));
         
         int offset = 0;
         int limit = 10; // default limit
@@ -122,9 +124,13 @@ public class SCHeader extends HttpServlet implements Serializable {
         String channel = "";
         try {
             channel = (String) httpSession.getAttribute("channel");
-            notifVer = dbo.getNotificationVer();
-//            log.info("notifVer: " + notifVer);
-            notifAuth = dbo.getNotificationAuth();
+            if (!channel.equalsIgnoreCase("")) {
+                notifVer = dbo.getNotificationVer(channel);
+                notifAuth = dbo.getNotificationAuth(channel);
+            } else {
+                notifVer = dbo.getNotifVerAll();
+                notifAuth = dbo.getNotifAuthAll();
+            }
 //            log.info("notifAuth: " + notifAuth);
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);

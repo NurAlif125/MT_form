@@ -25,8 +25,8 @@
 
     $(document).ready(function () {
         $('#approveAll').click(function () {
-           var answer = confirm('Approve All BIC?');
-           return answer;
+            var answer = confirm('Approve All BIC?');
+            return answer;
         });
         $('#rejectAll').click(function () {
             var answer = confirm('Reject All BIC?');
@@ -178,20 +178,20 @@
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-RESEND-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
-        }); 
+        });
         $('#approve_inc_resend').click(function () {
             var answer = confirm('Do you want to Approve this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
-        }); 
+        });
         $('#reject_unsettle_inc').click(function () {
             var answer = confirm('Do you want to Reject this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=UNSETTLE-INC&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
-        }); 
-        
+        });
+
         $('#verified').click(function () {
             var answer = confirm('Do you want to verified this MT..!!');
             if (answer) {
@@ -212,6 +212,12 @@
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AUTH&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
         });
+        $('#duplResend').click(function () {
+            var answer = confirm('Do you want to resend this message?');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=DUPL-RESEND&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+            }
+        });
         $('#generated').click(function () {
             var answer = confirm('Do you want to generate text this MT..!!');
             if (answer) {
@@ -225,6 +231,19 @@
                 printMTDoc('SCPrintMTDoc?id=' + $('#id').val());
             }
         });
+        $('#btn-export').click(function () {
+            var answer = confirm('Do you want to export this message to txt file?');
+            if (answer) {
+                var finalMT1 = $('#beforeConvert').val();
+                var finalMT2 = $('#afterConvert').val();
+                var finalMT3 = $('#mxview2').val();
+                if ((finalMT1 && finalMT1.trim() !== "") || (finalMT2 && finalMT2.trim() !== "") || (finalMT3 && finalMT3.trim() !== "")) {
+                    document.location.href = 'SCExport?id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+                } else {
+                    alert("MT format for this transaction is not available yet!");
+                }
+            }
+        });
         $('#printedmx').click(function () {
             var answer = confirm('Do you want to print this Message?');
             if (answer) {
@@ -235,6 +254,12 @@
             var answer = confirm('Do you want to print this MT..!!');
             if (answer) {
                 printMTDoc('SCPrintNota?id=' + $('#id').val());
+            }
+        });
+        $('#releaseDupl').click(function () {
+            var answer = confirm('Do you want to release this message?');
+            if (answer) {
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=DUPL-CNF&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
         });
         $('#returned').click(function () {
@@ -281,15 +306,15 @@
             var answer = confirm('Do you want to report as PDF format..!!');
             if (answer) {
                 var url = 'SCPrintPDF?' +
-                    'io_type=' + encodeURIComponent($('#io_type').val()) +
-                    '&mt_type=' + encodeURIComponent($('#mt_type').val()) +
-                    '&date_from=' + encodeURIComponent($('#date_from').val()) +
-                    '&date_end=' + encodeURIComponent($('#date_end').val()) +
-                    '&flag=' + encodeURIComponent($('#flag').val()) +
-                    '&value_date=' + encodeURIComponent($('#value_date').val()) +
-                    '&value_date_end=' + encodeURIComponent($('#value_date_end').val()) +
-                    '&cust_curr=' + encodeURIComponent($('#cust_curr').val()) +
-                    '&channel=' + encodeURIComponent($('#channel').val());
+                        'io_type=' + encodeURIComponent($('#io_type').val()) +
+                        '&mt_type=' + encodeURIComponent($('#mt_type').val()) +
+                        '&date_from=' + encodeURIComponent($('#date_from').val()) +
+                        '&date_end=' + encodeURIComponent($('#date_end').val()) +
+                        '&flag=' + encodeURIComponent($('#flag').val()) +
+                        '&value_date=' + encodeURIComponent($('#value_date').val()) +
+                        '&value_date_end=' + encodeURIComponent($('#value_date_end').val()) +
+                        '&cust_curr=' + encodeURIComponent($('#cust_curr').val()) +
+                        '&channel=' + encodeURIComponent($('#channel').val());
 
                 // Buka di tab baru langsung tanpa AJAX
                 window.open(url, '_blank');
@@ -326,7 +351,7 @@
                         if (response.status === "Processing") {
                             $('#status_message').html(
                                     'Your PDF is being generated. <br> <a href="' + response.download_url + '" target="_blank">Click here to download when ready</a>'
-                            );
+                                    );
                             window.open(response.download_url, '_blank');
                         }
                     },
@@ -722,7 +747,7 @@
         $('#reject_fia_failed').click(function () {
             var answer = confirm('Do you want to Reject this Message..!!');
             if (answer) {
-                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=FIA-FAILED&id=' + $('#id').val() + '&messageType=' + $('#messageType').val(); 
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=FIA-FAILED&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
         });
         $('#upload').click(function () {//20191231 ditambah search cover

@@ -129,10 +129,10 @@
                             </div>
 
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency Code</span>
-                                <input type="text" name="_061_mf32a_currency" id="_061_mf32a_currency" class="mandatory" onkeypress="return textonly(event)" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" name="_061_mf32a_currency" id="_061_mf32a_currency" class="mandatory" onkeypress="return textonly(event)" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>                             
-                                        <input type="text" name="_062_mf32a_amount" id="_062_mf32a_amount" class="mandatory" onpaste="return false" ondrop="return false" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)" />
+                                        <input type="text" name="_062_mf32a_amount" id="_062_mf32a_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" class="mandatory" onpaste="return false" ondrop="return false" maxlength="15" input_type="MF32A Amount" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" />
                                         <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
@@ -146,8 +146,8 @@
                                             var number2r = number2.replace(',', '.');
                                             var number2F = parseFloat(number2r);
                                             var nominal = formatUang(number2F, "");
-                                            var nominalStyle = nominal.fontsize(2);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStyle = nominal.fontsize(5);
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);
@@ -158,10 +158,10 @@
 
                                     <!-- OF33B -->
                                     <div class="form-row"><span class="label_body">OF33B</span><span class="label">Currency</span>
-                                        <input type="text" name="_070_of33b_currency" id="_070_of33b_currency" onkeypress="return textonly(event)" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_070_of33b_currency" id="_070_of33b_currency" onkeypress="return textonly(event)" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                        <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" onblur="cek_koma(this)" />
+                                        <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" />
                                         <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
@@ -176,7 +176,7 @@
                                             var number2F = parseFloat(number2r);
                                             var nominal = formatUang(number2F, "");
                                             var nominalStyle = nominal.fontsize(2);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);
@@ -187,7 +187,7 @@
 
                                     <!-- OF36 -->
                                     <div class="form-row"><span class="label_body">OF36</span><span class="label">Exchange Rate</span>
-                                        <input type="text" name="_080_of36_rate" id="_080_of36_rate" maxlength="12" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_080_of36_rate'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_080_of36_rate" id="_080_of36_rate" maxlength="12" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_080_of36_rate'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_080_of36_rate');" onblur="cek_koma(this)" />
                                     </div>
                                     <hr/>
 
@@ -195,7 +195,7 @@
                                     <div class="form-row"><span class="label_body">MF50</span><span class="label"><a style="color:red; text-decoration:none">*</a>Ordering Customer</span>
                                         <select id="type_mf50_ordering_customer" name="type_mf50_ordering_customer" class="mandatory" input_type="MF50 Ordering Customer" location="Body">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - BIC</option>
+                                            <option value="a">A - Identifier Code</option>
                                             <option value="f">F - Number/Name and Address Details</option>
                                             <option value="k">K - Name and Address</option>
                                         </select>
@@ -204,7 +204,7 @@
                                                 <input type="text" name="_090_mf50a_account" id="_090_mf50a_account" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_090_mf50a_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_091_mf50a_identifier_code" id="_091_mf50a_identifier_code" input_type="MF50a Identifier Code" location="Body" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_091_mf50a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_091_mf50a_identifier_code" id="_091_mf50a_identifier_code" input_type="MF50a Identifier Code" location="Body" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_091_mf50a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_092_mf50a_address" id="_092_mf50a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_092_mf50a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -317,7 +317,7 @@
                                         <input type="text" name="_107_of51a_party_identifier" id="_107_of51a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_107_of51a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code</span>
-                                        <input type="text" name="_108_of51a_identifier_code" id="_108_of51a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_108_of51a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_108_of51a_identifier_code" id="_108_of51a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_108_of51a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_109_of51a_address" id="_109_of51a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_109_of51a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -328,7 +328,7 @@
                                     <div class="form-row"><span class="label_body">OF52 </span><span class="label">Ordering Institution</span>
                                         <select id="type_of52_" name="type_of52_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Ordering Institution - BIC</option>
+                                            <option value="a">A - Ordering Institution - Identifier Code</option>
                                             <option value="d">D - Ordering Institution - Name and Address</option>
                                         </select>
                                         <div id="div_of52a_">
@@ -336,7 +336,7 @@
                                                 <input type="text" name="_110_of52a_party_identifier" id="_110_of52a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_110_of52a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_111_of52a_identifier_code" id="_111_of52a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_111_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_111_of52a_identifier_code" id="_111_of52a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_111_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_112_of52a_address" id="_112_of52a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_112_of52a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -357,7 +357,7 @@
                                     <div class="form-row"><span class="label_body">OF53</span><span class="label">Sender's Correspondent</span>
                                         <select id="type_of53_" name="type_of53_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - BIC</option>
+                                            <option value="a">A - Identifier Code</option>
                                             <option value="b">B - Location</option>
                                             <option value="d">D - Name and Address</option>
                                         </select>
@@ -366,7 +366,7 @@
                                                 <input type="text" name="_120_of53a_party_identifier" id="_120_of53a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_120_of53a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_121_of53a_identifier_code" id="_121_of53a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_121_of53a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_121_of53a_identifier_code" id="_121_of53a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_121_of53a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea disabled="true"><c:out value="${senderBank}" /></textarea>
@@ -395,7 +395,7 @@
                                     <div class="form-row"><span class="label_body">OF54</span><span class="label">Receiver's Correspondent</span>
                                         <select id="type_of54_" name="type_of54_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Receiver's Correspondent - BIC</option>
+                                            <option value="a">A - Receiver's Correspondent - Identifier Code</option>
                                             <option value="b">B - Receiver's Correspondent - Location</option>
                                             <option value="d">D - Receiver's Correspondent - Name and Address</option>
                                         </select>
@@ -404,7 +404,7 @@
                                                 <input type="text" name="_130_of54a_party_identifier" id="_130_of54a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_130_of54a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_131_of54a_identifier_code" id="_131_of54a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_131_of54a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_131_of54a_identifier_code" id="_131_of54a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_131_of54a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_132_of54a_address" id="_132_of54a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_132_of54a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -433,7 +433,7 @@
                                     <div class="form-row"><span class="label_body">OF55</span><span class="label">Third Reimbursement Institution</span>
                                         <select id="type_of55_" name="type_of55_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Third Reimbursement Inst - BIC</option>
+                                            <option value="a">A - Third Reimbursement Inst - Identifier Code</option>
                                             <option value="b">B - Third Reimbursement Inst - Location</option>
                                             <option value="d">D - Third Reimbursement Inst - Name and Address</option>
                                         </select>
@@ -442,7 +442,7 @@
                                                 <input type="text" name="_140_of55a_party_identifier" id="_140_of55a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_140_of55a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_141_of55a_identifier_code" id="_141_of55a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_141_of55a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_141_of55a_identifier_code" id="_141_of55a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_141_of55a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_142_of55a_address" id="_142_of55a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_142_of55a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -471,7 +471,7 @@
                                     <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
                                         <select id="type_of56_" name="type_of56_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Intermediary Inst - BIC</option>
+                                            <option value="a">A - Intermediary Inst - Identifier Code</option>
                                             <option value="c">C - Intermediary Inst - Institution</option>
                                             <option value="d">D - Intermediary Inst - Name and Address</option>
                                         </select>
@@ -480,7 +480,7 @@
                                                 <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_162_of56a_address" id="_162_of56a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_162_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -509,7 +509,7 @@
                                         <select id="type_of57_" name="type_of57_">
                                             <option value="">choose a type</option>
                                             <!--                                         - Account With Inst-->
-                                            <option value="a">A - BIC</option>
+                                            <option value="a">A - Identifier Code</option>
                                             <option value="b">B - Location</option>
                                             <option value="c">C - Institution</option>
                                             <option value="d">D - Name and Address</option>
@@ -519,7 +519,7 @@
                                                 <input type="text" name="_170_of57a_party_identifier" id="_170_of57a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_170_of57a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_171_of57a_identifier_code" id="_171_of57a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_171_of57a_identifier_code" id="_171_of57a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea disabled="true"><c:out value="${receiverBank}" /></textarea>
@@ -554,7 +554,7 @@
                                         <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="Of59A Beneficiary Customer" location="Body">
                                             <option value="">choose a type</option>
                                             <option value="59">59 - Name and Address</option>
-                                            <option value="59a">59A - BIC</option>
+                                            <option value="59a">59A - Identifier Code</option>
                                             <option value="59f">59F - Number/Name and Address Details</option>
                                         </select>
                                         <div id="div_mf59_">
@@ -594,7 +594,7 @@
                                         <input type="text" name="_182_mf59a_account" id="_182_mf59a_account" maxlength="35" size="40" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_182_mf59a_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_183_mf59a_identifier_code" id="_183_mf59a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_183_mf59a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                <input type="text" name="_183_mf59a_identifier_code" id="_183_mf59a_identifier_code" maxlength="11" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_183_mf59a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea cols="33" rows="4" maxlength="132" style="resize:none;" name="_184_mf59a_address" id="_184_mf59a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf59a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -720,10 +720,10 @@
                                     <input type="checkbox" name="sender_chargers_1_checkbox" id="sender_chargers_1_checkbox" />
                                     <div id="check_of71f_1">
                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                            <input type="text" name="_220_of71f_currency" id="_220_of71f_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_220_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                            <input type="text" name="_220_of71f_currency" id="_220_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_220_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                 </div>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_221_of71f_amount" id="_221_of71f_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_221_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_220_of71f_currency');" onblur="cek_koma(this)" />
+                                                    <input type="text" name="_221_of71f_amount" id="_221_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_221_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_220_of71f_currency');" />
                                                     <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
@@ -738,7 +738,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -752,10 +752,10 @@
                                             <input type="checkbox" name="sender_chargers_2_checkbox" id="sender_chargers_2_checkbox" />
                                             <div id="check_of71f_2">
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_222_of71f_currency" id="_222_of71f_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_222_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                    <input type="text" name="_222_of71f_currency" id="_222_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_222_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                 </div>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_223_of71f_amount" id="_223_of71f_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_223_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_222_of71f_currency');" onblur="cek_koma(this)" />
+                                                    <input type="text" name="_223_of71f_amount" id="_223_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_223_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_222_of71f_currency');" />
                                                     <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
@@ -770,7 +770,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -784,10 +784,10 @@
                                             <input type="checkbox" name="sender_chargers_3_checkbox" id="sender_chargers_3_checkbox" />
                                             <div id="check_of71f_3">
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_224_of71f_currency" id="_224_of71f_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_224_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                    <input type="text" name="_224_of71f_currency" id="_224_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_224_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                 </div>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_225_of71f_amount" id="_225_of71f_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_225_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_224_of71f_currency');" onblur="cek_koma(this)" />
+                                                    <input type="text" name="_225_of71f_amount" id="_225_of71f_amount" maxlength="15" onblur="checkZeroAmount(this.id); cek_koma(this);" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_225_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_224_of71f_currency');" />
                                                     <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
@@ -802,7 +802,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -816,10 +816,10 @@
                                             <input type="checkbox" name="sender_chargers_4_checkbox" id="sender_chargers_4_checkbox" />
                                             <div id="check_of71f_4">
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_226_of71f_currency" id="_226_of71f_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_226_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                    <input type="text" name="_226_of71f_currency" id="_226_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_226_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                 </div>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_227_of71f_amount" id="_227_of71f_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_227_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_226_of71f_currency');" onblur="cek_koma(this)" />
+                                                    <input type="text" name="_227_of71f_amount" id="_227_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_227_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_226_of71f_currency');" />
                                                     <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
@@ -834,7 +834,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -848,10 +848,10 @@
                                             <input type="checkbox" name="sender_chargers_5_checkbox" id="sender_chargers_5_checkbox" />
                                             <div id="check_of71f_5">
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_228_of71f_currency" id="_228_of71f_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_228_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                    <input type="text" name="_228_of71f_currency" id="_228_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_228_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                 </div>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_229_of71f_amount" id="_229_of71f_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_229_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_228_of71f_currency');" onblur="cek_koma(this)" />
+                                                    <input type="text" name="_229_of71f_amount" id="_229_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_229_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_228_of71f_currency');" />
                                                     <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                                     <font style="margin-left: 50px"></font>
                                                     <script langauge="javascript">
@@ -866,7 +866,7 @@
                                                         var number2F = parseFloat(number2r);
                                                         var nominal = formatUang(number2F, "");
                                                         var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("red");
+                                                        var nominalStylec = nominalStyle.fontcolor("blue");
                                                         //var nominalStylecw = nominalStylec.fontWeight("900");
                                                         if (nominal !== "") {
                                                             document.write(nominalStylec);
@@ -880,10 +880,10 @@
 
                                     <!-- OF71G -->
                                     <div class="form-row"><span class="label_body">OF71G</span><span class="label">Currency</span>
-                                        <input type="text" name="_230_of71g_currency" id="_230_of71g_currency" onkeypress="return textonly(event)" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of71g_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_230_of71g_currency" id="_230_of71g_currency" onkeypress="return textonly(event)" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of71g_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                        <input type="text" name="_231_of71g_amount" id="_231_of71g_amount" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_231_of71g_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_koma(this)" />
+                                        <input type="text" name="_231_of71g_amount" id="_231_of71g_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_231_of71g_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_231_of71g_amount');" />
                                         <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
@@ -898,7 +898,7 @@
                                             var number2F = parseFloat(number2r);
                                             var nominal = formatUang(number2F, "");
                                             var nominalStyle = nominal.fontsize(2);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);

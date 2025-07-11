@@ -81,7 +81,7 @@
             <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" minlength="12" autocomplete="off" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
         </c:otherwise>
 </c:choose--%>
-    <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" minlength="12" autocomplete="off" input_type="Receiver Institution" location="Header" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
+    <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" minlength="12" autocomplete="off" input_type="Receiver Institution" location="Header" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
     <%--<input readonly="true" type="text" name="receiver_institution" id="receiver_institution" maxlength="12" <c:choose><c:when test="${empty headerById.receiverAddress}">value="INDOIDJRXXXX"</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />--%>
 </div>
 <div class="form-row"><span class="label">Address Expansion</span>  <!-- 20191230 -->

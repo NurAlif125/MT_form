@@ -147,3 +147,20 @@ function cek_sender(obj) {//121910 penambahan slash pada account
     }
 
 }
+
+var hasShownAlert = false;
+function checkZeroAmount(inputID) {
+    const amountInput = document.getElementById(inputID);
+    const value = amountInput.value.trim().replace(',', '.'); 
+
+    if (value !== "" && parseFloat(value) === 0) {
+        if (!hasShownAlert) {
+            hasShownAlert = true;
+            alert("Amount must not be 0 (zero)");
+            setTimeout(() => {
+                amountInput.focus(); // tunda supaya tidak langsung trigger blur lagi
+                hasShownAlert = false; // reset supaya alert bisa muncul lagi jika validasi gagal lagi
+            }, 100);
+        }
+    }
+}

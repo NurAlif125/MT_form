@@ -117,7 +117,7 @@ function markAsRead() {
         });
 
         if (checkedNotifs.length === 0) {
-            alert("Pilih setidaknya satu notifikasi!");
+            alert("Select at least one Notification!");
             return;
         }
         

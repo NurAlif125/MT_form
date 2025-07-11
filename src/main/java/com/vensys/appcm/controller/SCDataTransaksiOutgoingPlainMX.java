@@ -117,7 +117,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         data.setMur("M");
         data.setOperator_comment("Operator Comment");
         if (abstractMX.getMxId().toString().contains("pacs.008") || abstractMX.getMxId().toString().contains("pacs.009")) {
-            data.setBlock3(request.getParameter("UETR"));
+            data.setBlock3("121:" + request.getParameter("UETR") + ";");
         } else {
             data.setBlock3(null);
         }
@@ -130,7 +130,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             reference = "Reference : " + request.getParameter("rtrId");
         }
 
-        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference);
+        String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference, (String) session.getAttribute("nameUser"));
 
         MxWriteConfiguration mxConfiguration = new MxWriteConfiguration();
         mxConfiguration.documentPrefix = null;
@@ -220,16 +220,10 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrdIntrBkSttlmAmt().getCcy());
             datas.setMessageType(abstractMX.getMxId().toString());
 
-            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
-            int lengthIdDupe = idDupe.size();
-            // log.info("panjang dupe nya.... " + lengthIdDupe);
-            if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
-                for (int ld = 1; ld < lengthIdDupe; ld++) {
-                    dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
-                }
-                log.info("masuk if 270");
+            boolean idDupe = dBTrx.cekDuplikatID(datas);
+            
+            if (idDupe) {
+                dBTrx2.updateDuplikat(datas.getId_headers());
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             log.info("ini " + abstractMX.getMxId().id());
@@ -290,16 +284,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
             datas.setMessageType(data.getMessageType());
 
-            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
-            int lengthIdDupe = idDupe.size();
-            // log.info("panjang dupe nya.... " + lengthIdDupe);
-            if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
-                for (int ld = 1; ld < lengthIdDupe; ld++) {
-                    dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
-                }
-                log.info("masuk if 270");
+            boolean idDupe = dBTrx.cekDuplikatID(datas);
+            if (idDupe) {
+                dBTrx2.updateDuplikat(datas.getId_headers());
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
             log.info("ini " + abstractMX.getMxId().id());
@@ -360,16 +347,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
             datas.setMessageType(data.getMessageType());
 
-            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
-            int lengthIdDupe = idDupe.size();
-            // log.info("panjang dupe nya.... " + lengthIdDupe);
-            if (lengthIdDupe > 1) {
-                // log.info("246 masuk if");
-                for (int ld = 1; ld < lengthIdDupe; ld++) {
-                    dBTrx2.updateDuplikat(idDupe.get(ld));
-                    log.info("sini 249");
-                }
-                // log.info("masuk if 270");
+            boolean idDupe = dBTrx.cekDuplikatID(datas);
+            if (idDupe) {
+                dBTrx2.updateDuplikat(datas.getId_headers());
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.053")) {
             appHeader.setMsgDefIdr("camt.053.001.08");
@@ -436,16 +416,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getBal().get(0).getAmt().getCcy());
             datas.setMessageType(abstractMX.getMxId().toString());
 
-            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
-            int lengthIdDupe = idDupe.size();
-            // log.info("panjang dupe nya.... " + lengthIdDupe);
-            if (lengthIdDupe > 1) {
-                log.info("246 masuk if");
-                for (int ld = 1; ld < lengthIdDupe; ld++) {
-                    dBTrx2.updateDuplikat(idDupe.get(ld));
-                    // log.info("sini 249");
-                }
-                // log.info("masuk if 270");
+            boolean idDupe = dBTrx.cekDuplikatID(datas);
+            if (idDupe) {
+                dBTrx2.updateDuplikat(datas.getId_headers());
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.055")) {
             appHeader.setMsgDefIdr("camt.055.001.08");
@@ -496,7 +469,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05500108) abstractMX).toJson(), saaHeader);
 
-//            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
+//            boolean idDupe = dBTrx.cekDuplikatID(datas);
 //            int lengthIdDupe = idDupe.size();
 //            // log.info("panjang dupe nya.... " + lengthIdDupe);
 //            if (lengthIdDupe > 1) {
@@ -555,17 +528,17 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt056.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05600108) abstractMX).toJson(), saaHeader);
-            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
-            int lengthIdDupe = idDupe.size();
-            // log.info("panjang dupe nya.... " + lengthIdDupe);
-            if (lengthIdDupe > 1) {
-                // log.info("246 masuk if");
-                for (int ld = 1; ld < lengthIdDupe; ld++) {
-                    dBTrx2.updateDuplikat(idDupe.get(ld));
-                    // log.info("sini 249");
-                }
-                // log.info("masuk if 270");
-            }
+//            boolean idDupe = dBTrx.cekDuplikatID(datas);
+//            int lengthIdDupe = idDupe.size();
+//            // log.info("panjang dupe nya.... " + lengthIdDupe);
+//            if (lengthIdDupe > 1) {
+//                // log.info("246 masuk if");
+//                for (int ld = 1; ld < lengthIdDupe; ld++) {
+//                    dBTrx2.updateDuplikat(idDupe.get(ld));
+//                    // log.info("sini 249");
+//                }
+//                // log.info("masuk if 270");
+//            }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.107")) {
             appHeader.setMsgDefIdr("camt.107.001.01");
 
@@ -614,17 +587,17 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt107.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10700101) abstractMX).toJson(), saaHeader);
-            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
-            int lengthIdDupe = idDupe.size();
-            // log.info("panjang dupe nya.... " + lengthIdDupe);
-            if (lengthIdDupe > 1) {
-                // log.info("246 masuk if");
-                for (int ld = 1; ld < lengthIdDupe; ld++) {
-                    dBTrx2.updateDuplikat(idDupe.get(ld));
-                    // log.info("sini 249");
-                }
-                // log.info("masuk if 270");
-            }
+//            boolean idDupe = dBTrx.cekDuplikatID(datas);
+//            int lengthIdDupe = idDupe.size();
+//            // log.info("panjang dupe nya.... " + lengthIdDupe);
+//            if (lengthIdDupe > 1) {
+//                // log.info("246 masuk if");
+//                for (int ld = 1; ld < lengthIdDupe; ld++) {
+//                    dBTrx2.updateDuplikat(idDupe.get(ld));
+//                    // log.info("sini 249");
+//                }
+//                // log.info("masuk if 270");
+//            }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.108")) {
             appHeader.setMsgDefIdr("camt.108.001.01");
 
@@ -673,17 +646,17 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt108.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10800101) abstractMX).toJson(), saaHeader);
-            List<Integer> idDupe = dBTrx.cekDuplikatID(datas);
-            int lengthIdDupe = idDupe.size();
-            // log.info("panjang dupe nya.... " + lengthIdDupe);
-            if (lengthIdDupe > 1) {
-                // log.info("246 masuk if");
-                for (int ld = 1; ld < lengthIdDupe; ld++) {
-                    dBTrx2.updateDuplikat(idDupe.get(ld));
-                    // log.info("sini 249");
-                }
-                // log.info("masuk if 270");
-            }
+//            boolean idDupe = dBTrx.cekDuplikatID(datas);
+//            int lengthIdDupe = idDupe.size();
+//            // log.info("panjang dupe nya.... " + lengthIdDupe);
+//            if (lengthIdDupe > 1) {
+//                // log.info("246 masuk if");
+//                for (int ld = 1; ld < lengthIdDupe; ld++) {
+//                    dBTrx2.updateDuplikat(idDupe.get(ld));
+//                    // log.info("sini 249");
+//                }
+//                // log.info("masuk if 270");
+//            }
         }
 
         dbConn.closeConnection();

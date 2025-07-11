@@ -11,6 +11,6 @@
     </div>
     <div class="blok-1">
         <span><h3>MT</h3></span> <br/>
-        <textarea name="after" id="after" readonly="true"><c:out value="${textById.final_mx}" /></textarea>
+        <textarea name="afterConvert" id="afterConvert" readonly="true"><c:out value="${textById.final_mx}" /></textarea>
     </div>
 </div>

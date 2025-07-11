@@ -17,6 +17,7 @@ import com.prowidesoftware.swift.model.SwiftBlock3;
 import com.prowidesoftware.swift.model.SwiftBlock4;
 import com.prowidesoftware.swift.model.SwiftMessage;
 import com.prowidesoftware.swift.model.Tag;
+import com.vensys.appcm.attribute.AMT200;
 import com.prowidesoftware.swift.model.mx.AbstractMX;
 import com.prowidesoftware.swift.model.mx.MxPacs00400109;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
@@ -27,6 +28,7 @@ import com.vensys.appcm.dbase.DBconnection;
 import com.vensys.appcm.dbase.DBconnection2;
 import com.vensys.appcm.model.DataMTText;
 import com.vensys.appcm.model.TagDB;
+import com.vensys.appcm.model.MT200;
 import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,6 +39,8 @@ import java.util.StringTokenizer;
  * @author AplDev2
  */
 public class CHeader {
+    AMT200 atributeMT200 = new AMT200();
+    MT200 mt200 = new MT200();
 
     Logger log = Logger.getLogger(CHeader.class);
     TagDB tag = new TagDB();
@@ -197,12 +201,51 @@ public class CHeader {
             } else if (messageType.equalsIgnoreCase("202")) {
                 TagMT202 mt202 = new TagMT202(this);
                 mt202.tagMT202(sb4, id);
+            } else if (messageType.equalsIgnoreCase("200")) {
+                tagMT200(sb4, id);
             }
             log.info("wifeParser() is successfully");
 
         } catch (IOException e) {
             log.error("wifeParser() failed: " + e.getMessage(), e);
         }
+    }
+
+//    metode baca tag MT200
+    public void tagMT200(SwiftBlock4 sb4, int idHeader) {
+        mt200 = atributeMT200.getAtributeMT200();
+        // log.info("tagMT200: " + new Gson().toJson(mt200));
+        for (Tag t : sb4.getTags()) {
+            String tagName = t.getName();
+            String tagValue = t.getValue();
+            String tags = "";
+            if (tagName.equalsIgnoreCase("20")) {
+                tags = mt200.getMf20();
+                readBlock4(tags, tagName, tagValue);
+            } else if (tagName.equalsIgnoreCase("32A")) {
+                tags = mt200.getMf32a();
+                splitMT32A(tags, tagName, tagValue);
+            } else if (tagName.equalsIgnoreCase("53B")) {
+                tags = mt200.getOf53b();
+                splitRowData(tags, tagName, tagValue);
+            } else if (tagName.equalsIgnoreCase("56A")) {
+                tags = mt200.getOf56a();
+                splitRowData(tags, tagName, tagValue);
+            } else if (tagName.equalsIgnoreCase("57A")) {
+                tags = mt200.getOf57a();
+                splitRowData(tags, tagName, tagValue);
+            } else if (tagName.equalsIgnoreCase("58A")) {
+                tags = mt200.getOf58a();
+                splitRowData(tags, tagName, tagValue);
+            } else if (tagName.equalsIgnoreCase("58D")) {
+                tags = mt200.getOf58d();
+                splitRowData(tags, tagName, tagValue);
+            } else if (tagName.equalsIgnoreCase("72")) {
+                tags = mt200.getOf72();
+                readBlock4(tags, tagName, tagValue);
+            }
+        }
+        // cekAcctnameData202();
     }
 
     //    method split date, currency dan amount

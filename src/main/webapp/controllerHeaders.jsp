@@ -26,6 +26,21 @@
         box-sizing: border-box;
         padding: 5px;
     }
+    
+    /* Tambah jarak ke kanan teks header */
+    table.dataTable thead th.sorting,
+    table.dataTable thead th.sorting_asc,
+    table.dataTable thead th.sorting_desc {
+      padding-right: 20px !important; /* atur sesuai kebutuhan */
+    }
+
+    /* Tambah jarak pada ikon sort */
+    table.dataTable thead th.sorting:after,
+    table.dataTable thead th.sorting_asc:after,
+    table.dataTable thead th.sorting_desc:after {
+      right: 4px !important; /* geser ikon sort ke kanan */
+    }
+
 
 </style>
 <div id="isi">
@@ -113,48 +128,50 @@
                                 <th>Creation date</th>
                                 <th>Status</th>
                                 <th>Source</th>
+                                <th>Create By</th>
+                                <th>Approve By</th>
                                 <th>Action</th>
                                 <!--                        <th>Action</th>-->
                             </tr>
                         </thead>
                         <tbody></tbody>
-<!--                        <tbody>
-                            <c:forEach items="${headers}" var="item">
-                                <tr>
-                                    <%--c:if test="${flagFilter == 'VER'}">
-                                        <td><input type="checkbox" name="chkId" id="chkId" value="${item.id_headers}"></td>
-                                    </c:if--%>
-                                    <td><%=rowNum++%></td>
-                                    <td>${item.messageType}</td>
-                                    <%--
-                                    <td>
-                                        <c:choose>
-                                            <c:when test = "${fn:contains(item.block3,'111:009;')}">
-                                                Yes
-                                            </c:when>
-                                            <c:otherwise>
-                                                No
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    --%>
-                                    <td>${item.io_type}</td>
-                                    <td>${item.sequenceNumber}</td>
-                                    <td>${item.logicalTerminal}</td>
-                                    <td>${item.receiverAddress}</td>
-                                    <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">${item.trans_refference}</a></td>
-                                    <td>${item.trans_related_refference}</td>
-                                    <td>${item.trans_date_value}</td>
-                                    <td>${item.trans_ccy}</td>
-                                    <%--<td style="text-align: right"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${item.tag32Amount}" /></td>--%>
-                                    <td style="text-align: right">${item.trans_amount}</td>
-                                    <td>${item.tanggal}</td>
-                                    <td>${item.flag}</td>
-                                    <td>${item.source}</td>
-                                    <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">view</a></td>
-                                </tr>
-                            </c:forEach>
-                        </tbody>-->
+                        <!--                        <tbody>
+                        <c:forEach items="${headers}" var="item">
+                            <tr>
+                            <%--c:if test="${flagFilter == 'VER'}">
+                                <td><input type="checkbox" name="chkId" id="chkId" value="${item.id_headers}"></td>
+                            </c:if--%>
+                            <td><%=rowNum++%></td>
+                            <td>${item.messageType}</td>
+                            <%--
+                            <td>
+                                <c:choose>
+                                    <c:when test = "${fn:contains(item.block3,'111:009;')}">
+                                        Yes
+                                    </c:when>
+                                    <c:otherwise>
+                                        No
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            --%>
+                            <td>${item.io_type}</td>
+                            <td>${item.sequenceNumber}</td>
+                            <td>${item.logicalTerminal}</td>
+                            <td>${item.receiverAddress}</td>
+                            <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">${item.trans_refference}</a></td>
+                            <td>${item.trans_related_refference}</td>
+                            <td>${item.trans_date_value}</td>
+                            <td>${item.trans_ccy}</td>
+                            <%--<td style="text-align: right"><fmt:formatNumber type = "number" maxFractionDigits = "3" value = "${item.tag32Amount}" /></td>--%>
+                            <td style="text-align: right">${item.trans_amount}</td>
+                            <td>${item.tanggal}</td>
+                            <td>${item.flag}</td>
+                            <td>${item.source}</td>
+                            <td><a href="ViewDataTransaksiOutgoing?id=${item.id_headers}">view</a></td>
+                        </tr>
+                        </c:forEach>
+                    </tbody>-->
                         <tfoot>
                             <tr id="filterRow">
                                 <th></th>
@@ -171,6 +188,8 @@
                                 <th><input type="text" class="column-search" placeholder_="Search Creation"></th>
                                 <th><input type="text" class="column-search" placeholder_="Search Status"></th>
                                 <th><input type="text" class="column-search" placeholder_="Search Source"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Createby"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search Approveby"></th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -273,7 +292,7 @@
                     <td>SETTLE</td>
                 </tr>
             </table>
-                <br>
+            <br>
             <table class="modal-table" style="border:1px solid black">
                 <tr>
                     <th colspan="6" style="background: #20696d;color: #ffffff;">OUTGOING</th>
@@ -383,7 +402,7 @@
                     <td>NACK</td>
                 </tr>
             </table>
-                <br>
+            <br>
             <table class="modal-table" style="border:1px solid black">
                 <tr>
                     <th colspan="3" style="background: #20696d;color: #ffffff;">FLAG SEMENTARA</th>
@@ -443,7 +462,7 @@
                     <td>AML-RESEND</td>
                     <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi outgong gagal kirim ke AML</td>
                 </tr>
-				<tr>
+                <tr>
                     <td>11</td>
                     <td>FIA-RESEND</td>
                     <td>Flag sementara untuk memerintah fia mengirimkan kembali transaksi gagal kirim ke FIA</td>
@@ -496,7 +515,7 @@
 //                    });
 //        }
 //    });
-    
+
     $('#example tfoot tr').appendTo('#example thead');
 </script>
 <script>
@@ -511,7 +530,7 @@
 
     // When the user clicks the button, open the modal 
     btn.onclick = function () {
-        modal.style.display = "block"; 
+        modal.style.display = "block";
     }
 
     // When the user clicks on <span> (x), close the modal
@@ -536,10 +555,14 @@
 //    }
 //});
 
-    
-$(document).ready(function () {
+function escapeHtml(text) {
+    return $('<div>').text(text).html();
+}
+
+
+    $(document).ready(function () {
 //console.log("Document is ready");
-    const fullUrl = window.location.search && window.location.search !== "?" ? window.location.search : '';
+        const fullUrl = window.location.search && window.location.search !== "?" ? window.location.search : '';
 //    console.log(fullUrl);
 
 //    console.log("Table initialized");
@@ -548,96 +571,121 @@ $(document).ready(function () {
 //    console.log('DataTables error:', message);
 //});
 
-if ($.fn.DataTable.isDataTable('#example')) {
-    $('#example').DataTable().clear().destroy(); // destroy kalau sudah ada
-}
-    
-    var table = $('#example').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: "headerData"+fullUrl,
-            type: "GET",
-            xhrFields: {
-                withCredentials: true 
-             },
-            data: function (d) {
-                d.io_type = $('#io_type_filter').val();
-                d.flag = $('#flag_filter').val();
-                d.channel = $('#channel_filter').val();
-            },
-            dataSrc: function (json) {
-//                console.log("Received JSON:", json);
-                return json.data;
-            }
-        },
-        columns: [
-            { data: null }, // No
-            { data: "messageType" },
-            { data: "io_type" },
-            { data: "sequenceNumber" },
-            { data: "logicalTerminal" },
-            { data: "receiverAddress" },
-            { data: "trans_reference" },
-            { data: "trans_related_reference" },
-            { data: "trans_date_value" },
-            { data: "trans_ccy" },
-            { data: "trans_amount" },
-            { data: "tanggal" },
-            { data: "flag" },
-            { data: "source" },
-            { data: null } // Action
-        ],
-        columnDefs: [
-            {
-                targets: 0,
-                render: function (data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1;
-                }
-            },
-            {
-                targets: 6,
-                render: function (data, type, row, meta) {
-                    return '<a href="ViewDataTransaksiOutgoing?id=' + row.id_headers + '">'+row.trans_reference+'</a>';
-                }
-            },
-            {
-                targets: -1,
-                render: function (data, type, row, meta) {
-                    return '<a href="ViewDataTransaksiOutgoing?id=' + row.id_headers + '">view</a>';
-                }
-            }
-        ]
-        ,initComplete: function () {
-            const api = this.api();
-
-            function debounce(func, delay) {
-                var timeout;
-                return function () {
-                    const context = this;
-                    const args = arguments;
-                    clearTimeout(timeout);
-                    timeout = setTimeout(() => func.apply(context, args), delay);
-                };
-            }
-
-            $('#example thead input').each(function () {
-                var colIdx = $(this).parent().index();
-                $(this).on('keyup change', debounce(function () {
-                    var val = this.value;
-//                    console.log(' Search column '+colIdx+' = '+val+'');
-                    api.column(colIdx).search(val).draw();
-                }, 800));
-            });
+        if ($.fn.DataTable.isDataTable('#example')) {
+            $('#example').DataTable().clear().destroy(); // destroy kalau sudah ada
         }
+
+        var table = $('#example').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "headerData" + fullUrl,
+                type: "GET",
+                xhrFields: {
+                    withCredentials: true
+                },
+                data: function (d) {
+                    d.io_type = $('#io_type_filter').val();
+                    d.flag = $('#flag_filter').val();
+                    d.channel = $('#channel_filter').val();
+                    d.quicksearch = $('#example_filter input[type="search"]').val();
+                },
+                dataSrc: function (json) {
+//                console.log("Received JSON:", json);
+                    return json.data;
+                }
+            },
+            language: {
+                processing: "Processing..." 
+            },
+            columns: [
+                {data: null}, // No
+                {data: "messageType"},
+                {data: "io_type"},
+                {data: "sequenceNumber"},
+                {data: "logicalTerminal"},
+                {data: "receiverAddress"},
+                {data: "trans_reference"},
+                {data: "trans_related_reference"},
+                {data: "trans_date_value"},
+                {data: "trans_ccy"},
+                {data: "trans_amount"},
+                {data: "tanggal"},
+                {data: "flag"},
+                {data: "source"},
+                {data: "createby"},
+                {data: "approveby"},
+                {data: null} // Action
+            ],
+            columnDefs: [
+                { orderable: false, targets: [0, 14] }, // index kolom yang tidak ingin di-sort
+                {
+                    targets: 0,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    targets: 6,
+                    render: function (data, type, row, meta) {
+                        return '<a href="ViewDataTransaksiOutgoing?id=' + encodeURIComponent(row.id_headers) + '">' + escapeHtml(row.trans_reference) + '</a>';
+                    }
+                },
+                {
+                    targets: -1,
+                    render: function (data, type, row, meta) {
+                        return '<a href="ViewDataTransaksiOutgoing?id=' + encodeURIComponent(row.id_headers) + '">view</a>';
+                    }
+                }
+            ]
+            , initComplete: function () {
+                const api = this.api();
+
+                function debounce(func, delay) {
+                    var timeout;
+                    return function () {
+                        const context = this;
+                        const args = arguments;
+                        clearTimeout(timeout);
+                        timeout = setTimeout(() => func.apply(context, args), delay);
+                    };
+                }
+
+                $('#example thead input').each(function () {
+                    var colIdx = $(this).parent().index();
+                    $(this).on('keyup change', debounce(function () {
+                        var val = this.value;
+//                    console.log(' Search column '+colIdx+' = '+val+'');
+                        api.column(colIdx).search(val).draw();
+                    }, 800));
+                });
+                
+                $('#example_filter input[type="search"]').off()
+                    .on('input', debounce(function () {
+                        table.ajax.reload();
+                }, 800));
+                
+                $('#example thead input').on('click', function (e) {
+                    e.stopPropagation(); 
+                });
+                
+                //ctrl+a
+                $('#example thead input').on('keydown', function (e) {
+                    if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+                        e.preventDefault();
+                        this.select();
+                    }
+                });
+            }
+        });
+        
+
+        $('#select-page').on('change', function () {
+            // Reload data
+            console.log("page changed");
+            $("#example").DataTable().ajax.reload();
+        });
     });
-    
-    $('#select-page').on('change', function(){
-           // Reload data
-        console.log ("page changed");
-        $("#example").DataTable().ajax.reload();
-     });
-});
 
 
 </script>

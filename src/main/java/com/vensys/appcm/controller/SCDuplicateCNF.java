@@ -20,14 +20,15 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author hadi
+ * @author rafli
  */
-public class SCDuplicate extends HttpServlet {
+public class SCDuplicateCNF extends HttpServlet {
 
     Logger log = Logger.getLogger(getClass().getName());
-
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -38,13 +39,13 @@ public class SCDuplicate extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession httpSession = request.getSession();
         DBconnection dbConn = new DBconnection();
-//        List<Header> duplicate = new ArrayList<Header>();
+//        List<Header> duplicateCNF = new ArrayList<Header>();
 //        DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         String channel = httpSession.getAttribute("channel").toString();
         try {
             log.info("processRequest");
-//            duplicate = bBHeaders.getAllHeaderDuplicate(channel);
-//            httpSession.setAttribute("duplicate", duplicate);
+//            duplicateCNF = bBHeaders.getAllHeaderDuplicateCNF(channel);
+//            httpSession.setAttribute("duplicateCNF", duplicateCNF);
             httpSession.setAttribute("flagFilter", "MOD");
 //            httpSession.setAttribute("headers", duplicate);
         } catch (Exception ex) {
@@ -53,14 +54,15 @@ public class SCDuplicate extends HttpServlet {
         } finally {
             dbConn.closeConnection();
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("viewDuplicate.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("viewDuplicateCNF.jsp");
 //        RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders.jsp?menu=0");
         dispatcher.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -72,8 +74,9 @@ public class SCDuplicate extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -85,12 +88,14 @@ public class SCDuplicate extends HttpServlet {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

@@ -75,15 +75,15 @@ public class DBDataTransaksiOutgoing {
         return id;
     }
 
-    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel, String reference) {
+    public String addDataTransaksiOutgoing(DataHeaderTransaksi data, String user_id, String ip_access, String comp_name, String channel, String reference, String nameUser) {
         String header = "";
         // Mendapatkan string format tanggal dan Timestamp secara langsung
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String timestampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
         try {
-            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source) \n"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
+            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source, createby, approveby) \n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
                     + "RETURNING id_headers;";
             PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -121,6 +121,8 @@ public class DBDataTransaksiOutgoing {
             st.setString(28, "SRC:MANUAL"); //user entry
             st.setString(29, data.getNetworkType()); //networktype
             st.setString(30, channel);
+            st.setString(31, nameUser);
+            st.setString(32, "--");
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -306,6 +308,18 @@ public class DBDataTransaksiOutgoing {
         }
     }
     
+    public void updateApproved(String nameUser, int id) {
+        try {
+            String sql = "UPDATE headers SET approveby = ? WHERE id_headers =?";
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setString(1, nameUser);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            log.error("Error updateApproved: " + e.getMessage());
+        }
+    }
+    
     /**
      * methodoverload untuk updateStatusTransaksiOutgoing
      * @param flag
@@ -347,7 +361,7 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND flag='MOD'";
         } else if (flag.equalsIgnoreCase("AUTH")) {
             log.info("flagnya auth 220");
-            flag_before = " AND (flag='VER' or flag='CVT-VER')";
+            flag_before = " AND (flag='VER' or flag='CVT-VER' or flag='DUPL-CNF')";
         } else if (flag.equalsIgnoreCase("TEXT")) {
             flag_before = " AND flag='AUTH'";
         } // diubah menjadi INC-WAIT setelah save data nasabah 20180413
@@ -388,6 +402,10 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='REM-FAILED-CNF')";
         }  else if (flag.equalsIgnoreCase("CVT-VER-RESEND")) {
             flag_before = " AND (flag='CVT-VER')";            
+        }  else if (flag.equalsIgnoreCase("DUPL-CNF")) {
+            flag_before = " AND (flag='DUPL')";
+        }  else if (flag.equalsIgnoreCase("DUPL-RESEND")) {
+            flag_before = " AND (flag='DUPL-CNF')";
         }
         
       
@@ -427,7 +445,8 @@ public class DBDataTransaksiOutgoing {
             (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
             (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
             (flag.equalsIgnoreCase("INC-AML-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH)
+            (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH) ||
+            (flag.equalsIgnoreCase("DUPL-RESEND")) && AUTH
             ) {
             CreateText ct = new CreateText(conn);
             
@@ -1723,8 +1742,8 @@ public class DBDataTransaksiOutgoing {
         return datas;
     }
 
-    public List<Integer> cekDuplikatID(Header data) throws Exception {
-        List<Integer> dupe = new ArrayList<Integer>();
+    public boolean cekDuplikatID(Header data) throws Exception {
+        boolean dupe = false;
         SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyy");
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = originalFormat.parse(data.getTrans_date_value());
@@ -1733,16 +1752,16 @@ public class DBDataTransaksiOutgoing {
         try {
             String sql = "SELECT DISTINCT h.id_headers, messageType, logicalTerminal, sessionNumber, sequenceNumber, io_type,\n"
                     + "receiverAddress, tanggal, flag, isDuplicate, trx.trans_reference, trx.trans_related_reference, trx.trans_date_value, trx.trans_amount,\n"
-                    + "trx.trans_ccy FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers WHERE logicalTerminal = ? AND receiverAddress = ? AND trx.trans_reference = ?\n"
+                    + "trx.trans_ccy FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers WHERE logicalTerminal = ? AND receiverAddress = ? AND lower(trx.trans_reference) = ?\n"
                     + "AND trx.trans_date_value::date = ?::date AND trx.trans_amount = ? AND trx.trans_ccy = ? AND messageType = ?\n"
-                    + "AND tanggal > CURRENT_DATE AND io_type = 'I' ORDER BY h.id_headers";
+                    + "AND tanggal > CURRENT_DATE AND io_type = 'I' AND isDuplicate = '0' ORDER BY h.id_headers";
             log.info("trans_reference & trans_date_value" + data.getTrans_refference() + " # " + data.getTrans_date_value());
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getLogicalTerminal());
             log.info("logical terminal : " + data.getLogicalTerminal());
             st.setString(2, data.getReceiverAddress());
             log.info("receiver Address : " + data.getReceiverAddress());
-            st.setString(3, data.getTrans_refference());
+            st.setString(3, data.getTrans_refference().toLowerCase());
             log.info("trans_reference : " + data.getTrans_refference());
             if (data.getTrans_date_value().length() == 6) {
                 st.setString(4, "20" + data.getTrans_date_value().substring(0, 2) + "-" + data.getTrans_date_value().substring(2, 4) + "-" + data.getTrans_date_value().substring(4, 6));
@@ -1758,7 +1777,7 @@ public class DBDataTransaksiOutgoing {
             log.info("messageType : " + data.getMessageType());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                dupe.add(rs.getInt(1));
+                dupe = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1768,8 +1787,14 @@ public class DBDataTransaksiOutgoing {
     }
 
     public void updateDuplikat(int id_headers) throws Exception {
-        String sql = "update headers set isduplicate = '1' where id_headers = ?";
-        System.out.println("sql updateDuplikat = " + sql);
+        String sql = "update headers set isduplicate = '1', flag = 'DUPL' where id_headers = ?";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, id_headers);
+        st.executeUpdate();
+    }
+    
+    public void updateDuplikatCNF (int id_headers) throws Exception {
+        String sql = "update headers set isduplicate = '0' where id_headers = ?";
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setInt(1, id_headers);
         st.executeUpdate();
