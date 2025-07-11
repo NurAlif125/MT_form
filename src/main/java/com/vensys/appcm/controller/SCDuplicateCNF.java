@@ -39,13 +39,13 @@ public class SCDuplicateCNF extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession httpSession = request.getSession();
         DBconnection dbConn = new DBconnection();
-        List<Header> duplicateCNF = new ArrayList<Header>();
-        DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
+//        List<Header> duplicateCNF = new ArrayList<Header>();
+//        DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
         String channel = httpSession.getAttribute("channel").toString();
         try {
             log.info("processRequest");
-            duplicateCNF = bBHeaders.getAllHeaderDuplicateCNF(channel);
-            httpSession.setAttribute("duplicateCNF", duplicateCNF);
+//            duplicateCNF = bBHeaders.getAllHeaderDuplicateCNF(channel);
+//            httpSession.setAttribute("duplicateCNF", duplicateCNF);
             httpSession.setAttribute("flagFilter", "MOD");
 //            httpSession.setAttribute("headers", duplicate);
         } catch (Exception ex) {

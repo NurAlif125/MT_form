@@ -595,6 +595,9 @@ function escapeHtml(text) {
                     return json.data;
                 }
             },
+            language: {
+                processing: "Processing..." 
+            },
             columns: [
                 {data: null}, // No
                 {data: "messageType"},
@@ -656,6 +659,11 @@ function escapeHtml(text) {
                         api.column(colIdx).search(val).draw();
                     }, 800));
                 });
+                
+                $('#example_filter input[type="search"]').off()
+                    .on('input', debounce(function () {
+                        table.ajax.reload();
+                }, 800));
                 
                 $('#example thead input').on('click', function (e) {
                     e.stopPropagation(); 

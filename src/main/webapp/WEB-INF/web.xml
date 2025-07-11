@@ -72,6 +72,14 @@
         <servlet-name>SCDuplicateCNF</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCDuplicateCNF</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCDuplicateList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDuplicateList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCDuplicateCnfList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDuplicateCnfList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCFIA</servlet-name>
         <url-pattern>/SCFIA</url-pattern>
