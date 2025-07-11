@@ -13,6 +13,7 @@ public class DataGeneralSetting {
     private String hostname;
     private String appversion;
     private String MT103;
+    private String MT110;
     private String MT111;
     private String MT202;
     private String MT192;
@@ -52,6 +53,14 @@ public class DataGeneralSetting {
 
     public void setMT103(String MT103) {
         this.MT103 = MT103;
+    }
+    
+    public String getMT110() {
+        return MT110;
+    }
+
+    public void setMT110(String MT110) {
+        this.MT110 = MT110;
     }
     
     public String getMT111() {

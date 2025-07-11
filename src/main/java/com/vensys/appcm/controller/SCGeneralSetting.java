@@ -46,6 +46,7 @@ public class SCGeneralSetting extends HttpServlet {
         data.setHostname(request.getParameter("hostname"));
         data.setAppversion(request.getParameter("appversion"));
         data.setMT103(request.getParameter("mt103"));
+        data.setMT110(request.getParameter("mt110"));
         data.setMT111(request.getParameter("mt111"));
         data.setMT202(request.getParameter("mt202"));
         data.setMT192(request.getParameter("mt192"));

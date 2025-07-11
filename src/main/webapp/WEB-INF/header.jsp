@@ -220,6 +220,9 @@
                                         <c:if test="${item == 'MT:103'}">
                                         <li><a href="mt103.jsp">103 - Single Customer Credit Transfer</a></li>
                                         </c:if>
+                                        <c:if test="${item == 'MT:110'}">
+                                        <li><a href="mt110.jsp">110 - Advice of Cheque(s)</a></li>
+                                        </c:if>
                                         <c:if test="${item == 'MT:111'}">
                                         <li><a href="mt111.jsp">111 - Request for Stop Payment of a Cheque</a></li>
                                         </c:if>

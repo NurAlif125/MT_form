@@ -166,9 +166,9 @@
                                             <c:if test="${item == 'MT:103'}">
                                                 <li><a onclick="userTrackMenuClick('103 - Single Customer Credit Transfer')" href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
                                                 </c:if>
-                                            <%--<c:if test="${innerItem == 'MT:110'}">
+                                            <c:if test="${item == 'MT:110'}">
                                                 <li><a onclick="userTrackMenuClick('110 - Advice of Cheque(s)')" href="mt110.jsp?create=true">110 - Advice of Cheque(s)</a></li>
-                                            </c:if>--%>
+                                            </c:if>
                                             <c:if test="${item == 'MT:111'}">
                                                 <li><a onclick="userTrackMenuClick('111 - Request for Stop Payment of a Cheque')" href="mt111.jsp?create=true">111 - Request for Stop Payment of a Cheque</a></li>
                                             </c:if>

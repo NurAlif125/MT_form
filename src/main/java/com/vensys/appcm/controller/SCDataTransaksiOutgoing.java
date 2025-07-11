@@ -113,7 +113,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
             //end of the code
             //UETR
-            if (messageType.equals("103") || messageType.equals("111") || messageType.contains("202") || messageType.equals("200")) {//191227 ditambah uetr
+            if (messageType.equals("103") || messageType.equals("110") || messageType.equals("111") || messageType.contains("202") || messageType.equals("200")) {//191227 ditambah uetr
                 log.info("masuk sini 181");
                 if (flagStatus.length() > 0) {
                     log.info("masuk sini 183");

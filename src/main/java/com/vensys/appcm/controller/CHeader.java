@@ -5,6 +5,7 @@
 package com.vensys.appcm.controller;
 
 import com.vensys.appcm.controller.TagMT103;
+import com.vensys.appcm.controller.TagMT110;
 import com.vensys.appcm.controller.TagMT111;
 import com.vensys.appcm.controller.TagMT202;
 import com.vensys.appcm.controller.TagMT202COV;
@@ -184,7 +185,10 @@ public class CHeader {
             if (messageType.equalsIgnoreCase("103")) {
                 TagMT103 mt103 = new TagMT103(this);
                 mt103.tagMT103(sb4, id);
-            } else if (messageType.equalsIgnoreCase("111")) {
+            } else if (messageType.equalsIgnoreCase("110")) {
+                TagMT110 mt110 = new TagMT110(this);
+                mt110.tagMT110(sb4, id);
+            }else if (messageType.equalsIgnoreCase("111")) {
                 TagMT111 mt111 = new TagMT111(this);
                 mt111.tagMT111(sb4, id);
             } else if (messageType.equalsIgnoreCase("202COV")) {
@@ -241,6 +245,45 @@ public class CHeader {
         readBlock4(arr[0], tagName, tagValue.substring(0, 8));
         readBlock4(arr[1], tagName, tagValue.substring(8, 11));
         readBlock4(arr[2], tagName, tagValue.substring(11));
+    }
+    
+       public void splitRowData59(String tags, String tagName, String tagValue) {
+        StringTokenizer st = new StringTokenizer(tags, ",");
+        int i = 0;
+        String arr[] = new String[st.countTokens()];
+        while (st.hasMoreElements()) {
+            arr[i] = st.nextToken();
+            i++;
+        }
+
+        if (tagValue.startsWith("/")) {
+            StringTokenizer st_ = new StringTokenizer(tagValue, "\r\n");
+            int j = 0;
+            String arr_[] = new String[st_.countTokens()];
+            while (st_.hasMoreElements()) {
+                arr_[j] = st_.nextToken();
+                j++;
+            }
+
+            // Fix: Jangan buang karakter selain digit untuk account
+            if (tagName.equalsIgnoreCase("59")) {
+                readBlock4(arr[0], tagName, arr_[0]); // Simpan full account termasuk huruf seperti "US"
+            } else {
+                readBlock4(arr[0], tagName, arr_[0]);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int k = 1; k < arr_.length; k++) {
+                sb.append(arr_[k]);
+                if (k < arr_.length - 1) sb.append("\r\n");
+            }
+
+            if (arr.length > 1) {
+                readBlock4(arr[1], tagName, sb.toString());
+            }
+        } else {
+            readBlock4(arr[1], tagName, tagValue);
+        }
     }
 
     //    method split mark, date, currency, amount
