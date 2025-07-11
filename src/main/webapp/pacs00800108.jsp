@@ -687,7 +687,7 @@
                             </fieldset>
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PaymentTypeInformation</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="IntrBkSttlmAmt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt" id="FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt" tabindex="-1">
                                 <legend>InterbankSettlementAmount <a style="color:red;text-decoration:none">*</a></legend>
-                                <label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="content" data-xsd2html2xml-name="IntrBkSttlmAmt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt"><input type="number" onchange='if (this.value) {
+                                <label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="content" data-xsd2html2xml-name="IntrBkSttlmAmt" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt"><input type="number" onblur="validateAmount(this);" onchange='if (this.value) {
             this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
             this.removeAttribute("value"); };' required="required" min="0" step="0.00001" pattern="[-]?{0,}" data-xsd2html2xml-primitive="decimal" data-xsd2html2xml-description="InterbankSettlementAmount"><span>InterbankSettlementAmount <a style="color:red;text-decoration:none">*</a></span></label><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.008.001.08" data-xsd2html2xml-type="attribute" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/@Ccy" id="FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/Ccy" tabindex="-1"><input type="text" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" onkeypress="return textonly(event)" onchange='if (this.value) {
                         this.setAttribute("value", this.value); } else {
@@ -4094,6 +4094,13 @@
                 console.log("BICFI setelah diproses:", newValue);
             } else if (value.length > 0) {
                 alert('BICFI must be 12 characters (contoh: BDINIDJAXXXX)');
+            }
+        }
+
+        function validateAmount(input) {
+            let value = input.value.trim().replace(',','.');
+            if (value && parseFloat(value) === 0) {
+                alert('Amount must not be Zero (0)');
             }
         }
     </script>
