@@ -18,6 +18,12 @@
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MENU:DUPLICATE'}">
             <div id="judul">Duplicate List</div>
+            <div id="rowsearch">
+                <a href="List_scr.jsp" class="btnLink">Advance search</a>
+                <div class="my-navigation">
+                    <div class="simple-help"><a id="myBtn" style="cursor:pointer;" ><img class="img-help" src="images/help.png"/></a></div>
+                </div>
+            </div>
             <div id="content">
                 <%int rowNum = 1;%>
                 <table id="example" class="display nowrap" style="width:100%">
