@@ -1742,8 +1742,8 @@ public class DBDataTransaksiOutgoing {
         return datas;
     }
 
-    public boolean cekDuplikatID(Header data) throws Exception {
-        boolean dupe = false;
+    public int cekDuplikatID(Header data) throws Exception {
+        int dupe = 0;
         SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyy");
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = originalFormat.parse(data.getTrans_date_value());
@@ -1762,7 +1762,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(2, data.getReceiverAddress());
             log.info("receiver Address : " + data.getReceiverAddress());
             st.setString(3, data.getTrans_refference().toLowerCase());
-            log.info("trans_reference : " + data.getTrans_refference());
+            log.info("trans_reference : " + data.getTrans_refference().toLowerCase());
             if (data.getTrans_date_value().length() == 6) {
                 st.setString(4, "20" + data.getTrans_date_value().substring(0, 2) + "-" + data.getTrans_date_value().substring(2, 4) + "-" + data.getTrans_date_value().substring(4, 6));
             } else {
@@ -1777,7 +1777,7 @@ public class DBDataTransaksiOutgoing {
             log.info("messageType : " + data.getMessageType());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                dupe = true;
+                dupe++;
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -72,7 +72,7 @@ function escapeHtml(text) {
             processing: true,
             serverSide: true,
             ajax: {
-                url: "SCDuplicateList" + fullUrl,
+                url: "SCDuplicateCnfList" + fullUrl,
                 type: "GET",
                 xhrFields: {
                     withCredentials: true

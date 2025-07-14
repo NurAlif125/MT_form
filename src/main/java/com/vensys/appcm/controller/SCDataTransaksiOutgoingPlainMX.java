@@ -220,10 +220,10 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXpacs004.getPmtRtr().getTxInf().get(0).getRtrdIntrBkSttlmAmt().getCcy());
             datas.setMessageType(abstractMX.getMxId().toString());
 
-            boolean idDupe = dBTrx.cekDuplikatID(datas);
+            int idDupe = dBTrx.cekDuplikatID(datas);
             
-            if (idDupe) {
-                dBTrx2.updateDuplikat(datas.getId_headers());
+            if (idDupe > 1) {
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             log.info("ini " + abstractMX.getMxId().id());
@@ -284,9 +284,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXpacs008.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
             datas.setMessageType(data.getMessageType());
 
-            boolean idDupe = dBTrx.cekDuplikatID(datas);
-            if (idDupe) {
-                dBTrx2.updateDuplikat(datas.getId_headers());
+            int idDupe = dBTrx.cekDuplikatID(datas);
+            if (idDupe > 1) {
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
             log.info("ini " + abstractMX.getMxId().id());
@@ -347,9 +347,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXpacs009.getFICdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt().getCcy());
             datas.setMessageType(data.getMessageType());
 
-            boolean idDupe = dBTrx.cekDuplikatID(datas);
-            if (idDupe) {
-                dBTrx2.updateDuplikat(datas.getId_headers());
+            int idDupe = dBTrx.cekDuplikatID(datas);
+            if (idDupe > 1) {
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.053")) {
             appHeader.setMsgDefIdr("camt.053.001.08");
@@ -416,9 +416,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_ccy(dataMXcamt053.getBkToCstmrStmt().getStmt().get(0).getBal().get(0).getAmt().getCcy());
             datas.setMessageType(abstractMX.getMxId().toString());
 
-            boolean idDupe = dBTrx.cekDuplikatID(datas);
-            if (idDupe) {
-                dBTrx2.updateDuplikat(datas.getId_headers());
+            int idDupe = dBTrx.cekDuplikatID(datas);
+            if (idDupe > 1) {
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.055")) {
             appHeader.setMsgDefIdr("camt.055.001.08");
@@ -469,7 +469,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05500108) abstractMX).toJson(), saaHeader);
 
-//            boolean idDupe = dBTrx.cekDuplikatID(datas);
+//            int idDupe = dBTrx.cekDuplikatID(datas);
 //            int lengthIdDupe = idDupe.size();
 //            // log.info("panjang dupe nya.... " + lengthIdDupe);
 //            if (lengthIdDupe > 1) {
@@ -528,7 +528,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt056.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05600108) abstractMX).toJson(), saaHeader);
-//            boolean idDupe = dBTrx.cekDuplikatID(datas);
+//            int idDupe = dBTrx.cekDuplikatID(datas);
 //            int lengthIdDupe = idDupe.size();
 //            // log.info("panjang dupe nya.... " + lengthIdDupe);
 //            if (lengthIdDupe > 1) {
@@ -587,7 +587,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt107.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10700101) abstractMX).toJson(), saaHeader);
-//            boolean idDupe = dBTrx.cekDuplikatID(datas);
+//            int idDupe = dBTrx.cekDuplikatID(datas);
 //            int lengthIdDupe = idDupe.size();
 //            // log.info("panjang dupe nya.... " + lengthIdDupe);
 //            if (lengthIdDupe > 1) {
@@ -646,7 +646,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt108.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt10800101) abstractMX).toJson(), saaHeader);
-//            boolean idDupe = dBTrx.cekDuplikatID(datas);
+//            int idDupe = dBTrx.cekDuplikatID(datas);
 //            int lengthIdDupe = idDupe.size();
 //            // log.info("panjang dupe nya.... " + lengthIdDupe);
 //            if (lengthIdDupe > 1) {
