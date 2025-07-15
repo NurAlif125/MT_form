@@ -308,8 +308,8 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                     int id_headers = dBDataTransaksiOutgoing.id_headers();
                     log.info("create new MT");
-                    boolean idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
-                    if (idDupe) {
+                    int idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
+                    if (idDupe > 1) {
                         dBDataTransaksiOutgoing2.updateDuplikat(id_headers);
                         // log.info("masuk if 270");
                     }

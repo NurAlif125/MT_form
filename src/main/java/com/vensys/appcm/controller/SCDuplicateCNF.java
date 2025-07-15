@@ -46,8 +46,8 @@ public class SCDuplicateCNF extends HttpServlet {
             log.info("processRequest");
 //            duplicateCNF = bBHeaders.getAllHeaderDuplicateCNF(channel);
 //            httpSession.setAttribute("duplicateCNF", duplicateCNF);
-            httpSession.setAttribute("flagFilter", "MOD");
-//            httpSession.setAttribute("headers", duplicate);
+            httpSession.setAttribute("flagFilter", "DUPL-CNF");
+            httpSession.setAttribute("flag", "DUPL-CNF");
         } catch (Exception ex) {
             log.error(ex.getMessage());
             ex.printStackTrace();

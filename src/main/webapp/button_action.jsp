@@ -658,10 +658,12 @@
             </c:if>
             <% } else if (request.getParameter("id") != null && session.getAttribute("isDuplicate").equals("1")) {%>
             <% if (session.getAttribute("flagStatus").equals("DUPL")) {%>
+            <% if (session.getAttribute("flagFilter") == null) {%>
+            <% } else { %>
             <c:if test="${item == 'FLOW:DUPL'}">
                 <input type="button" name="releaseDupl" id="releaseDupl" value="Release" />
             </c:if>
-            <% }%>
+            <% } }%>
             <% } else {%>
             <% if (request.getParameter("id") == null) { %>
             <c:if test="${item == 'FLOW:CREATE'}">

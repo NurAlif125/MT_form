@@ -880,8 +880,8 @@ public class DBHeader {
             where += " AND flag='FIA-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             where += " AND flag='FIA-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("DUPL-CNF")) {
-            where += " AND flag='DUPL-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+        } else if (flag.equalsIgnoreCase("DUPL-RESEND")) {
+            where += " AND flag='DUPL-RESEND' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         }
@@ -1827,7 +1827,7 @@ public class DBHeader {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
 
-        StringBuilder where = new StringBuilder("(h.isDuplicate = 0 AND h.flag NOT IN ('DUPL-CNF', 'DUPL')) ");
+        StringBuilder where = new StringBuilder("1=1");
         // io_type
         if (io_type == null || io_type.isEmpty()) {
             where.append(" AND (h.io_type='O' OR h.io_type='I')");
@@ -2159,7 +2159,7 @@ public class DBHeader {
 //        return headers;
 //    }
     public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
-        StringBuilder where = new StringBuilder("WHERE (h.isDuplicate = 0 AND h.flag NOT IN ('DUPL-CNF', 'DUPL')) ");
+        StringBuilder where = new StringBuilder("WHERE 1=1 ");
         List<Object> parameters = new ArrayList<>();
 
         if (io_type == null || io_type.isEmpty()) {

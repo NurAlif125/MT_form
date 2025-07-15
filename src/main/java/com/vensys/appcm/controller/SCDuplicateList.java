@@ -85,7 +85,8 @@ public class SCDuplicateList extends HttpServlet {
             duplicate = bBHeaders.getAllHeaderDuplicate(channel, start, length, quickSearch, sort);
             totalRecords = bBHeaders.getCountAllHeaderDuplicate(channel, quickSearch);
 //            httpSession.setAttribute("duplicate", duplicate);
-            httpSession.setAttribute("flagFilter", "MOD");
+            httpSession.setAttribute("flagFilter", "DUPL");
+            httpSession.setAttribute("flag", "DUPL");
         
         
             JSONArray dataArray = new JSONArray();
