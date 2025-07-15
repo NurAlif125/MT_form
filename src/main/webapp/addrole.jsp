@@ -85,10 +85,15 @@
                         <!--<label>Incoming Un Settle <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:Un-Settle" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:Un-Settle'}"> checked="true" </c:if> </c:forEach> /></label>-->
                         <label>Incoming Settle <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:SETTLE" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:SETTLE'}"> checked="true" </c:if> </c:forEach> /></label>
                     </div>
+                    <div class="form-row"><span class="labelL">&nbsp;</span>
+                        <label>Release Duplicate <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:DUPL" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:DUPL'}"> checked="true" </c:if> </c:forEach> /></label>
+                        <label>Release Duplicate Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:DUPL-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:DUPL-CNF'}"> checked="true" </c:if> </c:forEach> /></label>
+                    </div> 
                     <div class="form-row"><span class="labelL">Menu</span>
                         <label>Dashboard <input type="checkbox" name="role_detail" id="role_detail" value="MENU:DASHBOARD" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:DASHBOARD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Master <input type="checkbox" name="role_detail" id="role_detail" value="MENU:MASTER" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:MASTER'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Duplicate <input type="checkbox" name="role_detail" id="role_detail" value="MENU:DUPLICATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:DUPLICATE'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>Rejected <input type="checkbox" name="role_detail" id="role_detail" value="MENU:REJECTED" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:REJECTED'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>List of Transactions <input type="checkbox" name="role_detail" id="role_detail" value="MENU:LIST_TRANSACTIONS" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:LIST_TRANSACTIONS'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Reporting <input type="checkbox" name="role_detail" id="role_detail" value="MENU:REPORTING" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:REPORTING'}"> checked="true" </c:if></c:forEach> /></label>
                         <!--<label>House Keeping <input type="checkbox" name="role_detail" id="role_detail" value="MENU:HOUSEKEEPING" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:HOUSEKEEPING'}"> checked="true" </c:if></c:forEach> /></label>-->

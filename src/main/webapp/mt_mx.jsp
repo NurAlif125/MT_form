@@ -7,7 +7,7 @@
 <div class="form-cols2">
     <div class="blok-1">
         <span><h3>MT</h3></span> <br/>
-        <textarea name="before" id="before" readonly="true"><c:out value="${textById.final_mt}" /></textarea>
+        <textarea name="beforeConvert" id="beforeConvert" readonly="true"><c:out value="${textById.final_mt}" /></textarea>
     </div>
     <div class="blok-1">
         <span><h3>MX</h3></span> <br/>

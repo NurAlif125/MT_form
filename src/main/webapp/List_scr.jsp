@@ -86,7 +86,7 @@
                         String[] flags = new String[]{"MOD", "VER", "AUTH", "FIA-FAILED", "FIA-FAILED-CNF", "FIA-RESEND", "UNSETTLE-OUT", "WAITING-SAA-CNF", "WAITING-SAA-RESEND",
                             "WAITING-AML", "AML-TERMINATE-OUT", "REJECT", "AML-FAILED", "AML-FAILED-CNF", "AML-RESEND", "CVT-MOD", "CVT-VER", "CVT-VER-RESEND",
                             "ACK", "NACK", "INC-CVT", "RESEND-CNF", "INC-CVT-RESEND", "INC-AML", "AML-TERMINATE-IN", "INC-AML-FAILED", "INC-AML-FAILED-CNF", "INC-AML-RESEND",
-                        "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE", "WAITING-SAA", "OUT", "INC", "AML-TERMINATE-IN", "AML-TERMINATE-OUT", "AML-CLEAN"};
+                        "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE", "WAITING-SAA", "OUT", "INC", "AML-TERMINATE-IN", "AML-TERMINATE-OUT", "AML-CLEAN", "DUPL", "DUPL-CNF", "DUPL-RESEND"};
                         pageContext.setAttribute("flags", flags);
                     %>
                     <select name="status" id="status">
@@ -109,7 +109,7 @@
                 <input type="text" name="rel_reference" id="rel_reference" /> [ex.RelRef0001]
             </div>
             <div class="form-row"><span class="labelL">Currency Code</span>
-                <input type="text" name="currency_code" id="currency_code" size="3" /> [ex.IDR]
+                <input type="text" name="currency_code" id="currency_code" size="3" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" /> [ex.IDR]
             </div>
             <div class="form-row"><span class="labelL">Amount</span>
                 <input type="text" name="amount" id="amount" /> [ex.1000,05]

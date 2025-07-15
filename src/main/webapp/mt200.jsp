@@ -70,10 +70,10 @@
                                     </c:choose>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Currency Code</span>
-                                        <input type="text" class="mandatory" onkeypress="return textonly(event)" name="_061_mf32a_currency" id="_061_mf32a_currency" maxlength="3" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                        <input type="text" class="mandatory" onkeypress="return textonly(event)" name="_061_mf32a_currency" id="_061_mf32a_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" input_type="MF32A Currency" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Amount</span>
-                                        <input type="text" class="mandatory" name="_062_mf32a_amount" id="_062_mf32a_amount" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" onblur="cek_koma(this)"  ondrop="return false;" onpaste="return false;" />
+                                        <input type="text" class="mandatory" name="_062_mf32a_amount" id="_062_mf32a_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" ondrop="return false;" onpaste="return false;" />
                                         <!--//untuk menampilkan uang dalam block ditambahkan pada 20151007-->    
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
@@ -96,7 +96,7 @@
 //                                                document.write(nominalStylec);
 //                                            }
                                             var nominalStyle = nominal.fontsize(5);
-                                            var nominalStylec = nominalStyle.fontcolor("red");
+                                            var nominalStylec = nominalStyle.fontcolor("blue");
                                             //var nominalStylecw = nominalStylec.fontWeight("900");
                                             if (nominal !== "") {
                                                 document.write(nominalStylec);
@@ -150,7 +150,7 @@
                                     <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
                                         <select id="type_of56_" name="type_of56_">
                                             <option value="" <% if("true".equals(request.getParameter("create"))) { out.write("selected='selected'"); }%> >choose a type</option>
-                                            <option value="a">A - Intermediary Inst - BIC</option>
+                                            <option value="a">A - Intermediary Inst - Identifier Code</option>
                                             <option value="d">D - Intermediary Inst - Name and Address</option>
                                         </select>
                                         <div id="div_of56a_">
@@ -158,7 +158,7 @@
                                                 <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="56A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                                <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="56A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_162_of56a_address" id="_162_of56a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_162_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -179,7 +179,7 @@
                                     <div class="form-row"><span class="label_body">MF57</span><span class="label"><a style="color:red; text-decoration:none">*</a>Account With Institution</span>
                                         <select class="mandatory" id="type_of57_" name="type_of57_" input_type="MF57 Account With Institution" location="Body">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Account With Inst - BIC</option>
+                                            <option value="a">A - Account With Inst - Identifier Code</option>
                                             <option value="b">B - Account With Inst - Location</option>
                                             <option value="d">D - Account With Inst - Name and Address</option>
                                         </select>
@@ -188,7 +188,7 @@
                                                 <input type="text" name="_170_of57a_party_identifier" id="_170_of57a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_170_of57a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_171_of57a_identifier_code" id="_171_of57a_identifier_code" maxlength="11" input_type="OF57A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                                                <input type="text" name="_171_of57a_identifier_code" id="_171_of57a_identifier_code" maxlength="11" input_type="OF57A Identifier Code" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea disabled="true"><c:out value="${receiverBank}" /></textarea>

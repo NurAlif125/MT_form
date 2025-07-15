@@ -158,7 +158,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     reference = "Reference: "+request.getParameter("_010_mf20_sender_reference");
                 } 
                 
-                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference);
+                lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference, (String) session.getAttribute("nameUser"));
                 log.info("lastInsertedID " + lastInsertedID);
             } else {
                 if (io_typeStatus.equalsIgnoreCase("I")) {
@@ -166,10 +166,13 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         log.info("flag req null");
                         if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equalsIgnoreCase("CVT-MOD")) {
                             dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        } else if (flagStatus.equalsIgnoreCase("DUPL")) {
+                            flag = "DUPL-CNF";
+                            dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         }
                     } else {
                         // System.out.println("flag req ada");
-                        if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equals("CVT-MOD")) {
+                        if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equals("CVT-MOD") || flagStatus.equalsIgnoreCase("DUPL")) {
                             log.info("flag req mod");
                             if (request.getParameter("sender_logical_terminal") == null) {
                                 log.info("sender null");
@@ -183,8 +186,10 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 //                            dBDataTransaksiOutgoing.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         } else {
                             // System.out.println("flag req selain ver and mod");
-                            dBDataTransaksiOutgoing.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
-                            
+                            dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
+                            if (flag.equalsIgnoreCase("AUTH")) {
+                                dBDataTransaksiOutgoing2.updateApproved((String) session.getAttribute("nameUser"), Integer.parseInt(id));
+                            }
                             if ((flagStatus.equalsIgnoreCase("VER") && flag.equalsIgnoreCase("MOD")) || (flagStatus.equalsIgnoreCase("CVT-VER") && flag.equalsIgnoreCase("CVT-MOD"))) {
                                 // log.info("kadieuu flag selain mod 146");
                                 dBDataTransaksiOutgoing2.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), flagStatus);
@@ -235,7 +240,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 }
                 // System.out.println("baris 272");
             }
-            if (!flagStatus.equalsIgnoreCase("INC-NSTP")) {
+            if (!flagStatus.equalsIgnoreCase("INC-NSTP") || !flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
                 while (names.hasMoreElements()) {
                     tags = names.nextElement().toString();
                     if (tags.startsWith("_")) {
@@ -303,15 +308,9 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                     int id_headers = dBDataTransaksiOutgoing.id_headers();
                     log.info("create new MT");
-                    List<Integer> idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
-                    int lengthIdDupe = idDupe.size();
-                    log.info("panjang dupe nya.... " + lengthIdDupe);
-                    if (lengthIdDupe > 1) {
-                        log.info("246 masuk if");
-                        for (int ld = 1; ld < lengthIdDupe; ld++) {
-                            dBDataTransaksiOutgoing2.updateDuplikat(idDupe.get(ld));
-                            log.info("sini 249");
-                        }
+                    int idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
+                    if (idDupe > 1) {
+                        dBDataTransaksiOutgoing2.updateDuplikat(id_headers);
                         // log.info("masuk if 270");
                     }
                     if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
@@ -325,7 +324,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 //                        dBDataTransaksiOutgoing2.updateMXText(dataXml, Integer.parseInt(id));
                     } else {
                         log.info("update data MT");
-                        if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
+                        if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || !flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
                             dBDataTransaksiOutgoing2.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
                         } else {
                             dBDataTransaksiOutgoing2.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));

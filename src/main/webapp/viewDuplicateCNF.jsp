@@ -1,11 +1,10 @@
 <%-- 
-    Document   : viewDuplicate
-    Created on : Apr 9, 2013, 10:07:27 PM
-    Author     : hadi
+    Document   : viewDuplicateCNF
+    Created on : Jul 2, 2025, 7:28:29 PM
+    Author     : rafli
 --%>
 
 <%@ include file="header.jsp" %>
-
 <link type="text/css" href="css/paging/pagingheader.css" rel="stylesheet" />
 <script src="js/jquery-3.7.1.min_cdn"></script>
 <script src="js/DataTables/DataTables-1.13.6/js/jquery.dataTables.min.js"></script>
@@ -17,7 +16,7 @@
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MENU:DUPLICATE'}">
-            <div id="judul">Duplicate List</div>
+            <div id="judul">Duplicate Confirmation List</div>
             <div id="rowsearch">
                 <a href="List_scr.jsp" class="btnLink">Advance search</a>
                 <div class="my-navigation">
@@ -83,7 +82,7 @@ function escapeHtml(text) {
             processing: true,
             serverSide: true,
             ajax: {
-                url: "SCDuplicateList" + fullUrl,
+                url: "SCDuplicateCnfList" + fullUrl,
                 type: "GET",
                 xhrFields: {
                     withCredentials: true

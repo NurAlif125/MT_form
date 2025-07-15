@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.apache.commons.text.StringEscapeUtils;
 import com.vensys.appcm.dbase.DBHeader;
 import com.vensys.appcm.dbase.DBUserData;
 import com.vensys.appcm.dbase.DBconnection;
@@ -35,7 +36,38 @@ public class HeaderListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
   
-        log.info("SCHEADER:");     
+        log.info("SCHEADER:");  
+        // get sort list table
+        String orderColumnIndexRaw = request.getParameter("order[0][column]");
+        String orderDirRaw = request.getParameter("order[0][dir]"); // asc / desc
+        // Escape untuk mencegah XSS
+        String orderColumnIndex = StringEscapeUtils.escapeHtml4(orderColumnIndexRaw);
+        String orderDir = StringEscapeUtils.escapeHtml4(orderDirRaw);
+
+        // Validasi angka index
+        if (!orderColumnIndex.matches("\\d+")) {
+            orderColumnIndex = "0"; // default index
+        }
+
+        // Ambil nama kolom
+        String orderColumnNameRaw = request.getParameter("columns[" + orderColumnIndex + "][data]");
+        // Escape juga kolom
+        String orderColumnName = StringEscapeUtils.escapeHtml4(orderColumnNameRaw);
+//        
+//        System.out.println("57========= "+orderDir+" === "+orderColumnName);
+        String sort = "", columnName = "";
+        if (orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
+            columnName = "tanggal";
+            sort = "tanggal DESC";
+//            System.out.println("62========= "+sort);
+        } else {
+//            if(orderColumnName == null || orderColumnName.isEmpty() || "null".equalsIgnoreCase(orderColumnName) || "".equalsIgnoreCase(orderColumnName)) {
+//                columnName = "tanggal";
+//                System.out.println("66========= "+columnName);
+//            } 
+            sort = orderColumnName+" "+orderDir;
+//            System.out.println("69========= "+sort);
+        }
         
         HeaderSearchCriteria criteria = new HeaderSearchCriteria();
         criteria.setMtSearch(request.getParameter("columns[1][search][value]"));
@@ -51,6 +83,8 @@ public class HeaderListServlet extends HttpServlet {
         criteria.setCreatedDateSearch(request.getParameter("columns[11][search][value]"));
         criteria.setFlagSearch(request.getParameter("columns[12][search][value]"));
         criteria.setSourceSearch(request.getParameter("columns[13][search][value]"));
+        criteria.setCreateby(request.getParameter("columns[14][search][value]"));
+        criteria.setApproveby(request.getParameter("columns[15][search][value]"));
         
 //        System.out.println("mtSearch: " + request.getParameter("columns[1][search][value]"));
 //        System.out.println("ioSearch: " + request.getParameter("columns[2][search][value]"));
@@ -104,6 +138,7 @@ public class HeaderListServlet extends HttpServlet {
         String currency_code = request.getParameter("currency_code");
         String amount = request.getParameter("amount");
         String find = request.getParameter("find");
+        String quickSearch = request.getParameter("quicksearch");
 //        log.info("flag: " + flag);
         String status = request.getParameter("status");
 //        log.info("status: " + status);
@@ -138,10 +173,13 @@ public class HeaderListServlet extends HttpServlet {
 
         try {
             channel = (String) httpSession.getAttribute("channel");
-            notifVer = dbo.getNotificationVer();
-//            log.info("notifVer: " + notifVer);
-            notifAuth = dbo.getNotificationAuth();
-//            log.info("notifAuth: " + notifAuth);
+            if (!channel.equalsIgnoreCase("")) {
+                notifVer = dbo.getNotificationVer(channel);
+                notifAuth = dbo.getNotificationAuth(channel);
+            } else {
+                notifVer = dbo.getNotifVerAll();
+                notifAuth = dbo.getNotifAuthAll();
+            }
             httpSession.setAttribute("notifVer", notifVer);
             httpSession.setAttribute("notifAuth", notifAuth);
                 DBHeader dbHeader = new DBHeader(dbConn.getConnection());
@@ -149,8 +187,8 @@ public class HeaderListServlet extends HttpServlet {
                 List<Header> headers = new ArrayList<>();
                 
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
-                headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
-                totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
+                totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                 System.out.println("Total Data"+ String.valueOf(totalRecords));
             } else if (flag != null && !flag.isEmpty()) {
                 if (menu == null) {
@@ -283,8 +321,8 @@ public class HeaderListServlet extends HttpServlet {
                         menu = "3";
                     }
 
-                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
-                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
+                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                     System.out.println("Total Data"+ String.valueOf(totalRecords));
                 
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -293,8 +331,8 @@ public class HeaderListServlet extends HttpServlet {
                     httpSession.setAttribute("flagFilter", flag);
                 } else {
 //                    log.info("flag else : " + flag);
-                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria);
-                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria);
+                    headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
+                    totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
                     System.out.println("Total Data"+ String.valueOf(totalRecords));
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("flag", flag);
@@ -307,8 +345,8 @@ public class HeaderListServlet extends HttpServlet {
 
                 System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
-                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria);
-                totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria);
+                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch, sort);
+                totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch);
                 System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
@@ -340,6 +378,8 @@ public class HeaderListServlet extends HttpServlet {
                     obj.put("trans_date_value", h.getTrans_date_value());
                     obj.put("trans_amount", h.getTrans_amount());
                     obj.put("trans_ccy", h.getTrans_ccy());
+                    obj.put("createby", h.getCreateby());
+                    obj.put("approveby", h.getApproveby());
                     dataArray.put(obj);
                 }
 

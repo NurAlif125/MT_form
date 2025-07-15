@@ -68,6 +68,18 @@
         <servlet-name>HeaderListServlet</servlet-name>
         <servlet-class>com.vensys.appcm.controller.HeaderListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SCDuplicateCNF</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDuplicateCNF</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCDuplicateList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDuplicateList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCDuplicateCnfList</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCDuplicateCnfList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SCFIA</servlet-name>
         <url-pattern>/SCFIA</url-pattern>
@@ -950,6 +962,10 @@
     <servlet-mapping>
         <servlet-name>HeaderListServlet</servlet-name>
         <url-pattern>/HeaderListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCDuplicateCNF</servlet-name>
+        <url-pattern>/SCDuplicateCNF</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

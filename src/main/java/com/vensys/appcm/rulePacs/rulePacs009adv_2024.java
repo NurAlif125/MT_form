@@ -162,7 +162,7 @@ public class rulePacs009adv_2024 {
                 }
             }
         }
-        
+
         CreditTransferTransaction36 cdtTrfTxInf = this.mxPacs00900108.getFICdtTrf().getCdtTrfTxInf().get(0);
         if (cdtTrfTxInf != null) {
             PaymentIdentification7 pmtId = cdtTrfTxInf.getPmtId();
@@ -175,7 +175,7 @@ public class rulePacs009adv_2024 {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><td>FICdtTrf/CdtTrfTxInf/PmtId/InstrId</td></tr>");
                     }
                 }
-                
+
                 String end2EndId = pmtId.getEndToEndId();
                 if (end2EndId == null || end2EndId.equalsIgnoreCase("")) {
                     validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PmtId/EndToEndId\"><td>EndToEndIdentification is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/PmtId/EndToEndId</td></tr>");
@@ -191,13 +191,13 @@ public class rulePacs009adv_2024 {
                         }
                     }
                 }
-                
+
                 String uetr = pmtId.getUETR();
                 if (uetr == null || uetr.equalsIgnoreCase("")) {
-                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PmtId/UETR\"><td>UETR is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/PmtId/UETR</td></tr>");
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"UETR\"><td>UETR is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/PmtId/UETR</td></tr>");
                 }
             }
-            
+
             ActiveCurrencyAndAmount intrBkSttlmAmt = cdtTrfTxInf.getIntrBkSttlmAmt();
             if (intrBkSttlmAmt.getValue() == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrBkSttlmAmt\"><td>InterBankSettlementAmount is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/IntrBkSttlmAmt</td></tr>");
@@ -211,12 +211,12 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             LocalDate intrBkSttlmDt = cdtTrfTxInf.getIntrBkSttlmDt();
             if (intrBkSttlmDt == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrBkSttlmDt\"><td>InterBankSettlementDate is mandatory!</td><td>FICdtTrf/CdtTrfTxInf/IntrBkSttlmDt</td></tr>");
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 prvsInstgAgt1 = cdtTrfTxInf.getPrvsInstgAgt1();
             if (prvsInstgAgt1 != null) {
                 FinancialInstitutionIdentification18 finInstnIdPrvsInstgAgt1 = prvsInstgAgt1.getFinInstnId();
@@ -266,7 +266,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 prvsInstgAgt2 = cdtTrfTxInf.getPrvsInstgAgt2();
             if (prvsInstgAgt2 != null) {
                 FinancialInstitutionIdentification18 finInstnIdPrvsInstgAgt2 = prvsInstgAgt2.getFinInstnId();
@@ -315,7 +315,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 prvsInstgAgt3 = cdtTrfTxInf.getPrvsInstgAgt3();
             if (prvsInstgAgt3 != null) {
                 FinancialInstitutionIdentification18 finInstnIdPrvsInstgAgt3 = prvsInstgAgt3.getFinInstnId();
@@ -364,7 +364,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 instgAgt = cdtTrfTxInf.getInstgAgt();
             if (instgAgt != null) {
                 FinancialInstitutionIdentification18 finInstnIdInstgAgt = instgAgt.getFinInstnId();
@@ -382,7 +382,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 instdAgt = cdtTrfTxInf.getInstdAgt();
             if (instdAgt != null) {
                 FinancialInstitutionIdentification18 finInstnIdInstdAgt = instdAgt.getFinInstnId();
@@ -394,15 +394,19 @@ public class rulePacs009adv_2024 {
                         if (receiverAddress == null || receiverAddress.equalsIgnoreCase("")) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>BAH \"To\" BIC must match \"Instructed Agent\" BIC</td><td>FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                         } else {
-                            String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
-                            if (!bicInstdAgt.equals(receiverAddress1)) {
+                            if (receiverAddress.length() == 12) {
+                                String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
+                                if (!bicInstdAgt.equals(receiverAddress1)) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>BAH \"To\" BIC must match \"Instructed Agent\" BIC</td><td>FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                                }
+                            } else {
                                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>BAH \"To\" BIC must match \"Instructed Agent\" BIC</td><td>FICdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
                             }
                         }
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 intrmyAgt1 = cdtTrfTxInf.getIntrmyAgt1();
             if (intrmyAgt1 != null) {
                 FinancialInstitutionIdentification18 finInstnIdIntrmyAgt1 = intrmyAgt1.getFinInstnId();
@@ -451,7 +455,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 intrmyAgt2 = cdtTrfTxInf.getIntrmyAgt2();
             if (intrmyAgt2 != null) {
                 FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = intrmyAgt2.getFinInstnId();
@@ -500,7 +504,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 intrmyAgt3 = cdtTrfTxInf.getIntrmyAgt3();
             if (intrmyAgt3 != null) {
                 FinancialInstitutionIdentification18 finInstnIdIntrmyAgt3 = intrmyAgt3.getFinInstnId();
@@ -549,7 +553,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 dbtr = cdtTrfTxInf.getDbtr();
             if (dbtr != null) {
                 FinancialInstitutionIdentification18 finInstnIdDbtr = dbtr.getFinInstnId();
@@ -600,7 +604,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 dbtrAgt = cdtTrfTxInf.getDbtrAgt();
             if (dbtrAgt != null) {
                 FinancialInstitutionIdentification18 finInstnIdDbtrAgt = dbtrAgt.getFinInstnId();
@@ -649,7 +653,7 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             BranchAndFinancialInstitutionIdentification6 cdtrAgt = cdtTrfTxInf.getCdtrAgt();
             if (cdtrAgt != null) {
                 FinancialInstitutionIdentification18 finInstnIdCdtrAgt = cdtrAgt.getFinInstnId();
@@ -749,17 +753,17 @@ public class rulePacs009adv_2024 {
                     }
                 }
             }
-            
+
             CashAccount38 cdtrAgtAcct = cdtTrfTxInf.getCdtrAgtAcct();
             if (cdtrAgtAcct != null && cdtrAgt == null) {
                 validationRuleComment.add("<tr class=\"error__row\"input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt\"><td>If CreditorAgentAccount is present, then CreditorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
             }
-            
+
             CashAccount38 dbtrAgtAcct = cdtTrfTxInf.getDbtrAcct();
             if (dbtrAgtAcct != null && dbtrAgt == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt\"><td>If DebtorAgentAccount is present, then DebtorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt</td></tr>");
             }
-            
+
             CashAccount38 intrmyAgt1Acct = cdtTrfTxInf.getIntrmyAgt1Acct();
             if (intrmyAgt1Acct != null && intrmyAgt1 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1\"><td>If IntermediaryAgent1Account is present, then IntermediaryAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1</td></tr>");
@@ -768,7 +772,7 @@ public class rulePacs009adv_2024 {
             if (intrmyAgt1 != null && cdtrAgt == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt\"><td>If IntermediaryAgent1 is present, then CreditorAgent must be present.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
             }
-            
+
             CashAccount38 intrmyAgt2Acct = cdtTrfTxInf.getIntrmyAgt2Acct();
             if (intrmyAgt2Acct != null && intrmyAgt2 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2\"><td>If IntermediaryAgent2Account is present, then IntermediaryAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2</td></tr>");
@@ -777,7 +781,7 @@ public class rulePacs009adv_2024 {
             if (intrmyAgt2 != null && intrmyAgt1 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1\"><td>If IntermediaryAgent2 is present, then IntermediaryAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1</td></tr>");
             }
-            
+
             CashAccount38 intrmyAgt3Acct = cdtTrfTxInf.getIntrmyAgt3Acct();
             if (intrmyAgt3Acct != null && intrmyAgt3 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3\"><td>If IntermediaryAgent3Account is present, then IntermediaryAgent3 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3</td></tr>");
@@ -786,7 +790,7 @@ public class rulePacs009adv_2024 {
             if (intrmyAgt3 != null && intrmyAgt2 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2\"><td>If IntermediaryAgent3 is present, then IntermediaryAgent2 must be present.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2</td></tr>");
             }
-            
+
             CashAccount38 prvsInstgAgt1Acct = cdtTrfTxInf.getPrvsInstgAgt1Acct();
             if (prvsInstgAgt1Acct != null && prvsInstgAgt1 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1\"><td>If PreviousInstructing1Account is present, then PreviousInstructingAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1</td></tr>");
@@ -801,7 +805,7 @@ public class rulePacs009adv_2024 {
             if (prvsInstgAgt3Acct != null && prvsInstgAgt3 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3\"><td>If PreviousInstructing3Account is present, then PreviousInstructingAgent3 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3</td></tr>");
             }
-            
+
             if (prvsInstgAgt2 != null && prvsInstgAgt1 == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1\"><td>If PreviousInstructingAgent2 is present, then PreviousInstructingAgent1 must be present.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1</td></tr>");
             }

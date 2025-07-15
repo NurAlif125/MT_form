@@ -50,8 +50,9 @@ import org.apache.commons.lang.StringEscapeUtils;
 public class VDataTransaksiOutgoing extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    
+
     Logger log = Logger.getLogger(getClass().getName());
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -98,6 +99,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             httpSession.setAttribute("io_typeStatus", headerById.getIo_type());
             httpSession.setAttribute("messageType", headerById.getMessageType());
             httpSession.setAttribute("isDuplicate", headerById.getIsDuplicate());
+            httpSession.setAttribute("userEntry", headerById.getUserEntry());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -111,21 +113,23 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             httpSession.setAttribute("nama_core", namaCore);
         }
         String typeMT = headerById.getMessageType();
-        if ("103".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT)) {
+        if ("103".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT) || "200".equalsIgnoreCase(typeMT)) {
             try {
                 System.out.println("Message Type: " + headerById.getMessageType());
-                CHeader headermt = new CHeader(); 
-                headermt.wifeParser(headerById.getMessageType(),Integer.parseInt(request.getParameter("id")));
-                
+                CHeader headermt = new CHeader();
+                headermt.wifeParser(headerById.getMessageType(), Integer.parseInt(request.getParameter("id")));
+
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         } else if (typeMT.contains("pacs") || typeMT.contains("camt")) {
-            try {
-                CHeader headermx = new CHeader();
-                headermx.insertJsonTags(headerById.getMessageType(), Integer.parseInt(request.getParameter("id")));
-            } catch (Exception exc) {
-                exc.printStackTrace();
+            if (headerById.getIo_type().equalsIgnoreCase("O")) {
+                try {
+                    CHeader headermx = new CHeader();
+                    headermx.insertJsonTags(headerById.getMessageType(), Integer.parseInt(request.getParameter("id")));
+                } catch (Exception exc) {
+                    exc.printStackTrace();
+                }
             }
         }
         tags = bBHeaders.getAllTagById(request.getParameter("id"), prefix);
@@ -137,13 +141,12 @@ public class VDataTransaksiOutgoing extends HttpServlet {
 
         try {
             // log.info("masuk gettextbyid");
-            
+
             if (headerById.getMessageType().contains("pacs") || headerById.getMessageType().contains("camt")) {
                 textById = dbText.getMxTextById(Integer.parseInt(request.getParameter("id")));
             } else {
                 textById = dbText.getMtTextById(Integer.parseInt(request.getParameter("id")));
             }
-            
 
             //ini yg bawaan MT
             String before = textById.getModify_mt();
@@ -207,8 +210,8 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             }
             //request.setAttribute("keyAfter", resultAft);
             //request.setAttribute("keyBefore", resultBfr);
-           request.setAttribute("keyAfter", StringEscapeUtils.escapeHtml(resultAft));
-           request.setAttribute("keyBefore", StringEscapeUtils.escapeHtml(resultBfr));
+            request.setAttribute("keyAfter", StringEscapeUtils.escapeHtml(resultAft));
+            request.setAttribute("keyBefore", StringEscapeUtils.escapeHtml(resultBfr));
 
 //            System.out.println("textByid: "+textById);
         } catch (Exception ex) {
@@ -217,12 +220,11 @@ public class VDataTransaksiOutgoing extends HttpServlet {
 
         // ditambahkan pada 20180326 untuk mengetahui nama dari BANK
         //try {
-          //  senderBank = bBHeaders.getSenderBank(request.getParameter("id"));
+        //  senderBank = bBHeaders.getSenderBank(request.getParameter("id"));
 //            System.out.println("senderBank : "+senderBank);
         //} catch (Exception ex) {
-           // ex.printStackTrace();
+        // ex.printStackTrace();
         //}
-
         // ditambahkan pada 20180326 untuk mengetahui nama dari BANK
         try {
             receiverBank = bBHeaders.getRecBank(request.getParameter("id"));
@@ -233,10 +235,10 @@ public class VDataTransaksiOutgoing extends HttpServlet {
 
         try {
             relation = dbRelation.getMtRelbyIdHeaders(request.getParameter("id"));
-           // user_comments = opr.getAllUserCommentEvidence(Integer.parseInt(request.getParameter("id")),"comment");
+            // user_comments = opr.getAllUserCommentEvidence(Integer.parseInt(request.getParameter("id")),"comment");
             //evidence_list = opr.getAllUserCommentEvidence(Integer.parseInt(request.getParameter("id")),"attachment");
             //if(evidence_list.size()>0){
-               // evidence_exist = "yes";
+            // evidence_exist = "yes";
             //}
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -252,26 +254,26 @@ public class VDataTransaksiOutgoing extends HttpServlet {
                 } else {
                     logicalTerminal = "";
                 }
-                
+
                 if (!arrLtri[1].isEmpty()) {
                     receiverInstitution = arrLtri[1];
                 } else {
                     receiverInstitution = "";
                 }
-                
+
             } else {
                 if (!arrLtri[1].isEmpty()) {
                     logicalTerminal = arrLtri[1];
                 } else {
                     logicalTerminal = "";
                 }
-                
+
                 if (!arrLtri[3].isEmpty()) {
                     receiverInstitution = arrLtri[3];
                 } else {
                     receiverInstitution = "";
                 }
-                
+
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -295,15 +297,15 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         //request.setAttribute("evidence_exist", evidence_exist); //20240108 ditambah ini
         String suffix = "COV";
         RequestDispatcher view;
-        
-        if (headerById.getNetworktype().contains("MT")) { 
+
+        if (headerById.getNetworktype().contains("MT")) {
             if (headerById.getMessageType().contains("103") || headerById.getMessageType().contains("200") || headerById.getMessageType().contains("202")) {
                 view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
             } else {
                 view = request.getRequestDispatcher("mt.jsp");
             }
         } else {
-            MxWriteConfiguration mxConfiguration =  new MxWriteConfiguration();
+            MxWriteConfiguration mxConfiguration = new MxWriteConfiguration();
             mxConfiguration.rootElement = "Document";
             mxConfiguration.documentPrefix = null;
             mxConfiguration.headerPrefix = null;
@@ -313,7 +315,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
                 dataMXpacs009.setAppHdr(null);
                 String clearMX = dataMXpacs009.message(mxConfiguration);
                 request.setAttribute("dataIsoXML", clearMX);
-                
+
                 view = request.getRequestDispatcher(headerById.getMessageType().substring(0, 8) + "cov.jsp");
             } else if (headerById.getMessageType().contains("ADV")) {
                 String json = opr.getBodyAnHeaderMXById(Integer.parseInt(request.getParameter("id"))).get("bodyMX");
@@ -321,7 +323,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
                 dataMXpacs009.setAppHdr(null);
                 String clearMX = dataMXpacs009.message(mxConfiguration);
                 request.setAttribute("dataIsoXML", clearMX);
-                
+
                 view = request.getRequestDispatcher(headerById.getMessageType().substring(0, 8) + "adv.jsp");
             } else if (headerById.getMessageType().contains("pacs.004") || headerById.getMessageType().contains("pacs.008") || headerById.getMessageType().contains("pacs.009") || headerById.getMessageType().contains("camt.053") || headerById.getMessageType().contains("camt.055") || headerById.getMessageType().contains("camt.056") || headerById.getMessageType().contains("camt.107") || headerById.getMessageType().contains("camt.108")) {
                 String json = opr.getBodyAnHeaderMXById(Integer.parseInt(request.getParameter("id"))).get("bodyMX");
@@ -366,7 +368,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
                     String clearMX = dataMXcamt108.message(mxConfiguration);
                     request.setAttribute("dataIsoXML", clearMX);
                 }
-                
+
                 view = request.getRequestDispatcher(headerById.getMessageType().substring(0, 8) + ".jsp");
             } else {
                 view = request.getRequestDispatcher("mx.jsp");

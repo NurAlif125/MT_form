@@ -36,7 +36,6 @@ import java.math.BigDecimal;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-
 /**
  *
  * @author Muhammad Abdul Hadi
@@ -100,7 +99,6 @@ public class DBHeader {
 //        } else if (filter.equals("0")) {
 //            where += " AND block3 not like '%111:009;%'";
 //        }
-
         where += " AND CAST(hd.tanggal as DATE) BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:59'"; //20200213
         String sql = "SELECT DISTINCT hd.id_headers, hd.messageType,hd.logicalTerminal,hd.io_type,"
                 + "hd.receiverAddress,hd.tanggal,hd.flag, t32d.detail, t32c.detail as ccy FROM headers as hd "
@@ -388,13 +386,13 @@ public class DBHeader {
 //        } else {
 //            where += " AND filter = '" + filter + "' ";
 //        }
-        if ( filter == null) {
+        if (filter == null) {
             where += "";
         } else if (filter.equals("1")) {
             where += " AND block3 like '%111:009;%'";
         } else if (filter.equals("0")) {
             where += " AND block3 not like '%111:009;%'";
-        }else{
+        } else {
             where += "";
         }
 
@@ -627,7 +625,8 @@ public class DBHeader {
                 + "FROM headers WHERE id_headers=? ";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
-        st.setString(1, id);
+        int idx = Integer.parseInt(id);
+        st.setInt(1, idx);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             Header header = new Header();
@@ -747,7 +746,7 @@ public class DBHeader {
         return headers;
     }
 
-    public List<Header> getAllHeader(HttpSession httpSession, String io_type, String flag, String channel, int start, int length, HeaderSearchCriteria criteria) throws Exception {
+    public List<Header> getAllHeader(HttpSession httpSession, String io_type, String flag, String channel, int start, int length, HeaderSearchCriteria criteria, String quicksearch, String sort) throws Exception {
         String where = "";
         String role = "";
         String isDuplicate = "0";
@@ -801,9 +800,9 @@ public class DBHeader {
         if (flag == null || flag.isEmpty()) {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("MOD")) {
-            where += " AND flag='MOD' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='MOD' ";
         } else if (flag.equalsIgnoreCase("VER")) {
-            where += " AND flag='VER' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='VER' ";
 //        } else if (flag.equalsIgnoreCase("AUTH")) {
 //            where += " AND flag='AUTH' AND CAST(h.tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
 //        } else if (flag.equalsIgnoreCase("TEXT")) {
@@ -830,11 +829,11 @@ public class DBHeader {
             where += " AND flag='INC-HOLD' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("NACK")) {
             where += " AND flag='NACK' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        }  else if (flag.equalsIgnoreCase("ACK")) {
+        } else if (flag.equalsIgnoreCase("ACK")) {
             where += " AND flag='ACK' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-CNF")) {
             where += " AND flag='INC-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        }  else if (flag.equalsIgnoreCase("INC")) {
+        } else if (flag.equalsIgnoreCase("INC")) {
             where += " AND flag='INC' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("ERR")) {
             isDuplicate = "3";
@@ -847,54 +846,70 @@ public class DBHeader {
             where += " AND flag='WAITING-AML' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-CVT")) {
             where += " AND flag='INC-CVT' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC")) { 
+        } else if (flag.equalsIgnoreCase("INC")) {
             where += " AND flag='INC' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("RESEND-CNF")) { 
+        } else if (flag.equalsIgnoreCase("RESEND-CNF")) {
             where += " AND flag='RESEND-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) { 
+        } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) {
             where += " AND flag='INC-REJECT-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML")) { 
+        } else if (flag.equalsIgnoreCase("INC-AML")) {
             where += " AND flag='INC-AML' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) { 
+        } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
             where += " AND flag='INC-AML-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) { 
+        } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) {
             where += " AND flag='INC-AML-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("SETTLE")) { 
+        } else if (flag.equalsIgnoreCase("SETTLE")) {
             where += " AND flag='SETTLE' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) { 
+        } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) {
             where += " AND flag='AML-TERMINATE-IN' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) { 
+        } else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) {
             where += " AND flag='AML-TERMINATE-OUT' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) { 
+        } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) {
             where += " AND flag='UNSETTLE-INC' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) { 
+        } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) {
             where += " AND flag='INC-RESEND-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) { 
+        } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) {
             where += " AND flag='UNSETTLE-OUT' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) { 
+        } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) {
             where += " AND flag='WAITING-SAA-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-FAILED")) { 
+        } else if (flag.equalsIgnoreCase("AML-FAILED")) {
             where += " AND flag='AML-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-FAILED-CNF")) { 
+        } else if (flag.equalsIgnoreCase("AML-FAILED-CNF")) {
             where += " AND flag='AML-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("FIA-FAILED")) { 
+        } else if (flag.equalsIgnoreCase("FIA-FAILED")) {
             where += " AND flag='FIA-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) { 
+        } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             where += " AND flag='FIA-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+        } else if (flag.equalsIgnoreCase("DUPL-RESEND")) {
+            where += " AND flag='DUPL-RESEND' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         }
-                
+
         if (channel != null && !channel.isBlank()) {
             where += " AND source LIKE '%" + channel + "%'";
         }
-     
+
+        if (quicksearch != null && !quicksearch.isEmpty()) {
+            if (quicksearch.startsWith("ou")) {
+                where += " AND (h.io_type = 'I' OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE '%" + quicksearch + "%')";
+            } else if (quicksearch.startsWith("in")) {
+                where += " AND (h.io_type = 'O' OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE '%" + quicksearch + "%')";
+            } else {
+                where += " AND CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE '%" + quicksearch + "%'";
+            }
+        }
 
         if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
             where += " AND messageType ILIKE '%" + criteria.getMtSearch() + "%'";
         }
         if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
-            where += " AND io_type ILIKE '%" + criteria.getIoSearch() + "%'";
+            String ioInput = criteria.getIoSearch().trim().toLowerCase();
+            if (ioInput.startsWith("ou")) {
+                where += " AND h.io_type = 'I'";
+            } else if (ioInput.startsWith("in")) {
+                where += " AND h.io_type = 'O'";
+            }
         }
         if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
             where += " AND sequenceNumber::TEXT ILIKE '%" + criteria.getSeqSearch() + "%'";
@@ -929,20 +944,23 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
         }
+        if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+            where += " AND createby ILIKE '%" + criteria.getCreateby() + "%'";
+        }
+        if (criteria.getApproveby()  != null && !criteria.getApproveby().isEmpty()) {
+            where += " AND approveby ILIKE '%" + criteria.getApproveby() + "%'";
+        }
 
-
-        
         List<Header> headers = new ArrayList<Header>();
         String sql = """
                      SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,
-                     h.receiverAddress, h.tanggal, h.id_headers, h.flag, h.isDuplicate,
-                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy
-                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
-                + "ORDER BY tanggal DESC OFFSET "+start+" ROWS FETCH NEXT "+length+" ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
-        
-//        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
+                     h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.id_headers, h.flag, h.isDuplicate,
+                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby
+                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
+                + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
-        System.out.println(sql);
+//        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
+//        System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -966,7 +984,7 @@ public class DBHeader {
             header.setBlock3(rs.getString(12));
             header.setSource(rs.getString(13));
             header.setTrans_refference(rs.getString(14));
-            System.out.println("Refernce "+rs.getString(14));
+//            System.out.println("Refernce " + rs.getString(14));
             header.setTrans_related_refference(rs.getString(15));
             header.setTrans_amount(rs.getString(17));
             if (rs.getString(17) == null) {
@@ -976,6 +994,8 @@ public class DBHeader {
             }
             header.setTrans_date_value(rs.getString(16));
             header.setTrans_ccy(rs.getString(18));
+            header.setCreateby(rs.getString(19));
+            header.setApproveby(rs.getString(20));
 
 //            header.setTrans_ccy(rs.getString(15));
 //            header.setTag20(rs.getString(12));
@@ -989,9 +1009,9 @@ public class DBHeader {
         }
         return headers;
     }
-    
-    public int countAllHeader(HttpSession httpSession, String io_type, String flag, String channel, HeaderSearchCriteria criteria) throws Exception {
-        String where = "";
+
+    public int countAllHeader(HttpSession httpSession, String io_type, String flag, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
+        String where = " ";
         String role = "";
         String isDuplicate = "0";
         Calendar now = Calendar.getInstance();
@@ -1044,9 +1064,9 @@ public class DBHeader {
         if (flag == null || flag.isEmpty()) {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("MOD")) {
-            where += " AND flag='MOD' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='MOD' ";
         } else if (flag.equalsIgnoreCase("VER")) {
-            where += " AND flag='VER' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+            where += " AND flag='VER' ";
 //        } else if (flag.equalsIgnoreCase("AUTH")) {
 //            where += " AND flag='AUTH' AND CAST(h.tanggal as date) = '" + tanggal_transaksi_sebulan + "'";
 //        } else if (flag.equalsIgnoreCase("TEXT")) {
@@ -1073,11 +1093,11 @@ public class DBHeader {
             where += " AND flag='INC-HOLD' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("NACK")) {
             where += " AND flag='NACK' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        }  else if (flag.equalsIgnoreCase("ACK")) {
+        } else if (flag.equalsIgnoreCase("ACK")) {
             where += " AND flag='ACK' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-CNF")) {
             where += " AND flag='INC-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        }  else if (flag.equalsIgnoreCase("INC")) {
+        } else if (flag.equalsIgnoreCase("INC")) {
             where += " AND flag='INC' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("ERR")) {
             isDuplicate = "3";
@@ -1090,53 +1110,68 @@ public class DBHeader {
             where += " AND flag='WAITING-AML' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-CVT")) {
             where += " AND flag='INC-CVT' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC")) { 
+        } else if (flag.equalsIgnoreCase("INC")) {
             where += " AND flag='INC' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("RESEND-CNF")) { 
+        } else if (flag.equalsIgnoreCase("RESEND-CNF")) {
             where += " AND flag='RESEND-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) { 
+        } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) {
             where += " AND flag='INC-REJECT-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML")) { 
+        } else if (flag.equalsIgnoreCase("INC-AML")) {
             where += " AND flag='INC-AML' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) { 
+        } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
             where += " AND flag='INC-AML-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) { 
+        } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) {
             where += " AND flag='INC-AML-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("SETTLE")) { 
+        } else if (flag.equalsIgnoreCase("SETTLE")) {
             where += " AND flag='SETTLE' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) { 
+        } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) {
             where += " AND flag='AML-TERMINATE-IN' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) { 
+        } else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) {
             where += " AND flag='AML-TERMINATE-OUT' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) { 
+        } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) {
             where += " AND flag='UNSETTLE-INC' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) { 
+        } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) {
             where += " AND flag='INC-RESEND-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) { 
+        } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) {
             where += " AND flag='UNSETTLE-OUT' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) { 
+        } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) {
             where += " AND flag='WAITING-SAA-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-FAILED")) { 
+        } else if (flag.equalsIgnoreCase("AML-FAILED")) {
             where += " AND flag='AML-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("AML-FAILED-CNF")) { 
+        } else if (flag.equalsIgnoreCase("AML-FAILED-CNF")) {
             where += " AND flag='AML-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("FIA-FAILED")) { 
+        } else if (flag.equalsIgnoreCase("FIA-FAILED")) {
             where += " AND flag='FIA-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) { 
+        } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             where += " AND flag='FIA-FAILED-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else {
             where += " AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         }
-                
+
         if (channel != null && !channel.isBlank()) {
             where += " AND source LIKE '%" + channel + "%'";
         }
-        
+
+        if (quicksearch != null && !quicksearch.isEmpty()) {
+            if (quicksearch.startsWith("ou")) {
+                where += " AND (h.io_type = 'I' OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE '%" + quicksearch + "%')";
+            } else if (quicksearch.startsWith("in")) {
+                where += " AND (h.io_type = 'O' OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE '%" + quicksearch + "%')";
+            } else {
+                where += " AND CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE '%" + quicksearch + "%'";
+            }
+        }
+
         if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
             where += " AND messageType ILIKE '%" + criteria.getMtSearch() + "%'";
         }
         if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
-            where += " AND io_type ILIKE '%" + criteria.getIoSearch() + "%'";
+            String ioInput = criteria.getIoSearch().trim().toLowerCase();
+            if (ioInput.startsWith("ou")) {
+                where += " AND h.io_type = 'I'";
+            } else if (ioInput.startsWith("in")) {
+                where += " AND h.io_type = 'O'";
+            }
         }
         if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
             where += " AND sequenceNumber::TEXT ILIKE '%" + criteria.getSeqSearch() + "%'";
@@ -1171,16 +1206,20 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
         }
+        if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+            where += " AND createby ILIKE '%" + criteria.getCreateby() + "%'";
+        }
+        if (criteria.getApproveby() != null && !criteria.getApproveby().isEmpty()) {
+            where += " AND approveby ILIKE '%" + criteria.getApproveby() + "%'";
+        }
 
-        
         int headers = 0;
         String sql = """
                      SELECT count(h.id_headers)
-                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") "
+                     FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
                 + "--ORDER BY tanggal DESC --LIMIT 100 OFFSET (1 - 1) * 100";
-        
-//        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
 
+//        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
 //        System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -1189,7 +1228,7 @@ public class DBHeader {
         }
         return headers;
     }
-  
+
     public List<Header> getAllHeaderPajak(HttpSession httpSession, String io_type, String flag) throws Exception {
         String where = "";
         String tag_where = "";
@@ -1328,38 +1367,247 @@ public class DBHeader {
         return headers;
     }
 
-    public List<Header> getAllHeaderDuplicate() throws Exception {
+    public List<Header> getAllHeaderDuplicate(String channel, int start, int length, String quickSearch, String sort) throws Exception {
         Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
-        List<Header> headers = new ArrayList<Header>();
-        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,"
-                + "h.receiverAddress, h.tanggal, h.flag, td.trans_reference FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + "WHERE TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? "
-                + "AND h.isduplicate=1 ORDER BY tanggal DESC";
-//        System.out.println("sql getAllHeaderDuplicate = " + sql);
+        List<Header> headers = new ArrayList<>();
+
+        String where = "WHERE h.isduplicate = 1 AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? ";
+        List<Object> params = new ArrayList<>();
+        params.add(dDay.format(tanggal));
+
+        if (channel != null && !channel.isBlank()) {
+            where += "AND h.source = ? ";
+            params.add(channel);
+        }
+        
+        if (quickSearch != null && !quickSearch.isBlank()) {
+            where += "AND LOWER(CONCAT(" +
+                    "COALESCE(h.messageType, ''), ' ', " +
+                    "COALESCE(h.logicalTerminal, ''), ' ', " +
+                    "COALESCE(h.sessionNumber, ''), ' ', " +
+                    "COALESCE(h.sequenceNumber, ''), ' ', " +
+                    "COALESCE(h.io_type, ''), ' ', " +
+                    "COALESCE(h.receiverAddress, ''), ' ', " +
+                    "COALESCE(td.trans_reference, '')" +
+                    ")) ILIKE ? ";
+            params.add("%" + quickSearch.toLowerCase() + "%");
+        }
+
+
+        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, " +
+                     "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference " +
+                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
+                     where +
+                     "ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        // Pagination 
+        params.add(start);
+        params.add(length);
+
         PreparedStatement st = this.conn.prepareStatement(sql);
-        st.setString(1, dDay.format(tanggal));
+
+        int idx = 1;
+        for (Object param : params) {
+            if (param instanceof String) {
+                st.setString(idx++, (String) param);
+            } else if (param instanceof Integer) {
+                st.setInt(idx++, (Integer) param);
+            }
+        }
+
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
             Header header = new Header();
-            header.setMessageType(rs.getString(2));
-            header.setLogicalTerminal(rs.getString(3).toUpperCase());
-            header.setSessionNumber(rs.getString(4));
-            header.setSequenceNumber(rs.getString(5));
-//            header.setIo_type(rs.getString(5));
-            if (rs.getString(6).equalsIgnoreCase("i")) {
-                header.setIo_type("OUTGOING");
-            } else {
-                header.setIo_type("INCOMING");
-            }
-            header.setReceiverAddress(rs.getString(7).toUpperCase());
-            header.setTanggal(rs.getString(8));
-            header.setId_headers(rs.getInt(1));
-            header.setFlag(rs.getString(9));
-            header.setTag20(rs.getString(10));
+            header.setId_headers(rs.getInt("id_headers"));
+            header.setMessageType(rs.getString("messageType"));
+            header.setLogicalTerminal(rs.getString("logicalTerminal").toUpperCase());
+            header.setSessionNumber(rs.getString("sessionNumber"));
+            header.setSequenceNumber(rs.getString("sequenceNumber"));
+
+            String io = rs.getString("io_type");
+            header.setIo_type("i".equalsIgnoreCase(io) ? "OUTGOING" : "INCOMING");
+
+            header.setReceiverAddress(rs.getString("receiverAddress").toUpperCase());
+            header.setTanggal(rs.getString("tanggal"));
+            header.setFlag(rs.getString("flag"));
+            header.setTag20(rs.getString("trans_reference"));
+
             headers.add(header);
         }
+
         return headers;
+    }
+
+    
+     public int getCountAllHeaderDuplicate(String channel, String quickSearch) throws Exception {
+         Date tanggal = new Date();
+        SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
+        List<Header> headers = new ArrayList<>();
+
+        String where = "WHERE h.isduplicate = 1 AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? ";
+        List<Object> params = new ArrayList<>();
+        params.add(dDay.format(tanggal));
+
+        if (channel != null && !channel.isBlank()) {
+            where += "AND h.source = ? ";
+            params.add(channel);
+        }
+        
+        if (quickSearch != null && !quickSearch.isBlank()) {
+            where += "AND LOWER(CONCAT(" +
+                    "COALESCE(h.messageType, ''), ' ', " +
+                    "COALESCE(h.logicalTerminal, ''), ' ', " +
+                    "COALESCE(h.sessionNumber, ''), ' ', " +
+                    "COALESCE(h.sequenceNumber, ''), ' ', " +
+                    "COALESCE(h.io_type, ''), ' ', " +
+                    "COALESCE(h.receiverAddress, ''), ' ', " +
+                    "COALESCE(td.trans_reference, '')" +
+                    ")) ILIKE ? ";
+            params.add("%" + quickSearch.toLowerCase() + "%");
+        }
+
+        String sql = "SELECT COUNT(DISTINCT h.id_headers) " +
+                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
+                     where +"";
+
+        PreparedStatement st = this.conn.prepareStatement(sql);
+
+        int idx = 1;
+        for (Object param : params) {
+            if (param instanceof String) {
+                st.setString(idx++, (String) param);
+            } else if (param instanceof Integer) {
+                st.setInt(idx++, (Integer) param);
+            }
+        }
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+         
+         return 0;
+    }
+    
+    public List<Header> getAllHeaderDuplicateCNF(String channel, int start, int length, String quickSearch, String sort) throws Exception {
+        Date tanggal = new Date();
+        SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
+        List<Header> headers = new ArrayList<>();
+
+        String where = "WHERE h.flag='DUPL-CNF' AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? ";
+        List<Object> params = new ArrayList<>();
+        params.add(dDay.format(tanggal));
+
+        if (channel != null && !channel.isBlank()) {
+            where += "AND h.source = ? ";
+            params.add(channel);
+        }
+        
+        if (quickSearch != null && !quickSearch.isBlank()) {
+            where += "AND LOWER(CONCAT(" +
+                    "COALESCE(h.messageType, ''), ' ', " +
+                    "COALESCE(h.logicalTerminal, ''), ' ', " +
+                    "COALESCE(h.sessionNumber, ''), ' ', " +
+                    "COALESCE(h.sequenceNumber, ''), ' ', " +
+                    "COALESCE(h.io_type, ''), ' ', " +
+                    "COALESCE(h.receiverAddress, ''), ' ', " +
+                    "COALESCE(td.trans_reference, '')" +
+                    ")) ILIKE ? ";
+            params.add("%" + quickSearch.toLowerCase() + "%");
+        }
+
+
+        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, " +
+                     "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference " +
+                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
+                     where +
+                     "ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        // Pagination 
+        params.add(start);
+        params.add(length);
+
+        PreparedStatement st = this.conn.prepareStatement(sql);
+
+        int idx = 1;
+        for (Object param : params) {
+            if (param instanceof String) {
+                st.setString(idx++, (String) param);
+            } else if (param instanceof Integer) {
+                st.setInt(idx++, (Integer) param);
+            }
+        }
+
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            Header header = new Header();
+            header.setId_headers(rs.getInt("id_headers"));
+            header.setMessageType(rs.getString("messageType"));
+            header.setLogicalTerminal(rs.getString("logicalTerminal").toUpperCase());
+            header.setSessionNumber(rs.getString("sessionNumber"));
+            header.setSequenceNumber(rs.getString("sequenceNumber"));
+
+            String io = rs.getString("io_type");
+            header.setIo_type("i".equalsIgnoreCase(io) ? "OUTGOING" : "INCOMING");
+
+            header.setReceiverAddress(rs.getString("receiverAddress").toUpperCase());
+            header.setTanggal(rs.getString("tanggal"));
+            header.setFlag(rs.getString("flag"));
+            header.setTag20(rs.getString("trans_reference"));
+
+            headers.add(header);
+        }
+
+        return headers;
+    }
+    
+    public int getCountAllHeaderDuplicateCNF(String channel, String quickSearch) throws Exception {
+         Date tanggal = new Date();
+        SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
+        List<Header> headers = new ArrayList<>();
+
+        String where = "WHERE h.flag='DUPL-CNF' AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') = ? ";
+        List<Object> params = new ArrayList<>();
+        params.add(dDay.format(tanggal));
+
+        if (channel != null && !channel.isBlank()) {
+            where += "AND h.source = ? ";
+            params.add(channel);
+        }
+        
+        if (quickSearch != null && !quickSearch.isBlank()) {
+            where += "AND LOWER(CONCAT(" +
+                    "COALESCE(h.messageType, ''), ' ', " +
+                    "COALESCE(h.logicalTerminal, ''), ' ', " +
+                    "COALESCE(h.sessionNumber, ''), ' ', " +
+                    "COALESCE(h.sequenceNumber, ''), ' ', " +
+                    "COALESCE(h.io_type, ''), ' ', " +
+                    "COALESCE(h.receiverAddress, ''), ' ', " +
+                    "COALESCE(td.trans_reference, '')" +
+                    ")) ILIKE ? ";
+            params.add("%" + quickSearch.toLowerCase() + "%");
+        }
+
+        String sql = "SELECT COUNT(DISTINCT h.id_headers) " +
+                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
+                     where +"";
+
+        PreparedStatement st = this.conn.prepareStatement(sql);
+
+        int idx = 1;
+        for (Object param : params) {
+            if (param instanceof String) {
+                st.setString(idx++, (String) param);
+            } else if (param instanceof Integer) {
+                st.setInt(idx++, (Integer) param);
+            }
+        }
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+         
+         return 0;
     }
 
     public List<Header> getAllHeaderReject() throws Exception {
@@ -1555,204 +1803,228 @@ public class DBHeader {
 //        }
 //        return datas;
 //    }
-    
     public List<Header> getResultHeader(
-    HttpSession httpSession,
-    String io_type,
-    String sender_bank,
-    String receiver_bank,
-    String mt_type,
-    String date_from,
-    String date_end,
-    String sender_reference,
-    String rel_reference,
-    String currency_code,
-    String amount,
-    String status,
-    String db_type,
-    String channel,
-    int start,
-    int length,
-    HeaderSearchCriteria criteria
-) throws Exception {
-    List<Header> datas = new ArrayList<>();
-    List<Object> parameters = new ArrayList<>();
+            HttpSession httpSession,
+            String io_type,
+            String sender_bank,
+            String receiver_bank,
+            String mt_type,
+            String date_from,
+            String date_end,
+            String sender_reference,
+            String rel_reference,
+            String currency_code,
+            String amount,
+            String status,
+            String db_type,
+            String channel,
+            int start,
+            int length,
+            HeaderSearchCriteria criteria,
+            String quicksearch,
+            String sort
+    ) throws Exception {
+        List<Header> datas = new ArrayList<>();
+        List<Object> parameters = new ArrayList<>();
 
-    StringBuilder where = new StringBuilder("h.isDuplicate != 1");
-
-    // io_type
-    if (io_type == null || io_type.isEmpty()) {
-        where.append(" AND (h.io_type='O' OR h.io_type='I')");
-    } else if (io_type.equalsIgnoreCase("i")) {
-        where.append(" AND h.io_type = ?");
-        parameters.add("I");
-    } else if (io_type.equalsIgnoreCase("o")) {
-        where.append(" AND h.io_type = ?");
-        parameters.add("O");
-    } else {
-        where.append(" AND (h.io_type='O' OR h.io_type='I')");
-    }
-
-    if (sender_bank != null && !sender_bank.isEmpty()) {
-        where.append(" AND h.logicalTerminal ILIKE ?");
-        parameters.add("%" + sender_bank + "%");
-    }
-    if (receiver_bank != null && !receiver_bank.isEmpty()) {
-        where.append(" AND h.receiverAddress ILIKE ?");
-        parameters.add("%" + receiver_bank + "%");
-    }
-    if (mt_type != null && !mt_type.isEmpty()) {
-        where.append(" AND h.messageType ILIKE ?");
-        parameters.add("%" + mt_type + "%");
-    }
-    if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
-        where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
-        parameters.add(date_from);
-        parameters.add(date_end);
-    }
-    if (status != null && !status.isEmpty()) {
-        where.append(" AND h.flag = ?");
-        parameters.add(status);
-    }
-    if (sender_reference != null && !sender_reference.isEmpty()) {
-        where.append(" AND td.trans_reference ILIKE ?");
-        parameters.add("%" + sender_reference + "%");
-    }
-    if (rel_reference != null && !rel_reference.isEmpty()) {
-        where.append(" AND td.trans_related_reference ILIKE ?");
-        parameters.add("%" + rel_reference + "%");
-    }
-    if (currency_code != null && !currency_code.isEmpty()) {
-        where.append(" AND td.trans_ccy ILIKE ?");
-        parameters.add("%" + currency_code + "%");
-    }
-    if (amount != null && !amount.isEmpty()) {
-        where.append(" AND td.trans_amount::TEXT ILIKE ?");
-        parameters.add("%" + amount + "%");
-    }
-    if (channel != null && !channel.isBlank()) {
-        where.append(" AND h.source ILIKE ?");
-        parameters.add("%" + channel + "%");
-    }
-
-    // Dynamic filters dari criteria
-    if (criteria != null) {
-        if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
-            where.append(" AND h.messageType ILIKE ?");
-            parameters.add("%" + criteria.getMtSearch() + "%");
-        }
-        if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
-//            where.append(" AND h.io_type ILIKE ?");
+        StringBuilder where = new StringBuilder("1=1");
+        // io_type
+        if (io_type == null || io_type.isEmpty()) {
+            where.append(" AND (h.io_type='O' OR h.io_type='I')");
+        } else if (io_type.equalsIgnoreCase("i")) {
             where.append(" AND h.io_type = ?");
-            String ioInput = criteria.getIoSearch().trim().toLowerCase();
-//            if ("incoming".contains(ioInput)) {
-            if (ioInput.startsWith("o")) {
-                parameters.add("I");
-//            } else if ("outgoing".contains(ioInput)) {
-            } else if (ioInput.startsWith("i")) {
-                parameters.add("O");
-            } 
-//                parameters.add("%" + criteria.getIoSearch() + "%");
+            parameters.add("I");
+        } else if (io_type.equalsIgnoreCase("o")) {
+            where.append(" AND h.io_type = ?");
+            parameters.add("O");
+        } else {
+            where.append(" AND (h.io_type='O' OR h.io_type='I')");
         }
-        if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
-            where.append(" AND h.sequenceNumber::TEXT ILIKE ?");
-            parameters.add("%" + criteria.getSeqSearch() + "%");
-        }
-        if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
+
+        if (sender_bank != null && !sender_bank.isEmpty()) {
             where.append(" AND h.logicalTerminal ILIKE ?");
-            parameters.add("%" + criteria.getLogicalSearch() + "%");
+            parameters.add("%" + sender_bank + "%");
         }
-        if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
+        if (receiver_bank != null && !receiver_bank.isEmpty()) {
             where.append(" AND h.receiverAddress ILIKE ?");
-            parameters.add("%" + criteria.getReceiverSearch() + "%");
+            parameters.add("%" + receiver_bank + "%");
         }
-        if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
+        if (mt_type != null && !mt_type.isEmpty()) {
+            where.append(" AND h.messageType ILIKE ?");
+            parameters.add("%" + mt_type + "%");
+        }
+        if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
+            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
+            parameters.add(date_from);
+            parameters.add(date_end);
+        }
+        if (status != null && !status.isEmpty()) {
+            where.append(" AND h.flag = ?");
+            parameters.add(status);
+        }
+        if (sender_reference != null && !sender_reference.isEmpty()) {
             where.append(" AND td.trans_reference ILIKE ?");
-            parameters.add("%" + criteria.getRefSearch() + "%");
+            parameters.add("%" + sender_reference + "%");
         }
-        if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
+        if (rel_reference != null && !rel_reference.isEmpty()) {
             where.append(" AND td.trans_related_reference ILIKE ?");
-            parameters.add("%" + criteria.getRelRefSearch() + "%");
+            parameters.add("%" + rel_reference + "%");
         }
-        if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
-            where.append(" AND td.trans_date_value::TEXT ILIKE ?");
-            parameters.add("%" + criteria.getValDateSearch() + "%");
-        }
-        if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
+        if (currency_code != null && !currency_code.isEmpty()) {
             where.append(" AND td.trans_ccy ILIKE ?");
-            parameters.add("%" + criteria.getCcySearch() + "%");
+            parameters.add("%" + currency_code + "%");
         }
-        if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
+        if (amount != null && !amount.isEmpty()) {
             where.append(" AND td.trans_amount::TEXT ILIKE ?");
-            parameters.add("%" + criteria.getAmountSearch() + "%");
+            parameters.add("%" + amount + "%");
         }
-        if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
-            where.append(" AND h.tanggal::TEXT ILIKE ?");
-            parameters.add("%" + criteria.getCreatedDateSearch() + "%");
-        }
-        if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
-            where.append(" AND h.flag ILIKE ?");
-            parameters.add("%" + criteria.getFlagSearch() + "%");
-        }
-        if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
+        if (channel != null && !channel.isBlank()) {
             where.append(" AND h.source ILIKE ?");
-            parameters.add("%" + criteria.getSourceSearch() + "%");
+            parameters.add("%" + channel + "%");
         }
-    }
 
-    // Final query
-    String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, " +
-                 "h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, " +
-                 "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy " +
-                 "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
-                 "WHERE " + where + " ORDER BY h.tanggal DESC OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-
-    try (PreparedStatement st = this.conn.prepareStatement(sql)) {
-        int idx = 1;
-        for (Object param : parameters) {
-            st.setObject(idx++, param);
-        }
-        st.setInt(idx++, start);
-        st.setInt(idx, length);
-        
-        String rawSql = sql;
-        for (Object param : parameters) {
-            rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
-        }
-        rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
-        rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
-//        System.out.println("Expanded SQL:\n" + rawSql); //cetak hasil query
-
-
-        try (ResultSet rs = st.executeQuery()) {
-            while (rs.next()) {
-                Header data = new Header();
-                data.setId_headers(rs.getInt("id_headers"));
-                data.setMessageType(rs.getString("messageType"));
-                data.setLogicalTerminal(rs.getString("logicalTerminal"));
-                data.setSessionNumber(rs.getString("sessionNumber"));
-                data.setSequenceNumber(rs.getString("sequenceNumber"));
-                data.setIo_type("I".equalsIgnoreCase(rs.getString("io_type")) ? "Outgoing" : "Incoming");
-                data.setReceiverAddress(rs.getString("receiverAddress"));
-                data.setTanggal(rs.getString("tanggal"));
-                data.setFlag(rs.getString("flag"));
-                data.setBlock3(rs.getString("block3"));
-                data.setSource(rs.getString("source"));
-                data.setTrans_refference(rs.getString("trans_reference"));
-                data.setTrans_related_refference(rs.getString("trans_related_reference"));
-                data.setTrans_date_value(rs.getString("trans_date_value"));
-                String amt = rs.getString("trans_amount");
-                data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
-                data.setTrans_ccy(rs.getString("trans_ccy"));
-                datas.add(data);
+        if (quicksearch != null && !quicksearch.isEmpty()) {
+            if (quicksearch.startsWith("ou")) {
+                where.append(" AND (h.io_type = ? OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE ?)");
+                parameters.add("I");
+                parameters.add("%" + quicksearch + "%");
+            } else if (quicksearch.startsWith("in")) {
+                where.append(" AND (h.io_type = ? OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE ?)");
+                parameters.add("O");
+                parameters.add("%" + quicksearch + "%");
+            } else {
+                where.append(" AND CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE ?");
+                parameters.add("%" + quicksearch + "%");
             }
         }
+
+        // Dynamic filters dari criteria
+        if (criteria != null) {
+            if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
+                where.append(" AND h.messageType ILIKE ?");
+                parameters.add("%" + criteria.getMtSearch() + "%");
+            }
+            if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
+//            where.append(" AND h.io_type ILIKE ?");
+                where.append(" AND h.io_type = ?");
+                String ioInput = criteria.getIoSearch().trim().toLowerCase();
+//            if ("incoming".contains(ioInput)) {
+                if (ioInput.startsWith("ou")) {
+                    parameters.add("I");
+//            } else if ("outgoing".contains(ioInput)) {
+                } else if (ioInput.startsWith("in")) {
+                    parameters.add("O");
+                }
+//                parameters.add("%" + criteria.getIoSearch() + "%");
+            }
+            if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
+                where.append(" AND h.sequenceNumber::TEXT ILIKE ?");
+                parameters.add("%" + criteria.getSeqSearch() + "%");
+            }
+            if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
+                where.append(" AND h.logicalTerminal ILIKE ?");
+                parameters.add("%" + criteria.getLogicalSearch() + "%");
+            }
+            if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
+                where.append(" AND h.receiverAddress ILIKE ?");
+                parameters.add("%" + criteria.getReceiverSearch() + "%");
+            }
+            if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
+                where.append(" AND td.trans_reference ILIKE ?");
+                parameters.add("%" + criteria.getRefSearch() + "%");
+            }
+            if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
+                where.append(" AND td.trans_related_reference ILIKE ?");
+                parameters.add("%" + criteria.getRelRefSearch() + "%");
+            }
+            if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
+                where.append(" AND td.trans_date_value::TEXT ILIKE ?");
+                parameters.add("%" + criteria.getValDateSearch() + "%");
+            }
+            if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
+                where.append(" AND td.trans_ccy ILIKE ?");
+                parameters.add("%" + criteria.getCcySearch() + "%");
+            }
+            if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
+                where.append(" AND td.trans_amount::TEXT ILIKE ?");
+                parameters.add("%" + criteria.getAmountSearch() + "%");
+            }
+            if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
+                where.append(" AND h.tanggal::TEXT ILIKE ?");
+                parameters.add("%" + criteria.getCreatedDateSearch() + "%");
+            }
+            if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
+                where.append(" AND h.flag ILIKE ?");
+                parameters.add("%" + criteria.getFlagSearch() + "%");
+            }
+            if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
+                where.append(" AND h.source ILIKE ?");
+                parameters.add("%" + criteria.getSourceSearch() + "%");
+            }
+            if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+                where.append(" AND h.createby ILIKE ?");
+                parameters.add("%" + criteria.getCreateby() + "%");
+            }
+            if (criteria.getApproveby() != null && !criteria.getApproveby().isEmpty()) {
+                where.append(" AND h.approveby ILIKE ?");
+                parameters.add("%" + criteria.getApproveby() + "%");
+            }
+        }
+
+        // Final query
+        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
+                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, h.source, "
+                + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby "
+                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+            int idx = 1;
+            for (Object param : parameters) {
+                st.setObject(idx++, param);
+            }
+            st.setInt(idx++, start);
+            st.setInt(idx, length);
+
+            //check hasil query
+//            String rawSql = sql;
+//            for (Object param : parameters) {
+//                rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
+//            }
+//            rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
+//            rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
+//        System.out.println("Expanded SQL:\n" + rawSql); //cetak hasil query
+
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    Header data = new Header();
+                    data.setId_headers(rs.getInt("id_headers"));
+                    data.setMessageType(rs.getString("messageType"));
+                    data.setLogicalTerminal(rs.getString("logicalTerminal"));
+                    data.setSessionNumber(rs.getString("sessionNumber"));
+                    data.setSequenceNumber(rs.getString("sequenceNumber"));
+                    data.setIo_type("I".equalsIgnoreCase(rs.getString("io_type")) ? "OUTGOING" : "INCOMING");
+                    data.setReceiverAddress(rs.getString("receiverAddress"));
+                    data.setTanggal(rs.getString("tanggal"));
+                    data.setFlag(rs.getString("flag"));
+                    data.setBlock3(rs.getString("block3"));
+                    data.setSource(rs.getString("source"));
+                    data.setTrans_refference(rs.getString("trans_reference"));
+                    data.setTrans_related_refference(rs.getString("trans_related_reference"));
+                    data.setTrans_date_value(rs.getString("trans_date_value"));
+                    String amt = rs.getString("trans_amount");
+                    data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
+                    data.setTrans_ccy(rs.getString("trans_ccy"));
+                    data.setCreateby(rs.getString("createby"));
+                    data.setApproveby(rs.getString("approveby"));
+                    datas.add(data);
+                }
+            }
+        }
+
+        return datas;
     }
 
-    return datas;
-}
-
-    
 //    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria) throws Exception {
 //        String where = "";
 //        String prefix = "";
@@ -1886,79 +2158,92 @@ public class DBHeader {
 //        }
 //        return headers;
 //    }
-    
-    
-   public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria) throws Exception {
-    StringBuilder where = new StringBuilder("WHERE 1=1");
-    List<Object> parameters = new ArrayList<>();
+    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
+        StringBuilder where = new StringBuilder("WHERE 1=1 ");
+        List<Object> parameters = new ArrayList<>();
 
-    if (io_type == null || io_type.isEmpty()) {
-        where.append(" AND (h.io_type='O' OR h.io_type='I')");
-    } else if (io_type.equalsIgnoreCase("i")) {
-        where.append(" AND h.io_type=?");
-        parameters.add("I");
-    } else if (io_type.equalsIgnoreCase("o")) {
-        where.append(" AND h.io_type=?");
-        parameters.add("O");
-    }
+        if (io_type == null || io_type.isEmpty()) {
+            where.append(" AND (h.io_type='O' OR h.io_type='I')");
+        } else if (io_type.equalsIgnoreCase("i")) {
+            where.append(" AND h.io_type=?");
+            parameters.add("I");
+        } else if (io_type.equalsIgnoreCase("o")) {
+            where.append(" AND h.io_type=?");
+            parameters.add("O");
+        }
 
-    if (sender_bank != null && !sender_bank.isEmpty()) {
-        where.append(" AND logicalTerminal LIKE ?");
-        parameters.add("%" + sender_bank + "%");
-    }
+        if (sender_bank != null && !sender_bank.isEmpty()) {
+            where.append(" AND logicalTerminal LIKE ?");
+            parameters.add("%" + sender_bank + "%");
+        }
 
-    if (receiver_bank != null && !receiver_bank.isEmpty()) {
-        where.append(" AND receiverAddress LIKE ?");
-        parameters.add("%" + receiver_bank + "%");
-    }
+        if (receiver_bank != null && !receiver_bank.isEmpty()) {
+            where.append(" AND receiverAddress LIKE ?");
+            parameters.add("%" + receiver_bank + "%");
+        }
 
-    if (mt_type != null && !mt_type.isEmpty()) {
-        where.append(" AND h.messageType LIKE ?");
-        parameters.add("%" + mt_type + "%");
-    }
+        if (mt_type != null && !mt_type.isEmpty()) {
+            where.append(" AND h.messageType LIKE ?");
+            parameters.add("%" + mt_type + "%");
+        }
 
-    if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
-        where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
-        parameters.add(date_from);
-        parameters.add(date_end);
-    }
+        if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
+            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
+            parameters.add(date_from);
+            parameters.add(date_end);
+        }
 
-    if (status != null && !status.isEmpty()) {
-        where.append(" AND h.flag = ?");
-        parameters.add(status);
-    }
+        if (status != null && !status.isEmpty()) {
+            where.append(" AND h.flag = ?");
+            parameters.add(status);
+        }
 
-    if (sender_reference != null && !sender_reference.isEmpty()) {
-        where.append(" AND td.trans_reference LIKE ?");
-        parameters.add("%" + sender_reference + "%");
-    }
+        if (sender_reference != null && !sender_reference.isEmpty()) {
+            where.append(" AND td.trans_reference LIKE ?");
+            parameters.add("%" + sender_reference + "%");
+        }
 
-    if (rel_reference != null && !rel_reference.isEmpty()) {
-        where.append(" AND td.trans_related_reference LIKE ?");
-        parameters.add("%" + rel_reference + "%");
-    }
+        if (rel_reference != null && !rel_reference.isEmpty()) {
+            where.append(" AND td.trans_related_reference LIKE ?");
+            parameters.add("%" + rel_reference + "%");
+        }
 
-    if (currency_code != null && !currency_code.isEmpty()) {
-        where.append(" AND td.trans_ccy LIKE ?");
-        parameters.add("%" + currency_code + "%");
-    }
+        if (currency_code != null && !currency_code.isEmpty()) {
+            where.append(" AND td.trans_ccy LIKE ?");
+            parameters.add("%" + currency_code + "%");
+        }
 
-    if (amount != null && !amount.isEmpty()) {
-        where.append(" AND td.trans_amount::text LIKE ?");
-        parameters.add("%" + amount + "%");
-    }
+        if (amount != null && !amount.isEmpty()) {
+            where.append(" AND td.trans_amount::text LIKE ?");
+            parameters.add("%" + amount + "%");
+        }
 
-    if (channel != null && !channel.isBlank()) {
-        where.append(" AND source LIKE ?");
-        parameters.add("%" + channel + "%");
-    }
+        if (channel != null && !channel.isBlank()) {
+            where.append(" AND source LIKE ?");
+            parameters.add("%" + channel + "%");
+        }
 
-    // From HeaderSearchCriteria (Datatables column search)
-    if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
-        where.append(" AND messageType ILIKE ?");
-        parameters.add("%" + criteria.getMtSearch() + "%");
-    }
-    if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
+        if (quicksearch != null && !quicksearch.isEmpty()) {
+            if (quicksearch.startsWith("ou")) {
+                where.append(" AND (h.io_type = ? OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE ?)");
+                parameters.add("I");
+                parameters.add("%" + quicksearch + "%");
+            } else if (quicksearch.startsWith("in")) {
+                where.append(" AND (h.io_type = ? OR CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE ?)");
+                parameters.add("O");
+                parameters.add("%" + quicksearch + "%");
+            } else {
+                where.append(" AND CONCAT(h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, h.receiverAddress, h.tanggal, h.flag, h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy) ILIKE ?");
+                parameters.add("%" + quicksearch + "%");
+            }
+        }
+
+        // From HeaderSearchCriteria (Datatables column search)
+        if (criteria.getMtSearch() != null && !criteria.getMtSearch().isEmpty()) {
+            where.append(" AND messageType ILIKE ?");
+            parameters.add("%" + criteria.getMtSearch() + "%");
+        }
+        if (criteria.getIoSearch() != null && !criteria.getIoSearch().isEmpty()) {
 //            where.append(" AND h.io_type ILIKE ?");
             where.append(" AND h.io_type = ?");
             String ioInput = criteria.getIoSearch().trim().toLowerCase();
@@ -1968,69 +2253,93 @@ public class DBHeader {
 //            } else if ("outgoing".contains(ioInput)) {
             } else if (ioInput.startsWith("i")) {
                 parameters.add("O");
-            } 
+            }
 //                parameters.add("%" + criteria.getIoSearch() + "%");
-    }
-    if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
-        where.append(" AND sequenceNumber::TEXT ILIKE ?");
-        parameters.add("%" + criteria.getSeqSearch() + "%");
-    }
-    if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
-        where.append(" AND logicalTerminal ILIKE ?");
-        parameters.add("%" + criteria.getLogicalSearch() + "%");
-    }
-    if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
-        where.append(" AND receiverAddress ILIKE ?");
-        parameters.add("%" + criteria.getReceiverSearch() + "%");
-    }
-    if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
-        where.append(" AND trans_reference ILIKE ?");
-        parameters.add("%" + criteria.getRefSearch() + "%");
-    }
-    if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
-        where.append(" AND trans_related_reference ILIKE ?");
-        parameters.add("%" + criteria.getRelRefSearch() + "%");
-    }
-    if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
-        where.append(" AND trans_date_value::TEXT ILIKE ?");
-        parameters.add("%" + criteria.getValDateSearch() + "%");
-    }
-    if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
-        where.append(" AND trans_ccy ILIKE ?");
-        parameters.add("%" + criteria.getCcySearch() + "%");
-    }
-    if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
-        where.append(" AND trans_amount::TEXT ILIKE ?");
-        parameters.add("%" + criteria.getAmountSearch() + "%");
-    }
-    if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
-        where.append(" AND tanggal::TEXT ILIKE ?");
-        parameters.add("%" + criteria.getCreatedDateSearch() + "%");
-    }
-    if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
-        where.append(" AND flag ILIKE ?");
-        parameters.add("%" + criteria.getFlagSearch() + "%");
-    }
-    if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
-        where.append(" AND source ILIKE ?");
-        parameters.add("%" + criteria.getSourceSearch() + "%");
-    }
-
-    String sql = "SELECT count(h.id_headers) FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-               + where.toString() + " AND h.isDuplicate!=1";
-
-    try (PreparedStatement st = this.conn.prepareStatement(sql)) {
-        for (int i = 0; i < parameters.size(); i++) {
-            st.setObject(i + 1, parameters.get(i));
         }
-        ResultSet rs = st.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1);
+        if (criteria.getSeqSearch() != null && !criteria.getSeqSearch().isEmpty()) {
+            where.append(" AND sequenceNumber::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getSeqSearch() + "%");
         }
-    }
+        if (criteria.getLogicalSearch() != null && !criteria.getLogicalSearch().isEmpty()) {
+            where.append(" AND logicalTerminal ILIKE ?");
+            parameters.add("%" + criteria.getLogicalSearch() + "%");
+        }
+        if (criteria.getReceiverSearch() != null && !criteria.getReceiverSearch().isEmpty()) {
+            where.append(" AND receiverAddress ILIKE ?");
+            parameters.add("%" + criteria.getReceiverSearch() + "%");
+        }
+        if (criteria.getRefSearch() != null && !criteria.getRefSearch().isEmpty()) {
+            where.append(" AND trans_reference ILIKE ?");
+            parameters.add("%" + criteria.getRefSearch() + "%");
+        }
+        if (criteria.getRelRefSearch() != null && !criteria.getRelRefSearch().isEmpty()) {
+            where.append(" AND trans_related_reference ILIKE ?");
+            parameters.add("%" + criteria.getRelRefSearch() + "%");
+        }
+        if (criteria.getValDateSearch() != null && !criteria.getValDateSearch().isEmpty()) {
+            where.append(" AND trans_date_value::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getValDateSearch() + "%");
+        }
+        if (criteria.getCcySearch() != null && !criteria.getCcySearch().isEmpty()) {
+            where.append(" AND trans_ccy ILIKE ?");
+            parameters.add("%" + criteria.getCcySearch() + "%");
+        }
+        if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
+            where.append(" AND trans_amount::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getAmountSearch() + "%");
+        }
+        if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
+            where.append(" AND tanggal::TEXT ILIKE ?");
+            parameters.add("%" + criteria.getCreatedDateSearch() + "%");
+        }
+        if (criteria.getFlagSearch() != null && !criteria.getFlagSearch().isEmpty()) {
+            where.append(" AND flag ILIKE ?");
+            parameters.add("%" + criteria.getFlagSearch() + "%");
+        }
+        if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
+            where.append(" AND source ILIKE ?");
+            parameters.add("%" + criteria.getSourceSearch() + "%");
+        }
+        if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
+            where.append(" AND createby ILIKE ?");
+            parameters.add("%" + criteria.getCreateby() + "%");
+        }
+        if (criteria.getApproveby() != null && !criteria.getApproveby().isEmpty()) {
+            where.append(" AND approveby ILIKE ?");
+            parameters.add("%" + criteria.getApproveby() + "%");
+        }
 
-    return 0;
-}
+        String sql = "SELECT count(h.id_headers) FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + where.toString() + "";
+
+        try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+            for (int i = 0; i < parameters.size(); i++) {
+                st.setObject(i + 1, parameters.get(i));
+            }
+            ResultSet rs = st.executeQuery();
+            
+//              int idx = 1;
+//            for (Object param : parameters) {
+//                st.setObject(idx++, param);
+//            }
+////            st.setInt(idx++, start);
+////            st.setInt(idx, length);
+//
+//            String rawSql = sql;
+//            for (Object param : parameters) {
+//                rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
+//            }
+////            rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
+////            rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
+//        System.out.println("Expanded Count SQL:\n" + rawSql); //cetak hasil query
+            
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+
+        return 0;
+    }
 
     public boolean getResultTag(int headerId, String tag_where, String prefix) throws Exception {
         boolean hasil = false;
@@ -2047,33 +2356,34 @@ public class DBHeader {
         return hasil;
     }
 
-       public Header getHeaderById(String headerId, String prefix) throws SQLException {
+    public Header getHeaderById(String headerId, String prefix) throws SQLException {
         Header header = new Header();
-        String sql = "SELECT DISTINCT \n" +
-                    "    logicalTerminal, \n" +
-                    "    messageType, \n" +
-                    "    receiverAddress, \n" +
-                    "    messagePriority, \n" +
-                    "    deliveryMonitoring, \n" +
-                    "    bankingPriority, \n" +
-                    "    mur, \n" +
-                    "    komentar, \n" +
-                    "    block3, \n" +
-                    "    flag, \n" +
-                    "    io_type, \n" +
-                    "    branch, \n" +
-                    "    isduplicate, \n" +
-                    "    COALESCE(t32c.detail, json_tag->'fiToFICstmrCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'ccy') AS curr,\n" +
-                    "    COALESCE(networkType, 'MT') as networkType\n" +
-                    "FROM \n" +
-                    "    headers h\n" +
-                    "LEFT JOIN \n" +
-                    "    tags_mx tm ON tm.id_headers = h.id_headers\n" +
-                    "LEFT JOIN \n" +
-                    "    tags t32c ON t32c.id_headers = h.id_headers \n" +
-                    "    AND t32c.tagName LIKE '%mf32a_currency%'\n" +
-                    "WHERE h.id_headers='" + headerId + "'";
-                
+        String sql = "SELECT DISTINCT \n"
+                + "    logicalTerminal, \n"
+                + "    messageType, \n"
+                + "    receiverAddress, \n"
+                + "    messagePriority, \n"
+                + "    deliveryMonitoring, \n"
+                + "    bankingPriority, \n"
+                + "    mur, \n"
+                + "    komentar, \n"
+                + "    block3, \n"
+                + "    flag, \n"
+                + "    io_type, \n"
+                + "    branch, \n"
+                + "    isduplicate, \n"
+                + "    COALESCE(t32c.detail, json_tag->'fiToFICstmrCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'ccy') AS curr,\n"
+                + "    COALESCE(networkType, 'MT') as networkType,\n"
+                + "    userentry "
+                + "FROM \n"
+                + "    headers h\n"
+                + "LEFT JOIN \n"
+                + "    tags_mx tm ON tm.id_headers = h.id_headers\n"
+                + "LEFT JOIN \n"
+                + "    tags t32c ON t32c.id_headers = h.id_headers \n"
+                + "    AND t32c.tagName LIKE '%mf32a_currency%'\n"
+                + "WHERE h.id_headers='" + headerId + "'";
+
 //                "SELECT DISTINCT logicalTerminal, messageType, receiverAddress, messagePriority, deliveryMonitoring, bankingPriority, mur, komentar, block3, flag, io_type, special_rate, multi_currency, multi_amount, cust_curr, branch, t32c.detail as curr, special_rate_multi\n"
 //                + "FROM headers " + prefix + " h\n"
 //                + "left join tags t32c ON t32c.id_headers = h.id_headers AND (t32c.tagName like '%mf32a_currency%')\n"
@@ -2101,6 +2411,7 @@ public class DBHeader {
             header.setTag32Currency(rs.getString(13));
             header.setNetworktype(rs.getString("networktype"));
             header.setIsDuplicate(rs.getString("isduplicate"));
+            header.setUserEntry(rs.getString("userentry"));
         }
         return header;
     }
@@ -2840,733 +3151,731 @@ public class DBHeader {
         }
         return null;
     }
-     
-     public String clearXMLEncode ( String text ) {
-        
-        if(text==null){
+
+    public String clearXMLEncode(String text) {
+
+        if (text == null) {
             return "";
-        } 
-         text = text.replace("&amp;amp;", "&");
-         text = text.replace("&amp;lt;", "<");
-         text = text.replace("&amp;gt;", ">");
-         text = text.replace("&amp;quot;", "\"");
-         text = text.replace("&amp;apos;", "'");
-         
-         text = text.replace("&amp;", "&");
-         text = text.replace("&lt;", "<");
-         text = text.replace("&gt;", ">");
-         text = text.replace("&quot;", "\"");
-         text = text.replace("&apos;", "'");
-   
+        }
+        text = text.replace("&amp;amp;", "&");
+        text = text.replace("&amp;lt;", "<");
+        text = text.replace("&amp;gt;", ">");
+        text = text.replace("&amp;quot;", "\"");
+        text = text.replace("&amp;apos;", "'");
+
+        text = text.replace("&amp;", "&");
+        text = text.replace("&lt;", "<");
+        text = text.replace("&gt;", ">");
+        text = text.replace("&quot;", "\"");
+        text = text.replace("&apos;", "'");
+
         return text;
-        
+
     }
-     
-    public EssentialFieldPacs009 getEssentialFieldPacs009byId (int id_headers){
-     String sql ="SELECT \n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'instrId' AS instructionId,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'endToEndId' AS endToEndId,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'uetr' AS uetr,\n" +
-                "    TO_DATE(\n" +
-                "        CONCAT(\n" +
-                "            json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'year', '-', \n" +
-                "            LPAD((json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'month')::TEXT, 2, '0'), '-', \n" +
-                "            LPAD((json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'day')::TEXT, 2, '0')\n" +
-                "        ), \n" +
-                "        'YYYY-MM-DD'\n" +
-                "    ) AS interbankSettlementDate,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'ccy' AS interbankSettlementCurrency,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'value' AS interbankSettlementAmount,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instgAgt' -> 'finInstnId' ->> 'nm' AS instructingAgent,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instdAgt' -> 'finInstnId' ->> 'nm' AS instructedAgent,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAgt' -> 'finInstnId' ->> 'bicfi' AS debtorInstitutionId,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAgt' -> 'finInstnId' ->> 'nm' AS debtorAgent,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAgt' -> 'finInstnId' ->> 'bicfi' AS creditorInstitutionId,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAgt' -> 'finInstnId' ->> 'nm' AS creditorAgent,\n" +
-//                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAcct' -> 'id' ->> 'othr' AS debtorAcc,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAcct' -> 'id' ->> 'othr' AS creditorAcc,\n" +
-//                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' ->> 'nm' AS debtorNm,\n" +
-                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' ->> 'nm' AS creditorNm\n" +
-                "FROM \n" +
-                "    tags_mx\n" +
-                "WHERE \n" +
-                "    id_headers = ?;";
-             
-              try {
+
+    public EssentialFieldPacs009 getEssentialFieldPacs009byId(int id_headers) {
+        String sql = "SELECT \n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'instrId' AS instructionId,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'endToEndId' AS endToEndId,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'uetr' AS uetr,\n"
+                + "    TO_DATE(\n"
+                + "        CONCAT(\n"
+                + "            json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'year', '-', \n"
+                + "            LPAD((json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'month')::TEXT, 2, '0'), '-', \n"
+                + "            LPAD((json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'day')::TEXT, 2, '0')\n"
+                + "        ), \n"
+                + "        'YYYY-MM-DD'\n"
+                + "    ) AS interbankSettlementDate,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'ccy' AS interbankSettlementCurrency,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'value' AS interbankSettlementAmount,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instgAgt' -> 'finInstnId' ->> 'nm' AS instructingAgent,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instdAgt' -> 'finInstnId' ->> 'nm' AS instructedAgent,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAgt' -> 'finInstnId' ->> 'bicfi' AS debtorInstitutionId,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAgt' -> 'finInstnId' ->> 'nm' AS debtorAgent,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAgt' -> 'finInstnId' ->> 'bicfi' AS creditorInstitutionId,\n"
+                + "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAgt' -> 'finInstnId' ->> 'nm' AS creditorAgent,\n"
+                + //                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAcct' -> 'id' ->> 'othr' AS debtorAcc,\n" +
+                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAcct' -> 'id' ->> 'othr' AS creditorAcc,\n"
+                + //                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' ->> 'nm' AS debtorNm,\n" +
+                "    json_tag -> 'fiCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' ->> 'nm' AS creditorNm\n"
+                + "FROM \n"
+                + "    tags_mx\n"
+                + "WHERE \n"
+                + "    id_headers = ?;";
+
+        try {
             PreparedStatement ps = this.conn.prepareStatement(sql);
             ps.setInt(1, id_headers);
             ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()){
-            EssentialFieldPacs009 dataEssentialFieldPacs009 = new EssentialFieldPacs009();
-            dataEssentialFieldPacs009.setInstructionId(resultSet.getString("instructionId"));
-            dataEssentialFieldPacs009.setEndToEndId(resultSet.getString("endToEndId"));
-            dataEssentialFieldPacs009.setUetr(resultSet.getString("uetr"));
-            dataEssentialFieldPacs009.setInterbankSettlementDate(resultSet.getString("interbankSettlementDate"));
-            dataEssentialFieldPacs009.setInterbankSettlementCurrency(resultSet.getString("interbankSettlementCurrency"));
-            dataEssentialFieldPacs009.setInterbankSettlementAmount(resultSet.getString("interbankSettlementAmount"));
+            while (resultSet.next()) {
+                EssentialFieldPacs009 dataEssentialFieldPacs009 = new EssentialFieldPacs009();
+                dataEssentialFieldPacs009.setInstructionId(resultSet.getString("instructionId"));
+                dataEssentialFieldPacs009.setEndToEndId(resultSet.getString("endToEndId"));
+                dataEssentialFieldPacs009.setUetr(resultSet.getString("uetr"));
+                dataEssentialFieldPacs009.setInterbankSettlementDate(resultSet.getString("interbankSettlementDate"));
+                dataEssentialFieldPacs009.setInterbankSettlementCurrency(resultSet.getString("interbankSettlementCurrency"));
+                dataEssentialFieldPacs009.setInterbankSettlementAmount(resultSet.getString("interbankSettlementAmount"));
 //            dataEssentialFieldPacs009.setPreviousInstructingAgent1(resultSet.getString("previousInstructingAgent1"));
 //            dataEssentialFieldPacs009.setPreviousInstructingAgent2(resultSet.getString("previousInstructingAgent2"));
 //            dataEssentialFieldPacs009.setPreviousInstructingAgent3(resultSet.getString("previousInstructingAgent3"));
-            dataEssentialFieldPacs009.setInstructingAgent(resultSet.getString("instructingAgent"));
-            dataEssentialFieldPacs009.setInstructedAgent(resultSet.getString("instructedAgent"));
-            dataEssentialFieldPacs009.setDebtorInstitutionId(resultSet.getString("debtorInstitutionId"));
-            dataEssentialFieldPacs009.setDebtorAgent(resultSet.getString("debtorAgent"));
-            dataEssentialFieldPacs009.setCreditorInstitutionId(resultSet.getString("creditorInstitutionId"));
-            dataEssentialFieldPacs009.setCreditorAgent(resultSet.getString("creditorAgent"));
-            dataEssentialFieldPacs009.setCreditorAcc(resultSet.getString("creditorAcc"));
-            dataEssentialFieldPacs009.setCreditorNm(resultSet.getString("creditorNm"));
+                dataEssentialFieldPacs009.setInstructingAgent(resultSet.getString("instructingAgent"));
+                dataEssentialFieldPacs009.setInstructedAgent(resultSet.getString("instructedAgent"));
+                dataEssentialFieldPacs009.setDebtorInstitutionId(resultSet.getString("debtorInstitutionId"));
+                dataEssentialFieldPacs009.setDebtorAgent(resultSet.getString("debtorAgent"));
+                dataEssentialFieldPacs009.setCreditorInstitutionId(resultSet.getString("creditorInstitutionId"));
+                dataEssentialFieldPacs009.setCreditorAgent(resultSet.getString("creditorAgent"));
+                dataEssentialFieldPacs009.setCreditorAcc(resultSet.getString("creditorAcc"));
+                dataEssentialFieldPacs009.setCreditorNm(resultSet.getString("creditorNm"));
 
-             return dataEssentialFieldPacs009;
+                return dataEssentialFieldPacs009;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DBHeader.class.getName()).log(Level.ERROR, null, ex);
         }
         return null;
     }
-    
+
     public Collection<Header> printMXDocPacs008(String id) throws SQLException, Exception {
-            ArrayList<Header> headers = new ArrayList<Header>();
-            DecimalFormat df = new DecimalFormat("#,###.####");
-            String sql = "SELECT \n" +
-                            "    logicalTerminal,\n" +
-                            "    messageType,\n" +
-                            "    receiverAddress,\n" +
-                            "    messagePriority,\n" +
-                            "    bankingPriority,\n" +
-                            "    mur,\n" +
-                            "    komentar,\n" +
-                            "    MIRDate,\n" +
-                            "    COALESCE(MIRLogicalTerminal, ''),\n" +
-                            "    COALESCE(MIRSessionNumber, ''),\n" +
-                            "    COALESCE(MIRSequenceNumber, ''),\n" +
-                            "    json_tag -> 'appHdr' -> 'fr' -> 'fiId' -> 'finInstnId' ->> 'bicfi' AS fr_bicfi,\n" +
-                            "    json_tag -> 'appHdr' -> 'to' -> 'fiId' -> 'finInstnId' ->> 'bicfi' AS to_bicfi,\n" +
-                            "    json_tag -> 'appHdr' ->> 'msgDefIdr' AS msgDefIdr,\n" +
-                            "    h.flag,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'grpHdr' ->> 'msgId' AS msgId,\n" +
-                            "    CONCAT(\n" +
-                            "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'year', '-', \n" +
-                            "        LPAD(json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'month', 2, '0'), '-', \n" +
-                            "        LPAD(json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'day', 2, '0')\n" +
-                            "    ) AS intrBkSttlmDt,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'ccy' AS intrBkSttlmAmt_ccy,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'value' AS intrBkSttlmAmt_value,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 ->> 'chrgBr' AS chrgBr,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instdAmt' ->> 'ccy' AS instdAmt_ccy,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instdAmt' ->> 'value' AS instdAmt_value,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 ->> 'xchgRate' AS xchgRate,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' ->> 'nm' AS dbtr_nm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'dept' AS dbtr_pstlAdr_dept,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'subDept' AS dbtr_pstlAdr_subDept,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'strtNm' AS dbtr_pstlAdr_strtNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'bldgNb' AS dbtr_pstlAdr_bldgNb,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'bldgNm' AS dbtr_pstlAdr_bldgNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'flr' AS dbtr_pstlAdr_flr,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'pstBx' AS dbtr_pstlAdr_pstBx,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'room' AS dbtr_pstlAdr_room,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'pstCd' AS dbtr_pstlAdr_pstCd,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'twnNm' AS dbtr_pstlAdr_twnNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'twnLctnNm' AS dbtr_pstlAdr_twnLctnNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'dstrctNm' AS dbtr_pstlAdr_dstrctNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'ctry' AS dbtr_pstlAdr_ctry,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' -> 'adrLine' ->> 0 AS dbtr_pstlAdr_adrLine_0,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' -> 'adrLine' ->> 1 AS dbtr_pstlAdr_adrLine_1,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' -> 'adrLine' ->> 2 AS dbtr_pstlAdr_adrLine_2,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'id' -> 'prvtId' -> 'othr' -> 0 ->> 'id' AS dbtr_id,\n" +
-                            "    CONCAT(\n" +
-                            "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAcct' -> 'id' -> 'othr' ->> 'id', \n" +
-                            "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAcct' -> 'id' ->> 'iban'\n" +
-                            "    ) AS dbtrAcct_id,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instgAgt' -> 'finInstnId' ->> 'bicfi' AS instgAgt_bicfi,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrmyAgt1' -> 'finInstnId' ->> 'bicfi' AS intrmyAgt1_bicfi,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAgt' -> 'finInstnId' ->> 'bicfi' AS dbtrAgt_bicfi,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAgt' -> 'finInstnId' ->> 'bicfi' AS cdtrAgt_bicfi,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' ->> 'nm' AS cdtr_nm,\n" +
-                            "	json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'dept' AS cdtr_pstlAdr_dept,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'subDept' AS cdtr_pstlAdr_subDept,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'strtNm' AS cdtr_pstlAdr_strtNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'bldgNb' AS cdtr_pstlAdr_bldgNb,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'bldgNm' AS cdtr_pstlAdr_bldgNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'flr' AS cdtr_pstlAdr_flr,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'pstBx' AS cdtr_pstlAdr_pstBx,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'room' AS cdtr_pstlAdr_room,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'pstCd' AS cdtr_pstlAdr_pstCd,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'twnNm' AS cdtr_pstlAdr_twnNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'twnLctnNm' AS cdtr_pstlAdr_twnLctnNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'dstrctNm' AS cdtr_pstlAdr_dstrctNm,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'ctry' AS cdtr_pstlAdr_ctry,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' -> 'adrLine' ->> 0 AS cdtr_pstlAdr_adrLine_0,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' -> 'adrLine' ->> 1 AS cdtr_pstlAdr_adrLine_1,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' -> 'adrLine' ->> 2 AS cdtr_pstlAdr_adrLine_2,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'id' -> 'prvtId' -> 'othr' -> 0 ->> 'id' AS cdtr_id,\n" +
-                            "    CONCAT(\n" +
-                            "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAcct' -> 'id' -> 'othr' ->> 'id',\n" +
-                            "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAcct' -> 'id' ->> 'iban'\n" +
-                            "    ) AS cdtrAcct_id,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'rmtInf' -> 'ustrd' ->> 0 AS rmtInf_ustrd,\n" +
-                            "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'instrId' AS pmtId_instrId \n" +
-                        "	from headers h\n" +
-                        "    left join tags_mx mx on\n" +
-                        "    h.id_headers=mx.id_headers\n" +
-                        "    where h.id_headers=?";
+        ArrayList<Header> headers = new ArrayList<Header>();
+        DecimalFormat df = new DecimalFormat("#,###.####");
+        String sql = "SELECT \n"
+                + "    logicalTerminal,\n"
+                + "    messageType,\n"
+                + "    receiverAddress,\n"
+                + "    messagePriority,\n"
+                + "    bankingPriority,\n"
+                + "    mur,\n"
+                + "    komentar,\n"
+                + "    MIRDate,\n"
+                + "    COALESCE(MIRLogicalTerminal, ''),\n"
+                + "    COALESCE(MIRSessionNumber, ''),\n"
+                + "    COALESCE(MIRSequenceNumber, ''),\n"
+                + "    json_tag -> 'appHdr' -> 'fr' -> 'fiId' -> 'finInstnId' ->> 'bicfi' AS fr_bicfi,\n"
+                + "    json_tag -> 'appHdr' -> 'to' -> 'fiId' -> 'finInstnId' ->> 'bicfi' AS to_bicfi,\n"
+                + "    json_tag -> 'appHdr' ->> 'msgDefIdr' AS msgDefIdr,\n"
+                + "    h.flag,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'grpHdr' ->> 'msgId' AS msgId,\n"
+                + "    CONCAT(\n"
+                + "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'year', '-', \n"
+                + "        LPAD(json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'month', 2, '0'), '-', \n"
+                + "        LPAD(json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'day', 2, '0')\n"
+                + "    ) AS intrBkSttlmDt,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'ccy' AS intrBkSttlmAmt_ccy,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'value' AS intrBkSttlmAmt_value,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 ->> 'chrgBr' AS chrgBr,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instdAmt' ->> 'ccy' AS instdAmt_ccy,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instdAmt' ->> 'value' AS instdAmt_value,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 ->> 'xchgRate' AS xchgRate,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' ->> 'nm' AS dbtr_nm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'dept' AS dbtr_pstlAdr_dept,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'subDept' AS dbtr_pstlAdr_subDept,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'strtNm' AS dbtr_pstlAdr_strtNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'bldgNb' AS dbtr_pstlAdr_bldgNb,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'bldgNm' AS dbtr_pstlAdr_bldgNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'flr' AS dbtr_pstlAdr_flr,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'pstBx' AS dbtr_pstlAdr_pstBx,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'room' AS dbtr_pstlAdr_room,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'pstCd' AS dbtr_pstlAdr_pstCd,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'twnNm' AS dbtr_pstlAdr_twnNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'twnLctnNm' AS dbtr_pstlAdr_twnLctnNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'dstrctNm' AS dbtr_pstlAdr_dstrctNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' ->> 'ctry' AS dbtr_pstlAdr_ctry,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' -> 'adrLine' ->> 0 AS dbtr_pstlAdr_adrLine_0,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' -> 'adrLine' ->> 1 AS dbtr_pstlAdr_adrLine_1,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'pstlAdr' -> 'adrLine' ->> 2 AS dbtr_pstlAdr_adrLine_2,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtr' -> 'id' -> 'prvtId' -> 'othr' -> 0 ->> 'id' AS dbtr_id,\n"
+                + "    CONCAT(\n"
+                + "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAcct' -> 'id' -> 'othr' ->> 'id', \n"
+                + "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAcct' -> 'id' ->> 'iban'\n"
+                + "    ) AS dbtrAcct_id,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'instgAgt' -> 'finInstnId' ->> 'bicfi' AS instgAgt_bicfi,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrmyAgt1' -> 'finInstnId' ->> 'bicfi' AS intrmyAgt1_bicfi,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'dbtrAgt' -> 'finInstnId' ->> 'bicfi' AS dbtrAgt_bicfi,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAgt' -> 'finInstnId' ->> 'bicfi' AS cdtrAgt_bicfi,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' ->> 'nm' AS cdtr_nm,\n"
+                + "	json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'dept' AS cdtr_pstlAdr_dept,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'subDept' AS cdtr_pstlAdr_subDept,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'strtNm' AS cdtr_pstlAdr_strtNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'bldgNb' AS cdtr_pstlAdr_bldgNb,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'bldgNm' AS cdtr_pstlAdr_bldgNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'flr' AS cdtr_pstlAdr_flr,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'pstBx' AS cdtr_pstlAdr_pstBx,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'room' AS cdtr_pstlAdr_room,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'pstCd' AS cdtr_pstlAdr_pstCd,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'twnNm' AS cdtr_pstlAdr_twnNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'twnLctnNm' AS cdtr_pstlAdr_twnLctnNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'dstrctNm' AS cdtr_pstlAdr_dstrctNm,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' ->> 'ctry' AS cdtr_pstlAdr_ctry,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' -> 'adrLine' ->> 0 AS cdtr_pstlAdr_adrLine_0,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' -> 'adrLine' ->> 1 AS cdtr_pstlAdr_adrLine_1,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'pstlAdr' -> 'adrLine' ->> 2 AS cdtr_pstlAdr_adrLine_2,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtr' -> 'id' -> 'prvtId' -> 'othr' -> 0 ->> 'id' AS cdtr_id,\n"
+                + "    CONCAT(\n"
+                + "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAcct' -> 'id' -> 'othr' ->> 'id',\n"
+                + "        json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'cdtrAcct' -> 'id' ->> 'iban'\n"
+                + "    ) AS cdtrAcct_id,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'rmtInf' -> 'ustrd' ->> 0 AS rmtInf_ustrd,\n"
+                + "    json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'instrId' AS pmtId_instrId \n"
+                + "	from headers h\n"
+                + "    left join tags_mx mx on\n"
+                + "    h.id_headers=mx.id_headers\n"
+                + "    where h.id_headers=?";
 
-            PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setInt(1, Integer.parseInt(id));
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Header header = new Header();
-                String logTer = rs.getString(1).substring(0, 8) + "XXX";
-                String recAdd = rs.getString(3).substring(0, 8) + "XXX";
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, Integer.parseInt(id));
+        ResultSet rs = st.executeQuery();
+        while (rs.next()) {
+            Header header = new Header();
+            String logTer = rs.getString(1).substring(0, 8) + "XXX";
+            String recAdd = rs.getString(3).substring(0, 8) + "XXX";
 
-                if (rs.getString(13).equalsIgnoreCase("O")) {
-                    header.setLogicalTerminal(logTer);
-                    header.setReceiverAddress(recAdd);
-                } else {
-                    header.setLogicalTerminal(recAdd);
-                    header.setReceiverAddress(logTer);
-                }
-                header.setMessageType(rs.getString("messageType"));
-                header.setMessagePriority(rs.getString(4));
-                header.setBankingPriority(rs.getString(5));
-                header.setMur(rs.getString(6));
-                header.setKomentar(rs.getString(7));
-                header.setMIRDate(rs.getString(8).trim());
-                header.setMIRLogicalTerminal(rs.getString(9).substring(0, 8) + "XXX");
-                header.setMIRSessionNumber(rs.getString(10));
-                header.setMIRSequenceNumber(rs.getString(11));
-                header.setFlag(rs.getString(15));
-                String data = "";
-                data += "Requestor DN\t\t\t: ou=" + rs.getString(12).substring(8).toLowerCase() + ",o=" + rs.getString(1).substring(0, 8).toLowerCase() + ",o=swift\n";
-                data += "Responder DN\t\t\t: ou=" + rs.getString(13).substring(8).toLowerCase() + ",o=" + rs.getString(3).substring(0, 8).toLowerCase() + ",o=swift\n";
-                data += "Identifier\t\t\t\t: " + rs.getString(14) + "\n";
-                data += "Message Identifier\t\t: " + rs.getString(16) + "\n";
-                data += "Instruction Id\t\t\t: " + rs.getString(67) + "\n";
-                data += "Interbank Settlement Date\t\t: " + rs.getString(17) + "\n";
-                data += "Currency\t\t\t: " + rs.getString(18) + "\n";
-                data += "Interbank Settlement Amount\t: " + df.format(new BigDecimal(rs.getString(19))) + "\n";
-                data += "Charges\t\t\t\t: " + rs.getString(20) + "\n";
-                String instrCurr = rs.getString(21);
-                if (instrCurr == null) {
-                    instrCurr = "";
-                } else {
-                    instrCurr = "Instructed Currency\t\t: " + instrCurr + "\n";
-                }
-                String instrAmt = rs.getString(22);
-                if (instrAmt == null) {
-                    instrAmt = "";
-                } else {
-                    instrAmt = "Instructed Amount\t\t: " + df.format(new BigDecimal(instrAmt)) + "\n";
-                }
-                String rate = rs.getString(23);
-                if (rate == null) {
-                    rate = "";
-                } else {
-                    rate = "Exchange Rate\t\t\t: " + df.format(new BigDecimal(rate)) + "\n";
-                }
-                data += instrCurr;
-                data += instrAmt;
-                data += rate;
-                data += "Debtor\n";
-                String debtorName = rs.getString(24);
-                if (debtorName == null) {
-                    debtorName = "";
-                } else {
-                    debtorName = "    Name\t\t\t\t: " + clearXMLEncode(debtorName) + "\n";
-                }
-                data += debtorName;
-                String debtorDept = rs.getString(25);
-                if (debtorDept == null) {
-                    debtorDept = "";
-                } else {
-                    debtorDept = "    Department\t\t\t: " +clearXMLEncode( debtorDept) + "\n";
-                }
-                data += debtorDept;
-                String debtorSubDept = rs.getString(26);
-                if (debtorSubDept == null) {
-                    debtorSubDept = "";
-                } else {
-                    debtorSubDept = "    Sub Department\t\t: " + clearXMLEncode(debtorSubDept) + "\n";
-                }
-                data += debtorSubDept;
-                String debtorStreet = rs.getString(27);
-                if (debtorStreet == null) {
-                    debtorStreet = "";
-                } else {
-                    debtorStreet = "    Street Name\t\t\t: " +clearXMLEncode( debtorStreet) + "\n";
-                }
-                data += debtorStreet;
-                String debtorBdNb = rs.getString(28);
-                if (debtorBdNb == null) {
-                    debtorBdNb = "";
-                } else {
-                    debtorBdNb = "    Building Number\t\t: " + clearXMLEncode(debtorBdNb) + "\n";
-                }
-                data += debtorBdNb;
-                String debtorBdNm = rs.getString(29);
-                if (debtorBdNm == null) {
-                    debtorBdNm = "";
-                } else {
-                    debtorBdNm = "    Building Name\t\t\t: " + clearXMLEncode(debtorBdNm) + "\n";
-                }
-                data += debtorBdNm;
-                String debtorFloor = rs.getString(30);
-                if (debtorFloor == null) {
-                    debtorFloor = "";
-                } else {
-                    debtorFloor = "    Floor\t\t\t\t: " + clearXMLEncode(debtorFloor) + "\n";
-                }
-                data += debtorFloor;
-                String debtorPoBox = rs.getString(31);
-                if (debtorPoBox == null) {
-                    debtorPoBox = "";
-                } else {
-                    debtorPoBox = "    Post Box\t\t\t: " + clearXMLEncode(debtorPoBox) + "\n";
-                }
-                data += debtorPoBox;
-                String debtorRoom = rs.getString(32);
-                if (debtorRoom == null) {
-                    debtorRoom = "";
-                } else {
-                    debtorRoom = "    Room\t\t\t\t: " + clearXMLEncode(debtorRoom) + "\n";
-                }
-                data += debtorRoom;
-                String debtorPoCd = rs.getString(33);
-                if (debtorPoCd == null) {
-                    debtorPoCd = "";
-                } else {
-                    debtorPoCd = "    Post Code\t\t\t: " + clearXMLEncode(debtorPoCd) + "\n";
-                }
-                data += debtorPoCd;
-                String debtorTwn = rs.getString(34);
-                if (debtorTwn == null) {
-                    debtorTwn = "";
-                } else {
-                    debtorTwn = "    Town Name\t\t\t: " + clearXMLEncode(debtorTwn) + "\n";
-                }
-                data += debtorTwn;
-                String debtorTwnLc = rs.getString(35);
-                if (debtorTwnLc == null) {
-                    debtorTwnLc = "";
-                } else {
-                    debtorTwnLc = "    Town Location Name\t\t: " + clearXMLEncode(debtorTwnLc)  + "\n";
-                }
-                data += debtorTwnLc;
-                String debtorDistrc = rs.getString(36);
-                if (debtorDistrc == null) {
-                    debtorDistrc = "";
-                } else {
-                    debtorDistrc = "    District Name\t\t\t: " + clearXMLEncode(debtorDistrc)  + "\n";
-                }
-                data += debtorDistrc;
-                String debtorCtry = rs.getString(37);
-                if (debtorCtry == null) {
-                    debtorCtry = "";
-                } else {
-                    debtorCtry = "    Country\t\t\t: " + clearXMLEncode(debtorCtry)  + "\n";
-                }
-                data += debtorCtry;
-                String debtorAddrLine1 = rs.getString(38);
-                if (debtorAddrLine1 == null) {
-                    debtorAddrLine1 = "";
-                } else {
-                    debtorAddrLine1 = "    Address Line\t\t\t: " + clearXMLEncode(debtorAddrLine1)  + "\n";
-                }
-                data += debtorAddrLine1;
-                String debtorAddrLine2 = rs.getString(39);
-                if (debtorAddrLine2 == null) {
-                    debtorAddrLine2 = "";
-                } else {
-                    debtorAddrLine2 = "    \t\t\t\t  " + clearXMLEncode(debtorAddrLine2)  + "\n";
-                }
-                data += debtorAddrLine2;
-                String debtorAddrLine3 = rs.getString(40);
-                if (debtorAddrLine3 == null) {
-                    debtorAddrLine3 = "";
-                } else {
-                    debtorAddrLine3 = "    \t\t\t\t  " + clearXMLEncode(debtorAddrLine3)  + "\n";
-                }
-                data += debtorAddrLine3;
-                String debtorIdent = rs.getString(41);
-                if (debtorIdent == null) {
-                    debtorIdent = "";
-                } else {
-                    debtorIdent = "    Identification\t\t: " + clearXMLEncode(debtorIdent)  + "\n";
-                }
-                data += debtorIdent;
-                String debtorAcc = rs.getString(42);
-                if (debtorAcc.length() < 1) {
-                    debtorAcc = "";
-                } else {
-                    debtorAcc = "Debtor Account Number\t\t: " + debtorAcc + "\n";
-                }
-                data += debtorAcc;
-                String instrgBank = rs.getString(43);
-                if (instrgBank == null) {
-                    instrgBank = "";
-                } else {
-                    instrgBank = "Instructing Bank\t\t\t: " + clearXMLEncode(instrgBank)  + "\n";
-                }
-                data += instrgBank;
-                String intrmBank = rs.getString(44);
-                if (intrmBank == null) {
-                    intrmBank = "";
-                } else {
-                    intrmBank = "Intermediary Bank\t\t\t: " + clearXMLEncode(intrmBank)  + "\n";
-                }
-                data += intrmBank;
-                String debtorBank = rs.getString(45);
-                if (debtorBank == null) {
-                    debtorBank = "";
-                } else {
-                    debtorBank = "Debtor Bank\t\t\t: " + clearXMLEncode(debtorBank)  + "\n";
-                }
-                data += debtorBank;
-                String creditorBank = rs.getString(46);
-                if (creditorBank == null) {
-                    creditorBank = "";
-                } else {
-                    creditorBank = "Creditor Bank\t\t\t: " + clearXMLEncode(creditorBank)  + "\n";
-                }
-                data += creditorBank;
-                data += "Creditor\n";
-                String creditorName = rs.getString(47);
-                if (creditorName == null) {
-                    creditorName = "";
-                } else {
-                    creditorName = "    Name\t\t\t\t: " + clearXMLEncode(creditorName)  + "\n";
-                }
-                data += creditorName;
-                String creditorDept = rs.getString(48);
-                if (creditorDept == null) {
-                    creditorDept = "";
-                } else {
-                    creditorDept = "    Department\t\t\t: " + clearXMLEncode(creditorDept)  + "\n";
-                }
-                data += creditorDept;
-                String creditorSubDept = rs.getString(49);
-                if (creditorSubDept == null) {
-                    creditorSubDept = "";
-                } else {
-                    creditorSubDept = "    Sub Department\t\t: " + clearXMLEncode(creditorSubDept)  + "\n";
-                }
-                data += creditorSubDept;
-                String creditorStreet = rs.getString(50);
-                if (creditorStreet == null) {
-                    creditorStreet = "";
-                } else {
-                    creditorStreet = "    Street Name\t\t\t: " + clearXMLEncode(creditorStreet)  + "\n";
-                }
-                data += creditorStreet;
-                String creditorBdNb = rs.getString(51);
-                if (creditorBdNb == null) {
-                    creditorBdNb = "";
-                } else {
-                    creditorBdNb = "    Building Number\t\t: " + clearXMLEncode(creditorBdNb)  + "\n";
-                }
-                data += creditorBdNb;
-                String creditorBdNm = rs.getString(52);
-                if (creditorBdNm == null) {
-                    creditorBdNm = "";
-                } else {
-                    creditorBdNm = "    Building Name\t\t\t: " + clearXMLEncode(creditorBdNm)  + "\n";
-                }
-                data += creditorBdNm;
-                String creditorFloor = rs.getString(53);
-                if (creditorFloor == null) {
-                    creditorFloor = "";
-                } else {
-                    creditorFloor = "    Floor\t\t\t\t: " + clearXMLEncode(creditorFloor)  + "\n";
-                }
-                data += creditorFloor;
-                String creditorPoBox = rs.getString(54);
-                if (creditorPoBox == null) {
-                    creditorPoBox = "";
-                } else {
-                    creditorPoBox = "    Post Box\t\t\t: " + clearXMLEncode(creditorPoBox)  + "\n";
-                }
-                data += creditorPoBox;
-                String creditorRoom = rs.getString(55);
-                if (creditorRoom == null) {
-                    creditorRoom = "";
-                } else {
-                    creditorRoom = "    Room\t\t\t\t: " + clearXMLEncode(creditorRoom)  + "\n";
-                }
-                data += creditorRoom;
-                String creditorPoCd = rs.getString(56);
-                if (creditorPoCd == null) {
-                    creditorPoCd = "";
-                } else {
-                    creditorPoCd = "    Post Code\t\t\t: " + clearXMLEncode(creditorPoCd)  + "\n";
-                }
-                data += creditorPoCd;
-                String creditorTwn = rs.getString(57);
-                if (creditorTwn == null) {
-                    creditorTwn = "";
-                } else {
-                    creditorTwn = "    Town Name\t\t\t: " + clearXMLEncode(creditorTwn)  + "\n";
-                }
-                data += creditorTwn;
-                String creditorTwnLc = rs.getString(58);
-                if (creditorTwnLc == null) {
-                    creditorTwnLc = "";
-                } else {
-                    creditorTwnLc = "    Town Location Name\t\t: " + clearXMLEncode(creditorTwnLc)  + "\n";
-                }
-                data += creditorTwnLc;
-                String creditorDistrc = rs.getString(59);
-                if (creditorDistrc == null) {
-                    creditorDistrc = "";
-                } else {
-                    creditorDistrc = "    District Name\t\t\t: " + clearXMLEncode(creditorDistrc)  + "\n";
-                }
-                data += creditorDistrc;
-                String creditorCtry = rs.getString(60);
-                if (creditorCtry == null) {
-                    creditorCtry = "";
-                } else {
-                    creditorCtry = "    Country\t\t\t: " + clearXMLEncode(creditorCtry)  + "\n";
-                }
-                data += creditorCtry;
-                String creditorAddrLine1 = rs.getString(61);
-                if (creditorAddrLine1 == null) {
-                    creditorAddrLine1 = "";
-                } else {
-                    creditorAddrLine1 = "    Address Line\t\t\t: " + clearXMLEncode(creditorAddrLine1)  + "\n";
-                }
-                data += creditorAddrLine1;
-                String creditorAddrLine2 = rs.getString(62);
-                if (creditorAddrLine2 == null) {
-                    creditorAddrLine2 = "";
-                } else {
-                    creditorAddrLine2 = "    \t\t\t\t  " + clearXMLEncode(creditorAddrLine2)  + "\n";
-                }
-                data += creditorAddrLine2;
-                String creditorAddrLine3 = rs.getString(63);
-                if (creditorAddrLine3 == null) {
-                    creditorAddrLine3 = "";
-                } else {
-                    creditorAddrLine3 = "    \t\t\t\t  " + clearXMLEncode(creditorAddrLine3)  + "\n";
-                }
-                data += creditorAddrLine3;
-                String creditorIdent = rs.getString(64);
-                if (creditorIdent == null) {
-                    creditorIdent = "";
-                } else {
-                    creditorIdent = "    Identification\t\t: " + clearXMLEncode(creditorIdent)  + "\n";
-                }
-                data += creditorIdent;
-                String creditorAcc = rs.getString(65);
-                if (creditorAcc.length() < 1) {
-                    creditorAcc = "";
-                } else {
-                    creditorAcc = "Creditor Account Number\t\t: " + creditorAcc + "\n";
-                }
-                data += creditorAcc;
-                String remittanceInfo1 = rs.getString(66);
-                if (remittanceInfo1 == null) {
-                    remittanceInfo1 = "";
-                } else {
-                    if (remittanceInfo1.length() > 70) {
-                        remittanceInfo1 = "Remittance Information\t\t: " + remittanceInfo1.substring(0, 70) + "\n    \t\t\t\t  " + remittanceInfo1.substring(70);
-                    } else {
-                        remittanceInfo1 = "Remittance Information\t\t: " + remittanceInfo1;
-                    }
-                }
-                data += clearXMLEncode(remittanceInfo1);
-                header.setMxdetail(data);
-                headers.add(header);
+            if (rs.getString(13).equalsIgnoreCase("O")) {
+                header.setLogicalTerminal(logTer);
+                header.setReceiverAddress(recAdd);
+            } else {
+                header.setLogicalTerminal(recAdd);
+                header.setReceiverAddress(logTer);
             }
-            return headers;
-        }
-          public Collection<Header> printMXDocPacs009(String id) throws SQLException, Exception {
-            ArrayList<Header> headers = new ArrayList<Header>();
-            DecimalFormat df = new DecimalFormat("#,###.####");
-            String sql = "SELECT logicalTerminal,messageType,receiverAddress,messagePriority,   \n" +
-    "                        bankingPriority,mur,komentar,   \n" +
-    "                        MIRDate, \n" +
-    "						COALESCE(MIRLogicalTerminal, '') AS MIRLogicalTerminal,  \n" +
-    "						COALESCE(MIRSessionNumber, '') AS MIRSessionNumber,  \n" +
-    "						COALESCE(MIRSequenceNumber, '') AS MIRSequenceNumber,  \n" +
-    "                        json_tag->'appHdr'->'fr'->'fiId'->'finInstnId'->>'bicfi' AS fromBic, \n" +
-    "						json_tag->'appHdr'->'to'->'fiId'->'finInstnId'->>'bicfi' AS toBic,  \n" +
-    "						json_tag->'appHdr'->>'msgDefIdr' AS msgDefIdr,   \n" +
-    "						h.flag,   \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'pmtId'->>'instrId' AS instructionId, \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'pmtId'->>'endToEndId' AS endToEndId, \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'pmtId'->>'uetr' AS uetr,  \n" +
-    "						CONCAT( \n" +
-    "							mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmDt'->>'year', '-',  \n" +
-    "							LPAD(mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmDt'->>'month', 2, '0'), '-',  \n" +
-    "							LPAD(mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmDt'->>'day', 2, '0') \n" +
-    "    					) AS interbankSettlementDate,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'ccy' AS interBankSettlementCcy,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'value' AS interBankSettlementAmount, \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'prvsInstgAgt1'->'finInstnId'->>'bicfi' AS preInstructingAgent1,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'prvsInstgAgt2'->'finInstnId'->>'bicfi' AS preInstructingAgent2,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'prvsInstgAgt3'->'finInstnId'->>'bicfi' AS preInstructingAgent3,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'dbtr'->'finInstnId'->>'bicfi' AS debtorInstitutionId,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'cdtr'->'finInstnId'->>'bicfi' AS creditorInstitutionId,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'instgAgt'->'finInstnId'->>'bicfi' AS instructingAgent,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'instdAgt'->'finInstnId'->>'bicfi' AS instructedAgent,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'dbtrAgt'->'finInstnId'->>'bicfi' AS debtorAgent,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAgt'->'finInstnId'->>'bicfi' AS creditorAgent,  \n" +
-    "						CONCAT( \n" +
-    "							mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAcct'->'id'->'othr'->>'id',  \n" +
-    "							mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAcct'->'id'->>'iban' \n" +
-    "						) AS creditoracc,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtr'->>'nm' AS creditornm,  \n" +
-    "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAcct'->'id'->'othr'->>'id' AS nm, \n" +
-    "                        io_type as io_type   \n" +
-    "                         from headers h   \n" +
-    "                         left join tags_mx mx on  \n" +
-    "                         h.id_headers=mx.id_headers  \n" +
-    "                         where h.id_headers=?";
-    //        System.out.println("printMXDoc009= " + sql);
-            PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setInt(1, Integer.parseInt(id));
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                Header header = new Header();
-                String logTer = rs.getString("logicalTerminal").substring(0, 8) + "XXX";
-                String recAdd = rs.getString("receiverAddress").substring(0, 8) + "XXX";
-
-                if (rs.getString("io_type").equalsIgnoreCase("O")) {
-                    header.setLogicalTerminal(logTer);
-                    header.setReceiverAddress(recAdd);
-                } else {
-                    header.setLogicalTerminal(recAdd);
-                    header.setReceiverAddress(logTer);
-                }
-                header.setMessageType(rs.getString("messageType"));
-                header.setMessagePriority(rs.getString("messagePriority"));
-                if (rs.getString("bankingPriority")!=null) {
-                    header.setBankingPriority(rs.getString("bankingPriority"));
-                }
-                if (rs.getString("mur")!=null) {
-                    header.setMur(rs.getString("mur"));
-                }
-                if (rs.getString("komentar")!=null) {
-                    header.setKomentar(rs.getString("komentar"));
-                }
-                if (rs.getString("MIRDate")!=null) {
-                    header.setMIRDate(rs.getString("MIRDate").trim());
-                }
-                if (rs.getString("MIRLogicalTerminal")!=null) {
-                    if (rs.getString("MIRLogicalTerminal").length()>=8){
-                        header.setMIRLogicalTerminal(rs.getString("MIRLogicalTerminal").substring(0, 8) + "XXX");
-                    }
-                }
-                if (rs.getString("MIRSessionNumber")!=null) {
-                    header.setMIRSessionNumber(rs.getString("MIRSessionNumber"));
-                }
-                if (rs.getString("MIRSequenceNumber")!=null) {
-                    header.setMIRSequenceNumber(rs.getString("MIRSequenceNumber"));
-                }
-
-                header.setFlag(rs.getString("flag"));
-                String data = "";
-                data += "Requestor DN\t\t\t\t: ou=" + rs.getString("fromBic").substring(8).toLowerCase() + ",o=" + rs.getString(1).substring(0, 8).toLowerCase() + ",o=swift\n";
-                data += "Responder DN\t\t\t\t: ou=" + rs.getString("toBic").substring(8).toLowerCase() + ",o=" + rs.getString(3).substring(0, 8).toLowerCase() + ",o=swift\n";
-
-                //Identifier
-                if(rs.getString("instructionId") == null){
-                    data += "";
-                } else {
-                    data += "Identifier\t\t\t\t\t: " + rs.getString("instructionId") + "\n";
-                }
-                //End to End Id
-                if(rs.getString("endToEndId") == null){
-                    data += "";
-                } else {
-                    data += "End to End Id\t\t\t\t: " + rs.getString("endToEndId") + "\n";
-                }
-                //UETR
-                if(rs.getString("uetr") == null){
-                    data += "";
-                } else {
-                    data += "UETR\t\t\t\t\t: " + rs.getString("uetr") + "\n";
-                }
-                //Interbank Settlement 
-                if(rs.getString("interbankSettlementDate") == null){
-                    data += "";
-                } else {
-                    data += "Interbank Settlement Date\t\t\t: " + rs.getString("interbankSettlementDate") + "\n";
-                }
-                if(rs.getString("interBankSettlementCcy") == null){
-                    data += "";
-                } else {
-                    data += "Interbank Settlement Currency\t\t: " + rs.getString("interBankSettlementCcy") + "\n";
-                }
-                if(rs.getString("interBankSettlementAmount") == null){
-                    data += "";
-                } else {
-                    data += "Interbank Settlement Amount\t\t: " + rs.getString("interBankSettlementAmount") + "\n";
-                }
-
-
-                //Previous agent
-                if (rs.getString("preInstructingAgent1") == null) {
-                    data += "";
-                } else {
-                    data += "Previous agent 1\t\t\t\t: " + clearXMLEncode(rs.getString("preInstructingAgent1")) + "\n";
-                }
-                if (rs.getString("preInstructingAgent2") == null) {
-                    data += "";
-                } else {
-                    data += "Previous agent 2\t\t\t\t: " + clearXMLEncode(rs.getString("preInstructingAgent2")) + "\n";
-                }
-                if (rs.getString("preInstructingAgent3") == null) {
-                    data += "";
-                } else {
-                    data += "Previous agent 3\t\t\t\t: " + clearXMLEncode(rs.getString("preInstructingAgent3")) + "\n";
-                }
-
-                //Debtor Creditor Agent
-                if (rs.getString("instructingAgent") == null) {
-                    data += "";
-                } else {
-                    data += "Instructing Agent\t\t\t\t: " + clearXMLEncode(rs.getString("instructingAgent")) + "\n";
-                }
-                if (rs.getString("instructedAgent") == null) {
-                    data += "";
-                } else {
-                    data += "Instructed Agent\t\t\t\t: " + clearXMLEncode(rs.getString("instructedAgent")) + "\n";
-                }
-                if (rs.getString("debtorInstitutionId") == null) {
-                    data += "";
-                } else {
-                    data += "Debtor Institution ID\t\t\t: " + clearXMLEncode(rs.getString("debtorInstitutionId")) + "\n";
-                }
-                if (rs.getString("debtorAgent") == null) {
-                    data += "";
-                } else {
-                    data += "Debtor Agent\t\t\t\t: " + clearXMLEncode(rs.getString("debtorAgent")) + "\n";
-                }
-                if (rs.getString("creditorInstitutionId") == null) {
-                    data += "";
-                } else {
-                    data += "Creditor Institution ID\t\t\t: " + clearXMLEncode(rs.getString("creditorInstitutionId")) + "\n";
-                }
-                if (rs.getString("creditorAgent") == null) {
-                    data += "";
-                } else {
-                    data += "Creditor Agent\t\t\t\t: " + clearXMLEncode(rs.getString("creditorAgent")) + "\n";
-                }
-                if (rs.getString("creditoracc") == null || rs.getString("creditoracc").equalsIgnoreCase("")) {
-                    data += "";
-                } else {
-                    data += "Creditor Account Number\t\t\t: " + clearXMLEncode(rs.getString("creditoracc")) + "\n";
-                }
-
-
-
-                header.setMxdetail(data);
-                headers.add(header);
+            header.setMessageType(rs.getString("messageType"));
+            header.setMessagePriority(rs.getString(4));
+            header.setBankingPriority(rs.getString(5));
+            header.setMur(rs.getString(6));
+            header.setKomentar(rs.getString(7));
+            header.setMIRDate(rs.getString(8).trim());
+            header.setMIRLogicalTerminal(rs.getString(9).substring(0, 8) + "XXX");
+            header.setMIRSessionNumber(rs.getString(10));
+            header.setMIRSequenceNumber(rs.getString(11));
+            header.setFlag(rs.getString(15));
+            String data = "";
+            data += "Requestor DN\t\t\t: ou=" + rs.getString(12).substring(8).toLowerCase() + ",o=" + rs.getString(1).substring(0, 8).toLowerCase() + ",o=swift\n";
+            data += "Responder DN\t\t\t: ou=" + rs.getString(13).substring(8).toLowerCase() + ",o=" + rs.getString(3).substring(0, 8).toLowerCase() + ",o=swift\n";
+            data += "Identifier\t\t\t\t: " + rs.getString(14) + "\n";
+            data += "Message Identifier\t\t: " + rs.getString(16) + "\n";
+            data += "Instruction Id\t\t\t: " + rs.getString(67) + "\n";
+            data += "Interbank Settlement Date\t\t: " + rs.getString(17) + "\n";
+            data += "Currency\t\t\t: " + rs.getString(18) + "\n";
+            data += "Interbank Settlement Amount\t: " + df.format(new BigDecimal(rs.getString(19))) + "\n";
+            data += "Charges\t\t\t\t: " + rs.getString(20) + "\n";
+            String instrCurr = rs.getString(21);
+            if (instrCurr == null) {
+                instrCurr = "";
+            } else {
+                instrCurr = "Instructed Currency\t\t: " + instrCurr + "\n";
             }
-            return headers;
+            String instrAmt = rs.getString(22);
+            if (instrAmt == null) {
+                instrAmt = "";
+            } else {
+                instrAmt = "Instructed Amount\t\t: " + df.format(new BigDecimal(instrAmt)) + "\n";
+            }
+            String rate = rs.getString(23);
+            if (rate == null) {
+                rate = "";
+            } else {
+                rate = "Exchange Rate\t\t\t: " + df.format(new BigDecimal(rate)) + "\n";
+            }
+            data += instrCurr;
+            data += instrAmt;
+            data += rate;
+            data += "Debtor\n";
+            String debtorName = rs.getString(24);
+            if (debtorName == null) {
+                debtorName = "";
+            } else {
+                debtorName = "    Name\t\t\t\t: " + clearXMLEncode(debtorName) + "\n";
+            }
+            data += debtorName;
+            String debtorDept = rs.getString(25);
+            if (debtorDept == null) {
+                debtorDept = "";
+            } else {
+                debtorDept = "    Department\t\t\t: " + clearXMLEncode(debtorDept) + "\n";
+            }
+            data += debtorDept;
+            String debtorSubDept = rs.getString(26);
+            if (debtorSubDept == null) {
+                debtorSubDept = "";
+            } else {
+                debtorSubDept = "    Sub Department\t\t: " + clearXMLEncode(debtorSubDept) + "\n";
+            }
+            data += debtorSubDept;
+            String debtorStreet = rs.getString(27);
+            if (debtorStreet == null) {
+                debtorStreet = "";
+            } else {
+                debtorStreet = "    Street Name\t\t\t: " + clearXMLEncode(debtorStreet) + "\n";
+            }
+            data += debtorStreet;
+            String debtorBdNb = rs.getString(28);
+            if (debtorBdNb == null) {
+                debtorBdNb = "";
+            } else {
+                debtorBdNb = "    Building Number\t\t: " + clearXMLEncode(debtorBdNb) + "\n";
+            }
+            data += debtorBdNb;
+            String debtorBdNm = rs.getString(29);
+            if (debtorBdNm == null) {
+                debtorBdNm = "";
+            } else {
+                debtorBdNm = "    Building Name\t\t\t: " + clearXMLEncode(debtorBdNm) + "\n";
+            }
+            data += debtorBdNm;
+            String debtorFloor = rs.getString(30);
+            if (debtorFloor == null) {
+                debtorFloor = "";
+            } else {
+                debtorFloor = "    Floor\t\t\t\t: " + clearXMLEncode(debtorFloor) + "\n";
+            }
+            data += debtorFloor;
+            String debtorPoBox = rs.getString(31);
+            if (debtorPoBox == null) {
+                debtorPoBox = "";
+            } else {
+                debtorPoBox = "    Post Box\t\t\t: " + clearXMLEncode(debtorPoBox) + "\n";
+            }
+            data += debtorPoBox;
+            String debtorRoom = rs.getString(32);
+            if (debtorRoom == null) {
+                debtorRoom = "";
+            } else {
+                debtorRoom = "    Room\t\t\t\t: " + clearXMLEncode(debtorRoom) + "\n";
+            }
+            data += debtorRoom;
+            String debtorPoCd = rs.getString(33);
+            if (debtorPoCd == null) {
+                debtorPoCd = "";
+            } else {
+                debtorPoCd = "    Post Code\t\t\t: " + clearXMLEncode(debtorPoCd) + "\n";
+            }
+            data += debtorPoCd;
+            String debtorTwn = rs.getString(34);
+            if (debtorTwn == null) {
+                debtorTwn = "";
+            } else {
+                debtorTwn = "    Town Name\t\t\t: " + clearXMLEncode(debtorTwn) + "\n";
+            }
+            data += debtorTwn;
+            String debtorTwnLc = rs.getString(35);
+            if (debtorTwnLc == null) {
+                debtorTwnLc = "";
+            } else {
+                debtorTwnLc = "    Town Location Name\t\t: " + clearXMLEncode(debtorTwnLc) + "\n";
+            }
+            data += debtorTwnLc;
+            String debtorDistrc = rs.getString(36);
+            if (debtorDistrc == null) {
+                debtorDistrc = "";
+            } else {
+                debtorDistrc = "    District Name\t\t\t: " + clearXMLEncode(debtorDistrc) + "\n";
+            }
+            data += debtorDistrc;
+            String debtorCtry = rs.getString(37);
+            if (debtorCtry == null) {
+                debtorCtry = "";
+            } else {
+                debtorCtry = "    Country\t\t\t: " + clearXMLEncode(debtorCtry) + "\n";
+            }
+            data += debtorCtry;
+            String debtorAddrLine1 = rs.getString(38);
+            if (debtorAddrLine1 == null) {
+                debtorAddrLine1 = "";
+            } else {
+                debtorAddrLine1 = "    Address Line\t\t\t: " + clearXMLEncode(debtorAddrLine1) + "\n";
+            }
+            data += debtorAddrLine1;
+            String debtorAddrLine2 = rs.getString(39);
+            if (debtorAddrLine2 == null) {
+                debtorAddrLine2 = "";
+            } else {
+                debtorAddrLine2 = "    \t\t\t\t  " + clearXMLEncode(debtorAddrLine2) + "\n";
+            }
+            data += debtorAddrLine2;
+            String debtorAddrLine3 = rs.getString(40);
+            if (debtorAddrLine3 == null) {
+                debtorAddrLine3 = "";
+            } else {
+                debtorAddrLine3 = "    \t\t\t\t  " + clearXMLEncode(debtorAddrLine3) + "\n";
+            }
+            data += debtorAddrLine3;
+            String debtorIdent = rs.getString(41);
+            if (debtorIdent == null) {
+                debtorIdent = "";
+            } else {
+                debtorIdent = "    Identification\t\t: " + clearXMLEncode(debtorIdent) + "\n";
+            }
+            data += debtorIdent;
+            String debtorAcc = rs.getString(42);
+            if (debtorAcc.length() < 1) {
+                debtorAcc = "";
+            } else {
+                debtorAcc = "Debtor Account Number\t\t: " + debtorAcc + "\n";
+            }
+            data += debtorAcc;
+            String instrgBank = rs.getString(43);
+            if (instrgBank == null) {
+                instrgBank = "";
+            } else {
+                instrgBank = "Instructing Bank\t\t\t: " + clearXMLEncode(instrgBank) + "\n";
+            }
+            data += instrgBank;
+            String intrmBank = rs.getString(44);
+            if (intrmBank == null) {
+                intrmBank = "";
+            } else {
+                intrmBank = "Intermediary Bank\t\t\t: " + clearXMLEncode(intrmBank) + "\n";
+            }
+            data += intrmBank;
+            String debtorBank = rs.getString(45);
+            if (debtorBank == null) {
+                debtorBank = "";
+            } else {
+                debtorBank = "Debtor Bank\t\t\t: " + clearXMLEncode(debtorBank) + "\n";
+            }
+            data += debtorBank;
+            String creditorBank = rs.getString(46);
+            if (creditorBank == null) {
+                creditorBank = "";
+            } else {
+                creditorBank = "Creditor Bank\t\t\t: " + clearXMLEncode(creditorBank) + "\n";
+            }
+            data += creditorBank;
+            data += "Creditor\n";
+            String creditorName = rs.getString(47);
+            if (creditorName == null) {
+                creditorName = "";
+            } else {
+                creditorName = "    Name\t\t\t\t: " + clearXMLEncode(creditorName) + "\n";
+            }
+            data += creditorName;
+            String creditorDept = rs.getString(48);
+            if (creditorDept == null) {
+                creditorDept = "";
+            } else {
+                creditorDept = "    Department\t\t\t: " + clearXMLEncode(creditorDept) + "\n";
+            }
+            data += creditorDept;
+            String creditorSubDept = rs.getString(49);
+            if (creditorSubDept == null) {
+                creditorSubDept = "";
+            } else {
+                creditorSubDept = "    Sub Department\t\t: " + clearXMLEncode(creditorSubDept) + "\n";
+            }
+            data += creditorSubDept;
+            String creditorStreet = rs.getString(50);
+            if (creditorStreet == null) {
+                creditorStreet = "";
+            } else {
+                creditorStreet = "    Street Name\t\t\t: " + clearXMLEncode(creditorStreet) + "\n";
+            }
+            data += creditorStreet;
+            String creditorBdNb = rs.getString(51);
+            if (creditorBdNb == null) {
+                creditorBdNb = "";
+            } else {
+                creditorBdNb = "    Building Number\t\t: " + clearXMLEncode(creditorBdNb) + "\n";
+            }
+            data += creditorBdNb;
+            String creditorBdNm = rs.getString(52);
+            if (creditorBdNm == null) {
+                creditorBdNm = "";
+            } else {
+                creditorBdNm = "    Building Name\t\t\t: " + clearXMLEncode(creditorBdNm) + "\n";
+            }
+            data += creditorBdNm;
+            String creditorFloor = rs.getString(53);
+            if (creditorFloor == null) {
+                creditorFloor = "";
+            } else {
+                creditorFloor = "    Floor\t\t\t\t: " + clearXMLEncode(creditorFloor) + "\n";
+            }
+            data += creditorFloor;
+            String creditorPoBox = rs.getString(54);
+            if (creditorPoBox == null) {
+                creditorPoBox = "";
+            } else {
+                creditorPoBox = "    Post Box\t\t\t: " + clearXMLEncode(creditorPoBox) + "\n";
+            }
+            data += creditorPoBox;
+            String creditorRoom = rs.getString(55);
+            if (creditorRoom == null) {
+                creditorRoom = "";
+            } else {
+                creditorRoom = "    Room\t\t\t\t: " + clearXMLEncode(creditorRoom) + "\n";
+            }
+            data += creditorRoom;
+            String creditorPoCd = rs.getString(56);
+            if (creditorPoCd == null) {
+                creditorPoCd = "";
+            } else {
+                creditorPoCd = "    Post Code\t\t\t: " + clearXMLEncode(creditorPoCd) + "\n";
+            }
+            data += creditorPoCd;
+            String creditorTwn = rs.getString(57);
+            if (creditorTwn == null) {
+                creditorTwn = "";
+            } else {
+                creditorTwn = "    Town Name\t\t\t: " + clearXMLEncode(creditorTwn) + "\n";
+            }
+            data += creditorTwn;
+            String creditorTwnLc = rs.getString(58);
+            if (creditorTwnLc == null) {
+                creditorTwnLc = "";
+            } else {
+                creditorTwnLc = "    Town Location Name\t\t: " + clearXMLEncode(creditorTwnLc) + "\n";
+            }
+            data += creditorTwnLc;
+            String creditorDistrc = rs.getString(59);
+            if (creditorDistrc == null) {
+                creditorDistrc = "";
+            } else {
+                creditorDistrc = "    District Name\t\t\t: " + clearXMLEncode(creditorDistrc) + "\n";
+            }
+            data += creditorDistrc;
+            String creditorCtry = rs.getString(60);
+            if (creditorCtry == null) {
+                creditorCtry = "";
+            } else {
+                creditorCtry = "    Country\t\t\t: " + clearXMLEncode(creditorCtry) + "\n";
+            }
+            data += creditorCtry;
+            String creditorAddrLine1 = rs.getString(61);
+            if (creditorAddrLine1 == null) {
+                creditorAddrLine1 = "";
+            } else {
+                creditorAddrLine1 = "    Address Line\t\t\t: " + clearXMLEncode(creditorAddrLine1) + "\n";
+            }
+            data += creditorAddrLine1;
+            String creditorAddrLine2 = rs.getString(62);
+            if (creditorAddrLine2 == null) {
+                creditorAddrLine2 = "";
+            } else {
+                creditorAddrLine2 = "    \t\t\t\t  " + clearXMLEncode(creditorAddrLine2) + "\n";
+            }
+            data += creditorAddrLine2;
+            String creditorAddrLine3 = rs.getString(63);
+            if (creditorAddrLine3 == null) {
+                creditorAddrLine3 = "";
+            } else {
+                creditorAddrLine3 = "    \t\t\t\t  " + clearXMLEncode(creditorAddrLine3) + "\n";
+            }
+            data += creditorAddrLine3;
+            String creditorIdent = rs.getString(64);
+            if (creditorIdent == null) {
+                creditorIdent = "";
+            } else {
+                creditorIdent = "    Identification\t\t: " + clearXMLEncode(creditorIdent) + "\n";
+            }
+            data += creditorIdent;
+            String creditorAcc = rs.getString(65);
+            if (creditorAcc.length() < 1) {
+                creditorAcc = "";
+            } else {
+                creditorAcc = "Creditor Account Number\t\t: " + creditorAcc + "\n";
+            }
+            data += creditorAcc;
+            String remittanceInfo1 = rs.getString(66);
+            if (remittanceInfo1 == null) {
+                remittanceInfo1 = "";
+            } else {
+                if (remittanceInfo1.length() > 70) {
+                    remittanceInfo1 = "Remittance Information\t\t: " + remittanceInfo1.substring(0, 70) + "\n    \t\t\t\t  " + remittanceInfo1.substring(70);
+                } else {
+                    remittanceInfo1 = "Remittance Information\t\t: " + remittanceInfo1;
+                }
+            }
+            data += clearXMLEncode(remittanceInfo1);
+            header.setMxdetail(data);
+            headers.add(header);
         }
-          
+        return headers;
+    }
+
+    public Collection<Header> printMXDocPacs009(String id) throws SQLException, Exception {
+        ArrayList<Header> headers = new ArrayList<Header>();
+        DecimalFormat df = new DecimalFormat("#,###.####");
+        String sql = "SELECT logicalTerminal,messageType,receiverAddress,messagePriority,   \n"
+                + "                        bankingPriority,mur,komentar,   \n"
+                + "                        MIRDate, \n"
+                + "						COALESCE(MIRLogicalTerminal, '') AS MIRLogicalTerminal,  \n"
+                + "						COALESCE(MIRSessionNumber, '') AS MIRSessionNumber,  \n"
+                + "						COALESCE(MIRSequenceNumber, '') AS MIRSequenceNumber,  \n"
+                + "                        json_tag->'appHdr'->'fr'->'fiId'->'finInstnId'->>'bicfi' AS fromBic, \n"
+                + "						json_tag->'appHdr'->'to'->'fiId'->'finInstnId'->>'bicfi' AS toBic,  \n"
+                + "						json_tag->'appHdr'->>'msgDefIdr' AS msgDefIdr,   \n"
+                + "						h.flag,   \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'pmtId'->>'instrId' AS instructionId, \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'pmtId'->>'endToEndId' AS endToEndId, \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'pmtId'->>'uetr' AS uetr,  \n"
+                + "						CONCAT( \n"
+                + "							mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmDt'->>'year', '-',  \n"
+                + "							LPAD(mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmDt'->>'month', 2, '0'), '-',  \n"
+                + "							LPAD(mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmDt'->>'day', 2, '0') \n"
+                + "    					) AS interbankSettlementDate,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'ccy' AS interBankSettlementCcy,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'intrBkSttlmAmt'->>'value' AS interBankSettlementAmount, \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'prvsInstgAgt1'->'finInstnId'->>'bicfi' AS preInstructingAgent1,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'prvsInstgAgt2'->'finInstnId'->>'bicfi' AS preInstructingAgent2,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'prvsInstgAgt3'->'finInstnId'->>'bicfi' AS preInstructingAgent3,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'dbtr'->'finInstnId'->>'bicfi' AS debtorInstitutionId,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'cdtr'->'finInstnId'->>'bicfi' AS creditorInstitutionId,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'instgAgt'->'finInstnId'->>'bicfi' AS instructingAgent,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'instdAgt'->'finInstnId'->>'bicfi' AS instructedAgent,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'dbtrAgt'->'finInstnId'->>'bicfi' AS debtorAgent,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAgt'->'finInstnId'->>'bicfi' AS creditorAgent,  \n"
+                + "						CONCAT( \n"
+                + "							mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAcct'->'id'->'othr'->>'id',  \n"
+                + "							mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAcct'->'id'->>'iban' \n"
+                + "						) AS creditoracc,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtr'->>'nm' AS creditornm,  \n"
+                + "						mx.json_tag->'fiCdtTrf'->'cdtTrfTxInf'->0->'undrlygCstmrCdtTrf'->'cdtrAcct'->'id'->'othr'->>'id' AS nm, \n"
+                + "                        io_type as io_type   \n"
+                + "                         from headers h   \n"
+                + "                         left join tags_mx mx on  \n"
+                + "                         h.id_headers=mx.id_headers  \n"
+                + "                         where h.id_headers=?";
+        //        System.out.println("printMXDoc009= " + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setInt(1, Integer.parseInt(id));
+        ResultSet rs = st.executeQuery();
+
+        while (rs.next()) {
+            Header header = new Header();
+            String logTer = rs.getString("logicalTerminal").substring(0, 8) + "XXX";
+            String recAdd = rs.getString("receiverAddress").substring(0, 8) + "XXX";
+
+            if (rs.getString("io_type").equalsIgnoreCase("O")) {
+                header.setLogicalTerminal(logTer);
+                header.setReceiverAddress(recAdd);
+            } else {
+                header.setLogicalTerminal(recAdd);
+                header.setReceiverAddress(logTer);
+            }
+            header.setMessageType(rs.getString("messageType"));
+            header.setMessagePriority(rs.getString("messagePriority"));
+            if (rs.getString("bankingPriority") != null) {
+                header.setBankingPriority(rs.getString("bankingPriority"));
+            }
+            if (rs.getString("mur") != null) {
+                header.setMur(rs.getString("mur"));
+            }
+            if (rs.getString("komentar") != null) {
+                header.setKomentar(rs.getString("komentar"));
+            }
+            if (rs.getString("MIRDate") != null) {
+                header.setMIRDate(rs.getString("MIRDate").trim());
+            }
+            if (rs.getString("MIRLogicalTerminal") != null) {
+                if (rs.getString("MIRLogicalTerminal").length() >= 8) {
+                    header.setMIRLogicalTerminal(rs.getString("MIRLogicalTerminal").substring(0, 8) + "XXX");
+                }
+            }
+            if (rs.getString("MIRSessionNumber") != null) {
+                header.setMIRSessionNumber(rs.getString("MIRSessionNumber"));
+            }
+            if (rs.getString("MIRSequenceNumber") != null) {
+                header.setMIRSequenceNumber(rs.getString("MIRSequenceNumber"));
+            }
+
+            header.setFlag(rs.getString("flag"));
+            String data = "";
+            data += "Requestor DN\t\t\t\t: ou=" + rs.getString("fromBic").substring(8).toLowerCase() + ",o=" + rs.getString(1).substring(0, 8).toLowerCase() + ",o=swift\n";
+            data += "Responder DN\t\t\t\t: ou=" + rs.getString("toBic").substring(8).toLowerCase() + ",o=" + rs.getString(3).substring(0, 8).toLowerCase() + ",o=swift\n";
+
+            //Identifier
+            if (rs.getString("instructionId") == null) {
+                data += "";
+            } else {
+                data += "Identifier\t\t\t\t\t: " + rs.getString("instructionId") + "\n";
+            }
+            //End to End Id
+            if (rs.getString("endToEndId") == null) {
+                data += "";
+            } else {
+                data += "End to End Id\t\t\t\t: " + rs.getString("endToEndId") + "\n";
+            }
+            //UETR
+            if (rs.getString("uetr") == null) {
+                data += "";
+            } else {
+                data += "UETR\t\t\t\t\t: " + rs.getString("uetr") + "\n";
+            }
+            //Interbank Settlement 
+            if (rs.getString("interbankSettlementDate") == null) {
+                data += "";
+            } else {
+                data += "Interbank Settlement Date\t\t\t: " + rs.getString("interbankSettlementDate") + "\n";
+            }
+            if (rs.getString("interBankSettlementCcy") == null) {
+                data += "";
+            } else {
+                data += "Interbank Settlement Currency\t\t: " + rs.getString("interBankSettlementCcy") + "\n";
+            }
+            if (rs.getString("interBankSettlementAmount") == null) {
+                data += "";
+            } else {
+                data += "Interbank Settlement Amount\t\t: " + rs.getString("interBankSettlementAmount") + "\n";
+            }
+
+            //Previous agent
+            if (rs.getString("preInstructingAgent1") == null) {
+                data += "";
+            } else {
+                data += "Previous agent 1\t\t\t\t: " + clearXMLEncode(rs.getString("preInstructingAgent1")) + "\n";
+            }
+            if (rs.getString("preInstructingAgent2") == null) {
+                data += "";
+            } else {
+                data += "Previous agent 2\t\t\t\t: " + clearXMLEncode(rs.getString("preInstructingAgent2")) + "\n";
+            }
+            if (rs.getString("preInstructingAgent3") == null) {
+                data += "";
+            } else {
+                data += "Previous agent 3\t\t\t\t: " + clearXMLEncode(rs.getString("preInstructingAgent3")) + "\n";
+            }
+
+            //Debtor Creditor Agent
+            if (rs.getString("instructingAgent") == null) {
+                data += "";
+            } else {
+                data += "Instructing Agent\t\t\t\t: " + clearXMLEncode(rs.getString("instructingAgent")) + "\n";
+            }
+            if (rs.getString("instructedAgent") == null) {
+                data += "";
+            } else {
+                data += "Instructed Agent\t\t\t\t: " + clearXMLEncode(rs.getString("instructedAgent")) + "\n";
+            }
+            if (rs.getString("debtorInstitutionId") == null) {
+                data += "";
+            } else {
+                data += "Debtor Institution ID\t\t\t: " + clearXMLEncode(rs.getString("debtorInstitutionId")) + "\n";
+            }
+            if (rs.getString("debtorAgent") == null) {
+                data += "";
+            } else {
+                data += "Debtor Agent\t\t\t\t: " + clearXMLEncode(rs.getString("debtorAgent")) + "\n";
+            }
+            if (rs.getString("creditorInstitutionId") == null) {
+                data += "";
+            } else {
+                data += "Creditor Institution ID\t\t\t: " + clearXMLEncode(rs.getString("creditorInstitutionId")) + "\n";
+            }
+            if (rs.getString("creditorAgent") == null) {
+                data += "";
+            } else {
+                data += "Creditor Agent\t\t\t\t: " + clearXMLEncode(rs.getString("creditorAgent")) + "\n";
+            }
+            if (rs.getString("creditoracc") == null || rs.getString("creditoracc").equalsIgnoreCase("")) {
+                data += "";
+            } else {
+                data += "Creditor Account Number\t\t\t: " + clearXMLEncode(rs.getString("creditoracc")) + "\n";
+            }
+
+            header.setMxdetail(data);
+            headers.add(header);
+        }
+        return headers;
+    }
+
     public ArrayList<Header> getAllHeaderReport(String status, String io_type, String mt_type, String value_date, String date_from, String date_end, String flag, String filter, String cust_curr, String value_date_end, String channel) throws SQLException {
         DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
         DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
@@ -3684,61 +3993,61 @@ public class DBHeader {
 //        PreparedStatement st = this.conn.prepareStatement(sql);
 //        ResultSet rs = st.executeQuery();
 
-            StringBuilder where = new StringBuilder(" isDuplicate=0 ");
-            List<Object> params = new ArrayList<>();
+        StringBuilder where = new StringBuilder(" isDuplicate=0 ");
+        List<Object> params = new ArrayList<>();
 
-            // io_type condition
-            if (io_type != null && !io_type.equalsIgnoreCase("IO")) {
-                if (io_type.equalsIgnoreCase("I")) {
-                    where.append(" AND io_type = ?");
-                    params.add("I");
-                } else {
-                    where.append(" AND io_type = ?");
-                    params.add("O");
-                }
+        // io_type condition
+        if (io_type != null && !io_type.equalsIgnoreCase("IO")) {
+            if (io_type.equalsIgnoreCase("I")) {
+                where.append(" AND h.io_type = ?");
+                params.add("I");
+            } else {
+                where.append(" AND h.io_type = ?");
+                params.add("O");
             }
+        }
 
-            // mt_type condition
-            if (mt_type != null && !mt_type.isEmpty()) {
-                where.append(" AND messageType = ?");
-                params.add(mt_type);
+        // mt_type condition
+        if (mt_type != null && !mt_type.isEmpty()) {
+            where.append(" AND h.messageType = ?");
+            params.add(mt_type);
+        }
+
+        // flag condition
+        if (flag != null && !flag.isEmpty()) {
+            where.append(" AND h.flag = ?");
+            params.add(flag);
+        }
+
+        // cust_curr condition
+        if (cust_curr != null && !cust_curr.isEmpty()) {
+            where.append(" AND trx.trans_ccy = ?");
+            params.add(cust_curr);
+        }
+
+        // filter condition
+        if (filter != null) {
+            if (filter.equals("1")) {
+                where.append(" AND block3 like ?");
+                params.add("%111:009;%");
+            } else if (filter.equals("0")) {
+                where.append(" AND block3 not like ?");
+                params.add("%111:009;%");
             }
+        }
 
-            // flag condition
-            if (flag != null && !flag.isEmpty()) {
-                where.append(" AND flag = ?");
-                params.add(flag);
-            }
+        // channel condition
+        if (channel != null && !channel.isEmpty()) {
+            where.append(" AND h.source = ?");
+            params.add(channel);
+        }
 
-            // cust_curr condition
-            if (cust_curr != null && !cust_curr.isEmpty()) {
-                where.append(" AND t32c.detail = ?");
-                params.add(cust_curr);
-            }
+        // date range condition (harus selalu ada)
+        where.append(" AND CAST(h.tanggal as DATE) BETWEEN ? AND ?");
+        params.add(java.sql.Date.valueOf(date_from));  // pastikan format yyyy-MM-dd
+        params.add(java.sql.Timestamp.valueOf(date_end + " 23:59:59"));
 
-            // filter condition
-            if (filter != null) {
-                if (filter.equals("1")) {
-                    where.append(" AND block3 like ?");
-                    params.add("%111:009;%");
-                } else if (filter.equals("0")) {
-                    where.append(" AND block3 not like ?");
-                    params.add("%111:009;%");
-                }
-            }
-
-            // channel condition
-            if (channel != null && !channel.isEmpty()) {
-                where.append(" AND source = ?");
-                params.add(channel);
-            }
-
-            // date range condition (harus selalu ada)
-            where.append(" AND CAST(hd.tanggal as DATE) BETWEEN ? AND ?");
-            params.add(java.sql.Date.valueOf(date_from));  // pastikan format yyyy-MM-dd
-            params.add(java.sql.Timestamp.valueOf(date_end + " 23:59:59"));
-
-            // SQL lengkap
+        // SQL lengkap
 //            String sql = "SELECT DISTINCT \n" +
 //                "    hd.id_headers, \n" +
 //                "    hd.messageType,\n" +
@@ -3793,110 +4102,47 @@ public class DBHeader {
 //                "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
 //                "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE "
 //                + where.toString() + " ORDER BY tanggal DESC";
-            String sql = "SELECT DISTINCT \n" +
-                        "    hd.id_headers, \n" +
-                        "    hd.messageType,\n" +
-                        "    hd.logicalTerminal,\n" +
-                        "    hd.io_type,\n" +
-                        "    hd.receiverAddress,\n" +
-                        "    hd.tanggal,\n" +
-                        "    hd.flag, \n" +
-                        "    COALESCE('20' || SUBSTRING(t32d.detail FROM 1 FOR 2) || '-' ||\n" +
-                        "                    SUBSTRING(t32d.detail FROM 3 FOR 2) || '-' ||\n" +
-                        "                    RIGHT(t32d.detail, 2), '') AS vdate,\n" +
-                        "\n" +
-                        "    -- REF --\n" +
-                        "    COALESCE(\n" +
-                        "        t20.detail, \n" +
-                        "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,pmtId,instrId}', -- pacs.008\n" +
-                        "        COALESCE(mx.json_tag #>> '{pmtRtr,grpHdr,msgId}', -- pacs.004\n" +
-                        "        COALESCE(mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,pmtId,instrId}', -- pacs.009\n" +
-                        "        COALESCE(mx.json_tag #>> '{rsltnOfInvstgtn,assgnmt,id}', -- camt.029\n" +
-                        "        COALESCE(mx.json_tag #>> '{bkToCstmrAcctRpt,rpt,0,id}', -- camt.052\n" +
-                        "        COALESCE(mx.json_tag #>> '{bkToCstmrStmt,stmt,0,id}', -- camt.053\n" +
-                        "        COALESCE(mx.json_tag #>> '{fiToFIPmtCxlReq,undrlyg,0,txInf,0,_case,id}', -- camt.056\n" +
-                        "        COALESCE(mx.json_tag #>> '{fiToFIPmtCxlReq,assgnmt,id}', -- camt.056\n" +
-                        "        COALESCE(mx.json_tag #>> '{fiToFIPmtStsRpt,grpHdr,msgId}',\n" +
-                        "        COALESCE(mx.json_tag #>> '{ntfctnToRcv,ntfctn,id}',\n" +
-                        "        COALESCE(mx.json_tag #>> '{ntfctnToRcv,grpHdr,msgId}',\n" +
-                        "                 mx.json_tag #>> '{cstmrPmtCxlReq,assgnmt,id}'\n" +
-                        "        )))))))))))) as ref,\n" +
-                        "\n" +
-                        "    -- Currency\n" +
-                        "    COALESCE(\n" +
-                        "        t32c.detail, \n" +
-                        "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,ccy}', -- pacs.008\n" +
-                        "        COALESCE(mx.json_tag #>> '{pmtRtr,txInf,0,rtrdIntrBkSttlmAmt,ccy}',  -- pacs.004\n" +
-                        "                 mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,ccy}'  -- pacs.009\n" +
-                        "        ))\n" +
-                        "    ) as curr,\n" +
-                        "\n" +
-                        "    -- Amount\n" +
-                        "    COALESCE(\n" +
-                        "        t32.detail, \n" +
-                        "        COALESCE(mx.json_tag #>> '{fiToFICstmrCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,value}', -- pacs.008\n" +
-                        "        COALESCE(mx.json_tag #>> '{pmtRtr,txInf,0,rtrdIntrBkSttlmAmt,value}', -- pacs.004\n" +
-                        "                 mx.json_tag #>> '{fiCdtTrf,cdtTrfTxInf,0,intrBkSttlmAmt,value}' -- pacs.009\n" +
-                        "        ))\n" +
-                        "    ) as amount,\n" +
-                        "\n" +
-                        "    hd.source\n" +
-                        "\n" +
-                        "FROM headers as hd \n" +
-                        "\n" +
-                        "LEFT JOIN tags t20 ON t20.id_headers = hd.id_headers AND t20.tag = '20'\n" +
-                        "\n" +
-                        "LEFT JOIN tags t32c ON t32c.id_headers = hd.id_headers \n" +
-                        "    AND (t32c.tagName LIKE '%mf32a_currency%' OR t32c.tagName LIKE '%mf62f_currency%' OR t32c.tagName LIKE '%mf62m_currency%' OR t32c.tagName LIKE '%mf32b_currency%') \n" +
-                        "\n" +
-                        "LEFT JOIN tags t32d ON t32d.id_headers = hd.id_headers \n" +
-                        "    AND (t32d.tagName LIKE '%mf32a_date%' OR t32d.tagName LIKE '%mf62f_date%' OR t32d.tagName LIKE '%mf62m_date%' OR t32d.tagName LIKE '%mf32a_value_date%') \n" +
-                        "\n" +
-                        "LEFT JOIN tags t32 ON t32.id_headers = hd.id_headers \n" +
-                        "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
-                        "\n" +
-                        "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers \n" +
-                        "WHERE "+ where.toString() +" ORDER BY tanggal DESC;";
+        String sql = "SELECT DISTINCT h.id_headers, h.source, h.messageType, h.io_type, h.logicalTerminal, h.receiverAddress, trx.trans_reference, h.tanggal, COALESCE(trx.trans_date_value, '') as trans_date_value, COALESCE(trx.trans_ccy, '') as trans_ccy, COALESCE(trx.trans_amount, 0) as trans_amount, h.flag FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers \n"
+                + "WHERE " + where.toString() + " ORDER BY tanggal DESC;";
 //            System.out.println(sql);
-            PreparedStatement st = this.conn.prepareStatement(sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
 
-            // set parameters ke prepared statement
-            for (int i = 0; i < params.size(); i++) {
-                Object param = params.get(i);
-                if (param instanceof String) {
-                    st.setString(i + 1, (String) param);
-                } else if (param instanceof java.sql.Date) {
-                    st.setDate(i + 1, (java.sql.Date) param);
-                } else if (param instanceof java.sql.Timestamp) {
-                    st.setTimestamp(i + 1, (java.sql.Timestamp) param);
-                } else {
-                    st.setObject(i + 1, param);
-                }
+        // set parameters ke prepared statement
+        for (int i = 0; i < params.size(); i++) {
+            Object param = params.get(i);
+            if (param instanceof String) {
+                st.setString(i + 1, (String) param);
+            } else if (param instanceof java.sql.Date) {
+                st.setDate(i + 1, (java.sql.Date) param);
+            } else if (param instanceof java.sql.Timestamp) {
+                st.setTimestamp(i + 1, (java.sql.Timestamp) param);
+            } else {
+                st.setObject(i + 1, param);
             }
+        }
 
-            ResultSet rs = st.executeQuery();
+        ResultSet rs = st.executeQuery();
 
-        
         while (rs.next()) {
             Header header = new Header();
-            header.setMessageType(rs.getString(2));
-            if (rs.getString(4).equalsIgnoreCase("O")) {
-                header.setLogicalTerminal(rs.getString(5));
-                header.setReceiverAddress(rs.getString(3));
+            header.setMessageType(rs.getString("messageType"));
+            if (rs.getString("io_type").equalsIgnoreCase("O")) {
+                header.setLogicalTerminal(rs.getString("receiverAddress"));
+                header.setReceiverAddress(rs.getString("logicalTerminal"));
             } else {
-                header.setLogicalTerminal(rs.getString(3));
-                header.setReceiverAddress(rs.getString(5));
+                header.setLogicalTerminal(rs.getString("logicalTerminal"));
+                header.setReceiverAddress(rs.getString("receiverAddress"));
             }
-            header.setIo_type(rs.getString(4));
-            header.setTanggal(rs.getString(6));
-            header.setFlag(rs.getString(7));
-            header.setId_headers(rs.getInt(1));
-            header.setTag20(rs.getString("ref"));
-            header.setTag32Date(rs.getString("vdate"));
-            header.setTag32Currency(rs.getString("curr"));
-            header.setTag32Amount(rs.getString("amount"));
+            header.setIo_type(rs.getString("io_type"));
+            header.setTanggal(rs.getString("tanggal"));
+            header.setFlag(rs.getString("flag"));
+            header.setId_headers(rs.getInt("id_headers"));
+            header.setTag20(rs.getString("trans_reference"));
+            header.setTag32Date(rs.getString("trans_date_value"));
+            header.setTag32Currency(rs.getString("trans_ccy"));
+            header.setTag32Amount(rs.getString("trans_amount"));
             header.setSource(rs.getString("source"));
-            
+
             headers.add(header);
         }
         return headers;

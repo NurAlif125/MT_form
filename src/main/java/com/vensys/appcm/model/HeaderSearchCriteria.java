@@ -22,6 +22,8 @@ public class HeaderSearchCriteria {
     private String createdDateSearch;    // tanggal
     private String flagSearch;           // flag
     private String sourceSearch;         // source
+    private String createby;             // createby
+    private String approveby;            // approve
 
     // Getters and Setters
     public String getMtSearch() {
@@ -127,5 +129,22 @@ public class HeaderSearchCriteria {
     public void setSourceSearch(String sourceSearch) {
         this.sourceSearch = sourceSearch;
     }
+
+    public String getCreateby() {
+        return createby;
+    }
+
+    public void setCreateby(String createby) {
+        this.createby = createby;
+    }
+
+    public String getApproveby() {
+        return approveby;
+    }
+
+    public void setApproveby(String approveby) {
+        this.approveby = approveby;
+    }
+    
 }
 

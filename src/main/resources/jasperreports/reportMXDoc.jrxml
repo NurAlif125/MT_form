@@ -5,10 +5,10 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
-	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
-	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
-	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Title" fontName="DejaVu Sans" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="DejaVu Sans" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="DejaVu Sans" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="DejaVu Sans" fontSize="12"/>
 	<style name="Row" mode="Transparent">
 		<conditionalStyle>
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
@@ -48,7 +48,7 @@
 			<staticText>
 				<reportElement style="Title" x="220" y="40" width="132" height="25" uuid="c1847e32-3e51-4069-b037-df7efc19f627"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="16" isBold="false"/>
+					<font fontName="DejaVu Sans" size="16" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Transaction Detail]]></text>
 			</staticText>
@@ -65,7 +65,7 @@
 	</pageHeader>
 	<columnHeader>
 		<band height="130" splitType="Stretch">
-                        <property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1]]></printWhenExpression>
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="55" width="555" height="1" uuid="89cc3cd8-15aa-4faf-8124-b7704e94267c">
@@ -96,14 +96,14 @@
 			<staticText>
 				<reportElement style="Title" x="1" y="1" width="443" height="14" uuid="73bcbf59-26d7-4300-afc3-7ca0c72bf6a7"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="DejaVu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[Instance Type and Transmission]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Title" x="1" y="40" width="443" height="14" uuid="de9bd73a-814e-4a0a-91e3-abe827368fec"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="DejaVu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[Message Header]]></text>
 			</staticText>
@@ -189,7 +189,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="DejaVu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[Message Text]]></text>
 			</staticText>
@@ -200,7 +200,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement markup="none">
-					<font fontName="Arial"/>
+					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{mxdetail}]]></textFieldExpression>
 			</textField>
@@ -220,7 +220,7 @@
 					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="11"/>
+					<font fontName="DejaVu Sans" size="11"/>
 				</textElement>
 				<text><![CDATA[End of Message Text]]></text>
 			</staticText>
