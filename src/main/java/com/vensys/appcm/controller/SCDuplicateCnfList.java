@@ -85,7 +85,8 @@ public class SCDuplicateCnfList extends HttpServlet {
             duplicate = bBHeaders.getAllHeaderDuplicateCNF(channel, start, length, quickSearch, sort);
             totalRecords = bBHeaders.getCountAllHeaderDuplicateCNF(channel, quickSearch);
 //            httpSession.setAttribute("duplicate", duplicate);
-            httpSession.setAttribute("flagFilter", "MOD");
+            httpSession.setAttribute("flagFilter", "DUPL-CNF");
+            httpSession.setAttribute("flag", "DUPL-CNF");
         
         
             JSONArray dataArray = new JSONArray();

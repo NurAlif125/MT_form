@@ -45,8 +45,8 @@ public class SCDuplicate extends HttpServlet {
             log.info("processRequest");
 //            duplicate = bBHeaders.getAllHeaderDuplicate(channel);
 //            httpSession.setAttribute("duplicate", duplicate);
-            httpSession.setAttribute("flagFilter", "MOD");
-//            httpSession.setAttribute("headers", duplicate);
+            httpSession.setAttribute("flagFilter", "DUPL");
+            httpSession.setAttribute("flag", "DUPL");
         } catch (Exception ex) {
             log.error(ex.getMessage());
             ex.printStackTrace();
