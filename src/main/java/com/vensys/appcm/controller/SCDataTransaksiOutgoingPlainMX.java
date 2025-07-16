@@ -223,7 +223,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             int idDupe = dBTrx.cekDuplikatID(datas);
             
             if (idDupe > 1) {
-                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008")) {
             log.info("ini " + abstractMX.getMxId().id());
@@ -286,7 +286,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 
             int idDupe = dBTrx.cekDuplikatID(datas);
             if (idDupe > 1) {
-                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
             log.info("ini " + abstractMX.getMxId().id());
@@ -349,7 +349,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 
             int idDupe = dBTrx.cekDuplikatID(datas);
             if (idDupe > 1) {
-                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.053")) {
             appHeader.setMsgDefIdr("camt.053.001.08");
@@ -418,7 +418,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 
             int idDupe = dBTrx.cekDuplikatID(datas);
             if (idDupe > 1) {
-                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers));
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
             }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.055")) {
             appHeader.setMsgDefIdr("camt.055.001.08");

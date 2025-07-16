@@ -310,7 +310,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     log.info("create new MT");
                     int idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
                     if (idDupe > 1) {
-                        dBDataTransaksiOutgoing2.updateDuplikat(id_headers);
+                        dBDataTransaksiOutgoing2.updateDuplikat(id_headers, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         // log.info("masuk if 270");
                     }
                     if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
