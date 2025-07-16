@@ -68,10 +68,12 @@ public class SCFIAPath extends HttpServlet {
             String privateKeyPath = request.getParameter("privateKeyPath") == null ? "" : request.getParameter("privateKeyPath");
             String keyFilePassword = request.getParameter("keyFilePassword") == null ? "" : request.getParameter("keyFilePassword");
             
-            data.setClientAuthenticationType(clientAuthenticationTypeSFTP);
-            data.setPrivateKeyType(privateKeyType);
-            data.setPrivateKeyPath(privateKeyPath);
-            data.setKeyFilePassword(keyFilePassword);
+            if (!clientAuthenticationTypeSFTP.isEmpty()) {                
+                data.setClientAuthenticationType(clientAuthenticationTypeSFTP);
+                data.setPrivateKeyType(privateKeyType);
+                data.setPrivateKeyPath(privateKeyPath);
+                data.setKeyFilePassword(keyFilePassword);
+            }
             
             // FTPS Values
 //            clientAuthenticationTypeFTPS
@@ -85,12 +87,13 @@ public class SCFIAPath extends HttpServlet {
             String keyStorePassword = request.getParameter("keyStorePassword") == null ? "" : request.getParameter("keyStorePassword");
             String keyStoreAlias = request.getParameter("keyStoreAlias") == null ? "" : request.getParameter("keyStoreAlias");
             
-            data.setClientAuthenticationType(clientAuthenticationTypeFTPS);
-            data.setPrivateKeyPassword(privateKeyPassword);
-            data.setKeyStoreFile(keyStoreFile);
-            data.setKeyStorePassword(keyStorePassword);
-            data.setKeyStoreAlias(keyStoreAlias);
-            
+            if (!clientAuthenticationTypeFTPS.isEmpty()) {                
+                data.setClientAuthenticationType(clientAuthenticationTypeFTPS);
+                data.setPrivateKeyPassword(privateKeyPassword);
+                data.setKeyStoreFile(keyStoreFile);
+                data.setKeyStorePassword(keyStorePassword);
+                data.setKeyStoreAlias(keyStoreAlias);
+            }    
             
             // Global
             // path
