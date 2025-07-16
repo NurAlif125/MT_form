@@ -472,17 +472,33 @@ public class DBDataTransaksiOutgoing {
                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
                 
 //                System.out.println(finalMX.get("final_mx"));
-                ct.createTextFileMX(getChannel, fullMessage,variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
+                String source = getSource(id_headers);
+                ct.createTextFileMX(source, fullMessage,variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
                 
             } else {
                 log.info("STL MT for id_headers "+id_headers);
-                
+                String channel = getSource(id_headers);
     //            CreateTextNew ctn = new CreateTextNew(conn);
-                ct.getFinalMT(getChannel, id_headers, io_type, flag, user_id, ip_access, comp_name);
+                ct.getFinalMT(channel, id_headers, io_type, flag, user_id, ip_access, comp_name);
             }
         }
     }
     
+    public String getSource(int idHeaders) {
+        String channel = "";
+        String sql = "SELECT source FROM headers WHERE id_headers = ?";
+        try {
+            PreparedStatement st = this.conn.prepareStatement(sql);
+            st.setInt(1, idHeaders);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                channel = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            log.error(e.getMessage());
+        }
+         return channel;
+    }
     
     public Map<String,String> getJSONMXandHeaderSaa(int idHeaders){
         log.info("Get Body MX and Header SAA");
@@ -1786,11 +1802,12 @@ public class DBDataTransaksiOutgoing {
 
     }
 
-    public void updateDuplikat(int id_headers) throws Exception {
+    public void updateDuplikat(int id_headers, String userId, String ipAccess, String compName) throws Exception {
         String sql = "update headers set isduplicate = '1', flag = 'DUPL' where id_headers = ?";
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setInt(1, id_headers);
         st.executeUpdate();
+        updateDataHeaderStatus("DUPL", id_headers, userId, ipAccess, compName);
     }
     
     public void updateDuplikatCNF (int id_headers) throws Exception {
