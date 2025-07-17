@@ -84,11 +84,33 @@ public class SCNotification extends HttpServlet {
             out.print("[]"); // Jika user belum login, kembalikan list kosong
             return;
         }
+        
+        // Ambil offset dan limit dari request
+        int offset = 0;
+        int limit = 15;
+        try {
+            String pageParam = request.getParameter("page");
+            if (pageParam != null) {
+                int page = Integer.parseInt(pageParam);
+                offset = page * limit;
+            } else {
+                offset = Integer.parseInt(request.getParameter("offset"));
+                limit = Integer.parseInt(request.getParameter("limit"));
+            }
+        } catch (NumberFormatException e) {
+            out.print("[]");
+            e.printStackTrace();
+            log.error("SCNotificationList Error: " + e.getMessage());
+        }
+
+        
+        System.out.println("getNotificationList -> offset=" + offset + ", limit=" + limit);
+
 
         DBconnection dbConn = new DBconnection();
         try {
             DBnotification notif = new DBnotification(dbConn.getConnection());
-            List<Map<String, String>> notificationList = notif.getNotificationList(userId, roleId);
+            List<Map<String, String>> notificationList = notif.getNotificationList(userId, roleId, offset, limit);
             Gson gson = new Gson();
             out.print(gson.toJson(notificationList));
 //            System.out.println(gson.toJson(notificationList));

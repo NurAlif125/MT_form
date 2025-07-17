@@ -207,7 +207,7 @@
             }
         });
         $('#authorized').click(function () {
-            var answer = confirm('Do you want to authorized this MT..!!');
+            var answer = confirm('Do you want to authorized this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=AUTH&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
@@ -219,14 +219,14 @@
             }
         });
         $('#generated').click(function () {
-            var answer = confirm('Do you want to generate text this MT..!!');
+            var answer = confirm('Do you want to generate text this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=TEXT&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
                 //printMTDoc('SCPrintMTDoc?id='+$('#id').val());
             }
         });
         $('#printed').click(function () {
-            var answer = confirm('Do you want to print this MT..!!');
+            var answer = confirm('Do you want to print this Message..!!');
             if (answer) {
                 printMTDoc('SCPrintMTDoc?id=' + $('#id').val());
             }
@@ -251,7 +251,7 @@
             }
         });
         $('#printNote').click(function () { // ditambahkan untuk print nota 20180413
-            var answer = confirm('Do you want to print this MT..!!');
+            var answer = confirm('Do you want to print this Message..!!');
             if (answer) {
                 printMTDoc('SCPrintNota?id=' + $('#id').val());
             }
@@ -263,7 +263,7 @@
             }
         });
         $('#returned').click(function () {
-            var answer = confirm('Do you want to return this MT..!!');
+            var answer = confirm('Do you want to return this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=RETURNED&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
                 //printMTDoc('SCPrintMTDoc?id='+$('#id').val());
@@ -473,20 +473,20 @@
         });
         // penambahan button force INC-OK 16 Sept 2015
         $('#INC-OK').click(function () {
-            var answer = confirm('Do you want to Generate to Incoming OK this MT..!!');
+            var answer = confirm('Do you want to Generate to Incoming OK this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-OK&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
                 //printMTDoc('SCPrintMTDoc?id='+$('#id').val());
             }
         });
         $('#modified_ver').click(function () {
-            var answer = confirm('Do you want to Send this MT..!!');
+            var answer = confirm('Do you want to Send this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=CVT-MOD&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
         });
         $('#reject_ver').click(function () {
-            var answer = confirm('Do you want to reject this MT..!!');
+            var answer = confirm('Do you want to reject this Message..!!');
             if (answer) {
 //                document.location.href = 'SCRejectAction?id=' + $('#id').val() + '&operator_comment=' + $('#operator_comment').val();
                 document.location.href = 'SCRejectAction?id=' + $('#id').val();
@@ -501,7 +501,7 @@
         });
         // penambahan button resend ACK 17 April 2018
         $('#RACK').click(function () {
-            var answer = confirm('Do you want to resend ACK for this MT ?');
+            var answer = confirm('Do you want to resend ACK for this Message ?');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=RACK&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
@@ -509,7 +509,7 @@
 
         // penambahan button resend INC-OK 17 April 2018
         $('#INC-ROK').click(function () {
-            var answer = confirm('Do you want to resend Incoming for this MT ?');
+            var answer = confirm('Do you want to resend Incoming for this Message ?');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-ROK&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
@@ -610,7 +610,7 @@
 
         // 17 April 2018 penambahan untuk memindahkan joutnal history
         $('#DELHIS').click(function () {
-            var answer = confirm('Do you want to delete journal history for this MT ?');
+            var answer = confirm('Do you want to delete journal history for this Message ?');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=DELHIS&id=' + $('#id').val() + '&messageType=' + $('#messageType').val() + '&fM=' + $('#_121_of53a_identifier_code').val() + '&ref=' + $('#_010_mf20_sender_reference').val() + '&nominal=' + $('#_062_mf32a_amount').val() + '&rek=' + $('#_180_mf59_account').val();
             }
@@ -636,7 +636,7 @@
             }
         });
         $('#sendTEXT').click(function () {
-            var answer = confirm('Do you want to Send this MT..!!');
+            var answer = confirm('Do you want to Send this MX..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiIncoming?flag=SENDTEXT&id=' + $('#id').val() + '&messageType=' + $('#messageType').val() + '&acct=' + $('#_180_mf59_account').val() + '&accnbr=' + $('#_180_mf59_account').val();
             }
@@ -654,13 +654,13 @@
             }
         });
         $('#incoming_settle').click(function () {//20190917 ditambah incoming settle
-            var answer = confirm('Do you want to settle this MT..!!');
+            var answer = confirm('Do you want to settle this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiIncoming?flag=SETTLE&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
         });
         $('#incoming_ok').click(function () {//20190917 ditambah incoming settle
-            var answer = confirm('Do you want to receive this MT..!!');
+            var answer = confirm('Do you want to receive this Message..!!');
             if (answer) {
                 document.location.href = 'ServletControllerDataTransaksiIncoming?flag=INC-OK&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
