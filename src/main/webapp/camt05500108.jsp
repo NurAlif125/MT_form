@@ -4,8 +4,11 @@
     Author     : rafli
 --%>
 
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <style type="text/css">
-
+    
     [hidden] {
         display: none;
     }
@@ -105,34 +108,49 @@
     input[disabled="disabled"] {
         background-color: #ECCFD1;
     }
+    input[data-xsd2html2xml-description="BICFI"] {
+        text-transform: uppercase;
+    }
+    input[data-xsd2html2xml-description="Currency"] {
+        text-transform: uppercase;
+    }
+    input[data-xsd2html2xml-description="AnyBIC"] {
+        text-transform: uppercase;
+    }
 </style>
 <script src="js/flatpickr.js"></script>
 <link rel="stylesheet" href="css/flatpickr.css">
 <meta id="generator-farras" name="generator" content="XSD2HTML2XML v3: https://github.com/MichielCM/xsd2html2xml" data-xsd2html2xml-source='<c:out value='${dataIsoXML}' />'/>
 <script src="js/xml2html_rule.js" type="text/javascript"></script>
+<%
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    String formattedDate = sdf.format(new java.util.Date());
+    pageContext.setAttribute("tgl_today", formattedDate);
+%>
+<c:set var="tgl_today" value="${tgl_today}" />
 
 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Document" data-xsd2html2xml-xpath="/Document">
         <legend>Document</legend>
         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CstmrPmtCxlReq" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq">
-                <legend>CstmrPmtCxlReq</legend>
+                <legend>CstmrPmtCxlReq <a style="color:red;text-decoration:none">*</a></legend>
                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Assgnmt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt">
-                        <legend>Assignment</legend>
+                        <legend>Assignment <a style="color:red;text-decoration:none">*</a></legend>
                         <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Id" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Id"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
             }
-            ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Identification"><span>Identification</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Assgnr" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr">
-                                <legend>Assigner</legend>
+            ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Identification"><span>Identification <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Assgnr" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr">
+                                <legend>Assigner <a style="color:red;text-decoration:none">*</a></legend>
                                 <label><input type="radio" name="id1" required="required" onclick="clickRadioInput(this, 'id1');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Agt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr/Agt">
-                                        <legend>Agent</legend>
+                                        <legend>Agent <a style="color:red;text-decoration:none">*</a></legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr/Agt/FinInstnId">
-                                                <legend>FinancialInstitutionIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr/Agt/FinInstnId/BICFI"><input type="text" maxlength="11" maxlength="11" onchange='if (this.value) {
+                                                <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend>
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr/Agt/FinInstnId/BICFI"><input type="text" onblur="formatBICFI(this);" maxlength="12" maxlength="12" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value");
             }
-            ;' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr/Agt/FinInstnId/ClrSysMmbId">
+            ;' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr/Agt/FinInstnId/ClrSysMmbId">
                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                         </legend>
                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgnr/Agt/FinInstnId/ClrSysMmbId/ClrSysId">
@@ -150,12 +168,12 @@
                                             </fieldset></section>
                                     </fieldset></section>
                             </fieldset></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Assgne" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgne">
-                                <legend>Assignee</legend>
+                                <legend>Assignee <a style="color:red;text-decoration:none">*</a></legend>
                                 <label><input type="radio" name="id3" required="required" onclick="clickRadioInput(this, 'id3');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Agt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgne/Agt">
-                                        <legend>Agent</legend>
+                                        <legend>Agent <a style="color:red;text-decoration:none">*</a></legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgne/Agt/FinInstnId">
-                                                <legend>FinancialInstitutionIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgne/Agt/FinInstnId/BICFI"><input type="text" maxlength="11" maxlength="11" onchange='if (this.value) {
+                                                <legend>FinancialInstitutionIdentification <a style="color:red;text-decoration:none">*</a></legend>
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgne/Agt/FinInstnId/BICFI"><input type="text" onblur="formatBICFI(this);" maxlength="12" maxlength="12" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/Assgne/Agt/FinInstnId/ClrSysMmbId">
                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -174,35 +192,37 @@
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{18,18}[0-9]{2,2}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="LEI"><span>LEI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">LEI</button></section>
                                             </fieldset></section>
                                     </fieldset></section>
-                            </fieldset></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
+                            </fieldset></section><c:choose><c:when test = "${headerById.id_headers == null}"><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/CreDtTm"><input type="text" value="${tgl_today}" class="datetime-local" onchange='if (this.value) {
                 this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
-                this.removeAttribute("value"); };' required="required" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime</span></label></section>
+                this.removeAttribute("value"); };' required="required" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime <a style="color:red;text-decoration:none">*</a></span></label></section></c:when><c:otherwise><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Assgnmt/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
+                this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
+                this.removeAttribute("value"); };' required="required" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime <a style="color:red;text-decoration:none">*</a></span></label></section></c:otherwise></c:choose>
                     </fieldset></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Undrlyg" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg">
-                        <legend>Underlying</legend>
+                        <legend>Underlying <a style="color:red;text-decoration:none">*</a></legend>
                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlPmtInfAndCxl" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl">
-                                <legend>OriginalPaymentInformationAndCancellation</legend>
+                                <legend>OriginalPaymentInformationAndCancellation <a style="color:red;text-decoration:none">*</a></legend>
                                 <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlPmtInfId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlPmtInfId"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value");
-            };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalPaymentInformationIdentification"><span>OriginalPaymentInformationIdentification</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlGrpInf" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlGrpInf">
-                                        <legend>OriginalGroupInformation</legend>
+            };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalPaymentInformationIdentification"><span>OriginalPaymentInformationIdentification <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlGrpInf" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlGrpInf">
+                                        <legend>OriginalGroupInformation <a style="color:red;text-decoration:none">*</a></legend>
                                         <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlMsgId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlGrpInf/OrgnlMsgId"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
-                this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalMessageIdentification"><span>OriginalMessageIdentification</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlMsgNmId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlGrpInf/OrgnlMsgNmId"><input type="text" onchange='if (this.value) {
+                this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalMessageIdentification"><span>OriginalMessageIdentification <a style="color:red;text-decoration:none">*</a></span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlMsgNmId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlGrpInf/OrgnlMsgNmId"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
-                            this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalMessageNameIdentification"><span>OriginalMessageNameIdentification</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlCreDtTm" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlGrpInf/OrgnlCreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
+                            this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalMessageNameIdentification"><span>OriginalMessageNameIdentification <a style="color:red;text-decoration:none">*</a></span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlCreDtTm" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/OrgnlGrpInf/OrgnlCreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
                                         this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00"))); } else {
                                         this.removeAttribute("value"); };' required="required" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="OriginalCreationDateTime"><span>OriginalCreationDateTime<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">OriginalCreationDateTime</button></section>
                                     </fieldset></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="TxInf" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf">
-                                        <legend>TransactionInformation</legend>
+                                        <legend>TransactionInformation <a style="color:red;text-decoration:none">*</a></legend>
                                         <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CxlId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlId"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="CancellationIdentification"><span>CancellationIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CancellationIdentification</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Case" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case">
-                                                <legend>Case</legend>
+                                                <legend>Case <a style="color:red;text-decoration:none">*</a></legend>
                                                 <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Id" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
-                this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="16" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Identification"><span>Identification</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Cretr" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr">
-                                                        <legend>Creator</legend>
+                this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="16" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Identification"><span>Identification <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Cretr" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr">
+                                                        <legend>Creator <a style="color:red;text-decoration:none">*</a></legend>
                                                         <label><input type="radio" name="id5" required="required" onclick="clickRadioInput(this, 'id5');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Pty" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Pty">
                                                                 <legend>Party</legend>
                                                                 <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Pty/Nm"><input type="text" onchange='if (this.value) {
@@ -260,7 +280,7 @@
                                                                         </legend>
                                                                         <label><input type="radio" name="id6" required="required" onclick="clickRadioInput(this, 'id6');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Pty/Id/OrgId">
                                                                                 <legend>OrganisationIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Pty/Id/OrgId/AnyBIC"><input type="text" onblur="formatBICFI(this);" maxlength="12" minlength="12" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -336,7 +356,7 @@
                                                                 <legend>Agent</legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/BICFI"><input type="text" maxlength="11" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/BICFI"><input type="text" onblur="formatBICFI(this);" minlength="12" maxlength="12" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -408,18 +428,18 @@
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalInstructionIdentification"><span>OriginalInstructionIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">OriginalInstructionIdentification</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlEndToEndId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlEndToEndId"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
-                            this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalEndToEndIdentification"><span>OriginalEndToEndIdentification</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlUETR" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlUETR"><input type="text" id="UETR" onchange='if (this.value) {
+                            this.removeAttribute("value"); };' required="required" maxlength="35" pattern=".{1,35}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalEndToEndIdentification"><span>OriginalEndToEndIdentification <a style="color:red;text-decoration:none">*</a></span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlUETR" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlUETR"><input type="text" id="UETR" onchange='if (this.value) {
                                         this.setAttribute("value", this.value); } else {
-                                        this.removeAttribute("value"); };' required="required" pattern="[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalUETR"><button type="button" onclick="generateuetr()">Generate</button><span>OriginalUETR</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlInstdAmt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlInstdAmt">
-                                                <legend>OriginalInstructedAmount</legend>
+                                        this.removeAttribute("value"); };' required="required" pattern="[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="OriginalUETR"><button type="button" onclick="generateuetr()">Generate</button><span>OriginalUETR <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlInstdAmt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlInstdAmt">
+                                                <legend>OriginalInstructedAmount <a style="color:red;text-decoration:none">*</a></legend>
                                                 <label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="content" data-xsd2html2xml-name="OrgnlInstdAmt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlInstdAmt"><input type="number" onchange='if (this.value) {
                 this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
-                this.removeAttribute("value"); };' required="required" min="0" step="0.1" pattern="[-]?{0,}" data-xsd2html2xml-primitive="decimal" data-xsd2html2xml-description="OriginalInstructedAmount"><span>OriginalInstructedAmount</span></label><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="attribute" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlInstdAmt/@Ccy"><input type="text" onkeypress="return textonly(event)" onchange='if (this.value) {
+                this.removeAttribute("value"); };' required="required" min="0" step="0.1" pattern="[-]?{0,}" data-xsd2html2xml-primitive="decimal" data-xsd2html2xml-description="OriginalInstructedAmount"><span>OriginalInstructedAmount <a style="color:red;text-decoration:none">*</a></span></label><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="attribute" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlInstdAmt/@Ccy"><input type="text" onkeypress="return textonly(event)" onchange='if (this.value) {
                             this.setAttribute("value", this.value);
                         } else {
                             this.removeAttribute("value");
                         }
-                        ;' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency</span></label>
+                        ;' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency <a style="color:red;text-decoration:none">*</a></span></label>
                                             </fieldset></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlReqdExctnDt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdExctnDt">
                                                 <legend>OriginalRequestedExecutionDate<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                 </legend>
@@ -438,7 +458,7 @@
                 this.removeAttribute("value");
             }
             ;' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="OriginalRequestedCollectionDate"><span>OriginalRequestedCollectionDate<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">OriginalRequestedCollectionDate</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CxlRsnInf" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf">
-                                                <legend>CancellationReasonInformation</legend>
+                                                <legend>CancellationReasonInformation <a style="color:red;text-decoration:none">*</a></legend>
                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Orgtr" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr">
                                                         <legend>Originator<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                         </legend>
@@ -495,7 +515,7 @@
                                                                 </legend>
                                                                 <label><input type="radio" name="id11" required="required" onclick="clickRadioInput(this, 'id11');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/Id/OrgId">
                                                                         <legend>OrganisationIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/Id/OrgId/AnyBIC"><input type="text" onblur="formatBICFI(this);" maxlength="12" minlength="12" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -559,7 +579,7 @@
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{2,2}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="CountryOfResidence"><span>CountryOfResidence<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">CountryOfResidence</button></section>
                                                     </fieldset>
                                                     <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Originator</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Rsn" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Rsn">
-                                                        <legend>Reason</legend>
+                                                        <legend>Reason <a style="color:red;text-decoration:none">*</a></legend>
                                                         <label><input type="radio" name="id14" required="required" onclick="clickRadioInput(this, 'id14');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Cd" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Rsn/Cd"><select onchange='this.childNodes.forEach(function (o) {
                 if (o.nodeType == Node.ELEMENT_NODE)
                     o.removeAttribute("selected"); }); this.children[this.selectedIndex].setAttribute("selected", "selected");' required="required" data-xsd2html2xml-description="Code"><option value="DUPL">DuplicatePayment</option>
@@ -571,7 +591,7 @@
                                                                     <option value="TECH">TechnicalProblem</option>
                                                                     <option value="FRAD">FraudulentOrigin</option>
                                                                     <option value="AM09">IncorrectAmount</option>
-                                                                    <option value="NARR">Narrative</option></select><span>Code</span></label></section>
+                                                                    <option value="NARR">Narrative</option></select><span>Code <a style="color:red;text-decoration:none">*</a></span></label></section>
                                                     </fieldset></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AddtlInf" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/AddtlInf"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="105" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AdditionalInformation"><span>AdditionalInformation<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="2" onclick="clickAddButton(this);">AdditionalInformation</button></section>
@@ -646,4 +666,26 @@
             }
         }
     });
+
+    function formatBICFI(input) {
+        input.value = input.value.toUpperCase();
+        let value = input.value.trim();
+        if (value.length === 12) {
+            const part1 = value.substring(0, 8);
+            const part2 = value.substring(9, 12);
+            const newValue = part1 + part2;
+            newValue.toUpperCase();
+            input.value = newValue;
+            console.log("BICFI setelah diproses:", newValue);
+        } else if (value.length > 0) {
+            alert('BICFI must be 12 characters (contoh: BDINIDJAXXXX)');
+        }
+    }
+
+    function validateAmount(input) {
+        let value = input.value.trim().replace(',', '.');
+        if (value && parseFloat(value) === 0) {
+            alert('Amount must not be Zero (0)');
+        }
+    }
 </script>
