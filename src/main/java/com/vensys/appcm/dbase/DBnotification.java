@@ -47,16 +47,19 @@ public class DBnotification {
         return data;
     }
     
-    public List<Map<String, String>> getNotificationList(String userId, String roleId) throws SQLException {
+    public List<Map<String, String>> getNotificationList(String userId, String roleId, int offset, int limit) throws SQLException {
         List<Map<String, String>> notifications = new ArrayList<>();
         String sql = "SELECT id_notif, title_msg, msg_body, TO_CHAR(created_at, 'YYYY-MM-DD HH24:MI:SS') as created_at FROM notifications \n" +
                      "WHERE ? = ANY(string_to_array(COALESCE(msg_to_role, ''), ','))\n" +
                      "AND NOT (? = ANY(string_to_array(COALESCE(is_read_userid, ''), ',')))\n" +
-                     " AND TO_CHAR(created_at, 'YYYY-MM-DD') = TO_CHAR(now(), 'YYYY-MM-DD') ORDER BY created_at DESC;";
+                     " AND TO_CHAR(created_at, 'YYYY-MM-DD') = TO_CHAR(now(), 'YYYY-MM-DD') ORDER BY created_at DESC \n"+
+                     "LIMIT ? OFFSET ?";
 
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             st.setString(1, roleId);
             st.setString(2, userId);
+            st.setInt(3, limit);
+            st.setInt(4, offset);
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     Map<String, String> notif = new HashMap<>();

@@ -50,28 +50,49 @@ function fetchNotifications() {
 
 fetchNotifications();
 setInterval(fetchNotifications, 5000);
-        
+
+
+let currentOffset = 0;
+let pageSize = 15;
+let isLoading = false;
+let hasMore = true;
+
 function fetchNotificationList() {
-    $.getJSON("SCNotificationList", function (data) {
+    if (isLoading || !hasMore) return;
+    isLoading = true;
+    $("#loadingNotif").show();
+//    $("#notifList").empty(); 
+
+    $.getJSON("SCNotificationList?offset=" + currentOffset + "&limit=" + pageSize, function (data) {
         let notifList = $("#notifList");
-        notifList.empty(); // Bersihkan list sebelum diisi ulang
+        // Hapus baris ini kalau kamu ingin **append** saat infinite scroll
+        // notifList.empty(); // Jangan kosongkan list, cukup tambahkan ke bawah
 
         if (data.length === 0) {
-            notifList.append('<tr><td colspan="3" style="padding:2px; text-align:center;">No Notifications</td></tr>');
+            hasMore = false;
+            if (currentOffset === 0) {
+                notifList.append('<tr><td colspan="4" style="padding:2px; text-align:center;">No Notifications</td></tr>');
+            }
         } else {
             data.forEach((notif) => {
-                 let title = notif.title ? notif.title.trim() : "";
+                let title = notif.title ? notif.title.trim() : "";
                 let message = notif.message ? notif.message.trim() : "";
                 let dates_at = notif.created_at ? notif.created_at.trim() : "";
 
-
-               let row = $("<tr>").addClass("tbl-tr-notif").attr("onclick", "showDetail('"+message+"')");;
+                let row = $("<tr>")
+                    .addClass("tbl-tr-notif")
+                    .attr("data-message", message)
+                    .on("click", function () {
+                        const msg = $(this).data("message");
+                        showDetail(msg);
+                });
+                
                 let checkboxCell = $("<td>").addClass("tbl-td-notif").append(
                     $("<input>").attr({
                         type: "checkbox",
                         class: "notifCheckbox",
                         value: notif.id
-                    }).css("cursor", "pointer").attr("onclick","event.stopPropagation()")
+                    }).css("cursor", "pointer").attr("onclick", "event.stopPropagation()")
                 );
                 let titleCell = $("<td>").addClass("tbl-td-notif").text(title);
                 let messageCell = $("<td>").addClass("tbl-td-notif").html(message);
@@ -80,9 +101,68 @@ function fetchNotificationList() {
                 row.append(checkboxCell, titleCell, messageCell, dates);
                 notifList.append(row);
             });
+            currentOffset += pageSize;
         }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        console.error("AJAX error:", textStatus, errorThrown);
+    }).always(function () {
+        isLoading = false;
+        $("#loadingNotif").hide();
     });
 }
+
+//check scroll
+$(document).ready(function () {
+    fetchNotificationList(); // initial load
+
+    $("#notifLists").on("scroll", function () {
+        const container = $(this)[0];
+        if (container.scrollTop + container.clientHeight >= container.scrollHeight - 20) {
+            fetchNotificationList();
+        }
+//        let container = $(this);
+//        if (container.scrollTop() + container.innerHeight() >= container[0].scrollHeight - 100) {
+//            fetchNotificationList();
+//        }
+    });
+});
+
+
+//function fetchNotificationList() {
+//    $.getJSON("SCNotificationList", function (data) {
+//        let notifList = $("#notifList");
+//        notifList.empty(); // Bersihkan list sebelum diisi ulang
+//
+//        if (data.length === 0) {
+//            notifList.append('<tr><td colspan="3" style="padding:2px; text-align:center;">No Notifications</td></tr>');
+//        } else {
+//            data.forEach((notif) => {
+//                 let title = notif.title ? notif.title.trim() : "";
+//                let message = notif.message ? notif.message.trim() : "";
+//                let dates_at = notif.created_at ? notif.created_at.trim() : "";
+//
+//
+//               let row = $("<tr>").addClass("tbl-tr-notif").attr("onclick", "showDetail('"+message+"')");;
+//                let checkboxCell = $("<td>").addClass("tbl-td-notif").append(
+//                    $("<input>").attr({
+//                        type: "checkbox",
+//                        class: "notifCheckbox",
+//                        value: notif.id
+//                    }).css("cursor", "pointer").attr("onclick","event.stopPropagation()")
+//                );
+//                let titleCell = $("<td>").addClass("tbl-td-notif").text(title);
+//                let messageCell = $("<td>").addClass("tbl-td-notif").html(message);
+//                let dates = $("<td>").addClass("tbl-td-notif").text(dates_at);
+//
+//                row.append(checkboxCell, titleCell, messageCell, dates);
+//                notifList.append(row);
+//            });
+//        }
+//    });
+//}
+
+
+
 
 function markAsRead() {
 //    let selectedIds = $(".notifCheckbox:checked").map(function() {
@@ -134,6 +214,10 @@ function markAsRead() {
 //                    console.log(response.status)
                     $('#checkAll').prop('checked', false);
                     if (response.status == "success") {
+                        currentOffset = 0;
+                        hasMore = true;
+                        $("#notifList").empty(); // kosongkan daftar lama
+                        
                         fetchNotificationList()
                         fetchNotifications()
 //                        console.log("berhasil read notification")

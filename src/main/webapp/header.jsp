@@ -538,6 +538,7 @@
                         <tbody id="notifList" class="tbl-body-notif">
                         </tbody>
                     </table>
+                    <div id="loadingNotif" style="text-align: center; display: none; color:blue !important; padding: 5px;">Loading...</div>
 
                     <!-- Detail Pesan -->
                     <div id="notifDetail" style="display: none;">
