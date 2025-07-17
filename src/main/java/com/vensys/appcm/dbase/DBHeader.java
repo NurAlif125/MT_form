@@ -942,7 +942,16 @@ public class DBHeader {
             where += " AND flag ILIKE '%" + criteria.getFlagSearch() + "%'";
         }
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
-            where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
+            String source = criteria.getSourceSearch().trim();
+            if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
+                where += " AND source IN ('FRONTARENA', 'TSA')";
+            } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
+                where += " AND source = 'BANKTRADE'";
+            } else if (source.startsWith("c") || source.startsWith("C")) {
+                where += " AND source = 'CUSTODY'";
+            } else if (source.startsWith("r") || source.startsWith("R")) {
+                where += " AND source = 'NCBS'";
+            }
         }
         if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
             where += " AND createby ILIKE '%" + criteria.getCreateby() + "%'";
@@ -982,7 +991,15 @@ public class DBHeader {
 //            }
             header.setFlag(rs.getString(10));
             header.setBlock3(rs.getString(12));
-            header.setSource(rs.getString(13));
+            if (rs.getString(13).equalsIgnoreCase("FRONTARENA") || rs.getString(13).equalsIgnoreCase("TSA")) {
+                header.setSource("Treasury OPS");
+            } else if (rs.getString(13).equalsIgnoreCase("BANKTRADE")) {
+                header.setSource("Trade OPS");
+            } else if (rs.getString(13).equalsIgnoreCase("CUSTODY")) {
+                header.setSource("Custody OPS");
+            } else if (rs.getString(13).equalsIgnoreCase("NCBS")) {
+                header.setSource("Remittance OPS");
+            }
             header.setTrans_refference(rs.getString(14));
 //            System.out.println("Refernce " + rs.getString(14));
             header.setTrans_related_refference(rs.getString(15));
@@ -1204,7 +1221,16 @@ public class DBHeader {
             where += " AND flag ILIKE '%" + criteria.getFlagSearch() + "%'";
         }
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
-            where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
+            String source = criteria.getSourceSearch().trim();
+            if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
+                where += " AND source IN ('FRONTARENA', 'TSA')";
+            } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
+                where += " AND source = 'BANKTRADE'";
+            } else if (source.startsWith("c") || source.startsWith("C")) {
+                where += " AND source = 'CUSTODY'";
+            } else if (source.startsWith("r") || source.startsWith("R")) {
+                where += " AND source = 'NCBS'";
+            }
         }
         if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
             where += " AND createby ILIKE '%" + criteria.getCreateby() + "%'";
@@ -1958,8 +1984,16 @@ public class DBHeader {
                 parameters.add("%" + criteria.getFlagSearch() + "%");
             }
             if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
-                where.append(" AND h.source ILIKE ?");
-                parameters.add("%" + criteria.getSourceSearch() + "%");
+                String source = criteria.getSourceSearch().trim();
+                if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
+                    where.append(" AND source IN ('FRONTARENA', 'TSA')");
+                } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
+                    where.append(" AND source = 'BANKTRADE'");
+                } else if (source.startsWith("c") || source.startsWith("C")) {
+                    where.append(" AND source = 'CUSTODY'");
+                } else if (source.startsWith("r") || source.startsWith("R")) {
+                    where.append(" AND source = 'NCBS'");
+                }
             }
             if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
                 where.append(" AND h.createby ILIKE ?");
@@ -2008,7 +2042,15 @@ public class DBHeader {
                     data.setTanggal(rs.getString("tanggal"));
                     data.setFlag(rs.getString("flag"));
                     data.setBlock3(rs.getString("block3"));
-                    data.setSource(rs.getString("source"));
+                    if (rs.getString("source").equalsIgnoreCase("FRONTARENA") || rs.getString("source").equalsIgnoreCase("TSA")) {
+                        data.setSource("Treasury OPS");
+                    } else if (rs.getString("source").equalsIgnoreCase("BANKTRADE")) {
+                        data.setSource("Trade OPS");
+                    } else if (rs.getString("source").equalsIgnoreCase("CUSTODY")) {
+                        data.setSource("Custody OPS");
+                    } else if (rs.getString("source").equalsIgnoreCase("NCBS")) {
+                        data.setSource("Remittance OPS");
+                    }
                     data.setTrans_refference(rs.getString("trans_reference"));
                     data.setTrans_related_refference(rs.getString("trans_related_reference"));
                     data.setTrans_date_value(rs.getString("trans_date_value"));
@@ -2297,8 +2339,16 @@ public class DBHeader {
             parameters.add("%" + criteria.getFlagSearch() + "%");
         }
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
-            where.append(" AND source ILIKE ?");
-            parameters.add("%" + criteria.getSourceSearch() + "%");
+            String source = criteria.getSourceSearch().trim();
+            if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
+                where.append(" AND source IN ('FRONTARENA', 'TSA')");
+            } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
+                where.append(" AND source = 'BANKTRADE'");
+            } else if (source.startsWith("c") || source.startsWith("C")) {
+                where.append(" AND source = 'CUSTODY'");
+            } else if (source.startsWith("r") || source.startsWith("R")) {
+                where.append(" AND source = 'NCBS'");
+            }
         }
         if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
             where.append(" AND createby ILIKE ?");
