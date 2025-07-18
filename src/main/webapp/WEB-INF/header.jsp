@@ -214,9 +214,6 @@
                                     <%--c:if test="${item == 'MT:101'}">
                                     <li><a href="mt101.jsp">101 - Request for Transfer</a></li>
                                     </c:if--%>
-                                    <c:if test="${item == 'MT:191'}">
-                                        <li><a href="mt191.jsp">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
-                                        </c:if>
                                         <c:if test="${item == 'MT:103'}">
                                         <li><a href="mt103.jsp">103 - Single Customer Credit Transfer</a></li>
                                         </c:if>
@@ -225,6 +222,12 @@
                                         </c:if>
                                         <c:if test="${item == 'MT:111'}">
                                         <li><a href="mt111.jsp">111 - Request for Stop Payment of a Cheque</a></li>
+                                        </c:if>
+                                        <c:if test="${item == 'MT:191'}">
+                                        <li><a href="mt191.jsp">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
+                                        </c:if>
+                                        <c:if test="${item == 'MT:192'}">
+                                        <li><a href="mt192.jsp">192 - Request for Cancellation</a></li>
                                         </c:if>
                                         <c:if test="${item == 'MT:199'}">
                                         <li><a href="mt199.jsp">199 - Free Format Message</a></li>
@@ -243,6 +246,9 @@
                                         </c:if>
                                         <c:if test="${item == 'MT:202COV'}">
                                         <li><a href="mt202COV.jsp">202 COV - General Financial Institution Transfer</a></li>
+                                        </c:if>
+                                        <c:if test="${item == 'MT:299'}">
+                                        <li><a href="mt299.jsp">299 - Free Format Message</a></li>
                                         </c:if>
                                     </c:forEach>
                             </ul>

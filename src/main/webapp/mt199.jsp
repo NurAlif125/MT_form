@@ -21,17 +21,20 @@
                 <input name="messageType" id="messageType" type="hidden" value="199" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
-                        <li><a href="#" rel="view1">Header</a></li>
-                        <li><a href="#" rel="view2">Body</a></li>
-                        <li><a href="#" rel="view3">Comment</a></li>
-                        <li><a href="#" rel="view4">Histories</a></li>
-                        <li><a href="#" rel="view5">Log MT Text</a></li>
-                        <li><a href="#" rel="view6">MT Relation</a></li>
-                        <li><a href="#" rel="view7" id="tabView7">Translation</a></li>
+                        <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
+                        <li id="tab-view2"><a href="#" rel="view2">Body</a></li>
+                        <li id="tab-view3"><a href="#" rel="view3">Comment</a></li>
+                        <li id="tab-view4"><a href="#" rel="view4">Histories</a></li>
+                        <li id="tab-view5"><a href="#" rel="view5">Log MT Text</a></li>
+                        <li id="tab-view6"><a href="#" rel="view6">MT Relation</a></li>
+                        <li id="tab-view7"><a href="#" rel="view7" id="tabView7">Translation</a></li>
+                        <li hidden id="tab-validate"><a href="#" rel="view8" id="tabView8">Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
-                            <%@ include file="header_mt_input.jsp" %>
+                            <%--@ include file="header_mt_input.jsp" --%>
+                            <%@ include file="header_mt.jsp" %>
+                            <%@ include file="special_rate.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
                             <!-- MF20 -->
@@ -53,23 +56,27 @@
                                     <hr/>
                                 </div>
                                 <div id="view3" class="tabcontent">
-                            <%@ include file="comment_mt.jsp" %>
-                        </div>
-                        <div id="view4" class="tabcontent">
-                            <%@ include file="history_mt.jsp" %>
-                        </div>
-                        <div id="view5" class="tabcontent">
-                            <%@ include file="logTrx_mt.jsp" %>
-                        </div>
-                        <div id="view6" class="tabcontent">
-                            <%@ include file="relation_mt.jsp" %>
-                        </div>
+                                    <%@ include file="comment_mt.jsp" %>
+                                </div>
+                                <div id="view4" class="tabcontent">
+                                    <%@ include file="history_mt.jsp" %>
+                                </div>
+                                <div id="view5" class="tabcontent">
+                                    <%@ include file="logTrx_mt.jsp" %>
+                                </div>
+                                <div id="view6" class="tabcontent">
+                                    <%@ include file="relation_mt.jsp" %>
+                                </div>
 
-                        <div id="view7" class="tab-content">
-                            <div class="form-row">
-                                <%@include file="VMtFull.jsp" %>
+                                <div id="view7" class="tab-content">
+                                    <div class="form-row">
+                                        <%@include file="mt_mx.jsp" %>
+                                    </div>
+                                </div>
+                                <div id="view8" class="tabcontent">
+                                    <div id="error-container"></div>
+                                </div>
                             </div>
-                        </div>
                     </div>
                 </div>
         </div>
