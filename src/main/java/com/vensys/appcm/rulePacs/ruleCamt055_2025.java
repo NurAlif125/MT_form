@@ -7,18 +7,22 @@ package com.vensys.appcm.rulePacs;
 import com.prowidesoftware.swift.model.mx.MxCamt05500108;
 import com.prowidesoftware.swift.model.mx.dic.ActiveOrHistoricCurrencyAndAmount;
 import com.prowidesoftware.swift.model.mx.dic.BranchAndFinancialInstitutionIdentification6;
+import com.prowidesoftware.swift.model.mx.dic.CancellationReason33Choice;
 import com.prowidesoftware.swift.model.mx.dic.Case5;
 import com.prowidesoftware.swift.model.mx.dic.CaseAssignment5;
+import com.prowidesoftware.swift.model.mx.dic.DateAndDateTime2Choice;
 import com.prowidesoftware.swift.model.mx.dic.FinancialInstitutionIdentification18;
 import com.prowidesoftware.swift.model.mx.dic.FinancialInstitutionIdentification6;
 import com.prowidesoftware.swift.model.mx.dic.OriginalGroupInformation29;
 import com.prowidesoftware.swift.model.mx.dic.OriginalPaymentInstruction34;
 import com.prowidesoftware.swift.model.mx.dic.Party40Choice;
 import com.prowidesoftware.swift.model.mx.dic.PartyIdentification135;
+import com.prowidesoftware.swift.model.mx.dic.PaymentCancellationReason5;
 import com.prowidesoftware.swift.model.mx.dic.PaymentTransaction109;
 import com.prowidesoftware.swift.model.mx.dic.PostalAddress24;
 import com.prowidesoftware.swift.model.mx.dic.UnderlyingTransaction24;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -226,23 +230,89 @@ public class ruleCamt055_2025 {
                             }
                         }
                     }
-                    
+
                     String orgnlEndToEndId = txInf.get(0).getOrgnlEndToEndId();
                     if (orgnlEndToEndId.equalsIgnoreCase("")) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlEndToEndId\"><td>OriginalEndToEndIdentification is mandatory!</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlEndToEndId</td></tr>");
                     }
-                    
+
                     String orgnlUETR = txInf.get(0).getOrgnlUETR();
                     if (orgnlUETR.equalsIgnoreCase("")) {
                         validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlUETR\"><td>OriginalUETR is mandatory!</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlUETR</td></tr>");
                     }
-                    
+
                     ActiveOrHistoricCurrencyAndAmount orgnlInstrAmt = txInf.get(0).getOrgnlInstdAmt();
                     if (orgnlInstrAmt != null) {
                         BigDecimal amt = orgnlInstrAmt.getValue();
                         String ccy = orgnlInstrAmt.getCcy();
                         if (amt == null || ccy == null) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlInstdAmt\"><td>OriginalInstructedAmount is mandatory!</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlInstdAmt</td></tr>");
+                        }
+                    }
+
+                    DateAndDateTime2Choice orgnlReqdExctnDt = txInf.get(0).getOrgnlReqdExctnDt();
+                    LocalDate orgnlReqdColltnDt = txInf.get(0).getOrgnlReqdColltnDt();
+
+                    if (orgnlReqdExctnDt == null && orgnlReqdColltnDt == null) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdExctnDt\"><td>Either OriginalRequestedExecutionDate or OriginalRequestedCollectionDate must be present, but both can't be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdExctnDt</td></tr>");
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdColltnDt\"><td>Either OriginalRequestedExecutionDate or OriginalRequestedCollectionDate must be present, but both can't be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdColltnDt</td></tr>");
+                    } else if (orgnlReqdExctnDt != null && orgnlReqdColltnDt != null) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdExctnDt\"><td>Either OriginalRequestedExecutionDate or OriginalRequestedCollectionDate must be present, but both can't be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdExctnDt</td></tr>");
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdColltnDt\"><td>Either OriginalRequestedExecutionDate or OriginalRequestedCollectionDate must be present, but both can't be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdColltnDt</td></tr>");
+                    }
+
+                    List<PaymentCancellationReason5> cxlRsnInf = txInf.get(0).getCxlRsnInf();
+                    if (cxlRsnInf != null) {
+                        PartyIdentification135 orgtr = cxlRsnInf.get(0).getOrgtr();
+                        if (orgtr != null) {
+                            PostalAddress24 pstlAdr = orgtr.getPstlAdr();
+                            if (pstlAdr != null) {
+                                String dept = pstlAdr.getDept();
+                                String subDept = pstlAdr.getSubDept();
+                                String strtNm = pstlAdr.getStrtNm();
+                                String bldgNb = pstlAdr.getBldgNb();
+                                String bldgNm = pstlAdr.getBldgNm();
+                                String flr = pstlAdr.getFlr();
+                                String pstBx = pstlAdr.getPstBx();
+                                String room = pstlAdr.getRoom();
+                                String pstCd = pstlAdr.getPstCd();
+                                String twnNm = pstlAdr.getTwnNm();
+                                String twnLctnNm = pstlAdr.getTwnLctnNm();
+                                String dstrctNm = pstlAdr.getDstrctNm();
+                                String ctrySubDvsn = pstlAdr.getCtrySubDvsn();
+                                String ctry = pstlAdr.getCtry();
+                                List<String> adrLine = pstlAdr.getAdrLine();
+
+                                if (!adrLine.isEmpty() && (dept != null || subDept != null || strtNm != null || bldgNb != null || bldgNm != null || flr != null || pstBx != null || room != null || pstCd != null || twnLctnNm != null || dstrctNm != null || ctrySubDvsn != null) && ((twnNm == null || ctry == null) || adrLine.size() > 2)) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/PstlAdr\"><td>If Address Line is present and any other Postal Address element(s) are present, then Town Name and Country are mandatory in Postal Address and a maximum of two occurrences of Address Line are allowed.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/PstlAdr</td></tr>");
+                                } else if (!adrLine.isEmpty() && (dept == null && subDept == null && strtNm == null && bldgNb == null && bldgNm == null && flr == null && pstBx == null && room == null && pstCd == null && twnLctnNm == null && dstrctNm == null && ctrySubDvsn == null && twnNm == null && ctry == null)) {
+                                    int i = 0;
+                                    while (i < adrLine.size()) {
+                                        int panjang = adrLine.get(i).length();
+                                        if (panjang > 35) {
+                                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/PstlAdr/AdrLine\"><td>If Postal Address is present and if no other element than Address Line is present then every occurrence of Address Line must not exceed 35 characters.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/PstlAdr/AdrLine</td></tr>");
+                                        }
+                                        i++;
+                                    }
+                                } else if (adrLine.isEmpty() && (twnNm == null || ctry == null)) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Orgtr/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
+
+                        CancellationReason33Choice rsn = cxlRsnInf.get(0).getRsn();
+                        List<String> addtlInf = cxlRsnInf.get(0).getAddtlInf();
+                        if (rsn != null) {
+                            String cd = rsn.getCd();
+                            if (cd != null) {
+                                if (cd.equalsIgnoreCase("NARR")) {
+                                    if (addtlInf.isEmpty()) {
+                                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/AddtlInf\"><td>If Reason code = NARR, then Additional Information is mandatory.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/AddtlInf</td></tr>");
+                                    }
+                                }
+                            } else {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Rsn\"><td>Reason/Code is mandatory!</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/CxlRsnInf/Rsn</td></tr>");
+                            }
                         }
                     }
                 }
