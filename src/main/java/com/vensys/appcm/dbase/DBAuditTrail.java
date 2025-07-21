@@ -34,7 +34,14 @@ public class DBAuditTrail {
                 "a.status_header, a.user_login, a.ip_access, a.comp_name, b.useredit,\n" +
                 "b.receiveraddress, b.userentry, b.flag, "
             + "case when b.komentar LIKE '%<?xml version%' then '' else b.komentar end komentar, "
-            + "b.source, a.status_tanggal as tanggal\n" +
+            + "CASE \n" +
+            "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXTRS' THEN 'TSA'\n" +
+            "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXCLC' THEN 'BANKTRADE'\n" +
+            "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXCUS' THEN 'CUSTODY'\n" +
+            "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXRMT' THEN 'NCBS'\n" +
+            "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXXXX' THEN 'FRONTARENA'\n" +
+            "    ELSE b.source\n" +
+            "END AS source, a.status_tanggal as tanggal\n" +
                 " FROM header_status a INNER JOIN headers b ON a.id_headers = b.id_headers WHERE b.tanggal BETWEEN ? AND ? ORDER BY a.id_headers DESC, a.status_tanggal ASC";
 //    System.out.println("getAllDataHistoryLogin : " + sql);
 
@@ -76,7 +83,14 @@ public class DBAuditTrail {
         String sql = "SELECT b.messagetype, b.logicalterminal, \n" +
                     "case when UPPER(b.io_type) = 'I' then 'Outgoing' else 'Incoming' end io_type, \n" +
                     "a.status_header, a.user_login, a.ip_access, a.comp_name, b.useredit,\n" +
-                    "b.receiveraddress, b.userentry, b.flag, b.komentar, b.source, a.status_tanggal as tanggal\n" +
+                    "b.receiveraddress, b.userentry, b.flag, b.komentar,"+ "CASE \n" +
+                    "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXTRS' THEN 'TSA'\n" +
+                    "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXCLC' THEN 'BANKTRADE'\n" +
+                    "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXCUS' THEN 'CUSTODY'\n" +
+                    "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXRMT' THEN 'NCBS'\n" +
+                    "    WHEN b.source = '' AND b.logicalTerminal = 'BDINIDJAXXXX' THEN 'FRONTARENA'\n" +
+                    "    ELSE b.source\n" +
+                    "END AS source, a.status_tanggal as tanggal\n" +
                     "FROM header_status a INNER JOIN headers b ON a.id_headers = b.id_headers"
                 + " WHERE tanggal BETWEEN ? AND ? AND user_login=? ORDER BY a.id_headers DESC, a.status_tanggal ASC";
     //    System.out.println("getAllDataHistoryLogin : " + sql);

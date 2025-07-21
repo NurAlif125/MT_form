@@ -120,6 +120,19 @@ public class DBDataTransaksiOutgoing {
             st.setString(27, data.getBlock3()); // block 3 
             st.setString(28, "SRC:MANUAL"); //user entry
             st.setString(29, data.getNetworkType()); //networktype
+
+            if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXTRS")) {
+                channel = "TSA";
+            } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXCLC")) {
+                channel = "BANKTRADE";
+            } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXCUS")) {
+                channel = "CUSTODY";
+            } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXRMT")) {
+                channel = "EMS";
+            } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXXXX")) {
+                channel = "FRONTARENA";
+            }
+
             st.setString(30, channel);
             st.setString(31, nameUser);
             st.setString(32, "--");

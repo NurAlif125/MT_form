@@ -28,7 +28,7 @@ public class DBLogEvent {
 
     public ArrayList<DataUserActivity> getAllDataLogEvent(String date_from, String date_end) throws Exception {
         ArrayList<DataUserActivity> datas = new ArrayList<DataUserActivity>();
-        String sql = "select user_id,event_date, hostname, ip, description from event_log where event_date BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:00'";
+        String sql = "select user_id,event_date, hostname, ip, description from event_log where event_date BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:00' order by event_date DESC";
 //        System.out.println("getAllDataLogEvent : " + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
@@ -46,7 +46,7 @@ public class DBLogEvent {
 
     public ArrayList<DataUserActivity> getAllDataLogEventById(String date_from, String date_end, String user_idlog) throws Exception {
         ArrayList<DataUserActivity> datas = new ArrayList<DataUserActivity>();
-        String sql = "select user_id,event_date, hostname, ip, description from event_log where event_date BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:00' And user_id = '" + user_idlog + "' ";
+        String sql = "select user_id,event_date, hostname, ip, description from event_log where event_date BETWEEN '" + date_from + "' AND '" + date_end + " 23:59:00' And user_id = '" + user_idlog + "' order by event_date DESC";
 //        System.out.println("sql activity : "+sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();

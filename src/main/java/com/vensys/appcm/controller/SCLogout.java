@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.sql.Connection;
 
 /**
@@ -48,7 +49,7 @@ public class SCLogout extends HttpServlet {
     DBconnection2 dbConn2 = new DBconnection2();
     DBUserData dbo = new DBUserData(dbConn.getConnection());
     DBEventLog dbEvl = new DBEventLog(dbConn2.getConnection2());
-    
+     
     String user_id = (String) session.getAttribute("user_id");
     String ip_access = (String) session.getAttribute("ip_access");
     String comp_name = (String) session.getAttribute("comp_name");
@@ -58,10 +59,18 @@ public class SCLogout extends HttpServlet {
     String compName = session.getAttribute("comp_name") != null ? session.getAttribute("comp_name").toString() : null;
     
     String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
     if (userId != null && ipAccess != null && compName != null) {
         dbo.insertDataLogin(userId, "0", ipAccess, compName, tanggal, "1");
     } else {
+        response.setContentType("text/html;charset=UTF-8"); 
+        PrintWriter out = response.getWriter();
+        out.println("<script>");
+        out.println("alert('Your session has expired, please log in again!');");
+        out.println("window.location.href='login.jsp';");
+        out.println("</script>");
+        out.close();
+//        response.sendRedirect("login.jsp");
+        return;
         // System.out.println("Session attributes are missing: user_id, ip_access, or comp_name is null.");
 //        log.info("Session attributes are missing: user_id, ip_access, or comp_name is null.");
     }

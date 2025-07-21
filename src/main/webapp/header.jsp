@@ -492,11 +492,12 @@
                 <li><a onclick="userTrackMenuClick('Contact Us')" href="contact.jsp">Contact Us</a></li>
                 </c:if>
             </c:forEach>
-
-        <div onclick="openModal()" class="notif-container" style="float: right;">
+             
+                <!--Notifications-->
+<!--        <div onclick="openModal()" class="notif-container" style="float: right;">
             <span onclick="userTrackMenuClick('Notifications')" class="link-notif">Notif</span>
             <span id="notifCount" class="notif-badge"></span>
-        </div>
+        </div>-->
     </ul>
     <body style="clear: both;">
         <input type="hidden" id="timeout" name="timeout" value="<% out.print(session.getAttribute("timeout"));%>"/>
@@ -520,7 +521,7 @@
 
 
         <!-- Modal Notifikasi -->
-        <div id="notifModal" class="modal-notif" onclick="outsideClick(event)">
+<!--        <div id="notifModal" class="modal-notif" onclick="outsideClick(event)">
             <div class="modal-notif-content">
                 <span class="close-modal" onclick="closeModal()">&times;</span>
                 <h3>Notifications</h3>
@@ -540,7 +541,7 @@
                     </table>
                     <div id="loadingNotif" style="text-align: center; display: none; color:blue !important; padding: 5px;">Loading...</div>
 
-                    <!-- Detail Pesan -->
+                     Detail Pesan 
                     <div id="notifDetail" style="display: none;">
                         <h3>Detail Pesan</h3>
                         <div id="detailContent" style="overflow: scroll; height: 365px; max-height: 365px; padding:2px;"></div>
@@ -551,13 +552,13 @@
 
                 <div class="p-4 text-center border-t" style="padding: 7px 4px 4px 4px;">
                     <input type="button" onclick="markAsRead()" name="submit_mt" id="btn-read" value="Read" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600" />
-                    <!--<button onclick="markAsRead()" id="btn-read" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Tandai Sudah Dibaca</button>-->
+                    <button onclick="markAsRead()" id="btn-read" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">Tandai Sudah Dibaca</button>
                 </div>
             </div>
-        </div>
+        </div>-->
 
 
-        <%@ include file="NotificationControl.jsp" %>
+        <%--<%@ include file="NotificationControl.jsp" %>--%>
 
         <script>
             function userTrackMenuClick(menu_name) {
