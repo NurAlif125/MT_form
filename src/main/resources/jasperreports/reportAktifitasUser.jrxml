@@ -103,7 +103,7 @@
 		<band height="17" splitType="Stretch">
 			<frame>
 				<reportElement key="frame" style="Row" mode="Opaque" x="0" y="1" width="801" height="15" uuid="492916b9-ba27-450a-8818-bf98d0996c6b"/>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField" style="Detail" x="31" y="0" width="93" height="15" uuid="453aca22-cf13-4e04-b39e-72ab3b191900"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
@@ -124,7 +124,7 @@
 					</textElement>
 					<textFieldExpression><![CDATA[$F{hostname}]]></textFieldExpression>
 				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement key="textField" style="Detail" x="474" y="0" width="327" height="15" uuid="5efd1dbe-c031-4225-9fdb-1d68ffa7b66f"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
