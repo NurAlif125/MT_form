@@ -439,7 +439,7 @@
                         } else {
                             this.removeAttribute("value");
                         }
-                        ;' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency <a style="color:red;text-decoration:none">*</a></span></label>
+                        ;' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency" oninput="this.value = this.value.toUpperCase();"><span>Currency <a style="color:red;text-decoration:none">*</a></span></label>
                                             </fieldset></section><section id="CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdExctnDt" tabindex="-1"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.055.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgnlReqdExctnDt" data-xsd2html2xml-xpath="/Document/CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/OrgnlReqdExctnDt">
                                                 <legend>OriginalRequestedExecutionDate<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                                 </legend>

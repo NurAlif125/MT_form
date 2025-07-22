@@ -468,18 +468,17 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             dBTrx2.addMXText(dataMXcamt055.message(mxConfiguration), returnId_headers);
 
             dBTrx2.addDataMXTag(returnId_headers, ((MxCamt05500108) abstractMX).toJson(), saaHeader);
-
-//            int idDupe = dBTrx.cekDuplikatID(datas);
-//            int lengthIdDupe = idDupe.size();
-//            // log.info("panjang dupe nya.... " + lengthIdDupe);
-//            if (lengthIdDupe > 1) {
-//                // log.info("246 masuk if");
-//                for (int ld = 1; ld < lengthIdDupe; ld++) {
-//                    dBTrx2.updateDuplikat(idDupe.get(ld));
-//                    // log.info("sini 249");
-//                }
-//                // log.info("masuk if 270");
-//            }
+            
+            datas.setLogicalTerminal(logicalTerminal);
+            datas.setReceiverAddress(receiverAddress);
+            datas.setTrans_refference(dataMXcamt055.getCstmrPmtCxlReq().getAssgnmt().getId());
+            datas.setTrans_date_value("--");
+            datas.setTrans_amount(null);
+            datas.setTrans_ccy(null);
+            int idDupe = dBTrx.cekDuplikatID(datas);
+            if (idDupe > 1) {
+                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+            }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.056")) {
             appHeader.setMsgDefIdr("camt.056.001.08");
 
