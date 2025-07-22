@@ -944,13 +944,13 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             String source = criteria.getSourceSearch().trim();
             if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
-                where += " AND source IN ('FRONTARENA', 'TSA')";
+                where +=" AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))";
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
-                where += " AND source = 'BANKTRADE'";
+                where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND source = 'CUSTODY'";
+                where += " AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
-                where += " AND source IN ('NCBS', 'EMS')";
+                where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
                 where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
             }
@@ -966,7 +966,15 @@ public class DBHeader {
         String sql = """
                      SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type,
                      h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.id_headers, h.flag, h.isDuplicate,
-                     h.block3, h.source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, h.userentry
+                     h.block3, 
+                     CASE 
+                        WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXTRS' THEN 'TSA'
+                        WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCLC' THEN 'BANKTRADE'
+                        WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCUS' THEN 'CUSTODY'
+                        WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXRMT' THEN 'NCBS'
+                        WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXXXX' THEN 'FRONTARENA'
+                        ELSE h.source
+                    END AS source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, h.userentry
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
                 + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
@@ -1232,13 +1240,13 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             String source = criteria.getSourceSearch().trim();
             if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
-                where += " AND source IN ('FRONTARENA', 'TSA')";
+                where +=" AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))";
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
-                where += " AND source = 'BANKTRADE'";
+                where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND source = 'CUSTODY'";
+                where += " AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
-                where += " AND source IN ('NCBS', 'EMS')";
+                where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
                 where += " AND source ILIKE '%" + criteria.getSourceSearch() + "%'";
             }
@@ -1994,16 +2002,17 @@ public class DBHeader {
                 where.append(" AND h.flag ILIKE ?");
                 parameters.add("%" + criteria.getFlagSearch() + "%");
             }
+            
             if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
                 String source = criteria.getSourceSearch().trim();
                 if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
-                    where.append(" AND source IN ('FRONTARENA', 'TSA')");
+                    where.append(" AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))");
                 } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
-                    where.append(" AND source = 'BANKTRADE'");
+                    where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
                 } else if (source.startsWith("c") || source.startsWith("C")) {
-                    where.append(" AND source = 'CUSTODY'");
+                    where.append(" AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
                 } else if (source.startsWith("r") || source.startsWith("R")) {
-                    where.append(" AND source IN ('NCBS', 'EMS')");
+                    where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
                 } else {
                     where.append(" AND h.source ILIKE ?");
                     parameters.add("%" + criteria.getSourceSearch() + "%");
@@ -2020,8 +2029,22 @@ public class DBHeader {
         }
 
         // Final query
-        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
-                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, h.source, "
+//        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
+//                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, h.source, "
+//                + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby "
+//                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+//                + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+            String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
+                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, "
+                    + "CASE \n" +
+                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXTRS' THEN 'TSA'\n" +
+                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCLC' THEN 'BANKTRADE'\n" +
+                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCUS' THEN 'CUSTODY'\n" +
+                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXRMT' THEN 'NCBS'\n" +
+                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXXXX' THEN 'FRONTARENA'\n" +
+                    "    ELSE h.source\n" +
+                    "END AS source, "
                 + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, h.userentry "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
@@ -2362,13 +2385,13 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             String source = criteria.getSourceSearch().trim();
             if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
-                where.append(" AND source IN ('FRONTARENA', 'TSA')");
+                where.append(" AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))");
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
-                where.append(" AND source = 'BANKTRADE'");
+                where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where.append(" AND source = 'CUSTODY'");
+                where.append(" AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
             } else if (source.startsWith("r") || source.startsWith("R")) {
-                where.append(" AND source IN ('NCBS', 'EMS')");
+                where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
             } else {
                 where.append(" AND source ILIKE ?");
                 parameters.add("%" + criteria.getSourceSearch() + "%");
