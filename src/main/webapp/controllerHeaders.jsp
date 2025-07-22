@@ -636,6 +636,19 @@ function escapeHtml(text) {
                     render: function (data, type, row, meta) {
                         return '<a href="ViewDataTransaksiOutgoing?id=' + encodeURIComponent(row.id_headers) + '">view</a>';
                     }
+                },
+                {
+                    targets: 10, // kolom trans_amount
+                    render: function (data, type, row, meta) {
+                        if (!data || isNaN(data)) return data;
+
+                        let num = parseFloat(data);
+
+                        return num.toLocaleString('id-ID', {
+                            minimumFractionDigits: 5,
+                            maximumFractionDigits: 5
+                        });
+                    }
                 }
             ]
             , initComplete: function () {
