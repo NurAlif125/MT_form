@@ -948,7 +948,7 @@ public class DBHeader {
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
+                where += " AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
                 where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
@@ -1007,7 +1007,7 @@ public class DBHeader {
                     header.setSource("Treasury OPS");
                 } else if (rs.getString(13).equalsIgnoreCase("BANKTRADE")) {
                     header.setSource("Trade OPS");
-                } else if (rs.getString(13).equalsIgnoreCase("CUSTODY")) {
+                } else if (rs.getString(13).equalsIgnoreCase("CSA")) {
                     header.setSource("Custody OPS");
                 } else if (rs.getString(13).equalsIgnoreCase("NCBS") || rs.getString(13).equalsIgnoreCase("EMS")) {
                     header.setSource("Remittance OPS");
@@ -1244,7 +1244,7 @@ public class DBHeader {
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
+                where += " AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
                 where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
@@ -2010,7 +2010,7 @@ public class DBHeader {
                 } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                     where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
                 } else if (source.startsWith("c") || source.startsWith("C")) {
-                    where.append(" AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
+                    where.append(" AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')");
                 } else if (source.startsWith("r") || source.startsWith("R")) {
                     where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
                 } else {
@@ -2085,7 +2085,7 @@ public class DBHeader {
                             data.setSource("Treasury OPS");
                         } else if (rs.getString("source").equalsIgnoreCase("BANKTRADE")) {
                             data.setSource("Trade OPS");
-                        } else if (rs.getString("source").equalsIgnoreCase("CUSTODY")) {
+                        } else if (rs.getString("source").equalsIgnoreCase("CSA")) {
                             data.setSource("Custody OPS");
                         } else if (rs.getString("source").equalsIgnoreCase("NCBS") || rs.getString("source").equalsIgnoreCase("EMS")) {
                             data.setSource("Remittance OPS");
@@ -2389,7 +2389,7 @@ public class DBHeader {
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where.append(" AND (source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
+                where.append(" AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')");
             } else if (source.startsWith("r") || source.startsWith("R")) {
                 where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
             } else {
