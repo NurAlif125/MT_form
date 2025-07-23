@@ -124,7 +124,7 @@ public class DBHeader {
 //            header.setId_headers(rs.getInt(1));
 //            header.setTag20(ambilTag20(header.getId_headers()));
 //            header.setTag32Amount(ambilTag32Amount(header.getId_headers()));
-////            amount
+        ////            amount
 //            header.setTag32AmountOnly(ambilTag32AmountOnly(header.getId_headers()));
 ////            sender
 //            header.setTag53a_identifier_code(ambilTag53a_identifier_code(header.getId_headers()));
@@ -887,7 +887,11 @@ public class DBHeader {
         }
 
         if (channel != null && !channel.isBlank()) {
-            where += " AND source LIKE '%" + channel + "%'";
+            if (channel.equalsIgnoreCase("EMS")) {
+                where += " AND source IN ('EMS', 'NCBS')";
+            } else {
+                where += " AND source LIKE '%" + channel + "%'";
+            }
         }
 
         if (quicksearch != null && !quicksearch.isEmpty()) {
@@ -944,7 +948,7 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             String source = criteria.getSourceSearch().trim();
             if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
-                where +=" AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))";
+                where += " AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))";
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
@@ -958,7 +962,7 @@ public class DBHeader {
         if (criteria.getCreateby() != null && !criteria.getCreateby().isEmpty()) {
             where += " AND createby ILIKE '%" + criteria.getCreateby() + "%'";
         }
-        if (criteria.getApproveby()  != null && !criteria.getApproveby().isEmpty()) {
+        if (criteria.getApproveby() != null && !criteria.getApproveby().isEmpty()) {
             where += " AND approveby ILIKE '%" + criteria.getApproveby() + "%'";
         }
 
@@ -976,7 +980,7 @@ public class DBHeader {
                         ELSE h.source
                     END AS source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, h.userentry
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
-                + "ORDER BY "+sort+" OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
+                + "ORDER BY " + sort + " OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
 //        System.out.println(sql);
@@ -1183,7 +1187,11 @@ public class DBHeader {
         }
 
         if (channel != null && !channel.isBlank()) {
-            where += " AND source LIKE '%" + channel + "%'";
+            if (channel.equalsIgnoreCase("EMS")) {
+                where += " AND source IN ('EMS', 'NCBS')";
+            } else {
+                where += " AND source LIKE '%" + channel + "%'";
+            }
         }
 
         if (quicksearch != null && !quicksearch.isEmpty()) {
@@ -1240,7 +1248,7 @@ public class DBHeader {
         if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
             String source = criteria.getSourceSearch().trim();
             if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
-                where +=" AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))";
+                where += " AND (source IN ('FRONTARENA', 'TSA') OR logicalTerminal IN ('BDINIDJAXTRS', 'BDINIDJAXXXX'))";
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
@@ -1425,26 +1433,25 @@ public class DBHeader {
             where += "AND h.source = ? ";
             params.add(channel);
         }
-        
+
         if (quickSearch != null && !quickSearch.isBlank()) {
-            where += "AND LOWER(CONCAT(" +
-                    "COALESCE(h.messageType, ''), ' ', " +
-                    "COALESCE(h.logicalTerminal, ''), ' ', " +
-                    "COALESCE(h.sessionNumber, ''), ' ', " +
-                    "COALESCE(h.sequenceNumber, ''), ' ', " +
-                    "COALESCE(h.io_type, ''), ' ', " +
-                    "COALESCE(h.receiverAddress, ''), ' ', " +
-                    "COALESCE(td.trans_reference, '')" +
-                    ")) ILIKE ? ";
+            where += "AND LOWER(CONCAT("
+                    + "COALESCE(h.messageType, ''), ' ', "
+                    + "COALESCE(h.logicalTerminal, ''), ' ', "
+                    + "COALESCE(h.sessionNumber, ''), ' ', "
+                    + "COALESCE(h.sequenceNumber, ''), ' ', "
+                    + "COALESCE(h.io_type, ''), ' ', "
+                    + "COALESCE(h.receiverAddress, ''), ' ', "
+                    + "COALESCE(td.trans_reference, '')"
+                    + ")) ILIKE ? ";
             params.add("%" + quickSearch.toLowerCase() + "%");
         }
 
-
-        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, " +
-                     "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference " +
-                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
-                     where +
-                     "ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
+                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference "
+                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + where
+                + "ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         // Pagination 
         params.add(start);
@@ -1484,9 +1491,8 @@ public class DBHeader {
         return headers;
     }
 
-    
-     public int getCountAllHeaderDuplicate(String channel, String quickSearch) throws Exception {
-         Date tanggal = new Date();
+    public int getCountAllHeaderDuplicate(String channel, String quickSearch) throws Exception {
+        Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
         List<Header> headers = new ArrayList<>();
 
@@ -1498,23 +1504,23 @@ public class DBHeader {
             where += "AND h.source = ? ";
             params.add(channel);
         }
-        
+
         if (quickSearch != null && !quickSearch.isBlank()) {
-            where += "AND LOWER(CONCAT(" +
-                    "COALESCE(h.messageType, ''), ' ', " +
-                    "COALESCE(h.logicalTerminal, ''), ' ', " +
-                    "COALESCE(h.sessionNumber, ''), ' ', " +
-                    "COALESCE(h.sequenceNumber, ''), ' ', " +
-                    "COALESCE(h.io_type, ''), ' ', " +
-                    "COALESCE(h.receiverAddress, ''), ' ', " +
-                    "COALESCE(td.trans_reference, '')" +
-                    ")) ILIKE ? ";
+            where += "AND LOWER(CONCAT("
+                    + "COALESCE(h.messageType, ''), ' ', "
+                    + "COALESCE(h.logicalTerminal, ''), ' ', "
+                    + "COALESCE(h.sessionNumber, ''), ' ', "
+                    + "COALESCE(h.sequenceNumber, ''), ' ', "
+                    + "COALESCE(h.io_type, ''), ' ', "
+                    + "COALESCE(h.receiverAddress, ''), ' ', "
+                    + "COALESCE(td.trans_reference, '')"
+                    + ")) ILIKE ? ";
             params.add("%" + quickSearch.toLowerCase() + "%");
         }
 
-        String sql = "SELECT COUNT(DISTINCT h.id_headers) " +
-                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
-                     where +"";
+        String sql = "SELECT COUNT(DISTINCT h.id_headers) "
+                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + where + "";
 
         PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -1530,10 +1536,10 @@ public class DBHeader {
         if (rs.next()) {
             return rs.getInt(1);
         }
-         
-         return 0;
+
+        return 0;
     }
-    
+
     public List<Header> getAllHeaderDuplicateCNF(String channel, int start, int length, String quickSearch, String sort) throws Exception {
         Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
@@ -1547,26 +1553,25 @@ public class DBHeader {
             where += "AND h.source = ? ";
             params.add(channel);
         }
-        
+
         if (quickSearch != null && !quickSearch.isBlank()) {
-            where += "AND LOWER(CONCAT(" +
-                    "COALESCE(h.messageType, ''), ' ', " +
-                    "COALESCE(h.logicalTerminal, ''), ' ', " +
-                    "COALESCE(h.sessionNumber, ''), ' ', " +
-                    "COALESCE(h.sequenceNumber, ''), ' ', " +
-                    "COALESCE(h.io_type, ''), ' ', " +
-                    "COALESCE(h.receiverAddress, ''), ' ', " +
-                    "COALESCE(td.trans_reference, '')" +
-                    ")) ILIKE ? ";
+            where += "AND LOWER(CONCAT("
+                    + "COALESCE(h.messageType, ''), ' ', "
+                    + "COALESCE(h.logicalTerminal, ''), ' ', "
+                    + "COALESCE(h.sessionNumber, ''), ' ', "
+                    + "COALESCE(h.sequenceNumber, ''), ' ', "
+                    + "COALESCE(h.io_type, ''), ' ', "
+                    + "COALESCE(h.receiverAddress, ''), ' ', "
+                    + "COALESCE(td.trans_reference, '')"
+                    + ")) ILIKE ? ";
             params.add("%" + quickSearch.toLowerCase() + "%");
         }
 
-
-        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, " +
-                     "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference " +
-                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
-                     where +
-                     "ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String sql = "SELECT DISTINCT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
+                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference "
+                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + where
+                + "ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         // Pagination 
         params.add(start);
@@ -1605,9 +1610,9 @@ public class DBHeader {
 
         return headers;
     }
-    
+
     public int getCountAllHeaderDuplicateCNF(String channel, String quickSearch) throws Exception {
-         Date tanggal = new Date();
+        Date tanggal = new Date();
         SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
         List<Header> headers = new ArrayList<>();
 
@@ -1619,23 +1624,23 @@ public class DBHeader {
             where += "AND h.source = ? ";
             params.add(channel);
         }
-        
+
         if (quickSearch != null && !quickSearch.isBlank()) {
-            where += "AND LOWER(CONCAT(" +
-                    "COALESCE(h.messageType, ''), ' ', " +
-                    "COALESCE(h.logicalTerminal, ''), ' ', " +
-                    "COALESCE(h.sessionNumber, ''), ' ', " +
-                    "COALESCE(h.sequenceNumber, ''), ' ', " +
-                    "COALESCE(h.io_type, ''), ' ', " +
-                    "COALESCE(h.receiverAddress, ''), ' ', " +
-                    "COALESCE(td.trans_reference, '')" +
-                    ")) ILIKE ? ";
+            where += "AND LOWER(CONCAT("
+                    + "COALESCE(h.messageType, ''), ' ', "
+                    + "COALESCE(h.logicalTerminal, ''), ' ', "
+                    + "COALESCE(h.sessionNumber, ''), ' ', "
+                    + "COALESCE(h.sequenceNumber, ''), ' ', "
+                    + "COALESCE(h.io_type, ''), ' ', "
+                    + "COALESCE(h.receiverAddress, ''), ' ', "
+                    + "COALESCE(td.trans_reference, '')"
+                    + ")) ILIKE ? ";
             params.add("%" + quickSearch.toLowerCase() + "%");
         }
 
-        String sql = "SELECT COUNT(DISTINCT h.id_headers) " +
-                     "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers " +
-                     where +"";
+        String sql = "SELECT COUNT(DISTINCT h.id_headers) "
+                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
+                + where + "";
 
         PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -1651,8 +1656,8 @@ public class DBHeader {
         if (rs.next()) {
             return rs.getInt(1);
         }
-         
-         return 0;
+
+        return 0;
     }
 
     public List<Header> getAllHeaderReject() throws Exception {
@@ -1728,7 +1733,7 @@ public class DBHeader {
 //            //diganti jadi = pd tgl 20151007
 //            where += " AND h.flag = '" + status + "'";
 //        }
-////        tags
+    ////        tags
 //        if (sender_reference == null || sender_reference.isEmpty()) {
 //            where += "";
 //        } else {
@@ -1924,8 +1929,12 @@ public class DBHeader {
             parameters.add("%" + amount + "%");
         }
         if (channel != null && !channel.isBlank()) {
-            where.append(" AND h.source ILIKE ?");
-            parameters.add("%" + channel + "%");
+            if (channel.equalsIgnoreCase("EMS")) {
+                where.append(" AND h.source IN ('EMS', 'NCBS')");
+            } else {
+                where.append(" AND h.source ILIKE ?");
+                parameters.add("%" + channel + "%");
+            }
         }
 
         if (quicksearch != null && !quicksearch.isEmpty()) {
@@ -2002,7 +2011,7 @@ public class DBHeader {
                 where.append(" AND h.flag ILIKE ?");
                 parameters.add("%" + criteria.getFlagSearch() + "%");
             }
-            
+
             if (criteria.getSourceSearch() != null && !criteria.getSourceSearch().isEmpty()) {
                 String source = criteria.getSourceSearch().trim();
                 if (source.startsWith("tre") || source.startsWith("Tre") || source.startsWith("TRE")) {
@@ -2034,20 +2043,19 @@ public class DBHeader {
 //                + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby "
 //                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
 //                + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-
-            String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
+        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
                 + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, "
-                    + "CASE \n" +
-                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXTRS' THEN 'TSA'\n" +
-                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCLC' THEN 'BANKTRADE'\n" +
-                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCUS' THEN 'CUSTODY'\n" +
-                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXRMT' THEN 'NCBS'\n" +
-                    "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXXXX' THEN 'FRONTARENA'\n" +
-                    "    ELSE h.source\n" +
-                    "END AS source, "
+                + "CASE \n"
+                + "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXTRS' THEN 'TSA'\n"
+                + "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCLC' THEN 'BANKTRADE'\n"
+                + "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXCUS' THEN 'CUSTODY'\n"
+                + "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXRMT' THEN 'NCBS'\n"
+                + "    WHEN h.source = '' AND h.logicalTerminal = 'BDINIDJAXXXX' THEN 'FRONTARENA'\n"
+                + "    ELSE h.source\n"
+                + "END AS source, "
                 + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, h.userentry "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+                + "WHERE " + where + " ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             int idx = 1;
@@ -2065,7 +2073,6 @@ public class DBHeader {
 //            rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
 //            rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
 //        System.out.println("Expanded SQL:\n" + rawSql); //cetak hasil query
-
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
                     Header data = new Header();
@@ -2149,7 +2156,7 @@ public class DBHeader {
 //            //diganti jadi = pd tgl 20151007
 //            where += " AND h.flag = '" + status + "'";
 //        }
-////        tags
+    ////        tags
 //        if (sender_reference == null || sender_reference.isEmpty()) {
 //            where += "";
 //        } else {
@@ -2305,8 +2312,12 @@ public class DBHeader {
         }
 
         if (channel != null && !channel.isBlank()) {
-            where.append(" AND source LIKE ?");
-            parameters.add("%" + channel + "%");
+            if (channel.equalsIgnoreCase("EMS")) {
+                where.append(" AND h.source IN ('EMS', 'NCBS')");
+            } else {
+                where.append(" AND h.source ILIKE ?");
+                parameters.add("%" + channel + "%");
+            }
         }
 
         if (quicksearch != null && !quicksearch.isEmpty()) {
@@ -2414,12 +2425,12 @@ public class DBHeader {
                 st.setObject(i + 1, parameters.get(i));
             }
             ResultSet rs = st.executeQuery();
-            
+
 //              int idx = 1;
 //            for (Object param : parameters) {
 //                st.setObject(idx++, param);
 //            }
-////            st.setInt(idx++, start);
+            ////            st.setInt(idx++, start);
 ////            st.setInt(idx, length);
 //
 //            String rawSql = sql;
@@ -2953,7 +2964,8 @@ public class DBHeader {
 //        System.out.println("hasil=" + hasil);
         return jumlah;
     }
-//// tambahan buat ngitung transaksi dan sum amount pada bank tertentu (by DENNA)
+
+    //// tambahan buat ngitung transaksi dan sum amount pada bank tertentu (by DENNA)
 
     public String[] getBanksForChart(String tag, int tagName, String tanggal1, String tanggal2, String ioType) throws Exception {
         String[] hasil = new String[0];
@@ -3998,7 +4010,7 @@ public class DBHeader {
 //        } else {
 //            where += " AND messageType = '" + mt_type + "'";
 //        }
-////        System.out.println("### flag ### = " + flag);
+        ////        System.out.println("### flag ### = " + flag);
 //        if (flag == null || flag.isEmpty()) {
 //            where += "";
 //        } else {
