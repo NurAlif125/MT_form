@@ -641,13 +641,8 @@ function escapeHtml(text) {
                     targets: 10, // kolom trans_amount
                     render: function (data, type, row, meta) {
                         if (!data || isNaN(data)) return data;
-
-                        let num = parseFloat(data);
-
-                        return num.toLocaleString('id-ID', {
-                            minimumFractionDigits: 5,
-                            maximumFractionDigits: 5
-                        });
+                        
+                        return formatNumberPreserveDecimal(data);
                     }
                 }
             ]
@@ -699,6 +694,47 @@ function escapeHtml(text) {
             $("#example").DataTable().ajax.reload();
         });
     });
+    
+    
+//    function formatNumberPreserveDecimal(value) {
+//        if (!value) return "";
+//
+//        let parts = value.split(",");
+//        let integerPart = parseInt(parts[0]).toLocaleString('id-ID');
+//        let decimalPart = parts[1] ? "," + parts[1] : "";
+//
+//        return integerPart + decimalPart;
+//    }
+
+    function formatNumberPreserveDecimal(value) {
+        if (!value) return "";
+
+        // Ganti koma ke titik untuk proses numerik
+        let normalized = value.replace(",", ".");
+        let parts = normalized.split(".");
+        let integer = parts[0];
+        let decimal = parts[1] || "";
+
+        if (decimal.length > 5) {
+            // Hanya round jika bukan semua nol
+            if (!/^0+$/.test(decimal)) {
+                let rounded = parseFloat(normalized).toFixed(5);
+                parts = rounded.split(".");
+                integer = parts[0];
+                decimal = parts[1];
+            } else {
+                // Jika semua nol, batasi tetap 5 nol
+                decimal = decimal.substring(0, 5);
+            }
+        }
+
+        // Format angka dengan pemisah ribuan Indonesia
+        let formattedInteger = parseInt(integer).toLocaleString('id-ID');
+
+        return decimal ? formattedInteger + "," + decimal : formattedInteger;
+    }
+
+
 
 
 </script>

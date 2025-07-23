@@ -937,7 +937,7 @@ public class DBHeader {
             where += " AND trans_ccy ILIKE '%" + criteria.getCcySearch() + "%'";
         }
         if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
-            where += " AND trans_amount::TEXT ILIKE '%" + criteria.getAmountSearch() + "%'";
+            where += " AND trans_amount::TEXT ILIKE '%" + criteria.getAmountSearch().replace(".", "").replace(",", ".") + "%'";
         }
         if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
             where += " AND tanggal::TEXT ILIKE '%" + criteria.getCreatedDateSearch() + "%'";
@@ -980,7 +980,8 @@ public class DBHeader {
                         ELSE h.source
                     END AS source, td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, h.userentry
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
-                + "ORDER BY " + sort + " OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
+                + "ORDER BY " + sort + " LIMIT " + length + " OFFSET " + start+"";
+//                + "ORDER BY " + sort + " OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
 //        System.out.println(sql);
@@ -1006,14 +1007,14 @@ public class DBHeader {
             header.setFlag(rs.getString(10));
             header.setBlock3(rs.getString(12));
             header.setUserEntry(rs.getString(21));
-            if (rs.getString(21).equalsIgnoreCase("SRC:MANUAL")) {
-                if (rs.getString(13).equalsIgnoreCase("FRONTARENA") || rs.getString(13).equalsIgnoreCase("TSA")) {
+            if ("SRC:MANUAL".equalsIgnoreCase(rs.getString(21))) {
+                if ("FRONTARENA".equalsIgnoreCase(rs.getString(13)) || "TSA".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Treasury OPS");
-                } else if (rs.getString(13).equalsIgnoreCase("BANKTRADE")) {
+                } else if ("BANKTRADE".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Trade OPS");
-                } else if (rs.getString(13).equalsIgnoreCase("CSA")) {
+                } else if ("CSA".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Custody OPS");
-                } else if (rs.getString(13).equalsIgnoreCase("NCBS") || rs.getString(13).equalsIgnoreCase("EMS")) {
+                } else if ("NCBS".equalsIgnoreCase(rs.getString(13)) || "EMS".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Remittance OPS");
                 } else {
                     header.setSource(rs.getString(13));
@@ -1451,11 +1452,11 @@ public class DBHeader {
                 + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + where
-                + "ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+                + "ORDER BY " + sort + " LIMIT ? OFFSET ? ";
 
         // Pagination 
-        params.add(start);
         params.add(length);
+        params.add(start);
 
         PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -1571,11 +1572,11 @@ public class DBHeader {
                 + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, td.trans_reference "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + where
-                + "ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+                + "ORDER BY " + sort + " LIMIT ? OFFSET ? ";
 
         // Pagination 
+        params.add(length); //limit
         params.add(start);
-        params.add(length);
 
         PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -2001,7 +2002,7 @@ public class DBHeader {
             }
             if (criteria.getAmountSearch() != null && !criteria.getAmountSearch().isEmpty()) {
                 where.append(" AND td.trans_amount::TEXT ILIKE ?");
-                parameters.add("%" + criteria.getAmountSearch() + "%");
+                parameters.add("%" + criteria.getAmountSearch().replace(".", "").replace(",", ".") + "%");
             }
             if (criteria.getCreatedDateSearch() != null && !criteria.getCreatedDateSearch().isEmpty()) {
                 where.append(" AND h.tanggal::TEXT ILIKE ?");
@@ -2055,15 +2056,16 @@ public class DBHeader {
                 + "END AS source, "
                 + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, h.userentry "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-                + "WHERE " + where + " ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+                + "WHERE " + where + " ORDER BY " + sort + " LIMIT ? OFFSET ?";
+//                + "WHERE " + where + " ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             int idx = 1;
             for (Object param : parameters) {
                 st.setObject(idx++, param);
             }
-            st.setInt(idx++, start);
-            st.setInt(idx, length);
+            st.setInt(idx++, length); // limit
+            st.setInt(idx, start);
 
             //check hasil query
 //            String rawSql = sql;
@@ -2087,14 +2089,14 @@ public class DBHeader {
                     data.setFlag(rs.getString("flag"));
                     data.setBlock3(rs.getString("block3"));
                     data.setUserEntry(rs.getString("userentry"));
-                    if (rs.getString("userentry").equalsIgnoreCase("SRC:MANUAL")) {
-                        if (rs.getString("source").equalsIgnoreCase("FRONTARENA") || rs.getString("source").equalsIgnoreCase("TSA")) {
+                    if ("SRC:MANUAL".equalsIgnoreCase(rs.getString("userentry"))) {
+                        if ("FRONTARENA".equalsIgnoreCase(rs.getString("source")) || "TSA".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Treasury OPS");
-                        } else if (rs.getString("source").equalsIgnoreCase("BANKTRADE")) {
+                        } else if ("BANKTRADE".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Trade OPS");
-                        } else if (rs.getString("source").equalsIgnoreCase("CSA")) {
+                        } else if ("CSA".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Custody OPS");
-                        } else if (rs.getString("source").equalsIgnoreCase("NCBS") || rs.getString("source").equalsIgnoreCase("EMS")) {
+                        } else if ("NCBS".equalsIgnoreCase(rs.getString("source")) || "EMS".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Remittance OPS");
                         } else {
                             data.setSource(rs.getString("source"));
