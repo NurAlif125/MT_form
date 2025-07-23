@@ -51,6 +51,8 @@ public class HeaderListServlet extends HttpServlet {
 
         // Ambil nama kolom
         String orderColumnNameRaw = request.getParameter("columns[" + orderColumnIndex + "][data]");
+        
+        System.out.println(orderColumnIndexRaw);
         // Escape juga kolom
         String orderColumnName = StringEscapeUtils.escapeHtml4(orderColumnNameRaw);
 //        
@@ -104,20 +106,6 @@ public class HeaderListServlet extends HttpServlet {
 
 
          HttpSession session = request.getSession();
-//        String sender_logical_terminal = session.getAttribute("sender_logical_terminal") != null ? (String) session.getAttribute("sender_logical_terminal") : "";
-//        String receiver_institution = session.getAttribute("receiver_institution") != null ? (String) session.getAttribute("receiver_institution") : "";
-//        String mt_type = session.getAttribute("mt_type") != null ? (String) session.getAttribute("mt_type") : "";
-//        String date_from = session.getAttribute("date_from") != null ? (String) session.getAttribute("date_from") : "";
-//        String date_end = session.getAttribute("date_end") != null ? (String) session.getAttribute("date_end") : "";
-//        System.out.println("=====================");
-//        System.out.println("Date form___ :"+date_from);
-//        String sender_reference = session.getAttribute("sender_reference") != null ? (String) session.getAttribute("sender_reference") : "";
-//        String rel_reference = session.getAttribute("rel_reference") != null ? (String) session.getAttribute("rel_reference") : "";
-//        String currency_code = session.getAttribute("currency_code") != null ? (String) session.getAttribute("currency_code") : "";
-//        String amount = session.getAttribute("amount") != null ? (String) session.getAttribute("amount") : "";
-//        String find = session.getAttribute("find") != null ? (String) session.getAttribute("find") : "";
-//        String status = session.getAttribute("status") != null ? (String) session.getAttribute("status") : "";
-//        String menu = session.getAttribute("menu") != null ? (String) session.getAttribute("menu") : "";
 
         int draw = Integer.parseInt(request.getParameter("draw"));
         int start = Integer.parseInt(request.getParameter("start"));
@@ -333,7 +321,7 @@ public class HeaderListServlet extends HttpServlet {
 //                    log.info("flag else : " + flag);
                     headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
                     totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
-                    System.out.println("Total Data"+ String.valueOf(totalRecords));
+//                    System.out.println("Total Data"+ String.valueOf(totalRecords));
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("flag", flag);
                     httpSession.setAttribute("flagFilter", flag);
@@ -343,11 +331,12 @@ public class HeaderListServlet extends HttpServlet {
 //                log.info("masuk sini else");
                 String db_type = request.getParameter("db_type") != null ? request.getParameter("db_type") : "";
 
-                System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
+//                System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
+//                    System.out.println("start= " +start+" | lenghth= "+ length);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
                 headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch, sort);
                 totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch);
-                System.out.println("TOtal REcordd ----"+totalRecords);
+//                System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
                 httpSession.setAttribute("flag", status);
@@ -382,6 +371,7 @@ public class HeaderListServlet extends HttpServlet {
                     obj.put("approveby", h.getApproveby());
                     dataArray.put(obj);
                 }
+                
 
                 JSONObject jsonResponse = new JSONObject();
     //            jsonResponse.put("draw", draw);
@@ -395,7 +385,6 @@ public class HeaderListServlet extends HttpServlet {
                 jsonResponse.put("data", dataArray);
     //            System.out.println("JSON Response: " + jsonResponse.toString());
                 out.print(jsonResponse.toString());
-//            out.print(jsonResponse.toString());
 
             session.removeAttribute("db_type");
             session.removeAttribute("io_type");
