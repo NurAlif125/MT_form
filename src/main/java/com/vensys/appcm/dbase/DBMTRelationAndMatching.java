@@ -53,7 +53,7 @@ public class DBMTRelationAndMatching {
                 + "INNER JOIN investigation as inv ON inv.id_relation = hd.id_headers "
                 + "WHERE inv.id_headers='" + id_headers + "' "
                 + "order by hd.tanggal desc";
-        System.out.println("sql=" + sql);
+//        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -85,7 +85,7 @@ public class DBMTRelationAndMatching {
                 "OR (inv.id_headers = ? AND inv.id_relation = hd.id_headers)\n" +
                 "WHERE inv.id_headers = ? OR inv.id_relation = ?\n" +
                 "ORDER BY hd.tanggal DESC;";
-        System.out.println("sql=" + sql);
+//        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, id_headers);
         st.setString(2, id_headers);
@@ -112,7 +112,7 @@ public class DBMTRelationAndMatching {
         String sql = "SELECT count(*) FROM headers as hd \n" +
                 "INNER JOIN investigation as inv ON inv.id_relation = hd.id_headers \n" +
                 "WHERE inv.id_headers=?";
-        System.out.println("sql=" + sql);
+//        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, id_headers);
         ResultSet rs = st.executeQuery();
