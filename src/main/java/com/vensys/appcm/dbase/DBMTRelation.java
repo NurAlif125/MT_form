@@ -54,7 +54,7 @@ public class DBMTRelation {
         String sql = "SELECT hd.messageType, hd.io_type, hd.id_headers FROM headers as hd "
                 + "INNER JOIN investigation as inv ON inv.id_relation = hd.id_headers "
                 + "WHERE inv.id_headers='" + id_headers + "'";
-        System.out.println("sql=" + sql);
+//        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {

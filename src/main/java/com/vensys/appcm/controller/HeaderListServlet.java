@@ -365,7 +365,8 @@ public class HeaderListServlet extends HttpServlet {
                     obj.put("trans_reference", h.getTrans_refference());
                     obj.put("trans_related_reference", h.getTrans_related_refference());
                     obj.put("trans_date_value", h.getTrans_date_value());
-                    obj.put("trans_amount", h.getTrans_amount());
+//                    obj.put("trans_amount", h.getTrans_amount());
+                    obj.put("trans_amount", formatAmount(h.getTrans_amount()));
                     obj.put("trans_ccy", h.getTrans_ccy());
                     obj.put("createby", h.getCreateby());
                     obj.put("approveby", h.getApproveby());
@@ -410,6 +411,42 @@ public class HeaderListServlet extends HttpServlet {
             out.close();
         }
     }
+    
+    public static String formatAmount(String value) {
+        if (value == null || value.trim().isEmpty()) return "";
+
+        value = value.trim();
+
+        String intPart = value;
+        String decPart = "";
+
+        if (value.contains(".")) {
+            String[] parts = value.split("\\.");
+            intPart = parts[0];
+            decPart = parts.length > 1 ? parts[1] : "";
+        }
+
+        // Buang titik ribuan jika ada
+        intPart = intPart.replace(".", "");
+
+        // Format integer dengan pemisah ribuan (titik)
+        String formattedInt = String.format("%,d", Integer.parseInt(intPart)).replace(',', '.');
+
+        // Maksimal 5 digit desimal
+        if (!decPart.isEmpty()) {
+            decPart = decPart.length() > 5 ? decPart.substring(0, 5) : decPart;
+
+            // Hapus trailing zero
+            decPart = decPart.replaceAll("0+$", "");
+
+            if (!decPart.isEmpty()) {
+                return formattedInt + "," + decPart;
+            }
+        }
+
+        return formattedInt;
+    }
+
     
      @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
