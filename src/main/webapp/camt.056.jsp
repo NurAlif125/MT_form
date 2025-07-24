@@ -29,17 +29,20 @@
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MX:camt05600108'}">
             <div id="judul">CAMT.056.001.08 - FI To FI Payment Cancellation Request V08</div>
-            <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingPlainMXChangeStats" onsubmit="return confirm('Do you want to save this MX data?');">
+            <form id="form1" class="form-mx" name="form1" method="post" action="SCDataTransaksiOutgoingMX">
+                <input type="hidden" name="status" id="status" value="${headerById.flag}" />
                 <input name="messageType" id="messageType" type="hidden" value="${headerById.messageType}" />
                 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
-                        <li><a href="#" rel="view1">Header</a></li>
-                        <li><a href="#" rel="view2">Essential Field</a></li>
-                        <li><a href="#" rel="view3">MX Full</a></li>
-                        <li><a href="#" rel="view4">Log MX Text</a></li>
-                        <li><a href="#" rel="view5">Comment</a></li>
-                        <li><a href="#" rel="view6">Histories</a></li>
+                        <li id="tab-view1"><a href="#" rel="view1">Header</a></li>
+                        <li id="tab-view2"><a href="#" rel="view2">Essential Field</a></li>
+                        <li id="tab-view3"><a href="#" rel="view3">MX Full</a></li>
+                        <li id="tab-view4"><a href="#" rel="view4">Log MX Text</a></li>
+                        <li id="tab-view5"><a href="#" rel="view5">Comment</a></li>
+                        <li id="tab-view6"><a href="#" rel="view6">Histories</a></li>
+                        <li id="tab-view7"><a href="#" rel="view7">Translation</a></li>
+                        <li id="tab-validate"><a href="#" rel="view8" id="tab-view-validate" hidden>Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
@@ -67,13 +70,34 @@
                         <div id="view6" class="tabcontent">
                             <%@ include file="history_mt.jsp" %>
                         </div>
+                        <div id="view6" class="tabcontent">
+                            <%@ include file="history_mt.jsp" %>
+                        </div>
+                        <div id="view7" class="tabcontent">
+                            <%@ include file="mx_mt.jsp" %>
+                        </div>
+                        <div id="view8" class="tabcontent">
+                            <div id="error-container">
+                                <table id="errorInfoTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Message</th>
+                                            <th>Path</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="errorInformationTable"></tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <%@ include file="tabValidateMX.jsp" %>
                 <%@ include file="button_action.jsp" %>
             </form>
         </c:if>
     </c:forEach>
 </div>
+<%@ include file="validateMX.jsp" %>
 <script type="text/javascript" src="js/data-tree.js"></script>
 <script>
     var xmldata = document.getElementById("hiddenmxfull").value;

@@ -475,10 +475,10 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             datas.setTrans_date_value("--");
             datas.setTrans_amount(null);
             datas.setTrans_ccy(null);
-            int idDupe = dBTrx.cekDuplikatID(datas);
-            if (idDupe > 1) {
-                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
-            }
+//            int idDupe = dBTrx.cekDuplikatID(datas);
+//            if (idDupe > 1) {
+//                dBTrx2.updateDuplikat(Integer.parseInt(returnId_headers), (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+//            }
         } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.056")) {
             appHeader.setMsgDefIdr("camt.056.001.08");
 

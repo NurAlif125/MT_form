@@ -8,11 +8,13 @@ import com.google.gson.Gson;
 import com.prowidesoftware.swift.model.mx.AbstractMX;
 import com.prowidesoftware.swift.model.mx.MxCamt05300108;
 import com.prowidesoftware.swift.model.mx.MxCamt05500108;
+import com.prowidesoftware.swift.model.mx.MxCamt05600108;
 import com.prowidesoftware.swift.model.mx.MxPacs00400109;
 import com.prowidesoftware.swift.model.mx.MxPacs00800108;
 import com.prowidesoftware.swift.model.mx.MxPacs00900108;
 import com.vensys.appcm.rulePacs.ruleCamt053_2025;
 import com.vensys.appcm.rulePacs.ruleCamt055_2025;
+import com.vensys.appcm.rulePacs.ruleCamt056_2025;
 import com.vensys.appcm.rulePacs.rulePacs004_2024;
 import com.vensys.appcm.rulePacs.rulePacs008_2024;
 import com.vensys.appcm.rulePacs.rulePacs009Cov_2024;
@@ -106,6 +108,12 @@ public class SCValidateMX extends HttpServlet {
             rulecamt055.runRules(logicalTerminal, receiverAddress);
             String errorRuleCamt055 = rulecamt055.getErrorRule();
             out.print(errorRuleCamt055);
+        } else if (abstractMX.getMxId().id().toLowerCase().contains("camt.056")) {
+            MxCamt05600108 dataMXcamt056 = (MxCamt05600108) abstractMX;
+            ruleCamt056_2025 rulecamt056 = new ruleCamt056_2025 (dataMXcamt056);
+            rulecamt056.runRules(logicalTerminal, receiverAddress);
+            String errorRuleCamt056 = rulecamt056.getErrorRule();
+            out.print(errorRuleCamt056);
         }
     }
 

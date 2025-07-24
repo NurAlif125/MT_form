@@ -143,6 +143,26 @@ public class ruleCamt055_2025 {
                         String id = Case.getId();
                         if (id.equalsIgnoreCase("")) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id\"><td>Case/Identification is mandatory!</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id</td></tr>");
+                        } else if (id.length() == 16) {
+                            if (id.startsWith("/")) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id\"><td>The first one and the 16th one cannot be “/”.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id</td></tr>");
+                            }
+                            
+                            if (id.endsWith("/")) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id\"><td>The first one and the 16th one cannot be “/”.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id</td></tr>");
+                            }
+                            
+                            if (id.contains("//")) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id\"><td>The string of 16 characters cannot contain “//”.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id</td></tr>");
+                            }
+                        } else {
+                            if (id.startsWith("/")) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id\"><td>The first one and the 16th one cannot be “/”.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id</td></tr>");
+                            }
+                            
+                            if (id.contains("//")) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id\"><td>The string of 16 characters cannot contain “//”.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Id</td></tr>");
+                            }
                         }
 
                         Party40Choice cretr = Case.getCretr();
@@ -191,38 +211,111 @@ public class ruleCamt055_2025 {
                                     if (finInstnId != null) {
                                         String name = finInstnId.getNm();
                                         PostalAddress24 pstlAdr = finInstnId.getPstlAdr();
-                                        if (name == null || pstlAdr == null) {
-                                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId\"><td>Name and Address must always be present together.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId</td></tr>");
-                                        } else {
-                                            String dept = pstlAdr.getDept();
-                                            String subDept = pstlAdr.getSubDept();
-                                            String strtNm = pstlAdr.getStrtNm();
-                                            String bldgNb = pstlAdr.getBldgNb();
-                                            String bldgNm = pstlAdr.getBldgNm();
-                                            String flr = pstlAdr.getFlr();
-                                            String pstBx = pstlAdr.getPstBx();
-                                            String room = pstlAdr.getRoom();
-                                            String pstCd = pstlAdr.getPstCd();
-                                            String twnNm = pstlAdr.getTwnNm();
-                                            String twnLctnNm = pstlAdr.getTwnLctnNm();
-                                            String dstrctNm = pstlAdr.getDstrctNm();
-                                            String ctrySubDvsn = pstlAdr.getCtrySubDvsn();
-                                            String ctry = pstlAdr.getCtry();
-                                            List<String> adrLine = pstlAdr.getAdrLine();
+                                        String bicfi = finInstnId.getBICFI();
+                                        if (bicfi == null || bicfi.equalsIgnoreCase("")) {
+                                            if (name == null || pstlAdr == null) {
+                                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId\"><td>Name and Address must always be present together.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId</td></tr>");
+                                            } else {
+                                                String dept = pstlAdr.getDept();
+                                                String subDept = pstlAdr.getSubDept();
+                                                String strtNm = pstlAdr.getStrtNm();
+                                                String bldgNb = pstlAdr.getBldgNb();
+                                                String bldgNm = pstlAdr.getBldgNm();
+                                                String flr = pstlAdr.getFlr();
+                                                String pstBx = pstlAdr.getPstBx();
+                                                String room = pstlAdr.getRoom();
+                                                String pstCd = pstlAdr.getPstCd();
+                                                String twnNm = pstlAdr.getTwnNm();
+                                                String twnLctnNm = pstlAdr.getTwnLctnNm();
+                                                String dstrctNm = pstlAdr.getDstrctNm();
+                                                String ctrySubDvsn = pstlAdr.getCtrySubDvsn();
+                                                String ctry = pstlAdr.getCtry();
+                                                List<String> adrLine = pstlAdr.getAdrLine();
 
-                                            if (!adrLine.isEmpty() && (dept != null || subDept != null || strtNm != null || bldgNb != null || bldgNm != null || flr != null || pstBx != null || room != null || pstCd != null || twnLctnNm != null || dstrctNm != null || ctrySubDvsn != null) && ((twnNm == null || ctry == null) || adrLine.size() > 2)) {
-                                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Address Line is present and any other Postal Address element(s) are present, then Town Name and Country are mandatory in Postal Address and a maximum of two occurrences of Address Line are allowed.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
-                                            } else if (!adrLine.isEmpty() && (dept == null && subDept == null && strtNm == null && bldgNb == null && bldgNm == null && flr == null && pstBx == null && room == null && pstCd == null && twnLctnNm == null && dstrctNm == null && ctrySubDvsn == null && twnNm == null && ctry == null)) {
-                                                int i = 0;
-                                                while (i < adrLine.size()) {
-                                                    int panjang = adrLine.get(i).length();
-                                                    if (panjang > 35) {
-                                                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine\"><td>If Postal Address is present and if no other element than Address Line is present then every occurrence of Address Line must not exceed 35 characters.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine</td></tr>");
+                                                if (!adrLine.isEmpty() && (dept != null || subDept != null || strtNm != null || bldgNb != null || bldgNm != null || flr != null || pstBx != null || room != null || pstCd != null || twnLctnNm != null || dstrctNm != null || ctrySubDvsn != null) && ((twnNm == null || ctry == null) || adrLine.size() > 2)) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Address Line is present and any other Postal Address element(s) are present, then Town Name and Country are mandatory in Postal Address and a maximum of two occurrences of Address Line are allowed.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
+                                                } else if (!adrLine.isEmpty() && (dept == null && subDept == null && strtNm == null && bldgNb == null && bldgNm == null && flr == null && pstBx == null && room == null && pstCd == null && twnLctnNm == null && dstrctNm == null && ctrySubDvsn == null && twnNm == null && ctry == null)) {
+                                                    int i = 0;
+                                                    while (i < adrLine.size()) {
+                                                        int panjang = adrLine.get(i).length();
+                                                        if (panjang > 35) {
+                                                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine\"><td>If Postal Address is present and if no other element than Address Line is present then every occurrence of Address Line must not exceed 35 characters.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine</td></tr>");
+                                                        }
+                                                        i++;
                                                     }
-                                                    i++;
+                                                } else if (adrLine.isEmpty() && (twnNm == null || ctry == null)) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
                                                 }
-                                            } else if (adrLine.isEmpty() && (twnNm == null || ctry == null)) {
-                                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
+                                            }
+                                        } else if (name != null) {
+                                            if (pstlAdr == null) {
+                                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId\"><td>Name and Address must always be present together.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId</td></tr>");
+                                            } else {
+                                                String dept = pstlAdr.getDept();
+                                                String subDept = pstlAdr.getSubDept();
+                                                String strtNm = pstlAdr.getStrtNm();
+                                                String bldgNb = pstlAdr.getBldgNb();
+                                                String bldgNm = pstlAdr.getBldgNm();
+                                                String flr = pstlAdr.getFlr();
+                                                String pstBx = pstlAdr.getPstBx();
+                                                String room = pstlAdr.getRoom();
+                                                String pstCd = pstlAdr.getPstCd();
+                                                String twnNm = pstlAdr.getTwnNm();
+                                                String twnLctnNm = pstlAdr.getTwnLctnNm();
+                                                String dstrctNm = pstlAdr.getDstrctNm();
+                                                String ctrySubDvsn = pstlAdr.getCtrySubDvsn();
+                                                String ctry = pstlAdr.getCtry();
+                                                List<String> adrLine = pstlAdr.getAdrLine();
+
+                                                if (!adrLine.isEmpty() && (dept != null || subDept != null || strtNm != null || bldgNb != null || bldgNm != null || flr != null || pstBx != null || room != null || pstCd != null || twnLctnNm != null || dstrctNm != null || ctrySubDvsn != null) && ((twnNm == null || ctry == null) || adrLine.size() > 2)) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Address Line is present and any other Postal Address element(s) are present, then Town Name and Country are mandatory in Postal Address and a maximum of two occurrences of Address Line are allowed.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
+                                                } else if (!adrLine.isEmpty() && (dept == null && subDept == null && strtNm == null && bldgNb == null && bldgNm == null && flr == null && pstBx == null && room == null && pstCd == null && twnLctnNm == null && dstrctNm == null && ctrySubDvsn == null && twnNm == null && ctry == null)) {
+                                                    int i = 0;
+                                                    while (i < adrLine.size()) {
+                                                        int panjang = adrLine.get(i).length();
+                                                        if (panjang > 35) {
+                                                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine\"><td>If Postal Address is present and if no other element than Address Line is present then every occurrence of Address Line must not exceed 35 characters.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine</td></tr>");
+                                                        }
+                                                        i++;
+                                                    }
+                                                } else if (adrLine.isEmpty() && (twnNm == null || ctry == null)) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
+                                                }
+                                            }
+                                        } else if (pstlAdr != null) {
+                                            if (name == null) {
+                                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId\"><td>Name and Address must always be present together.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId</td></tr>");
+                                            } else {
+                                                String dept = pstlAdr.getDept();
+                                                String subDept = pstlAdr.getSubDept();
+                                                String strtNm = pstlAdr.getStrtNm();
+                                                String bldgNb = pstlAdr.getBldgNb();
+                                                String bldgNm = pstlAdr.getBldgNm();
+                                                String flr = pstlAdr.getFlr();
+                                                String pstBx = pstlAdr.getPstBx();
+                                                String room = pstlAdr.getRoom();
+                                                String pstCd = pstlAdr.getPstCd();
+                                                String twnNm = pstlAdr.getTwnNm();
+                                                String twnLctnNm = pstlAdr.getTwnLctnNm();
+                                                String dstrctNm = pstlAdr.getDstrctNm();
+                                                String ctrySubDvsn = pstlAdr.getCtrySubDvsn();
+                                                String ctry = pstlAdr.getCtry();
+                                                List<String> adrLine = pstlAdr.getAdrLine();
+
+                                                if (!adrLine.isEmpty() && (dept != null || subDept != null || strtNm != null || bldgNb != null || bldgNm != null || flr != null || pstBx != null || room != null || pstCd != null || twnLctnNm != null || dstrctNm != null || ctrySubDvsn != null) && ((twnNm == null || ctry == null) || adrLine.size() > 2)) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Address Line is present and any other Postal Address element(s) are present, then Town Name and Country are mandatory in Postal Address and a maximum of two occurrences of Address Line are allowed.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
+                                                } else if (!adrLine.isEmpty() && (dept == null && subDept == null && strtNm == null && bldgNb == null && bldgNm == null && flr == null && pstBx == null && room == null && pstCd == null && twnLctnNm == null && dstrctNm == null && ctrySubDvsn == null && twnNm == null && ctry == null)) {
+                                                    int i = 0;
+                                                    while (i < adrLine.size()) {
+                                                        int panjang = adrLine.get(i).length();
+                                                        if (panjang > 35) {
+                                                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine\"><td>If Postal Address is present and if no other element than Address Line is present then every occurrence of Address Line must not exceed 35 characters.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr/AdrLine</td></tr>");
+                                                        }
+                                                        i++;
+                                                    }
+                                                } else if (adrLine.isEmpty() && (twnNm == null || ctry == null)) {
+                                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr\"><td>If Postal Address is used, and if Address Line is absent, then Town Name and Country must be present.</td><td>CstmrPmtCxlReq/Undrlyg/OrgnlPmtInfAndCxl/TxInf/Case/Cretr/Agt/FinInstnId/PstlAdr</td></tr>");
+                                                }
                                             }
                                         }
                                     }
