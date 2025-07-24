@@ -430,7 +430,8 @@ public class HeaderListServlet extends HttpServlet {
         intPart = intPart.replace(".", "");
 
         // Format integer dengan pemisah ribuan (titik)
-        String formattedInt = String.format("%,d", Integer.parseInt(intPart)).replace(',', '.');
+//        String formattedInt = String.format("%,d", Integer.parseInt(intPart)).replace(',', '.');
+        String formattedInt = String.format("%,d", new java.math.BigDecimal(intPart).toBigInteger()).replace(',', '.');
 
         // Maksimal 5 digit desimal
         if (!decPart.isEmpty()) {
