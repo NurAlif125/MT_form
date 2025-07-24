@@ -706,32 +706,53 @@ function escapeHtml(text) {
 //        return integerPart + decimalPart;
 //    }
 
+//    function formatNumberPreserveDecimal(value) {
+//        if (!value) return "";
+//
+//        // Ganti koma ke titik untuk proses numerik
+//        let normalized = value.replace(",", ".");
+//        let parts = normalized.split(".");
+//        let integer = parts[0];
+//        let decimal = parts[1] || "";
+//
+//        if (decimal.length > 5) {
+//            // Hanya round jika bukan semua nol
+//            if (!/^0+$/.test(decimal)) {
+//                let rounded = parseFloat(normalized).toFixed(5);
+//                parts = rounded.split(".");
+//                integer = parts[0];
+//                decimal = parts[1];
+//            } else {
+//                // Jika semua nol, batasi tetap 5 nol
+//                decimal = decimal.substring(0, 5);
+//            }
+//        }
+//
+//        // Format angka dengan pemisah ribuan Indonesia
+//        let formattedInteger = parseInt(integer).toLocaleString('id-ID');
+//
+//        return decimal ? formattedInteger + "," + decimal : formattedInteger;
+//    }
+    
+    
     function formatNumberPreserveDecimal(value) {
         if (!value) return "";
 
-        // Ganti koma ke titik untuk proses numerik
-        let normalized = value.replace(",", ".");
-        let parts = normalized.split(".");
-        let integer = parts[0];
-        let decimal = parts[1] || "";
+        // Ubah format lokal ID ke format standar (hilangkan titik, ganti koma jadi titik)
+        let normalized = value.replace(/\./g, '').replace(',', '.');
 
-        if (decimal.length > 5) {
-            // Hanya round jika bukan semua nol
-            if (!/^0+$/.test(decimal)) {
-                let rounded = parseFloat(normalized).toFixed(5);
-                parts = rounded.split(".");
-                integer = parts[0];
-                decimal = parts[1];
-            } else {
-                // Jika semua nol, batasi tetap 5 nol
-                decimal = decimal.substring(0, 5);
-            }
-        }
+        let number = parseFloat(normalized);
+        if (isNaN(number)) return value;
 
-        // Format angka dengan pemisah ribuan Indonesia
-        let formattedInteger = parseInt(integer).toLocaleString('id-ID');
+        // Bulatkan ke maksimal 5 digit desimal
+        let rounded = number.toFixed(5);
 
-        return decimal ? formattedInteger + "," + decimal : formattedInteger;
+        // Pisahkan bagian integer dan desimal
+        let parts = rounded.split(".");
+        let integerPart = parseInt(parts[0]).toLocaleString('id-ID');
+        let decimalPart = parts[1] ? "," + parts[1].replace(/0+$/, '') : "";
+
+        return decimalPart === "," ? integerPart : integerPart + decimalPart;
     }
 
 
