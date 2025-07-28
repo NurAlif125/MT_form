@@ -46,7 +46,7 @@ public class DBDataRole {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        evl.insertDataEvent(modifier, "Tambah role", ip, comp);
+        evl.insertDataEvent(modifier, "Tambah role - "+data.getRole_name(), ip, comp);
         evl.updateLogUser(modifier, "role", tanggal);
     }
 
@@ -67,7 +67,7 @@ public class DBDataRole {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        evl.insertDataEvent(modifier, "Ubah role", ip, comp);
+        evl.insertDataEvent(modifier, "Ubah role - "+data.getRole_id(), ip, comp);
         evl.updateLogUser(modifier, "role", tanggal);
     }
 
@@ -211,7 +211,7 @@ public class DBDataRole {
         st.setInt(1, role_id);
         st.executeUpdate();
 //        System.out.println(st);
-        evl.insertDataEvent(modifier, "Disable Permanent role", ip, comp);
+        evl.insertDataEvent(modifier, "Disable Permanent role - "+role_id, ip, comp);
         evl.updateLogUser(modifier, "role", tanggal);
     }
     

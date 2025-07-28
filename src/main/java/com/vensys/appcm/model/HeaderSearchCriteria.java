@@ -24,6 +24,15 @@ public class HeaderSearchCriteria {
     private String sourceSearch;         // source
     private String createby;             // createby
     private String approveby;            // approve
+    private String userentry;            // approve
+
+    public String getUserentry() {
+        return userentry;
+    }
+
+    public void setUserentry(String userentry) {
+        this.userentry = userentry;
+    }
 
     // Getters and Setters
     public String getMtSearch() {

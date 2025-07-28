@@ -87,6 +87,7 @@ public class HeaderListServlet extends HttpServlet {
         criteria.setSourceSearch(request.getParameter("columns[13][search][value]"));
         criteria.setCreateby(request.getParameter("columns[14][search][value]"));
         criteria.setApproveby(request.getParameter("columns[15][search][value]"));
+        criteria.setUserentry(request.getParameter("columns[16][search][value]"));
         
 //        System.out.println("mtSearch: " + request.getParameter("columns[1][search][value]"));
 //        System.out.println("ioSearch: " + request.getParameter("columns[2][search][value]"));
@@ -161,7 +162,8 @@ public class HeaderListServlet extends HttpServlet {
 
         try {
             channel = (String) httpSession.getAttribute("channel");
-            if (!channel.equalsIgnoreCase("")) {
+//            if (!channel.equalsIgnoreCase("")) {
+            if (channel != null && !channel.equalsIgnoreCase("")) {
                 notifVer = dbo.getNotificationVer(channel);
                 notifAuth = dbo.getNotificationAuth(channel);
             } else {
@@ -370,6 +372,7 @@ public class HeaderListServlet extends HttpServlet {
                     obj.put("trans_ccy", h.getTrans_ccy());
                     obj.put("createby", h.getCreateby());
                     obj.put("approveby", h.getApproveby());
+                    obj.put("userentry", h.getUserEntry());
                     dataArray.put(obj);
                 }
                 

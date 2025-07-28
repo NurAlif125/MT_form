@@ -43,13 +43,13 @@ public class DBDataUser {
     public void addDataUser(DataUser data, String mofier, String ip, String comp) {
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new,sub_role,channel,user_bic) VALUES (?,?,?,?,?,?,?,?,?,?)";
+             String sql = "INSERT INTO users (user_id,name,description,password,role,enable,status_new,sub_role,channel,user_bic) VALUES (?,?,?,?,?,?,?,?,?,?)";
 //            String sql = "INSERT INTO [user] (user_id,name,description,role,enable) VALUES (?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, data.getUser_id()); //user_id
             st.setString(2, data.getName());     //name
-            st.setString(3, "1");     //password
-            st.setString(4, data.getDescription());     //description
+            st.setString(3, data.getDescription());     //description
+            st.setString(4, "1");     //password
             st.setInt(5, data.getRole());     //role
             st.setInt(6, data.getEnable());     //enable
             st.setInt(7, 1);
@@ -61,7 +61,7 @@ public class DBDataUser {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        evl.insertDataEvent(mofier, "Tambah user", ip, comp);
+        evl.insertDataEvent(mofier, "Tambah user - "+data.getUser_id(), ip, comp);
         evl.updateLogUser(mofier, "user", tanggal);
     }
     
@@ -84,7 +84,7 @@ public class DBDataUser {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        evl.insertDataEvent(mofier, "Ubah user", ip, comp);
+        evl.insertDataEvent(mofier, "Ubah user - "+user_id, ip, comp);
         evl.updateLogUser(mofier, "user", tanggal);
     }
 
@@ -356,7 +356,7 @@ public class DBDataUser {
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setString(1, user_id);
         st.executeUpdate();
-        evl.insertDataEvent(mofier, "disable permanent user", ip, comp);
+        evl.insertDataEvent(mofier, "disable permanent user - "+user_id, ip, comp);
         evl.updateLogUser(mofier, "user", tanggal);
     }
     

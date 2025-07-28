@@ -58,6 +58,7 @@ public class SCDataUser extends HttpServlet {
         String auto_disable = request.getParameter("auto_disable");
 //        String idPass="";
         boolean isValidUser = false;
+        boolean isValidUserDisalbe = false;
         String message = "";
         
         if(request.getParameter("subrole") == null) {
@@ -107,6 +108,12 @@ public class SCDataUser extends HttpServlet {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            try {
+                isValidUserDisalbe = dbo.authenticateUserDisable(data.getUser_id());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            
             
             String foundUser = "";
             if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
@@ -120,7 +127,11 @@ public class SCDataUser extends HttpServlet {
             
             if (foundUser.equalsIgnoreCase("Found User LDAP")) {
                 if (isValidUser) {//validasi untuk user
-                    message = "Failed, username is already registered in CM";
+                    if (isValidUserDisalbe) {
+                        message = "Failed, User Id already Disabled";
+                    } else {
+                        message = "Failed, username is already registered in CM";
+                    }
                 } else {
                     dbData2.addDataUser(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
@@ -147,8 +158,9 @@ public class SCDataUser extends HttpServlet {
             dbConn.closeConnection();
         }
         session.setAttribute("message", message);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataUserList");
-        dispatcher.forward(request, response);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataUserList");
+//        dispatcher.forward(request, response);
+        response.sendRedirect("SCDataUserList");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

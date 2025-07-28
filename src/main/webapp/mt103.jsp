@@ -910,6 +910,9 @@
                                     <!-- OF72 -->
                                     <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
                                         <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_240_of72_sender_receiver_information" id="_240_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_240_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                        <span style="font-size: 8px; color: #555; padding:5px">
+                                             Sample Input: <code>/INS/ABNANL2A</code>
+                                        </span>
                                     </div>
                                     <hr/>
 

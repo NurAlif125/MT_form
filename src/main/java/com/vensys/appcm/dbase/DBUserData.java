@@ -159,6 +159,23 @@ public class DBUserData {
         }
         return isValid;
     }
+    
+    public boolean authenticateUserDisable(String user_id) throws Exception {
+        boolean isValid = false;
+        String sql = "SELECT user_id, name, password, status_new, user_mt_routing, description, role_id "
+                + "FROM users WHERE user_id= ? AND enable = 2 ";
+//        System.out.println("sql=" + sql);
+        PreparedStatement st = this.conn.prepareStatement(sql);
+        st.setString(1 , user_id);
+        ResultSet rs = st.executeQuery();
+        if (rs.next()) {
+            String _user_id = rs.getString(1);
+            if (_user_id.equalsIgnoreCase(user_id)) {
+                isValid = true;
+            }
+        }
+        return isValid;
+    }
 
     public boolean cekHistoryPass(String user_id, String password) throws Exception {
         boolean isValid = true;
