@@ -75,8 +75,8 @@
                 $('#tab-view3').removeClass("selected").removeAttr('class');
                 $('#tab-view4').removeClass("selected").removeAttr('class');
                 $('#tab-view5').removeClass("selected").removeAttr('class');
-//                $('#tab-view6').removeClass("selected").removeAttr('class');
-//                $('#tab-view7').removeClass("selected").removeAttr('class');
+                $('#tab-view6').removeClass("selected").removeAttr('class');
+                $('#tab-view7').removeClass("selected").removeAttr('class');
                 $('#tab-validate').addClass("selected");
 
                 let errorContainer = document.getElementById("error-container");

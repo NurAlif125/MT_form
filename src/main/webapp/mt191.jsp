@@ -6,12 +6,27 @@
 
 <%@ include file="header.jsp" %>
 <%@ include file="rule/validate_rule_mtn91.jsp" %>
+<%@ include file="rule/validateList_scr.jsp" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%--<%@page contentType="text/html" import="java.util.*" %>--%>
+<%@ page import="java.util.*"%>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
 <script src="js/tabcontent.js" type="text/javascript"></script>
+<script src="js/mt.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/dropdown.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/themes/flickr.com/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/tabcontent.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/displaytag.css" type="text/css">
+<link rel="stylesheet" href="css/helper.css" type="text/css">
+<link href="css/MT.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
+<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.js"></script>
 
 <div id="isi">
     <c:forEach var="item" items="${role}">
@@ -26,11 +41,14 @@
                         <li id="tab-view3"><a href="#" rel="view3">Comment</a></li>
                         <li id="tab-view4"><a href="#" rel="view4">Histories</a></li>
                         <li id="tab-view5"><a href="#" rel="view5">Log MT Text</a></li>
-                        <li hidden id="tab-validate"><a href="#" rel="view6" id="tabView6">Validate</a></li>
+                        <li id="tab-view6"><a href="#" rel="view6">MT Relation</a></li>
+                        <li id="tab-view7"><a href="#" rel="view7" id="tabView7">Translation</a></li>
+                        <li hidden id="tab-validate"><a href="#" rel="view8" id="tabView8">Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
                             <%@ include file="header_mt.jsp" %>
+                            <%@ include file="special_rate.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
                             <!-- MF20 -->
@@ -150,17 +168,25 @@
 
                         </div>
                         <div id="view3" class="tabcontent">
-                            <%@ include file="comment_mt.jsp" %>
+                         <%@ include file="comment_mt.jsp" %>
+                    </div>
+                    <div id="view4" class="tabcontent">
+                        <%@ include file="history_mt.jsp" %>
+                    </div>
+                    <div id="view5" class="tabcontent">
+                        <%@ include file="logTrx_mt.jsp" %>
+                    </div>
+                    <div id="view6" class="tabcontent">
+                        <%@ include file="relation_mt.jsp" %>
+                    </div>
+                    <div id="view7" class="tab-content">
+                        <div class="form-row">
+                            <%@include file="mt_mx.jsp" %>
                         </div>
-                        <div id="view4" class="tabcontent">
-                            <%@ include file="history_mt.jsp" %>
-                        </div>
-                        <div id="view5" class="tabcontent">
-                            <%@ include file="logTrx_mt.jsp" %>
-                        </div>
-                        <div id="view6" class="tabcontent">
-                            <div id="error-container"></div>
-                        </div>
+                    </div>
+                    <div id="view8" class="tabcontent">
+                        <div id="error-container"></div>
+                    </div>
                     </div>
                 </div>
                 <%@ include file="button_action.jsp" %>
@@ -168,3 +194,37 @@
         </c:if>
     </c:forEach>
 </div>
+
+<script>
+    // Fungsi untuk mengambil parameter dari URL
+    function getQueryParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Mengecek apakah ada parameter hideView1 di URL
+    if (getQueryParameter('create') === 'true') {
+        // Menyembunyikan tab view1 dan seluruh kontennya
+        const tabView7 = document.getElementById('tabView7');
+        const view1Content = document.getElementById('view7');
+
+        if (tabView7)
+            tabView7.style.display = 'none'; // Sembunyikan tab link
+        if (view7Content)
+            view7Content.style.display = 'none'; // Sembunyikan konten view1
+    } else {
+        // Tampilkan view1 jika tidak ada parameter untuk menyembunyikan
+        document.getElementById('view7').classList.add('active');
+    }
+</script>
+
+<script type="text/javascript" src="js/json-xml-data-tree/data-tree.js"></script>
+<script>
+    var xmldat = document.getElementById("mxview3").value;
+    new DataTree({
+        xml: xmldat,
+        container: '#mxfull',
+        attrs: 'show',
+        startExpanded: true
+    });
+</script>

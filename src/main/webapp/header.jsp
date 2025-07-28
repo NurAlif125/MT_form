@@ -173,14 +173,23 @@
                                             <%--c:if test="${item == 'MT:101'}">
                                             <li><a href="mt101.jsp">101 - Request for Transfer</a></li>
                                             </c:if--%>
-                                            <%-- <c:if test="${item == 'MT:191'}">
-                                                 <li><a href="mt191.jsp">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
-                                                 </c:if>--%>
                                             <c:if test="${item == 'MT:103'}">
                                                 <li><a onclick="userTrackMenuClick('103 - Single Customer Credit Transfer')" href="mt103.jsp?create=true">103 - Single Customer Credit Transfer</a></li>
                                                 </c:if>
-                                                <c:if test="${item == 'MT:199'}">
-                                                <!--<li><a href="mt199.jsp?create=true">199 - Free Format Message</a></li>-->
+                                            <c:if test="${item == 'MT:110'}">
+                                                <li><a onclick="userTrackMenuClick('110 - Advice of Cheque(s)')" href="mt110.jsp?create=true">110 - Advice of Cheque(s)</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:111'}">
+                                                <li><a onclick="userTrackMenuClick('111 - Request for Stop Payment of a Cheque')" href="mt111.jsp?create=true">111 - Request for Stop Payment of a Cheque</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:191'}">
+                                                <li><a onclick="userTrackMenuClick('191 - Request for Payment of Charges, Interest and Other Expenses')" href="mt191.jsp?create=true">191 - Request for Payment of Charges, Interest and Other Expenses</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:192'}">
+                                                <li><a onclick="userTrackMenuClick('192 - Request for Cancellation')" href="mt192.jsp?create=true">192 - Request for Cancellation</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:199'}">
+                                                <li><a onclick="userTrackMenuClick('199 - Free Format Message')" href="mt199.jsp?create=true">199 - Free Format Message</a></li>
                                             </c:if>
                                             <c:if test="${item == 'MT:199'}">
                                                 <!--<li><a href="SCInvesitvationOutgoing103">199 - Free Format Message (From MT103 Outgoing)</a></li>-->
@@ -202,7 +211,10 @@
                                             </c:if>
                                             <c:if test="${item == 'MT:202COV'}">
                                                 <li><a onclick="userTrackMenuClick('202 COV - General Financial Institution Transfer')" href="mt202COV.jsp?create=true">202 COV - General Financial Institution Transfer</a></li>
-                                                </c:if>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:299'}">
+                                                <li><a onclick="userTrackMenuClick('299 - Free Format Message')" href="mt299.jsp?create=true">299 - Free Format Message</a></li>
+                                            </c:if>
                                             </c:forEach>
                                     </ul>
                                 </li>
