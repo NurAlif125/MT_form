@@ -26,13 +26,16 @@
                    <%--  </c:if>
                 </c:forEach>--%>
             </div>
-            <div id="message">
-                <span class="style1">
-                    <div align="center">
-                        <c:out value="${message}"/>
-                    </div>
-                </span>
-            </div>
+            <c:if test="${not empty sessionScope.message}">
+                <div id="message">
+                    <span class="style1">
+                        <div align="center">
+                            <c:out value="${sessionScope.message}" />
+                        </div>
+                    </span>
+                </div>
+                <c:remove var="message" scope="session" />
+            </c:if>
             <div id="content">
                 <%int rowNum = 1;%>
                 <table id="example" class="display nowrap" style="width:100%">

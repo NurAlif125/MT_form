@@ -117,8 +117,9 @@ public class SCDataRole extends HttpServlet {
             dbConn2.closeConnection2();
         }
         session.setAttribute("message", strErrMsg);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataRoleList");
-        dispatcher.forward(request, response);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataRoleList");
+//        dispatcher.forward(request, response);
+        response.sendRedirect("SCDataRoleList");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
