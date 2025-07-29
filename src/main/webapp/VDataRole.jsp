@@ -41,7 +41,7 @@
                 <table id="example" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th style="width:30px;">No</th>
                             <th>Role Name</th>
                             <th>Description</th>
                             <th>Timeout</th>
@@ -52,7 +52,7 @@
                     <tbody>
                     <c:forEach items="${dataRole}" var="item">
                         <tr>
-                            <td><%=rowNum++%></td>
+                            <td style="width:30px;"><%=rowNum++%></td>
                             <td><a href="VDataRole?role_id=${item.role_id}">${item.role_name}</a></td>
                             <td>${item.role_desc}</td>
                             <td>${item.timeout}</td>
