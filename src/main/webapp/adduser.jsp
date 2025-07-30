@@ -170,6 +170,7 @@
 
 <script>
     var cnl = document.getElementById('channel');
+    var cnl = document.getElementById('user_bic');
 </script>
 
 
