@@ -4894,8 +4894,10 @@
                 newValue.toUpperCase();
                 input.value = newValue;
                 console.log("BICFI setelah diproses:", newValue);
-            } else if (value.length > 0) {
-                alert('BICFI must be 12 characters (contoh: BDINIDJAXXXX)');
+            } else if (value.length === 11) {
+                input.value.toUpperCase();
+            } else if (value.length < 11) {
+                alert('BICFI must be 12 characters (example: BDINIDJAXXXX)');
             }
         }
 
