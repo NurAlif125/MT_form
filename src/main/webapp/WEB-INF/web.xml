@@ -989,4 +989,24 @@
         </init-param>
         <!--<load-on-startup>3</load-on-startup>-->
     </servlet>
+    <filter>
+        <filter-name>NoCacheFilter</filter-name>
+        <filter-class>com.vensys.appcm.myutils.NoCacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/AppCM/*</url-pattern>
+    </filter-mapping>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/400.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.jsp</location>
+    </error-page>
 </web-app>
