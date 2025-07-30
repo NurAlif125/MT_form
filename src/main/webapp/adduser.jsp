@@ -169,6 +169,10 @@
 </script>
 
 <script>
+    var cnl = document.getElementById('channel');
+</script>
+
+<script>
   const input = document.getElementById('searchBIC');
   const suggestionsContainer = document.getElementById('suggestions');
 
