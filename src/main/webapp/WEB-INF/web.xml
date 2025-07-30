@@ -989,4 +989,12 @@
         </init-param>
         <!--<load-on-startup>3</load-on-startup>-->
     </servlet>
+    <filter>
+        <filter-name>NoCacheFilter</filter-name>
+        <filter-class>com.vensys.appcm.myutils.NoCacheFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/AppCM/*</url-pattern>
+    </filter-mapping>
 </web-app>
