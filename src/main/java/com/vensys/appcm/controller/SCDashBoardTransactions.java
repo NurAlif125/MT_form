@@ -58,6 +58,13 @@ public class SCDashBoardTransactions extends HttpServlet {
         String begDateInsert = request.getParameter("insert_date_from");
         String endDateInsert = request.getParameter("insert_date_end");
         String io_type = request.getParameter("io_type");
+        
+        String ioType = request.getParameter("io_type");
+        if (ioType == null || !ioType.matches("^[a-zA-Z0-9_-]+$")) {
+            log.warn("Invalid io_type parameter: {}", io_type);
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+            return;
+        }
         // System.out.println("::: Tipe Dashboard ALL -> " + io_type);
       
         try {  
