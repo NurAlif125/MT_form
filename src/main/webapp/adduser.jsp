@@ -168,9 +168,9 @@
     window.onload = handleRoleChange;
 </script>
 
-<script>
+<!--<script>
     var cnl = document.getElementById('channel');
-</script>
+</script>-->
 
 <script>
   const input = document.getElementById('searchBIC');
