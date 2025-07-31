@@ -44,13 +44,6 @@
                             <option value="O">Incoming</option>
                         </select>
                     </div>
-                    <div class="form-row"><span class="labelL2">Filter</span>
-                        <select name="filter_msg" id="filter_msg">
-                            <option value="">All</option>
-                            <option value="1">Swift Go</option>
-                            <option value="0">Non Swift Go</option>
-                        </select>
-                    </div>
                     <div class="form-row"><span class="labelL2">Message Type</span>
                         <input type="text" name="mt_type" id="mt_type" value="" size="17" />
                     </div>
