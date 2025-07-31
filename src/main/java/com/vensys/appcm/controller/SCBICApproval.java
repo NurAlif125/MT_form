@@ -22,8 +22,9 @@ import org.apache.log4j.Logger;
  * @author rafli
  */
 public class SCBICApproval extends HttpServlet {
-    
+
     Logger log = Logger.getLogger(getClass().getName());
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,33 +40,47 @@ public class SCBICApproval extends HttpServlet {
         DataBIC data = new DataBIC();
         DataBIC datas = new DataBIC();
         DBBIC dbData = new DBBIC(dbConn2.getConnection2());
-        
+
         String id_member = request.getParameter("id_member");
-        String action = request.getParameter("approvebic") != null ? "APPROVE" : 
-                   request.getParameter("rejectbic") != null ? "REJECT" : null;
-        data.setCode_member(request.getParameter("code_member"));
-        data.setCompany(request.getParameter("company"));
-        data.setAddress(request.getParameter("address"));
-        data.setNote(request.getParameter("note"));
-        
-        if (action.equalsIgnoreCase("APPROVE")) {
-            log.info("Approving BIC");
-            dbData.addDataAfterApproval(data, Integer.parseInt(id_member));
-        } else if (action.equalsIgnoreCase("REJECT")) {
-            data = dbData.getBicById(id_member);
-            if (data.getCode_member() == null && data.getCompany() == null) {
-                dbData.deletePermanentBICApproval(Integer.parseInt(id_member));
-            } else {
-                dbData.deleteBICApproval(Integer.parseInt(id_member));
-            }
-        }
-        
+        String action = request.getParameter("approvebic") != null ? "APPROVE"
+                : request.getParameter("rejectbic") != null ? "REJECT" : null;
+
         try {
+            if (id_member == null || !id_member.matches("\\d+")) {
+                response.sendError(400, "Invalid or missing id_member");
+                return;
+            }
+
+            if (action == null) {
+                response.sendError(400, "No action specified");
+                return;
+            }
+
+            data.setCode_member(request.getParameter("code_member"));
+            data.setCompany(request.getParameter("company"));
+            data.setAddress(request.getParameter("address"));
+            data.setNote(request.getParameter("note"));
+
+            if (action.equalsIgnoreCase("APPROVE")) {
+                log.info("Approving BIC");
+                dbData.addDataAfterApproval(data, Integer.parseInt(id_member));
+            } else if (action.equalsIgnoreCase("REJECT")) {
+                data = dbData.getBicById(id_member);
+                if (data.getCode_member() == null && data.getCompany() == null) {
+                    dbData.deletePermanentBICApproval(Integer.parseInt(id_member));
+                } else {
+                    dbData.deleteBICApproval(Integer.parseInt(id_member));
+                }
+            }
+        } catch (NumberFormatException e) {
+            response.sendError(400);
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("Exception in processRequest: ", ex);
+            response.sendError(500);
         } finally {
             dbConn2.closeConnection2();
         }
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCBICList");
         dispatcher.forward(request, response);
     }

@@ -46,9 +46,9 @@ public class SCDataUserList extends HttpServlet {
         String name = request.getParameter("s_name");
         String description = request.getParameter("s_description");
         
-        if ((user_id != null && !user_id.matches("^[a-zA-Z0-9_\\- ]{1,50}$")) || (name != null && !name.matches("^[a-zA-Z0-9_\\- ]{1,50}$")) || (description != null && !description.matches("^[a-zA-Z0-9_\\- ]{1,50}$"))) {
+        if ((user_id != null && !user_id.matches("[a-zA-Z0-9_]+")) || (name != null && !name.matches("[a-zA-Z0-9_]+")) || (description != null && !description.matches("[a-zA-Z0-9_]+"))) {
             log.warn("Blocked suspicious _s_user_id, _s_name, _s_description input: " + user_id + name + description);
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter");
+            response.sendError(400);
             return;
         }
         

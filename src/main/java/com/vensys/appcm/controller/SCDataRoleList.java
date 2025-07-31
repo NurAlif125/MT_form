@@ -40,9 +40,9 @@ public class SCDataRoleList extends HttpServlet {
         String find = request.getParameter("find");
         String role_name = request.getParameter("_s_role_name");
 
-        if (role_name != null && !role_name.matches("^[a-zA-Z0-9_\\- ]{1,50}$")) {
+        if (role_name != null && !role_name.matches("[a-zA-Z0-9_]+")) {
             log.warn("Blocked suspicious _s_role_name input: " + role_name);
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid parameter");
+            response.sendError(400);
             return;
         }
 

@@ -23,6 +23,9 @@ public class NoCacheFilter implements Filter {
 
         res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
         res.setHeader("Pragma", "no-cache");
+        res.setHeader("X-Content-Type-Options", "nosniff");
+        res.setHeader("X-Frame-Options", "DENY");
+        res.setHeader("Content-Security-Policy", "default-src 'self'");
         res.setDateHeader("Expires", 0);
 
         chain.doFilter(request, response);

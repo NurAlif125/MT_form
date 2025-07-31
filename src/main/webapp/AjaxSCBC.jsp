@@ -3,6 +3,7 @@
     Created on : Jul 5, 2022, 10:02:02 AM
     Author     : Muhammad Farras Ma'ruf
 --%>
+<%@page import="org.apache.commons.text.StringEscapeUtils"%>
 <%@page contentType="application/json" pageEncoding="UTF-8"%>
 <%@page import="com.vensys.appcm.dbase.DBBIC"%>
 <%@page import="com.vensys.appcm.dbase.DBconnection"%>
@@ -38,6 +39,11 @@
 
 // get data from data base by provided paremeters
     List<String[]> bic = db.getPagesBicAjax((offsetPage * maxData), maxData);
+    for (int i = 0; i < bic.size(); i++) {
+        for (int j = 0; j < bic.get(i).length; j++) {
+            bic.get(i)[j] = StringEscapeUtils.escapeHtml4(bic.get(i)[j]);
+        }
+    }
 
 // convert datas to json
     String jsonResult = new Gson().toJson(bic);
