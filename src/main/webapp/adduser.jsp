@@ -169,12 +169,10 @@
 </script>
 
 <script>
-    var cnl = document.getElementById('channel');
-    var cnl = document.getElementById('user_bic');
-    
-    //logicnya
+    document.getElementById('channel').onchange = function () {
+        document.getElementById('user_bic').selectedIndex = this.selectedIndex;
+    };
 </script>
-
 
 <script>
   const input = document.getElementById('searchBIC');
