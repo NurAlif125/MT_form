@@ -168,10 +168,41 @@
     window.onload = handleRoleChange;
 </script>
 
-<script>
+<!-- <script>
     document.getElementById('channel').onchange = function () {
         document.getElementById('user_bic').selectedIndex = this.selectedIndex;
     };
+    document.getElementById('channel').onchange != function () {
+        document.getElementById('user_bic').selectedIndex = this.hiddenIndex;
+    };
+
+</script> -->
+
+<script>
+  document.getElementById('channel').onchange = function () {
+    var selectedIndex = this.selectedIndex;
+    var bicSelect = document.getElementById('user_bic');
+
+    // Set selectedIndex
+    bicSelect.selectedIndex = selectedIndex;
+
+   
+
+    // Loop untuk menyembunyikan option yang tidak terpilih
+    for (let i = 0; i < bicSelect.options.length; i++) {
+        if (i === selectedIndex) {
+            bicSelect.options[i].style.display = 'block'; // tampilkan yang terpilih
+
+        } else {
+            bicSelect.options[i].style.display = 'none'; // sembunyikan yang lain
+        }
+        if( selectedIndex === 0) {
+            bicSelect.selectedIndex = 0;
+            bicSelect.options[i].style.display = 'block';
+        }
+    }
+     
+  };
 </script>
 
 <script>
