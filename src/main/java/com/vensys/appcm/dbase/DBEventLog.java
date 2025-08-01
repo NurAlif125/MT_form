@@ -30,7 +30,7 @@ public class DBEventLog {
     public void insertDataEvent(String user_id, String event, String ip, String com, String changes) {
         String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "Insert into event_log (user_id, event_date, ip, hostname, description, changes_tes) values (?, ?, ?, ?, ?, ?)";
+            String sql = "Insert into event_log (user_id, event_date, ip, hostname, description, changes) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement st = this.conn2.prepareStatement(sql);
             try {
                 st.setString(1, user_id);
