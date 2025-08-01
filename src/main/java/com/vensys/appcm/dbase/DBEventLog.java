@@ -24,9 +24,13 @@ public class DBEventLog {
     }
     
     public void insertDataEvent(String user_id, String event, String ip, String com) {
+        insertDataEvent(user_id, event, ip, com, "");
+    }
+
+    public void insertDataEvent(String user_id, String event, String ip, String com, String changes) {
         String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "Insert into event_log (user_id, event_date, ip, hostname, description) values (?, ?, ?, ?, ?)";
+            String sql = "Insert into event_log (user_id, event_date, ip, hostname, description, changes_tes) values (?, ?, ?, ?, ?, ?)";
             PreparedStatement st = this.conn2.prepareStatement(sql);
             try {
                 st.setString(1, user_id);
@@ -34,6 +38,7 @@ public class DBEventLog {
                 st.setString(3, ip);
                 st.setString(4, com);
                 st.setString(5, event);
+                st.setString(6, changes);
                 st.executeUpdate();
             } catch (SQLException e) {
                 System.out.print("Error SQL insert Event: " + e.getMessage());

@@ -747,8 +747,8 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        evl.insertDataEvent(user_login, "Update status transaksi menjadi " + status_header, ip_access, comp_name);
+        }        
+        // evl.insertDataEvent(user_login, "Update status transaksi menjadi " + status_header, ip_access, comp_name);
         evl.updateLogUser(user_login, "trx", tanggal);
     }
 

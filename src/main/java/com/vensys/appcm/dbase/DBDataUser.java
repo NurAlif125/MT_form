@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import jakarta.servlet.http.HttpServletRequest;
 import com.vensys.appcm.model.DataRole;
 import com.vensys.appcm.model.DataUser;
@@ -65,7 +66,75 @@ public class DBDataUser {
         evl.updateLogUser(mofier, "user", tanggal);
     }
     
-    public void updateDataUser(DataUser data, String user_id, String mofier, String ip, String comp) {
+    public void updateDataUser(DataUser newData, String user_id, DataUser oldData, String mofier, String ip, String comp) {
+        try {
+            StringBuilder changes = new StringBuilder();
+
+            if (!Objects.equals(oldData.getName(), newData.getName())) {
+            changes.append("name :\n")
+                   .append("before: '").append(oldData.getName()).append("'\n")
+                   .append("after: '").append(newData.getName()).append("'\n");
+            }
+            if (!Objects.equals(oldData.getDescription(), newData.getDescription())) {
+                changes.append("description :\n")
+                    .append("before: '").append(oldData.getDescription()).append("'\n")
+                    .append("after: '").append(newData.getDescription()).append("'\n");
+            }
+            if (oldData.getRole() != newData.getRole()) {
+                changes.append("role :\n")
+                    .append("before: ").append(oldData.getRole()).append("\n")
+                    .append("after: ").append(newData.getRole()).append("\n");
+            }
+            if (oldData.getSub_role() != newData.getSub_role()) {
+                changes.append("sub_role :\n")
+                    .append("before: ").append(oldData.getSub_role()).append("\n")
+                    .append("after: ").append(newData.getSub_role()).append("\n");
+            }
+            if (!Objects.equals(oldData.getChannel(), newData.getChannel())) {
+                changes.append("channel :\n")
+                    .append("before: '").append(oldData.getChannel()).append("'\n")
+                    .append("after: '").append(newData.getChannel()).append("'\n");
+            }
+            if (oldData.getEnable() != newData.getEnable()) {
+                changes.append("enable :\n")
+                    .append("before: ").append(oldData.getEnable()).append("\n")
+                    .append("after: ").append(newData.getEnable()).append("\n");
+            }
+            if (!Objects.equals(oldData.getUser_bic(), newData.getUser_bic())) {
+                changes.append("user_bic :\n")
+                    .append("before: '").append(oldData.getUser_bic()).append("'\n")
+                    .append("after: '").append(newData.getUser_bic()).append("'\n");
+            }
+
+            // Only perform update if changes exist
+            if (changes.length() > 0) {
+                String sql = "UPDATE users SET name=?, description=?, role=?, sub_role=?, channel=?, enable=?, user_bic=? WHERE user_id=?";
+                PreparedStatement st = this.conn.prepareStatement(sql);
+                st.setString(1, newData.getName());
+                st.setString(2, newData.getDescription());
+                st.setInt(3, newData.getRole());
+                st.setInt(4, newData.getSub_role());
+                st.setString(5, newData.getChannel());
+                st.setInt(6, newData.getEnable());
+                st.setString(7, newData.getUser_bic());
+                st.setString(8, user_id);
+                st.executeUpdate();
+
+                // Log change details
+                evl.insertDataEvent(mofier, "Ubah user - " + user_id , ip, comp, changes.toString());
+            } else {
+                evl.insertDataEvent(mofier, "Ubah user - " + user_id + ": No changes made.", ip, comp);
+            }
+
+            evl.updateLogUser(mofier, "user", tanggal);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void updateDataUserOLD(DataUser data, String user_id, String mofier, String ip, String comp) {
 //        System.out.println("user_id" + user_id);
         try {
 //            String sql = "UPDATE [user] SET name=?,description=?,role=?,enable=? WHERE user_id=?";
