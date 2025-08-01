@@ -318,9 +318,9 @@ public class SCUserData extends HttpServlet {
 
                 if (successLogin) {
 //                    dispatcher = request.getRequestDispatcher("controllerHeaders");
-                    response.setHeader("Cache-Control", "public, max-age=" + String.valueOf(dataRole.getTimeout()) + "");
-                    response.setHeader("Pragma", ""); // Kosongkan pragma agar tidak override Cache-Control
-                    response.setDateHeader("Expires", System.currentTimeMillis() + dataRole.getTimeout() * 1000); // 5 menit
+                    response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+                    response.setHeader("Pragma", "no-cache");
+                    response.setDateHeader("Expires", 0);
                     dispatcher = request.getRequestDispatcher("home.jsp");
                     dispatcher.forward(request, response);
 //                    log.info("controllerHeaders");
