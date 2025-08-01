@@ -46,10 +46,11 @@ public class SCDataUser extends HttpServlet {
         DBconnection dbConn = new DBconnection();
         DBconnection2 dbConn2 = new DBconnection2();
         DataUser data = new DataUser();
+        DataUser oldData = new DataUser();
         LDAPCon ldapCon = new LDAPCon();
         DBDataUser dbData = new DBDataUser(dbConn.getConnection());
         DBDataUser dbData2 = new DBDataUser(dbConn2.getConnection2());
-        DBUserData dbo = new DBUserData(dbConn.getConnection());
+        DBUserData dbo = new DBUserData(dbConn.getConnection());        
         HttpSession session = request.getSession();
         String user_id = request.getParameter("user_id");
         String enable = "";
@@ -139,7 +140,8 @@ public class SCDataUser extends HttpServlet {
             log.info("addDataUser");
         } else {
             if (request.getParameter("delete_user") == null) {
-                dbData2.updateDataUser(data, user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                oldData = dbData.getDataUserById(user_id);
+                dbData2.updateDataUser(data, user_id, oldData, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 log.info("updateDataUser");
             } else {
                 log.info("DISABLE PERMANENT USER");
