@@ -6,6 +6,34 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        function toggleSenderChargesRequirement() {
+            const chargeVal = $('#_210_of71a_details_charges').val();
+            const shouldRequire = (chargeVal === 'BEN' || chargeVal === 'SHA');
+
+            if (chargeVal === 'BEN' || chargeVal === 'SHA') {
+                const emptyFields = [
+                    "#_220_of71f_currency", "#_221_of71f_amount",
+                    "#_222_of71f_currency", "#_223_of71f_amount",
+                    "#_224_of71f_currency", "#_225_of71f_amount",
+                    "#_226_of71f_currency", "#_227_of71f_amount",
+                    "#_228_of71f_currency", "#_229_of71f_amount",
+                    "#_230_of71f_amount",   "#_231_of71f_amount"
+                ];
+
+                const allEmpty = emptyFields.every(selector => {
+                    return ($(selector).val() || "").trim() === "";
+                });
+
+                if (allEmpty) {
+                    $("#sender_chargers_1_checkbox").prop('checked', true);
+                    $('#_220_of71f_currency').val($("#_061_mf32a_currency").val());
+                    $('#_221_of71f_amount').val('0');
+                    $("#check_of71f_1").show();
+                }            
+            }
+        }
+
         let validator = $("#form1").validate({
             ignore: [],  
             onkeyup: false,          // Nonaktifkan validasi saat mengetik
@@ -222,7 +250,8 @@
 //            }
         });
         
-        $("#btn-validate").click(function () {
+        $("#btn-validate").click(function () {            
+            toggleSenderChargesRequirement();            
             let isValid = $("#form1").valid(); 
             if (isValid) {
                 alert("All inputs are valid!");
@@ -231,6 +260,7 @@
 
         $("#submit_mt").click(function (e) {
             e.preventDefault();
+            toggleSenderChargesRequirement();
             let isValid = $("#form1").valid(); 
             if (isValid) {  
                 $("#form1").submit(); 
@@ -1753,9 +1783,7 @@
             $("#_228_of71f_currency").prop("required", false);
             $("#_229_of71f_amount").prop("required", false);
         }
-        
-        
-        
+                    
         //special rate
         if ($("#special_rate").val() != "") {
             $("#special_rate_checkbox").prop("checked", true);
@@ -1781,4 +1809,5 @@
         
 
     });
+    
 </script>
