@@ -702,14 +702,14 @@
                                     </div>
                                     <hr/>
 
-                                    <!-- OF71A -->
-                                    <div class="form-row"><span class="label_body">MF71A</span><span class="label"><a style="color:red; text-decoration:none">*</a>Details of Charges</span>
-                                        <select id="_210_of71a_details_charges" name="_210_of71a_details_charges" class="mandatory" input_type="MF71A Detail Charges" location="Body">
-                                            <option value="">choose a code</option>
-                                            <option value="OUR" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='OUR'}"> selected="true" </c:if></c:if></c:forEach>>OUR</option> <!-- - Ordering Customer-->
+                            <!-- OF71A -->
+                            <div class="form-row"><span class="label_body">MF71A</span><span class="label"><a style="color:red; text-decoration:none">*</a>Details of Charges</span>
+                                <select id="_210_of71a_details_charges" name="_210_of71a_details_charges" class="mandatory" input_type="MF71A Detail Charges" location="Body">
+                                    <option value="">choose a code</option>
+                                    <option value="OUR" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='OUR'}"> selected="true" </c:if></c:if></c:forEach>>OUR</option> <!-- - Ordering Customer-->
                                     <option value="BEN" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='BEN'}"> selected="true" </c:if></c:if></c:forEach>>BEN</option>
                                     <option value="SHA" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_210_of71a_details_charges'}"><c:if test="${item.detail=='SHA'}"> selected="true" </c:if></c:if></c:forEach>>SHA</option>
-                                            </select>
+                                </select>
                                 <%--<input type="text" name="_200_of71a_details_charges" id="_200_of71a_details_charges" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_200_of71a_details_charges'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />--%>
                             </div>
                             <hr/>
@@ -721,191 +721,191 @@
                                     <div id="check_of71f_1">
                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
                                             <input type="text" name="_220_of71f_currency" id="_220_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_220_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                                </div>
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_221_of71f_amount" id="_221_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_221_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_220_of71f_currency');" />
-                                                    <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
-                                                    <font style="margin-left: 50px"></font>
-                                                    <script langauge="javascript">
-                                                        function formatUang(n, currency) {
-                                                            if (isNaN(n)) {
-                                                                return "";
-                                                            }
-                                                            return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                                        }
-                                                        var number2 = document.getElementById('_221_of71f_amount').value;
-                                                        var number2r = number2.replace(',', '.');
-                                                        var number2F = parseFloat(number2r);
-                                                        var nominal = formatUang(number2F, "");
-                                                        var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("blue");
-                                                        //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        if (nominal !== "") {
-                                                            document.write(nominalStylec);
-                                                        }
-                                                    </script>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <!-- OF71F_2 -->
-                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 2</span>
-                                            <input type="checkbox" name="sender_chargers_2_checkbox" id="sender_chargers_2_checkbox" />
-                                            <div id="check_of71f_2">
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_222_of71f_currency" id="_222_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_222_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                                </div>
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_223_of71f_amount" id="_223_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_223_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_222_of71f_currency');" />
-                                                    <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
-                                                    <font style="margin-left: 50px"></font>
-                                                    <script langauge="javascript">
-                                                        function formatUang(n, currency) {
-                                                            if (isNaN(n)) {
-                                                                return "";
-                                                            }
-                                                            return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                                        }
-                                                        var number2 = document.getElementById('_223_of71f_amount').value;
-                                                        var number2r = number2.replace(',', '.');
-                                                        var number2F = parseFloat(number2r);
-                                                        var nominal = formatUang(number2F, "");
-                                                        var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("blue");
-                                                        //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        if (nominal !== "") {
-                                                            document.write(nominalStylec);
-                                                        }
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- OF71F_3 -->
-                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 3</span>
-                                            <input type="checkbox" name="sender_chargers_3_checkbox" id="sender_chargers_3_checkbox" />
-                                            <div id="check_of71f_3">
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_224_of71f_currency" id="_224_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_224_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                                </div>
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_225_of71f_amount" id="_225_of71f_amount" maxlength="15" onblur="checkZeroAmount(this.id); cek_koma(this);" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_225_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_224_of71f_currency');" />
-                                                    <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
-                                                    <font style="margin-left: 50px"></font>
-                                                    <script langauge="javascript">
-                                                        function formatUang(n, currency) {
-                                                            if (isNaN(n)) {
-                                                                return "";
-                                                            }
-                                                            return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                                        }
-                                                        var number2 = document.getElementById('_225_of71f_amount').value;
-                                                        var number2r = number2.replace(',', '.');
-                                                        var number2F = parseFloat(number2r);
-                                                        var nominal = formatUang(number2F, "");
-                                                        var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("blue");
-                                                        //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        if (nominal !== "") {
-                                                            document.write(nominalStylec);
-                                                        }
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- OF71F_4 -->
-                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 4</span>
-                                            <input type="checkbox" name="sender_chargers_4_checkbox" id="sender_chargers_4_checkbox" />
-                                            <div id="check_of71f_4">
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_226_of71f_currency" id="_226_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_226_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                                </div>
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_227_of71f_amount" id="_227_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_227_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_226_of71f_currency');" />
-                                                    <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
-                                                    <font style="margin-left: 50px"></font>
-                                                    <script langauge="javascript">
-                                                        function formatUang(n, currency) {
-                                                            if (isNaN(n)) {
-                                                                return "";
-                                                            }
-                                                            return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                                        }
-                                                        var number2 = document.getElementById('_227_of71f_amount').value;
-                                                        var number2r = number2.replace(',', '.');
-                                                        var number2F = parseFloat(number2r);
-                                                        var nominal = formatUang(number2F, "");
-                                                        var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("blue");
-                                                        //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        if (nominal !== "") {
-                                                            document.write(nominalStylec);
-                                                        }
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- OF71F_5 -->
-                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 5</span>
-                                            <input type="checkbox" name="sender_chargers_5_checkbox" id="sender_chargers_5_checkbox" />
-                                            <div id="check_of71f_5">
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
-                                                    <input type="text" name="_228_of71f_currency" id="_228_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_228_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                                </div>
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                                    <input type="text" name="_229_of71f_amount" id="_229_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_229_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_228_of71f_currency');" />
-                                                    <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
-                                                    <font style="margin-left: 50px"></font>
-                                                    <script langauge="javascript">
-                                                        function formatUang(n, currency) {
-                                                            if (isNaN(n)) {
-                                                                return "";
-                                                            }
-                                                            return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                                        }
-                                                        var number2 = document.getElementById('_229_of71f_amount').value;
-                                                        var number2r = number2.replace(',', '.');
-                                                        var number2F = parseFloat(number2r);
-                                                        var nominal = formatUang(number2F, "");
-                                                        var nominalStyle = nominal.fontsize(2);
-                                                        var nominalStylec = nominalStyle.fontcolor("blue");
-                                                        //var nominalStylecw = nominalStylec.fontWeight("900");
-                                                        if (nominal !== "") {
-                                                            document.write(nominalStylec);
-                                                        }
-                                                    </script>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr/>
-                                    </div>
-
-                                    <!-- OF71G -->
-                                    <div class="form-row"><span class="label_body">OF71G</span><span class="label">Currency</span>
-                                        <input type="text" name="_230_of71g_currency" id="_230_of71g_currency" onkeypress="return textonly(event)" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of71g_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                    </div>
-                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                        <input type="text" name="_231_of71g_amount" id="_231_of71g_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_231_of71g_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_231_of71g_amount');" />
-                                        <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
-                                        <font style="margin-left: 50px"></font>
-                                        <script langauge="javascript">
-                                            function formatUang(n, currency) {
-                                                if (isNaN(n)) {
-                                                    return "";
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                            <input type="text" name="_221_of71f_amount" id="_221_of71f_amount" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_221_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_220_of71f_currency');" />
+                                            <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
+                                            <font style="margin-left: 50px"></font>
+                                            <script langauge="javascript">
+                                                function formatUang(n, currency) {
+                                                    if (isNaN(n)) {
+                                                        return "";
+                                                    }
+                                                    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                                 }
-                                                return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                            }
-                                            var number2 = document.getElementById('_231_of71g_amount').value;
-                                            var number2r = number2.replace(',', '.');
-                                            var number2F = parseFloat(number2r);
-                                            var nominal = formatUang(number2F, "");
-                                            var nominalStyle = nominal.fontsize(2);
-                                            var nominalStylec = nominalStyle.fontcolor("blue");
-                                            //var nominalStylecw = nominalStylec.fontWeight("900");
-                                            if (nominal !== "") {
-                                                document.write(nominalStylec);
-                                            }
-                                        </script>
+                                                var number2 = document.getElementById('_221_of71f_amount').value;
+                                                var number2r = number2.replace(',', '.');
+                                                var number2F = parseFloat(number2r);
+                                                var nominal = formatUang(number2F, "");
+                                                var nominalStyle = nominal.fontsize(2);
+                                                var nominalStylec = nominalStyle.fontcolor("blue");
+                                                //var nominalStylecw = nominalStylec.fontWeight("900");
+                                                if (nominal !== "") {
+                                                    document.write(nominalStylec);
+                                                }
+                                            </script>
+                                        </div>
                                     </div>
-                                    <hr/>
+                                </div>
+                                <!-- OF71F_2 -->
+                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 2</span>
+                                    <input type="checkbox" name="sender_chargers_2_checkbox" id="sender_chargers_2_checkbox" />
+                                    <div id="check_of71f_2">
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
+                                            <input type="text" name="_222_of71f_currency" id="_222_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_222_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        </div>
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                            <input type="text" name="_223_of71f_amount" id="_223_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_223_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_222_of71f_currency');" />
+                                            <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
+                                            <font style="margin-left: 50px"></font>
+                                            <script langauge="javascript">
+                                                function formatUang(n, currency) {
+                                                    if (isNaN(n)) {
+                                                        return "";
+                                                    }
+                                                    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+                                                }
+                                                var number2 = document.getElementById('_223_of71f_amount').value;
+                                                var number2r = number2.replace(',', '.');
+                                                var number2F = parseFloat(number2r);
+                                                var nominal = formatUang(number2F, "");
+                                                var nominalStyle = nominal.fontsize(2);
+                                                var nominalStylec = nominalStyle.fontcolor("blue");
+                                                //var nominalStylecw = nominalStylec.fontWeight("900");
+                                                if (nominal !== "") {
+                                                    document.write(nominalStylec);
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- OF71F_3 -->
+                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 3</span>
+                                    <input type="checkbox" name="sender_chargers_3_checkbox" id="sender_chargers_3_checkbox" />
+                                    <div id="check_of71f_3">
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
+                                            <input type="text" name="_224_of71f_currency" id="_224_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_224_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        </div>
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                            <input type="text" name="_225_of71f_amount" id="_225_of71f_amount" maxlength="15" onblur="checkZeroAmount(this.id); cek_koma(this);" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_225_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_224_of71f_currency');" />
+                                            <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
+                                            <font style="margin-left: 50px"></font>
+                                            <script langauge="javascript">
+                                                function formatUang(n, currency) {
+                                                    if (isNaN(n)) {
+                                                        return "";
+                                                    }
+                                                    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+                                                }
+                                                var number2 = document.getElementById('_225_of71f_amount').value;
+                                                var number2r = number2.replace(',', '.');
+                                                var number2F = parseFloat(number2r);
+                                                var nominal = formatUang(number2F, "");
+                                                var nominalStyle = nominal.fontsize(2);
+                                                var nominalStylec = nominalStyle.fontcolor("blue");
+                                                //var nominalStylecw = nominalStylec.fontWeight("900");
+                                                if (nominal !== "") {
+                                                    document.write(nominalStylec);
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- OF71F_4 -->
+                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 4</span>
+                                    <input type="checkbox" name="sender_chargers_4_checkbox" id="sender_chargers_4_checkbox" />
+                                    <div id="check_of71f_4">
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
+                                            <input type="text" name="_226_of71f_currency" id="_226_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_226_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        </div>
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                            <input type="text" name="_227_of71f_amount" id="_227_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_227_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_226_of71f_currency');" />
+                                            <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
+                                            <font style="margin-left: 50px"></font>
+                                            <script langauge="javascript">
+                                                function formatUang(n, currency) {
+                                                    if (isNaN(n)) {
+                                                        return "";
+                                                    }
+                                                    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+                                                }
+                                                var number2 = document.getElementById('_227_of71f_amount').value;
+                                                var number2r = number2.replace(',', '.');
+                                                var number2F = parseFloat(number2r);
+                                                var nominal = formatUang(number2F, "");
+                                                var nominalStyle = nominal.fontsize(2);
+                                                var nominalStylec = nominalStyle.fontcolor("blue");
+                                                //var nominalStylecw = nominalStylec.fontWeight("900");
+                                                if (nominal !== "") {
+                                                    document.write(nominalStylec);
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- OF71F_5 -->
+                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Sender's Charges 5</span>
+                                    <input type="checkbox" name="sender_chargers_5_checkbox" id="sender_chargers_5_checkbox" />
+                                    <div id="check_of71f_5">
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
+                                            <input type="text" name="_228_of71f_currency" id="_228_of71f_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_228_of71f_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        </div>
+                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                            <input type="text" name="_229_of71f_amount" id="_229_of71f_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_229_of71f_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_228_of71f_currency');" />
+                                            <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
+                                            <font style="margin-left: 50px"></font>
+                                            <script langauge="javascript">
+                                                function formatUang(n, currency) {
+                                                    if (isNaN(n)) {
+                                                        return "";
+                                                    }
+                                                    return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+                                                }
+                                                var number2 = document.getElementById('_229_of71f_amount').value;
+                                                var number2r = number2.replace(',', '.');
+                                                var number2F = parseFloat(number2r);
+                                                var nominal = formatUang(number2F, "");
+                                                var nominalStyle = nominal.fontsize(2);
+                                                var nominalStylec = nominalStyle.fontcolor("blue");
+                                                //var nominalStylecw = nominalStylec.fontWeight("900");
+                                                if (nominal !== "") {
+                                                    document.write(nominalStylec);
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+
+                            <!-- OF71G -->
+                            <div class="form-row"><span class="label_body">OF71G</span><span class="label">Currency</span>
+                                <input type="text" name="_230_of71g_currency" id="_230_of71g_currency" onkeypress="return textonly(event)" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of71g_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                <input type="text" name="_231_of71g_amount" id="_231_of71g_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_231_of71g_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_231_of71g_amount');" />
+                                <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
+                                <font style="margin-left: 50px"></font>
+                                <script langauge="javascript">
+                                    function formatUang(n, currency) {
+                                        if (isNaN(n)) {
+                                            return "";
+                                        }
+                                        return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+                                    }
+                                    var number2 = document.getElementById('_231_of71g_amount').value;
+                                    var number2r = number2.replace(',', '.');
+                                    var number2F = parseFloat(number2r);
+                                    var nominal = formatUang(number2F, "");
+                                    var nominalStyle = nominal.fontsize(2);
+                                    var nominalStylec = nominalStyle.fontcolor("blue");
+                                    //var nominalStylecw = nominalStylec.fontWeight("900");
+                                    if (nominal !== "") {
+                                        document.write(nominalStylec);
+                                    }
+                                </script>
+                            </div>
+                            <hr/>
 
                                     <!-- OF72 -->
                                     <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
