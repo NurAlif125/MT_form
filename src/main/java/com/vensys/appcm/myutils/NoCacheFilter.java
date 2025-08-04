@@ -51,7 +51,7 @@ public class NoCacheFilter implements Filter {
         httpResp.setHeader("X-Frame-Options", "DENY");
         httpResp.setHeader("X-XSS-Protection", "1; mode=block");
         httpResp.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-        httpResp.setHeader("Content-Security-Policy", "default-src 'self'");
+        httpResp.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self';");
         httpResp.setHeader("Referrer-Policy", "no-referrer");
         httpResp.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
 
