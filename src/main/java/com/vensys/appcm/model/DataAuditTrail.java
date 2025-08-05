@@ -23,6 +23,15 @@ public class DataAuditTrail {
     String komentar = "";
     String source = "";
     String tanggal = "";
+    String noreff = "";
+
+    public String getNoreff() {
+        return noreff;
+    }
+
+    public void setNoreff(String noreff) {
+        this.noreff = noreff;
+    }
 
     public String getMessagetype() {
         return messagetype;
