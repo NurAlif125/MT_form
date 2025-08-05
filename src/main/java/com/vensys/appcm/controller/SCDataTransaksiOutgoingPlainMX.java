@@ -86,7 +86,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
             priority = "HIGH";
         }
         
-        if (priority.equalsIgnoreCase("")) {
+        if (priority.equalsIgnoreCase("N")) {
+            headerPriority = "Normal";
+        } else if (priority.equalsIgnoreCase("")) {
             headerPriority = "Normal";
         } else if (priority.equalsIgnoreCase("U")) {
             headerPriority = "Urgent";
@@ -136,7 +138,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         mxConfiguration.documentPrefix = null;
         mxConfiguration.headerPrefix = null;
 
-        String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <DataPDU xmlns=\"urn:swift:saa:xsd:saa.2.0\">   <Revision>2.0.13</Revision>   <Header>THIS-IS-SAA-HEADER</Header>   <Body>ONLY-SAA-HEADERS</Body></DataPDU>  ";
+        String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><DataPDU xmlns=\"urn:swift:saa:xsd:saa.2.0\"><Revision>2.0.13</Revision><Header>THIS-IS-SAA-HEADER</Header><Body>ONLY-SAA-HEADERS</Body></DataPDU>";
 
         BusinessAppHdrV02 appHeader = new BusinessAppHdrV02();
         appHeader.setFr(new Party44Choice());
