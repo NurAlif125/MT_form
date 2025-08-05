@@ -994,7 +994,7 @@ public class DBHeader {
                      CASE WHEN h.userentry = 'SRC:MANUAL' THEN 'MANUAL ENTRY'
                      WHEN h.userentry = 'SRC:FIA' THEN 'CHANNEL' ELSE h.userentry END as userentry 
                      FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers WHERE isDuplicate='""" + isDuplicate + "' AND (" + where + ") AND h.flag NOT IN ('DUPL-CNF', 'DUPL')"
-                + "ORDER BY " + sort + " LIMIT " + length + " OFFSET " + start+"";
+                + "ORDER BY " + sort + " LIMIT " + length + " OFFSET " + start + "";
 //                + "ORDER BY " + sort + " OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
@@ -1047,8 +1047,19 @@ public class DBHeader {
             }
             header.setTrans_date_value(rs.getString(16));
             header.setTrans_ccy(rs.getString(18));
-            header.setCreateby(rs.getString(19));
-            header.setApproveby(rs.getString(20));
+            if (rs.getString(19).contains(";")) {
+                String[] createby = rs.getString(19).split(";");
+                header.setCreateby(createby[0]);
+            } else {
+                header.setCreateby(rs.getString(19));
+            }
+
+            if (rs.getString(20).contains(";")) {
+                String[] approveby = rs.getString(20).split(";");
+                header.setApproveby(approveby[0]);
+            } else {
+                header.setApproveby(rs.getString(20));
+            }
 
 //            header.setTrans_ccy(rs.getString(15));
 //            header.setTag20(rs.getString(12));
@@ -2074,7 +2085,7 @@ public class DBHeader {
             }
             if (criteria.getUserentry() != null && !criteria.getUserentry().isEmpty()) {
                 String userentry = criteria.getUserentry().trim().toLowerCase();
-                System.out.println("====================== "+ userentry);
+                System.out.println("====================== " + userentry);
                 if (userentry.startsWith("man")) {
                     where.append(" AND h.userentry ILIKE ?");
                     parameters.add("%SRC:MANUAL%");
@@ -2102,8 +2113,8 @@ public class DBHeader {
                 + "    ELSE h.source\n"
                 + "END AS source, "
                 + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby, "
-                + " CASE WHEN h.userentry = 'SRC:MANUAL' THEN 'MANUAL ENTRY' \n" +
-                   "WHEN h.userentry = 'SRC:FIA' THEN 'CHANNEL' ELSE h.userentry END as userentry "
+                + " CASE WHEN h.userentry = 'SRC:MANUAL' THEN 'MANUAL ENTRY' \n"
+                + "WHEN h.userentry = 'SRC:FIA' THEN 'CHANNEL' ELSE h.userentry END as userentry "
                 + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
                 + "WHERE " + where + " ORDER BY " + sort + " LIMIT ? OFFSET ?";
 //                + "WHERE " + where + " ORDER BY " + sort + " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
@@ -2159,8 +2170,19 @@ public class DBHeader {
                     String amt = rs.getString("trans_amount");
                     data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
                     data.setTrans_ccy(rs.getString("trans_ccy"));
-                    data.setCreateby(rs.getString("createby"));
-                    data.setApproveby(rs.getString("approveby"));
+                    if (rs.getString("createby").contains(";")) {
+                        String[] createby = rs.getString("createby").split(";");
+                        data.setCreateby(createby[0]);
+                    } else {
+                        data.setCreateby(rs.getString("createby"));
+                    }
+                    
+                    if (rs.getString("approveby").contains(";")) {
+                        String[] approveby = rs.getString("approveby").split(";");
+                        data.setApproveby(approveby[0]);
+                    } else {
+                        data.setApproveby(rs.getString("approveby"));
+                    }
                     datas.add(data);
                 }
             }
@@ -2303,7 +2325,7 @@ public class DBHeader {
 //        return headers;
 //    }
     public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
-       List<Header> datas = new ArrayList<>();
+        List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
 
         StringBuilder where = new StringBuilder("1=1");
@@ -2502,14 +2524,11 @@ public class DBHeader {
             }
             ResultSet rs = st.executeQuery();
 
-              
-
 //            String rawSql = sql;
 //            for (Object param : parameters) {
 //                rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
 //            }
 //        System.out.println("Expanded Count List Search SQL:\n" + rawSql); //cetak hasil query
-            
             if (rs.next()) {
                 return rs.getInt(1);
             }

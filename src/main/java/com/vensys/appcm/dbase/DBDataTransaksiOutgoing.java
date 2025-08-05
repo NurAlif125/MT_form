@@ -107,7 +107,7 @@ public class DBDataTransaksiOutgoing {
             } else {
                 st.setString(16, data.getFlag()); //flag
             }
-            st.setString(17, "SRC:MANUAL"); //user edit 
+            st.setString(17, user_id); //user edit 
             st.setString(18, ""); //template name 
             st.setInt(19, 0); //flag template 
             st.setString(20, ""); //sender input name 
@@ -134,7 +134,7 @@ public class DBDataTransaksiOutgoing {
             }
 
             st.setString(30, channel);
-            st.setString(31, nameUser);
+            st.setString(31, nameUser + ";" + user_id);
             st.setString(32, "--");
 
             ResultSet rs = st.executeQuery();
@@ -321,11 +321,11 @@ public class DBDataTransaksiOutgoing {
         }
     }
     
-    public void updateApproved(String nameUser, int id) {
+    public void updateApproved(String nameUser, int id, String user_id) {
         try {
             String sql = "UPDATE headers SET approveby = ? WHERE id_headers =?";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setString(1, nameUser);
+            st.setString(1, nameUser + ";" + user_id);
             st.setInt(2, id);
             st.executeUpdate();
         } catch (SQLException e) {
