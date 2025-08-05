@@ -1,11 +1,14 @@
-admin<%-- 
+<%-- 
     Document   : camt05300108
     Created on : Feb 14, 2025, 3:49:16 PM
     Author     : rafli
 --%>
 
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <style type="text/css">
-
+    
     [hidden] {
         display: none;
     }
@@ -105,29 +108,49 @@ admin<%--
     input[disabled="disabled"] {
         background-color: #ECCFD1;
     }
+    input[data-xsd2html2xml-description="BICFI"] {
+        text-transform: uppercase;
+    }
+    input[data-xsd2html2xml-description="Currency"] {
+        text-transform: uppercase;
+    }
+    input[data-xsd2html2xml-description="AnyBIC"] {
+        text-transform: uppercase;
+    }
 </style>
 <script src="js/flatpickr.js"></script>
 <link rel="stylesheet" href="css/flatpickr.css">
 <meta id="generator-farras" name="generator" content="XSD2HTML2XML v3: https://github.com/MichielCM/xsd2html2xml" data-xsd2html2xml-source='<c:out value='${dataIsoXML}' />'/>
 <script src="js/xml2html_rule.js" type="text/javascript"></script>
+<%
+    java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    String formattedDate = sdf.format(new java.util.Date());
+    pageContext.setAttribute("tgl_today", formattedDate);
+%>
+<c:set var="tgl_today" value="${tgl_today}" />
 
 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Document" data-xsd2html2xml-xpath="/Document">
         <legend>Document</legend>
         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BkToCstmrStmt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt">
                 <legend>BankToCustomerStatement</legend>
                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="GrpHdr" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr">
-                        <legend>GroupHeader</legend>
+                        <legend>GroupHeader <a style="color:red;text-decoration:none">*</a></legend>
                         <section id="BkToCstmrStmt/GrpHdr/MsgId" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="MsgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/MsgId"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
             }
-            ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification</span></label></section><section id="BkToCstmrStmt/GrpHdr/CreDtTm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
+            ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="MessageIdentification"><span>MessageIdentification <a style="color:red;text-decoration:none">*</a></span></label></section><c:choose><c:when test = "${headerById.id_headers == null}"><section id="BkToCstmrStmt/GrpHdr/CreDtTm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/CreDtTm"><input type="text" value="${tgl_today}" class="datetime-local" onchange='if (this.value) {
                         this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
                     } else {
                         this.removeAttribute("value");
                     }
-                    ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="MsgRcpt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/MsgRcpt">
+                    ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime <a style="color:red;text-decoration:none">*</a></span></label></section></c:when><c:otherwise><section id="BkToCstmrStmt/GrpHdr/CreDtTm" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CreDtTm" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/CreDtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
+                        this.setAttribute("value", (this.value.match(/.*\d\d:\d\d:\d\d/) ? this.value : this.value.concat(":00")));
+                    } else {
+                        this.removeAttribute("value");
+                    }
+                    ;' required="required" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" step="1" data-xsd2html2xml-primitive="datetime" data-xsd2html2xml-description="CreationDateTime"><span>CreationDateTime <a style="color:red;text-decoration:none">*</a></span></label></section></c:otherwise></c:choose><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="MsgRcpt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/MsgRcpt">
                                 <legend>MessageRecipient<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
                                 <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/MsgRcpt/Nm"><input type="text" onchange='if (this.value) {
@@ -206,7 +229,7 @@ admin<%--
                                         </legend>
                                         <label><input type="radio" name="id2" required="required" onclick="clickRadioInput(this, 'id2');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/MsgRcpt/Id/OrgId">
                                                 <legend>OrganisationIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/MsgRcpt/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/GrpHdr/MsgRcpt/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -305,14 +328,14 @@ admin<%--
             }
             ;' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="500" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AdditionalInformation"><span>AdditionalInformation<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AdditionalInformation</button></section>
                     </fieldset></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Stmt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt">
-                        <legend>Statement</legend>
+                        <legend>Statement <a style="color:red;text-decoration:none">*</a></legend>
                         <section id="BkToCstmrStmt/Stmt/Id" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Id" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Id"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
-                this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Identification"><span>Identification</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="StmtPgntn" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/StmtPgntn">
-                                <legend>StatementPagination</legend>
+                this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Identification"><span>Identification <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="StmtPgntn" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/StmtPgntn">
+                                <legend>StatementPagination <a style="color:red;text-decoration:none">*</a></legend>
                                 <section id="BkToCstmrStmt/Stmt/StmtPgntn/PgNb" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PgNb" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/StmtPgntn/PgNb"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
-                this.removeAttribute("value"); };' required="required" pattern="[0-9]{1,5}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="PageNumber"><span>PageNumber</span></label></section><section id="BkToCstmrStmt/Stmt/StmtPgntn/LastPgInd" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LastPgInd" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/StmtPgntn/LastPgInd"><input type="checkbox" onchange='if (this.checked) {
+                this.removeAttribute("value"); };' required="required" pattern="[0-9]{1,5}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="PageNumber"><span>PageNumber <a style="color:red;text-decoration:none">*</a></span></label></section><section id="BkToCstmrStmt/Stmt/StmtPgntn/LastPgInd" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LastPgInd" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/StmtPgntn/LastPgInd"><input type="checkbox" onchange='if (this.checked) {
                             this.setAttribute("checked", "checked") } else {
                             this.removeAttribute("checked") }' pattern=".{0,}" data-xsd2html2xml-primitive="boolean" data-xsd2html2xml-description="LastPageIndicator"><span>LastPageIndicator</span></label></section>
                             </fieldset></section><section id="BkToCstmrStmt/Stmt/ElctrncSeqNb" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ElctrncSeqNb" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/ElctrncSeqNb"><input type="number" onchange='if (this.value) {
@@ -367,9 +390,9 @@ admin<%--
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Proprietary"><span>Proprietary</span></label></section>
                             </fieldset>
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">ReportingSource</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Acct" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct">
-                                <legend>Account</legend>
+                                <legend>Account <a style="color:red;text-decoration:none">*</a></legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Id" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Id">
-                                        <legend>Identification</legend>
+                                        <legend>Identification <a style="color:red;text-decoration:none">*</a></legend>
                                         <label><input type="radio" name="id7" required="required" onclick="clickRadioInput(this, 'id7');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="IBAN" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Id/IBAN"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z]{2,2}[0-9]{2,2}[a-zA-Z0-9]{1,30}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="IBAN"><span>IBAN</span></label></section><label><input type="radio" name="id7" required="required" onclick="clickRadioInput(this, 'id7');" data-xsd2html2xml-description="2"><span>2</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Othr" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Id/Othr">
@@ -406,7 +429,7 @@ admin<%--
                                     </fieldset>
                                     <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Type</button></section><section id="BkToCstmrStmt/Stmt/Acct/Ccy" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Ccy"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
-                this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency</span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Nm"><input type="text" onchange='if (this.value) {
+                this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency <a style="color:red;text-decoration:none">*</a></span></label></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Nm" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Nm"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
                             this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z/\-\?:\(\)\.,'\+ ]+" maxlength="70" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Name"><span>Name<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Name</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Prxy" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Prxy">
                                         <legend>Proxy<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -497,7 +520,7 @@ admin<%--
                                                 </legend>
                                                 <label><input type="radio" name="id12" required="required" onclick="clickRadioInput(this, 'id12');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Ownr/Id/OrgId">
                                                         <legend>OrganisationIdentification</legend>
-                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Ownr/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Ownr/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Ownr/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value);
@@ -578,7 +601,7 @@ admin<%--
                                         </legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Svcr/FinInstnId">
                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Svcr/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Svcr/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Acct/Svcr/FinInstnId/ClrSysMmbId">
                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -952,12 +975,12 @@ admin<%--
                                     <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Tax</button></section>
                             </fieldset>
                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="unbounded" onclick="clickAddButton(this);">Interest</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Bal" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal">
-                                <legend>Balance<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
+                                <legend>Balance <a style="color:red;text-decoration:none">*</a><button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Tp" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Tp">
-                                        <legend>Type</legend>
+                                        <legend>Type <a style="color:red;text-decoration:none">*</a></legend>
                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CdOrPrtry" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Tp/CdOrPrtry">
-                                                <legend>CodeOrProprietary</legend>
+                                                <legend>CodeOrProprietary <a style="color:red;text-decoration:none">*</a></legend>
                                                 <label><input type="radio" name="id26" required="required" onclick="clickRadioInput(this, 'id26');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Cd" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Tp/CdOrPrtry/Cd"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" maxlength="4" pattern=".{1,4}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Code"><span>Code</span></label></section><label><input type="radio" name="id26" required="required" onclick="clickRadioInput(this, 'id26');" data-xsd2html2xml-description="2"><span>2</span></label><section data-xsd2html2xml-choice="true"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Prtry" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Tp/CdOrPrtry/Prtry"><input type="text" onchange='if (this.value) {
@@ -1020,17 +1043,17 @@ admin<%--
                                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">Date</button></section>
                                     </fieldset>
                                     <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="unbounded" onclick="clickAddButton(this);">CreditLine</button></section><section id="BkToCstmrStmt/Stmt/Bal/Amt" tabindex="-1"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Amt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Amt">
-                                        <legend>Amount</legend>
+                                        <legend>Amount <a style="color:red;text-decoration:none">*</a></legend>
                                         <label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="content" data-xsd2html2xml-name="Amt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Amt"><input type="number" onchange='if (this.value) {
                 this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
-                this.removeAttribute("value"); };' required="required" min="0" step="0.00001" pattern="[-]?{0,}" data-xsd2html2xml-primitive="decimal" data-xsd2html2xml-description="Amount"><span>Amount</span></label><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="attribute" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Amt/@Ccy" id="BkToCstmrStmt/Stmt/Bal/Amt/Ccy" tabindex="-1"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
+                this.removeAttribute("value"); };' required="required" min="0" step="0.00001" pattern="[-]?{0,}" data-xsd2html2xml-primitive="decimal" data-xsd2html2xml-description="Amount"><span>Amount <a style="color:red;text-decoration:none">*</a></span></label><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="attribute" data-xsd2html2xml-name="Ccy" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Amt/@Ccy" id="BkToCstmrStmt/Stmt/Bal/Amt/Ccy" tabindex="-1"><input type="text" maxlength="3" onkeypress="return textonly(event)" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
-                            this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency</span></label>
+                            this.removeAttribute("value"); };' required="required" pattern="[A-Z]{3,3}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="Currency"><span>Currency <a style="color:red;text-decoration:none">*</a></span></label>
                                     </fieldset></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="CdtDbtInd" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/CdtDbtInd"><select onchange='this.childNodes.forEach(function (o) {
                 if (o.nodeType == Node.ELEMENT_NODE)
                     o.removeAttribute("selected"); }); this.children[this.selectedIndex].setAttribute("selected", "selected");' required="required" data-xsd2html2xml-description="CreditDebitIndicator"><option value="CRDT">Credit</option>
-                                            <option value="DBIT">Debit</option></select><span>CreditDebitIndicator</span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Dt">
-                                        <legend>Date</legend>
+                                            <option value="DBIT">Debit</option></select><span>CreditDebitIndicator <a style="color:red;text-decoration:none">*</a></span></label></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Dt">
+                                        <legend>Date <a style="color:red;text-decoration:none">*</a></legend>
                                         <label><input type="radio" name="id30" required="required" onclick="clickRadioInput(this, 'id30');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Dt" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Dt/Dt"><input type="text" class="date" onchange='if (this.value) {
                 this.setAttribute("value", this.value.replace(/\s+/g, " ").trim()); } else {
                 this.removeAttribute("value"); };' required="required" pattern=".{0,}" data-xsd2html2xml-primitive="date" data-xsd2html2xml-description="Date"><span>Date</span></label></section><label><input type="radio" name="id30" required="required" onclick="clickRadioInput(this, 'id30');" data-xsd2html2xml-description="2"><span>2</span></label><section data-xsd2html2xml-choice="true"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="DtTm" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Bal/Dt/DtTm"><input type="text" class="datetime-local" onchange='if (this.value) {
@@ -1568,7 +1591,7 @@ admin<%--
                                                         </legend>
                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/Chrgs/Rcrd/Agt/FinInstnId">
                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/Chrgs/Rcrd/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/Chrgs/Rcrd/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/Chrgs/Rcrd/Agt/FinInstnId/ClrSysMmbId">
                                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -2624,7 +2647,7 @@ admin<%--
                                                                         </legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/Chrgs/Rcrd/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/Chrgs/Rcrd/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/Chrgs/Rcrd/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/Chrgs/Rcrd/Agt/FinInstnId/ClrSysMmbId">
                                                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -3065,7 +3088,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id63" required="required" onclick="clickRadioInput(this, 'id63');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/InitgPty/Pty/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/InitgPty/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/InitgPty/Pty/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/InitgPty/Pty/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value);
@@ -3147,7 +3170,7 @@ admin<%--
                                                                         <legend>Agent</legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/InitgPty/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/InitgPty/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/InitgPty/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value");
             }
@@ -3424,7 +3447,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id72" required="required" onclick="clickRadioInput(this, 'id72');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Pty/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Pty/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Pty/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -3515,7 +3538,7 @@ admin<%--
                                                                         <legend>Agent</legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Dbtr/Agt/FinInstnId/ClrSysMmbId">
                                                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -3855,7 +3878,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id85" required="required" onclick="clickRadioInput(this, 'id85');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtDbtr/Pty/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtDbtr/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtDbtr/Pty/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtDbtr/Pty/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
@@ -3934,7 +3957,7 @@ admin<%--
                                                                         <legend>Agent</legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtDbtr/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtDbtr/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtDbtr/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -4202,7 +4225,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id94" required="required" onclick="clickRadioInput(this, 'id94');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Pty/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Pty/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Pty/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -4278,7 +4301,7 @@ admin<%--
                                                                         <legend>Agent</legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Cdtr/Agt/FinInstnId/ClrSysMmbId">
                                                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -4623,7 +4646,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id107" required="required" onclick="clickRadioInput(this, 'id107');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtCdtr/Pty/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtCdtr/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtCdtr/Pty/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -4707,7 +4730,7 @@ admin<%--
                                                                         <legend>Agent</legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtCdtr/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtCdtr/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtCdtr/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/UltmtCdtr/Agt/FinInstnId/ClrSysMmbId">
                                                                                         <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -4972,7 +4995,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id116" required="required" onclick="clickRadioInput(this, 'id116');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/TradgPty/Pty/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/TradgPty/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/TradgPty/Pty/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/TradgPty/Pty/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -5046,7 +5069,7 @@ admin<%--
                                                                         <legend>Agent</legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/TradgPty/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/TradgPty/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/TradgPty/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -5337,7 +5360,7 @@ admin<%--
                                                                                         </legend>
                                                                                         <label><input type="radio" name="id125" required="required" onclick="clickRadioInput(this, 'id125');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Pty/Id/OrgId">
                                                                                                 <legend>OrganisationIdentification</legend>
-                                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Pty/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Pty/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Pty/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value);
@@ -5427,7 +5450,7 @@ admin<%--
                                                                                 <legend>Agent</legend>
                                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Agt/FinInstnId">
                                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdPties/Prtry/Pty/Agt/FinInstnId/ClrSysMmbId">
                                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -5631,7 +5654,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/InstgAgt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/InstgAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/InstgAgt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/InstgAgt/FinInstnId/ClrSysMmbId">
@@ -5838,7 +5861,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/InstdAgt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/InstdAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/InstdAgt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -6035,7 +6058,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/DbtrAgt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/DbtrAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/DbtrAgt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/DbtrAgt/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -6235,7 +6258,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/CdtrAgt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/CdtrAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/CdtrAgt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/CdtrAgt/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -6437,7 +6460,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt1/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt1/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt1/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt1/FinInstnId/ClrSysMmbId">
@@ -6644,7 +6667,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt2/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt2/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt2/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt2/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -6852,7 +6875,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt3/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt3/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt3/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IntrmyAgt3/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -7049,7 +7072,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/RcvgAgt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/RcvgAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/RcvgAgt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/RcvgAgt/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -7265,7 +7288,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/DlvrgAgt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/DlvrgAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/DlvrgAgt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -7481,7 +7504,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IssgAgt/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IssgAgt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IssgAgt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/IssgAgt/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -7692,7 +7715,7 @@ admin<%--
                                                                 </legend>
                                                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/SttlmPlc/FinInstnId">
                                                                         <legend>FinancialInstitutionIdentification</legend>
-                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/SttlmPlc/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/SttlmPlc/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/SttlmPlc/FinInstnId/ClrSysMmbId">
                                                                                 <legend>ClearingSystemMemberIdentification<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
@@ -7900,7 +7923,7 @@ admin<%--
                                                                         <legend>Agent</legend>
                                                                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="FinInstnId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/Prtry/Agt/FinInstnId">
                                                                                 <legend>FinancialInstitutionIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/Prtry/Agt/FinInstnId/BICFI"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="BICFI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/Prtry/Agt/FinInstnId/BICFI"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="BICFI"><span>BICFI<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">BICFI</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="ClrSysMmbId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RltdAgts/Prtry/Agt/FinInstnId/ClrSysMmbId">
@@ -8612,7 +8635,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id191" required="required" onclick="clickRadioInput(this, 'id191');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/Invcr/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/Invcr/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/Invcr/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/Invcr/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -8781,7 +8804,7 @@ admin<%--
                                                                                 </legend>
                                                                                 <label><input type="radio" name="id195" required="required" onclick="clickRadioInput(this, 'id195');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/Invcee/Id/OrgId">
                                                                                         <legend>OrganisationIdentification</legend>
-                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/Invcee/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                        <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/Invcee/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -9199,7 +9222,7 @@ admin<%--
                                                                                         </legend>
                                                                                         <label><input type="radio" name="id200" required="required" onclick="clickRadioInput(this, 'id200');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/Grnshee/Id/OrgId">
                                                                                                 <legend>OrganisationIdentification</legend>
-                                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/Grnshee/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/Grnshee/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/Grnshee/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value);
@@ -9360,7 +9383,7 @@ admin<%--
                                                                                         </legend>
                                                                                         <label><input type="radio" name="id204" required="required" onclick="clickRadioInput(this, 'id204');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/OrgId">
                                                                                                 <legend>OrganisationIdentification</legend>
-                                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RmtInf/Strd/GrnshmtRmt/GrnshmtAdmstr/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -9934,7 +9957,7 @@ admin<%--
                                                                         </legend>
                                                                         <label><input type="radio" name="id215" required="required" onclick="clickRadioInput(this, 'id215');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="OrgId" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RtrInf/Orgtr/Id/OrgId">
                                                                                 <legend>OrganisationIdentification</legend>
-                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RtrInf/Orgtr/Id/OrgId/AnyBIC"><input type="text" onchange='if (this.value) {
+                                                                                <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="AnyBIC" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RtrInf/Orgtr/Id/OrgId/AnyBIC"><input type="text" minlength="12" maxlength="12" onblur="formatBICFI(this);" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="AnyBIC"><span>AnyBIC<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">AnyBIC</button></section><section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:camt.053.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="LEI" data-xsd2html2xml-xpath="/Document/BkToCstmrStmt/Stmt/Ntry/NtryDtls/TxDtls/RtrInf/Orgtr/Id/OrgId/LEI"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -10561,68 +10584,90 @@ admin<%--
             </fieldset></section>
     </fieldset></section>
 <script>
-    flatpickr(".datetime-local", {
-        enableTime: true,
-        enableSeconds: true,
-        dateFormat: "Y-m-d\TH:i:S",
-        time_24hr: true,
-        minuteIncrement: 1,
-    });
-    flatpickr(".date", {
-        dateFormat: "Y-m-d",
-        enableTime: false
-    });
-    flatpickr(".time", {
-        enableTime: true,
-        enableSeconds: true,
-        dateFormat: "H:i:S",
-        time_24hr: true,
-        minuteIncrement: 1,
-        noCalendar: true,
-        utc: true
-    });
-    function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
+        flatpickr(".datetime-local", {
+            enableTime: true,
+            enableSeconds: true,
+            dateFormat: "Y-m-d\TH:i:S",
+            time_24hr: true,
+            minuteIncrement: 1,
         });
-    }
-    function generateuetr() {
-        const uuid = generateUUID();
-        const inputField = document.getElementById("UETR");
-        inputField.value = uuid;
-        inputField.setAttribute("value", uuid);
-    }
+        flatpickr(".date", {
+            dateFormat: "Y-m-d",
+            enableTime: false
+        });
+        flatpickr(".time", {
+            enableTime: true,
+            enableSeconds: true,
+            dateFormat: "H:i:S",
+            time_24hr: true,
+            minuteIncrement: 1,
+            noCalendar: true,
+            utc: true
+        });
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        function generateuetr() {
+            const uuid = generateUUID();
+            const inputField = document.getElementById("UETR");
+            inputField.value = uuid;
+            inputField.setAttribute("value", uuid);
+        }
 
-    function textonly(e) {
-        var code;
-        if (!e)
-            var e = window.event;
-        if (e.keyCode)
-            code = e.keyCode;
-        else if (e.which)
-            code = e.which;
-        var character = String.fromCharCode(code);
+        function textonly(e) {
+            var code;
+            if (!e)
+                var e = window.event;
+            if (e.keyCode)
+                code = e.keyCode;
+            else if (e.which)
+                code = e.which;
+            var character = String.fromCharCode(code);
 
-        var AllowRegex = /^[\ba-zA-Z\s-]$/;
-        if (AllowRegex.test(character))
+            var AllowRegex = /^[\ba-zA-Z\s-]$/;
+            if (AllowRegex.test(character))
             return true;
-        return false;
-    }
+            return false;
+        }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const statusInput = document.getElementById("status"); // Ambil elemen status
-        const form = document.getElementById("form1"); // Ambil elemen form
+        document.addEventListener("DOMContentLoaded", function () {
+            const statusInput = document.getElementById("status"); // Ambil elemen status
+            const form = document.getElementById("form1"); // Ambil elemen form
 
-        if ((statusInput && statusInput.value === "INC" && form) || (statusInput && statusInput.value === "VER" && form) || (statusInput && statusInput.value === "AUTH" && form) || (statusInput && statusInput.value === "CVT-VER" && form) || (statusInput && statusInput.value === "WAITING-AML" && form) || (statusInput && statusInput.value === "REJECT" && form) || (statusInput && statusInput.value === "RESEND" && form)) {
-            const allInputs = form.elements; // Ambil semua elemen dalam form sekali saja
-            for (let input of allInputs) {
-                if (input.tagName === "SELECT" || input.tagName === "BUTTON") {
-                    input.disabled = true;
-                } else {
-                    input.readOnly = true;
+            if ((statusInput && statusInput.value === "INC" && form) || (statusInput && statusInput.value === "VER" && form) || (statusInput && statusInput.value === "AUTH" && form) || (statusInput && statusInput.value === "CVT-VER" && form) || (statusInput && statusInput.value === "WAITING-AML" && form) || (statusInput && statusInput.value === "REJECT" && form) || (statusInput && statusInput.value === "RESEND" && form)) {
+                const allInputs = form.elements; // Ambil semua elemen dalam form sekali saja
+                for (let input of allInputs) {
+                    if (input.tagName === "SELECT" || input.tagName === "BUTTON") {
+                        input.disabled = true;
+                    } else {
+                        input.readOnly = true;
+                    }
                 }
             }
+        });
+
+        function formatBICFI(input) {
+            input.value = input.value.toUpperCase();
+            let value = input.value.trim();
+            if (value.length === 12) {
+                const part1 = value.substring(0, 8);
+                const part2 = value.substring(9, 12);
+                const newValue = part1 + part2;
+                newValue.toUpperCase();
+                input.value = newValue;
+                console.log("BICFI setelah diproses:", newValue);
+            } else if (value.length > 0) {
+                alert('BICFI must be 12 characters (contoh: BDINIDJAXXXX)');
+            }
         }
-    });
-</script>
+
+        function validateAmount(input) {
+            let value = input.value.trim().replace(',','.');
+            if (value && parseFloat(value) === 0) {
+                alert('Amount must not be Zero (0)');
+            }
+        }
+    </script>

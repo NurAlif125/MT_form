@@ -14,6 +14,15 @@ public class DataUserActivity {
     private String hostname;
     private String ip;
     private String description;
+    private String changes;
+
+    public String getChanges() {
+        return changes;
+    }
+
+    public void setChanges(String changes) {
+        this.changes = changes;
+    }
 
     public String getUser_id() {
         return user_id;

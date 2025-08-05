@@ -13,6 +13,7 @@ import com.prowidesoftware.swift.model.mx.dic.BalanceType13;
 import com.prowidesoftware.swift.model.mx.dic.CashAccount39;
 import com.prowidesoftware.swift.model.mx.dic.CashBalance8;
 import com.prowidesoftware.swift.model.mx.dic.GroupHeader81;
+import com.prowidesoftware.swift.model.mx.dic.OriginalBusinessQuery1;
 import com.prowidesoftware.swift.model.mx.dic.Pagination1;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -53,6 +54,14 @@ public class ruleCamt053_2025 {
             if (creDtTm == null) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/GrpHdr/CreDtTm\"><td>CreationDateTime is mandatory!</td><td>BkToCstmrStmt/GrpHdr/CreDtTm</td></tr>");
             }
+            
+            OriginalBusinessQuery1 orgnlBizQry = grpHdr.getOrgnlBizQry();
+            if (orgnlBizQry != null) {
+                String orgnlBizQryMsgId = orgnlBizQry.getMsgId();
+                if (orgnlBizQryMsgId.equalsIgnoreCase("")) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/GrpHdr/OrgnlBizQry/MsgId\"><td>MessageIdentification is mandatory!</td><td>BkToCstmrStmt/GrpHdr/OrgnlBizQry/MsgId</td></tr>");
+                }
+            }
 
             String addtlInf = grpHdr.getAddtlInf();
             if (addtlInf != null) {
@@ -65,7 +74,7 @@ public class ruleCamt053_2025 {
         AccountStatement9 stmt = this.mxCamt05300108.getBkToCstmrStmt().getStmt().get(0);
         if (stmt != null) {
             String id = stmt.getId();
-            if (id == null) {
+            if (id == null || id.equalsIgnoreCase("")) {
                 validationRuleComment.add("<tr class=\"error__row\" input-id=\"BkToCstmrStmt/Stmt/Id\"><td>Identification is mandatory!</td><td>BkToCstmrStmt/Stmt/Id</td></tr>");
             }
 

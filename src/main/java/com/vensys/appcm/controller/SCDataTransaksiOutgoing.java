@@ -6,6 +6,7 @@ package com.vensys.appcm.controller;
 
 import com.vensys.appcm.dbase.DBDataBICGO;
 import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
+import com.vensys.appcm.dbase.DBEventLog;
 import com.vensys.appcm.dbase.DBconnection;
 import com.vensys.appcm.dbase.DBconnection2;
 import java.io.IOException;
@@ -40,6 +41,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(getClass().getName());
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,10 +82,11 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         String messageType = request.getParameter("messageType");
         String komentar = request.getParameter("komentar");
         DBconnection dbConn = new DBconnection();
-        DBconnection2 dbConn2 = new DBconnection2();
+        DBconnection2 dbConn2 = new DBconnection2();        
         DataHeaderTransaksi data = new DataHeaderTransaksi();
         Header header = new Header();
         CreateText ct = new CreateText(dbConn.getConnection());
+        DBEventLog evl = new DBEventLog(dbConn2.getConnection2());
         CreateTextNew ctn = new CreateTextNew(dbConn.getConnection());
         DBDataTransaksiOutgoing dBDataTransaksiOutgoing = new DBDataTransaksiOutgoing(dbConn.getConnection());
         DBDataTransaksiOutgoing dBDataTransaksiOutgoing2 = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
@@ -113,7 +116,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
             //end of the code
             //UETR
-            if (messageType.equals("103") || messageType.contains("202") || messageType.equals("200")) {//191227 ditambah uetr
+            if (messageType.equals("103") || messageType.equals("110") || messageType.equals("111") || messageType.equals("191") || messageType.equals("192") || messageType.contains("202") || messageType.equals("200")) {//191227 ditambah uetr
                 log.info("masuk sini 181");
                 if (flagStatus.length() > 0) {
                     log.info("masuk sini 183");
@@ -330,7 +333,20 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                             dBDataTransaksiOutgoing2.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
                         }
                     }
+
+                    if ("MOD".equalsIgnoreCase(flagStatus)){
+                        MessageComparator comparator = new MessageComparator();
+                        System.out.println("id_YUDA: " + id);
+                        String hasilCompare = comparator.compare(Integer.parseInt(id)); 
+                        if (hasilCompare != null && !hasilCompare.isEmpty()) {
+                            evl.insertDataEvent((String) session.getAttribute("user_id"), "Update status transaksi menjadi " + flag , (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"),hasilCompare);
+                        }
+                    } else {
+                        evl.insertDataEvent((String) session.getAttribute("user_id"), "Update status transaksi menjadi " + flag , (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                    }
                 }
+                
+
 //                20211215 penambahan cek duplikat create manual
 
                 // end of the line
@@ -386,7 +402,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         } catch (SQLException ex) {
             log.error(ex.getMessage());
         } catch (Exception ex) {
-            log.error(ex.getMessage());
+            log.error("Error occurred", ex);
         }
     }
 

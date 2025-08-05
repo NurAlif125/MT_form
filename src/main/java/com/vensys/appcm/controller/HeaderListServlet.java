@@ -51,6 +51,8 @@ public class HeaderListServlet extends HttpServlet {
 
         // Ambil nama kolom
         String orderColumnNameRaw = request.getParameter("columns[" + orderColumnIndex + "][data]");
+        
+        System.out.println(orderColumnIndexRaw);
         // Escape juga kolom
         String orderColumnName = StringEscapeUtils.escapeHtml4(orderColumnNameRaw);
 //        
@@ -85,6 +87,7 @@ public class HeaderListServlet extends HttpServlet {
         criteria.setSourceSearch(request.getParameter("columns[13][search][value]"));
         criteria.setCreateby(request.getParameter("columns[14][search][value]"));
         criteria.setApproveby(request.getParameter("columns[15][search][value]"));
+        criteria.setUserentry(request.getParameter("columns[16][search][value]"));
         
 //        System.out.println("mtSearch: " + request.getParameter("columns[1][search][value]"));
 //        System.out.println("ioSearch: " + request.getParameter("columns[2][search][value]"));
@@ -104,20 +107,6 @@ public class HeaderListServlet extends HttpServlet {
 
 
          HttpSession session = request.getSession();
-//        String sender_logical_terminal = session.getAttribute("sender_logical_terminal") != null ? (String) session.getAttribute("sender_logical_terminal") : "";
-//        String receiver_institution = session.getAttribute("receiver_institution") != null ? (String) session.getAttribute("receiver_institution") : "";
-//        String mt_type = session.getAttribute("mt_type") != null ? (String) session.getAttribute("mt_type") : "";
-//        String date_from = session.getAttribute("date_from") != null ? (String) session.getAttribute("date_from") : "";
-//        String date_end = session.getAttribute("date_end") != null ? (String) session.getAttribute("date_end") : "";
-//        System.out.println("=====================");
-//        System.out.println("Date form___ :"+date_from);
-//        String sender_reference = session.getAttribute("sender_reference") != null ? (String) session.getAttribute("sender_reference") : "";
-//        String rel_reference = session.getAttribute("rel_reference") != null ? (String) session.getAttribute("rel_reference") : "";
-//        String currency_code = session.getAttribute("currency_code") != null ? (String) session.getAttribute("currency_code") : "";
-//        String amount = session.getAttribute("amount") != null ? (String) session.getAttribute("amount") : "";
-//        String find = session.getAttribute("find") != null ? (String) session.getAttribute("find") : "";
-//        String status = session.getAttribute("status") != null ? (String) session.getAttribute("status") : "";
-//        String menu = session.getAttribute("menu") != null ? (String) session.getAttribute("menu") : "";
 
         int draw = Integer.parseInt(request.getParameter("draw"));
         int start = Integer.parseInt(request.getParameter("start"));
@@ -173,7 +162,8 @@ public class HeaderListServlet extends HttpServlet {
 
         try {
             channel = (String) httpSession.getAttribute("channel");
-            if (!channel.equalsIgnoreCase("")) {
+//            if (!channel.equalsIgnoreCase("")) {
+            if (channel != null && !channel.equalsIgnoreCase("")) {
                 notifVer = dbo.getNotificationVer(channel);
                 notifAuth = dbo.getNotificationAuth(channel);
             } else {
@@ -333,7 +323,7 @@ public class HeaderListServlet extends HttpServlet {
 //                    log.info("flag else : " + flag);
                     headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
                     totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
-                    System.out.println("Total Data"+ String.valueOf(totalRecords));
+//                    System.out.println("Total Data"+ String.valueOf(totalRecords));
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("flag", flag);
                     httpSession.setAttribute("flagFilter", flag);
@@ -343,11 +333,12 @@ public class HeaderListServlet extends HttpServlet {
 //                log.info("masuk sini else");
                 String db_type = request.getParameter("db_type") != null ? request.getParameter("db_type") : "";
 
-                System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
+//                System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
+//                    System.out.println("start= " +start+" | lenghth= "+ length);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
                 headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch, sort);
                 totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch);
-                System.out.println("TOtal REcordd ----"+totalRecords);
+//                System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
                 httpSession.setAttribute("flag", status);
@@ -376,12 +367,15 @@ public class HeaderListServlet extends HttpServlet {
                     obj.put("trans_reference", h.getTrans_refference());
                     obj.put("trans_related_reference", h.getTrans_related_refference());
                     obj.put("trans_date_value", h.getTrans_date_value());
-                    obj.put("trans_amount", h.getTrans_amount());
+//                    obj.put("trans_amount", h.getTrans_amount());
+                    obj.put("trans_amount", formatAmount(h.getTrans_amount()));
                     obj.put("trans_ccy", h.getTrans_ccy());
                     obj.put("createby", h.getCreateby());
                     obj.put("approveby", h.getApproveby());
+                    obj.put("userentry", h.getUserEntry());
                     dataArray.put(obj);
                 }
+                
 
                 JSONObject jsonResponse = new JSONObject();
     //            jsonResponse.put("draw", draw);
@@ -395,7 +389,6 @@ public class HeaderListServlet extends HttpServlet {
                 jsonResponse.put("data", dataArray);
     //            System.out.println("JSON Response: " + jsonResponse.toString());
                 out.print(jsonResponse.toString());
-//            out.print(jsonResponse.toString());
 
             session.removeAttribute("db_type");
             session.removeAttribute("io_type");
@@ -421,6 +414,43 @@ public class HeaderListServlet extends HttpServlet {
             out.close();
         }
     }
+    
+    public static String formatAmount(String value) {
+        if (value == null || value.trim().isEmpty()) return "";
+
+        value = value.trim();
+
+        String intPart = value;
+        String decPart = "";
+
+        if (value.contains(".")) {
+            String[] parts = value.split("\\.");
+            intPart = parts[0];
+            decPart = parts.length > 1 ? parts[1] : "";
+        }
+
+        // Buang titik ribuan jika ada
+        intPart = intPart.replace(".", "");
+
+        // Format integer dengan pemisah ribuan (titik)
+//        String formattedInt = String.format("%,d", Integer.parseInt(intPart)).replace(',', '.');
+        String formattedInt = String.format("%,d", new java.math.BigDecimal(intPart).toBigInteger()).replace(',', '.');
+
+        // Maksimal 5 digit desimal
+        if (!decPart.isEmpty()) {
+            decPart = decPart.length() > 5 ? decPart.substring(0, 5) : decPart;
+
+            // Hapus trailing zero
+            decPart = decPart.replaceAll("0+$", "");
+
+            if (!decPart.isEmpty()) {
+                return formattedInt + "," + decPart;
+            }
+        }
+
+        return formattedInt;
+    }
+
     
      @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

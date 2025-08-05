@@ -130,6 +130,7 @@
                                 <th>Source</th>
                                 <th>Create By</th>
                                 <th>Approve By</th>
+                                <th>Entry</th>
                                 <th>Action</th>
                                 <!--                        <th>Action</th>-->
                             </tr>
@@ -190,6 +191,7 @@
                                 <th><input type="text" class="column-search" placeholder_="Search Source"></th>
                                 <th><input type="text" class="column-search" placeholder_="Search Createby"></th>
                                 <th><input type="text" class="column-search" placeholder_="Search Approveby"></th>
+                                <th><input type="text" class="column-search" placeholder_="Search userentry"></th>
                                 <th></th>
                             </tr>
                         </tfoot>
@@ -615,10 +617,11 @@ function escapeHtml(text) {
                 {data: "source"},
                 {data: "createby"},
                 {data: "approveby"},
+                {data: "userentry"},
                 {data: null} // Action
             ],
             columnDefs: [
-                { orderable: false, targets: [0, 14] }, // index kolom yang tidak ingin di-sort
+                { orderable: false, targets: [0, 15] }, // index kolom yang tidak ingin di-sort
                 {
                     targets: 0,
                     render: function (data, type, row, meta) {
@@ -637,6 +640,14 @@ function escapeHtml(text) {
                         return '<a href="ViewDataTransaksiOutgoing?id=' + encodeURIComponent(row.id_headers) + '">view</a>';
                     }
                 }
+//                ,
+//                {
+//                    targets: 10, // kolom trans_amount
+//                    render: function (data, type, row, meta) {
+////                        if (!data || isNaN(data)) return data;
+//                        return formatNumberPreserveDecimal(data);
+//                    }
+//                }
             ]
             , initComplete: function () {
                 const api = this.api();
@@ -684,9 +695,21 @@ function escapeHtml(text) {
             // Reload data
             console.log("page changed");
             $("#example").DataTable().ajax.reload();
-        });
+        });    
     });
-
+    
+    
+//    function formatNumberPreserveDecimal(value) {
+//        if (!value) return "";
+//
+//        let parts = value.split(",");
+//        let integerPart = parseInt(parts[0]).toLocaleString('id-ID');
+//        let decimalPart = parts[1] ? "," + parts[1] : "";
+//
+//        return integerPart + decimalPart;
+//    }
+    
+  
 
 </script>
 

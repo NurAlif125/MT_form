@@ -46,10 +46,11 @@ public class SCDataUser extends HttpServlet {
         DBconnection dbConn = new DBconnection();
         DBconnection2 dbConn2 = new DBconnection2();
         DataUser data = new DataUser();
+        DataUser oldData = new DataUser();
         LDAPCon ldapCon = new LDAPCon();
         DBDataUser dbData = new DBDataUser(dbConn.getConnection());
         DBDataUser dbData2 = new DBDataUser(dbConn2.getConnection2());
-        DBUserData dbo = new DBUserData(dbConn.getConnection());
+        DBUserData dbo = new DBUserData(dbConn.getConnection());        
         HttpSession session = request.getSession();
         String user_id = request.getParameter("user_id");
         String enable = "";
@@ -58,6 +59,7 @@ public class SCDataUser extends HttpServlet {
         String auto_disable = request.getParameter("auto_disable");
 //        String idPass="";
         boolean isValidUser = false;
+        boolean isValidUserDisalbe = false;
         String message = "";
         
         if(request.getParameter("subrole") == null) {
@@ -107,6 +109,12 @@ public class SCDataUser extends HttpServlet {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            try {
+                isValidUserDisalbe = dbo.authenticateUserDisable(data.getUser_id());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            
             
             String foundUser = "";
             if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
@@ -120,7 +128,11 @@ public class SCDataUser extends HttpServlet {
             
             if (foundUser.equalsIgnoreCase("Found User LDAP")) {
                 if (isValidUser) {//validasi untuk user
-                    message = "Failed, username is already registered in CM";
+                    if (isValidUserDisalbe) {
+                        message = "Failed, User Id already Disabled";
+                    } else {
+                        message = "Failed, username is already registered in CM";
+                    }
                 } else {
                     dbData2.addDataUser(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 }
@@ -128,7 +140,8 @@ public class SCDataUser extends HttpServlet {
             log.info("addDataUser");
         } else {
             if (request.getParameter("delete_user") == null) {
-                dbData2.updateDataUser(data, user_id, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                oldData = dbData.getDataUserById(user_id);
+                dbData2.updateDataUser(data, user_id, oldData, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                 log.info("updateDataUser");
             } else {
                 log.info("DISABLE PERMANENT USER");
@@ -147,8 +160,9 @@ public class SCDataUser extends HttpServlet {
             dbConn.closeConnection();
         }
         session.setAttribute("message", message);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataUserList");
-        dispatcher.forward(request, response);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("SCDataUserList");
+//        dispatcher.forward(request, response);
+        response.sendRedirect("SCDataUserList");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

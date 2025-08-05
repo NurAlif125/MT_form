@@ -48,7 +48,7 @@
                 <table id="example" class="display nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th style="width:30px;">No</th>
                             <th>User Id</th>
                             <th>Name</th>
                             <th>Channel</th>
@@ -64,7 +64,7 @@
                     <tbody>
                     <c:forEach items="${dataUser}" var="item">
                         <tr>
-                            <td><%=rowNum++%></td>
+                            <td style="width:30px;"><%=rowNum++%></td>
                             <td><a href="VDataUser?user_id=${item.user_id}">${item.user_id}</a></td>
                             <td>${item.name}</td>
                             <td>${item.channel}</td>
