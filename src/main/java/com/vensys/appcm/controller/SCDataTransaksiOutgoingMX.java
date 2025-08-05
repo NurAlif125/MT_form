@@ -81,6 +81,20 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         String dnSender = "ou=" + logicalTerminal.substring(9, 12).toLowerCase() + ",o=" + logicalTerminal.substring(0, 8).toLowerCase() + ",o=swift";
         String dnReceiver = "ou=" + receiverAddress.substring(9, 12).toLowerCase() + ",o=" + receiverAddress.substring(0, 8).toLowerCase() + ",o=swift";
         String service = getService();
+        String priority = request.getParameter("priority");
+        String headerPriority = "";
+
+        if (priority.equalsIgnoreCase("N")) {
+            priority = "NORM";
+        } else if (priority.equalsIgnoreCase("U")) {
+            priority = "HIGH";
+        }
+        
+        if (priority.equalsIgnoreCase("")) {
+            headerPriority = "Normal";
+        } else if (priority.equalsIgnoreCase("U")) {
+            headerPriority = "Urgent";
+        }
         
         String dataXml = request.getParameter("dataXML");
         
@@ -89,7 +103,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         mxConfiguration.headerPrefix = null;
         
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
-        String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>  <Saa:DataPDU xmlns:Saa=\"urn:swift:saa:xsd:saa.2.0\" xmlns:Sw=\"urn:swift:snl:ns.Sw\" xmlns:SwGbl=\"urn:swift:snl:ns.SwGbl\" xmlns:SwInt=\"urn:swift:snl:ns.SwInt\" xmlns:SwSec=\"urn:swift:snl:ns.SwSec\">   <Saa:Revision>2.0.13</Saa:Revision>   <Saa:Header></Saa:Header>   <Saa:Body>ONLY-SAA-HEADERS</Saa:Body></Saa:DataPDU>  ";
+        String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <DataPDU xmlns:Saa=\"urn:swift:saa:xsd:saa.2.0\">   <Revision>2.0.13</Revision>   <Header>THIS-IS-SAA-HEADER</Header>   <Body>ONLY-SAA-HEADERS</Body></DataPDU>  ";
         
         BusinessAppHdrV02 appHeader;
         
@@ -158,7 +172,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 String newXML = dataMXpacs004.message(mxConfiguration);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
-                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                String headerSaa = "<Message><SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "." + idHeaders + "</SenderReference><MessageIdentifier>" + appHeader.getMsgDefIdr() + "</MessageIdentifier><Format>MX</Format><SubFormat>Input</SubFormat><Sender><DN>" + dnSender + "</DN><FullName><X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</X1></FullName></Sender><Receiver><DN>" + dnReceiver + "</DN><FullName><X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</X1></FullName></Receiver><InterfaceInfo><UserReference>" + appHeader.getBizMsgIdr() + "</UserReference></InterfaceInfo><NetworkInfo><Priority>" + headerPriority + "</Priority><Service>" + service + "</Service><SWIFTNetNetworkInfo><RequestType>" + appHeader.getMsgDefIdr() + "</RequestType><RequestSubtype>" + appHeader.getBizSvc() + "</RequestSubtype></SWIFTNetNetworkInfo></NetworkInfo></Message>";
                 saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
                 
                 String newJson = dataMXpacs004.toJson();
@@ -238,7 +252,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 String newXML = dataMXpacs008.message(mxConfiguration);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
-                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                String headerSaa = "<Message><SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "." + idHeaders + "</SenderReference><MessageIdentifier>" + appHeader.getMsgDefIdr() + "</MessageIdentifier><Format>MX</Format><SubFormat>Input</SubFormat><Sender><DN>" + dnSender + "</DN><FullName><X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</X1></FullName></Sender><Receiver><DN>" + dnReceiver + "</DN><FullName><X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</X1></FullName></Receiver><InterfaceInfo><UserReference>" + appHeader.getBizMsgIdr() + "</UserReference></InterfaceInfo><NetworkInfo><Priority>" + headerPriority + "</Priority><Service>" + service + "</Service><SWIFTNetNetworkInfo><RequestType>" + appHeader.getMsgDefIdr() + "</RequestType><RequestSubtype>" + appHeader.getBizSvc() + "</RequestSubtype></SWIFTNetNetworkInfo></NetworkInfo></Message>";
                 saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
                 
                 String newJson = dataMXpacs008.toJson();
@@ -318,7 +332,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 String newXML = dataMXpacs009.message(mxConfiguration);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
-                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                String headerSaa = "<Message><SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "." + idHeaders + "</SenderReference><MessageIdentifier>" + appHeader.getMsgDefIdr() + "</MessageIdentifier><Format>MX</Format><SubFormat>Input</SubFormat><Sender><DN>" + dnSender + "</DN><FullName><X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</X1></FullName></Sender><Receiver><DN>" + dnReceiver + "</DN><FullName><X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</X1></FullName></Receiver><InterfaceInfo><UserReference>" + appHeader.getBizMsgIdr() + "</UserReference></InterfaceInfo><NetworkInfo><Priority>" + headerPriority + "</Priority><Service>" + service + "</Service><SWIFTNetNetworkInfo><RequestType>" + appHeader.getMsgDefIdr() + "</RequestType><RequestSubtype>" + appHeader.getBizSvc() + "</RequestSubtype></SWIFTNetNetworkInfo></NetworkInfo></Message>";
                 saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
                 
                 String newJson = dataMXpacs009.toJson();
@@ -398,7 +412,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 String newXML = dataMXcamt053.message(mxConfiguration);
                 dBTrx2.updateMXText(newXML, Integer.parseInt(idHeaders));
                 
-                String headerSaa = "<Saa:Message><Saa:SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) +  "." + idHeaders + "</Saa:SenderReference><Saa:MessageIdentifier>" + appHeader.getMsgDefIdr() + "</Saa:MessageIdentifier><Saa:Format>MX</Saa:Format><Saa:SubFormat>Input</Saa:SubFormat><Saa:Sender><Saa:DN>" + dnSender + "</Saa:DN><Saa:FullName><Saa:X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Sender><Saa:Receiver><Saa:DN>" + dnReceiver + "</Saa:DN><Saa:FullName><Saa:X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</Saa:X1></Saa:FullName></Saa:Receiver><Saa:InterfaceInfo><Saa:UserReference>" + appHeader.getBizMsgIdr() + "</Saa:UserReference></Saa:InterfaceInfo><Saa:NetworkInfo><Saa:Priority>Normal</Saa:Priority><Saa:Service>" + service + "</Saa:Service><Saa:SWIFTNetNetworkInfo><Saa:RequestType>" + appHeader.getMsgDefIdr() + "</Saa:RequestType><Saa:RequestSubtype>" + appHeader.getBizSvc() + "</Saa:RequestSubtype></Saa:SWIFTNetNetworkInfo></Saa:NetworkInfo></Saa:Message>";
+                String headerSaa = "<Message><SenderReference>I" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "." + idHeaders + "</SenderReference><MessageIdentifier>" + appHeader.getMsgDefIdr() + "</MessageIdentifier><Format>MX</Format><SubFormat>Input</SubFormat><Sender><DN>" + dnSender + "</DN><FullName><X1>" + logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12) + "</X1></FullName></Sender><Receiver><DN>" + dnReceiver + "</DN><FullName><X1>" + receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12) + "</X1></FullName></Receiver><InterfaceInfo><UserReference>" + appHeader.getBizMsgIdr() + "</UserReference></InterfaceInfo><NetworkInfo><Priority>" + headerPriority + "</Priority><Service>" + service + "</Service><SWIFTNetNetworkInfo><RequestType>" + appHeader.getMsgDefIdr() + "</RequestType><RequestSubtype>" + appHeader.getBizSvc() + "</RequestSubtype></SWIFTNetNetworkInfo></NetworkInfo></Message>";
                 saaHeader = saaHeader.replace("THIS-IS-SAA-HEADER", headerSaa);
                 
                 String newJson = dataMXcamt053.toJson();
