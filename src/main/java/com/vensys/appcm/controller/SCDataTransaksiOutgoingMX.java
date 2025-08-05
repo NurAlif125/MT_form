@@ -90,11 +90,9 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
             priority = "HIGH";
         }
         
-        if (priority.equalsIgnoreCase("N")) {
+        if (priority.equalsIgnoreCase("NORM")) {
             headerPriority = "Normal";
-        } else if (priority.equalsIgnoreCase("")) {
-            headerPriority = "Normal";
-        } else if (priority.equalsIgnoreCase("U")) {
+        } else if (priority.equalsIgnoreCase("HIGH")) {
             headerPriority = "Urgent";
         }
         
