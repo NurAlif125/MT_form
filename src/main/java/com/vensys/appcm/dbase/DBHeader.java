@@ -1021,7 +1021,7 @@ public class DBHeader {
             header.setFlag(rs.getString(10));
             header.setBlock3(rs.getString(12));
             header.setUserEntry(rs.getString(21));
-            if ("SRC:MANUAL".equalsIgnoreCase(rs.getString(21))) {
+            if ("MANUAL ENTRY".equalsIgnoreCase(header.getUserEntry())) {
                 if ("FRONTARENA".equalsIgnoreCase(rs.getString(13)) || "TSA".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Treasury OPS");
                 } else if ("BANKTRADE".equalsIgnoreCase(rs.getString(13))) {
@@ -2138,7 +2138,7 @@ public class DBHeader {
                     data.setFlag(rs.getString("flag"));
                     data.setBlock3(rs.getString("block3"));
                     data.setUserEntry(rs.getString("userentry"));
-                    if ("SRC:MANUAL".equalsIgnoreCase(rs.getString("userentry"))) {
+                    if ("MANUAL ENTRY".equalsIgnoreCase(rs.getString("userentry"))) {
                         if ("FRONTARENA".equalsIgnoreCase(rs.getString("source")) || "TSA".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Treasury OPS");
                         } else if ("BANKTRADE".equalsIgnoreCase(rs.getString("source"))) {
