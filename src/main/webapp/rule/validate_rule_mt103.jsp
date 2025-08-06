@@ -11,26 +11,39 @@
             const chargeVal = $('#_210_of71a_details_charges').val();
             const shouldRequire = (chargeVal === 'BEN' || chargeVal === 'SHA');
 
-            if (chargeVal === 'BEN' || chargeVal === 'SHA') {
+            if (shouldRequire) {
                 const emptyFields = [
                     "#_220_of71f_currency", "#_221_of71f_amount",
                     "#_222_of71f_currency", "#_223_of71f_amount",
                     "#_224_of71f_currency", "#_225_of71f_amount",
                     "#_226_of71f_currency", "#_227_of71f_amount",
-                    "#_228_of71f_currency", "#_229_of71f_amount",
-                    "#_230_of71f_amount",   "#_231_of71f_amount"
+                    "#_228_of71f_currency", "#_229_of71f_amount"
                 ];
 
-                const allEmpty = emptyFields.every(selector => {
-                    return ($(selector).val() || "").trim() === "";
-                });
+                const allEmpty = emptyFields.every(selector => ($(selector).val() || "").trim() === "");
 
                 if (allEmpty) {
                     $("#sender_chargers_1_checkbox").prop('checked', true);
                     $('#_220_of71f_currency').val($("#_061_mf32a_currency").val());
                     $('#_221_of71f_amount').val('0');
                     $("#check_of71f_1").show();
-                }            
+                } else {
+                    for (let i = 0; i < emptyFields.length; i += 2) {
+                        const currencySelector = emptyFields[i];
+                        const amountSelector = emptyFields[i + 1];
+
+                        const currencyVal = $(currencySelector).val().trim();
+                        const amountVal = $(amountSelector).val().trim();
+                        
+                        if (currencyVal && !amountVal) {
+                            $(amountSelector).val('0');
+                        }
+
+                        if (!currencyVal && amountVal) {
+                            $(currencySelector).val($("#_061_mf32a_currency").val());
+                        }
+                    }
+                }
             }
         }
 
