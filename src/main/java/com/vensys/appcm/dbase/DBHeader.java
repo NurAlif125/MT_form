@@ -1047,16 +1047,24 @@ public class DBHeader {
             }
             header.setTrans_date_value(rs.getString(16));
             header.setTrans_ccy(rs.getString(18));
-            if (rs.getString(19).contains(";")) {
-                String[] createby = rs.getString(19).split(";");
-                header.setCreateby(createby[0]);
+            if (rs.getString(19) != null) {
+                if (rs.getString(19).contains(";")) {
+                    String[] createby = rs.getString(19).split(";");
+                    header.setCreateby(createby[0]);
+                } else {
+                    header.setCreateby(rs.getString(19));
+                }
             } else {
                 header.setCreateby(rs.getString(19));
             }
-
-            if (rs.getString(20).contains(";")) {
-                String[] approveby = rs.getString(20).split(";");
-                header.setApproveby(approveby[0]);
+            
+            if (rs.getString(20) != null) {
+                if (rs.getString(20).contains(";")) {
+                    String[] approveby = rs.getString(20).split(";");
+                    header.setApproveby(approveby[0]);
+                } else {
+                    header.setApproveby(rs.getString(20));
+                }
             } else {
                 header.setApproveby(rs.getString(20));
             }
@@ -2170,16 +2178,25 @@ public class DBHeader {
                     String amt = rs.getString("trans_amount");
                     data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
                     data.setTrans_ccy(rs.getString("trans_ccy"));
-                    if (rs.getString("createby").contains(";")) {
-                        String[] createby = rs.getString("createby").split(";");
-                        data.setCreateby(createby[0]);
+                    
+                    if (rs.getString("createby") != null) {
+                        if (rs.getString("createby").contains(";")) {
+                            String[] createby = rs.getString("createby").split(";");
+                            data.setCreateby(createby[0]);
+                        } else {
+                            data.setCreateby(rs.getString("createby"));
+                        }
                     } else {
                         data.setCreateby(rs.getString("createby"));
                     }
                     
-                    if (rs.getString("approveby").contains(";")) {
-                        String[] approveby = rs.getString("approveby").split(";");
-                        data.setApproveby(approveby[0]);
+                    if (rs.getString("approveby") != null) {
+                        if (rs.getString("approveby").contains(";")) {
+                            String[] approveby = rs.getString("approveby").split(";");
+                            data.setApproveby(approveby[0]);
+                        } else {
+                            data.setApproveby(rs.getString("approveby"));
+                        }
                     } else {
                         data.setApproveby(rs.getString("approveby"));
                     }
