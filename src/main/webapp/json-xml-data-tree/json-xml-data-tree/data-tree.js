@@ -1,6 +1,6 @@
 /* ==============
 | DATATREE.JS
-| @author: Mitya (acroxall@espresso.co.uk)
+| @author: Mitya
 | @Docs & demo: http://www.mitya.co.uk/scripts/XML-Tree---visualise-and-traverse-your-XML-186
 ============== */
 

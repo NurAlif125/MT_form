@@ -3,9 +3,11 @@
     Author     : M Abdul Hadi
 --%>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="header.jsp" %>
 <%@ include file="rule/validateList_scr.jsp" %>
 <%@ page import="java.util.*"%>
+
 <script src="js/tabcontent.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/dropdown.css" media="screen" rel="stylesheet" type="text/css" />
