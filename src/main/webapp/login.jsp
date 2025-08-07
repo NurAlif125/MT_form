@@ -4,20 +4,37 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.text.*,java.util.*" session="true"%>
 
-<%!
-//        DateFormat fmt = new SimpleDateFormat("EEEE, d MMMM yyyy");
-//        String now = fmt.format(new Date());
-//    Calendar calendar = Calendar.getInstance();
-//    java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
-//    SimpleDateFormat formatter = new SimpleDateFormat("EEEE, d MMMM yyyy");
-//    String tglsekarang = formatter.format(ourJavaTimestampObject);
-//
-//HttpSession session = request.getSession();
+<%
+// Security Headers
+response.setHeader("X-XSS-Protection", "1; mode=block");
+response.setHeader("X-Content-Type-Options", "nosniff");
+response.setHeader("X-Frame-Options", "DENY");
+response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+response.setHeader("Content-Security-Policy", 
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
+    "img-src 'self' data: https://flickr.com; " +
+    "font-src 'self' https://cdn.jsdelivr.net; " +
+    "connect-src 'self';");
+response.setHeader("X-Content-Security-Policy",
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
+    "img-src 'self' data: https://flickr.com; " +
+    "font-src 'self' https://cdn.jsdelivr.net; " +
+    "connect-src 'self';");
+response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
 %>
+
 <html>
     <head>
         <title>clickMessenger Login</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="images/icon.png"/>
         <meta name="description" content="CM" />
         <meta name="keywords" content="enter your keywords here" />
@@ -55,12 +72,12 @@
                             <h3 style="color:#20696d;"><b>CM - SWIFT Interface</b></h3>
                             <br>
                             <div class="form-floating mb-3">
-                                <input required type="text" name="username" autocomplete="off" class="form-control"  autofocus="true" id="floatUserName" placeholder="Your Username" maxlength="50">
+                                <input required type="text" name="username" autocomplete="off" class="form-control"  autofocus="true" id="floatUserName" placeholder="Your Username" maxlength="20">
                                 <label for="floatUserName"><i class="fa-solid fa-user"></i> User ID</label>
                             </div>
 
                             <div class="form-floating">
-                                <input required type="password" class="form-control" name="password" id="password" autocomplete="off" placeholder="Password">
+                                <input required type="password" minlength="8" class="form-control" name="password" id="password" autocomplete="off" placeholder="Password">
                                 <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
                             </div>
                             <input class="mt-3 btn btn-primary" type="submit" name="Login" value="Login">
@@ -115,5 +132,4 @@
                 <p><a href="http://www.vensys.co.id" target="_blank">Copyright &copy; PT. Venturium System Indonesia</a></p>
             </div>-->
     </body>
-</html>
 </html>

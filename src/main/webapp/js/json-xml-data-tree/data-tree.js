@@ -1,7 +1,7 @@
 /* ==============
 | DATATREE.JS
-| @author: Mitya (acroxall@espresso.co.uk)
-| @Docs & demo: http://www.mitya.co.uk/scripts/XML-Tree---visualise-and-traverse-your-XML-186
+| @author: Mitya
+| @Docs & demo:
 ============== */
 
 DataTree = function(params, subTreeRequest) {

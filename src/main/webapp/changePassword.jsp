@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
  <%--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>--%> 
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %> 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.text.*,java.util.*" session="true"%>
 <%!
     Calendar calendar = Calendar.getInstance();
@@ -16,7 +16,7 @@
 <html>
     <head>
         <title>clickMessenger | Change Password</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="shortcut icon" href="images/icon.png"/>
         <meta name="description" content="RTGS - BI #2" />
         <meta name="keywords" content="enter your keywords here" />

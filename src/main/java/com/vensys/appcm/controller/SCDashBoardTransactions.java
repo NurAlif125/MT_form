@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.vensys.appcm.model.DataDashBoardTransactions;
 import com.vensys.appcm.model.DataSlipAndAmount;
+import java.util.regex.Pattern;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 //import org.apache.log4j.Logger;
@@ -34,6 +35,12 @@ import org.apache.logging.log4j.Logger;
  * @author Administrator
  */
 public class SCDashBoardTransactions extends HttpServlet {
+    
+    private static final Pattern SAFE_INPUT_PATTERN = Pattern.compile("^[a-zA-Z0-9_-]{0,50}$");
+
+    private static final String[] MALICIOUS_PARAMETERS = {
+        "classloader", "class.module", "bytes[", "process", "runtime", "exec"
+    };
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,6 +54,7 @@ public class SCDashBoardTransactions extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         DBconnection dbConn = new DBconnection();
         DBDataDashBoardTransactions dBDataDashBoardTransactions = new DBDataDashBoardTransactions(dbConn.getConnection());
         Logger log = LogManager.getLogger(getClass().getName());
@@ -57,12 +65,13 @@ public class SCDashBoardTransactions extends HttpServlet {
         
         String begDateInsert = request.getParameter("insert_date_from");
         String endDateInsert = request.getParameter("insert_date_end");
-        String io_type = request.getParameter("io_type");
+        String io_type = request.getParameter("io_type") == null ? "" : request.getParameter("io_type").trim();
         
-        String ioType = request.getParameter("io_type");
-        if (ioType == null || !ioType.matches("^[a-zA-Z0-9_-]+$")) {
-            log.warn("Invalid io_type parameter: {}", io_type);
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+        String ioType = request.getParameter("io_type") == null ? "" : request.getParameter("io_type").trim();
+        
+        if (!isInputValid(io_type) || !isInputValid(ioType)) {
+            log.warn("Invalid input detected - io_type: " + io_type + ", ioType: " + ioType);
+            response.sendError(400);
             return;
         }
         // System.out.println("::: Tipe Dashboard ALL -> " + io_type);
@@ -162,6 +171,10 @@ public class SCDashBoardTransactions extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("SCDashBoardTransactions.jsp");
         dispatcher.forward(request, response);
         
+    }
+    
+    private boolean isInputValid(String input) {
+        return SAFE_INPUT_PATTERN.matcher(input).matches();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

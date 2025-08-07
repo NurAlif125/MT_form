@@ -1,6 +1,5 @@
 // jquery.multi-select.js
 // by mySociety
-// https://github.com/mysociety/jquery-multi-select
 
 ;(function($) {
 

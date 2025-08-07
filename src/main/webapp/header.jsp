@@ -7,9 +7,28 @@
 <%--<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>--%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %> 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.vensys.appcm.controller.SCNotification" %>
 <%--<%@page import="java.io.FileInputStream" %>--%>
+<%
+// Security Headers
+response.setHeader("X-XSS-Protection", "1; mode=block");
+response.setHeader("X-Content-Type-Options", "nosniff");
+response.setHeader("X-Frame-Options", "DENY");
+response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+response.setHeader("Content-Security-Policy", 
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
+    "img-src 'self' data: https://flickr.com; " +
+    "font-src 'self' https://cdn.jsdelivr.net; " +
+    "connect-src 'self';");
+response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+response.setHeader("Pragma", "no-cache");
+response.setDateHeader("Expires", 0);
+%>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
 
