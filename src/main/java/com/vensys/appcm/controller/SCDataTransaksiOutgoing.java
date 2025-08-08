@@ -190,7 +190,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         } else {
                             // System.out.println("flag req selain ver and mod");
                             dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
-                            if (flag.equalsIgnoreCase("AUTH")) {
+                            if (flag.equalsIgnoreCase("AUTH") || flag.equalsIgnoreCase("CVT-VER-RESEND")) {
                                 dBDataTransaksiOutgoing2.updateApproved((String) session.getAttribute("nameUser"), Integer.parseInt(id), (String) session.getAttribute("user_id"));
                             }
                             if ((flagStatus.equalsIgnoreCase("VER") && flag.equalsIgnoreCase("MOD")) || (flagStatus.equalsIgnoreCase("CVT-VER") && flag.equalsIgnoreCase("CVT-MOD"))) {
