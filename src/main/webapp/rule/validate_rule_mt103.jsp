@@ -44,6 +44,17 @@
                         }
                     }
                 }
+
+                if($("#_070_of33b_currency").val().trim() === "") {
+                    $("#_070_of33b_currency").val($("#_061_mf32a_currency").val());
+                }
+
+                if($("#_072_of33b_amount").val().trim() === "") {
+                    $("#_072_of33b_amount").val('0');
+                }
+            } else {
+                $("#_070_of33b_currency").val('');
+                $("#_072_of33b_amount").val('');
             }
         }
 
