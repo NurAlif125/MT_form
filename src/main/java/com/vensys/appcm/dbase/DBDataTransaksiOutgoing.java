@@ -82,8 +82,8 @@ public class DBDataTransaksiOutgoing {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         String timestampString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timestamp);
         try {
-            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source, createby, approveby) \n"
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
+            String sql = "INSERT INTO headers(applicationId, serviceId, logicalTerminal, sessionNumber, sequenceNumber, io_type, messageType, receiverAddress, messagePriority, deliveryMonitoring, obsolescencePeriod, bankingPriority, mur, komentar, tanggal,flag, userEdit, templateName, flagTemplate, senderInputTime, MIRDate, MIRLogicalTerminal, MIRSessionNumber, MIRSequenceNumber, receiverOutputDate, receiverOutputTime, block3, userEntry, networktype, source, createby, approveby, trans_reference_check) \n"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) \n"
                     + "RETURNING id_headers;";
             PreparedStatement st = this.conn.prepareStatement(sql);
 
@@ -136,6 +136,9 @@ public class DBDataTransaksiOutgoing {
             st.setString(30, channel);
             st.setString(31, nameUser + ";" + user_id);
             st.setString(32, "--");
+            
+            String mergeRefUETR = reference.replace("Reference: ", "")+data.getBlock3().replace("121:", "").replace(";", "");
+            st.setString(33, mergeRefUETR);
 
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
