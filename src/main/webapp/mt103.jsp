@@ -216,7 +216,7 @@
                                                 <input type="text" name="_093_mf50f_account" id="_093_mf50f_account" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_093_mf50f_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                <select id="_094_mf50f_number" name="_094_mf50f_number" class="mandatory">
+                                                <select id="_094_mf50f_number" name="_094_mf50f_number" class="mandatory" input_type="MF50f Number/Name and Address Details" location="Body">
                                                     <option value=""></option>
                                                     <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_094_mf50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
                                             <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_094_mf50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
@@ -229,7 +229,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                    <input type="text" name="_095_mf50f_details" id="_095_mf50f_details" maxlength="33" class="mandatory" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_095_mf50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                    <input type="text" name="_095_mf50f_details" id="_095_mf50f_details" maxlength="33" class="mandatory" input_type="MF50f Number/Name and Address Details" location="Body" value="<c:forEach var="item" items="${tags}" ><c:if test="${item.tagName=='_095_mf50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                         </div>
                                         <div id="div_mf50f_2">
