@@ -156,6 +156,84 @@ public class rulePacs009_2024 {
                                 || dstrctNmPrvsInstgAgt1 != null || ctrySubDvsnPrvsInstgAgt1 != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
                         }
+                        
+                        if (DeptPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(DeptPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(subDeptPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(strtNmPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(bldgNbPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(bldgNmPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(flrPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(pstBxPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(roomPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(pstCdPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(dstrctNmPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(ctryPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmPrvsInstgAgt1 != null) {
+                            if ("".equalsIgnoreCase(twnNmPrvsInstgAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLinePrvsInstgAgt1.isEmpty()) {
+                            for (int j = 0; j < adrLinePrvsInstgAgt1.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLinePrvsInstgAgt1.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -205,6 +283,84 @@ public class rulePacs009_2024 {
                                 || dstrctNmPrvsInstgAgt2 != null || ctrySubDvsnPrvsInstgAgt2 != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
                         }
+                        
+                        if (DeptPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(DeptPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(subDeptPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(strtNmPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(bldgNbPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(bldgNmPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(flrPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(pstBxPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(roomPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(pstCdPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(dstrctNmPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(ctryPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmPrvsInstgAgt2 != null) {
+                            if ("".equalsIgnoreCase(twnNmPrvsInstgAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLinePrvsInstgAgt2.isEmpty()) {
+                            for (int j = 0; j < adrLinePrvsInstgAgt2.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLinePrvsInstgAgt2.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -253,6 +409,84 @@ public class rulePacs009_2024 {
                                 || pstCdPrvsInstgAgt3 != null || twnLctnNmPrvsInstgAgt3 != null
                                 || dstrctNmPrvsInstgAgt3 != null || ctrySubDvsnPrvsInstgAgt3 != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                        
+                        if (DeptPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(DeptPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(subDeptPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(strtNmPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(bldgNbPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(bldgNmPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(flrPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(pstBxPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(roomPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(pstCdPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(dstrctNmPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(ctryPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmPrvsInstgAgt3 != null) {
+                            if ("".equalsIgnoreCase(twnNmPrvsInstgAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLinePrvsInstgAgt3.isEmpty()) {
+                            for (int j = 0; j < adrLinePrvsInstgAgt3.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLinePrvsInstgAgt3.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
                         }
                     }
                 }
@@ -345,6 +579,84 @@ public class rulePacs009_2024 {
                                 || dstrctNmIntrmyAgt1 != null || ctrySubDvsnIntrmyAgt1 != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
                         }
+                        
+                        if (DeptIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(DeptIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(subDeptIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(strtNmIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(bldgNbIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(bldgNmIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(flrIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(pstBxIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(roomIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(pstCdIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(dstrctNmIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(ctryIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmIntrmyAgt1 != null) {
+                            if ("".equalsIgnoreCase(twnNmIntrmyAgt1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineIntrmyAgt1.isEmpty()) {
+                            for (int j = 0; j < adrLineIntrmyAgt1.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineIntrmyAgt1.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -394,6 +706,84 @@ public class rulePacs009_2024 {
                                 || dstrctNmIntrmyAgt2 != null || ctrySubDvsnIntrmyAgt2 != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
                         }
+                        
+                        if (DeptIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(DeptIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(subDeptIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(strtNmIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(bldgNbIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(bldgNmIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(flrIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(pstBxIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(roomIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(pstCdIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(dstrctNmIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(ctryIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmIntrmyAgt2 != null) {
+                            if ("".equalsIgnoreCase(twnNmIntrmyAgt2)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineIntrmyAgt2.isEmpty()) {
+                            for (int j = 0; j < adrLineIntrmyAgt2.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineIntrmyAgt2.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -442,6 +832,84 @@ public class rulePacs009_2024 {
                                 || pstCdIntrmyAgt3 != null || twnLctnNmIntrmyAgt3 != null
                                 || dstrctNmIntrmyAgt3 != null || ctrySubDvsnIntrmyAgt3 != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                        
+                        if (DeptIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(DeptIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(subDeptIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(strtNmIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(bldgNbIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(bldgNmIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(flrIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(pstBxIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(roomIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(pstCdIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(dstrctNmIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(ctryIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmIntrmyAgt3 != null) {
+                            if ("".equalsIgnoreCase(twnNmIntrmyAgt3)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineIntrmyAgt3.isEmpty()) {
+                            for (int j = 0; j < adrLineIntrmyAgt3.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineIntrmyAgt3.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
                         }
                     }
                 }
@@ -494,6 +962,84 @@ public class rulePacs009_2024 {
                                 || dstrctNmDbtr != null || ctrySubDvsnDbtr != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
                         }
+                        
+                        if (DeptDbtr != null) {
+                            if ("".equalsIgnoreCase(DeptDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptDbtr != null) {
+                            if ("".equalsIgnoreCase(subDeptDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmDbtr != null) {
+                            if ("".equalsIgnoreCase(strtNmDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbDbtr != null) {
+                            if ("".equalsIgnoreCase(bldgNbDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmDbtr != null) {
+                            if ("".equalsIgnoreCase(bldgNmDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrDbtr != null) {
+                            if ("".equalsIgnoreCase(flrDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxDbtr != null) {
+                            if ("".equalsIgnoreCase(pstBxDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomDbtr != null) {
+                            if ("".equalsIgnoreCase(roomDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdDbtr != null) {
+                            if ("".equalsIgnoreCase(pstCdDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmDbtr != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmDbtr != null) {
+                            if ("".equalsIgnoreCase(dstrctNmDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnDbtr != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryDbtr != null) {
+                            if ("".equalsIgnoreCase(ctryDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmDbtr != null) {
+                            if ("".equalsIgnoreCase(twnNmDbtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineDbtr.isEmpty()) {
+                            for (int j = 0; j < adrLineDbtr.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineDbtr.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Dbtr/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -543,6 +1089,84 @@ public class rulePacs009_2024 {
                                 || dstrctNmDbtrAgt != null || ctrySubDvsnDbtrAgt != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
                         }
+                        
+                        if (DeptDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(DeptDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(subDeptDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(strtNmDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNbDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNmDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(flrDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(pstBxDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(roomDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(pstCdDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(dstrctNmDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(ctryDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmDbtrAgt != null) {
+                            if ("".equalsIgnoreCase(twnNmDbtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineDbtrAgt.isEmpty()) {
+                            for (int j = 0; j < adrLineDbtrAgt.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineDbtrAgt.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -591,6 +1215,84 @@ public class rulePacs009_2024 {
                                 || pstCdCdtrAgt != null || twnLctnNmCdtrAgt != null
                                 || dstrctNmCdtrAgt != null || ctrySubDvsnCdtrAgt != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                        
+                        if (DeptCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(DeptCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(subDeptCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(strtNmCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNbCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNmCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(flrCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(pstBxCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(roomCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(pstCdCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(dstrctNmCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(ctryCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmCdtrAgt != null) {
+                            if ("".equalsIgnoreCase(twnNmCdtrAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineCdtrAgt.isEmpty()) {
+                            for (int j = 0; j < adrLineCdtrAgt.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineCdtrAgt.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
                         }
                     }
                 }
@@ -642,6 +1344,84 @@ public class rulePacs009_2024 {
                                 || pstCdCdtr != null || twnLctnNmCdtr != null
                                 || dstrctNmCdtr != null || ctrySubDvsnCdtr != null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                        }
+                        
+                        if (DeptCdtr != null) {
+                            if ("".equalsIgnoreCase(DeptCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptCdtr != null) {
+                            if ("".equalsIgnoreCase(subDeptCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmCdtr != null) {
+                            if ("".equalsIgnoreCase(strtNmCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbCdtr != null) {
+                            if ("".equalsIgnoreCase(bldgNbCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmCdtr != null) {
+                            if ("".equalsIgnoreCase(bldgNmCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrCdtr != null) {
+                            if ("".equalsIgnoreCase(flrCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxCdtr != null) {
+                            if ("".equalsIgnoreCase(pstBxCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomCdtr != null) {
+                            if ("".equalsIgnoreCase(roomCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdCdtr != null) {
+                            if ("".equalsIgnoreCase(pstCdCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmCdtr != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmCdtr != null) {
+                            if ("".equalsIgnoreCase(dstrctNmCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnCdtr != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryCdtr != null) {
+                            if ("".equalsIgnoreCase(ctryCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmCdtr != null) {
+                            if ("".equalsIgnoreCase(twnNmCdtr)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineDbtr.isEmpty()) {
+                            for (int j = 0; j < adrLineDbtr.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineDbtr.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FICdtTrf/CdtTrfTxInf/Cdtr/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
                         }
                     }
                 }
