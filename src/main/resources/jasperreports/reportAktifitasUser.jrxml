@@ -79,17 +79,12 @@
 				<text><![CDATA[Event Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="250" y="1" width="99" height="14" forecolor="#736343" uuid="84b7bfa2-7215-4f95-b04c-cd4e75797eb2"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Hostname]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText" style="Column header" x="349" y="2" width="98" height="14" forecolor="#736343" uuid="49f6fa9a-195e-4e90-a4a9-eb326ec391fe"/>
+				<reportElement key="staticText" style="Column header" x="250" y="2" width="98" height="14" forecolor="#736343" uuid="49f6fa9a-195e-4e90-a4a9-eb326ec391fe"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[IP]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="452" y="2" width="168" height="14" forecolor="#736343" uuid="87251da2-1943-45ed-9550-5cc992673f70"/>
+				<reportElement key="staticText" style="Column header" x="352" y="2" width="208" height="14" forecolor="#736343" uuid="87251da2-1943-45ed-9550-5cc992673f70"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Description]]></text>
 			</staticText>
@@ -99,7 +94,7 @@
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="620" y="2" width="166" height="14" forecolor="#736343" uuid="dbc2b6a8-61a3-41ce-b133-2cdbe8757f49"/>
+				<reportElement key="staticText" style="Column header" x="560" y="2" width="226" height="14" forecolor="#736343" uuid="dbc2b6a8-61a3-41ce-b133-2cdbe8757f49"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Changes]]></text>
 			</staticText>
@@ -124,14 +119,7 @@
 					<textFieldExpression><![CDATA[$F{event_date}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="Detail" x="250" y="0" width="99" height="15" uuid="649e4e98-5804-4c8d-bf34-a10a59ba47d5"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="11"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{hostname}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="Detail" x="451" y="0" width="169" height="15" uuid="5efd1dbe-c031-4225-9fdb-1d68ffa7b66f"/>
+					<reportElement key="textField" style="Detail" x="351" y="0" width="209" height="15" uuid="5efd1dbe-c031-4225-9fdb-1d68ffa7b66f"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
@@ -145,14 +133,14 @@
 					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="Detail" x="349" y="0" width="99" height="15" uuid="a74dce6b-2631-4d78-89ed-b76d19cf457d"/>
+					<reportElement key="textField" style="Detail" x="250" y="0" width="99" height="15" uuid="a74dce6b-2631-4d78-89ed-b76d19cf457d"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ip}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="Detail" x="620" y="0" width="166" height="15" uuid="7fe90954-1957-4f85-ad48-a18558445a07"/>
+					<reportElement key="textField" style="Detail" x="560" y="0" width="226" height="15" uuid="7fe90954-1957-4f85-ad48-a18558445a07"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="11"/>
 					</textElement>
