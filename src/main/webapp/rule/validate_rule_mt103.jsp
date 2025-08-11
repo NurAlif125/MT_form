@@ -25,7 +25,7 @@
                 if (allEmpty) {
                     $("#sender_chargers_1_checkbox").prop('checked', true);
                     $('#_220_of71f_currency').val($("#_061_mf32a_currency").val());
-                    $('#_221_of71f_amount').val('0');
+                    $('#_221_of71f_amount').val('0,');
                     $("#check_of71f_1").show();
                 } else {
                     for (let i = 0; i < emptyFields.length; i += 2) {
@@ -36,7 +36,7 @@
                         const amountVal = $(amountSelector).val().trim();
                         
                         if (currencyVal && !amountVal) {
-                            $(amountSelector).val('0');
+                            $(amountSelector).val('0,');
                         }
 
                         if (!currencyVal && amountVal) {
@@ -50,7 +50,7 @@
                 }
 
                 if($("#_072_of33b_amount").val().trim() === "") {
-                    $("#_072_of33b_amount").val('0');
+                    $("#_072_of33b_amount").val('0,');
                 }
             } else {
                 $("#_070_of33b_currency").val('');
