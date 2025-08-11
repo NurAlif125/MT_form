@@ -161,7 +161,7 @@
                                         <input type="text" name="_070_of33b_currency" id="_070_of33b_currency" onkeypress="return textonly(event)" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                        <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" />
+                                        <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" />
                                         <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                         <font style="margin-left: 50px"></font>
                                         <script langauge="javascript">
@@ -619,7 +619,7 @@
                                     </c:if>
                                     <% }%>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                        <select id="_186_mf59f_number" name="_186_mf59f_number" class="mandatory">
+                                        <select id="_186_mf59f_number" name="_186_mf59f_number" class="mandatory" input_type="MF59f Number/Name and Address Details" location="Body">
                                             <option value=""></option>
                                             <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
                                             <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
@@ -627,7 +627,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                    <input type="text" name="_187_mf59f_details" id="_187_mf59f_details" maxlength="33" class="mandatory" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_187_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" /> 
+                                                    <input type="text" name="_187_mf59f_details" id="_187_mf59f_details" maxlength="33" class="mandatory" input_type="MF59f Number/Name and Address Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_187_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" /> 
                                             </div>
                                     <% if (session.getAttribute("flagStatus").equals("INC-WAIT") || session.getAttribute("flagStatus").equals("INC-ADJ")) {%>
                                     <c:if test="${headerById.komentar=='Not Found'}">
