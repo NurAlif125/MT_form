@@ -125,9 +125,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 //        data.setBlock3(UUID.randomUUID().toString());
         String reference = "";
         if (messType.contains("008") || messType.contains("009")) {
-            reference = "Reference : " + request.getParameter("instrId");
+            reference = "Reference: " + request.getParameter("instrId");
         } else if (messType.contains("004")) {
-            reference = "Reference : " + request.getParameter("rtrId");
+            reference = "Reference: " + request.getParameter("rtrId");
         }
 
         String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference, (String) session.getAttribute("nameUser"));
