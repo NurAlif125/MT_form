@@ -84,7 +84,7 @@ response.setDateHeader("Expires", 0);
     </script>
     <% } %>    
     <% }%>
-
+    
     <!-- Header -->
     <!--20210405 ditambah host dan appversion-->
     <h1 class="logoAtas"><img class="homePage" src="images/flickr.com/cm.png"/><span>${hostname} (${appVersion})</span></h1>
@@ -531,6 +531,14 @@ response.setDateHeader("Expires", 0);
         </div>-->
     </ul>
     <body style="clear: both;">
+        <c:if test="${empty sessionScope.user_id}">
+            <script type="text/javascript">
+                alert('Your session has expired, please log in again!');
+                window.location.href = 'login.jsp';
+            </script>
+        </c:if>
+        
+        
         <input type="hidden" id="timeout" name="timeout" value="<% out.print(session.getAttribute("timeout"));%>"/>
         <!--<input type="hidden" id="timeout" name="timeout" value="300000"/>-->
         <script type="text/javascript">
@@ -548,8 +556,8 @@ response.setDateHeader("Expires", 0);
             });
             SetWinTimeout();
         </script>
-
-
+        
+        
 
         <!-- Modal Notifikasi -->
 <!--        <div id="notifModal" class="modal-notif" onclick="outsideClick(event)">
