@@ -234,7 +234,7 @@ public class DBDataTransaksiOutgoing {
     }
 
 //    }
-    public void updateDataTransaksiOutgoing(DataHeaderTransaksi data, String flag, String user_id, Integer id_headers, String ip_access, String comp_name) throws SQLException, Exception {
+    public void updateDataTransaksiOutgoing(DataHeaderTransaksi data, String flag, String user_id, Integer id_headers, String ip_access, String comp_name, String reference) throws SQLException, Exception {
         log.info("updateDataTransaksiOutgoing");
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -245,7 +245,7 @@ public class DBDataTransaksiOutgoing {
                     + "deliveryMonitoring=?,obsolescencePeriod=?,bankingPriority=?,mur=?,komentar=?,"
                     + "flag=?,userEdit=?,flagTemplate=?,senderInputTime=?,MIRDate=?,"
                     + "MIRLogicalTerminal=?,MIRSessionNumber=?,MIRSequenceNumber=?,receiverOutputDate=?,"
-                    + "receiverOutputTime=?,block3=? WHERE id_headers=?";
+                    + "receiverOutputTime=?,block3=?, trans_reference_check=? WHERE id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, "F");   //applicationId/
             st.setString(2, "01");  //serviceId/
@@ -280,7 +280,9 @@ public class DBDataTransaksiOutgoing {
             st.setString(23, "");   //receiverOutputDate//
             st.setString(24, "");   //receiverOutputTime//
             st.setString(25, data.getBlock3());   //block3/
-            st.setInt(26, id_headers);
+            String mergeRefUETR = reference.replace("Reference: ", "")+data.getBlock3().replace("121:", "").replace(";", "");
+            st.setString(26, mergeRefUETR);
+            st.setInt(27, id_headers);
 //            System.out.println(st);
             st.executeUpdate();
         } catch (SQLException e) {
@@ -979,18 +981,19 @@ public class DBDataTransaksiOutgoing {
         return update;
     }
     
-    public int updateFlagMX(String lt, String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name) throws SQLException, Exception {
+    public int updateFlagMX(String lt, String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name, String reference) throws SQLException, Exception {
         int update = 0;
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
-            String sql = "UPDATE headers set logicalTerminal=?, receiverAddress=?, flag=? where flag =? and id_headers=?";
+            String sql = "UPDATE headers set logicalTerminal=?, receiverAddress=?, flag=?, trans_reference_check=? where flag =? and id_headers=?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, lt.toUpperCase());
             st.setString(2, responder.toUpperCase());
             st.setString(3, flag);
 //            st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
             st.setString(4, flag_before);
-            st.setInt(5, id_headers);
+            st.setString(5, reference);
+            st.setInt(6, id_headers);
             update = st.executeUpdate();
             if (update > 0) {
                 log.info("Update Flag to:" + flag);

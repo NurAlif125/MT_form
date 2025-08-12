@@ -738,7 +738,7 @@ public class rulePacs004_2024 {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/PrvsInstgAgt1/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent1 must be present if PreviousInstructingAgent1 is present.</td><td>PmtRtr/TxInf/RtrChain/PrvsInstgAgt1/FinInstnId</td></tr>");
                         }
 
-                        if ((bicPrvsInstgAgt1RtrChain == null && pstlAdrPrvsInstgAgt1RtrChain != null) || (bicPrvsInstgAgt1RtrChain != null && pstlAdrPrvsInstgAgt1RtrChain == null)) {
+                        if ((nmPrvsInstgAgt1RtrChain == null && pstlAdrPrvsInstgAgt1RtrChain != null) || (nmPrvsInstgAgt1RtrChain != null && pstlAdrPrvsInstgAgt1RtrChain == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/PrvsInstgAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/PrvsInstgAgt1/FinInstnId</td></tr>");
                         }
 
@@ -866,7 +866,7 @@ public class rulePacs004_2024 {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/PrvsInstgAgt2/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent2 must be present if PreviousInstructingAgent2 is present.</td><td>PmtRtr/TxInf/RtrChain/PrvsInstgAgt2/FinInstnId</td></tr>");
                         }
 
-                        if ((bicPrvsInstgAgt2RtrChain == null && pstlAdrPrvsInstgAgt2RtrChain != null) || (bicPrvsInstgAgt2RtrChain != null && pstlAdrPrvsInstgAgt2RtrChain == null)) {
+                        if ((nmPrvsInstgAgt2RtrChain == null && pstlAdrPrvsInstgAgt2RtrChain != null) || (nmPrvsInstgAgt2RtrChain != null && pstlAdrPrvsInstgAgt2RtrChain == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/PrvsInstgAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/PrvsInstgAgt2/FinInstnId</td></tr>");
                         }
 
@@ -994,7 +994,7 @@ public class rulePacs004_2024 {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/PrvsInstgAgt3/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent3 must be present if PreviousInstructingAgent3 is present.</td><td>PmtRtr/TxInf/RtrChain/PrvsInstgAgt3/FinInstnId</td></tr>");
                         }
 
-                        if ((bicPrvsInstgAgt3RtrChain == null && pstlAdrPrvsInstgAgt3RtrChain != null) || (bicPrvsInstgAgt3RtrChain != null && pstlAdrPrvsInstgAgt3RtrChain == null)) {
+                        if ((nmPrvsInstgAgt3RtrChain == null && pstlAdrPrvsInstgAgt3RtrChain != null) || (nmPrvsInstgAgt3RtrChain != null && pstlAdrPrvsInstgAgt3RtrChain == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/PrvsInstgAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/PrvsInstgAgt3/FinInstnId</td></tr>");
                         }
 
@@ -1121,7 +1121,7 @@ public class rulePacs004_2024 {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/IntrmyAgt1/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent1 must be present if IntermediaryAgent3 is present.</td><td>PmtRtr/TxInf/RtrChain/IntrmyAgt1/FinInstnId</td></tr>");
                         }
 
-                        if ((bicIntrmyAgt1RtrChain == null && pstlAdrIntrmyAgt1RtrChain != null) || (bicIntrmyAgt1RtrChain != null && pstlAdrIntrmyAgt1RtrChain == null)) {
+                        if ((nmIntrmyAgt1RtrChain == null && pstlAdrIntrmyAgt1RtrChain != null) || (nmIntrmyAgt1RtrChain != null && pstlAdrIntrmyAgt1RtrChain == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/IntrmyAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/IntrmyAgt1/FinInstnId</td></tr>");
                         }
 
@@ -1248,7 +1248,7 @@ public class rulePacs004_2024 {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/IntrmyAgt2/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent2 must be present if IntermediaryAgent2 is present.</td><td>PmtRtr/TxInf/RtrChain/IntrmyAgt2/FinInstnId</td></tr>");
                         }
 
-                        if ((bicIntrmyAgt2RtrChain == null && pstlAdrIntrmyAgt2RtrChain != null) || (bicIntrmyAgt2RtrChain != null && pstlAdrIntrmyAgt2RtrChain == null)) {
+                        if ((nmIntrmyAgt2RtrChain == null && pstlAdrIntrmyAgt2RtrChain != null) || (nmIntrmyAgt2RtrChain != null && pstlAdrIntrmyAgt2RtrChain == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/IntrmyAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/IntrmyAgt2/FinInstnId</td></tr>");
                         }
 
@@ -1375,7 +1375,7 @@ public class rulePacs004_2024 {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/IntrmyAgt3/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent3 must be present if IntermediaryAgent3 is present.</td><td>PmtRtr/TxInf/RtrChain/IntrmyAgt3/FinInstnId</td></tr>");
                         }
 
-                        if ((bicIntrmyAgt3RtrChain == null && pstlAdrIntrmyAgt3RtrChain != null) || (bicIntrmyAgt3RtrChain != null && pstlAdrIntrmyAgt3RtrChain == null)) {
+                        if ((nmIntrmyAgt3RtrChain == null && pstlAdrIntrmyAgt3RtrChain != null) || (nmIntrmyAgt3RtrChain != null && pstlAdrIntrmyAgt3RtrChain == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/IntrmyAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/IntrmyAgt3/FinInstnId</td></tr>");
                         }
 
@@ -1498,11 +1498,15 @@ public class rulePacs004_2024 {
                         String bicCdtrAgtRtrChain = finInstnIdCdtrAgtRtrChain.getBICFI();
                         String nmcdtrAgtRtrChain = finInstnIdCdtrAgtRtrChain.getNm();
                         PostalAddress24 pstlAdrCdtrAgtRtrChain = finInstnIdCdtrAgtRtrChain.getPstlAdr();
+                        if ((bicCdtrAgtRtrChain != null && nmcdtrAgtRtrChain != null) || (nmcdtrAgtRtrChain != null && pstlAdrCdtrAgtRtrChain != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId\"><td>If BICFI is present, then Name and PostalAddress is not allowed</td><td>PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId</td></tr>");
+                        }
+                        
                         if (bicCdtrAgtRtrChain == null && nmcdtrAgtRtrChain == null) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId\"><td>FinancialInstitutionIdentification in CreditorAgent must be present if CreditorAgent is present.</td><td>PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId</td></tr>");
                         }
 
-                        if ((bicCdtrAgtRtrChain == null && pstlAdrCdtrAgtRtrChain != null) || (bicCdtrAgtRtrChain != null && pstlAdrCdtrAgtRtrChain == null)) {
+                        if ((nmcdtrAgtRtrChain == null && pstlAdrCdtrAgtRtrChain != null) || (nmcdtrAgtRtrChain != null && pstlAdrCdtrAgtRtrChain == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId</td></tr>");
                         }
 
@@ -2899,7 +2903,7 @@ public class rulePacs004_2024 {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/OrgnlTxRef/CdtrAgt/FinInstnId\"><td>FinancialInstitutionIdentification in CreditorAgent must be present if CreditorAgent is present.</td><td>PmtRtr/TxInf/OrgnlTxRef/CdtrAgt/FinInstnId</td></tr>");
                         }
 
-                        if ((bicCdtrAgtOTR == null && pstlAdrCdtrAgtOTR != null) || (bicCdtrAgtOTR != null && pstlAdrCdtrAgtOTR == null)) {
+                        if ((nmcdtrAgtOTR == null && pstlAdrCdtrAgtOTR != null) || (nmcdtrAgtOTR != null && pstlAdrCdtrAgtOTR == null)) {
                             validationRuleComment.add("<tr class=\"error__row\" input-id=\"PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>PmtRtr/TxInf/RtrChain/CdtrAgt/FinInstnId</td></tr>");
                         }
 

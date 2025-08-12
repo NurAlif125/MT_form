@@ -116,7 +116,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         data.setBanking_priority("N");
         data.setMur("M");
         data.setOperator_comment("Operator Comment");
-        if (abstractMX.getMxId().toString().contains("pacs.008") || abstractMX.getMxId().toString().contains("pacs.009")) {
+        if (abstractMX.getMxId().toString().contains("pacs.008") || abstractMX.getMxId().toString().contains("pacs.009") || abstractMX.getMxId().toString().contains("pacs.004")) {
             data.setBlock3("121:" + request.getParameter("UETR") + ";");
         } else {
             data.setBlock3(null);
@@ -125,9 +125,9 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
 //        data.setBlock3(UUID.randomUUID().toString());
         String reference = "";
         if (messType.contains("008") || messType.contains("009")) {
-            reference = "Reference : " + request.getParameter("instrId");
+            reference = "Reference: " + request.getParameter("instrId");
         } else if (messType.contains("004")) {
-            reference = "Reference : " + request.getParameter("rtrId");
+            reference = "Reference: " + request.getParameter("rtrId");
         }
 
         String returnId_headers = dBTrx.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference, (String) session.getAttribute("nameUser"));
