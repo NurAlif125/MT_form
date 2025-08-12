@@ -62,6 +62,7 @@
                 _241_mf50a_identifier_code: "required",
                 _245_mf50f_details: "required",
                 _247_mf50f_details: "required",
+                _243_mf50f_account: "required",
 
                 //mf59
                 type_of59_59a_: "required",
@@ -96,9 +97,10 @@
                 _291_mf59_name_address: {required: "MF59 Name and Address must be filled..!!"},
                 _293_mf59a_identifier_code: {required: "MF59A Identifier Code must be filled..!!"},
                 _297_mf59f_details: {required: "MF59F Details must be filled..!!"},
-                _299_mf59f_details: {required: "MF59F Details must be filled..!!"},
+                _299_mf59f_details: {required: "MF59F Details 2 must be filled..!!"},
                 _245_mf50f_details: {required: "MF50F Details must be filled..!!"},
-                _247_mf50f_details: {required: "MF50F Details must be filled..!!"}
+                _247_mf50f_details: {required: "MF50F Details 2 must be filled..!!"},
+                _243_mf50f_account: {required: "MF50F Account must be filled..!!"},
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);

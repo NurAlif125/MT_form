@@ -257,7 +257,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                <input type="text" name="_097_mf50f_details" id="_097_mf50f_details" maxlength="33" class="mandatory" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_097_mf50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                <input type="text" name="_097_mf50f_details" id="_097_mf50f_details" maxlength="33" input_type="MF50f Number/Name and Address Details" location="Body" class="mandatory" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_097_mf50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                         </div>
                                                     </div>
                                                 </div>
