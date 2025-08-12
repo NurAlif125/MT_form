@@ -1365,7 +1365,7 @@ public class rulePacs004_2024 {
                 }
 
                 BranchAndFinancialInstitutionIdentification6 intrmyAgt3RtrChain = rtrChain.getIntrmyAgt3();
-                if (intrmyAgt3RtrChain != null) { 
+                if (intrmyAgt2RtrChain != null) {
                     FinancialInstitutionIdentification18 finInstnIdIntrmyAgt3RtrChain = intrmyAgt3RtrChain.getFinInstnId();
                     if (finInstnIdIntrmyAgt3RtrChain != null) {
                         String bicIntrmyAgt3RtrChain = finInstnIdIntrmyAgt3RtrChain.getBICFI();
