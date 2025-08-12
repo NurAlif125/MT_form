@@ -41,7 +41,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     Logger log = Logger.getLogger(getClass().getName());
-    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,10 +63,9 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
 //        Date now = new Date();
         HttpSession session = request.getSession();
-        
+
 //        String channel = (String) session.getAttribute("cahnnel");
 //        channel = channel == null || channel.equalsIgnoreCase("") ? "" : "/"+(String) session.getAttribute("cahnnel");
-            
         String id = request.getParameter("id");
         String[] idsToUpdate = request.getParameterValues("chkId");
         String io_typeStatus = (String) session.getAttribute("io_typeStatus");
@@ -82,7 +80,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         String messageType = request.getParameter("messageType");
         String komentar = request.getParameter("komentar");
         DBconnection dbConn = new DBconnection();
-        DBconnection2 dbConn2 = new DBconnection2();        
+        DBconnection2 dbConn2 = new DBconnection2();
         DataHeaderTransaksi data = new DataHeaderTransaksi();
         Header header = new Header();
         CreateText ct = new CreateText(dbConn.getConnection());
@@ -158,20 +156,24 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                 String reference = "";
                 if (!messageType.contains("pacs") || !messageType.contains("camt")) {
-                    reference = "Reference: "+request.getParameter("_010_mf20_sender_reference");
-                } 
-                
+                    reference = "Reference: " + request.getParameter("_010_mf20_sender_reference");
+                }
+
                 lastInsertedID = dBDataTransaksiOutgoing2.addDataTransaksiOutgoing(data, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), (String) session.getAttribute("channel"), reference, (String) session.getAttribute("nameUser"));
                 log.info("lastInsertedID " + lastInsertedID);
             } else {
+                String reference = "";
+                if (!messageType.contains("pacs") || !messageType.contains("camt")) {
+                    reference = "Reference: " + request.getParameter("_010_mf20_sender_reference");
+                }
                 if (io_typeStatus.equalsIgnoreCase("I")) {
                     if (request.getParameter("flag") == null) {
                         log.info("flag req null");
                         if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equalsIgnoreCase("CVT-MOD")) {
-                            dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                            dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                         } else if (flagStatus.equalsIgnoreCase("DUPL")) {
                             flag = "DUPL-CNF";
-                            dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                            dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                         }
                     } else {
                         // System.out.println("flag req ada");
@@ -182,7 +184,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                                 dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                             } else {
                                 log.info("sender ada");
-                                dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                                dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                             }
 //                        } else if (flagStatus.equalsIgnoreCase("VER")) {
 //                            System.out.println("flag req ver");
@@ -205,7 +207,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         log.info("SCDataTransaksiOutgoing-elseif-1");
                         dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "INC-WAIT", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                     } else {
-                        if(request.getParameter("flag").equalsIgnoreCase("INC-SPRT")){
+                        if (request.getParameter("flag").equalsIgnoreCase("INC-SPRT")) {
                             dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), "WAITING-SAA-CNF", Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I");
                         }
                         if (request.getParameter("flag").equalsIgnoreCase("INC-SPRT")) {
@@ -334,21 +336,19 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         }
                     }
 
-                    if ("MOD".equalsIgnoreCase(flagStatus)){
+                    if ("MOD".equalsIgnoreCase(flagStatus)) {
                         MessageComparator comparator = new MessageComparator();
                         System.out.println("id_YUDA: " + id);
-                        String hasilCompare = comparator.compare(Integer.parseInt(id)); 
+                        String hasilCompare = comparator.compare(Integer.parseInt(id));
                         if (hasilCompare != null && !hasilCompare.isEmpty()) {
-                            evl.insertDataEvent((String) session.getAttribute("user_id"), "Update status transaksi menjadi " + flag , (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"),hasilCompare);
+                            evl.insertDataEvent((String) session.getAttribute("user_id"), "Update status transaksi menjadi " + flag, (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), hasilCompare);
                         }
                     } else {
-                        evl.insertDataEvent((String) session.getAttribute("user_id"), "Update status transaksi menjadi " + flag , (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        evl.insertDataEvent((String) session.getAttribute("user_id"), "Update status transaksi menjadi " + flag, (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                     }
                 }
-                
 
 //                20211215 penambahan cek duplikat create manual
-
                 // end of the line
             }
 
