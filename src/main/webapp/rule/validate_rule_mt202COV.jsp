@@ -96,9 +96,9 @@
                 _291_mf59_name_address: {required: "MF59 Name and Address must be filled..!!"},
                 _293_mf59a_identifier_code: {required: "MF59A Identifier Code must be filled..!!"},
                 _297_mf59f_details: {required: "MF59F Details must be filled..!!"},
-                _299_mf59f_details: {required: "MF59F Details must be filled..!!"},
+                _299_mf59f_details: {required: "MF59F Details 2 must be filled..!!"},
                 _245_mf50f_details: {required: "MF50F Details must be filled..!!"},
-                _247_mf50f_details: {required: "MF50F Details must be filled..!!"}
+                _247_mf50f_details: {required: "MF50F Details 2 must be filled..!!"}
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);
