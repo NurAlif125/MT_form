@@ -338,7 +338,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
 
                     if ("MOD".equalsIgnoreCase(flagStatus)) {
                         MessageComparator comparator = new MessageComparator();
-                        System.out.println("id_YUDA: " + id);
                         String hasilCompare = comparator.compare(Integer.parseInt(id));
                         if (hasilCompare != null && !hasilCompare.isEmpty()) {
                             evl.insertDataEvent((String) session.getAttribute("user_id"), "Update status transaksi menjadi " + flag, (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), hasilCompare);
