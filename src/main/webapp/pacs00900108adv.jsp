@@ -135,7 +135,7 @@
                 <legend>FICdtTrf</legend>
                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="GrpHdr" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr">
                         <legend>GroupHeader <a style="color:red;text-decoration:none">*</a></legend>
-                        <section id="FICdtTrf/GrpHdr/MsgId" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="MsgId" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/MsgId"><input type="text" onchange='if (this.value) {
+                        <section id="FICdtTrf/GrpHdr/MsgId" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="MsgId" data-xsd2html2xml-xpath="/Document/FICdtTrf/GrpHdr/MsgId"><input type="text" id="msgid" onchange='if (this.value) {
                 this.setAttribute("value", this.value);
             } else {
                 this.removeAttribute("value");
@@ -432,7 +432,7 @@
                         <legend>CreditTransferTransactionInformation <a style="color:red;text-decoration:none">*</a></legend>
                         <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PmtId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PmtId">
                                 <legend>PaymentIdentification <a style="color:red;text-decoration:none">*</a></legend>
-                                <section id="FICdtTrf/CdtTrfTxInf/PmtId/InstrId" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="InstrId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PmtId/InstrId"><input type="text" onchange='if (this.value) {
+                                <section id="FICdtTrf/CdtTrfTxInf/PmtId/InstrId" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="InstrId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PmtId/InstrId"><input type="text" id="instrid" oninput="copyToMsgId()" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="16" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="InstructionIdentification" name="instrId" ><span>InstructionIdentification <a style="color:red;text-decoration:none">*</a></span></label></section><section id="FICdtTrf/CdtTrfTxInf/PmtId/EndToEndId" tabindex="-1"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="EndToEndId" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PmtId/EndToEndId"><input type="text" onchange='if (this.value) {
                             this.setAttribute("value", this.value); } else {
@@ -608,7 +608,7 @@
                                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PostalAddress</button></section>
                                     </fieldset></section>
                             </fieldset>
-                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PreviousInstructingAgent1</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvsInstgAgt1Acct" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1Acct">
+                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PreviousInstructingAgent1</button></section><p>PreviousInstructingAgent is for :72: on MT202 with code /INS/</p><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvsInstgAgt1Acct" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1Acct">
                                 <legend>PreviousInstructingAgent1Account<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Id" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt1Acct/Id">
@@ -756,7 +756,7 @@
                                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PostalAddress</button></section>
                                     </fieldset></section>
                             </fieldset>
-                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PreviousInstructingAgent2</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvsInstgAgt2Acct" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2Acct">
+                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PreviousInstructingAgent2</button></section><p>PreviousInstructingAgent is for :72: on MT202 with code /INS/</p><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvsInstgAgt2Acct" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2Acct">
                                 <legend>PreviousInstructingAgent2Account<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Id" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt2Acct/Id">
@@ -895,7 +895,7 @@
                                             <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PostalAddress</button></section>
                                     </fieldset></section>
                             </fieldset>
-                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PreviousInstructingAgent3</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvsInstgAgt3Acct" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3Acct">
+                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">PreviousInstructingAgent3</button></section><p>PreviousInstructingAgent is for :72: on MT202 with code /INS/</p><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="PrvsInstgAgt3Acct" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3Acct">
                                 <legend>PreviousInstructingAgent3Account<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
                                 <section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Id" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/PrvsInstgAgt3Acct/Id">
@@ -1981,14 +1981,14 @@
             } else {
                 this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="140" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="InstructionInformation"><span>InstructionInformation<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">InstructionInformation</button></section>
                             </fieldset>
-                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="2" onclick="clickAddButton(this);">InstructionForCreditorAgent</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="InstrForNxtAgt" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstrForNxtAgt">
+                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="2" onclick="clickAddButton(this);">InstructionForCreditorAgent</button></section><p>InstructionForCreditorAgent is for :72: on MT202 with Code /ACC/ (InstructionForCreditorAgent/Cd is absent) & /TELB/ (InstructionForCreditorAgent/Cd must be present) & /PHOB/ (InstructionForCreditorAgent/Cd must be present).<br>Sample: <br>instrForCdtrAgt: THIS IS FROM ACC</p><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="InstrForNxtAgt" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstrForNxtAgt">
                                 <legend>InstructionForNextAgent<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
                                 <section><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="InstrInf" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/InstrForNxtAgt/InstrInf"><input type="text" onchange='if (this.value) {
                 this.setAttribute("value", this.value); } else {
                 this.removeAttribute("value"); };' required="required" pattern="[0-9a-zA-Z\/\-\?:\(\)\.,'\+ ]+" maxlength="35" data-xsd2html2xml-primitive="string" data-xsd2html2xml-description="InstructionInformation"><span>InstructionInformation<button type="button" class="remove" onclick="clickRemoveButton(this);"></button></span></label><button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="1" onclick="clickAddButton(this);">InstructionInformation</button></section>
                             </fieldset>
-                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="6" onclick="clickAddButton(this);">InstructionForNextAgent</button></section><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Purp" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Purp">
+                            <button type="button" class="add" data-xsd2html2xml-min="0" data-xsd2html2xml-max="6" onclick="clickAddButton(this);">InstructionForNextAgent</button></section><p>InstructionForNextAgent is for :72: on MT202 with code /PHONBIK/ & /REC/ & /TELE/ & /TELEIBK/ & /INT/ & /PHON/<br>Sample:<br>instrForNxtAgt: /REC/THIS IS REC<br>instrForNxtAgt: /PHON/THIS IS PHON</p><section><fieldset data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Purp" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Purp">
                                 <legend>Purpose<button type="button" class="remove" onclick="clickRemoveButton(this);"></button>
                                 </legend>
                                 <label><input type="radio" name="id66" required="required" onclick="clickRadioInput(this, 'id66');" data-xsd2html2xml-description="1"><span>1</span></label><section data-xsd2html2xml-choice="true"><label data-xsd2html2xml-namespace="urn:iso:std:iso:20022:tech:xsd:pacs.009.001.08" data-xsd2html2xml-type="element" data-xsd2html2xml-name="Cd" data-xsd2html2xml-xpath="/Document/FICdtTrf/CdtTrfTxInf/Purp/Cd"><input type="text" onchange='if (this.value) {
@@ -2100,5 +2100,11 @@
             if (value && parseFloat(value) === 0) {
                 alert('Amount must not be Zero (0)');
             }
+        }
+
+        function copyToMsgId() {
+            const instrid = document.getElementById('instrid');
+            const msgid = document.getElementById('msgid');
+            msgid.value = instrid.value;
         }
 </script>

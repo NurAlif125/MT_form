@@ -103,6 +103,12 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         mxConfiguration.headerPrefix = null;
         
         AbstractMX abstractMX = AbstractMX.parse(dataXml);
+        String reference = "";
+        if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008") || abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
+            reference = request.getParameter("instrId") + headers.getBlock3().replace("121:", "").replace(";", "");
+        } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
+            reference = "Reference: " + request.getParameter("rtrId");
+        }
         String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><DataPDU xmlns=\"urn:swift:saa:xsd:saa.2.0\"><Revision>2.0.13</Revision><Header>THIS-IS-SAA-HEADER</Header><Body>ONLY-SAA-HEADERS</Body></DataPDU>";
         
         BusinessAppHdrV02 appHeader;
@@ -180,10 +186,10 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 if(flag.equalsIgnoreCase("MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 }
                 
             }
@@ -260,10 +266,10 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 if(flag.equalsIgnoreCase("MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 }
                 
             }
@@ -340,10 +346,10 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 if(flag.equalsIgnoreCase("MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 }
                 
             }
@@ -420,10 +426,10 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
                 
                 if(flag.equalsIgnoreCase("MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 } else if (flag.equalsIgnoreCase("CVT-MOD")) {
                     int doUpdate = dBTrx.updateFlagMX(logicalTerminal, receiverAddress, newFlag, "CVT-MOD", Integer.parseInt(idHeaders),
-                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
+                        (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                 }
                 
             }

@@ -116,7 +116,7 @@ public class SCDataTransaksiOutgoingPlainMX extends HttpServlet {
         data.setBanking_priority("N");
         data.setMur("M");
         data.setOperator_comment("Operator Comment");
-        if (abstractMX.getMxId().toString().contains("pacs.008") || abstractMX.getMxId().toString().contains("pacs.009")) {
+        if (abstractMX.getMxId().toString().contains("pacs.008") || abstractMX.getMxId().toString().contains("pacs.009") || abstractMX.getMxId().toString().contains("pacs.004")) {
             data.setBlock3("121:" + request.getParameter("UETR") + ";");
         } else {
             data.setBlock3(null);
