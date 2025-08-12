@@ -99,6 +99,8 @@
                 _106_mf50k_name_address: "required",
                 _094_mf50f_number: "required",
                 _095_mf50f_details: "required",
+                _093_mf50f_account: "required",
+                _097_mf50f_details: "required",
 
                 //of52
                 _111_of52a_identifier_code: "required",
@@ -133,6 +135,7 @@
                 _186_mf59f_name_address: "required",
                 _186_mf59f_number: "required",
                 _187_mf59f_details: "required",
+                _189_mf59f_details: "required",
 
                 //of71a
                 _210_of71a_details_charges: "required"
@@ -177,7 +180,10 @@
                 _094_mf50f_number: {required: "number must be filled..!!"},
                 _095_mf50f_details: {required: "details must be filled..!!"},
                 _186_mf59f_number: {required: "number must be filled..!!"},
-                _187_mf59f_details: {required: "details must be filled..!!"}
+                _187_mf59f_details: {required: "details must be filled..!!"},
+                _093_mf50f_account: {required: "account must be filled..!!"},
+                _189_mf59f_details: {required: "details must be filled..!!"}
+
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);
