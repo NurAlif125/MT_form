@@ -25,7 +25,7 @@
                 if (allEmpty) {
                     $("#sender_chargers_1_checkbox").prop('checked', true);
                     $('#_220_of71f_currency').val($("#_061_mf32a_currency").val());
-                    $('#_221_of71f_amount').val('0');
+                    $('#_221_of71f_amount').val('0,');
                     $("#check_of71f_1").show();
                 } else {
                     for (let i = 0; i < emptyFields.length; i += 2) {
@@ -36,7 +36,7 @@
                         const amountVal = $(amountSelector).val().trim();
                         
                         if (currencyVal && !amountVal) {
-                            $(amountSelector).val('0');
+                            $(amountSelector).val('0,');
                         }
 
                         if (!currencyVal && amountVal) {
@@ -44,6 +44,17 @@
                         }
                     }
                 }
+
+                if($("#_070_of33b_currency").val().trim() === "") {
+                    $("#_070_of33b_currency").val($("#_061_mf32a_currency").val());
+                }
+
+                if($("#_072_of33b_amount").val().trim() === "") {
+                    $("#_072_of33b_amount").val('0,');
+                }
+            } else {
+                $("#_070_of33b_currency").val('');
+                $("#_072_of33b_amount").val('');
             }
         }
 
@@ -86,6 +97,10 @@
                 _093_mf50f_party_identifier: "required",
                 _094_mf50f_name_address: "required",
                 _106_mf50k_name_address: "required",
+                _094_mf50f_number: "required",
+                _095_mf50f_details: "required",
+                _093_mf50f_account: "required",
+                _097_mf50f_details: "required",
 
                 //of52
                 _111_of52a_identifier_code: "required",
@@ -118,6 +133,9 @@
                 _181_mf59_name_address: "required",
                 _183_mf59a_identifier_code: "required",
                 _186_mf59f_name_address: "required",
+                _186_mf59f_number: "required",
+                _187_mf59f_details: "required",
+                _189_mf59f_details: "required",
 
                 //of71a
                 _210_of71a_details_charges: "required"
@@ -158,7 +176,15 @@
                 _181_mf59_name_address: {required: "mf59_name_address must be filled..!!"},
                 _183_mf59a_identifier_code: {required: "mf59a_identifier_code must be filled..!!"},
                 _186_mf59f_name_address: {required: "mf59_name_address must be filled..!!"},
-                _210_of71a_details_charges: {required: "mf71a_details_charges must be filled..!!"}
+                _210_of71a_details_charges: {required: "mf71a_details_charges must be filled..!!"},
+                _094_mf50f_number: {required: "Number must be filled..!!"},
+                _095_mf50f_details: {required: "Details must be filled..!!"},
+                _186_mf59f_number: {required: "Number must be filled..!!"},
+                _187_mf59f_details: {required: "Details must be filled..!!"},
+                _093_mf50f_account: {required: "Account must be filled..!!"},
+                _189_mf59f_details: {required: "Details 2 must be filled..!!"},
+                _097_mf50f_details: {required: "Details 2 must be filled..!!"},
+
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);

@@ -116,7 +116,7 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 				<text><![CDATA[I/O]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="190" y="0" width="50" height="15" forecolor="#736343" uuid="ad3db756-1c84-41f6-9531-1ed0f9991939">
+				<reportElement key="staticText" style="Column header" x="190" y="0" width="70" height="15" forecolor="#736343" uuid="ad3db756-1c84-41f6-9531-1ed0f9991939">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -125,7 +125,7 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 				<text><![CDATA[Initial Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="308" y="0" width="47" height="15" forecolor="#736343" uuid="ac06caaa-2de3-4ce1-bfe8-a089204ec1b9"/>
+				<reportElement key="staticText" style="Column header" x="336" y="0" width="51" height="15" forecolor="#736343" uuid="ac06caaa-2de3-4ce1-bfe8-a089204ec1b9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
@@ -139,51 +139,42 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="355" y="0" width="54" height="15" forecolor="#736343" uuid="e59184ea-79e8-4073-8cd1-2fddc30f163d"/>
+				<reportElement key="staticText" style="Column header" x="389" y="0" width="54" height="15" forecolor="#736343" uuid="e59184ea-79e8-4073-8cd1-2fddc30f163d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[IP Access]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="409" y="0" width="61" height="15" forecolor="#736343" uuid="db2c317e-8979-4b4c-be89-4fe89d434e64">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="7"/>
-				</textElement>
-				<text><![CDATA[Computer Name]]></text>
-			</staticText>
-			<staticText>
-				<reportElement key="staticText" style="Column header" x="470" y="0" width="50" height="15" forecolor="#736343" uuid="4ab94fd7-4c81-48f7-aeca-b25cf1c70785"/>
+				<reportElement key="staticText" style="Column header" x="444" y="0" width="50" height="15" forecolor="#736343" uuid="4ab94fd7-4c81-48f7-aeca-b25cf1c70785"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Checker]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="520" y="0" width="53" height="15" forecolor="#736343" uuid="0a56755f-8c23-42fd-a6b3-49334d81d85e"/>
+				<reportElement key="staticText" style="Column header" x="494" y="0" width="53" height="15" forecolor="#736343" uuid="0a56755f-8c23-42fd-a6b3-49334d81d85e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Receiver]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="573" y="0" width="51" height="15" forecolor="#736343" uuid="29adbd43-4d12-4102-b9d4-1ad67e78298a"/>
+				<reportElement key="staticText" style="Column header" x="547" y="0" width="51" height="15" forecolor="#736343" uuid="29adbd43-4d12-4102-b9d4-1ad67e78298a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Maker]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="624" y="0" width="55" height="15" forecolor="#736343" uuid="f28c2068-39e4-4134-82aa-53e1d3bf3b6c"/>
+				<reportElement key="staticText" style="Column header" x="598" y="0" width="55" height="15" forecolor="#736343" uuid="f28c2068-39e4-4134-82aa-53e1d3bf3b6c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Final Status]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="679" y="0" width="51" height="15" forecolor="#736343" uuid="778ccebd-7bf6-4278-9368-de40f358fdf1">
+				<reportElement key="staticText" style="Column header" x="653" y="0" width="51" height="15" forecolor="#736343" uuid="778ccebd-7bf6-4278-9368-de40f358fdf1">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -192,14 +183,14 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 				<text><![CDATA[Source]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="730" y="0" width="71" height="15" forecolor="#736343" uuid="3b25e1c9-24c4-4d72-9d82-b706bf7271a9"/>
+				<reportElement key="staticText" style="Column header" x="704" y="0" width="97" height="15" forecolor="#736343" uuid="3b25e1c9-24c4-4d72-9d82-b706bf7271a9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7"/>
 				</textElement>
 				<text><![CDATA[Creation Date]]></text>
 			</staticText>
 			<staticText>
-				<reportElement key="staticText" style="Column header" x="240" y="0" width="68" height="15" forecolor="#736343" uuid="a4ff3edf-9522-48d8-9716-eb7ed4436dd0">
+				<reportElement key="staticText" style="Column header" x="260" y="0" width="76" height="15" forecolor="#736343" uuid="a4ff3edf-9522-48d8-9716-eb7ed4436dd0">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -235,7 +226,7 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 					<textFieldExpression><![CDATA[$F{io_type}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="308" y="0" width="47" height="15" uuid="18061fb1-1e25-4404-9bbd-ba72a50412fc">
+					<reportElement key="textField" style="Detail" x="336" y="0" width="51" height="15" uuid="18061fb1-1e25-4404-9bbd-ba72a50412fc">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -251,14 +242,14 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 					<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="190" y="0" width="50" height="15" uuid="98c9c923-1a30-4c06-ad81-3f177506f50c"/>
+					<reportElement key="textField" style="Detail" x="190" y="0" width="70" height="15" uuid="98c9c923-1a30-4c06-ad81-3f177506f50c"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{status_header}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="355" y="0" width="54" height="15" uuid="57825892-c02a-4d12-84f3-87e54fa4afe7">
+					<reportElement key="textField" style="Detail" x="389" y="0" width="54" height="15" uuid="57825892-c02a-4d12-84f3-87e54fa4afe7">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -267,37 +258,28 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 					<textFieldExpression><![CDATA[$F{ip_access}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="409" y="0" width="61" height="15" uuid="9427473c-c201-4d3c-bd4f-43f244154d8e">
-						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-					</reportElement>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font size="7"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$F{comp_name}]]></textFieldExpression>
-				</textField>
-				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="470" y="0" width="50" height="15" uuid="7f24a5b2-2c72-4d61-b3f2-07b0116cba5e"/>
+					<reportElement key="textField" style="Detail" x="444" y="0" width="50" height="15" uuid="7f24a5b2-2c72-4d61-b3f2-07b0116cba5e"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{useredit}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="520" y="0" width="53" height="15" uuid="ab7751a1-9ed8-4c95-bbe4-41a4c02407a9"/>
+					<reportElement key="textField" style="Detail" x="494" y="0" width="53" height="15" uuid="ab7751a1-9ed8-4c95-bbe4-41a4c02407a9"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{receiveraddress}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="573" y="0" width="51" height="15" uuid="c7810bd0-c528-48b2-86fb-166bedc0cfd9"/>
+					<reportElement key="textField" style="Detail" x="547" y="0" width="51" height="15" uuid="c7810bd0-c528-48b2-86fb-166bedc0cfd9"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{userentry}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="624" y="0" width="55" height="15" uuid="272090dd-9060-4d07-80a0-8cdfdbc9d8fc">
+					<reportElement key="textField" style="Detail" x="598" y="0" width="55" height="15" uuid="272090dd-9060-4d07-80a0-8cdfdbc9d8fc">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -306,14 +288,14 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 					<textFieldExpression><![CDATA[$F{flag}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement key="textField" style="Detail" x="679" y="0" width="51" height="15" uuid="6ba0c745-d40c-492f-adcb-2cb41ddbdab9"/>
+					<reportElement key="textField" style="Detail" x="653" y="0" width="51" height="15" uuid="6ba0c745-d40c-492f-adcb-2cb41ddbdab9"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{source}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="730" y="0" width="71" height="15" uuid="a24a9e59-3d09-40ef-ab61-ccea3255cd31">
+					<reportElement key="textField" style="Detail" x="704" y="0" width="97" height="15" uuid="a24a9e59-3d09-40ef-ab61-ccea3255cd31">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -322,7 +304,7 @@ INNER JOIN headers b ON a.id_headers = b.id_headers order by a.id_headers desc, 
 					<textFieldExpression><![CDATA[$F{tanggal}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-					<reportElement key="textField" style="Detail" x="240" y="0" width="68" height="15" uuid="c633f12e-0aa2-4b73-b8a9-87c17202f969"/>
+					<reportElement key="textField" style="Detail" x="260" y="0" width="76" height="15" uuid="c633f12e-0aa2-4b73-b8a9-87c17202f969"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="7"/>
 					</textElement>

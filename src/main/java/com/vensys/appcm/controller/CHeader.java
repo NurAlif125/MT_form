@@ -155,8 +155,8 @@ public class CHeader {
             if (fin == null || fin == "") {
                 return;
             }
-            fin.replaceAll("\\{1:F21.*.1:F01", "\\{1:F01");
-            // log.info("fin nya:" + fin);
+            fin = fin.replaceAll("\\{1:F21.*\\{1:F01", "{1:F01");
+            log.info("fin nya:" + fin);
             SwiftMessage msg = SwiftMessage.parse(fin);
             SwiftBlock3 sb3 = msg.getBlock3();
             SwiftBlock4 sb4 = msg.getBlock4();
