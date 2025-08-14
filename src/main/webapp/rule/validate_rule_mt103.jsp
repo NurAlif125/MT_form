@@ -100,6 +100,7 @@
                 _094_mf50f_number: "required",
                 _095_mf50f_details: "required",
                 _093_mf50f_account: "required",
+                _096_mf50f_number: "required",
                 _097_mf50f_details: "required",
 
                 //of52
@@ -136,7 +137,7 @@
                 _186_mf59f_number: "required",
                 _187_mf59f_details: "required",
                 _189_mf59f_details: "required",
-
+                _188_mf59f_number: "required",
                 //of71a
                 _210_of71a_details_charges: "required"
             },
@@ -184,6 +185,8 @@
                 _093_mf50f_account: {required: "Account must be filled..!!"},
                 _189_mf59f_details: {required: "Details 2 must be filled..!!"},
                 _097_mf50f_details: {required: "Details 2 must be filled..!!"},
+                _096_mf50f_number: {required: "Number 2 must be filled..!!"},
+                _188_mf59f_number: {required: "Number 2 must be filled..!!"},
 
             },
             errorPlacement: function (error, element) {
@@ -419,6 +422,7 @@
         $("#check_mf50f_4").attr("disabled", true);
         $("#_105_mf50k_account").attr("disabled", true);
         $("#_106_mf50k_name_address").attr("disabled", true);
+        $("#_096_mf50f_number").attr("disabled", true);
         $("#type_mf50_ordering_customer").change(function () {
             if ($("#type_mf50_ordering_customer").val() == "a") {
                 $("#div_mf50a_").show();
@@ -440,6 +444,7 @@
                 $("#_105_mf50k_account").attr("disabled", true);
                 $("#_106_mf50k_name_address").attr("disabled", true);
                 $("#_097_mf50f_details").attr("disabled", true);
+                $("#_096_mf50f_number").attr("disabled", true);
             } else if ($("#type_mf50_ordering_customer").val() == "f") {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").show();
@@ -460,6 +465,7 @@
                 $("#_105_mf50k_account").attr("disabled", true);
                 $("#_106_mf50k_name_address").attr("disabled", true);
                 $("#_097_mf50f_details").attr("disabled", false);
+                $("#_096_mf50f_number").attr("disabled", true);
             } else if ($("#type_mf50_ordering_customer").val() == "k") {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").hide();
@@ -480,6 +486,7 @@
                 $("#_105_mf50k_account").attr("disabled", false);
                 $("#_106_mf50k_name_address").attr("disabled", false);
                 $("#_097_mf50f_details").attr("disabled", true);
+                $("#_096_mf50f_number").attr("disabled", true);
             } else {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").hide();
@@ -500,22 +507,28 @@
                 $("#_105_mf50k_account").attr("disabled", true);
                 $("#_106_mf50k_name_address").attr("disabled", true);
                 $("#_097_mf50f_details").attr("disabled", true);
+                $("#_096_mf50f_number").attr("disabled", true);
             }
         });
         
         //mf50f_2
         $("#check_mf50f_2").hide();
         $("#_096_mf50f_number").prop("required", false);
+        $("#_096_mf50f_number").attr("disabled", true);
         $("#_097_mf50f_details").prop("required", false);
         $("#name_address_checkbox_2_50").click(function () {
             if ($("#name_address_checkbox_2_50").is(":checked")) {
                 $("#check_mf50f_2").show();
                 $("#_096_mf50f_number").prop("required", true);
+                $("#_096_mf50f_number").attr("disabled", false);                
                 $("#_097_mf50f_details").prop("required", true);
+                $("#_097_mf50f_details").attr("disabled", false);
             } else {
                 $("#check_mf50f_2").hide();
                 $("#_096_mf50f_number").prop("required", false);
+                $("#_096_mf50f_number").attr("disabled", true);
                 $("#_097_mf50f_details").prop("required", false);
+                $("#_097_mf50f_details").attr("disabled", true);
             }
         });
         
@@ -888,6 +901,7 @@
         $("#check_mf59f_2").attr("disabled", true);
         $("#check_mf59f_3").attr("disabled", true);
         $("#check_mf59f_4").attr("disabled", true);
+        $("#_189_mf59f_details").attr("disabled", true);
         $("#type_of59_59a_").change(function () {
             if ($("#type_of59_59a_").val() == "59") {
                 $("#div_mf59_").show();
@@ -906,6 +920,8 @@
                 $("#check_mf59f_2").attr("disabled", true);
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
+                $("#_188_mf59f_number").attr("disabled", true);
+                $("#_189_mf59f_details").attr("disabled", true);
             } else if ($("#type_of59_59a_").val() == "59a") {
                 $("#div_mf59_").hide();
                 $("#div_mf59a_").show();
@@ -924,6 +940,8 @@
                 $("#check_mf59f_2").attr("disabled", true);
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
+                $("#_188_mf59f_number").attr("disabled", true);
+                $("#_189_mf59f_details").attr("disabled", false);
             } else if ($("#type_of59_59a_").val() == "59f") {
                 $("#div_mf59_").hide();
                 $("#div_mf59a_").hide();
@@ -942,6 +960,7 @@
                 $("#check_mf59f_2").attr("disabled", false);
                 $("#check_mf59f_3").attr("disabled", false);
                 $("#check_mf59f_4").attr("disabled", false);
+                $("#_188_mf59f_number").attr("disabled", false);
             } else {
                 $("#div_mf59_").hide();
                 $("#div_mf59a_").hide();
@@ -960,22 +979,30 @@
                 $("#check_mf59f_2").attr("disabled", true);
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
+                $("#_188_mf59f_number").attr("disabled", true);
+                $("#_189_mf59f_details").attr("disabled", true);
             }
         });
 
         //mf59f_2
         $("#check_mf59f_2").hide();
         $("#_188_mf59f_number").prop("required", false);
+        $("#_188_mf59f_number").attr("disabled", true);
         $("#_189_mf59f_details").prop("required", false);
+        $("#_189_mf59f_details").attr("disabled", true);
         $("#name_address_checkbox_2").click(function () {
             if ($("#name_address_checkbox_2").is(":checked")) {
                 $("#check_mf59f_2").show();
                 $("#_188_mf59f_number").prop("required", true);
+                $("#_188_mf59f_number").attr("disabled", false);
                 $("#_189_mf59f_details").prop("required", true);
+                $("#_189_mf59f_details").attr("disabled", false);                
             } else {
                 $("#check_mf59f_2").hide();
                 $("#_188_mf59f_number").prop("required", false);
+                $("#_188_mf59f_number").attr("disabled", true);
                 $("#_189_mf59f_details").prop("required", false);
+                $("#_189_mf59f_details").attr("disabled", true);
             }
         });
 

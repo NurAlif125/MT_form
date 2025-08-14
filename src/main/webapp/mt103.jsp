@@ -244,7 +244,7 @@
                                                     <input type="checkbox" name="name_address_checkbox_2_50" id="name_address_checkbox_2_50" />
                                                     <div id="check_mf50f_2">
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                            <select id="_096_mf50f_number" name="_096_mf50f_number" class="mandatory">
+                                                            <select id="_096_mf50f_number" name="_096_mf50f_number" class="mandatory" input_type="MF50f Number/Name and Address Details" location="Body">
                                                                 <option value=""></option>
                                                                 <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_096_mf50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Name of Ordering Customer)</option>
                                                                 <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_096_mf50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
@@ -654,7 +654,7 @@
                                         <input type="checkbox" name="name_address_checkbox_2" id="name_address_checkbox_2" />
                                         <div id="check_mf59f_2">
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                <select id="_188_mf59f_number" name="_188_mf59f_number" class="mandatory">
+                                                <select id="_188_mf59f_number" name="_188_mf59f_number" class="mandatory" input_type="MF59f Number/Name and Address Details" location="Body">
                                                     <option value=""></option>
                                                     <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Name of Ordering Customer)</option>
                                                     <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
