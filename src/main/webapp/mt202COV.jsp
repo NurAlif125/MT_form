@@ -738,10 +738,10 @@
                             
                             <!-- OF33B -->
                             <div class="form-row"><span class="label_body">OF33B</span><span class="label">Currency</span>
-                                <input type="text" onkeypress="return textonly(event)" name="_070_of33b_currency" id="_070_of33b_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="return textonly(event)" name="_330_of33b_currency" id="_330_of33b_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_330_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" />
+                                <input type="text" name="_332_of33b_amount" id="_332_of33b_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_332_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_332_of33b_amount');" />
                                 <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                 <font style="margin-left: 50px"></font>
                                 <script langauge="javascript">
@@ -751,7 +751,7 @@
                                         }
                                         return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                     }
-                                    var number2 = document.getElementById('_072_of33b_amount').value;
+                                    var number2 = document.getElementById('_332_of33b_amount').value;
                                     var number2r = number2.replace(',', '.');
                                     var number2F = parseFloat(number2r);
                                     var nominal = formatUang(number2F, "");
