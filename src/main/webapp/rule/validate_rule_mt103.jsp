@@ -423,6 +423,7 @@
         $("#_105_mf50k_account").attr("disabled", true);
         $("#_106_mf50k_name_address").attr("disabled", true);
         $("#_096_mf50f_number").attr("disabled", true);
+        $("#_097_mf50f_details").attr("disabled", true);
         $("#type_mf50_ordering_customer").change(function () {
             if ($("#type_mf50_ordering_customer").val() == "a") {
                 $("#div_mf50a_").show();
@@ -941,7 +942,6 @@
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
                 $("#_188_mf59f_number").attr("disabled", true);
-                $("#_189_mf59f_details").attr("disabled", false);
             } else if ($("#type_of59_59a_").val() == "59f") {
                 $("#div_mf59_").hide();
                 $("#div_mf59a_").hide();
@@ -980,7 +980,6 @@
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
                 $("#_188_mf59f_number").attr("disabled", true);
-                $("#_189_mf59f_details").attr("disabled", true);
             }
         });
 
