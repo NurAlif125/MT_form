@@ -107,7 +107,7 @@ public class SCDataTransaksiOutgoingMX extends HttpServlet {
         if (abstractMX.getMxId().id().toLowerCase().contains("pacs.008") || abstractMX.getMxId().id().toLowerCase().contains("pacs.009")) {
             reference = request.getParameter("instrId") + headers.getBlock3().replace("121:", "").replace(";", "");
         } else if (abstractMX.getMxId().id().toLowerCase().contains("pacs.004")) {
-            reference = "Reference: " + request.getParameter("rtrId");
+            reference = request.getParameter("rtrId") + headers.getBlock3().replace("121:", "").replace(";", "");
         }
         String saaHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><DataPDU xmlns=\"urn:swift:saa:xsd:saa.2.0\"><Revision>2.0.13</Revision><Header>THIS-IS-SAA-HEADER</Header><Body>ONLY-SAA-HEADERS</Body></DataPDU>";
         
