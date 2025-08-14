@@ -1057,7 +1057,7 @@ public class DBHeader {
             } else {
                 header.setCreateby(rs.getString(19));
             }
-            
+
             if (rs.getString(20) != null) {
                 if (rs.getString(20).contains(";")) {
                     String[] approveby = rs.getString(20).split(";");
@@ -2178,7 +2178,7 @@ public class DBHeader {
                     String amt = rs.getString("trans_amount");
                     data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
                     data.setTrans_ccy(rs.getString("trans_ccy"));
-                    
+
                     if (rs.getString("createby") != null) {
                         if (rs.getString("createby").contains(";")) {
                             String[] createby = rs.getString("createby").split(";");
@@ -2189,7 +2189,7 @@ public class DBHeader {
                     } else {
                         data.setCreateby(rs.getString("createby"));
                     }
-                    
+
                     if (rs.getString("approveby") != null) {
                         if (rs.getString("approveby").contains(";")) {
                             String[] approveby = rs.getString("approveby").split(";");
@@ -2669,7 +2669,11 @@ public class DBHeader {
             tag.setUrutan(rs.getInt(1));
             tag.setTag(rs.getString(2));
             tag.setDetail(rs.getString(3));
-            tag.setTagName(parseDataTagName(rs.getString(4)));
+            if ("721".equalsIgnoreCase(rs.getString(2)) || "722".equalsIgnoreCase(rs.getString(2))) {
+                tag.setTagName(rs.getString(2).substring(0, 2));
+            } else {
+                tag.setTagName(parseDataTagName(rs.getString(4)));
+            }
             tag.setInfo(rs.getString(5).toUpperCase());
             tags.add(tag);
         }
