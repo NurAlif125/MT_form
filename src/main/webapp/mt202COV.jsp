@@ -322,7 +322,7 @@
                             
                             <!-- OF72 -->
                             <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
-                                <textarea cols="35" rows="6" maxlength="210" wrap="hard" style="resize:none;" name="_230_of721_sender_receiver_information" id="_230_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea cols="35" rows="6" maxlength="210" wrap="hard" style="resize:none;" name="_230_of721_sender_receiver_information" id="_230_of721_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of721_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                 <textarea onkeypress="avoidSplChars(event)" cols="50" rows="6" maxlength="260" style="resize:none; border:none; color:#555; font-size:8px; background:none;" >Sample Input:
 /RETN/
 /AC04/RETURN 103
@@ -725,7 +725,7 @@
                             
                             <!-- OF72 Sequence B -->
                             <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_320_of722_sender_receiver_information" id="_320_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_320_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_320_of722_sender_receiver_information" id="_320_of722_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_320_of722_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                 <textarea onkeypress="avoidSplChars(event)" cols="50" rows="6" maxlength="260" style="resize:none; border:none; color:#555; font-size:8px; background:none;" >Sample Input:
 /RETN/
 /AC04/RETURN 103
