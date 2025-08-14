@@ -239,6 +239,7 @@ public class DBDataTransaksiOutgoing {
         log.info("updateDataTransaksiOutgoing");
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String statusUpdate = "";
 
         try {
             String sql = "UPDATE headers SET applicationId=?,serviceId=?,logicalTerminal=?,"
@@ -288,7 +289,13 @@ public class DBDataTransaksiOutgoing {
             log.error(e.getLocalizedMessage());
             e.printStackTrace();
         }
-        updateDataHeaderStatus("UPDATE", id_headers, user_id, ip_access, comp_name);
+        if ("VER".equalsIgnoreCase(flag)) {
+            statusUpdate = "UPDATE";
+        } else if ("CVT-VER".equalsIgnoreCase(flag)) {
+            statusUpdate = "CVT-VER";
+        }
+        
+        updateDataHeaderStatus(statusUpdate, id_headers, user_id, ip_access, comp_name);
     }
 
     public void updateCommentMod(String komentar, String flag, String user_id, Integer id_headers, String ip_access, String comp_name, String flag_prev) throws SQLException, Exception {
