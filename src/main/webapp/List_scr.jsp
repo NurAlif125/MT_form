@@ -9,6 +9,10 @@
 <%@ page import="jakarta.servlet.RequestDispatcher" %>
 <link rel="stylesheet" href="css/displaytag.css" type="text/css">
 <link rel="stylesheet" href="css/helper.css" type="text/css">
+<link rel="stylesheet" href="css/flatpickr.css" type="text/css">
+<link rel="stylesheet" href="css/jquery.timepicker.min.css" type="text/css">
+<script type="text/javascript" src="js/jquery.timepicker.min.js"></script>
+<script type="text/javascript" src="js/flatpickr.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
@@ -21,9 +25,9 @@
     <div id="judul">List Search</div>
     <!--<form id="form1" name="form1" method="post" action="controllerHeaders?find=yes">-->
     <form id="form1" name="form1" method="get" action="controllerHeaders?find=yes">
-    <!--<form id="form1" name="form1" method="post" action="headerData?find=yes">-->
-    <!--<form id="form1" name="form1" method="get" action="headerData">-->
-    <input type="hidden" name="find" value="yes">
+        <!--<form id="form1" name="form1" method="post" action="headerData?find=yes">-->
+        <!--<form id="form1" name="form1" method="get" action="headerData">-->
+        <input type="hidden" name="find" value="yes">
         <% Date tgl_today = new java.util.Date();
             pageContext.setAttribute("tgl_today", tgl_today); %>
         <c:set var="tgl_today" value="${tgl_today}" />
@@ -62,44 +66,44 @@
             <div class="form-row"><span class="labelL">Receiver Institution</span>
                 <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" /> [ex.INDOIDJAXXXX]
             </div>
-<!--//ditambahkan pada 20151102 By Azan-->
-<!--            <div class="form-row"><span class="labelL">Sender</span>
-                <input type="text" name="sender_bank" id="sender_bank" maxlength="12" /> [ex.SPXAIDJAXXX]
-            </div>
-            <div class="form-row"><span class="labelL">Receiver</span>
-                <input type="text" name="receiver_bank" id="receiver_bank" maxlength="12" /> [ex.SPXAIDJAXXX]
-            </div>-->
+            <!--//ditambahkan pada 20151102 By Azan-->
+            <!--            <div class="form-row"><span class="labelL">Sender</span>
+                            <input type="text" name="sender_bank" id="sender_bank" maxlength="12" /> [ex.SPXAIDJAXXX]
+                        </div>
+                        <div class="form-row"><span class="labelL">Receiver</span>
+                            <input type="text" name="receiver_bank" id="receiver_bank" maxlength="12" /> [ex.SPXAIDJAXXX]
+                        </div>-->
             <!--end of tambahan 20151102-->
             <div class="form-row"><span class="labelL">MT</span>
                 <input type="text" name="mt_type" id="mt_type" maxlength="3" size="3" /> [ex.103]
             </div>
             <div class="form-row"><span class="labelL">Date From</span>
-                <input type="text" name="date_from" id="date_from" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" /> [ex.2013-31-01]
+                <input type="text" name="date_from" id="date_from" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" /> [ex.2013-31-01] <input type="text" class="time_from" name="time_from" id="time_from" placeholder="00:00:00" size="10" /> [ex: 00:00:00]
             </div>
             <div class="form-row"><span class="labelL">Date End</span>
-                <input type="text" name="date_end" id="date_end" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" /> [ex.2013-31-01]
+                <input type="text" name="date_end" id="date_end" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" /> [ex.2013-31-01] <input type="text" class="time_end" name="time_end" id="time_end" placeholder="23:59:59" size="10" /> [ex: 00:00:00]
             </div>
             <!--// ditambahkan parameter INC-XXX pada 20151001 by Azan-->
             <div class="form-row"><span class="labelL">Status</span>
                 <% if (session.getAttribute("flagFilter") == null) { %>
-                    <%
-                        String[] flags = new String[]{"MOD", "VER", "AUTH", "FIA-FAILED", "FIA-FAILED-CNF", "FIA-RESEND", "UNSETTLE-OUT", "WAITING-SAA-CNF", "WAITING-SAA-RESEND",
-                            "WAITING-AML", "AML-TERMINATE-OUT", "REJECT", "AML-FAILED", "AML-FAILED-CNF", "AML-RESEND", "CVT-MOD", "CVT-VER", "CVT-VER-RESEND",
-                            "ACK", "NACK", "INC-CVT", "RESEND-CNF", "INC-CVT-RESEND", "INC-AML", "AML-TERMINATE-IN", "INC-AML-FAILED", "INC-AML-FAILED-CNF", "INC-AML-RESEND",
+                <%
+                    String[] flags = new String[]{"MOD", "VER", "AUTH", "FIA-FAILED", "FIA-FAILED-CNF", "FIA-RESEND", "UNSETTLE-OUT", "WAITING-SAA-CNF", "WAITING-SAA-RESEND",
+                        "WAITING-AML", "AML-TERMINATE-OUT", "REJECT", "AML-FAILED", "AML-FAILED-CNF", "AML-RESEND", "CVT-MOD", "CVT-VER", "CVT-VER-RESEND",
+                        "ACK", "NACK", "INC-CVT", "RESEND-CNF", "INC-CVT-RESEND", "INC-AML", "AML-TERMINATE-IN", "INC-AML-FAILED", "INC-AML-FAILED-CNF", "INC-AML-RESEND",
                         "UNSETTLE-INC", "INC-RESEND-CNF", "INC-RESEND", "SETTLE", "WAITING-SAA", "OUT", "INC", "AML-TERMINATE-IN", "AML-TERMINATE-OUT", "AML-CLEAN", "DUPL", "DUPL-CNF", "DUPL-RESEND"};
-                        pageContext.setAttribute("flags", flags);
-                    %>
-                    <select name="status" id="status">
-                        <option value="">ALL</option>
-                        <c:forEach var="data" items="${pageScope.flags}">
-                            <option value="${data}">${data}</option>
-                        </c:forEach>
-                    </select>
-                <% } else { %>
-                    <select name="status" id="status" readonly="true">
-                        <option value="<%= session.getAttribute("flag") %>"><%= session.getAttribute("flag") %></option>
-                    </select>
-                <% } %>
+                    pageContext.setAttribute("flags", flags);
+                %>
+                <select name="status" id="status">
+                    <option value="">ALL</option>
+                    <c:forEach var="data" items="${pageScope.flags}">
+                        <option value="${data}">${data}</option>
+                    </c:forEach>
+                </select>
+                <% } else {%>
+                <select name="status" id="status" readonly="true">
+                    <option value="<%= session.getAttribute("flag")%>"><%= session.getAttribute("flag")%></option>
+                </select>
+                <% }%>
             </div>
             <div class="form-row"><span class="labelL">Sender's Reference</span>
                 <input type="text" name="sender_reference" id="sender_reference" /> [ex.Ref0001]
@@ -121,7 +125,25 @@
             <input type="button" name="back" id="back" value="Back" />
         </div>
     </form>
-            
+
 </div>
+<script>
+    flatpickr(".time_from", {
+        enableTime: true,
+        enableSeconds: true,
+        noCalendar: true,
+        dateFormat: "H:i:S",
+        time_24hr: true,
+        defaultDate: "00:00:00"
+    });
+    flatpickr(".time_end", {
+        enableTime: true,
+        enableSeconds: true,
+        noCalendar: true,
+        dateFormat: "H:i:S",
+        time_24hr: true,
+        defaultDate: "23:59:59"
+    });
+</script>
 
 

@@ -6,29 +6,28 @@
 
 <%
 // Security Headers
-response.setHeader("X-XSS-Protection", "1; mode=block");
-response.setHeader("X-Content-Type-Options", "nosniff");
-response.setHeader("X-Frame-Options", "DENY");
-response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-response.setHeader("Content-Security-Policy", 
-    "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
-    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
-    "img-src 'self' data: https://flickr.com; " +
-    "font-src 'self' https://cdn.jsdelivr.net; " +
-    "connect-src 'self';");
-response.setHeader("X-Content-Security-Policy",
-    "default-src 'self'; " +
-    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
-    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " +
-    "img-src 'self' data: https://flickr.com; " +
-    "font-src 'self' https://cdn.jsdelivr.net; " +
-    "connect-src 'self';");
-response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-response.setHeader("Pragma", "no-cache");
-response.setDateHeader("Expires", 0);
-response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+    response.setHeader("X-XSS-Protection", "1; mode=block");
+    response.setHeader("X-Content-Type-Options", "nosniff");
+    response.setHeader("X-Frame-Options", "DENY");
+    response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+    response.setHeader("Content-Security-Policy",
+            "default-src 'self'; "
+            + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+            + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+            + "img-src 'self' data: https://flickr.com; "
+            + "font-src 'self' https://cdn.jsdelivr.net; "
+            + "connect-src 'self'; "
+            + "object-src 'none'; "
+            + "frame-ancestors 'none'; "
+            + "base-uri 'self'; "
+            + "form-action 'self'; "
+            + "upgrade-insecure-requests;"
+    );
+    response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+    response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+    response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
 %>
 
 <html>
@@ -111,21 +110,21 @@ response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
         <script src="bootstrap-5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
         <script>
 
-                // get node Error Message
-                var nodeErrorMessage = document.getElementById("error-msg")
-                const toastLiveExample = document.getElementById('liveToast')
+            // get node Error Message
+            var nodeErrorMessage = document.getElementById("error-msg")
+            const toastLiveExample = document.getElementById('liveToast')
 
-                // event after the page is loaded perfectly
-                window.onload = function () {
-                    if (nodeErrorMessage.innerHTML !== "") {
-                        // show the toast is ther is no error
-                        console.log("Show the toast span")
-                        const toast = new bootstrap.Toast(toastLiveExample)
-                        toast.show();
-                    } else {
-                        console.log("dont show the toast")
-                    }
+            // event after the page is loaded perfectly
+            window.onload = function () {
+                if (nodeErrorMessage.innerHTML !== "") {
+                    // show the toast is ther is no error
+                    console.log("Show the toast span")
+                    const toast = new bootstrap.Toast(toastLiveExample)
+                    toast.show();
+                } else {
+                    console.log("dont show the toast")
                 }
+            }
 
         </script>
         <!--    <div id="kaki2">
