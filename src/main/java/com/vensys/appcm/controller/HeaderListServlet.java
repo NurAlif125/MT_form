@@ -120,6 +120,8 @@ public class HeaderListServlet extends HttpServlet {
         String mt_type = request.getParameter("mt_type");
         String date_from = request.getParameter("date_from");
         String date_end = request.getParameter("date_end");
+        String time_from = request.getParameter("time_from");
+        String time_end = request.getParameter("time_end");
         String sender_reference = request.getParameter("sender_reference");
         String rel_reference = request.getParameter("rel_reference"); // ditambahkan pada 20151001 by Azan
         String sender_bank = request.getParameter("sender_bank");// ditambahkan pada 20151102 by Azan
@@ -336,7 +338,7 @@ public class HeaderListServlet extends HttpServlet {
 //                System.out.println("DATE FORM: "+date_from+" ------- "+date_end);
 //                    System.out.println("start= " +start+" | lenghth= "+ length);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
-                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch, sort);
+                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch, sort, time_from, time_end);
                 totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch);
 //                System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;

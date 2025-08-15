@@ -134,7 +134,9 @@ public class SCUserData extends HttpServlet {
             strErrMsg = "Username is not registered in LDAP, please contact administrator";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
-            response.sendRedirect("login.jsp");
+            setSecurityHeaders(response);
+            dispatcher.forward(request, response);
+//            response.sendRedirect("login.jsp");
             log.info("login.jsp");
             return;
         } else {
@@ -170,6 +172,7 @@ public class SCUserData extends HttpServlet {
 //                 response.sendRedirect("login.jsp");
 //                    dispatcher = request.getRequestDispatcher("login.jsp");
 //                    dispatcher.forward(request, response);
+                setSecurityHeaders(response);
                 response.sendRedirect("login.jsp");
                 log.info("login.jsp");
                 return;
@@ -177,21 +180,27 @@ public class SCUserData extends HttpServlet {
                 strErrMsg = "Username is not registered in LDAP, please contact administrator";
                 session.setAttribute("errormsg", strErrMsg);
                 dispatcher = request.getRequestDispatcher("login.jsp");
-                response.sendRedirect("login.jsp");
+                setSecurityHeaders(response);
+                dispatcher.forward(request, response);
+//                response.sendRedirect("login.jsp");
                 log.info("login.jsp");
                 return;
             } else if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
                 strErrMsg = "Unable to connect to LDAP";
                 session.setAttribute("errormsg", strErrMsg);
                 dispatcher = request.getRequestDispatcher("login.jsp");
-                response.sendRedirect("login.jsp");
+                setSecurityHeaders(response);
+                dispatcher.forward(request, response);
+//                response.sendRedirect("login.jsp");
                 log.info("login.jsp");
                 return;
             } else if (isValidLogonLdap.equalsIgnoreCase("")) {
                 strErrMsg = "Unable to connect to LDAP!";
                 session.setAttribute("errormsg", strErrMsg);
                 dispatcher = request.getRequestDispatcher("login.jsp");
-                response.sendRedirect("login.jsp");
+                setSecurityHeaders(response);
+                dispatcher.forward(request, response);
+//                response.sendRedirect("login.jsp");
                 log.info("login.jsp");
                 return;
             }
@@ -318,17 +327,7 @@ public class SCUserData extends HttpServlet {
 
                 if (successLogin) {
 //                    dispatcher = request.getRequestDispatcher("controllerHeaders");
-                    response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-                    response.setHeader("Pragma", "no-cache");
-                    response.setDateHeader("Expires", 0);
-                    
-                    response.setHeader("X-Content-Type-Options", "nosniff");
-                    response.setHeader("X-Frame-Options", "DENY");
-                    response.setHeader("X-XSS-Protection", "1; mode=block");
-                    response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
-                    response.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self';");
-                    response.setHeader("Referrer-Policy", "no-referrer");
-                    response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+                    setSecurityHeaders(response);
                     dispatcher = request.getRequestDispatcher("home.jsp");
                     dispatcher.forward(request, response);
 //                    log.info("controllerHeaders");
@@ -336,12 +335,14 @@ public class SCUserData extends HttpServlet {
                     if (changepassword) {
                         session.setAttribute("errormsg", strErrMsg);
                         dispatcher = request.getRequestDispatcher("changePassword.jsp");
+                        setSecurityHeaders(response);
                         dispatcher.forward(request, response);
                         log.info("changePassword.jsp");
 
                     } else {
                         session.setAttribute("errormsg", strErrMsg);
                         dispatcher = request.getRequestDispatcher("login.jsp");
+                        setSecurityHeaders(response);
                         dispatcher.forward(request, response);
                         log.info("login.jsp");
                     }
@@ -350,8 +351,9 @@ public class SCUserData extends HttpServlet {
                 strErrMsg = "Username is disable. Please Contact the Administrator";
                 session.setAttribute("errormsg", strErrMsg);
                 dispatcher = request.getRequestDispatcher("login.jsp");
-                response.sendRedirect("login.jsp");
-//                dispatcher.forward(request, response);
+                setSecurityHeaders(response);
+//                response.sendRedirect("login.jsp");
+                dispatcher.forward(request, response);
                 log.info(strErrMsg);
             }
         } else {
@@ -359,8 +361,9 @@ public class SCUserData extends HttpServlet {
             strErrMsg = "Username is not registered in CM, please contact the administrator";
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
-            response.sendRedirect("login.jsp");
-//            dispatcher.forward(request, response);
+            setSecurityHeaders(response);
+//            response.sendRedirect("login.jsp");
+            dispatcher.forward(request, response);
             log.info(strErrMsg);
         }
         try {
@@ -386,6 +389,32 @@ public class SCUserData extends HttpServlet {
         InputStream inputStream = DBconnection.class.getClassLoader().getResourceAsStream("/db.properties");
         prop.load(inputStream);
         return prop.getProperty("bic");
+    }
+
+    private void setSecurityHeaders(HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+
+        response.setHeader("X-Content-Type-Options", "nosniff");
+        response.setHeader("X-Frame-Options", "DENY");
+        response.setHeader("X-XSS-Protection", "1; mode=block");
+        response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+        response.setHeader("Content-Security-Policy",
+                "default-src 'self'; "
+                + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+                + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+                + "img-src 'self' data: https://flickr.com; "
+                + "font-src 'self' https://cdn.jsdelivr.net; "
+                + "connect-src 'self'; "
+                + "object-src 'none'; "
+                + "frame-ancestors 'none'; "
+                + "base-uri 'self'; "
+                + "form-action 'self'; "
+                + "upgrade-insecure-requests;"
+        );
+        response.setHeader("Referrer-Policy", "no-referrer");
+        response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

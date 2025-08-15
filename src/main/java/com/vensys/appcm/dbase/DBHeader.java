@@ -1920,7 +1920,9 @@ public class DBHeader {
             int length,
             HeaderSearchCriteria criteria,
             String quicksearch,
-            String sort
+            String sort,
+            String time_from,
+            String time_end
     ) throws Exception {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
@@ -1952,9 +1954,9 @@ public class DBHeader {
             parameters.add("%" + mt_type + "%");
         }
         if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
-            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
-            parameters.add(date_from);
-            parameters.add(date_end);
+            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') BETWEEN ? AND ?");
+            parameters.add(date_from + " " + time_from);
+            parameters.add(date_end + " " + time_end);
         }
         if (status != null && !status.isEmpty()) {
             where.append(" AND h.flag = ?");
