@@ -2662,8 +2662,7 @@ public class DBHeader {
 
     public Collection<TagDB> getAllTagByIdReportMTDoc(String id) throws Exception {
         Collection<TagDB> tags = new ArrayList<TagDB>();
-        String sql = "SELECT urutan,"
-                + "CASE WHEN tags ILKE '72%' THEN LEFT(tags, 2) else tags end tags,detail,tagName,info FROM tags WHERE id_headers='" + id + "' ORDER BY urutan";
+        String sql = "SELECT urutan,tag,detail,tagName,info FROM tags WHERE id_headers='" + id + "' ORDER BY urutan";
 //        System.out.println("sql=" + sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
