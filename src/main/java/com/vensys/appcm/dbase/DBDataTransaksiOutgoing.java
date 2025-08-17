@@ -136,8 +136,8 @@ public class DBDataTransaksiOutgoing {
             st.setString(30, channel);
             st.setString(31, nameUser + ";" + user_id);
             st.setString(32, "--");
-            
-            String mergeRefUETR = reference.replace("Reference: ", "")+data.getBlock3().replace("121:", "").replace(";", "");
+
+            String mergeRefUETR = reference.replace("Reference: ", "") + data.getBlock3().replace("121:", "").replace(";", "");
             st.setString(33, mergeRefUETR);
 
             ResultSet rs = st.executeQuery();
@@ -152,11 +152,11 @@ public class DBDataTransaksiOutgoing {
         }
 
         addDataHeaderStatus("VER", user_id, ip_access, comp_name);
-        evl.insertDataEvent(user_id, "Membuat transaksi baru "+data.getMessageType()+" "+reference, ip_access, comp_name);
+        evl.insertDataEvent(user_id, "Membuat transaksi baru " + data.getMessageType() + " " + reference, ip_access, comp_name);
         evl.updateLogUser(user_id, "trx", timestampString);
         return header;
     }
-    
+
     public boolean tagsExists(int id_headers) {
         try {
             String selectSql = "SELECT id_headers FROM tags WHERE id_headers = ? LIMIT 1";
@@ -172,8 +172,8 @@ public class DBDataTransaksiOutgoing {
             return false;
         }
     }
-    
-    public boolean tagsMxExists (int id_headers) {
+
+    public boolean tagsMxExists(int id_headers) {
         try {
             String sql = "SELECT id_headers FROM tags_mx WHERE id_headers = ? LIMIT 1";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -204,18 +204,19 @@ public class DBDataTransaksiOutgoing {
             return false;
         }
     }
+
     public String getFlagFromQueue(String messType) throws SQLException, Exception {
         log.info("masuk getFlagFromQueue();");
         String flag = "MOD";
-        
+
         try {
             String sql = "SELECT queue FROM mt_details WHERE mt = ?";
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, messType);
-            
+
             ResultSet rs = st.executeQuery();
-            
-            while(rs.next()) {
+
+            while (rs.next()) {
                 if (rs.getString("queue").equals("1")) {
                     flag = "MOD";
                 } else if (rs.getString("queue").equals("2")) {
@@ -238,6 +239,7 @@ public class DBDataTransaksiOutgoing {
         log.info("updateDataTransaksiOutgoing");
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String statusUpdate = "";
 
         try {
             String sql = "UPDATE headers SET applicationId=?,serviceId=?,logicalTerminal=?,"
@@ -265,10 +267,8 @@ public class DBDataTransaksiOutgoing {
             st.setString(14, data.getOperator_comment());   //komentar/
             st.setString(15, flag);  //flag/
             st.setString(16, user_id);   //userEdit/
-            
-//            st.setString(15, "SRC:MANUAL");   //userEntry/
-            
 
+//            st.setString(15, "SRC:MANUAL");   //userEntry/
 //            st.setString(17, "");   //templateName//
             st.setInt(17, 0);   //flagTemplate//
             st.setString(18, "");   //senderInputTime//
@@ -280,7 +280,7 @@ public class DBDataTransaksiOutgoing {
             st.setString(23, "");   //receiverOutputDate//
             st.setString(24, "");   //receiverOutputTime//
             st.setString(25, data.getBlock3());   //block3/
-            String mergeRefUETR = reference.replace("Reference: ", "")+data.getBlock3().replace("121:", "").replace(";", "");
+            String mergeRefUETR = reference.replace("Reference: ", "") + data.getBlock3().replace("121:", "").replace(";", "");
             st.setString(26, mergeRefUETR);
             st.setInt(27, id_headers);
 //            System.out.println(st);
@@ -289,7 +289,13 @@ public class DBDataTransaksiOutgoing {
             log.error(e.getLocalizedMessage());
             e.printStackTrace();
         }
-        updateDataHeaderStatus("UPDATE", id_headers, user_id, ip_access, comp_name);
+        if ("VER".equalsIgnoreCase(flag)) {
+            statusUpdate = "UPDATE";
+        } else if ("CVT-VER".equalsIgnoreCase(flag)) {
+            statusUpdate = "CVT-VER";
+        }
+        
+        updateDataHeaderStatus(statusUpdate, id_headers, user_id, ip_access, comp_name);
     }
 
     public void updateCommentMod(String komentar, String flag, String user_id, Integer id_headers, String ip_access, String comp_name, String flag_prev) throws SQLException, Exception {
@@ -325,7 +331,7 @@ public class DBDataTransaksiOutgoing {
             log.error("Error moveJournalHistory : " + e.toString());
         }
     }
-    
+
     public void updateApproved(String nameUser, int id, String user_id) {
         try {
             String sql = "UPDATE headers SET approveby = ? WHERE id_headers =?";
@@ -337,9 +343,10 @@ public class DBDataTransaksiOutgoing {
             log.error("Error updateApproved: " + e.getMessage());
         }
     }
-    
+
     /**
      * methodoverload untuk updateStatusTransaksiOutgoing
+     *
      * @param flag
      * @param id_headers
      * @param flagStatus
@@ -348,14 +355,14 @@ public class DBDataTransaksiOutgoing {
      * @param comp_name
      * @param io_type
      * @throws SQLException
-     * @throws Exception 
+     * @throws Exception
      */
     public void updateStatusTransaksiOutgoing(String channel, String flag, Integer id_headers, String flagStatus, String user_id, String ip_access, String comp_name, String io_type) throws SQLException, Exception {
-        updateStatusTransaksiOutgoing(channel, flag, id_headers,flagStatus,user_id,ip_access,comp_name,io_type,"MT");
+        updateStatusTransaksiOutgoing(channel, flag, id_headers, flagStatus, user_id, ip_access, comp_name, io_type, "MT");
     }
 
     /**
-     * 
+     *
      * @param flag
      * @param id_headers
      * @param flagStatus
@@ -365,7 +372,7 @@ public class DBDataTransaksiOutgoing {
      * @param io_type
      * @param networkType
      * @throws SQLException
-     * @throws Exception 
+     * @throws Exception
      */
     public void updateStatusTransaksiOutgoing(String getChannel, String flag, Integer id_headers, String flagStatus, String user_id, String ip_access, String comp_name, String io_type, String networkType) throws SQLException, Exception {
 //        boolean TEXT = false;
@@ -406,27 +413,26 @@ public class DBDataTransaksiOutgoing {
             flag_before = " AND (flag='INC-WAIT')";
         } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
             flag_before = " AND (flag='FIA-FAILED')";
-        }  else if (flag.equalsIgnoreCase("FIA-RESEND")) {
+        } else if (flag.equalsIgnoreCase("FIA-RESEND")) {
             flag_before = " AND (flag='FIA-FAILED-CNF' or flag='FIA-RESEND')";
-        }  else if (flag.equalsIgnoreCase("AML-RESEND")) {
+        } else if (flag.equalsIgnoreCase("AML-RESEND")) {
             flag_before = " AND (flag='AML-FAILED-CNF')";
-        }  else if (flag.equalsIgnoreCase("WAITING-SAA-RESEND")) {
+        } else if (flag.equalsIgnoreCase("WAITING-SAA-RESEND")) {
             flag_before = " AND (flag='WAITING-SAA-CNF')";
-        }  else if (flag.equalsIgnoreCase("DDA-RESEND")) {
+        } else if (flag.equalsIgnoreCase("DDA-RESEND")) {
             flag_before = " AND (flag='DDA-FAILED-CNF')";
-        }  else if (flag.equalsIgnoreCase("INTEL-RESEND")) {
+        } else if (flag.equalsIgnoreCase("INTEL-RESEND")) {
             flag_before = " AND (flag='INTEL-FAILED-CNF')";
-        }  else if (flag.equalsIgnoreCase("REM-RESEND")) {
+        } else if (flag.equalsIgnoreCase("REM-RESEND")) {
             flag_before = " AND (flag='REM-FAILED-CNF')";
-        }  else if (flag.equalsIgnoreCase("CVT-VER-RESEND")) {
-            flag_before = " AND (flag='CVT-VER')";            
-        }  else if (flag.equalsIgnoreCase("DUPL-CNF")) {
+        } else if (flag.equalsIgnoreCase("CVT-VER-RESEND")) {
+            flag_before = " AND (flag='CVT-VER')";
+        } else if (flag.equalsIgnoreCase("DUPL-CNF")) {
             flag_before = " AND (flag='DUPL')";
-        }  else if (flag.equalsIgnoreCase("DUPL-RESEND")) {
+        } else if (flag.equalsIgnoreCase("DUPL-RESEND")) {
             flag_before = " AND (flag='DUPL-CNF')";
         }
-        
-      
+
 //        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         try {
 //            String sql = "UPDATE headers SET flag=?,isDuplicate=0,tanggal=LOCALTIMESTAMP WHERE id_headers=?";
@@ -447,61 +453,59 @@ public class DBDataTransaksiOutgoing {
         updateDataHeaderStatus(flag, id_headers, user_id, ip_access, comp_name);
         // penmabahn unutk force inc-OK ' || (flag.equalsIgnoreCase("INC-OK") && flagStatus.equalsIgnoreCase("INC-NOK"))' 16 sept 2015
         // INC-NOK diubah menjadi INC-WAIT 20180413
-        if (
-            (flag.equalsIgnoreCase("AUTH") && AUTH) || 
-            (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH")) || 
-            (flag.equalsIgnoreCase("INC-STL") && AUTH) || 
-            (flag.equalsIgnoreCase("INC-SPOK") && AUTH) || 
-            (flag.equalsIgnoreCase("INC-RSTL") && AUTH) || 
-            (flag.equalsIgnoreCase("FIA-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("AML-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("WAITING-SAA-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("INTEL-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("REM-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("DDA-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("CVT-VER-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("INC-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("INC-AML-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH) ||
-            (flag.equalsIgnoreCase("DUPL-RESEND")) && AUTH
-            ) {
+        if ((flag.equalsIgnoreCase("AUTH") && AUTH)
+                || (flag.equalsIgnoreCase("TEXT") && flagStatus.equalsIgnoreCase("AUTH"))
+                || (flag.equalsIgnoreCase("INC-STL") && AUTH)
+                || (flag.equalsIgnoreCase("INC-SPOK") && AUTH)
+                || (flag.equalsIgnoreCase("INC-RSTL") && AUTH)
+                || (flag.equalsIgnoreCase("FIA-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("AML-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("WAITING-SAA-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("INTEL-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("REM-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("DDA-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("CVT-VER-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("INC-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("INC-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("INC-AML-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("INC-CVT-RESEND") && AUTH)
+                || (flag.equalsIgnoreCase("DUPL-RESEND")) && AUTH) {
             CreateText ct = new CreateText(conn);
-            
+
             // Harus mengetahui dulu apakah MX atau MT
             if (networkType.contains("pacs") || networkType.contains("camt")) {
-                log.info("STL MX for id_headers "+id_headers);
-                
+                log.info("STL MX for id_headers " + id_headers);
+
                 // get json
                 var mapHeadAmdBody = getJSONMXandHeaderSaa(id_headers);
                 var body = mapHeadAmdBody.get("body");
                 var head = mapHeadAmdBody.get("header");
                 String channel = mapHeadAmdBody.get("channel");
 //                System.out.println("Body JSON "+body);
-                
+
                 // merubah json ke object prowide
                 var bodyMessage = AbstractMX.fromJson(body);
                 var variant = bodyMessage.getMxId().id();
-                
+
                 Map<String, String> finalMX = getMxTextById(id_headers.toString());
-                
-                log.info("Version : "+variant);
-                
-               var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
-                
+
+                log.info("Version : " + variant);
+
+                var fullMessage = CostumerHelper.joinHeadersAndBodyMX(variant.toLowerCase(), body, head);
+
 //                System.out.println(finalMX.get("final_mx"));
                 String source = getSource(id_headers);
-                ct.createTextFileMX(source, fullMessage,variant,id_headers, "I", channel, flag, user_id, ip_access, comp_name);
-                
+                ct.createTextFileMX(source, fullMessage, variant, id_headers, "I", channel, flag, user_id, ip_access, comp_name);
+
             } else {
-                log.info("STL MT for id_headers "+id_headers);
+                log.info("STL MT for id_headers " + id_headers);
                 String channel = getSource(id_headers);
-    //            CreateTextNew ctn = new CreateTextNew(conn);
+                //            CreateTextNew ctn = new CreateTextNew(conn);
                 ct.getFinalMT(channel, id_headers, io_type, flag, user_id, ip_access, comp_name);
             }
         }
     }
-    
+
     public String getSource(int idHeaders) {
         String channel = "";
         String sql = "SELECT source FROM headers WHERE id_headers = ?";
@@ -515,37 +519,35 @@ public class DBDataTransaksiOutgoing {
         } catch (SQLException e) {
             log.error(e.getMessage());
         }
-         return channel;
+        return channel;
     }
-    
-    public Map<String,String> getJSONMXandHeaderSaa(int idHeaders){
+
+    public Map<String, String> getJSONMXandHeaderSaa(int idHeaders) {
         log.info("Get Body MX and Header SAA");
         String sql = "SELECT json_tag::varchar, header_saa, h.source AS channel FROM tags_mx LEFT JOIN headers h ON h.id_headers = tags_mx.id_headers WHERE tags_mx.id_headers = ?";
-        
-        var data = new HashMap<String,String>();
-        
+
+        var data = new HashMap<String, String>();
+
         try {
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setInt(1, idHeaders);
             ResultSet rs = st.executeQuery();
-            
-            while (rs.next()){
+
+            while (rs.next()) {
                 data.put("body", rs.getString("json_tag"));
                 data.put("header", rs.getString("header_saa"));
                 data.put("source", rs.getString("channel"));
-                
+
                 // return true
                 return data;
             }
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             log.error(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
-        
+
         return null;
-        
-        
+
     }
 
     public void updateSpecialRate(BigDecimal rate, Integer id_headers, String flag, String user_id, String ip_access, String comp_name, String branch, BigDecimal multi_rate) throws SQLException, Exception {
@@ -738,7 +740,7 @@ public class DBDataTransaksiOutgoing {
 
     public void updateDataHeaderStatus(String status_header, Integer id_headers, String user_login, String ip_access, String comp_name) {
         log.info("updateDataHeaderStatus");
-        log.info("statusHeader:"+status_header);
+        log.info("statusHeader:" + status_header);
         try {
             String sql = "INSERT INTO header_status(id_headers,status_header,status_tanggal,user_login,ip_access,comp_name) VALUES (?,?,LOCALTIMESTAMP,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -752,7 +754,7 @@ public class DBDataTransaksiOutgoing {
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }        
+        }
         // evl.insertDataEvent(user_login, "Update status transaksi menjadi " + status_header, ip_access, comp_name);
         evl.updateLogUser(user_login, "trx", tanggal);
     }
@@ -762,9 +764,9 @@ public class DBDataTransaksiOutgoing {
         try {
             String sql = "INSERT INTO tags(urutan,id_headers,tag,detail,tagName,info) VALUES (?,?,?,?,?,?)";
             PreparedStatement st = this.conn.prepareStatement(sql);
-            
+
             st.setInt(1, urutan);
-            st.setInt(2,id);
+            st.setInt(2, id);
             st.setString(3, tag);
             st.setString(4, detail);
             st.setString(5, tagName);
@@ -821,6 +823,7 @@ public class DBDataTransaksiOutgoing {
             log.info("Error Delete Tag:" + e.getMessage());
         }
     }
+
     public void cleanDataTrxDetail(int id_headers) {
         try {
             String sql = "DELETE FROM trx_detail WHERE id_headers = ?";
@@ -949,7 +952,7 @@ public class DBDataTransaksiOutgoing {
             log.error("addDataTransaksi():" + e.getMessage());
         }
     }
-    
+
     public int updateMXText(String xml, int id_headers) throws SQLException, Exception {
         log.info("masuk updateMXText();");
         int update = 0;
@@ -965,8 +968,8 @@ public class DBDataTransaksiOutgoing {
         }
         return update;
     }
-    
-    public int updateTagsMXText (String json, String headersaa, int id_headers) throws SQLException, Exception {
+
+    public int updateTagsMXText(String json, String headersaa, int id_headers) throws SQLException, Exception {
         int update = 0;
         try {
             String sql = "UPDATE tags_mx set json_tag=?::jsonb, header_saa=? where id_headers=?";
@@ -980,31 +983,54 @@ public class DBDataTransaksiOutgoing {
         }
         return update;
     }
-    
-    public int updateFlagMX(String lt, String responder, String flag, String flag_before, int id_headers, String user_id, String ip_access, String comp_name, String reference) throws SQLException, Exception {
-        int update = 0;
-        String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        try {
-            String sql = "UPDATE headers set logicalTerminal=?, receiverAddress=?, flag=?, trans_reference_check=? where flag =? and id_headers=?";
-            PreparedStatement st = this.conn.prepareStatement(sql);
-            st.setString(1, lt.toUpperCase());
-            st.setString(2, responder.toUpperCase());
+
+    public int updateFlagMX(
+            String lt,
+            String responder,
+            String flag,
+            String flagBefore,
+            int idHeaders,
+            String userId,
+            String ipAccess,
+            String compName,
+            String reference
+    ) throws SQLException {
+
+        int updatedRows = 0;
+        String tanggalTransaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+        String sql = """
+        UPDATE headers
+        SET logicalTerminal = ?, 
+            receiverAddress = ?, 
+            flag = ?, 
+            trans_reference_check = ?
+        WHERE flag = ? AND id_headers = ?
+    """;
+
+        try (PreparedStatement st = this.conn.prepareStatement(sql)) {
+            st.setString(1, lt != null ? lt.toUpperCase() : null);
+            st.setString(2, responder != null ? responder.toUpperCase() : null);
             st.setString(3, flag);
-//            st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
-            st.setString(4, flag_before);
-            st.setString(5, reference);
-            st.setInt(6, id_headers);
-            update = st.executeUpdate();
-            if (update > 0) {
-                log.info("Update Flag to:" + flag);
-                updateDataHeaderStatus(flag, tanggal_transaksi, id_headers, user_id, ip_access, comp_name);
+            st.setString(4, reference);
+            st.setString(5, flagBefore);
+            st.setInt(6, idHeaders);
+
+            updatedRows = st.executeUpdate();
+            log.info("Rows updated: {}" + updatedRows);
+
+            if (updatedRows > 0) {
+                log.info("Flag updated to: {}" + flag);
+                updateDataHeaderStatus(flag, tanggalTransaksi, idHeaders, userId, ipAccess, compName);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Error updating flag in headers table", e);
+            throw e; // lempar kembali biar caller tahu ada error
         }
-        return update;
+
+        return updatedRows;
     }
-    
+
     public int updateFlagAfterValidate(String flag, int id_headers, String user_id, String ip_access, String comp_name) {
         int update = 0;
         String tanggal_transaksi = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -1024,7 +1050,7 @@ public class DBDataTransaksiOutgoing {
         }
         return update;
     }
-    
+
     public void updateDataHeaderStatus(String status_header, String status_tanggal, Integer id_headers, String user_login, String ip_access, String comp_name) {
         log.info("updateDataHeaderStatus");
         try {
@@ -1044,7 +1070,7 @@ public class DBDataTransaksiOutgoing {
         evl.insertDataEvent(user_login, "Update status transaksi menjadi " + status_header, ip_access, comp_name);
         evl.updateLogUser(user_login, "trx", tanggal);
     }
-    
+
     public void addMXText(String data, String id) {
         try {
             String sql = "INSERT INTO mx_text(id_headers, final_mx,modify_mx) VALUES (?,?,?)";
@@ -1058,7 +1084,7 @@ public class DBDataTransaksiOutgoing {
         }
 
     }
-    
+
     public void addDataMXTag(String id, String json, String headerSaa) {
         try {
             String sql = "INSERT INTO tags_mx VALUES(?,?::jsonb,?,?)";
@@ -1075,8 +1101,8 @@ public class DBDataTransaksiOutgoing {
         }
 
     }
-    
-    public void clearTrxDetail (int id) {
+
+    public void clearTrxDetail(int id) {
         try {
             String sql = "DELETE FROM trx_detail WHERE id_headers = ?";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -1086,8 +1112,8 @@ public class DBDataTransaksiOutgoing {
             log.error("clearTrxDetail: " + e.getMessage());
         }
     }
-    
-    public void clearJsonTags (int id) {
+
+    public void clearJsonTags(int id) {
         try {
             String sql = "DELETE FROM tags_mx WHERE id_headers = ?";
             PreparedStatement st = this.conn.prepareStatement(sql);
@@ -1097,8 +1123,8 @@ public class DBDataTransaksiOutgoing {
             log.error("clearTags_MX: " + e.getMessage());
         }
     }
-    
-    public String getTagsMX (int id) {
+
+    public String getTagsMX(int id) {
         String json = "";
         try {
             String sql = "SELECT json_tag from tags_mx WHERE id_headers = ?";
@@ -1114,7 +1140,7 @@ public class DBDataTransaksiOutgoing {
         }
         return json;
     }
-    
+
     public Map<String, String> getBodyAnHeaderMXById(int id) {
         Map<String, String> data = new HashMap<String, String>();
         try {
@@ -1828,8 +1854,8 @@ public class DBDataTransaksiOutgoing {
         st.executeUpdate();
         updateDataHeaderStatus("DUPL", id_headers, userId, ipAccess, compName);
     }
-    
-    public void updateDuplikatCNF (int id_headers) throws Exception {
+
+    public void updateDuplikatCNF(int id_headers) throws Exception {
         String sql = "update headers set isduplicate = '0' where id_headers = ?";
         PreparedStatement st = this.conn.prepareStatement(sql);
         st.setInt(1, id_headers);
@@ -2146,27 +2172,27 @@ public class DBDataTransaksiOutgoing {
             log.error("updateLock:" + e.getMessage());
         }
     }
-    
+
     public EssentialsFieldPacs0080108 getEssentialValuePacs00800108New(int headerId) {
         EssentialsFieldPacs0080108 tags = null;
         try {
-            
-            String sql = "SELECT \n" +
-                        "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'instrId' AS instr_id,\n" +
-                        "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'ccy' AS ccy,\n" +
-                        "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'value'::TEXT AS value,\n" +
-                        "	CONCAT(\n" +
-                        "		RIGHT(CONCAT(mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'year'), 2) , \n" +
-                        "		RIGHT(CONCAT('0' , mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'month'), 2),\n" +
-                        "		RIGHT(CONCAT('0' , mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'day'), 2)\n" +
-                        "	) AS settlement_date,\n" +
-                        "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'grpHdr' -> 'sttlmInf' -> 'instdRmbrsmntAgt' -> 'finInstnId' ->> 'bicfi' AS bicfi,\n" +
-                        "    mx.info\n" +
-                        "FROM headers h\n" +
-                        "LEFT JOIN tags_mx mx \n" +
-                        "    ON h.id_headers = mx.id_headers\n" +
-                        "WHERE h.id_headers = ?;";
-            
+
+            String sql = "SELECT \n"
+                    + "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'pmtId' ->> 'instrId' AS instr_id,\n"
+                    + "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'ccy' AS ccy,\n"
+                    + "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmAmt' ->> 'value'::TEXT AS value,\n"
+                    + "	CONCAT(\n"
+                    + "		RIGHT(CONCAT(mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'year'), 2) , \n"
+                    + "		RIGHT(CONCAT('0' , mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'month'), 2),\n"
+                    + "		RIGHT(CONCAT('0' , mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'cdtTrfTxInf' -> 0 -> 'intrBkSttlmDt' ->> 'day'), 2)\n"
+                    + "	) AS settlement_date,\n"
+                    + "    mx.json_tag -> 'fiToFICstmrCdtTrf' -> 'grpHdr' -> 'sttlmInf' -> 'instdRmbrsmntAgt' -> 'finInstnId' ->> 'bicfi' AS bicfi,\n"
+                    + "    mx.info\n"
+                    + "FROM headers h\n"
+                    + "LEFT JOIN tags_mx mx \n"
+                    + "    ON h.id_headers = mx.id_headers\n"
+                    + "WHERE h.id_headers = ?;";
+
             PreparedStatement st = this.conn.prepareStatement(sql);
             System.out.println("getEsentialPacs008ById: " + sql);
             st.setInt(1, headerId);
@@ -2174,69 +2200,68 @@ public class DBDataTransaksiOutgoing {
             while (rs.next()) {
                 System.out.println("Start");
                 tags = new EssentialsFieldPacs0080108(
-                rs.getString("instr_id") // instruction id
-                ,rs.getString("ccy"),
-                new BigDecimal(rs.getString("value").replace(",", ".")),
-                rs.getString("settlement_date")); // Currency
+                        rs.getString("instr_id") // instruction id
+                        ,
+                         rs.getString("ccy"),
+                        new BigDecimal(rs.getString("value").replace(",", ".")),
+                        rs.getString("settlement_date")); // Currency
                 System.out.println("End");
             }
-            
-        }
-        catch (SQLException ex){
+
+        } catch (SQLException ex) {
             log.error(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
         return tags;
     }
-    
-    
-    public EssentialsFieldPacs0080108 getMT103OutgoingByRefferenceDatevalueReceiverAndCurrency(String refference,  String ccy, String dateValue,String receiver) {
+
+    public EssentialsFieldPacs0080108 getMT103OutgoingByRefferenceDatevalueReceiverAndCurrency(String refference, String ccy, String dateValue, String receiver) {
         EssentialsFieldPacs0080108 tags = null;
         try {
-            
-            String sql = "select h.id_headers as id_headers, \n" +
-            "flag,\n" +
-            "t20.detail as refference,\n" +
-            "t32c.detail as currency,\n" +
-            "t32d.detail as dateValue,\n" +
-            "concat(left(receiveraddress,8),right(receiveraddress,3)) as receiver\n"+
-            "from headers as h\n" +
-            "inner join tags as t20 on t20.id_headers = h.id_headers and t20.tagname = '_010_mf20_sender_reference'\n" +
-            "inner join tags as t32c on t32c.id_headers = h.id_headers and t32c.tagname = '_061_mf32a_currency'\n" +
-            "inner join tags as t32d on t32d.id_headers = h.id_headers and t32d.tagname = '_060_mf32a_date'\n" +
-            "where h.io_type = 'I' and h.messageType = '103' and h.isDuplicate = '0' and flag in ('AUTH','ACK','MOD','VER')\n" +
-            "and t20.detail = ? and t32c.detail = ? and t32d.detail = ? and concat(left(receiveraddress,8),right(receiveraddress,3)) = ?;";
-            
+
+            String sql = "select h.id_headers as id_headers, \n"
+                    + "flag,\n"
+                    + "t20.detail as refference,\n"
+                    + "t32c.detail as currency,\n"
+                    + "t32d.detail as dateValue,\n"
+                    + "concat(left(receiveraddress,8),right(receiveraddress,3)) as receiver\n"
+                    + "from headers as h\n"
+                    + "inner join tags as t20 on t20.id_headers = h.id_headers and t20.tagname = '_010_mf20_sender_reference'\n"
+                    + "inner join tags as t32c on t32c.id_headers = h.id_headers and t32c.tagname = '_061_mf32a_currency'\n"
+                    + "inner join tags as t32d on t32d.id_headers = h.id_headers and t32d.tagname = '_060_mf32a_date'\n"
+                    + "where h.io_type = 'I' and h.messageType = '103' and h.isDuplicate = '0' and flag in ('AUTH','ACK','MOD','VER')\n"
+                    + "and t20.detail = ? and t32c.detail = ? and t32d.detail = ? and concat(left(receiveraddress,8),right(receiveraddress,3)) = ?;";
+
             PreparedStatement st = this.conn.prepareStatement(sql);
             System.out.println("getEsentialPacs008ById: " + sql);
             st.setString(1, refference);
             st.setString(2, ccy);
             st.setString(3, dateValue);
             st.setString(4, receiver);
-            
+
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 System.out.println("Start");
                 tags = new EssentialsFieldPacs0080108(
-                rs.getString("refference") // instruction id
-                ,rs.getString("currency"),
-                null,
-                rs.getString("dateValue"),
-                rs.getInt("id_headers"),
-                rs.getString("receiver")); // Currency
+                        rs.getString("refference") // instruction id
+                        ,
+                         rs.getString("currency"),
+                        null,
+                        rs.getString("dateValue"),
+                        rs.getInt("id_headers"),
+                        rs.getString("receiver")); // Currency
                 System.out.println("End");
             }
-            
-        }
-        catch (SQLException ex){
+
+        } catch (SQLException ex) {
             log.error(ex.getLocalizedMessage());
             ex.printStackTrace();
         }
         return tags;
     }
-    
+
     public boolean updateKomentar(int id_headers, String komentar) {
-        
+
         boolean update = false;
         try {
             String sql = "Update headers SET komentar=? WHERE id_headers=?";
@@ -2267,6 +2292,6 @@ public class DBDataTransaksiOutgoing {
             e.printStackTrace();
             throw e;
         }
-        return templatename;    
-    }    
+        return templatename;
+    }
 }

@@ -257,7 +257,7 @@
 
                             $("#tab-view-validate").removeAttr("hidden");
                             $("#view1, #view2").css("display", "none");
-                            $("#view7").css("display", "block");
+                            $("#view8").css("display", "block");
                             $('#tab-view1').removeClass("selected").removeAttr('class');
                             $('#tab-view2').removeClass("selected").removeAttr('class');
                             $('#tab-validate').addClass("selected");

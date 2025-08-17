@@ -324,9 +324,9 @@
                                         <textarea cols="35" rows="6" maxlength="210" wrap="hard" style="resize:none;" name="_230_of72_sender_receiver_information" id="_230_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                         <textarea onkeypress="avoidSplChars(event)" cols="50" rows="6" maxlength="260" style="resize:none; border:none; color:#555; font-size:8px; background:none;" >Sample Input:
 /RETN/
-/AC09/RETURN MT.103
-//TRN.205100000 FOR
-//USD 10.000 FROM 'SPXDJAIXXXX'
+/AC04/RETURN 103
+/MREF/TRN.205109105
+/TEXT/USD 3.200 FROM 'BDINIDJARMT'
 //LESS OUR CHGS, SINCE THE BENEF'S
 //ACCT IS CLOSED</textarea>
                                     </div>

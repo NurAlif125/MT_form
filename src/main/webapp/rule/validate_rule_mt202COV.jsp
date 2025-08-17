@@ -528,6 +528,7 @@
         $("#check_mf50f_4").attr("disabled", true);
         $("#_255_mf50k_account").attr("disabled", true);
         $("#_256_mf50k_name_address").attr("disabled", true);
+        $("#_247_mf50f_details").attr("disabled", true);
         $("#type_mf50_ordering_customer").change(function () {
             if ($("#type_mf50_ordering_customer").val() == "a") {
                 $("#div_mf50a_").show();
@@ -546,6 +547,7 @@
                 $("#check_mf50f_4").attr("disabled", true);
                 $("#_255_mf50k_account").attr("disabled", true);
                 $("#_256_mf50k_name_address").attr("disabled", true);
+                $("#_247_mf50f_details").attr("disabled", true);
             } else if ($("#type_mf50_ordering_customer").val() == "f") {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").show();
@@ -563,6 +565,7 @@
                 $("#check_mf50f_4").attr("disabled", false);
                 $("#_255_mf50k_account").attr("disabled", true);
                 $("#_256_mf50k_name_address").attr("disabled", true);
+                $("#_247_mf50f_details").attr("disabled", false);
             } else if ($("#type_mf50_ordering_customer").val() == "k") {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").hide();
@@ -580,6 +583,7 @@
                 $("#check_mf50f_4").attr("disabled", true);
                 $("#_255_mf50k_account").attr("disabled", false);
                 $("#_256_mf50k_name_address").attr("disabled", false);
+                $("#_247_mf50f_details").attr("disabled", true);
             } else {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").hide();
@@ -597,6 +601,7 @@
                 $("#check_mf50f_4").attr("disabled", true);
                 $("#_255_mf50k_account").attr("disabled", true);
                 $("#_256_mf50k_name_address").attr("disabled", true);
+                $("#_247_mf50f_details").attr("disabled", true);
             }
         });
         
@@ -825,6 +830,7 @@
         $("#check_mf59f_2").attr("disabled", true);
         $("#check_mf59f_3").attr("disabled", true);
         $("#check_mf59f_4").attr("disabled", true);
+        $("#_299_mf59f_details").attr("disabled", true);
         $("#type_of59_59a_").change(function () {
             if ($("#type_of59_59a_").val() == "59") {
                 $("#div_mf59_").show();
@@ -843,6 +849,7 @@
                 $("#check_mf59f_2").attr("disabled", true);
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
+                $("#_299_mf59f_details").attr("disabled", true);
             } else if ($("#type_of59_59a_").val() == "59a") {
                 $("#div_mf59_").hide();
                 $("#div_mf59a_").show();
@@ -860,6 +867,7 @@
                 $("#check_mf59f_2").attr("disabled", true);
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
+                $("#_299_mf59f_details").attr("disabled", true);
             } else if ($("#type_of59_59a_").val() == "59f") {
                 $("#div_mf59_").hide();
                 $("#div_mf59a_").hide();
@@ -877,6 +885,7 @@
                 $("#check_mf59f_2").attr("disabled", false);
                 $("#check_mf59f_3").attr("disabled", false);
                 $("#check_mf59f_4").attr("disabled", false);
+                $("#_299_mf59f_details").attr("disabled", false);
             } else {
                 $("#div_mf59_").hide();
                 $("#div_mf59a_").hide();
@@ -894,6 +903,7 @@
                 $("#check_mf59f_2").attr("disabled", true);
                 $("#check_mf59f_3").attr("disabled", true);
                 $("#check_mf59f_4").attr("disabled", true);
+                $("#_299_mf59f_details").attr("disabled", true);
             }
         });
 

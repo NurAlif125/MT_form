@@ -95,6 +95,7 @@ public class CreateText {
             TagDB tagDB = new TagDB();
             tagDB.setTag(rs.getString(1));
             tagDB.setDetail(rs.getString(2));
+            tagDB.setUrutan(rs.getInt(3));
             tags.add(tagDB);
         }
         log.info("getAllTagById");
@@ -345,7 +346,11 @@ public class CreateText {
                         } else if (tagDB.get(i).getTag().equalsIgnoreCase("om")) {//20231227 ditambah ini untuk generate notag
                             // log.info("masuk sini om" + str.get(0));
                             msg.getBlock4().append(new Tag("CMOMSG", str.get(0)));
-                        } else {
+                        } else if (tagDB.get(i).getTag().equalsIgnoreCase("721") || tagDB.get(i).getTag().equalsIgnoreCase("722")) {
+                            msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase().substring(0,2), wrapString(str.get(0), 6, 35)));
+                        } 
+                        
+                        else {
                             msg.getBlock4().append(new Tag(tagDB.get(i).getTag().toUpperCase(), str.get(0)));
                         }
                     } else if (str.size() == 2) {

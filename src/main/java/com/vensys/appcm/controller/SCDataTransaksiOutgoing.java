@@ -321,6 +321,8 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
                         dBDataTransaksiOutgoing2.addMTText(ctn.createFinalMT(ctn.getHeaderById(id_headers)), id_headers);
                     } else {
+                        String text = "";
+                        text = ct.createFinalMT(ct.getHeaderById(id_headers));
                         dBDataTransaksiOutgoing2.addMTText(ct.createFinalMT(ct.getHeaderById(id_headers)), id_headers);
                     }
                 } else {

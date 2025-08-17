@@ -1057,7 +1057,7 @@ public class DBHeader {
             } else {
                 header.setCreateby(rs.getString(19));
             }
-            
+
             if (rs.getString(20) != null) {
                 if (rs.getString(20).contains(";")) {
                     String[] approveby = rs.getString(20).split(";");
@@ -1920,7 +1920,9 @@ public class DBHeader {
             int length,
             HeaderSearchCriteria criteria,
             String quicksearch,
-            String sort
+            String sort,
+            String time_from,
+            String time_end
     ) throws Exception {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
@@ -1952,9 +1954,9 @@ public class DBHeader {
             parameters.add("%" + mt_type + "%");
         }
         if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
-            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
-            parameters.add(date_from);
-            parameters.add(date_end);
+            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') BETWEEN ? AND ?");
+            parameters.add(date_from + " " + time_from);
+            parameters.add(date_end + " " + time_end);
         }
         if (status != null && !status.isEmpty()) {
             where.append(" AND h.flag = ?");
@@ -2178,7 +2180,7 @@ public class DBHeader {
                     String amt = rs.getString("trans_amount");
                     data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
                     data.setTrans_ccy(rs.getString("trans_ccy"));
-                    
+
                     if (rs.getString("createby") != null) {
                         if (rs.getString("createby").contains(";")) {
                             String[] createby = rs.getString("createby").split(";");
@@ -2189,7 +2191,7 @@ public class DBHeader {
                     } else {
                         data.setCreateby(rs.getString("createby"));
                     }
-                    
+
                     if (rs.getString("approveby") != null) {
                         if (rs.getString("approveby").contains(";")) {
                             String[] approveby = rs.getString("approveby").split(";");
@@ -2670,7 +2672,11 @@ public class DBHeader {
             tag.setUrutan(rs.getInt(1));
             tag.setTag(rs.getString(2));
             tag.setDetail(rs.getString(3));
-            tag.setTagName(parseDataTagName(rs.getString(4)));
+            if ("721".equalsIgnoreCase(rs.getString(2)) || "722".equalsIgnoreCase(rs.getString(2))) {
+                tag.setTagName(rs.getString(2).substring(0, 2));
+            } else {
+                tag.setTagName(parseDataTagName(rs.getString(4)));
+            }
             tag.setInfo(rs.getString(5).toUpperCase());
             tags.add(tag);
         }

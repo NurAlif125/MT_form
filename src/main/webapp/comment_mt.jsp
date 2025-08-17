@@ -6,6 +6,6 @@
 
 <div class="form-row"><span class="label_sub"><b>Comments</b></span></div>
 <div class="form-row"><span class="label">Operator/System Comments</span>
-    <textarea style="background-color: #dcdcdc;" name="operator_comment" id="operator_comment" readonly="true" style="width: 290px;"><c:out value="${headerById.komentar}" /></textarea>
+    <textarea style="background-color: #dcdcdc;width: 19%;min-width: 280px;height: 190px;" name="operator_comment" id="operator_comment" readonly="true" style="width: 290px;"><c:out value="${headerById.komentar}" /></textarea>
 </div>
 <hr/>
