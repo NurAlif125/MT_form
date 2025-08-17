@@ -130,5 +130,12 @@
         <!--    <div id="kaki2">
                 <p><a href="http://www.vensys.co.id" target="_blank">Copyright &copy; PT. Venturium System Indonesia</a></p>
             </div>-->
+        
+        <%
+            try {
+                session.invalidate(); // remove session lama untuk single login
+            } catch (IllegalStateException ignored) {}
+        %>
+
     </body>
 </html>
