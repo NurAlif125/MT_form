@@ -538,11 +538,28 @@ response.setDateHeader("Expires", 0);
     </ul>
     <body style="clear: both;">
         <c:if test="${empty sessionScope.user_id}">
-            <script type="text/javascript">
+<!--            <script type="text/javascript">
                 alert('Your session has expired, please log in again!');
                 window.location.href = 'login.jsp';
-            </script>
+            </script>-->
         </c:if>
+
+        <c:choose>
+            <c:when test="${not empty sessionScope.duplicateLoginMessage}">
+                <script type="text/javascript">
+                    alert('Your account has been logged in from another device. Please log in again.');
+                    window.location.href = 'login.jsp';
+                </script>
+                <c:remove var="duplicateLoginMessage" scope="session"/>
+            </c:when>
+            <c:when test="${empty sessionScope.user_id}">
+                <script type="text/javascript">
+                    alert('Your session has expired, please log in again!');
+                    window.location.href = 'login.jsp';
+                </script>
+            </c:when>
+        </c:choose>
+
         
         
         <input type="hidden" id="timeout" name="timeout" value="<% out.print(session.getAttribute("timeout"));%>"/>

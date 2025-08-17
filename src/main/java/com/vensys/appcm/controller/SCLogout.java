@@ -80,6 +80,8 @@ public class SCLogout extends HttpServlet {
         if (userId != null && ipAccess != null && compName != null) {
             String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             dbo.insertDataLogin(userId, "0", ipAccess, compName, tanggal, "1");
+            
+            SessionRegistry.removeSession(user_id);
         } else {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -113,6 +115,7 @@ public class SCLogout extends HttpServlet {
 
         session = request.getSession(true);
         session.setAttribute("errorMsglogin", "You have been logged out.");
+        request.setAttribute("duplicateLoginMessage", "User sudah login di tempat lain");
 
         // Redirect ke login.jsp
         response.sendRedirect("login.jsp");
