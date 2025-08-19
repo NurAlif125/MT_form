@@ -288,7 +288,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("timeout", dataRole.getTimeout());
                                 
                                 //single session user login
-                                SessionRegistry.registerSession(user_id, session);
+//                                SessionRegistry.registerSession(user_id, session);
                             } else {
                                 dbo.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
                                 evl.updateLogUser(user_id, "login", tanggal);
@@ -320,7 +320,7 @@ public class SCUserData extends HttpServlet {
                         } else {
                             dbo.updateenable(data);
                             strErrMsg = "Username is not registered in CM, please contact the administrator";
-                            System.out.println("log 321");
+//                            System.out.println("log 321");
 //                              strErrMsg = "User is disable. Please Call Administrator";
                             session.setAttribute("errormsg", strErrMsg);
                         }
@@ -367,7 +367,7 @@ public class SCUserData extends HttpServlet {
         } else {
 //            strErrMsg = "User ID or password is incorrect";
             strErrMsg = "Username is not registered in CM, please contact the administrator";
-            System.out.println("log 368");
+//            System.out.println("log 368");
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
             setSecurityHeaders(response);

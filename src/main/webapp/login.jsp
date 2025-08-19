@@ -132,9 +132,9 @@
             </div>-->
         
         <%
-            try {
-                session.invalidate(); // remove session lama untuk single login
-            } catch (IllegalStateException ignored) {}
+            // try {
+              //  session.invalidate(); // remove session lama untuk single login
+            // } catch (IllegalStateException ignored) {}
         %>
 
     </body>
