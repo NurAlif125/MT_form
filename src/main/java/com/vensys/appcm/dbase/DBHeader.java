@@ -2343,7 +2343,7 @@ public class DBHeader {
 //        }
 //        return headers;
 //    }
-    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
+    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch, String time_from, String time_end) throws Exception {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
 
@@ -2374,9 +2374,9 @@ public class DBHeader {
             parameters.add("%" + mt_type + "%");
         }
         if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
-            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
-            parameters.add(date_from);
-            parameters.add(date_end);
+            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') BETWEEN ? AND ?");
+            parameters.add(date_from + " " + time_from);
+            parameters.add(date_end + " " + time_end);
         }
         if (status != null && !status.isEmpty()) {
             where.append(" AND h.flag = ?");
