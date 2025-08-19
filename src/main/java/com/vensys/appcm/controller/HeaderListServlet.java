@@ -339,7 +339,7 @@ public class HeaderListServlet extends HttpServlet {
 //                    System.out.println("start= " +start+" | lenghth= "+ length);
 //                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
                 headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, start, length, criteria, quickSearch, sort, time_from, time_end);
-                totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch);
+                totalRecords = bBHeaders.getCountResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, criteria, quickSearch, time_from, time_end);
 //                System.out.println("TOtal REcordd ----"+totalRecords);
 //                forward = RESULTHEADERS + "?menu="+menu;
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
