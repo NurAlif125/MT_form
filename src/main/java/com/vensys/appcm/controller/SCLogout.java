@@ -81,7 +81,8 @@ public class SCLogout extends HttpServlet {
             String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             dbo.insertDataLogin(userId, "0", ipAccess, compName, tanggal, "1");
             
-            SessionRegistry.removeSession(user_id);
+            // single login
+//            SessionRegistry.removeSession(user_id);
         } else {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
