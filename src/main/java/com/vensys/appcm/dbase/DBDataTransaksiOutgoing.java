@@ -122,13 +122,13 @@ public class DBDataTransaksiOutgoing {
             st.setString(29, data.getNetworkType()); //networktype
 
             if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXTRS")) {
-                channel = "TSA";
+                channel = "TSA"; // treasury
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXCLC")) {
                 channel = "BANKTRADE";
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXCUS")) {
-                channel = "CUSTODY";
+                channel = "CSA"; //custody
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXRMT")) {
-                channel = "EMS";
+                channel = "EMS"; // NCBS
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXXXX")) {
                 channel = "FRONTARENA";
             }

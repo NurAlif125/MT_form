@@ -102,20 +102,20 @@ response.setDateHeader("Expires", 0);
     <ul id="nav" class="dropdown dropdown-horizontal">
         <c:forEach var="item" items="${role}">
             <c:if test="${item == 'MENU:DASHBOARD'}">
-                <li><span class="dir">Dash Board</span>
-                    <ul>
+                <!--<li><span class="dir">Dash Board</span>-->
+                    <!--<ul>-->
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                                <li><a onclick="userTrackMenuClick('Summary Incoming')" href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
+                                <!--<li><a onclick="userTrackMenuClick('Summary Incoming')" href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>-->
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">
                                 <c:if test="${item == 'DOT:LIST'}">
-                                <li><a onclick="userTrackMenuClick('Summary Outgoing')" href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
+                                <!--<li><a onclick="userTrackMenuClick('Summary Outgoing')" href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>-->
                                 </c:if>
                             </c:forEach>
-                    </ul>
-                </li>
+<!--                    </ul>
+                </li>-->
             </c:if>
         </c:forEach>
         <c:forEach var="item" items="${role}">
@@ -124,7 +124,7 @@ response.setDateHeader("Expires", 0);
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MEMBER_CODE:LIST'}">
-                                <li><a onclick="userTrackMenuClick('BIC')" href="SCBICList">BIC</a></li>
+                                <!--<li><a onclick="userTrackMenuClick('BIC')" href="SCBICList">BIC</a></li>-->
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">

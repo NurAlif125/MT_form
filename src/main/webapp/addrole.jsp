@@ -90,7 +90,7 @@
                         <label>Release Duplicate Confirmation <input type="checkbox" name="role_detail" id="role_detail" value="FLOW:DUPL-CNF" <c:forEach var="item" items="${list}"><c:if test="${item == 'FLOW:DUPL-CNF'}"> checked="true" </c:if> </c:forEach> /></label>
                     </div> 
                     <div class="form-row"><span class="labelL">Menu</span>
-                        <label>Dashboard <input type="checkbox" name="role_detail" id="role_detail" value="MENU:DASHBOARD" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:DASHBOARD'}"> checked="true" </c:if></c:forEach> /></label>
+                        <!--<label>Dashboard <input type="checkbox" name="role_detail" id="role_detail" value="MENU:DASHBOARD" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:DASHBOARD'}"> checked="true" </c:if></c:forEach> /></label>-->
                         <label>Master <input type="checkbox" name="role_detail" id="role_detail" value="MENU:MASTER" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:MASTER'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Duplicate <input type="checkbox" name="role_detail" id="role_detail" value="MENU:DUPLICATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:DUPLICATE'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Rejected <input type="checkbox" name="role_detail" id="role_detail" value="MENU:REJECTED" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:REJECTED'}"> checked="true" </c:if></c:forEach> /></label>
@@ -114,14 +114,14 @@
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="MT_QUEUE:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT_QUEUE:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="MT_QUEUE:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT_QUEUE:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
                     </div>-->
-                    <div class="form-row">
+<!--                    <div class="form-row">
                         <span class="labelL">BIC</span>
                         <label>List <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:LIST" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:LIST'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Add <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:ADD" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:ADD'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>View <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:VIEW" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:VIEW'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Update <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:UPDATE" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:UPDATE'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>Approval <input type="checkbox" name="role_detail" id="role_detail" value="MEMBER_CODE:APPROVAL" <c:forEach var="item" items="${list}"><c:if test="${item == 'MEMBER_CODE:APPROVAL'}"> checked="true" </c:if></c:forEach> /></label>
-                    </div>
+                    </div>-->
 
                     <div class="form-row">
                         <span class="labelL">FIA Config</span>
