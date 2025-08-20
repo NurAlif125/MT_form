@@ -12,7 +12,7 @@
     response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
     response.setHeader("Content-Security-Policy",
             "default-src 'self'; "
-            + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+            + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; "
             + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
             + "img-src 'self' data: https://flickr.com; "
             + "font-src 'self' https://cdn.jsdelivr.net; "
