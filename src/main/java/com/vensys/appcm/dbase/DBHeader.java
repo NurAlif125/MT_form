@@ -889,6 +889,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where += " AND source IN ('EMS', 'NCBS')";
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where += " AND source IN ('CSA', 'CUSTODY')";
             } else {
                 where += " AND source LIKE '%" + channel + "%'";
             }
@@ -956,7 +958,7 @@ public class DBHeader {
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')";
+                where += " AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
                 where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
@@ -998,7 +1000,7 @@ public class DBHeader {
 //                + "ORDER BY " + sort + " OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
-//        System.out.println(sql);
+        System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1026,6 +1028,8 @@ public class DBHeader {
                     header.setSource("Treasury OPS");
                 } else if ("BANKTRADE".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Trade OPS");
+                } else if ("CUSTODY".equalsIgnoreCase(rs.getString(13))) {
+                    header.setSource("Custody OPS");
                 } else if ("CSA".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Custody OPS");
                 } else if ("NCBS".equalsIgnoreCase(rs.getString(13)) || "EMS".equalsIgnoreCase(rs.getString(13))) {
@@ -1225,6 +1229,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where += " AND source IN ('EMS', 'NCBS')";
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where += " AND source IN ('CSA', 'CUSTODY')";
             } else {
                 where += " AND source LIKE '%" + channel + "%'";
             }
@@ -1292,7 +1298,7 @@ public class DBHeader {
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')";
+                where += " AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
                 where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
@@ -1981,6 +1987,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where.append(" AND h.source IN ('EMS', 'NCBS')");
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where.append(" AND source IN ('CSA', 'CUSTODY')");
             } else {
                 where.append(" AND h.source ILIKE ?");
                 parameters.add("%" + channel + "%");
@@ -2077,7 +2085,7 @@ public class DBHeader {
                 } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                     where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
                 } else if (source.startsWith("c") || source.startsWith("C")) {
-                    where.append(" AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')");
+                    where.append(" AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
                 } else if (source.startsWith("r") || source.startsWith("R")) {
                     where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
                 } else {
@@ -2164,7 +2172,9 @@ public class DBHeader {
                             data.setSource("Treasury OPS");
                         } else if ("BANKTRADE".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Trade OPS");
-                        } else if ("CSA".equalsIgnoreCase(rs.getString("source"))) {
+                        } else if ("CUSTODY".equalsIgnoreCase(rs.getString("source"))) {
+                            data.setSource("Custody OPS");
+                        } else if ("CSA".equalsIgnoreCase(rs.getString(13))) {
                             data.setSource("Custody OPS");
                         } else if ("NCBS".equalsIgnoreCase(rs.getString("source")) || "EMS".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Remittance OPS");
@@ -2401,6 +2411,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where.append(" AND h.source IN ('EMS', 'NCBS')");
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where.append(" AND source IN ('CSA', 'CUSTODY')");
             } else {
                 where.append(" AND h.source ILIKE ?");
                 parameters.add("%" + channel + "%");
@@ -2497,7 +2509,7 @@ public class DBHeader {
                 } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                     where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
                 } else if (source.startsWith("c") || source.startsWith("C")) {
-                    where.append(" AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')");
+                    where.append(" AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
                 } else if (source.startsWith("r") || source.startsWith("R")) {
                     where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
                 } else {
