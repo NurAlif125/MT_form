@@ -50,7 +50,10 @@
                 }
 
                 if($("#_072_of33b_amount").val().trim() === "") {
-                    $("#_072_of33b_amount").val('0,');
+                    const amount32a = $("#_062_mf32a_amount").val().trim().replace(/,/g, "");
+                    const amount71f = $("#_221_of71f_amount").val().trim().replace(/,/g, "");
+                    const hasiltambah = Number(amount32a) + Number(amount71f);
+                    $("#_072_of33b_amount").val(hasiltambah.toString()).trigger('blur');
                 }
             } else {
                 $("#_070_of33b_currency").val('');
