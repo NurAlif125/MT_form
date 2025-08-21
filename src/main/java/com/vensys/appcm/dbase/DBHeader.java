@@ -4334,7 +4334,7 @@ public class DBHeader {
 //                "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
 //                "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE "
 //                + where.toString() + " ORDER BY tanggal DESC";
-        String sql = "SELECT DISTINCT h.id_headers, h.source, h.messageType, h.io_type, h.logicalTerminal, h.receiverAddress, trx.trans_reference, h.tanggal, COALESCE(trx.trans_date_value, '') as trans_date_value, COALESCE(trx.trans_ccy, '') as trans_ccy, COALESCE(trx.trans_amount, 0) as trans_amount, h.flag FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers \n"
+        String sql = "SELECT DISTINCT h.id_headers, h.source, h.messageType, case when UPPER(h.io_type) = 'I' then 'Outgoing' else 'Incoming' end io_type, h.logicalTerminal, h.receiverAddress, trx.trans_reference, h.tanggal, COALESCE(trx.trans_date_value, '') as trans_date_value, COALESCE(trx.trans_ccy, '') as trans_ccy, COALESCE(trx.trans_amount, 0) as trans_amount, h.flag FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers \n"
                 + "WHERE " + where.toString() + " ORDER BY tanggal DESC;";
 //            System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
