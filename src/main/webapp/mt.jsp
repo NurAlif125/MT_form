@@ -53,7 +53,7 @@
                     <div class="form-row">
                         <div class="form-cols">
                             <h1>MT</h1>
-                            <div class="p-3 bg-body rounded" style="width: fit-content;">
+                            <div class="p-3 bg-body rounded" style="width: fit-content; margin-top: -50px;">
                                 <input type="hidden" name="mxview2" id="mxview2" value="<c:out value="${textById.final_mt}"/>" />
                                 <div style="font-size: 14px;" class="scrl" id="editor">
                                 </div>
