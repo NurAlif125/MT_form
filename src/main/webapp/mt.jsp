@@ -78,6 +78,7 @@ var mxviewValue = document.getElementById("mxview2").value;
 var parts = mxviewValue.split("\n");
 const editor = new EditorJS({
     holderId : 'editor',
+    readOnly: true, 
     data: {
         blocks: parts.map(part => ({
             type: 'paragraph',
