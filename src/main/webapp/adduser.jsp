@@ -97,7 +97,7 @@
                         </select>
                     </div>
                         
-                    <div class="form-row"><span class="labelL2">BIC</span>
+                    <div class="form-row" hidden><span class="labelL2">BIC</span>
                         <select name="user_bic" id="user_bic">
                             <option value="">All BIC</option>
                         <c:forEach var="item1" items="${dataBicProp}">
