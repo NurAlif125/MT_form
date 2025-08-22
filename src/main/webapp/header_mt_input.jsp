@@ -17,7 +17,13 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
+                        <c:if test="${'TSA' eq sessionScope.channel}">
+                           <option value="BDINIDJAXTRS" <c:if test="${item1 == 'BDINIDJAXTRS' or item1== 'BDINIDJAXTRS'}">selected="true"</c:if>>BDINIDJAXTRS</option>
+                           <option value="BDINIDJAXXXX" <c:if test="${item1 == 'BDINIDJAXXXX' or item1== 'BDINIDJAXXXX'}">selected="true"</c:if>>BDINIDJAXXXX</option>
+                        </c:if>
+                        <c:if test="${'TSA' ne sessionScope.channel}">
+                            <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
+                        </c:if>
                     </c:otherwise>
                 </c:choose>
 <!--                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
@@ -33,7 +39,13 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
+                        <c:if test="${'TSA' eq sessionScope.channel}">
+                           <option value="BDINIDJAXTRS" <c:if test="${item1 == 'BDINIDJAXTRS' or item1== 'BDINIDJAXTRS'}">selected="true"</c:if>>BDINIDJAXTRS</option>
+                           <option value="BDINIDJAXXXX" <c:if test="${item1 == 'BDINIDJAXXXX' or item1== 'BDINIDJAXXXX'}">selected="true"</c:if>>BDINIDJAXXXX</option>
+                        </c:if>
+                        <c:if test="${'TSA' ne sessionScope.channel}">
+                            <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
+                        </c:if>
                     </c:otherwise>
                 </c:choose>
 <!--                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='MEGAIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
