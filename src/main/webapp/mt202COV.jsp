@@ -322,11 +322,12 @@
                             
                             <!-- OF72 -->
                             <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
-                                <textarea cols="35" rows="6" maxlength="210" wrap="hard" style="resize:none;" name="_230_of72_sender_receiver_information" id="_230_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea cols="35" rows="6" maxlength="210" wrap="hard" style="resize:none;" name="_230_of721_sender_receiver_information" id="_230_of721_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_230_of721_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                 <textarea onkeypress="avoidSplChars(event)" cols="50" rows="6" maxlength="260" style="resize:none; border:none; color:#555; font-size:8px; background:none;" >Sample Input:
-/RETN/AC09/RETURN MT.103
-//TRN.205100000 FOR
-//USD 10.000 FROM 'SPXDJAIXXXX'
+/RETN/
+/AC04/RETURN 103
+/MREF/TRN.205109105
+/TEXT/USD 3.200 FROM 'BDINIDJARMT'
 //LESS OUR CHGS, SINCE THE BENEF'S
 //ACCT IS CLOSED</textarea>
                             </div>
@@ -724,11 +725,12 @@
                             
                             <!-- OF72 Sequence B -->
                             <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_320_of72_sender_receiver_information" id="_320_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_320_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_320_of722_sender_receiver_information" id="_320_of722_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_320_of722_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                 <textarea onkeypress="avoidSplChars(event)" cols="50" rows="6" maxlength="260" style="resize:none; border:none; color:#555; font-size:8px; background:none;" >Sample Input:
-/RETN/AC09/RETURN MT.103
-//TRN.205100000 FOR
-//USD 10.000 FROM 'SPXDJAIXXXX'
+/RETN/
+/AC04/RETURN 103
+/MREF/TRN.205109105
+/TEXT/USD 3.200 FROM 'BDINIDJARMT'
 //LESS OUR CHGS, SINCE THE BENEF'S
 //ACCT IS CLOSED</textarea>
                             </div>
@@ -736,10 +738,10 @@
                             
                             <!-- OF33B -->
                             <div class="form-row"><span class="label_body">OF33B</span><span class="label">Currency</span>
-                                <input type="text" onkeypress="return textonly(event)" name="_070_of33b_currency" id="_070_of33b_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="return textonly(event)" name="_330_of33b_currency" id="_330_of33b_currency" maxlength="3" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_330_of33b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                <input type="text" name="_072_of33b_amount" id="_072_of33b_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_070_of33b_currency');" />
+                                <input type="text" name="_332_of33b_amount" id="_332_of33b_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_332_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_332_of33b_amount');" />
                                 <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                 <font style="margin-left: 50px"></font>
                                 <script langauge="javascript">
@@ -749,7 +751,7 @@
                                         }
                                         return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
                                     }
-                                    var number2 = document.getElementById('_072_of33b_amount').value;
+                                    var number2 = document.getElementById('_332_of33b_amount').value;
                                     var number2r = number2.replace(',', '.');
                                     var number2F = parseFloat(number2r);
                                     var nominal = formatUang(number2F, "");

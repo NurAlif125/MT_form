@@ -97,7 +97,7 @@
                         </select>
                     </div>
                         
-                    <div class="form-row"><span class="labelL2">BIC</span>
+                    <div class="form-row" hidden><span class="labelL2">BIC</span>
                         <select name="user_bic" id="user_bic">
                             <option value="">All BIC</option>
                         <c:forEach var="item1" items="${dataBicProp}">
@@ -168,41 +168,46 @@
     window.onload = handleRoleChange;
 </script>
 
-<!-- <script>
-    document.getElementById('channel').onchange = function () {
-        document.getElementById('user_bic').selectedIndex = this.selectedIndex;
-    };
-    document.getElementById('channel').onchange != function () {
-        document.getElementById('user_bic').selectedIndex = this.hiddenIndex;
-    };
-
-</script> -->
-
 <script>
-  document.getElementById('channel').onchange = function () {
-    var selectedIndex = this.selectedIndex;
-    var bicSelect = document.getElementById('user_bic');
+  function updateBicOptions() {
+    let $channel = $("#channel");
+    let $bic = $("#user_bic");
 
-    // Set selectedIndex
-    bicSelect.selectedIndex = selectedIndex;
+    let selectedIndex = $channel.prop("selectedIndex");
+    let selectedValue = $channel.val();
 
-   
-
-    // Loop untuk menyembunyikan option yang tidak terpilih
-    for (let i = 0; i < bicSelect.options.length; i++) {
-        if (i === selectedIndex) {
-            bicSelect.options[i].style.display = 'block'; // tampilkan yang terpilih
-
-        } else {
-            bicSelect.options[i].style.display = 'none'; // sembunyikan yang lain
-        }
-        if( selectedIndex === 0) {
-            bicSelect.selectedIndex = 0;
-            bicSelect.options[i].style.display = 'block';
-        }
+    $bic.find("option").show();
+    if (selectedIndex === 0) {
+      $bic.prop("selectedIndex", 0);
+      return;
     }
-     
-  };
+
+    if (selectedValue === "TSA") {
+      let allowed = ["BDINIDJAXTRS", "BDINIDJAXXXX"];
+      $bic.find("option").each(function () {
+        if (!allowed.includes($(this).val())) {
+          $(this).hide(); // hide yg bukan
+        }
+      });
+
+      if (!allowed.includes($bic.val())) {
+        $bic.val("BDINIDJAXTRS"); // auto select yg ini jika TSA
+      }
+    } else {
+      $bic.find("option").each(function (i) {
+      if (i === selectedIndex) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+      });
+      $bic.prop("selectedIndex", selectedIndex);
+    }
+  }
+
+  $("#channel").on("change", updateBicOptions);
+
+  $(document).ready(updateBicOptions);  
 </script>
 
 <script>

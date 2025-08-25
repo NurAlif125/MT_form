@@ -889,6 +889,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where += " AND source IN ('EMS', 'NCBS')";
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where += " AND source IN ('CSA', 'CUSTODY')";
             } else {
                 where += " AND source LIKE '%" + channel + "%'";
             }
@@ -956,7 +958,7 @@ public class DBHeader {
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')";
+                where += " AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
                 where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
@@ -998,7 +1000,7 @@ public class DBHeader {
 //                + "ORDER BY " + sort + " OFFSET " + start + " ROWS FETCH NEXT " + length + " ROWS ONLY --LIMIT 100 OFFSET (1 - 1) * 100";
 
 //        LIMIT <jumlahDataPerHalaman> OFFSET (<nomorHalaman> - 1) * <jumlahDataPerHalaman>
-//        System.out.println(sql);
+        System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);
         ResultSet rs = st.executeQuery();
         while (rs.next()) {
@@ -1026,6 +1028,8 @@ public class DBHeader {
                     header.setSource("Treasury OPS");
                 } else if ("BANKTRADE".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Trade OPS");
+                } else if ("CUSTODY".equalsIgnoreCase(rs.getString(13))) {
+                    header.setSource("Custody OPS");
                 } else if ("CSA".equalsIgnoreCase(rs.getString(13))) {
                     header.setSource("Custody OPS");
                 } else if ("NCBS".equalsIgnoreCase(rs.getString(13)) || "EMS".equalsIgnoreCase(rs.getString(13))) {
@@ -1057,7 +1061,7 @@ public class DBHeader {
             } else {
                 header.setCreateby(rs.getString(19));
             }
-            
+
             if (rs.getString(20) != null) {
                 if (rs.getString(20).contains(";")) {
                     String[] approveby = rs.getString(20).split(";");
@@ -1225,6 +1229,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where += " AND source IN ('EMS', 'NCBS')";
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where += " AND source IN ('CSA', 'CUSTODY')";
             } else {
                 where += " AND source LIKE '%" + channel + "%'";
             }
@@ -1292,7 +1298,7 @@ public class DBHeader {
             } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                 where += " AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')";
             } else if (source.startsWith("c") || source.startsWith("C")) {
-                where += " AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')";
+                where += " AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')";
             } else if (source.startsWith("r") || source.startsWith("R")) {
                 where += " AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')";
             } else {
@@ -1981,6 +1987,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where.append(" AND h.source IN ('EMS', 'NCBS')");
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where.append(" AND source IN ('CSA', 'CUSTODY')");
             } else {
                 where.append(" AND h.source ILIKE ?");
                 parameters.add("%" + channel + "%");
@@ -2077,7 +2085,7 @@ public class DBHeader {
                 } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                     where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
                 } else if (source.startsWith("c") || source.startsWith("C")) {
-                    where.append(" AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')");
+                    where.append(" AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
                 } else if (source.startsWith("r") || source.startsWith("R")) {
                     where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
                 } else {
@@ -2164,7 +2172,9 @@ public class DBHeader {
                             data.setSource("Treasury OPS");
                         } else if ("BANKTRADE".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Trade OPS");
-                        } else if ("CSA".equalsIgnoreCase(rs.getString("source"))) {
+                        } else if ("CUSTODY".equalsIgnoreCase(rs.getString("source"))) {
+                            data.setSource("Custody OPS");
+                        } else if ("CSA".equalsIgnoreCase(rs.getString(13))) {
                             data.setSource("Custody OPS");
                         } else if ("NCBS".equalsIgnoreCase(rs.getString("source")) || "EMS".equalsIgnoreCase(rs.getString("source"))) {
                             data.setSource("Remittance OPS");
@@ -2180,7 +2190,7 @@ public class DBHeader {
                     String amt = rs.getString("trans_amount");
                     data.setTrans_amount((amt == null) ? "0" : amt.replace(",", "."));
                     data.setTrans_ccy(rs.getString("trans_ccy"));
-                    
+
                     if (rs.getString("createby") != null) {
                         if (rs.getString("createby").contains(";")) {
                             String[] createby = rs.getString("createby").split(";");
@@ -2191,7 +2201,7 @@ public class DBHeader {
                     } else {
                         data.setCreateby(rs.getString("createby"));
                     }
-                    
+
                     if (rs.getString("approveby") != null) {
                         if (rs.getString("approveby").contains(";")) {
                             String[] approveby = rs.getString("approveby").split(";");
@@ -2343,7 +2353,7 @@ public class DBHeader {
 //        }
 //        return headers;
 //    }
-    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch) throws Exception {
+    public int getCountResultHeader(HttpSession httpSession, String io_type, String sender_bank, String receiver_bank, String mt_type, String date_from, String date_end, String sender_reference, String rel_reference, String currency_code, String amount, String status, String db_type, String channel, HeaderSearchCriteria criteria, String quicksearch, String time_from, String time_end) throws Exception {
         List<Header> datas = new ArrayList<>();
         List<Object> parameters = new ArrayList<>();
 
@@ -2374,9 +2384,9 @@ public class DBHeader {
             parameters.add("%" + mt_type + "%");
         }
         if (date_from != null && !date_from.isEmpty() && date_end != null && !date_end.isEmpty()) {
-            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD') BETWEEN ? AND ?");
-            parameters.add(date_from);
-            parameters.add(date_end);
+            where.append(" AND TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') BETWEEN ? AND ?");
+            parameters.add(date_from + " " + time_from);
+            parameters.add(date_end + " " + time_end);
         }
         if (status != null && !status.isEmpty()) {
             where.append(" AND h.flag = ?");
@@ -2401,6 +2411,8 @@ public class DBHeader {
         if (channel != null && !channel.isBlank()) {
             if (channel.equalsIgnoreCase("EMS")) {
                 where.append(" AND h.source IN ('EMS', 'NCBS')");
+            } else if (channel.equalsIgnoreCase("CUSTODY")) {
+                where.append(" AND source IN ('CSA', 'CUSTODY')");
             } else {
                 where.append(" AND h.source ILIKE ?");
                 parameters.add("%" + channel + "%");
@@ -2497,7 +2509,7 @@ public class DBHeader {
                 } else if (source.startsWith("tra") || source.startsWith("Tra") || source.startsWith("TRA")) {
                     where.append(" AND (source = 'BANKTRADE' OR logicalTerminal = 'BDINIDJAXCLC')");
                 } else if (source.startsWith("c") || source.startsWith("C")) {
-                    where.append(" AND (source = 'CSA' OR logicalTerminal='BDINIDJAXCUS')");
+                    where.append(" AND (source = 'CSA' OR source = 'CUSTODY' OR logicalTerminal='BDINIDJAXCUS')");
                 } else if (source.startsWith("r") || source.startsWith("R")) {
                     where.append(" AND (source = 'NCBS' OR logicalTerminal='BDINIDJAXRMT')");
                 } else {
@@ -2671,7 +2683,11 @@ public class DBHeader {
             tag.setUrutan(rs.getInt(1));
             tag.setTag(rs.getString(2));
             tag.setDetail(rs.getString(3));
-            tag.setTagName(parseDataTagName(rs.getString(4)));
+            if ("721".equalsIgnoreCase(rs.getString(2)) || "722".equalsIgnoreCase(rs.getString(2))) {
+                tag.setTagName(rs.getString(2).substring(0, 2));
+            } else {
+                tag.setTagName(parseDataTagName(rs.getString(4)));
+            }
             tag.setInfo(rs.getString(5).toUpperCase());
             tags.add(tag);
         }
@@ -4318,7 +4334,7 @@ public class DBHeader {
 //                "    AND (t32.tagName LIKE '%mf32a_amount%' OR t32.tagName LIKE '%mf62f_amount%' OR t32.tagName LIKE '%mf62m_amount%' OR t32.tagName LIKE '%mf32b_amount%')\n" +
 //                "LEFT JOIN tags_mx mx ON mx.id_headers = hd.id_headers WHERE "
 //                + where.toString() + " ORDER BY tanggal DESC";
-        String sql = "SELECT DISTINCT h.id_headers, h.source, h.messageType, h.io_type, h.logicalTerminal, h.receiverAddress, trx.trans_reference, h.tanggal, COALESCE(trx.trans_date_value, '') as trans_date_value, COALESCE(trx.trans_ccy, '') as trans_ccy, COALESCE(trx.trans_amount, 0) as trans_amount, h.flag FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers \n"
+        String sql = "SELECT DISTINCT h.id_headers, h.source, h.messageType, case when UPPER(h.io_type) = 'I' then 'Outgoing' else 'Incoming' end io_type, h.logicalTerminal, h.receiverAddress, trx.trans_reference, h.tanggal, COALESCE(trx.trans_date_value, '') as trans_date_value, COALESCE(trx.trans_ccy, '') as trans_ccy, COALESCE(trx.trans_amount, 0) as trans_amount, h.flag FROM headers h LEFT JOIN trx_detail trx ON h.id_headers = trx.id_headers \n"
                 + "WHERE " + where.toString() + " ORDER BY tanggal DESC;";
 //            System.out.println(sql);
         PreparedStatement st = this.conn.prepareStatement(sql);

@@ -18,7 +18,7 @@ response.setHeader("X-Frame-Options", "DENY");
 response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
 response.setHeader("Content-Security-Policy",
             "default-src 'self'; "
-            + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+            + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; "
             + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
             + "img-src 'self' data: https://flickr.com; "
             + "font-src 'self' https://cdn.jsdelivr.net; "
@@ -102,20 +102,20 @@ response.setDateHeader("Expires", 0);
     <ul id="nav" class="dropdown dropdown-horizontal">
         <c:forEach var="item" items="${role}">
             <c:if test="${item == 'MENU:DASHBOARD'}">
-                <li><span class="dir">Dash Board</span>
-                    <ul>
+                <!--<li><span class="dir">Dash Board</span>-->
+                    <!--<ul>-->
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                                <li><a onclick="userTrackMenuClick('Summary Incoming')" href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>
+                                <!--<li><a onclick="userTrackMenuClick('Summary Incoming')" href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>-->
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">
                                 <c:if test="${item == 'DOT:LIST'}">
-                                <li><a onclick="userTrackMenuClick('Summary Outgoing')" href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>
+                                <!--<li><a onclick="userTrackMenuClick('Summary Outgoing')" href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>-->
                                 </c:if>
                             </c:forEach>
-                    </ul>
-                </li>
+<!--                    </ul>
+                </li>-->
             </c:if>
         </c:forEach>
         <c:forEach var="item" items="${role}">
@@ -124,7 +124,7 @@ response.setDateHeader("Expires", 0);
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MEMBER_CODE:LIST'}">
-                                <li><a onclick="userTrackMenuClick('BIC')" href="SCBICList">BIC</a></li>
+                                <!--<li><a onclick="userTrackMenuClick('BIC')" href="SCBICList">BIC</a></li>-->
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">
@@ -543,6 +543,23 @@ response.setDateHeader("Expires", 0);
                 window.location.href = 'login.jsp';
             </script>
         </c:if>
+
+        <c:choose>
+            <c:when test="${not empty sessionScope.duplicateLoginMessage}">
+<!--                <script type="text/javascript">
+                    alert('Your account has been logged in from another device. Please log in again.');
+                    window.location.href = 'login.jsp';
+                </script>-->
+                <c:remove var="duplicateLoginMessage" scope="session"/>
+            </c:when>
+            <c:when test="${empty sessionScope.user_id}">
+<!--                <script type="text/javascript">
+                    alert('Your session has expired, please log in again!');
+                    window.location.href = 'login.jsp';
+                </script>-->
+            </c:when>
+        </c:choose>
+
         
         
         <input type="hidden" id="timeout" name="timeout" value="<% out.print(session.getAttribute("timeout"));%>"/>

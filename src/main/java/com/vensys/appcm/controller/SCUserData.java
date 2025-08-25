@@ -85,7 +85,7 @@ public class SCUserData extends HttpServlet {
         String channel = "";
         String userBIC = "";
         String namaUser = "";
-//        List <Nst> nsts = null;
+//        List <Nst> nsts = null;        
         try {
 //            data = dbo.getUserDataByIdLDAP(user_id);
             data = dbo.getUserDataById(user_id);
@@ -104,7 +104,7 @@ public class SCUserData extends HttpServlet {
             if (gagalLogin == null) {
                 gagalLogin = "-";
             }
-            if (!channel.equalsIgnoreCase("")) {
+            if (channel != null && !channel.equalsIgnoreCase("")) {
                 notifVer = dbo.getNotificationVer(channel);
                 notifAuth = dbo.getNotificationAuth(channel);
             } else {
@@ -117,6 +117,10 @@ public class SCUserData extends HttpServlet {
         } catch (Exception ex) {
             strErrMsg = "Unable to connect to database";
             log.error("getDataUserLogin : " + ex.getMessage());
+            session.setAttribute("errormsg", strErrMsg);
+            dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
         }
 
         String isValidLogonLdap = "", checkUserLdap = "";
@@ -174,7 +178,7 @@ public class SCUserData extends HttpServlet {
 //                    dispatcher.forward(request, response);
                 setSecurityHeaders(response);
                 response.sendRedirect("login.jsp");
-                log.info("login.jsp");
+                log.info(strErrMsg);
                 return;
             } else if (isValidLogonLdap.equalsIgnoreCase("nothing user")) {
                 strErrMsg = "Username is not registered in LDAP, please contact administrator";
@@ -183,7 +187,7 @@ public class SCUserData extends HttpServlet {
                 setSecurityHeaders(response);
                 dispatcher.forward(request, response);
 //                response.sendRedirect("login.jsp");
-                log.info("login.jsp");
+                log.info(strErrMsg);
                 return;
             } else if (isValidLogonLdap.equalsIgnoreCase("not connect")) {
                 strErrMsg = "Unable to connect to LDAP";
@@ -192,7 +196,7 @@ public class SCUserData extends HttpServlet {
                 setSecurityHeaders(response);
                 dispatcher.forward(request, response);
 //                response.sendRedirect("login.jsp");
-                log.info("login.jsp");
+                log.info(strErrMsg);
                 return;
             } else if (isValidLogonLdap.equalsIgnoreCase("")) {
                 strErrMsg = "Unable to connect to LDAP!";
@@ -201,7 +205,7 @@ public class SCUserData extends HttpServlet {
                 setSecurityHeaders(response);
                 dispatcher.forward(request, response);
 //                response.sendRedirect("login.jsp");
-                log.info("login.jsp");
+                log.info(strErrMsg);
                 return;
             }
         }
@@ -282,6 +286,9 @@ public class SCUserData extends HttpServlet {
 
                                 session.setAttribute("flagStatus", "");
                                 session.setAttribute("timeout", dataRole.getTimeout());
+                                
+                                //single session user login
+//                                SessionRegistry.registerSession(user_id, session);
                             } else {
                                 dbo.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
                                 evl.updateLogUser(user_id, "login", tanggal);
@@ -313,6 +320,7 @@ public class SCUserData extends HttpServlet {
                         } else {
                             dbo.updateenable(data);
                             strErrMsg = "Username is not registered in CM, please contact the administrator";
+//                            System.out.println("log 321");
 //                              strErrMsg = "User is disable. Please Call Administrator";
                             session.setAttribute("errormsg", strErrMsg);
                         }
@@ -359,12 +367,14 @@ public class SCUserData extends HttpServlet {
         } else {
 //            strErrMsg = "User ID or password is incorrect";
             strErrMsg = "Username is not registered in CM, please contact the administrator";
+//            System.out.println("log 368");
             session.setAttribute("errormsg", strErrMsg);
             dispatcher = request.getRequestDispatcher("login.jsp");
             setSecurityHeaders(response);
 //            response.sendRedirect("login.jsp");
             dispatcher.forward(request, response);
             log.info(strErrMsg);
+            log.info("log 368");
         }
         try {
             log.info("closeConnection");
@@ -402,7 +412,7 @@ public class SCUserData extends HttpServlet {
         response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
         response.setHeader("Content-Security-Policy",
                 "default-src 'self'; "
-                + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+                + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; "
                 + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
                 + "img-src 'self' data: https://flickr.com; "
                 + "font-src 'self' https://cdn.jsdelivr.net; "

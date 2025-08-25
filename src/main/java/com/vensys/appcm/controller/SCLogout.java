@@ -65,7 +65,7 @@ public class SCLogout extends HttpServlet {
         response.setDateHeader("Expires", 0);
         response.setHeader("Content-Security-Policy",
                 "default-src 'self'; "
-                + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+                + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; "
                 + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
                 + "img-src 'self' data: https://flickr.com; "
                 + "font-src 'self' https://cdn.jsdelivr.net; "
@@ -80,6 +80,9 @@ public class SCLogout extends HttpServlet {
         if (userId != null && ipAccess != null && compName != null) {
             String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             dbo.insertDataLogin(userId, "0", ipAccess, compName, tanggal, "1");
+            
+            // single login
+//            SessionRegistry.removeSession(user_id);
         } else {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -113,6 +116,7 @@ public class SCLogout extends HttpServlet {
 
         session = request.getSession(true);
         session.setAttribute("errorMsglogin", "You have been logged out.");
+        request.setAttribute("duplicateLoginMessage", "User sudah login di tempat lain");
 
         // Redirect ke login.jsp
         response.sendRedirect("login.jsp");
