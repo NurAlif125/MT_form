@@ -374,7 +374,7 @@ public class CHeader {
             arr[i] = st.nextToken();
             i++;
         }
-        String[] nTagValue = tagValue.split("\r\n");
+        String[] nTagValue = tagValue.split("\\R");
         for (int t = 0; t < nTagValue.length; t++) {
             readBlock4(arr[t], tagName, nTagValue[t]);
         }
@@ -480,7 +480,7 @@ public class CHeader {
             readBlock4(arr[1 + count32b], tagName, tagValue.substring(3));
             count32b = count32b + 2;
         } else if (tagName.equalsIgnoreCase("50k")) {
-            String[] dataTag = tagValue.split("\r\n");
+            String[] dataTag = tagValue.split("\\R");
             readBlock4(arr[0 + count50k], tagName, dataTag[0]);
             String nameAddr = "";
             for (int j = 1; j < dataTag.length; j++) {
@@ -489,7 +489,7 @@ public class CHeader {
             readBlock4(arr[1 + count50k], tagName, nameAddr);
             count50k = count50k + 2;
         } else if (tagName.equalsIgnoreCase("52a")) {
-            String[] dataTag = tagValue.split("\r\n");
+            String[] dataTag = tagValue.split("\\R");
             readBlock4(arr[0 + count52a], tagName, dataTag[0]);
             String bic = "";
             for (int j = 1; j < dataTag.length; j++) {
@@ -498,7 +498,7 @@ public class CHeader {
             readBlock4(arr[1 + count52a], tagName, bic);
             count52a = count52a + 2;
         } else if (tagName.equalsIgnoreCase("59")) {
-            String[] dataTag = tagValue.split("\r\n");
+            String[] dataTag = tagValue.split("\\R");
             readBlock4(arr[0 + count59], tagName, dataTag[0]);
             String nameAddr = "";
             for (int j = 1; j < dataTag.length; j++) {
@@ -560,7 +560,7 @@ public class CHeader {
             readBlock4(arr[1 + temp], tagName, arr_[1]);
         } else {
             if (tagValue.startsWith("/") || tagName.equalsIgnoreCase("24G")) {
-                String[] dataTag = tagValue.split("\r\n");
+                String[] dataTag = tagValue.split("\\R");
                 readBlock4(arr[0 + temp], tagName, dataTag[0]);
                 String bic = "";
                 for (int j = 1; j < dataTag.length; j++) {
@@ -597,7 +597,7 @@ public class CHeader {
             count57a = count57a + 2;
         }
         if (tagValue.startsWith("/")) {
-            String[] dataTag = tagValue.split("\r\n");
+            String[] dataTag = tagValue.split("\\R");
             readBlock4(arr[0 + temp], tagName, dataTag[0]);
             String bic = "";
             for (int j = 1; j < dataTag.length; j++) {
@@ -629,7 +629,7 @@ public class CHeader {
             count32b = count32b + 2;
         } else if (tagName.equalsIgnoreCase("59f")) {
             if (tagValue.startsWith("/")) {
-                String[] dataTag = tagValue.split("\r\n");
+                String[] dataTag = tagValue.split("\\R");
                 for (int a = 0; a < dataTag.length; a++) {
                     if (a == 0) {
                         readBlock4(arr[0 + a], tagName, dataTag[a]);
@@ -649,7 +649,7 @@ public class CHeader {
                     }
                 }
             } else {
-                String[] dataTag = tagValue.split("\r\n");
+                String[] dataTag = tagValue.split("\\R");
                 for (int a = 0; a < dataTag.length; a++) {
                     // log.info("data tag A :" + dataTag[a]);
                     for (int b = 0; b < 2; b++) {//20200408
@@ -670,7 +670,7 @@ public class CHeader {
         } //20200709
         else if (tagName.equalsIgnoreCase("50f")) {
             if (tagValue.startsWith("/") || tagValue.startsWith("ARNU") || tagValue.startsWith("CCPT") || tagValue.startsWith("CUST") || tagValue.startsWith("DRLC") || tagValue.startsWith("EMPL") || tagValue.startsWith("NIDN") || tagValue.startsWith("SOSE") || tagValue.startsWith("TXID")) {
-                String[] dataTag = tagValue.split("\r\n");
+                String[] dataTag = tagValue.split("\\R");
                 for (int a = 0; a < dataTag.length; a++) {
                     if (a == 0) {
                         readBlock4(arr[0 + a + count50f], tagName, dataTag[a]);
@@ -689,7 +689,7 @@ public class CHeader {
                     }
                 }
             } else {
-                String[] dataTag = tagValue.split("\r\n");
+                String[] dataTag = tagValue.split("\\R");
                 for (int a = 0; a < dataTag.length; a++) {
                     // log.info("data tag A :" + dataTag[a]);
                     for (int b = 0; b < 2; b++) {//20200408
@@ -725,7 +725,7 @@ public class CHeader {
             }
         } else if (tagName.equalsIgnoreCase("72") || tagName.equalsIgnoreCase("52a") || tagName.equalsIgnoreCase("52d") || tagName.equalsIgnoreCase("56a")) {
             if (tagValue.startsWith("/")) {
-                String[] dataTag = tagValue.split("\r\n");
+                String[] dataTag = tagValue.split("\\R");
                 readBlock4(arr[0 + count72], tagName, dataTag[0]);
                 String bic = "";
                 for (int j = 1; j < dataTag.length; j++) {
