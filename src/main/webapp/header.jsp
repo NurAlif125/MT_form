@@ -389,7 +389,7 @@ response.setDateHeader("Expires", 0);
                                             </c:forEach>
                                             <c:forEach var="iteminc" items="${role}">
                                                 <c:if test="${iteminc == 'FLOW:INC-AML'}">
-                                                <li><a onclick="userTrackMenuClick('Incoming Reject AML')" href="controllerHeaders?io_type=O&flag=INC-AML&menu=26">Incoming Reject AML</a></li>
+                                                <li><a onclick="userTrackMenuClick('Incoming Reject AML')" href="controllerHeaders?io_type=O&flag=WAITING-AML&menu=26">Incoming Reject AML</a></li>
                                                 </c:if>
                                             </c:forEach>
                                             <c:forEach var="iteminc" items="${role}">
