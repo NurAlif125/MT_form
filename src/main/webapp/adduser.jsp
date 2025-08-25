@@ -135,7 +135,9 @@
                     <input type="button" name="delete_user" id="delete_user" value="Disable Permanent" />
                     </c:if>
                     <!--<input type="button" name="delete_user" id="delete_user" value="Delete" />-->
-                    <input type="reset" name="reset" id="reset" value="Reset" />
+                    <% if(null == request.getParameter("user_id")) { %>
+                        <input type="reset" name="reset" id="reset" value="Reset" />
+                    <% } %>
                     <input type="button" name="back" id="back" value="Back" />
                 </div>
             </form>
@@ -182,7 +184,7 @@
       return;
     }
 
-    if (selectedValue === "TSA") {
+    if (selectedValue === "Treasury OPS") {
       let allowed = ["BDINIDJAXTRS", "BDINIDJAXXXX"];
       $bic.find("option").each(function () {
         if (!allowed.includes($(this).val())) {

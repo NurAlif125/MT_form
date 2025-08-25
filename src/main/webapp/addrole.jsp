@@ -296,7 +296,9 @@
                                 <input type="button" name="delete_role" id="delete_role" value="Disable Permanent" />
                             </c:if>
                             <!--<input type="button" name="delete_role" id="delete_role" value="Delete" />-->
-                            <input type="reset" name="reset" id="reset" value="Reset" />
+                            <% if(null == request.getParameter("role_id")) { %>
+                                <input type="reset" name="reset" id="reset" value="Reset" />
+                            <% } %>
                             <input type="button" name="back" id="back" value="Back" />
                         </div>
                     </form>
