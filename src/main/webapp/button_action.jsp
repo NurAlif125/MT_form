@@ -110,7 +110,7 @@
             </c:if>
             <% }%>
 
-            <% if (session.getAttribute("flagStatus").equals("INC-AML")) {%>
+            <% if (session.getAttribute("flagStatus").equals("WAITING-AML") && "O".equals(session.getAttribute("io_type")) ) { %>
             <c:if test="${item == 'FLOW:INC-AML'}">
                 <input type="button" name="reject_inc_cvt" id="reject_inc_cvt" value="Reject" />
             </c:if>
@@ -488,7 +488,7 @@
             </c:if>
             <% }%>
 
-            <% if (session.getAttribute("flagStatus").equals("WAITING-AML")) { %>
+            <% if (session.getAttribute("flagStatus").equals("WAITING-AML") && "I".equals(session.getAttribute("io_type")) ) { %>
             <c:if test="${item == 'FLOW:WAITING-AML'}">
                 <input type="button" name="reject_wait_aml" id="reject_wait_aml" value="Reject" />
             </c:if>

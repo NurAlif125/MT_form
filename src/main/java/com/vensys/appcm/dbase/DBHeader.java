@@ -859,8 +859,8 @@ public class DBHeader {
             where += " AND flag='RESEND-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) {
             where += " AND flag='INC-REJECT-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML")) {
-            where += " AND flag='INC-AML' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+        } else if (flag.equalsIgnoreCase("WAITING-AML")) {
+            where += " AND flag='INC-AML' AND io_type='O' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
             where += " AND flag='INC-AML-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) {
@@ -1207,8 +1207,8 @@ public class DBHeader {
             where += " AND flag='RESEND-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-REJECT-CNF")) {
             where += " AND flag='INC-REJECT-CNF' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
-        } else if (flag.equalsIgnoreCase("INC-AML")) {
-            where += " AND flag='INC-AML' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
+        } else if (flag.equalsIgnoreCase("WAITING-AML")) {
+            where += " AND flag='WAITING-AML' AND io_type='O' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
             where += " AND flag='INC-AML-FAILED' AND TO_CHAR(tanggal, 'YYYY-MM-DD') = '" + tanggal_transaksi_sebulan + "'";
         } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) {
