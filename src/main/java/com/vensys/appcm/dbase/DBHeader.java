@@ -773,7 +773,7 @@ public class DBHeader {
 //        SRC:MANUAL,SRC:FIA
         if ("Treasury OPS".equalsIgnoreCase(channel)) {
             where += "userEntry IN ('SRC:MANUAL') AND h.logicalTerminal IN ('BDINIDJAXTRS','BDINIDJAXXXX')";
-        } else if ("TSA".equalsIgnoreCase(channel)) {
+        } else if ("TSA".equalsIgnoreCase(channel) || "FRONTARENA".equalsIgnoreCase(channel)) {
             where += "userEntry IN ('SRC:FIA')";
         } else {
             if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA") && list.contains("SRC:UPLOAD")) {
@@ -1121,7 +1121,7 @@ public class DBHeader {
 //        SRC:MANUAL,SRC:FIA
         if ("Treasury OPS".equalsIgnoreCase(channel)) {
             where += "userEntry IN ('SRC:MANUAL') AND h.logicalTerminal IN ('BDINIDJAXTRS','BDINIDJAXXXX')";
-        } else if ("TSA".equalsIgnoreCase(channel)) {
+        } else if ("TSA".equalsIgnoreCase(channel) || "FRONTARENA".equalsIgnoreCase(channel)) {
             where += "userEntry IN ('SRC:FIA')";
         } else {
             if (list.contains("SRC:MANUAL") && list.contains("SRC:FIA") && list.contains("SRC:UPLOAD")) {
@@ -1859,7 +1859,7 @@ public class DBHeader {
             where.append(" AND h.userEntry IN ('SRC:MANUAL') AND h.logicalTerminal IN ('BDINIDJAXTRS','BDINIDJAXXXX')");
         }
         
-        if ("TSA".equalsIgnoreCase(channel)) {
+        if ("TSA".equalsIgnoreCase(channel) || "FRONTARENA".equalsIgnoreCase(channel)) {
             where.append(" AND h.userEntry IN ('SRC:FIA')");
         }
 
@@ -2162,7 +2162,7 @@ public class DBHeader {
             where.append(" AND h.userEntry IN ('SRC:MANUAL') AND h.logicalTerminal IN ('BDINIDJAXTRS','BDINIDJAXXXX')");
         }
         
-        if ("TSA".equalsIgnoreCase(channel)) {
+        if ("TSA".equalsIgnoreCase(channel) || "FRONTARENA".equalsIgnoreCase(channel)) {
             where.append(" AND h.userEntry IN ('SRC:FIA')");
         }
 
