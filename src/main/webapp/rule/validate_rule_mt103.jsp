@@ -469,7 +469,7 @@
                 $("#_105_mf50k_account").attr("disabled", true);
                 $("#_106_mf50k_name_address").attr("disabled", true);
                 $("#_097_mf50f_details").attr("disabled", false);
-                $("#_096_mf50f_number").attr("disabled", true);
+                $("#_096_mf50f_number").attr("disabled", false);
             } else if ($("#type_mf50_ordering_customer").val() == "k") {
                 $("#div_mf50a_").hide();
                 $("#div_mf50f_").hide();
@@ -1328,11 +1328,15 @@
             $("#name_address_checkbox_2_50").prop("checked", true);
             $("#check_mf50f_2").show();
             $("#_096_mf50f_number").prop("required", true);
+            $("#_096_mf50f_number").attr("disabled", false);
             $("#_097_mf50f_details").prop("required", true);
+            $("#_097_mf50f_details").attr("disabled", false);
         } else {
             $("#check_mf50f_2").hide();
             $("#_096_mf50f_number").prop("required", false);
+            $("#_096_mf50f_number").attr("disabled", true);
             $("#_097_mf50f_details").prop("required", false);
+            $("#_097_mf50f_details").attr("disabled", true);
         }
         
         //mf50f_3
@@ -1758,11 +1762,15 @@
             $("#name_address_checkbox_2").prop("checked", true);
             $("#check_mf59f_2").show();
             $("#_188_mf59f_number").prop("required", true);
+            $("#_188_mf59f_number").attr("disabled", false);
             $("#_189_mf59f_details").prop("required", true);
+            $("#_189_mf59f_details").attr("disabled", false);
         } else {
             $("#check_mf59f_2").hide();
             $("#_188_mf59f_number").prop("required", false);
+            $("#_188_mf59f_number").attr("disabled", true);
             $("#_189_mf59f_details").prop("required", false);
+            $("#_189_mf59f_details").attr("disabled", true);
         }
 
         //mf59f_3
