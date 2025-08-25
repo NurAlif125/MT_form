@@ -17,11 +17,11 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${'TSA' eq sessionScope.channel}">
+                        <c:if test="${'Treasury OPS' eq sessionScope.channel}">
                            <option value="BDINIDJAXTRS" <c:if test="${item1 == 'BDINIDJAXTRS' or item1== 'BDINIDJAXTRS'}">selected="true"</c:if>>BDINIDJAXTRS</option>
                            <option value="BDINIDJAXXXX" <c:if test="${item1 == 'BDINIDJAXXXX' or item1== 'BDINIDJAXXXX'}">selected="true"</c:if>>BDINIDJAXXXX</option>
                         </c:if>
-                        <c:if test="${'TSA' ne sessionScope.channel}">
+                        <c:if test="${'Treasury OPS' ne sessionScope.channel}">
                             <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
                         </c:if>
                     </c:otherwise>
@@ -39,11 +39,11 @@
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <c:if test="${'TSA' eq sessionScope.channel}">
+                        <c:if test="${'Treasury OPS' eq sessionScope.channel}">
                            <option value="BDINIDJAXTRS" <c:if test="${item1 == 'BDINIDJAXTRS' or item1== 'BDINIDJAXTRS'}">selected="true"</c:if>>BDINIDJAXTRS</option>
                            <option value="BDINIDJAXXXX" <c:if test="${item1 == 'BDINIDJAXXXX' or item1== 'BDINIDJAXXXX'}">selected="true"</c:if>>BDINIDJAXXXX</option>
                         </c:if>
-                        <c:if test="${'TSA' ne sessionScope.channel}">
+                        <c:if test="${'Treasury OPS' ne sessionScope.channel}">
                             <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
                         </c:if>
                     </c:otherwise>
