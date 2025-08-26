@@ -9,6 +9,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import java.io.IOException;
  *
  * @author rafli
  */
+@WebFilter("/*")
 public class NoCacheFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -33,10 +35,11 @@ public class NoCacheFilter implements Filter {
                 public void addCookie(Cookie cookie) {
                     cookie.setHttpOnly(true);
                     cookie.setSecure(true);
+                    cookie.setPath("/");
                     try {
                         // Java 11+ support
 //                    cookie.setComment("SameSite=Strict");
-                        cookie.setValue("SameSite=Strict");
+                        cookie.setAttribute("SameSite", "Strict");
                     } catch (Exception ignored) {
                     }
 
@@ -68,7 +71,9 @@ public class NoCacheFilter implements Filter {
             );
             httpResp.setHeader("Referrer-Policy", "no-referrer");
             httpResp.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
-
+            httpResp.setHeader("Server", "Unknown");
+            httpResp.setHeader("X-Powered-By", "Unknown");
+            
             chain.doFilter(request, wrappedResp);
             return;
         }
