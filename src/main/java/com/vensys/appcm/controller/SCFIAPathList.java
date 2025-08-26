@@ -34,13 +34,19 @@ public class SCFIAPathList extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
+        if (!request.getParameterMap().isEmpty()) {
+            
+            response.sendError(400);
+            return;
+        }
+
         HttpSession httpSession = request.getSession();
         DBconnection dbConn = new DBconnection();
         DBFIA db = new DBFIA(dbConn.getConnection());
-        
+
         try {
-            
+
             httpSession.setAttribute("numOfBic", db.getNumberofRowsPathConf());
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -49,7 +55,7 @@ public class SCFIAPathList extends HttpServlet {
         }
         RequestDispatcher dispatcher = request.getRequestDispatcher("VFIAPath.jsp");
         dispatcher.forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

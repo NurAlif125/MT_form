@@ -1,12 +1,12 @@
-/////*
+ /////*
 //// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 //// * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
 //// */
 package com.vensys.appcm.ldap;
 
-
 import com.vensys.appcm.dbase.DBconnection;
 import com.vensys.appcm.myutils.Encryptor;
+import com.vensys.appcm.myutils.LDAPSecurity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -32,6 +32,7 @@ import org.apache.logging.log4j.core.LoggerContext;
 //import java.util.regex.*;
 
 public class LDAPCon {
+
     org.apache.logging.log4j.Logger log = LogManager.getLogger(getClass().getName());
     private String ldapurl = null;
     private String domain = null;
@@ -40,41 +41,47 @@ public class LDAPCon {
     private String passCN = null;
     private String base_DN = null;
     Encryptor enc = new Encryptor();
-    
-       public String loginLDAP(String user, String passw) throws IOException {
-            readConfigProperties();
-            String validLogin = "";
-            
-            String ldapUrl = ldapurl;
-            String ldapDC = dc;
-            String adminDN = "cn="+userCN+","+dc;
-            String adminPassword = passCN;
-            String searchBase = dc;
 
-            // Setup koneksi awal sebagai admin
-            Hashtable<String, String> env = new Hashtable<>();
-            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-            env.put(Context.PROVIDER_URL, ldapUrl);
-            env.put(Context.SECURITY_AUTHENTICATION, "simple");
-            env.put(Context.SECURITY_PRINCIPAL, adminDN);
-            env.put(Context.SECURITY_CREDENTIALS, adminPassword);
+    public String loginLDAP(String user, String passw) throws IOException {
+        if (!LDAPSecurity.isValidLDAPInput(user) || !LDAPSecurity.isValidLDAPInput(passw)) {
+            log.warn("Input tidak valid untuk autentikasi LDAP");
+            return "error user or pass";
+        }
 
-            DirContext ctx = null;
+        readConfigProperties();
+        String validLogin = "";
 
-            try {
-                // 1. Bind sebagai admin
-                ctx = new InitialDirContext(env);
-                log.info("Berhasil bind sebagai: " + adminDN);
+        String ldapUrl = ldapurl;
+        String ldapDC = dc;
+        String adminDN = "cn=" + userCN + "," + dc;
+        String adminPassword = passCN;
+        String searchBase = dc;
 
-                // 2. Cari data 
-                String searchFilter = "(cn="+user+")";
-                SearchControls searchControls = new SearchControls();
-                searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-                
-                log.info("Search for user: " +searchFilter);
-                log.info("base DN: " +base_DN);
+        // Setup koneksi awal sebagai admin
+        Hashtable<String, String> env = new Hashtable<>();
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.PROVIDER_URL, ldapUrl);
+        env.put(Context.SECURITY_AUTHENTICATION, "simple");
+        env.put(Context.SECURITY_PRINCIPAL, adminDN);
+        env.put(Context.SECURITY_CREDENTIALS, adminPassword);
 
-                NamingEnumeration<SearchResult> results = ctx.search(base_DN, searchFilter, searchControls);
+        DirContext ctx = null;
+
+        try {
+            // 1. Bind sebagai admin
+            ctx = new InitialDirContext(env);
+            log.info("Berhasil bind sebagai: " + adminDN);
+
+            // 2. Cari data 
+            String safeUser = LDAPSecurity.escapeLDAPFilter(user);
+            String searchFilter = "(cn=" + safeUser + ")";
+            SearchControls searchControls = new SearchControls();
+            searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
+            log.info("Search for user: " + searchFilter);
+            log.info("base DN: " + base_DN);
+
+            NamingEnumeration<SearchResult> results = ctx.search(base_DN, searchFilter, searchControls);
 //                NamingEnumeration<SearchResult> results = null;
 //                try {
 //                    results = ctx.search(base_DN, searchFilter, searchControls);
@@ -85,134 +92,141 @@ public class LDAPCon {
 //                    System.out.println("tidak ditemukan di LDAP"+ searchFilter);
 //                    return validLogin;
 //                }
-                
-                if (results.hasMore()) {
-                    SearchResult admin1Data = results.next();
-                    String admin1DN = admin1Data.getNameInNamespace();
-                    Attributes attrs = admin1Data.getAttributes();
 
-                    log.info("Data "+admin1DN+" ditemukan:");
-                    log.info("  - DN: " + admin1DN);
+            if (results.hasMore()) {
+                SearchResult admin1Data = results.next();
+                String admin1DN = admin1Data.getNameInNamespace();
+                Attributes attrs = admin1Data.getAttributes();
 
-                    // 3. rebind
-                    try {
-                        
-                        Hashtable<String, String> env2 = new Hashtable<>();
-                        env2.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-                        env2.put(Context.PROVIDER_URL, ldapUrl);
-                        env2.put(Context.SECURITY_AUTHENTICATION, "simple");
-                        env2.put(Context.SECURITY_PRINCIPAL, admin1DN);
-                        env2.put(Context.SECURITY_CREDENTIALS, passw);
+                log.info("Data " + admin1DN + " ditemukan:");
+                log.info("  - DN: " + admin1DN);
+
+                // 3. rebind
+                try {
+
+                    Hashtable<String, String> env2 = new Hashtable<>();
+                    env2.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+                    env2.put(Context.PROVIDER_URL, ldapUrl);
+                    env2.put(Context.SECURITY_AUTHENTICATION, "simple");
+                    env2.put(Context.SECURITY_PRINCIPAL, admin1DN);
+                    env2.put(Context.SECURITY_CREDENTIALS, passw);
 //                        ctx.addToEnvironment(Context.SECURITY_PRINCIPAL, admin1DN);
 //                        ctx.addToEnvironment(Context.SECURITY_CREDENTIALS, passw); // Ganti dengan password 
 
-                        new InitialDirContext(env2);
-                        
-                        log.info("Berhasil Login sebagai: "+admin1DN);
+                    new InitialDirContext(env2);
+
+                    log.info("Berhasil Login sebagai: " + admin1DN);
 //                        System.out.println("=========Berhasil Login "+admin1DN);
-                         validLogin = "success";
+                    validLogin = "success";
 
-                    } catch (NamingException e) {
-                        ctx.close();
-                        System.err.println(e);
-                        log.error(e);
-                        validLogin = "error user or pass";
-                        log.error("Gagal rebind "+admin1DN);
-                    }
-                } else {
-                    ctx.close();
-                    validLogin = "nothing user";
-                    log.info("tidak ditemukan di LDAP");
-                }
-
-            } catch (NamingException e) {
-                validLogin = "not connect";
-                log.error("Koneksi LDAP gagal: " + e.getMessage());
-                log.error("=== erroror NamingException Detail ===");
-                log.error("erroror Naming: " + e.getExplanation());
-                log.error("Explanation: " + e.getExplanation());
-                log.error("Message: " + e.getMessage());
-                log.error("Root Cause: " + e.getRootCause());
-                log.error("Cause: " + e.getCause());
-            } finally {
-                try {
-                    ctx.close();
                 } catch (NamingException e) {
-                    log.error("Gagal menutup koneksi: " + e.getMessage());
+                    ctx.close();
+                    System.err.println(e);
+                    log.error(e);
+                    validLogin = "error user or pass";
+                    log.error("Gagal rebind " + admin1DN);
                 }
+            } else {
+                ctx.close();
+                validLogin = "nothing user";
+                log.info("tidak ditemukan di LDAP");
             }
 
-            return validLogin;
+        } catch (NamingException e) {
+            validLogin = "not connect";
+            log.error("Koneksi LDAP gagal: " + e.getMessage());
+            log.error("=== erroror NamingException Detail ===");
+            log.error("erroror Naming: " + e.getExplanation());
+            log.error("Explanation: " + e.getExplanation());
+            log.error("Message: " + e.getMessage());
+            log.error("Root Cause: " + e.getRootCause());
+            log.error("Cause: " + e.getCause());
+        } finally {
+            try {
+                ctx.close();
+            } catch (NamingException e) {
+                log.error("Gagal menutup koneksi: " + e.getMessage());
+            }
+        }
+
+        return validLogin;
     }
 
     public String cekUserAdd(String userToSearch) {
-       readConfigProperties();
 
-            String searchUser = "";
-            
-            String ldapUrl = ldapurl;
-            String ldapDC = dc;
-            String adminDN = "cn="+userCN+","+dc;
-            String adminPassword = passCN;
-            String searchBase = dc;
+        if (!LDAPSecurity.isValidLDAPInput(userToSearch)) {
+            log.warn("Input not valid for LDAP searching: " + userToSearch);
+            return "user not found";
+        }
 
-            // Setup koneksi awal sebagai admin
-            Hashtable<String, String> env = new Hashtable<>();
-            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
-            env.put(Context.PROVIDER_URL, ldapUrl);
-            env.put(Context.SECURITY_AUTHENTICATION, "simple");
-            env.put(Context.SECURITY_PRINCIPAL, adminDN);
-            env.put(Context.SECURITY_CREDENTIALS, adminPassword);
+        readConfigProperties();
 
-            DirContext ctx = null;
+        String searchUser = "";
 
-            try {
-                // 1. Bind sebagai admin
-                ctx = new InitialDirContext(env);
-                log.info("Berhasil bind sebagai: " + adminDN);
+        String ldapUrl = ldapurl;
+        String ldapDC = dc;
+        String adminDN = "cn=" + userCN + "," + dc;
+        String adminPassword = passCN;
+        String searchBase = dc;
 
-                // 2. Cari data 
-                String searchFilter = "(cn="+userToSearch+")";
-                SearchControls searchControls = new SearchControls();
-                searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-                
-                log.info("Search for user: " +searchFilter);
-                log.info("base DN: " +base_DN);
+        // Setup koneksi awal sebagai admin
+        Hashtable<String, String> env = new Hashtable<>();
+        env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
+        env.put(Context.PROVIDER_URL, ldapUrl);
+        env.put(Context.SECURITY_AUTHENTICATION, "simple");
+        env.put(Context.SECURITY_PRINCIPAL, adminDN);
+        env.put(Context.SECURITY_CREDENTIALS, adminPassword);
 
-                NamingEnumeration<SearchResult> results = ctx.search(base_DN, searchFilter, searchControls);
+        DirContext ctx = null;
 
-                if (results.hasMore()) {
-                    SearchResult admin1Data = results.next();
-                    String admin1DN = admin1Data.getNameInNamespace();
-                    Attributes attrs = admin1Data.getAttributes();
+        try {
+            // 1. Bind sebagai admin
+            ctx = new InitialDirContext(env);
+            log.info("Berhasil bind sebagai: " + adminDN);
 
-                    log.info("Data "+admin1DN+" ditemukan:");
-                    log.info("  - DN: " + admin1DN);
-                    searchUser = "success";
-                    
-                } else {
-                    ctx.close();
-                    searchUser = "user not found";
-                    log.info("tidak ditemukan di LDAP");
-                }
+            // 2. Cari data 
+            String safeUserToSearch = LDAPSecurity.escapeLDAPFilter(userToSearch);
+            String searchFilter = "(cn=" + safeUserToSearch + ")";
+            SearchControls searchControls = new SearchControls();
+            searchControls.setSearchScope(SearchControls.SUBTREE_SCOPE);
 
-            } catch (NamingException ex) {
+            log.info("Search for user: " + searchFilter);
+            log.info("base DN: " + base_DN);
+
+            NamingEnumeration<SearchResult> results = ctx.search(base_DN, searchFilter, searchControls);
+
+            if (results.hasMore()) {
+                SearchResult admin1Data = results.next();
+                String admin1DN = admin1Data.getNameInNamespace();
+                Attributes attrs = admin1Data.getAttributes();
+
+                log.info("Data " + admin1DN + " ditemukan:");
+                log.info("  - DN: " + admin1DN);
+                searchUser = "success";
+
+            } else {
+                ctx.close();
                 searchUser = "user not found";
-                log.error("Koneksi LDAP gagal: " + ex.getMessage());
-                log.error("=== erroror NamingException Detail ===");
-                log.error("erroror Naming: " + ex.getExplanation());
-                log.error("Explanation: " + ex.getExplanation());
-                log.error("Message: " + ex.getMessage());
-                log.error("Root Cause: " + ex.getRootCause());
-                log.error("Cause: " + ex.getCause());
-            } finally {
-                try {
-                    ctx.close();
-                } catch (NamingException e) {
-                    log.error("Gagal menutup koneksi: " + e.getMessage());
-                }
+                log.info("tidak ditemukan di LDAP");
             }
-        
+
+        } catch (NamingException ex) {
+            searchUser = "user not found";
+            log.error("Koneksi LDAP gagal: " + ex.getMessage());
+            log.error("=== erroror NamingException Detail ===");
+            log.error("erroror Naming: " + ex.getExplanation());
+            log.error("Explanation: " + ex.getExplanation());
+            log.error("Message: " + ex.getMessage());
+            log.error("Root Cause: " + ex.getRootCause());
+            log.error("Cause: " + ex.getCause());
+        } finally {
+            try {
+                ctx.close();
+            } catch (NamingException e) {
+                log.error("Gagal menutup koneksi: " + e.getMessage());
+            }
+        }
+
         return searchUser;
     }
 
@@ -220,25 +234,20 @@ public class LDAPCon {
 //        readConfigProperties();
 //         String searchUser = "";
 //         String bindDN = "cn=" + userCN + "," + dc;
-
 //         Hashtable<String, String> env = new Hashtable<>();
 //         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 //         env.put(Context.PROVIDER_URL, ldapurl);
 //         env.put(Context.SECURITY_AUTHENTICATION, "simple");
 //         env.put(Context.SECURITY_PRINCIPAL, bindDN);
 //         env.put(Context.SECURITY_CREDENTIALS, passCN);
-
 //         try {
 //             DirContext ctx = new InitialDirContext(env);
 //             System.out.println("Berhasil konek ke LDAP server!");
-
 //             // Filter pencarian berdasarkan CN
 //             String baseDN = base_DN;
 //             String filter = "(cn="+userToSearch+")";
 //             SearchControls controls = new SearchControls();
 //             controls.setSearchScope(SearchControls.SUBTREE_SCOPE);
-
-
 //             NamingEnumeration<SearchResult> results = ctx.search(baseDN, filter, controls);
 //             if (results.hasMore()) {
 //                 SearchResult entry = results.next();
@@ -251,9 +260,7 @@ public class LDAPCon {
 //                 System.out.println("Tidak ditemukan entri dengan CN="+userToSearch);
 //                 searchUser = "user not found";
 //             }
-
 //             ctx.close();
-
 //         } catch (AuthenticationException ae) {
 //             System.err.println("Authentication gagal: " + ae.getMessage());
 //             searchUser = "user not found";
@@ -267,10 +274,8 @@ public class LDAPCon {
 //             System.out.println("Root Cause: " + ex.getRootCause());
 //             System.out.println("Cause: " + ex.getCause());
 //         }
-        
 //         return searchUser;
 //     }
-    
     public void readConfigProperties() {
         try {
             Properties prop = new Properties();
@@ -293,4 +298,3 @@ public class LDAPCon {
     }
 
 }
-

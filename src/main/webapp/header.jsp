@@ -33,6 +33,9 @@ response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
 response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
 response.setHeader("Pragma", "no-cache");
 response.setDateHeader("Expires", 0);
+response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+response.setHeader("Server", "Unknown");
+response.setHeader("X-Powered-By", "Unknown");
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

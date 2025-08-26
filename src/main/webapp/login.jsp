@@ -28,6 +28,8 @@
     response.setHeader("Pragma", "no-cache");
     response.setDateHeader("Expires", 0);
     response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+    response.setHeader("Server", "Unknown");
+    response.setHeader("X-Powered-By", "Unknown");
 %>
 
 <html>

@@ -4,16 +4,12 @@
  */
 package com.vensys.appcm.myutils;
 
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.springframework.core.annotation.Order;
+import java.util.Map;
 
 /**
  *
@@ -21,18 +17,29 @@ import org.springframework.core.annotation.Order;
  */
 
 @WebFilter("/*")
-@Order(2)
-public class BlockOptionsMethodFilter implements Filter {
+public class InputValidationFilter implements Filter {
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
 
-        if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
-            resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "OPTIONS method is not allowed");
-            return;
+        for (Map.Entry<String, String[]> entry : req.getParameterMap().entrySet()) {
+            String paramName = entry.getKey();
+            String[] values = entry.getValue();
+
+            if (paramName.matches(".*(classLoader|class\\.module|\\$\\{).*")) {
+                ((HttpServletResponse) response).sendError(400);
+                return;
+            }
+
+            for (String v : values) {
+                if (v != null && v.matches(".*(classLoader|class\\.module|\\$\\{).*")) {
+                    ((HttpServletResponse) response).sendError(400);
+                    return;
+                }
+            }
         }
 
         chain.doFilter(request, response);

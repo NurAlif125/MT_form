@@ -24,6 +24,7 @@ import com.vensys.appcm.model.DataLogin;
 import com.vensys.appcm.model.DataRole;
 import com.vensys.appcm.model.DataUser;
 import com.vensys.appcm.model.DataNostro;
+import com.vensys.appcm.myutils.LDAPSecurity;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Properties;
@@ -71,6 +72,14 @@ public class SCUserData extends HttpServlet {
 //        List<DataNostro> dataNos = new ArrayList<DataNostro>();
         String user_id = request.getParameter("username");
         String password = request.getParameter("password");
+
+        if (!LDAPSecurity.isValidLDAPInput(user_id) || !LDAPSecurity.isValidLDAPInput(password)) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
+            return;
+        }
+        String safeUserId = LDAPSecurity.escapeLDAPFilter(user_id);
+        String safePassword = LDAPSecurity.escapeLDAPFilter(password);
+        
         String strErrMsg = null;
         HttpSession session = request.getSession();
         String berhasilLogin = "";
@@ -124,8 +133,8 @@ public class SCUserData extends HttpServlet {
         }
 
         String isValidLogonLdap = "", checkUserLdap = "";
-        checkUserLdap = ldapCon.cekUserAdd(user_id);
-        isValidLogonLdap = ldapCon.loginLDAP(user_id, password);
+        checkUserLdap = ldapCon.cekUserAdd(safeUserId);
+        isValidLogonLdap = ldapCon.loginLDAP(safeUserId, safePassword);
 
 //        int maxpassw = (data.getWrongpass_max() != null && !data.getWrongpass_max().trim().isEmpty())
 //         ? Integer.parseInt(data.getWrongpass_max()): 0;
@@ -286,7 +295,7 @@ public class SCUserData extends HttpServlet {
 
                                 session.setAttribute("flagStatus", "");
                                 session.setAttribute("timeout", dataRole.getTimeout());
-                                
+
                                 //single session user login
 //                                SessionRegistry.registerSession(user_id, session);
                             } else {
@@ -425,6 +434,8 @@ public class SCUserData extends HttpServlet {
         );
         response.setHeader("Referrer-Policy", "no-referrer");
         response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+        response.setHeader("Server", "Unknown");
+        response.setHeader("X-Powered-By", "Unknown");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
