@@ -1,0 +1,88 @@
+<%-- 
+    Document   : index
+    Created on : Aug 21, 2025, 9:32:34 AM
+    Author     : mslam
+--%>
+
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home - Form MT</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#f4f8fa;color:#1f3b44}
+  /* NAVBAR */
+  .navbar{background:#2a7d80;display:flex;gap:8px;padding:0 10px}
+  .nav-item{position:relative}
+  .nav-btn{color:#fff;padding:14px 18px;display:block;text-decoration:none;font-weight:600}
+  .nav-btn:hover{background:#1b575a}
+  .menu{display:none;position:absolute;top:100%;left:0;background:#2d7f82;
+        min-width:260px;box-shadow:0 4px 10px rgba(0,0,0,.15);z-index:5}
+  .nav-item:hover>.menu{display:block}
+  .menu a{display:block;color:#dfeff0;text-decoration:none;padding:12px 16px}
+  .menu a:hover{background:#256a6c}
+  /* sub menu (kategori) */
+  .sub{position:relative}
+  .submenu{display:none;position:absolute;left:100%;top:0;background:#2d7f82;min-width:300px;
+           box-shadow:0 4px 10px rgba(0,0,0,.15)}
+  .sub:hover>.submenu{display:block}
+  .arrow{float:right;opacity:.7}
+  /* Welcome */
+  .wrap{max-width:980px;margin:120px auto 40px auto;text-align:center}
+  h1{font-size:36px;margin:0 0 10px}
+  p{font-size:18px;margin:0}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="nav-item">
+    <a class="nav-btn" href="#">Create Message ▾</a>
+    <div class="menu">
+      <!-- MT -->
+      <div class="sub">
+        <a href="#">MT <span class="arrow">▸</span></a>
+        <div class="submenu">
+          <div class="sub">
+            <a href="#">Message Category 1 <span class="arrow">▸</span></a>
+            <div class="submenu">
+              <a href="Category1/mt110.jsp">110 - Advice of Cheque(s)</a>
+              <a href="Category1/mt111.jsp">111 - Request for Stop Payment of a Cheque</a>
+            </div>
+          </div>
+          <div class="sub">
+            <a href="#">Message Category 7 <span class="arrow">▸</span></a>
+            <div class="submenu">
+              <a href="Category7/mt700.jsp">701 - Issue of a Documentary Credit</a>
+              <a href="#">702 - Example Message</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sub">
+        <a href="#">MX <span class="arrow">▸</span></a>
+        <div class="submenu">
+          <a href="#">MX Category 1</a>
+          <a href="#">MX Category 2</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    <a class="nav-btn" href="#">Reporting ▾</a>
+    <div class="menu">
+      <a href="Category1/listForms.jsp">Category 1</a>
+      <a href="#">Category 7</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1>Welcome to Message Form System</h1>
+  <p>Please use the menu above to create or view messages.</p>
+</div>
+
+</body>
+</html>
