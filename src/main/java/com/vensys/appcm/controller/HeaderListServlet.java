@@ -269,8 +269,8 @@ public class HeaderListServlet extends HttpServlet {
                     } else if (flag.equalsIgnoreCase("RESEND-CNF")) {
                         flag = "RESEND-CNF";
                         menu = "25";
-                    } else if (flag.equalsIgnoreCase("INC-AML")) {
-                        flag = "INC-AML";
+                    } else if (flag.equalsIgnoreCase("WAITING-AML") && io_type.equalsIgnoreCase("O")) {
+                        flag = "WAITING-AML";
                         menu = "26";
                     } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) {
                         flag = "AML-TERMINATE-IN";
@@ -320,6 +320,7 @@ public class HeaderListServlet extends HttpServlet {
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("headers", headers);
                     httpSession.setAttribute("flag", flag);
+                    httpSession.setAttribute("io_type", io_type);
                     httpSession.setAttribute("flagFilter", flag);
                 } else {
 //                    log.info("flag else : " + flag);
@@ -328,6 +329,7 @@ public class HeaderListServlet extends HttpServlet {
 //                    System.out.println("Total Data"+ String.valueOf(totalRecords));
                     forward = CONTROLLERHEADERS + "?menu=" + menu;
                     httpSession.setAttribute("flag", flag);
+                    httpSession.setAttribute("io_type", io_type);
                     httpSession.setAttribute("flagFilter", flag);
                 }
 
@@ -345,6 +347,7 @@ public class HeaderListServlet extends HttpServlet {
                 forward = CONTROLLERHEADERS + "?menu=" + menu;
                 httpSession.setAttribute("flag", status);
                 httpSession.setAttribute("headers", headers);
+                httpSession.setAttribute("io_type", io_type);
                 httpSession.setAttribute("db_type", db_type);
                 if (httpSession.getAttribute("flagFilter") == null) {
                     httpSession.removeAttribute("flagFilter");
@@ -393,7 +396,7 @@ public class HeaderListServlet extends HttpServlet {
                 out.print(jsonResponse.toString());
 
             session.removeAttribute("db_type");
-            session.removeAttribute("io_type");
+//            session.removeAttribute("io_type");
             session.removeAttribute("sender_logical_terminal");
             session.removeAttribute("receiver_institution");
             session.removeAttribute("mt_type");

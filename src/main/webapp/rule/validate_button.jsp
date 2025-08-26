@@ -109,7 +109,7 @@
         $('#reject_inc_aml').click(function () {
             var answer = confirm('Do you want to Reject this Message..!!');
             if (answer) {
-                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=INC-AML&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
+                document.location.href = 'ServletControllerDataTransaksiOutgoing?flag=WAITING-AML&id=' + $('#id').val() + '&messageType=' + $('#messageType').val();
             }
         });
         $('#reject_true_acc_in').click(function () {
