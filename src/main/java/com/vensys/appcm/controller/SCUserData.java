@@ -73,12 +73,11 @@ public class SCUserData extends HttpServlet {
         String user_id = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (!LDAPSecurity.isValidLDAPInput(user_id) || !LDAPSecurity.isValidLDAPInput(password)) {
+        if (!LDAPSecurity.isValidLDAPInput(user_id)) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input");
             return;
         }
         String safeUserId = LDAPSecurity.escapeLDAPFilter(user_id);
-        String safePassword = LDAPSecurity.escapeLDAPFilter(password);
         
         String strErrMsg = null;
         HttpSession session = request.getSession();
@@ -134,7 +133,7 @@ public class SCUserData extends HttpServlet {
 
         String isValidLogonLdap = "", checkUserLdap = "";
         checkUserLdap = ldapCon.cekUserAdd(safeUserId);
-        isValidLogonLdap = ldapCon.loginLDAP(safeUserId, safePassword);
+        isValidLogonLdap = ldapCon.loginLDAP(safeUserId, password);
 
 //        int maxpassw = (data.getWrongpass_max() != null && !data.getWrongpass_max().trim().isEmpty())
 //         ? Integer.parseInt(data.getWrongpass_max()): 0;
