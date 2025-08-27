@@ -5,6 +5,7 @@ import com.vensys.appcm.dbase.DBDataTransaksiOutgoing;
 import com.vensys.appcm.dbase.DBconnection;
 import com.vensys.appcm.dbase.DBconnection2;
 import com.vensys.appcm.model.DataSFTP;
+import com.vensys.appcm.model.Header;
 import com.vensys.appcm.myutils.Encryptor;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
@@ -98,8 +99,19 @@ public class SFTP {
             // jika ga ktemu di list flag, maka taro di default folder (remoteDir)
             if (destinationDir == null) {
                 System.out.println("destinationdir null:" );
-                if(!channel.equals("")) {
-                   System.out.println("remoteDirBIC:" + remoteDirBIC);
+                if(!channel.equals("")) {                    
+                    System.out.println("remoteDirBIC:" + remoteDirBIC);
+                    if ("NCBS".equalsIgnoreCase(channel)) {
+                        channel = "EMS"; 
+                    } else if ("Treasury OPS".equalsIgnoreCase(channel)) {
+                        Header headerdata = dBDataTransaksiOutgoing.getHeaderById(String.valueOf(id));
+                        String bic = headerdata.getLogicalTerminal();
+                        if ( "BDINIDJAXXXX".equalsIgnoreCase(bic) ) {
+                            channel = "FRONTARENA"; 
+                        } else if ( "BDINIDJAXTRS".equalsIgnoreCase(bic) ) {
+                            channel = "TSA"; 
+                        }
+                    } 
                    remoteDestinationDir = remoteDirBIC + channel;
                 } else {
                     if(MXorMT.equalsIgnoreCase("MT")) {
