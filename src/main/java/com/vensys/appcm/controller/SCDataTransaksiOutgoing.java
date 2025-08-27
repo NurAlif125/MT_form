@@ -54,18 +54,9 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, Exception {
 
-//        log.info("SCDataTransaksiOutgoing-1");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");     //20211216
-        //simple date format
-//        String pattern = "yyyy-MM-dd";
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-//        String date = simpleDateFormat.format(new Date());
-
-//        Date now = new Date();
         HttpSession session = request.getSession();
 
-//        String channel = (String) session.getAttribute("cahnnel");
-//        channel = channel == null || channel.equalsIgnoreCase("") ? "" : "/"+(String) session.getAttribute("cahnnel");
         String id = request.getParameter("id");
         String[] idsToUpdate = request.getParameterValues("chkId");
         String io_typeStatus = (String) session.getAttribute("io_typeStatus");
@@ -90,7 +81,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         DBDataTransaksiOutgoing dBDataTransaksiOutgoing2 = new DBDataTransaksiOutgoing(dbConn2.getConnection2());
         String dataXml = request.getParameter("dataXML");
 
-//        log.info("SCData Transaksi Outgoign Awalan");
         if (idsToUpdate == null) {
             //data header
             log.info("sender1: " + request.getParameter("sender_logical_terminal"));
@@ -118,7 +108,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 log.info("masuk sini 181");
                 if (flagStatus.length() > 0) {
                     log.info("masuk sini 183");
-//                    if (flagStatus.equalsIgnoreCase("MOD")) {
                     if (action_type.equalsIgnoreCase("Save")) {
                         if (messageType.contains("COV")) {
                             data.setBlock3("119:COV;");
@@ -149,10 +138,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 }
             }
 
-            // System.out.println("flagStatus: " + flagStatus);
-//            // System.out.println("flag: " + request.getParameter("flag"));
-//                System.out.println("=============================message type: "+messageType);
-//                System.out.println("========================= Reference : "+request.getParameter("instrId"));
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                 String reference = "";
                 if (!messageType.contains("pacs") || !messageType.contains("camt")) {
@@ -176,7 +161,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                             dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                         }
                     } else {
-                        // System.out.println("flag req ada");
                         if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equals("CVT-MOD") || flagStatus.equalsIgnoreCase("DUPL")) {
                             log.info("flag req mod");
                             if (request.getParameter("sender_logical_terminal") == null) {
@@ -186,17 +170,12 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                                 log.info("sender ada");
                                 dBDataTransaksiOutgoing2.updateDataTransaksiOutgoing(data, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), reference);
                             }
-//                        } else if (flagStatus.equalsIgnoreCase("VER")) {
-//                            System.out.println("flag req ver");
-//                            dBDataTransaksiOutgoing.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                         } else {
-                            // System.out.println("flag req selain ver and mod");
                             dBDataTransaksiOutgoing2.updateStatusTransaksiOutgoing((String) session.getAttribute("channel"), request.getParameter("flag"), Integer.parseInt(id), flagStatus, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), "I", messageType);
                             if (flag.equalsIgnoreCase("AUTH") || flag.equalsIgnoreCase("CVT-VER-RESEND")) {
                                 dBDataTransaksiOutgoing2.updateApproved((String) session.getAttribute("nameUser"), Integer.parseInt(id), (String) session.getAttribute("user_id"));
                             }
                             if ((flagStatus.equalsIgnoreCase("VER") && flag.equalsIgnoreCase("MOD")) || (flagStatus.equalsIgnoreCase("CVT-VER") && flag.equalsIgnoreCase("CVT-MOD"))) {
-                                // log.info("kadieuu flag selain mod 146");
                                 dBDataTransaksiOutgoing2.updateCommentMod(komentar, flag, (String) session.getAttribute("user_id"), Integer.parseInt(id), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"), flagStatus);
                             }
                         }
@@ -229,23 +208,17 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             TagDB tag = new TagDB();
             Enumeration names = request.getParameterNames();
             String tags;
-            //Clean ID Header
-//            if (request.getParameter("flag") == null) {
-//                dBDataTransaksiOutgoing.cleanDataTag(id);
-//            }
             //191227 ditambah cleanTag
             if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-//                dBDataTransaksiOutgoing.cleanDataTag(id);
+
             } else {
-                // System.out.println("baris 266");
                 if (flagStatus.equalsIgnoreCase("MOD") || flagStatus.equalsIgnoreCase("CVT-MOD") || flagStatus.equalsIgnoreCase("INC-HOLD") || flagStatus.equalsIgnoreCase("INC-WAIT")) {//191202 ditambah if //191227 ditambah inc-wait
                     log.info("baris 268");
                     dBDataTransaksiOutgoing2.cleanDataTag(Integer.parseInt(id));
                     log.info("baris 270");
                 }
-                // System.out.println("baris 272");
             }
-            if (!flagStatus.equalsIgnoreCase("INC-NSTP") || !flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
+            if (!flagStatus.equalsIgnoreCase("INC-NSTP") && !flagStatus.equalsIgnoreCase("DUPL") && !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
                 while (names.hasMoreElements()) {
                     tags = names.nextElement().toString();
                     if (tags.startsWith("_")) {
@@ -254,7 +227,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         String arr[] = new String[st.countTokens()];
                         while (st.hasMoreElements()) {
                             arr[i] = st.nextToken().trim();
-//                        System.out.println("arr[" + i + "]" + arr[i]); di komen heula
                             i++;
                         }
                         tag.setUrutan(Integer.parseInt(arr[0]));    //urutan
@@ -279,10 +251,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         }
                         //end of the line 20211216 //
                         if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
-//                        log.info("masuk id null"); di komen heula banyak log na soalna
-
-//                        int id_headers = dBDataTransaksiOutgoing.id_headers();
-//                        log.info("get id header: " + id_headers); di komen heula banyak log na soalna
                             if (tag.getTag().startsWith("15")) {
                                 dBDataTransaksiOutgoing2.addDataTag(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(lastInsertedID));
                             } else {
@@ -301,14 +269,12 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                                 }
                             } else {
                                 if (!tag.getDetail().isEmpty()) {
-                                    // System.out.println(tag.getUrutan() + tag.getDetail() + tag.getTag() + tag.getTagName());
                                     dBDataTransaksiOutgoing2.addDataTag(tag.getUrutan(), tag.getTag(), tag.getDetail(), tag.getTagName(), Integer.parseInt(id));
                                 }
                             }
                         }
                     }
                 }
-//            CreateText ct = new CreateText(dbConn.getConnection());
                 //Add to MT Text
                 if (id == null ? "null" == null : id.equals("null") || id.isEmpty()) {
                     int id_headers = dBDataTransaksiOutgoing.id_headers();
@@ -316,7 +282,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     int idDupe = dBDataTransaksiOutgoing.cekDuplikatID(header);
                     if (idDupe > 1) {
                         dBDataTransaksiOutgoing2.updateDuplikat(id_headers, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
-                        // log.info("masuk if 270");
                     }
                     if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
                         dBDataTransaksiOutgoing2.addMTText(ctn.createFinalMT(ctn.getHeaderById(id_headers)), id_headers);
@@ -328,7 +293,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                 } else {
                     if (messageType.contains("pacs") || messageType.contains("camt")) {
                         log.info("update data MX");
-//                        dBDataTransaksiOutgoing2.updateMXText(dataXml, Integer.parseInt(id));
                     } else {
                         log.info("update data MT");
                         if ((messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) && (!flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF"))) {
@@ -361,8 +325,6 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
         }
         dbConn.closeConnection();
         dbConn2.closeConnection2();
-//        RequestDispatcher dispatcher = request.getRequestDispatcher("controllerHeaders");
-//        dispatcher.forward(request, response);
         String pagingHistory = HistoryPaging.getPagingHistory(request, response);
         response.sendRedirect("controllerHeaders?" + pagingHistory);
 
