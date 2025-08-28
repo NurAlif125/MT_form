@@ -115,12 +115,18 @@ public class SFTP {
                         channel = "CUSTODY";
                     } else if ("Treasury OPS".equalsIgnoreCase(channel)) {
                         Header headerdata = dBDataTransaksiOutgoing.getHeaderById(String.valueOf(id));
-                        String bic = headerdata.getLogicalTerminal();
-                        if ( "BDINIDJAXXXX".equalsIgnoreCase(bic) ) {
+                        String logicalterminal = headerdata.getLogicalTerminal();
+                        System.out.println("logicalterminal:" + logicalterminal);
+                        if ( "BDINIDJAXXXX".equalsIgnoreCase(logicalterminal) ) {
+                            System.out.println("masuk frontarena");
                             channel = "FRONTARENA"; 
-                        } else if ( "BDINIDJAXTRS".equalsIgnoreCase(bic) ) {
+                        } else if ( "BDINIDJAXTRS".equalsIgnoreCase(logicalterminal) ) {
                             channel = "TSA"; 
-                        }
+                            System.out.println("masuk tsa");
+                       } else {
+                            System.out.println("ga masuk frontarena dan tsa");
+                       }
+
                     } 
                    remoteDestinationDir = remoteDirBIC + channel;
                 } else {
