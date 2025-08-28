@@ -86,6 +86,10 @@
         <servlet-class>com.vensys.appcm.controller.HeaderListServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>WorkingLogsListServlet</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.WorkingLogsListServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SCDuplicateCNF</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCDuplicateCNF</servlet-class>
     </servlet>
@@ -96,6 +100,10 @@
     <servlet>
         <servlet-name>SCDuplicateCnfList</servlet-name>
         <servlet-class>com.vensys.appcm.controller.SCDuplicateCnfList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SCWorkflowLogs</servlet-name>
+        <servlet-class>com.vensys.appcm.controller.SCWorkflowLogs</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SCFIA</servlet-name>
@@ -981,8 +989,16 @@
         <url-pattern>/HeaderListServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>WorkingLogsListServlet</servlet-name>
+        <url-pattern>/WorkingLogsListServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SCDuplicateCNF</servlet-name>
         <url-pattern>/SCDuplicateCNF</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SCWorkflowLogs</servlet-name>
+        <url-pattern>/SCWorkflowLogs</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

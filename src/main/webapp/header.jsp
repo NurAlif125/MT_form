@@ -530,9 +530,11 @@ response.setHeader("X-Powered-By", "Unknown");
             </c:if>
             <c:if test="${item == 'MENU:CONTACT'}">
                 <li><a onclick="userTrackMenuClick('Contact Us')" href="contact.jsp">Contact Us</a></li>
-                </c:if>
+            </c:if>
             </c:forEach>
-             
+            <c:if test="${sessionScope.role_id == '1'}">
+                <li><a onclick="userTrackMenuClick('Workflow Logs')" href="SCWorkflowLogs">Workflow Logs</a></li>
+            </c:if> 
                 <!--Notifications-->
 <!--        <div onclick="openModal()" class="notif-container" style="float: right;">
             <span onclick="userTrackMenuClick('Notifications')" class="link-notif">Notif</span>

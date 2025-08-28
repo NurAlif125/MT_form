@@ -5,6 +5,7 @@
 package com.vensys.appcm.dbase;
 
 import com.vensys.appcm.controller.ConvertToTerbilang;
+import com.vensys.appcm.model.DataWorkflowLogs;
 import com.vensys.appcm.model.EssentialFieldPacs008;
 import com.vensys.appcm.model.EssentialFieldPacs009;
 import java.io.IOException;
@@ -1985,11 +1986,6 @@ public class DBHeader {
         }
 
         // Final query
-//        String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
-//                + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, h.source, "
-//                + "td.trans_reference, td.trans_related_reference, td.trans_date_value, td.trans_amount, td.trans_ccy, h.createby, h.approveby "
-//                + "FROM headers h LEFT JOIN trx_detail td ON h.id_headers = td.id_headers "
-//                + "WHERE " + where + " ORDER BY "+sort+" OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         String sql = "SELECT h.id_headers, h.messageType, h.logicalTerminal, h.sessionNumber, h.sequenceNumber, h.io_type, "
                 + "h.receiverAddress, TO_CHAR(h.tanggal, 'YYYY-MM-DD HH24:MI:SS') as tanggal, h.flag, h.block3, "
                 + "CASE \n"
