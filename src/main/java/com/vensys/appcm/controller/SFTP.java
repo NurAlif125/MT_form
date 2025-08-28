@@ -95,14 +95,24 @@ public class SFTP {
             remoteDestinationDir = remoteDirResend + destinationDir;
             System.out.println("remoteDestinationDir:" + remoteDestinationDir);
             System.out.println("remoteDir:" + remoteDir);
-            
+            System.out.println("id_headers:" + String.valueOf(id));
             // jika ga ktemu di list flag, maka taro di default folder (remoteDir)
+
+            // Trade OPS = BANKTRADE
+            // Remittance OPS =  EMS
+            // Treasury OPS = TSA & FRONTARENA
+            // Custody OPS = CUSTODY
+
             if (destinationDir == null) {
                 System.out.println("destinationdir null:" );
                 if(!channel.equals("")) {                    
                     System.out.println("remoteDirBIC:" + remoteDirBIC);
-                    if ("NCBS".equalsIgnoreCase(channel)) {
+                    if ("NCBS".equalsIgnoreCase(channel) || "Remittance OPS".equalsIgnoreCase(channel)) {
                         channel = "EMS"; 
+                    } else if ("Trade OPS".equalsIgnoreCase(channel)) {
+                        channel = "BANKTRADE"; 
+                    } else if ("Custody OPS".equalsIgnoreCase(channel)) {
+                        channel = "CUSTODY";
                     } else if ("Treasury OPS".equalsIgnoreCase(channel)) {
                         Header headerdata = dBDataTransaksiOutgoing.getHeaderById(String.valueOf(id));
                         String bic = headerdata.getLogicalTerminal();
@@ -127,6 +137,7 @@ public class SFTP {
             
             // Upload file
             log.info("Uploading file: {} to {}/{}", localFilePath, remoteDir, remoteFileName);
+            System.out.println("id_headers:" + id);
             System.out.println("remoteDestinationDir:" + remoteDestinationDir);
             System.out.println("remoteFileName:" + remoteFileName);
             channelSftp.cd(remoteDestinationDir);
