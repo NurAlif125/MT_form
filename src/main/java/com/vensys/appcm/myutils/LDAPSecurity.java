@@ -31,7 +31,6 @@ public class LDAPSecurity {
                 case '*': sb.append("\\2a"); break;
                 case '(': sb.append("\\28"); break;
                 case ')': sb.append("\\29"); break;
-                case '\0': sb.append("\\00"); break;
                 case '|': sb.append("\\7c"); break;
                 case '&': sb.append("\\26"); break;
                 case '=': sb.append("\\3d"); break;

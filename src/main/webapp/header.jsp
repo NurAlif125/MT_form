@@ -30,7 +30,7 @@ response.setHeader("Content-Security-Policy",
             + "upgrade-insecure-requests;"
     );
 response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
-response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
 response.setHeader("Pragma", "no-cache");
 response.setDateHeader("Expires", 0);
 response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
