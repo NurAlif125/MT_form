@@ -410,7 +410,7 @@ public class SCUserData extends HttpServlet {
     }
 
     private void setSecurityHeaders(HttpServletResponse response) {
-        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
 

@@ -48,7 +48,7 @@ public class NoCacheFilter implements Filter {
             };
 
             // === Set header non-cookie ===
-            httpResp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, private");
+            httpResp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
             httpResp.setHeader("Pragma", "no-cache");
             httpResp.setDateHeader("Expires", 0);
 

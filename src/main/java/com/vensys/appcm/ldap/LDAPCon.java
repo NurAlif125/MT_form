@@ -43,7 +43,7 @@ public class LDAPCon {
     Encryptor enc = new Encryptor();
 
     public String loginLDAP(String user, String passw) throws IOException {
-        if (!LDAPSecurity.isValidLDAPInput(user) || !LDAPSecurity.isValidLDAPInput(passw)) {
+        if (!LDAPSecurity.isValidLDAPInput(user)) {
             log.warn("Input tidak valid untuk autentikasi LDAP");
             return "error user or pass";
         }
