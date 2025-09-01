@@ -413,6 +413,8 @@ public class SCUserData extends HttpServlet {
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
+        response.setHeader("Surrogate-Control", "no-store");
+        response.setHeader("Vary", "accept-encoding");
 
         response.setHeader("X-Content-Type-Options", "nosniff");
         response.setHeader("X-Frame-Options", "DENY");
@@ -420,8 +422,8 @@ public class SCUserData extends HttpServlet {
         response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
         response.setHeader("Content-Security-Policy",
                 "default-src 'self'; "
-                + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; "
-                + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+                + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+                + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
                 + "img-src 'self' data: https://flickr.com; "
                 + "font-src 'self' https://cdn.jsdelivr.net; "
                 + "connect-src 'self'; "
@@ -433,6 +435,8 @@ public class SCUserData extends HttpServlet {
         );
         response.setHeader("Referrer-Policy", "no-referrer");
         response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+        response.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+        response.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
         response.setHeader("Server", "Unknown");
         response.setHeader("X-Powered-By", "Unknown");
     }

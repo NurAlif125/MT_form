@@ -127,23 +127,6 @@
     </form>
 
 </div>
-<script>
-    flatpickr(".time_from", {
-        enableTime: true,
-        enableSeconds: true,
-        noCalendar: true,
-        dateFormat: "H:i:S",
-        time_24hr: true,
-        defaultDate: "00:00:00"
-    });
-    flatpickr(".time_end", {
-        enableTime: true,
-        enableSeconds: true,
-        noCalendar: true,
-        dateFormat: "H:i:S",
-        time_24hr: true,
-        defaultDate: "23:59:59"
-    });
-</script>
+<script type="text/javascript" src="js/flatpickr_list_scr.js"></script>
 
 

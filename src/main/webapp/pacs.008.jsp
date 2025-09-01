@@ -8,15 +8,16 @@
 <%@ include file="rule/validateList_scr.jsp" %>
 <%--<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>--%>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
+<link rel="stylesheet" type="text/css" href="çss/tabValidateMX.css" />
 <script src="js/tabcontent.js" type="text/javascript"></script>
 <script src="js/mt.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/dropdown.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/themes/flickr.com/default.ultimate.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/tabcontent.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="css/displaytag.css" type="text/css">
-<link rel="stylesheet" href="css/helper.css" type="text/css">
-<link rel="stylesheet" href="css/data-tree.css" type="text/css">
+<link rel="stylesheet" href="css/displaytag.css" type="text/css" />
+<link rel="stylesheet" href="css/helper.css" type="text/css" />
+<link rel="stylesheet" href="css/data-tree.css" type="text/css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
@@ -88,21 +89,12 @@
                         </div>
                     </div>
                 </div>
-                <%@ include file="tabValidateMX.jsp" %>
+                <script type="text/javascript" src="js/tabValidateMX.js"></script>
                 <%@ include file="button_action.jsp" %>
             </form>
         </c:if>
     </c:forEach>
 </div>
-<%@ include file="validateMX.jsp" %>
+<script type="text/javascript" src="js/validateMX.js"></script>
 <script type="text/javascript" src="js/data-tree.js"></script>
-<script>
-    var xmldata = document.getElementById("hiddenmxfull").value;
-//    console.log(xmldata);
-    new DataTree({
-        xml: xmldata,
-        container: '#mxfull',
-        attrs:'show',
-        startExpanded:true
-    });
-</script>
+<script type="text/javascript" src="js/fullMX.js"></script>
