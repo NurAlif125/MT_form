@@ -153,21 +153,30 @@ public class DBWorkflowLogs {
             parameters.add("%" + quicksearch + "%");
             parameters.add("%" + quicksearch + "%");
         }
-
+        
+        String colDateExpr = "(date_time::timestamptz AT TIME ZONE 'Asia/Jakarta')::date";
+        boolean hasFrom = date_from != null && !date_from.isEmpty();
+        boolean hasEnd  = date_end  != null && !date_end.isEmpty();
+        
         // date range
         if (date_from != null && !date_from.isEmpty()) {
-            where.append(" AND to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF')::date >= ?");
+//            where.append(" AND to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF') >= ?");
+            where.append(" AND ").append(colDateExpr).append(" >= ?::date");
             parameters.add(date_from);
         }
 
         if (date_end != null && !date_end.isEmpty()) {
-            where.append(" AND to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF')::date <= ?");
+//            where.append(" AND to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF') <= ?");
+            where.append(" AND ").append(colDateExpr).append(" <= ?::date");
             parameters.add(date_end);
         }
         
-        if ((date_from == null || date_from.isEmpty()) && (date_end == null || date_end.isEmpty())) {
-            where.append(" AND date(date_time::timestamp) = current_date");
-        } 
+        if (!hasFrom && !hasEnd) {
+            where.append(" AND ").append(colDateExpr).append(" = (now() AT TIME ZONE 'Asia/Jakarta')::date");
+        }
+//        if ((date_from == null || date_from.isEmpty()) && (date_end == null || date_end.isEmpty())) {
+//            where.append(" AND date(date_time::timestamp) = current_date");
+//        } 
         
         // noreff
         if (noreff != null && !noreff.isEmpty()) {
