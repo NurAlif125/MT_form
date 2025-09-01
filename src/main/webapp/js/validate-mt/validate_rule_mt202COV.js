@@ -1,10 +1,12 @@
-<%-- 
-    Document   : validate_rule_mt202
-    Created on : Aug 12, 2012, 2:16:33 PM
-    Author     : M Abdul Hadi
---%>
+function loadCss(filename) {
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type = "text/css";
+  link.href = filename;
+  document.head.appendChild(link);
+}
 
-<script type="text/javascript">
+
     $(document).ready(function() {
         let validator = $("#form1").validate({
             ignore: [],  
@@ -12,12 +14,8 @@
             onfocusout: false, 
             rules: {
                 //header
-                //unit: "required",
                 sender_logical_terminal: "required",
-                //sender_type: "required",
-                //sender_type_institution: "required",
-
-                //receiver_type: "required",
+                
                 receiver_institution: "required",
 
                 priority: "required",
@@ -216,17 +214,15 @@
         });
         
         $.validator.addMethod("regex", function(value, element, param) {
-            //this.optional(element) lewati validasi jika kosong dan param.test(value) check regex
             return this.optional(element) || param.test(value); 
-//            Jika tidak ada pesan khusus dalam messages tampilkan "Format tidak valid"
         }, "Format tidak valid");
         
     });
-</script>
 
-<link rel="stylesheet" type="text/css" href="css/validate.css" />
 
-<script type="text/javascript">
+loadCss("../../css/validate.css");
+
+
     $(document).ready(function(){
         
 //        specialrate
@@ -968,17 +964,15 @@
             }
         });
         
-        
-        
     });
-</script>
 
-<!--skrip edit-->
 
-<!--baris kadua-->
+//skrip edit
 
-<!-- rule view -->
-<script type="text/javascript">
+//baris kadua
+
+// rule view 
+
     $(document).ready(function(){
         //of13c
         if ($("#_022_of13c_code").val() != ""){
@@ -1588,4 +1582,3 @@
         }
 
     });
-</script>

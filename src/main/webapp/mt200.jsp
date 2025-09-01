@@ -5,8 +5,8 @@
 --%>
 
 <%@ include file="header.jsp" %>
-<%@ include file="rule/validate_rule_mt200.jsp" %>
-<%@ include file="rule/validateList_scr.jsp" %>
+<script src="js/validate-mt/validate_rule_mt200.js"></script>
+<script src="js/validate-mt/validateList_scr.js"></script>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
 <script src="js/mt.js" type="text/javascript"></script>
 <script src="js/tabcontent.js" type="text/javascript"></script>
@@ -74,34 +74,8 @@
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Amount</span>
                                         <input type="text" class="mandatory" name="_062_mf32a_amount" id="_062_mf32a_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');" ondrop="return false;" onpaste="return false;" />
-                                        <!--//untuk menampilkan uang dalam block ditambahkan pada 20151007-->    
-                                        <font style="margin-left: 50px"></font>
-                                        <script langauge="javascript">
-                                            function formatUang(n, currency) {
-                                                if (isNaN(n)) {
-                                                    return "";
-                                                }
-                                                return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                            }
-                                            var number2 = document.getElementById('_062_mf32a_amount').value;
-                                            var number2r = number2.replace(',', '.');
-                                            var number2F = parseFloat(number2r);
-                                            var nominal = formatUang(number2F, "");
-                                            
-//                                            if (nominal === "") {
-//                                                document.write("");
-//                                            } else {
-//                                                var nominalStyle = nominal.fontsize(5);
-//                                                var nominalStylec = nominalStyle.fontcolor("red");
-//                                                document.write(nominalStylec);
-//                                            }
-                                            var nominalStyle = nominal.fontsize(5);
-                                            var nominalStylec = nominalStyle.fontcolor("blue");
-                                            //var nominalStylecw = nominalStylec.fontWeight("900");
-                                            if (nominal !== "") {
-                                                document.write(nominalStylec);
-                                            }
-                                        </script>
+                                       <font style="margin-left: 50px"></font>
+                                        
                                     </div>
                                     <hr/>
 
@@ -117,36 +91,6 @@
 
                                     <hr/>
 
-
-                                    <!-- OF56 -->
-<!--                                    <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
-                                        <select id="type_of56_" name="type_of56_">
-                                            <option value="" <% if("true".equals(request.getParameter("create"))) { out.write("selected='selected'"); }%> >choose a type</option>
-                                            <option value="a">A - Intermediary Inst - BIC</option>
-                                            <option value="d">D - Intermediary Inst - Name and Address</option>
-                                        </select>
-                                        <div id="div_of56a_">
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                                <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
-                                                <input type="text" name="_160_of56a_party_identifier" id="_160_of56a_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of56a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                            </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Identifier Code</span>
-                                                <input type="text" name="_161_of56a_identifier_code" id="_161_of56a_identifier_code" maxlength="11" input_type="OF56A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of56a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
-                                            </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
-                                                <textarea name="_162_of56a_address" id="_162_of56a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_162_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
-                                            </div>
-                                        </div>
-                                        <div id="div_of56d_">
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                                <input type="text" name="_164_of56d_party_identifier" id="_164_of56d_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_164_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
-                                                <input type="text" name="_164_of56d_party_identifier" id="_164_of56d_party_identifier" onblur="cek_slash(this)" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_164_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                            </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Name and Address</span>
-                                                <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_165_of56d_name_address" id="_165_of56d_name_address" input_type="OF56D Name Address" location="Body" > <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_165_of56d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
-                                            </div>
-                                        </div>
-                                    </div>-->
                                     <div class="form-row"><span class="label_body">OF56</span><span class="label">Intermediary Institution</span>
                                         <select id="type_of56_" name="type_of56_">
                                             <option value="" <% if("true".equals(request.getParameter("create"))) { out.write("selected='selected'"); }%> >choose a type</option>
@@ -255,36 +199,7 @@
 </c:if>
 </c:forEach>
 </div>
-<script>
-    // Fungsi untuk mengambil parameter dari URL
-    function getQueryParameter(name) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
-    }
-
-    // Mengecek apakah ada parameter hideView1 di URL
-    if (getQueryParameter('create') === 'true') {
-        // Menyembunyikan tab view1 dan seluruh kontennya
-        const tabView7 = document.getElementById('tabView7');
-        const view1Content = document.getElementById('view7');
-
-        if (tabView7)
-            tabView7.style.display = 'none'; // Sembunyikan tab link
-        if (view7Content)
-            view7Content.style.display = 'none'; // Sembunyikan konten view1
-    } else {
-        // Tampilkan view1 jika tidak ada parameter untuk menyembunyikan
-        document.getElementById('view7').classList.add('active');
-    }
-</script>
 
 <script type="text/javascript" src="js/json-xml-data-tree/data-tree.js"></script>
-<script>
-    var xmldat = document.getElementById("mxview3").value;
-    new DataTree({
-        xml: xmldat,
-        container: '#mxfull',
-        attrs: 'show',
-        startExpanded: true
-    });
-</script>
+<script type="text/javascript" src="js/validate-mt/tab-contens-custom.js"></script>
+<script type="text/javascript" src="js/custom-currency.js"></script>

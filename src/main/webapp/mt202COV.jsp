@@ -5,8 +5,8 @@
 --%>
 
 <%@ include file="header.jsp" %>
-<%@ include file="rule/validate_rule_mt202COV.jsp" %>
-<%@ include file="rule/validateList_scr.jsp" %>
+<script src="js/validate-mt/validate_rule_mt202COV.js"></script>
+<script src="js/validate-mt/validateList_scr.js"></script>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
 <script src="js/mt.js" type="text/javascript"></script>
 <script src="js/tabcontent.js" type="text/javascript"></script>
@@ -96,26 +96,7 @@
                             </div>
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red; text-decoration:none">*</a>Amount</span>
                                 <input type="text" class="mandatory" name="_062_mf32a_amount" id="_062_mf32a_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" input_type="MF32A Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_061_mf32a_currency');"  ondrop="return false;" onpaste="return false;" />
-                                <!--//untuk menampilkan uang dalam block ditambahkan pada 20151007-->    
                                 <font style="margin-left: 50px"></font>
-                                <script langauge="javascript">
-                                    function formatUang(n, currency) {
-                                        if (isNaN(n)) {
-                                            return "";
-                                        }
-                                        return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                    }
-                                    var number2 = document.getElementById('_062_mf32a_amount').value;
-                                    var number2r = number2.replace(',', '.');
-                                    var number2F = parseFloat(number2r);
-                                    var nominal = formatUang(number2F, "");
-                                    var nominalStyle = nominal.fontsize(5);
-                                    var nominalStylec = nominalStyle.fontcolor("blue");
-                                    //var nominalStylecw = nominalStylec.fontWeight("900");
-                                    if (nominal !== "") {
-                                        document.write(nominalStylec);
-                                    } 
-                                </script>
                             </div>
                             <hr/>
                             
@@ -742,26 +723,7 @@
                             </div>
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
                                 <input type="text" name="_332_of33b_amount" id="_332_of33b_amount" onblur="checkZeroAmount(this.id); cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_332_of33b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_332_of33b_amount');" />
-                                <!--//untuk menampilkan uang dalam block ditambahkan pada 20151002-->    
                                 <font style="margin-left: 50px"></font>
-                                <script langauge="javascript">
-                                    function formatUang(n, currency) {
-                                        if (isNaN(n)) {
-                                            return "";
-                                        }
-                                        return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                    }
-                                    var number2 = document.getElementById('_332_of33b_amount').value;
-                                    var number2r = number2.replace(',', '.');
-                                    var number2F = parseFloat(number2r);
-                                    var nominal = formatUang(number2F, "");
-                                    var nominalStyle = nominal.fontsize(2);
-                                    var nominalStylec = nominalStyle.fontcolor("blue");
-                                    //var nominalStylecw = nominalStylec.fontWeight("900");
-                                    if (nominal !== "") {
-                                        document.write(nominalStylec);
-                                    }
-                                </script>
                             </div>
                             <hr/>
                             
@@ -799,3 +761,5 @@
         </c:if>
     </c:forEach>
 </div>
+
+<script type="text/javascript" src="js/custom-currency.js"></script>

@@ -8,21 +8,21 @@
     <div class="form-cols">
         <div class="blok-1">
             <span><h3>Before</h3></span> <br/>
-            <textarea name="before" id="before" class="mttext"><c:out value="${textById.modify_mt}" /></textarea>
+            <textarea name="before" id="before" class="mttext" readonly="true"><c:out value="${textById.modify_mt}" /></textarea>
         </div>
         <div class="blok-1">
             <span><h3>After</h3></span> <br/>
-            <textarea name="after" id="after" class="mttext"><c:out value="${textById.final_mt}" /></textarea>
+            <textarea name="after" id="after" class="mttext" readonly="true"><c:out value="${textById.final_mt}" /></textarea>
         </div>
         <div class="blok-1">
             <br/><span><h3>Record Before Changed</h3></span>
             <%--<pre style="color:red">${keyBefore}</pre>--%>
-            <textarea cols="200" rows="6" class="mtlog">${keyBefore}</textarea>
+            <textarea cols="200" rows="6" class="mtlog" readonly="true">${keyBefore}</textarea>
         </div>
         <div class="blok-1">
             <br/><span><h3>Record After Changed</h3></span>
             <%--pre style="color:red">${keyAfter}</pre--%>
-            <textarea cols="200" rows="6" class="mtlog">${keyAfter}</textarea>
+            <textarea cols="200" rows="6" class="mtlog" readonly="true">${keyAfter}</textarea>
         </div>
     </div>
 </div>

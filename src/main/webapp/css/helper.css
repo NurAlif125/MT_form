@@ -793,3 +793,11 @@ table tbody a:hover{
 .dataTables_wrapper {
     overflow-x: auto !important;
 }
+
+/*add-roles*/
+.contens-addroles { 
+    background-color: #fafdfe;
+    border-radius: 0 2px 0 0;
+    height: 67vh;
+    overflow-y: scroll;
+}
