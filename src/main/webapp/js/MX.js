@@ -47,6 +47,14 @@ function textonly(e) {
     return false;
 }
 
+function numbersonly(e) {
+    var charCode = (e.which) ? e.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const statusInput = document.getElementById("status"); // Ambil elemen status
     const form = document.getElementById("form1"); // Ambil elemen form
@@ -72,7 +80,6 @@ function formatBICFI(input) {
         const newValue = part1 + part2;
         newValue.toUpperCase();
         input.value = newValue;
-        console.log("BICFI setelah diproses:", newValue);
     } else if (value.length === 11) {
         input.value.toUpperCase();
     } else if (value.length < 11) {
@@ -86,7 +93,14 @@ function validateAmount(input) {
         alert('Amount must not be Zero (0)');
     }
 }
+
 function copyToMsgId() {
+    const instrid = document.getElementById('instrid');
+    const msgid = document.getElementById('msgid');
+    msgid.value = instrid.value;
+}
+
+function copyToMsgId004() {
     const rtrid = document.getElementById('rtrid');
     const msgid = document.getElementById('msgid');
     msgid.value = rtrid.value;
