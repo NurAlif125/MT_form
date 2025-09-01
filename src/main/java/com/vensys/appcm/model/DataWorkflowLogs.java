@@ -32,7 +32,7 @@ public class DataWorkflowLogs {
         return component_name;
     }
 
-    public void setCompoent_name(String component_name) {
+    public void setComponent_name(String component_name) {
         this.component_name = component_name;
     }
 

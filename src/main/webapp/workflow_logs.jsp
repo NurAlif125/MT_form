@@ -144,6 +144,9 @@
                 <div class="form-row"><span class="labelL">Date End</span>
                     <input id="date_end" name="date_end"  readonly="true" type="text" class="datetime-picker flatpickr-input" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" />
                 </div>
+                <div class="form-row"><span class="labelL">No Refference</span>
+                    <input id="no_refference" name="no_refference"  readonly="false" type="text" />
+                </div>
                 <div class="form-row">
                     <input type="submit" name="search" id="search" value="Search" />
                 </div>
@@ -160,14 +163,19 @@
     time_24hr: true,
     defaultDate: new Date()
   });
-  
+
   flatpickr("#date_end", {
-    enableTime: true,       
-    enableSeconds: true, 
+    enableTime: true,
+    enableSeconds: true,
     dateFormat: "Y-m-d H:i:S",
     time_24hr: true,
-    defaultDate: new Date()
+    defaultDate: (function () {
+      const d = new Date();
+      d.setHours(23, 59, 0, 0); // jam:menit:detik:ms
+      return d;
+    })()
   });
+  
 </script>
 
 

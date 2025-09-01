@@ -73,7 +73,19 @@ public class WorkflowLogsListServlet extends HttpServlet{
 //            System.out.println("69========= "+sort);
         }
         
-        HeaderSearchCriteria criteria = new HeaderSearchCriteria();
+        DataWorkflowLogs dataWFLogs = new DataWorkflowLogs();
+        dataWFLogs.setDate_time(request.getParameter("columns[1][search][value]"));
+        dataWFLogs.setComponent_name(request.getParameter("columns[2][search][value]"));
+        dataWFLogs.setMessage_type(request.getParameter("columns[3][search][value]"));
+        dataWFLogs.setFile_name_original(request.getParameter("columns[4][search][value]"));
+        dataWFLogs.setFile_name(request.getParameter("columns[5][search][value]"));
+        dataWFLogs.setRefference(request.getParameter("columns[6][search][value]"));
+        dataWFLogs.setStatus(request.getParameter("columns[7][search][value]"));
+        dataWFLogs.setDescription(request.getParameter("columns[8][search][value]"));
+        dataWFLogs.setSource(request.getParameter("columns[9][search][value]"));
+        
+
+        // HeaderSearchCriteria criteria = new HeaderSearchCriteria();
 //        criteria.setMtSearch(request.getParameter("columns[1][search][value]"));
 //        criteria.setIoSearch(request.getParameter("columns[2][search][value]"));
 //        criteria.setSeqSearch(request.getParameter("columns[3][search][value]"));
@@ -157,16 +169,21 @@ public class WorkflowLogsListServlet extends HttpServlet{
             int totalRecords = 0;
             List<DataWorkflowLogs> datas = new ArrayList<>();
 
-            if (find == null || find.isEmpty()) {
-                datas = DBWFLogs.getResultDataWorkflow(httpSession, start, length, criteria, quickSearch, sort, date_from, date_end);
-                totalRecords = DBWFLogs.getCountResultDataWorkflow(httpSession, start, length, criteria, quickSearch, sort, date_from, date_end);
-                System.out.println("Total Data"+ String.valueOf(totalRecords));
-            } else {
-//                datas = DBWFLogs.getResultDataWorkflow(httpSession, date_time, component_name, message_type, file_name_original,
-//                        file_name, refference, status, description, source, start, length, criteria, quickSearch, sort, time_from, time_end);
-//                totalRecords = DBWFLogs.getCountResultDataWorkflow(httpSession, date_time,component_name,message_type,file_name_original,
-//                        file_name,refference,status,description, source, start, length, criteria, quickSearch, sort, time_from, time_end);
-            }
+            datas = DBWFLogs.getResultDataWorkflow(httpSession, start, length, dataWFLogs, quickSearch, sort, date_from, date_end, refference);
+            totalRecords = DBWFLogs.getCountResultDataWorkflow(httpSession, start, length, dataWFLogs, quickSearch, sort, date_from, date_end, refference);
+            System.out.println("Total Data:"+ String.valueOf(totalRecords));
+
+            
+//            if (find == null || find.isEmpty()) {
+//                datas = DBWFLogs.getResultDataWorkflow(httpSession, start, length, dataWFLogs, quickSearch, sort, date_from, date_end, refference);
+//                totalRecords = DBWFLogs.getCountResultDataWorkflow(httpSession, start, length, dataWFLogs, quickSearch, sort, date_from, date_end, refference);
+//                System.out.println("Total Data:"+ String.valueOf(totalRecords));
+//            } else {
+////                datas = DBWFLogs.getResultDataWorkflow(httpSession, date_time, component_name, message_type, file_name_original,
+////                        file_name, refference, status, description, source, start, length, criteria, quickSearch, sort, time_from, time_end);
+////                totalRecords = DBWFLogs.getCountResultDataWorkflow(httpSession, date_time,component_name,message_type,file_name_original,
+////                        file_name,refference,status,description, source, start, length, criteria, quickSearch, sort, time_from, time_end);
+//            }
             JSONArray dataArray = new JSONArray();
             for (DataWorkflowLogs h : datas) {
                 JSONObject obj = new JSONObject();
