@@ -98,10 +98,10 @@
                         <label>Reporting <input type="checkbox" name="role_detail" id="role_detail" value="MENU:REPORTING" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:REPORTING'}"> checked="true" </c:if></c:forEach> /></label>
                         <!--<label>House Keeping <input type="checkbox" name="role_detail" id="role_detail" value="MENU:HOUSEKEEPING" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:HOUSEKEEPING'}"> checked="true" </c:if></c:forEach> /></label>-->
                         <!--<label>Contact <input type="checkbox" name="role_detail" id="role_detail" value="MENU:CONTACT" <c:forEach var="item" items="${list}"><c:if test="${item == 'MENU:CONTACT'}"> checked="true" </c:if></c:forEach> /></label>-->
-                            </div>
-                            <div class="form-row">
-                                <span class="labelL">Session timeout</span>
-                                <input type="text" value="${dataRoleById.timeout}" name="timeout" id="timeout" required /> 1 minutes = 1 * 60 * 1000
+                    </div>
+                    <div class="form-row">
+                        <span class="labelL">Session timeout</span>
+                        <input style=" background-color: #e0e0e0; color: #888; pointer-events: none;" readonly="true" type="text" value="<c:out value='${dataRoleById.timeout}' default='300000'/>" name="timeout" id="timeout" required /> 1 minutes = 1 * 60 * 1000
                     </div>
                     <div class="form-row">
                         <span class="labelL"> Daily Outgoing Transactions</span>

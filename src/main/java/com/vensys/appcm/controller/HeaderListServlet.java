@@ -153,6 +153,7 @@ public class HeaderListServlet extends HttpServlet {
             if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
                 headers = dbHeader.getAllHeader(session, io_type, flag, channel, start, length, criteria, quickSearch, sort);
                 totalRecords = dbHeader.countAllHeader(session, io_type, flag, channel, criteria, quickSearch);
+                httpSession.setAttribute("io_type", io_type);
 //                System.out.println("Total Data"+ String.valueOf(totalRecords));
             } else if (flag != null && !flag.isEmpty()) {
                 if (menu == null) {
@@ -320,6 +321,7 @@ public class HeaderListServlet extends HttpServlet {
                 httpSession.setAttribute("flag", status);
                 httpSession.setAttribute("headers", headers);
                 httpSession.setAttribute("io_type", io_type);
+                System.out.println("===================io type: "+io_type);
                 httpSession.setAttribute("db_type", db_type);
                 if (httpSession.getAttribute("flagFilter") == null) {
                     httpSession.removeAttribute("flagFilter");
@@ -367,8 +369,7 @@ public class HeaderListServlet extends HttpServlet {
     //            System.out.println("JSON Response: " + jsonResponse.toString());
                 out.print(jsonResponse.toString());
 
-            session.removeAttribute("db_type");
-//            session.removeAttribute("io_type");
+//            session.removeAttribute("db_type");
             session.removeAttribute("sender_logical_terminal");
             session.removeAttribute("receiver_institution");
             session.removeAttribute("mt_type");
