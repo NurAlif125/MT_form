@@ -145,7 +145,7 @@
                     <input id="date_end" name="date_end"  readonly="true" type="text" class="datetime-picker flatpickr-input" pattern=".*(\+|-)((0[0-9])|(1[0-4])):[0-5][0-9]" />
                 </div>
                 <div class="form-row"><span class="labelL">No Refference</span>
-                    <input id="no_refference" name="no_refference"  readonly="false" type="text" />
+                    <input id="no_refference" name="no_refference"  type="text" />
                 </div>
                 <div class="form-row">
                     <input type="submit" name="search" id="search" value="Search" />

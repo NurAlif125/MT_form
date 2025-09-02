@@ -12,6 +12,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+
 import org.apache.log4j.Logger;
 
 /**
@@ -47,8 +51,10 @@ public class DBWorkflowLogs {
         List<DataWorkflowLogs> datas = new ArrayList<>();
         
         String sql = "SELECT to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'), 'YYYY-MM-DD HH24:MI:SS') as date_time"
-                + ",component_name, message_type, file_name_original, file_name, refference, status, description, source " 
-                + "FROM workflow_logs " + whereQuery + " ORDER BY " + sort + " LIMIT ? OFFSET ?";
+                + "\n ,component_name, message_type, file_name_original, file_name, refference, status, description, source " 
+                + "\n FROM workflow_logs " 
+                + "\n" + whereQuery 
+                + "\n ORDER BY " + sort + " LIMIT ? OFFSET ?";
 
         try (PreparedStatement st = this.conn.prepareStatement(sql)) {
             int idx = 1;
@@ -57,16 +63,7 @@ public class DBWorkflowLogs {
             }
             st.setInt(idx++, length); // limit
             st.setInt(idx, start);
-            System.out.println("PreparedStatement: " + st.toString());
-
-//            //check hasil query
-//            String rawSql = sql;
-//            for (Object param : parameters) {
-//                rawSql = rawSql.replaceFirst("\\?", "'" + String.valueOf(param).replace("'", "''") + "'");
-//            }
-//            rawSql = rawSql.replaceFirst("\\?", String.valueOf(length));
-//            rawSql = rawSql.replaceFirst("\\?", String.valueOf(start));
-//            System.out.println("Expanded LIST search SQL:\n" + rawSql); //cetak hasil query
+            System.out.println("QUERY :: " + st.toString());
             
             try (ResultSet rs = st.executeQuery()) {
                 while (rs.next()) {
@@ -109,7 +106,7 @@ public class DBWorkflowLogs {
             for (Object param : parameters) {
                 st.setObject(idx++, param);
             }
-            System.out.println("PreparedStatement2: " + st.toString());
+            // System.out.println("PreparedStatement2: " + st.toString());
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
@@ -128,6 +125,8 @@ public class DBWorkflowLogs {
         String date_end,
         String noreff
     ) {
+        Date tanggal = new Date();
+        SimpleDateFormat dDay = new SimpleDateFormat("yyyy-MM-dd");
         List<Object> parameters = new ArrayList<>();
         StringBuilder where = new StringBuilder(" WHERE 1=1 ");
 
@@ -154,33 +153,32 @@ public class DBWorkflowLogs {
             parameters.add("%" + quicksearch + "%");
         }
         
-        String colDateExpr = "(date_time::timestamptz AT TIME ZONE 'Asia/Jakarta')::date";
-        boolean hasFrom = date_from != null && !date_from.isEmpty();
-        boolean hasEnd  = date_end  != null && !date_end.isEmpty();
+        // String colDateExpr = "(date_time::timestamptz AT TIME ZONE 'Asia/Jakarta')::date";
+        // boolean hasFrom = date_from != null && !date_from.isEmpty();
+        // boolean hasEnd  = date_end  != null && !date_end.isEmpty();
         
         // date range
         if (date_from != null && !date_from.isEmpty()) {
-//            where.append(" AND to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF') >= ?");
-            where.append(" AND ").append(colDateExpr).append(" >= ?::date");
+            where.append(" AND to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'),'YYYY-MM-DD HH24:MI:SS') >= ?");
+            // where.append(" AND ").append(colDateExpr).append(" >= ?::date");
             parameters.add(date_from);
         }
 
         if (date_end != null && !date_end.isEmpty()) {
-//            where.append(" AND to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF') <= ?");
-            where.append(" AND ").append(colDateExpr).append(" <= ?::date");
+             where.append(" AND to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'),'YYYY-MM-DD HH24:MI:SS') <= ?");
+            // where.append(" AND ").append(colDateExpr).append(" <= ?::date");
             parameters.add(date_end);
         }
         
-        if (!hasFrom && !hasEnd) {
-            where.append(" AND ").append(colDateExpr).append(" = (now() AT TIME ZONE 'Asia/Jakarta')::date");
+        // if (!hasFrom && !hasEnd) {
+        if ((date_from == null || date_from.isEmpty()) && (date_end  == null || date_end.isEmpty())) {
+            where.append(" AND ").append("to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'),'YYYY-MM-DD')").append(" = ?");
+            parameters.add(dDay.format(tanggal));
         }
-//        if ((date_from == null || date_from.isEmpty()) && (date_end == null || date_end.isEmpty())) {
-//            where.append(" AND date(date_time::timestamp) = current_date");
-//        } 
         
         // noreff
         if (noreff != null && !noreff.isEmpty()) {
-            where.append(" AND reference_no = ?");
+            where.append(" AND refference ilike ?");
             parameters.add("%" + noreff + "%");
         }
 
