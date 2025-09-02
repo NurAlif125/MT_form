@@ -29,11 +29,15 @@ public class MethodFilter implements Filter {
         String method = req.getMethod();
 
         if (!ALLOWED_METHODS.contains(method)) {
-            res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+            res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
             res.setHeader("Pragma", "no-cache");
             res.setDateHeader("Expires", 0);
+            res.setHeader("Surrogate-Control", "no-store");
+            res.setHeader("Vary", "accept-encoding");
             res.setHeader("X-Content-Type-Options", "nosniff");
             res.setHeader("X-Frame-Options", "DENY");
+            res.setHeader("X-XSS-Protection", "1; mode=block");
+            res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
             res.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "HTTP method " + method + " not allowed.");
             return;
         }
