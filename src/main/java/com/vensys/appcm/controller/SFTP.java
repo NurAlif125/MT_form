@@ -111,7 +111,7 @@ public class SFTP {
                         channel = "EMS"; 
                     } else if ("Trade OPS".equalsIgnoreCase(channel)) {
                         channel = "BANKTRADE"; 
-                    } else if ("Custody OPS".equalsIgnoreCase(channel)) {
+                    } else if ("Custody OPS".equalsIgnoreCase(channel) || "CSA".equalsIgnoreCase(channel)) {
                         channel = "CUSTODY";
                     } else if ("Treasury OPS".equalsIgnoreCase(channel)) {
                         Header headerdata = dBDataTransaksiOutgoing.getHeaderById(String.valueOf(id));
