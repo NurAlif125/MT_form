@@ -26,8 +26,6 @@
             <% } else { %>
             <% if (session.getAttribute("flagStatus").equals("NACK")) {%>
             <c:if test="${item == 'FLOW:NACK'}">
-                <!-- <input type="button" name="modified" id="modified" value="Modify" /> -->
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -41,8 +39,6 @@
             <% }%>
             <% if (session.getAttribute("flagStatus").equals("ACK")) {%>
             <c:if test="${item == 'FLOW:ACK'}">
-                <!-- <input type="button" name="modified" id="modified" value="Modify" /> -->
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -57,7 +53,6 @@
             <% if (session.getAttribute("flagStatus").equals("INC-WAIT")) {%>
             <c:if test="${item == 'FLOW:INC'}">
                 <% if (session.getAttribute("messageType").equals("103") || session.getAttribute("messageType").equals("pacs.008.001.08")) {%>
-                <%--<c:if test="${headerById.komentar!='NAMA BERBEDA SAAT INQUIRY REKENING'}">--%>
                 <c:if test="${headerById.komentar=='Not Found'}">
                     <input type="button" name="saveAcc" id="saveAcc" value="Save" />
                 </c:if>  
@@ -68,11 +63,6 @@
                 <input type="button" name="recheck" id="recheck" value="Recheck" />
                 <input type="button" name="investigate" id="investigate" value="Investigate" />
                 <input type="button" name="retur" id="retur" value="Retur" />
-                <%--c:forEach var="itemInc" items="${role}">
-                    <c:if test="${itemInc == 'FLOW:RETUR'}">
-                        <input type="button" name="retur" id="retur" value="Retur" />
-                    </c:if>
-                </c:forEach--%>
 
                 <input type="button" name="sendTEXT" id="sendTEXT" value="Receive MT" />
                 <% }%>
@@ -83,10 +73,8 @@
                     </c:if>
                 </c:forEach>
                 <% }%>
-                <!--101 end here-->
             </c:if>
             <c:if test="${item == 'FLOW:REJECT'}">
-                <!--<input type="button" name="reject" id="reject" value="Reject" />-->
             </c:if>
             <% if (session.getAttribute("messageType").equals("202") || session.getAttribute("messageType").equals("200")) {%>
             <c:if test="${item == 'FLOW:RETUR'}">
@@ -94,9 +82,7 @@
             </c:if>
             <% }%>
             <% }%>
-            <!--INC-WAIT end here-->
-
-            <!--INCOMING-->
+            
             <% if (session.getAttribute("flagStatus").equals("INC-CVT")) {%>
             <c:if test="${item == 'FLOW:INC-CVT'}">
                 <input type="button" name="resend2cvt_in" id="resend2cvt_in" value="Resend to Convert" />
@@ -151,7 +137,6 @@
 
             <% if (session.getAttribute("flagStatus").equals("SETTLE")) {%>
             <c:if test="${item == 'FLOW:SETTLE'}">
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -163,13 +148,9 @@
                 </c:choose>
             </c:if>
             <% }%>
-
-
-            <!----OUTGOING---->
 
             <% if (session.getAttribute("flagStatus").equals("MOD")) {%>
             <c:if test="${item == 'FLOW:MOD'}">
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -181,11 +162,6 @@
                 </c:choose>
             </c:if>
             <% }%>
-
-
-
-
-
 
             <% if (session.getAttribute("flagStatus").equals("INC-STL")) {%>
             <c:if test="${item == 'FLOW:INC'}">
@@ -291,9 +267,6 @@
                     }
                 </script>
             </c:if>
-            <%--<c:if test="${item == 'FLOW:VER'}">
-                <input type="button" name="verified" id="verified" value="Verifiy" />
-            </c:if>--%>
             <%}%>
             <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
             <c:if test="${item == 'FLOW:CREATE'}">
@@ -303,7 +276,6 @@
                 <c:if test="${not renderedButtonSave}">
                     <input type="submit" name="submit_mt" id="submit_mt" value="Save" />
                 </c:if>
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
             </c:if>   
             <%}%>
             <% String msgType = (String) session.getAttribute("messageType"); %>
@@ -395,8 +367,6 @@
             <% //if (session.getAttribute("flagStatus").equals("CVT-MOD") && (!msgTypes.contains("pacs") || !msgTypes.contains("PACS")) ) {%>
             <% if (session.getAttribute("flagStatus").equals("CVT-MOD")){%>
             <c:if test="${item == 'FLOW:CVT-MOD'}">
-                <!--<input type="butto //n" name="save_cvt_mod" id="save_cvt_mod" value="Save" />-->
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -408,13 +378,9 @@
                 </c:choose>
             </c:if>
             <%}%>
-
-            <%--<c:if test="${item == 'FLOW:VER'}">
-                <input type="button" name="verified" id="verified" value="Verifiy" />
-            </c:if>--%>
             <%}%>
 
-            <!--OUTGOING (BUTTON PADA SEBELAH KIRI)-->
+            <%--OUTGOING (BUTTON PADA SEBELAH KIRI)--%>
 
             <% if (session.getAttribute("flagStatus").equals("VER")) {%>
             <c:if test="${item == 'FLOW:VER'}">
@@ -435,7 +401,6 @@
 
             <% if (session.getAttribute("flagStatus").equals("AUTH")) {%>
             <c:if test="${item == 'FLOW:AUTH'}">
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -451,7 +416,6 @@
             <% if (session.getAttribute("flagStatus").equals("FIA-FAILED")) { %>
             <c:if test="${item == 'FLOW:FIA-FAILED'}">
                 <input type="button" name="ResendFIA" id="ResendFIA" value="Resend to FIA" />
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -468,7 +432,6 @@
             <% if (session.getAttribute("flagStatus").equals("UNSETTLE-OUT")) {%>
             <c:if test="${item == 'FLOW:UNSETTLE-OUT'}">
                 <input type="button" name="resend2saa" id="resend2saa" value="Resend to SAA" />
-                <!--<input type="button" name="printed" id="printed" value="Print" />-->
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
                         <input type="button" name="printed" id="printed" value="Print" />
@@ -547,13 +510,8 @@
 
             <% if (session.getAttribute("flagStatus").equals("AUTH")) {%>
             <c:if test="${item == 'FLOW:TEXT'}">
-                <!--<input type="button" name="generated" id="generated" value="Resend" />-->
-                <!--<input type="button" name="reject" id="reject" value="Complete" />-->
             </c:if>
-            <!--here we go...!-->
-            <!--20230302-->
             <c:if test="${item == 'FLOW:REJECT'}">
-                <!--<input type="button" name="reject" id="reject" value="Reject" />-->
             </c:if>
             <%}%>
             <% if (session.getAttribute("flagStatus").equals("INC-NOK")) {%>
@@ -571,15 +529,9 @@
             <% if (session.getAttribute("flagStatus").equals("INC-OK")) {%>
             <c:if test="${item == 'FLOW:INC'}">
                 <% if (session.getAttribute("messageType").equals("103") || session.getAttribute("messageType").equals("pacs.008.001.08")) {%>
-
-                <!--    2024-12-16 : Farras, Menambahkan push release untukt ransaksi tertentu yg ada di INC-OK
-                karena tidak perlu menunggu cover dana-->
                 <input type="button" name="push_release" id="push_release" value="Push Release" /> 
 
-                <input type="button" name="search_cover" id="search_cover" value="Search Cover" /> <!-- 20191231 ditambah search cover -->
-
-                <!--<input type="button" name="investigate" id="investigate" value="Investigate" />  2024-12-23 kebutuhan untuk nanya jika statement belum datang -->
-                <!--<input type="button" name="retur" id="retur" value="Retur" />-->
+                <input type="button" name="search_cover" id="search_cover" value="Search Cover" />
                 <% }%>
                 <input type="button" name="reject" id="reject" value="Reject" />
             </c:if>
@@ -591,9 +543,6 @@
             <% }%>
 
             <% // if (session.getAttribute("flagStatus").equals("INC-STL")) {%>
-            <%--<c:if test="${item == 'FLOW:INC'}">--%>
-            <!--<input type="button" name="getConfirm" id="getConfirm" value="Send Confirmation" />-->
-            <%--</c:if>--%>
             <% // }%>
             <% if (session.getAttribute("flagStatus").equals("INC-INV")) {%>
             <c:if test="${item == 'FLOW:INC'}">
@@ -606,12 +555,11 @@
                 <input type="button" name="returinv" id="returinv" value="Retur" />
             </c:if>
             <% }%>
-            <!-- <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("CVT-MOD") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
+            <%-- <% if (!(((String) session.getAttribute("flagStatus")).equals("REJECT") || ((String) session.getAttribute("flagStatus")).equals("CVT-MOD") || ((String) session.getAttribute("flagStatus")).equals("TEXT") || ((String) session.getAttribute("flagStatus")).equals("MOD") || ((String) session.getAttribute("flagStatus")).equals("INC-NOK") || ((String) session.getAttribute("flagStatus")).equals("INC-OK") || ((String) session.getAttribute("flagStatus")).equals("AUTH") || ((String) session.getAttribute("flagStatus")).equals("ACK") || ((String) session.getAttribute("flagStatus")).equals("NACK") || ((String) session.getAttribute("flagStatus")).equals("INC") || ((String) session.getAttribute("flagStatus")).equals("INC-WAIT") || ((String) session.getAttribute("flagStatus")).equals("RACK") || ((String) session.getAttribute("flagStatus")).equals("INC-ROK") || ((String) session.getAttribute("flagStatus")).equals("INC-NSTP") || ((String) session.getAttribute("flagStatus")).equals("INC-SPRT") )) {%>
             <c:if test="${item == 'FLOW:REJECT'}">
                 <input type="button" name="reject" id="reject" value="Reject" hidden />
             </c:if>
-            <% }%> -->
-            <!--INC-NSTP-->
+            <% }%> --%>
             <% if (session.getAttribute("flagStatus").equals("INC-NSTP")) {%>
             <c:if test="${item == 'FLOW:INC'}">
                 <input type="button" name="saveRate" id="saveRate" value="Save" />
@@ -625,8 +573,6 @@
             </c:if>
             <% }%>    
             <% }%>
-            <!--INC-NSTP-->
-            <!--INC-SPRT-->
             <% if (session.getAttribute("flagStatus").equals("INC-SPRT")) {%>
             <c:if test="${item == 'FLOW:INC'}">
                 <input type="button" name="acceptSPRT" id="acceptSPRT" value="Approve Special Rate" />
@@ -641,17 +587,13 @@
             </c:if>
             <% }%>
             <% }%>
-            <!--INC-SPRT-->
             <% }%>
             <c:if test="${item == 'FLOW:PRINT'}">
 
                 <c:choose>
                     <c:when test="${headerById.networktype== 'MT'}">
-                        <!--<input type="button" name="printed" id="printed" value="Print" />-->
                     </c:when>
                     <c:when test="${headerById.networktype=='MX' && fn:containsIgnoreCase(headerById.messageType,'pacs.008.001')||fn:containsIgnoreCase(headerById.messageType,'pacs.009.001')}">
-                        <!--<input type="hidden" name="messageType" id="messageType" value="${headerById.messageType}"/>--> 
-                        <!--<input type="button" name="printedmx" id="printedmx" value="Print" />-->
                     </c:when>
                 </c:choose>
 
@@ -747,14 +689,12 @@
                 <% if ((request.getParameter("idlt") == null) ) {%>
                 <c:forEach var="itemF" items="${role}">
                     <c:if test="${itemF == 'FLOW:LTCREATE'}">
-                        <!--<input type="button" name="submit_template" id="submit_template" value="Save As Template" />-->
                     </c:if>
                 </c:forEach>    
                 <% } %>
             </c:if>
             <% } %>
             <% } %>
-            <!--20180417 untuk resend ack dan incominig-->
             <% if (session.getAttribute("flagStatus").equals("ACK") || session.getAttribute("flagStatus").equals("RACK")) {%>
             <c:if test="${item == 'FLOW:RACK'}">
                 <input type="button" name="RACK" id="RACK" value="Resend ACK" />
@@ -771,9 +711,6 @@
             </c:if>
             <% } %>
 
-            <!-- ... existing code ... -->
-            <!--end 20180417-->      
-
             <% if (session.getAttribute("flagStatus").equals("FIA-FAILED-CNF")) { %>
             <c:if test="${item == 'FLOW:FIA-FAILED-CNF'}">
                 <input type="button" name="ApproveFIA" id="ApproveFIA" value="Approve" />
@@ -781,16 +718,13 @@
             </c:if>
             <% }%>
 
-
-
-
         </c:forEach>      
         <input type="button" name="back" id="back" value="Back" />
     </div>
 
-    <!--=======================================================================================================================-->
+    <%--=======================================================================================================================--%>
 
-    <!--POSISI BUTTON SEBELAH KANAN-->
+    <%--POSISI BUTTON SEBELAH KANAN--%>
     <div class="btn--group">
         <c:forEach var="item" items="${role}">
 
@@ -802,25 +736,21 @@
 
             <% if (session.getAttribute("flagStatus").equals("VER")) {%>
             <c:if test="${item == 'FLOW:VER'}">
-                <!--<input type="button" name="export" id="btn-export" value="Export" />-->
             </c:if>
             <% }%>
 
             <% if (session.getAttribute("flagStatus").equals("AUTH")) {%>
             <c:if test="${item == 'FLOW:AUTH'}">
-                <!--<input type="button" name="export" id="btn-export" value="Export" />-->
             </c:if>
             <%}%>
 
             <% if (session.getAttribute("flagStatus").equals("CVT-MOD")) {%>
             <c:if test="${item == 'FLOW:CVT-MOD'}">
-                <!--<input type="button" name="export" id="btn-export" value="Export" />-->
             </c:if>
             <%}%>
 
             <% if (session.getAttribute("flagStatus").equals("CVT-VER")) {%>
             <c:if test="${item == 'FLOW:CVT-VER'}">
-                <!--<input type="button" name="export" id="btn-export" value="Export" />-->
             </c:if>
             <%}%> 
 
@@ -831,19 +761,15 @@
             <% if (session.getAttribute("flagStatus").equals("MOD")) {%>
             <c:if test="${item == 'FLOW:MOD'}">
                 <input type="button" name="validate" id="btn-validate" value="Validate" />
-                <!--<input type="button" name="submit_template" id="submit_template" value="Save As Template">-->
-                <!--<input type="button" name="export" id="export" value="Export">-->
             </c:if>
             <% } else if (session.getAttribute("flagStatus").equals("CVT-MOD")) { %>
             <c:if test="${item == 'FLOW:CVT-MOD'}">
                 <input type="button" name="validate" id="btn-validate" value="Validate" />
-                <!--<input type="button" name="submit_template" id="submit_template" value="Save As Template">-->
             </c:if>
             <% } %>
             <% } else { %>
             <c:if test="${item == 'FLOW:CREATE'}">
                 <input type="button" name="validate" id="btn-validate" value="Validate" />
-                <!--<input type="button" name="submit_template" id="submit_template" value="Save As Template">-->
             </c:if>
             <% } %>
         </c:forEach>
@@ -851,9 +777,6 @@
         <input type="button" name="btn-export" id="btn-export" value="Export" />
         <% } %>
 
-        <!--<input type="button" name="export" id="btn-export" value="Export" />-->
-
     </div>
-
 
 </div>

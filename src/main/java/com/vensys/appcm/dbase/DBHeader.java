@@ -1024,7 +1024,9 @@ public class DBHeader {
             } else {
                 header.setIo_type("INCOMING");
             }
-            header.setReceiverAddress(rs.getString(7).toUpperCase());
+            String receiver = rs.getString(7);
+
+            header.setReceiverAddress(receiver != null ? receiver.toUpperCase() : "");
             header.setTanggal(rs.getString(8));
             header.setId_headers(rs.getInt(9));
 //            if (rs.getString(6).equalsIgnoreCase("3")) {
@@ -2028,7 +2030,8 @@ public class DBHeader {
                     data.setSessionNumber(rs.getString("sessionNumber"));
                     data.setSequenceNumber(rs.getString("sequenceNumber"));
                     data.setIo_type("I".equalsIgnoreCase(rs.getString("io_type")) ? "OUTGOING" : "INCOMING");
-                    data.setReceiverAddress(rs.getString("receiverAddress"));
+                    String receiver = rs.getString("receiverAddress");
+                    data.setReceiverAddress(receiver != null ? receiver.toUpperCase() : "");
                     data.setTanggal(rs.getString("tanggal"));
                     data.setFlag(rs.getString("flag"));
                     data.setBlock3(rs.getString("block3"));
