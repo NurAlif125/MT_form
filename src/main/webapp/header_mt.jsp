@@ -4,7 +4,6 @@
     Author     : M Abdul Hadi
 --%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%--<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>--%>
 <input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
 <div class="form-row"><span class="label_sub"><b>Sender</b></span></div>
 <div class="form-row"><span class="label"><a style="color:red;text-decoration:none">*</a>Sender Logical Terminal</span>
@@ -27,8 +26,6 @@
                         </c:if>
                     </c:otherwise>
                 </c:choose>
-<!--                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
-                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>-->
             </select>
         </c:when>
         <c:when test="${headerById.io_type == 'I'}">
@@ -49,8 +46,6 @@
                         </c:if>
                     </c:otherwise>
                 </c:choose>
-<!--                <option value="BDINIDJAXXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJAXXXX'}"> selected </c:if>>BDINIDJAXXXX</option>
-                <option value="BDINIDJ0AXXX" <c:if test="${headerById.logicalTerminal=='BDINIDJ0AXXX'}"> selected </c:if>>BDINIDJ0AXXX</option>-->
             </select>
         </c:when>
         <c:otherwise>
@@ -84,14 +79,3 @@
     <div class="form-row"><span class="label">Block3</span>
         <input type="text" name="block3" id="block3" maxlength="100" size="100" value="<c:out value="${headerById.block3}" />" />
 </div>
-<%--<c:if test="${headerById.io_type == 'O'}">
-    <c:if test="${headerById.flag == 'INC-NSTP' || headerById.flag == 'INC-SPRT'}">
-        <hr/>
-        <div class="form-row"><span class="label_sub"><b>Special Rate</b></span></div>
-        <div class="form-row"><span class="label">Rate</span>
-            <input type="text" name="special_rate" id="special_rate" maxlength="10" size="10" value="<c:out value="${headerById.special_rate}" />" onkeypress="return numbersonly(event, '_061_mf32a_currency');" />
-        </div>
-    </c:if>
-</c:if>--%>
-
-

@@ -46,16 +46,5 @@
             </div>
         </c:if>
     </c:forEach>
-</div><!--close content-->
-<script>
-    $(document).ready(function () {
-        $('#example').DataTable({
-            "scrollX": true,
-            "columnDefs": [
-                {
-                    "className": "dt-head-left", "targets": "_all"
-                }
-            ]
-        });
-    });
-</script>
+</div>
+<script type="text/javascript" src="js/viewReject.js"></script>

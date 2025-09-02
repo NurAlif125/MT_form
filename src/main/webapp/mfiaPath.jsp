@@ -152,43 +152,7 @@
                             <input type="checkbox" name="isenable" id="isenable_checkbox" value="1"
                                 <c:if test="${fiaById.isEnable == '1'}">checked</c:if> />                           
                         </label>
-                    </div>                    
-                    
-                    
-                    <%--
-                    <div class="form-row">
-                        <span class="labelL3">Message Type </span>
-                        <input type="text" name="mtormx" id="mtormx" maxlength="45" value="<c:out value='${fiaById.mtormx}' />"/>
                     </div>
-                    
-                    <div class="form-row">
-                        <span class="labelL3">Need Check AML</span>
-                        <label for="needcheckaml_checkbox">
-                            <input type="checkbox" name="needcheckaml" id="needcheckaml_checkbox" value="1"
-                                <c:if test="${fiaById.needcheckaml == '1'}">checked</c:if> />
-                            
-                        </label>
-                    </div>
-                    <div class="form-row">
-                        <span class="labelL3">Need Converted</span>
-                        <label for="needconverted_checkbox">
-                            <input type="checkbox" name="needconverted" id="needconverted_checkbox" value="1"
-                                <c:if test="${fiaById.needconverted == '1'}">checked</c:if> />
-                            
-                        </label>
-                    </div>                                                         
-                    <div class="form-row">
-                        <span class="labelL3">Source To</span>
-                        <textarea name="sourceto" id="sourceto" ><c:out value="${fiaById.sourceto}" /></textarea>
-                    </div>
-                    <div class="form-row">
-                        <span class="labelL3">Enable</span>
-                        <label for="isenable_checkbox">
-                            <input type="checkbox" name="isenable" id="isenable_checkbox" value="1"
-                                <c:if test="${fiaById.isenable == '1'}">checked</c:if> />                           
-                        </label>
-                    </div>    
-                    --%>
                 </div>
                 <div class="form-row-action">
                     <c:forEach var="roleItem2" items="${role}">

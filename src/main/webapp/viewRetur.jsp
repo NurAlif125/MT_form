@@ -37,4 +37,4 @@
             </div>
         </c:if>
     </c:forEach>
-</div><!--close content-->
+</div>

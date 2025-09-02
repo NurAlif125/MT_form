@@ -38,9 +38,6 @@
                 </div>
                 <div class="form-row-action">
                     <input type="submit" name="submit" id="submit" value="Save" />
-                    <!--
-                    <input type="button" name="delete" id="delete" value="Delete" />
-                    -->
                     <input type="reset" name="reset" id="reset" value="Reset" />
                     <input type="button" name="back" id="back" value="Back" />
                 </div>
