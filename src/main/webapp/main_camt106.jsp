@@ -6,6 +6,7 @@
 
 <%@ include file="header.jsp" %>
 <link rel="stylesheet" type="text/css" href="css/validate_case.css" />
+<link rel="stylesheet" type="text/css" href="css/tabValidateMX.css" />
 <script src="js/tabcontent.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css" />
 <link href="css/dropdown/dropdown.css" media="screen" rel="stylesheet" type="text/css" />
@@ -46,11 +47,11 @@
                         </div>
                     </div>
                 </div>
-                <%@ include file="tabValidateMX.jsp" %>
+                <script type="text/javascript" src="js/tabValidateMX.js"></script>
                 <%@ include file="button_action.jsp" %>
             </form>
         </c:if>
     </c:forEach>
 </div>
 
-<%@ include file="validateMX.jsp" %>
+<script type="text/javascript" src="js/validateMX.js"></script>

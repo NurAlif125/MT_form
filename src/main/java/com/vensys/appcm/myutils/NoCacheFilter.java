@@ -51,6 +51,8 @@ public class NoCacheFilter implements Filter {
             httpResp.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
             httpResp.setHeader("Pragma", "no-cache");
             httpResp.setDateHeader("Expires", 0);
+            httpResp.setHeader("Surrogate-Control", "no-store");
+            httpResp.setHeader("Vary", "accept-encoding");
 
             httpResp.setHeader("X-Content-Type-Options", "nosniff");
             httpResp.setHeader("X-Frame-Options", "DENY");
@@ -58,8 +60,8 @@ public class NoCacheFilter implements Filter {
             httpResp.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
             httpResp.setHeader("Content-Security-Policy",
                     "default-src 'self'; "
-                    + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; "
-                    + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+                    + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+                    + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
                     + "img-src 'self' data: https://flickr.com; "
                     + "font-src 'self' https://cdn.jsdelivr.net; "
                     + "connect-src 'self'; "
@@ -71,6 +73,8 @@ public class NoCacheFilter implements Filter {
             );
             httpResp.setHeader("Referrer-Policy", "no-referrer");
             httpResp.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+            httpResp.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+            httpResp.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
             httpResp.setHeader("Server", "Unknown");
             httpResp.setHeader("X-Powered-By", "Unknown");
             
