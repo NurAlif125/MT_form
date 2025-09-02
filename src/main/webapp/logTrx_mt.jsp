@@ -1,8 +1,4 @@
-<style>
-    textarea {
-        resize: none;
-    }
-</style>
+<link type="text/css" href="css/log_trx.css" rel="stylesheet" />
 <div class="form-row"><span class="label_sub"><b>Log MT Text</b></span></div>
 <div class="form-row">
     <div class="form-cols">
@@ -16,12 +12,10 @@
         </div>
         <div class="blok-1">
             <br/><span><h3>Record Before Changed</h3></span>
-            <%--<pre style="color:red">${keyBefore}</pre>--%>
             <textarea cols="200" rows="6" class="mtlog">${keyBefore}</textarea>
         </div>
         <div class="blok-1">
             <br/><span><h3>Record After Changed</h3></span>
-            <%--pre style="color:red">${keyAfter}</pre--%>
             <textarea cols="200" rows="6" class="mtlog">${keyAfter}</textarea>
         </div>
     </div>

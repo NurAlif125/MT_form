@@ -83,6 +83,6 @@
                 Display <select class="simple-pagination-items-per-page"></select> items per page.
             </div>
         </div>
-    </div><!--close content-->
+    </div>
 </div>
 <script type="text/javascript" src="js/resultHeaders.js"></script>

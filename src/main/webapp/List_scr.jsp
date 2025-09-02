@@ -21,12 +21,8 @@
 <script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 <div id="isi">
-    <!-- Tabs -->
     <div id="judul">List Search</div>
-    <!--<form id="form1" name="form1" method="post" action="controllerHeaders?find=yes">-->
     <form id="form1" name="form1" method="get" action="controllerHeaders?find=yes">
-        <!--<form id="form1" name="form1" method="post" action="headerData?find=yes">-->
-        <!--<form id="form1" name="form1" method="get" action="headerData">-->
         <input type="hidden" name="find" value="yes">
         <% Date tgl_today = new java.util.Date();
             pageContext.setAttribute("tgl_today", tgl_today); %>
@@ -66,14 +62,6 @@
             <div class="form-row"><span class="labelL">Receiver Institution</span>
                 <input type="text" name="receiver_institution" id="receiver_institution" maxlength="12" /> [ex.INDOIDJAXXXX]
             </div>
-            <!--//ditambahkan pada 20151102 By Azan-->
-            <!--            <div class="form-row"><span class="labelL">Sender</span>
-                            <input type="text" name="sender_bank" id="sender_bank" maxlength="12" /> [ex.SPXAIDJAXXX]
-                        </div>
-                        <div class="form-row"><span class="labelL">Receiver</span>
-                            <input type="text" name="receiver_bank" id="receiver_bank" maxlength="12" /> [ex.SPXAIDJAXXX]
-                        </div>-->
-            <!--end of tambahan 20151102-->
             <div class="form-row"><span class="labelL">MT</span>
                 <input type="text" name="mt_type" id="mt_type" maxlength="3" size="3" /> [ex.103]
             </div>
@@ -83,7 +71,6 @@
             <div class="form-row"><span class="labelL">Date End</span>
                 <input type="text" name="date_end" id="date_end" value="<fmt:formatDate pattern='yyyy-MM-dd' value='${tgl_today}' />" size="10" /> [ex.2013-31-01] <input type="text" class="time_end" name="time_end" id="time_end" placeholder="23:59:59" size="10" /> [ex: 00:00:00]
             </div>
-            <!--// ditambahkan parameter INC-XXX pada 20151001 by Azan-->
             <div class="form-row"><span class="labelL">Status</span>
                 <% if (session.getAttribute("flagFilter") == null) { %>
                 <%
@@ -108,7 +95,6 @@
             <div class="form-row"><span class="labelL">Sender's Reference</span>
                 <input type="text" name="sender_reference" id="sender_reference" /> [ex.Ref0001]
             </div>
-            <!--// ditambahkan rel_reference pada 20151001 by Azan-->
             <div class="form-row"><span class="labelL">Related Reference</span>
                 <input type="text" name="rel_reference" id="rel_reference" /> [ex.RelRef0001]
             </div>

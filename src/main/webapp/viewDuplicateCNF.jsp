@@ -44,5 +44,5 @@
             </div>
         </c:if>
     </c:forEach>
-</div><!--close content-->
+</div>
 <script type="text/javascript" src="js/viewDuplicateCNF.js"></script>

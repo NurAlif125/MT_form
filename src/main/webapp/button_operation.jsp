@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<!--20220118-->
 <% if (session.getAttribute("flagFilter") == null) {%>
 <% if (session.getAttribute("flagStatus").equals("NACK")) {%>
 <c:if test="${item == 'FLOW:MOD'}">
@@ -45,43 +44,7 @@
             </c:if>
             <c:if test="${headerById.networktype=='MX'}">
                 <input type="submit" name="submit_mx" id="submit_mx" value="Save" />
-                <script>
-                    var nodeIsGenerator = document.getElementById("generator-farras")
-
-                    var nodeReceiverInstitution = document.getElementById("receiver_institution")
-                    var nodeLogicalTerminal = document.getElementById("sender_logical_terminal")
-
-                    console.log(nodeReceiverInstitution)
-                    console.log(nodeLogicalTerminal)
-
-                    if (nodeIsGenerator) {
-                        var nodeForm = document.getElementById("form1")
-
-                        nodeForm.addEventListener("submit", function (e) {
-                            console.log("Ini ada di mod")
-                            e.preventDefault()
-                            var xml = htmlToXML(nodeForm)
-
-                            // buat element untuk menampung data XML
-                            var input = document.createElement("input")
-
-                            input.setAttribute("name", "dataXML")
-                            input.setAttribute("value", xml)
-                            nodeForm.appendChild(input)
-
-                            // disini untuk append child receiver dan logical terminal
-                            nodeForm.appendChild(nodeReceiverInstitution)
-                            nodeForm.appendChild(nodeLogicalTerminal)
-
-                            nodeForm.submit()
-                        })
-                        console.log("Ini XML")
-                    } else {
-                        console.log("Ini MT")
-                    }
-                </script>
-                <!--20231008 dikomen supaya semua disave dulu untuk memastikan field mandatory terisi-->
-                <!--<input type="button" name="verified" id="verified" value="Verify" />--> 
+                <script type="text/javascript" src="js/saveMX1.js"></script>
             </c:if>
         </c:otherwise>
     </c:choose>
@@ -112,8 +75,6 @@
 </c:if>
 <% if (session.getAttribute("flagStatus").equals("INC-STLHOLD")) {%>
 <c:if test="${item == 'FLOW:INC'}">
-<!--    <input type="button" name="verifyACC" id="verifyACC" value="Adjustment Name" />
-    <input type="button" name="sendTEXT" id="sendTEXT" value="Send Message to Core" />-->
     <input type="button" name="manual_settle" id="manual_settle" value="Manual Settle" />
 
 </c:if>
@@ -138,7 +99,6 @@
 </c:if>
 <% }%>
 <% }%>
-<!--20180417 untuk resend ack dan incominig-->
 <% if (session.getAttribute("flagStatus").equals("ACK") || session.getAttribute("flagStatus").equals("RACK")) {%>
 <c:if test="${item == 'FLOW:RACK'}">
     <input type="button" name="RACK" id="RACK" value="Resend ACK" />
@@ -154,4 +114,3 @@
     <input type="button" name="DELHIS" id="DELHIS" value="Delete Journal History" />
 </c:if>
 <% }%>
-<!--end 20180417-->

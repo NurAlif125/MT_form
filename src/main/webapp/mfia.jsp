@@ -1,27 +1,5 @@
 <%@ include file="header.jsp" %>
-<style>
-    .dual-listbox {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-    .dual-listbox select {
-        width: 200px;
-        height: 200px;
-    }
-    .dual-listbox .buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    .dual-listbox button {
-        padding: 5px 10px;
-    }
-    #targetSourceTo option {
-        background-color: #f0f0f0;
-        color: black;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="css/mfia.css" />
 <div id="isi">
     <c:forEach var="roleItem" items="${role}">
         <c:if test="${roleItem == 'FIACONF:ADD'}">
@@ -37,9 +15,7 @@
                 <div id="tabs-1" class="formBody">
                     <div class="form-row">
                         <span class="labelL2">Source</span>
-                        <!-- <input type="text" name="source" id="source" value="<c:out value='${fiaById.source}' />" />  -->
                         <select name="source" id="source">
-                            <!-- <c:out value='${fiaById.source}' /> -->
                             <option value="">--Select--</option>
                             <c:forEach var="item1" items="${dataSource}">
                                 <option value="${item1}"
@@ -73,7 +49,6 @@
                     </div>                                                         
                     <div class="form-row">
                         <span class="labelL2">Source To</span>
-                        <!-- <textarea name="sourceto" id="sourceto" ><c:out value="${fiaById.sourceto}" /></textarea> -->
                         <div class="dual-listbox">
                             <div>
                                 <label>Source</label><br>
@@ -96,7 +71,6 @@
                                         <option value="${item}">${item}</option>
                                     </c:forEach>
                                 </select>
-                                <!-- <select id="targetSourceTo" multiple></select> -->
                             </div>
                         </div>                        
                     </div>
@@ -118,28 +92,4 @@
         </c:if>
     </c:forEach>
 </div>
-<script>
-    function moveSelected(fromId, toId) {
-        const from = document.getElementById(fromId);
-        const to = document.getElementById(toId);
-        Array.from(from.selectedOptions).forEach(option => {
-            to.appendChild(option);
-        });
-        prepareSubmission();
-    }
-
-    function moveAll(fromId, toId) {
-        const from = document.getElementById(fromId);
-        const to = document.getElementById(toId);
-        Array.from(from.options).forEach(option => {
-            to.appendChild(option);
-        });
-        prepareSubmission();
-    }
-
-    function prepareSubmission() {
-        const target = document.getElementById('targetSourceTo');
-        const selected = Array.from(target.options).map(opt => opt.value);
-        document.getElementById('selectedValuesSourceTo').value = selected.join(',');
-    }
-</script>
+<script type="text/javascript" src="js/mfia.js"></script>

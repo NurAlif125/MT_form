@@ -71,35 +71,15 @@ response.setHeader("X-Powered-By", "Unknown");
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <%@ include file="rule/validate_button.jsp" %>
     <link rel="stylesheet" href="css/notification-styles.css" type="text/css"/>
-    <%--    <script type="text/javascript" src="js/jquery.nivo.slider.pack.js"></script>
-        <script type="text/javascript">
-            $(window).load(function () {
-                $('#slider').nivoSlider();
-            });
-        </script>--%>
 
-    <%--
-        String user_id = (String) session.getAttribute("user_id");
-        if (user_id == null || user_id.equals("")) {
-            response.sendRedirect("login.jsp");
-        }
-    --%>
-
-    <!--readonly all form when flag is not MOD-->
     <% if (session.getAttribute("flagStatus") == null) {%>
 
     <% } else { %>
     <% if (!session.getAttribute("flagStatus").equals("MOD")) {%>
-    <script type="text/javascript">
-//        $('#form1').attr('readonly', 'readonly');
-        $('#form1 input').attr('readonly', 'readonly');
-//        console.log("kadieuuu header.jsp");
-    </script>
+    <script type="text/javascript" src="js/header1.js"></script>
     <% } %>    
     <% }%>
     
-    <!-- Header -->
-    <!--20210405 ditambah host dan appversion-->
     <h1 class="logoAtas"><img class="homePage" src="images/flickr.com/cm.png"/><span>${hostname} (${appVersion})</span></h1>
     <font class="main-site"><u><%= tglsekarang%></u> <a href="#" class="adm"><% out.print((String) session.getAttribute("user_id"));%><img src="images/user.png" style="margin-bottom:-2px;" /></a> <a href="ServletControllerLogout" class="log">Logout <img src="images/logout.png" style="margin-bottom:-2px;" /></a> <br>
         <p class="last">Last Success Login: <% out.print((String) session.getAttribute("berhasillogin"));%><br>
@@ -109,20 +89,14 @@ response.setHeader("X-Powered-By", "Unknown");
     <ul id="nav" class="dropdown dropdown-horizontal">
         <c:forEach var="item" items="${role}">
             <c:if test="${item == 'MENU:DASHBOARD'}">
-                <!--<li><span class="dir">Dash Board</span>-->
-                    <!--<ul>-->
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'DOT:LIST'}">
-                                <!--<li><a onclick="userTrackMenuClick('Summary Incoming')" href="SCDashBoardTransactions?io_type=O">Summary Incoming</a></li>-->
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">
                                 <c:if test="${item == 'DOT:LIST'}">
-                                <!--<li><a onclick="userTrackMenuClick('Summary Outgoing')" href="SCDashBoardTransactions?io_type=I">Summary Outgoing</a></li>-->
                                 </c:if>
                             </c:forEach>
-<!--                    </ul>
-                </li>-->
             </c:if>
         </c:forEach>
         <c:forEach var="item" items="${role}">
@@ -131,7 +105,6 @@ response.setHeader("X-Powered-By", "Unknown");
                     <ul>
                         <c:forEach var="item" items="${role}">
                             <c:if test="${item == 'MEMBER_CODE:LIST'}">
-                                <!--<li><a onclick="userTrackMenuClick('BIC')" href="SCBICList">BIC</a></li>-->
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">
@@ -146,10 +119,6 @@ response.setHeader("X-Powered-By", "Unknown");
                                 </c:if>
                             </c:forEach>
                             <c:forEach var="item" items="${role}">
-
-                            <c:if test="${item == 'MT_QUEUE:LIST'}">
-                                <!--<li><a href="SCDataMTList">Message Queue</a></li>-->
-                            </c:if>
                         </c:forEach>
                     </ul>
                 </li>
@@ -362,7 +331,6 @@ response.setHeader("X-Powered-By", "Unknown");
                                 <c:if test="${(item == 'TYPE:OUTGOING_INCOMING') || (item == 'TYPE:INCOMING')}">
                                 <li><span class="dir">Incoming</span>
                                     <ul>
-                                        <!--<li><a href="controllerHeaders?io_type=O&flag=INC-HOLD&menu=11">Incoming Hold</a></li>-->
                                         <c:forEach var="iteminc" items="${role}">
                                             <c:if test="${iteminc == 'FLOW:INC-TRX'}">
                                                 <li><a onclick="userTrackMenuClick('Incoming Transaction')" href="controllerHeaders?io_type=O&flag=INC&menu=24">Incoming Transaction</a></li>
@@ -499,11 +467,6 @@ response.setHeader("X-Powered-By", "Unknown");
                                     </ul>
                                 </li>
                             </c:if>
-                            <%--c:if test="${(item == 'MENU:UPLOADCNF')}">
-                                <li><a href="upload_confirmation.jsp">Upload Confirmation</a></li>
-                                <li><a href="upload_branch.jsp">Upload Branch Outgoing</a></li>
-                            </c:if--%>
-                            <!--20230718 tambah menu-->
                             <c:if test="${(item == 'MENU:UPLOADSTMT')}">
                                 <li><a onclick="userTrackMenuClick('Upload MT950')" href="upload_stmt.jsp">Upload MT950</a></li>
                                 </c:if>
@@ -545,10 +508,7 @@ response.setHeader("X-Powered-By", "Unknown");
     </ul>
     <body style="clear: both;">
         <c:if test="${empty sessionScope.user_id}">
-            <script type="text/javascript">
-                alert('Your session has expired, please log in again!');
-                window.location.href = 'login.jsp';
-            </script>
+            <script type="text/javascript" src="js/header2.js"></script>
         </c:if>
 
         <c:choose>
@@ -571,21 +531,7 @@ response.setHeader("X-Powered-By", "Unknown");
         
         <input type="hidden" id="timeout" name="timeout" value="<% out.print(session.getAttribute("timeout"));%>"/>
         <!--<input type="hidden" id="timeout" name="timeout" value="300000"/>-->
-        <script type="text/javascript">
-            var wintimeout;
-            function SetWinTimeout() {
-                var time = document.getElementById("timeout").value;
-                wintimeout = window.setTimeout("window.location.href='ServletControllerLogout';", time); //after 5 mins i.e. 5 * 60 * 1000
-            }
-            $('body').mouseover(function () {
-
-                window.clearTimeout(wintimeout); //when user mouseover remove timeout and reset it
-
-                SetWinTimeout();
-
-            });
-            SetWinTimeout();
-        </script>
+        <script type="text/javascript" src="js/header3.js"></script>
         
         
 
@@ -629,22 +575,6 @@ response.setHeader("X-Powered-By", "Unknown");
 
         <%--<%@ include file="NotificationControl.jsp" %>--%>
 
-        <script>
-            function userTrackMenuClick(menu_name) {
-                //            console.log("Menu "+menu_name)
-                fetch("SCUserLogMenuActivity", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "menu_name=" + encodeURIComponent(menu_name)
-                })
-                        .then(response => response.text())
-                        .then(data => {
-
-                        })
-                        .catch(error => console.error("Error:", error));
-            }
-        </script>
+        <script type="text/javascript" src="js/header4.js"></script>
 
     </body>
