@@ -54,8 +54,10 @@
           <div class="sub">
             <a href="#">Message Category 7 <span class="arrow">▸</span></a>
             <div class="submenu">
-              <a href="Category7/mt700.jsp">701 - Issue of a Documentary Credit</a>
-              <a href="#">702 - Example Message</a>
+              <a href="Category7/mt700.jsp">700 - Issue of a Documentary Credit</a>
+              <a href="Category7/mt701.jsp">701 - Issue of a Documentary Credit (Continuation)</a>
+              <a href="Category7/mt707.jsp">707 - Amendment to a Documentary Credit</a>
+              <a href="Category7/mt711.jsp">711 - Issue of a Documentary Credit (Continuation)</a>
             </div>
           </div>
         </div>
