@@ -76,7 +76,7 @@
     <a class="nav-btn" href="#">Reporting ▾</a>
     <div class="menu">
       <a href="Category1/listForms.jsp">Category 1</a>
-      <a href="#">Category 7</a>
+      <a href="Category7/listForms.jsp">Category 7</a>
     </div>
   </div>
 </div>
