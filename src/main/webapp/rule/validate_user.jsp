@@ -48,7 +48,7 @@
                 return false;
             }
         });
-    });s
+    });
 </script>
 
 <link rel="stylesheet" type="text/css" href="css/validate.css" />
