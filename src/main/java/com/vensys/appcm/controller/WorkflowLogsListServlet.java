@@ -115,7 +115,7 @@ public class WorkflowLogsListServlet extends HttpServlet{
         String message_type = request.getParameter("message_type");
         String file_name_original = request.getParameter("file_name_original");
         String file_name = request.getParameter("file_name");
-        String refference = request.getParameter("refference");
+        String refference = request.getParameter("no_refference");
         String status = request.getParameter("status");
         String description = request.getParameter("description");
         String source = request.getParameter("source");

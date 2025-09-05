@@ -126,7 +126,7 @@ public class DBDataTransaksiOutgoing {
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXCLC")) {
                 channel = "BANKTRADE";
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXCUS")) {
-                channel = "CSA"; //custody
+                channel = "CUSTODY"; //custody
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXRMT")) {
                 channel = "EMS"; // NCBS
             } else if (channel.equalsIgnoreCase("") && data.getSender_logical_terminal().equalsIgnoreCase("BDINIDJAXXXX")) {

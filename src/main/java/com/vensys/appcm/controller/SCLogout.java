@@ -59,23 +59,8 @@ public class SCLogout extends HttpServlet {
         String userId = session.getAttribute("user_id") != null ? session.getAttribute("user_id").toString() : null;
         String ipAccess = session.getAttribute("ip_access") != null ? session.getAttribute("ip_access").toString() : null;
         String compName = session.getAttribute("comp_name") != null ? session.getAttribute("comp_name").toString() : null;
-
-        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, private");
-        response.setHeader("Pragma", "no-cache");
-        response.setDateHeader("Expires", 0);
-        response.setHeader("Content-Security-Policy",
-                "default-src 'self'; "
-                + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; "
-                + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
-                + "img-src 'self' data: https://flickr.com; "
-                + "font-src 'self' https://cdn.jsdelivr.net; "
-                + "connect-src 'self'; "
-                + "object-src 'none'; "
-                + "frame-ancestors 'none'; "
-                + "base-uri 'self'; "
-                + "form-action 'self'; "
-                + "upgrade-insecure-requests;"
-        );
+        
+        setSecurityHeaders(response);
 
         if (userId != null && ipAccess != null && compName != null) {
             String tanggal = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -120,6 +105,38 @@ public class SCLogout extends HttpServlet {
 
         // Redirect ke login.jsp
         response.sendRedirect("login.jsp");
+    }
+    
+    private void setSecurityHeaders(HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Surrogate-Control", "no-store");
+        response.setHeader("Vary", "accept-encoding");
+
+        response.setHeader("X-Content-Type-Options", "nosniff");
+        response.setHeader("X-Frame-Options", "DENY");
+        response.setHeader("X-XSS-Protection", "1; mode=block");
+        response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+        response.setHeader("Content-Security-Policy",
+                "default-src 'self'; "
+                + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+                + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+                + "img-src 'self' data: https://flickr.com; "
+                + "font-src 'self' https://cdn.jsdelivr.net; "
+                + "connect-src 'self'; "
+                + "object-src 'none'; "
+                + "frame-ancestors 'none'; "
+                + "base-uri 'self'; "
+                + "form-action 'self'; "
+                + "upgrade-insecure-requests;"
+        );
+        response.setHeader("Referrer-Policy", "no-referrer");
+        response.setHeader("Permissions-Policy", "geolocation=(), microphone=()");
+        response.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+        response.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+        response.setHeader("Server", "Unknown");
+        response.setHeader("X-Powered-By", "Unknown");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
