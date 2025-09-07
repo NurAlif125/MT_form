@@ -296,7 +296,7 @@ public class SCUserData extends HttpServlet {
                                 session.setAttribute("timeout", dataRole.getTimeout());
 
                                 //single session user login
-//                                SessionRegistry.registerSession(user_id, session);
+                                SessionRegistry.registerSession(user_id, session);
                             } else {
                                 dbo.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
                                 evl.updateLogUser(user_id, "login", tanggal);

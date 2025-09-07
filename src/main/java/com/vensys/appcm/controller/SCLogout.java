@@ -67,7 +67,7 @@ public class SCLogout extends HttpServlet {
             dbo.insertDataLogin(userId, "0", ipAccess, compName, tanggal, "1");
             
             // single login
-//            SessionRegistry.removeSession(user_id);
+            SessionRegistry.removeSession(user_id);
         } else {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
