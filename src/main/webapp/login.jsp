@@ -12,7 +12,7 @@
     response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
     response.setHeader("Content-Security-Policy",
             "default-src 'self'; "
-            + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+            + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
             + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
             + "img-src 'self' data: https://flickr.com; "
             + "font-src 'self' https://cdn.jsdelivr.net; "
@@ -107,29 +107,6 @@
             </div>
         </div>
         <script src="bootstrap-5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-<<<<<<< HEAD
-        <script>
-
-            // get node Error Message
-            var nodeErrorMessage = document.getElementById("error-msg")
-            const toastLiveExample = document.getElementById('liveToast')
-
-            // event after the page is loaded perfectly
-            window.onload = function () {
-                if (nodeErrorMessage.innerHTML !== "") {
-                    // show the toast is ther is no error
-                    console.log("Show the toast span")
-                    const toast = new bootstrap.Toast(toastLiveExample)
-                    toast.show();
-                } else {
-                    console.log("dont show the toast")
-                }
-            }
-
-        </script>
-        <!--    <div id="kaki2">
-                <p><a href="http://www.vensys.co.id" target="_blank">Copyright &copy; PT. Venturium System Indonesia</a></p>
-            </div>-->
         
         <%
              try {
