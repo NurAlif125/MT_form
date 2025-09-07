@@ -50,7 +50,7 @@ public class DBWorkflowLogs {
 
         List<DataWorkflowLogs> datas = new ArrayList<>();
         
-        String sql = "SELECT to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'), 'YYYY-MM-DD HH24:MI:SS') as date_time"
+        String sql = "SELECT to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSTZH:TZM'), 'YYYY-MM-DD HH24:MI:SS') as date_time"
                 + "\n ,component_name, message_type, file_name_original, file_name, refference, status, description, source " 
                 + "\n FROM workflow_logs " 
                 + "\n" + whereQuery 
@@ -159,20 +159,20 @@ public class DBWorkflowLogs {
         
         // date range
         if (date_from != null && !date_from.isEmpty()) {
-            where.append(" AND to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'),'YYYY-MM-DD HH24:MI:SS') >= ?");
+            where.append(" AND to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSTZH:TZM'),'YYYY-MM-DD HH24:MI:SS') >= ?");
             // where.append(" AND ").append(colDateExpr).append(" >= ?::date");
             parameters.add(date_from);
         }
 
         if (date_end != null && !date_end.isEmpty()) {
-             where.append(" AND to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'),'YYYY-MM-DD HH24:MI:SS') <= ?");
+             where.append(" AND to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSTZH:TZM'),'YYYY-MM-DD HH24:MI:SS') <= ?");
             // where.append(" AND ").append(colDateExpr).append(" <= ?::date");
             parameters.add(date_end);
         }
         
         // if (!hasFrom && !hasEnd) {
         if ((date_from == null || date_from.isEmpty()) && (date_end  == null || date_end.isEmpty())) {
-            where.append(" AND ").append("to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSOF'),'YYYY-MM-DD')").append(" = ?");
+            where.append(" AND ").append("to_char(to_timestamp(date_time, 'YYYY-MM-DD\"T\"HH24:MI:SSTZH:TZM'),'YYYY-MM-DD')").append(" = ?");
             parameters.add(dDay.format(tanggal));
         }
         
