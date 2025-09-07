@@ -28,12 +28,12 @@
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 
 <%
-    String cspNonce = (request.getAttribute("cspNonce") != null) 
+    String cspNonce103 = (request.getAttribute("cspNonce") != null) 
         ? (String) request.getAttribute("cspNonce") 
-        : "";
+        : "tHeQTZaKLMY=";
 %>
 
-<style nonce="${request.getAttribute("cspNonce") != null ? request.getAttribute("cspNonce") : ''}">
+<style nonce="$<%= cspNonce103 %>">
     
     #container-form103 {
         width: 100% !important; 
@@ -828,7 +828,7 @@
 <script type="text/javascript" src="js/validate-mt/tab-contens-custom.js"></script>
 <script type="text/javascript" src="js/custom-currency.js"></script>
 
-<script nonce="${request.getAttribute("cspNonce") != null ? request.getAttribute("cspNonce") : ''}">
+<script nonce="$<%= cspNonce103 %>">
     
   document.getElementById("form1").addEventListener("submit", function (e) {
     if (!confirm("Do you want to save this MT data?")) {

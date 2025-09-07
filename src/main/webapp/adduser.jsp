@@ -8,33 +8,7 @@
 <%@ include file="rule/validate_user.jsp" %>
 <script src="js/mt.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css" />
-<style>
-  .suggestions {
-    margin-left: 80px;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width:150px;
-    background: white;
-    z-index: 10;
-    max-height: 150px;
-    overflow-y: auto;
-  }
-  
-  .show-border {
-      border: 1px solid #ccc;
-  }
-
-  .suggestions .suggestion-item {
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-
-  .suggestions .suggestion-item:hover {
-    background-color: #f0f0f0;
-  }
-</style>
+<link href="css/adduser.css" rel="stylesheet" type="text/css" />
 
 
 <div id="isi">

@@ -12,7 +12,7 @@
     response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
     response.setHeader("Content-Security-Policy",
             "default-src 'self'; "
-            + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+            + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
             + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
             + "img-src 'self' data: https://flickr.com; "
             + "font-src 'self' https://cdn.jsdelivr.net; "
@@ -44,11 +44,7 @@
         <meta name="description" content="CM" />
         <meta name="keywords" content="enter your keywords here" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <script type="text/javascript">
-            function setFocus() {
-                document.getElementById("username").focus();
-            }
-        </script>
+        <script type="text/javascript" src="js/login_focus.js"></script>
         <link href="fontawesome/css/all.css" rel="stylesheet">
         <link href="css/costume-css.css" rel="stylesheet">
         <link href="bootstrap-5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
@@ -93,10 +89,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-        <!--Toast for warning on login page-->                
+        </div>               
         <span class="d-none d-print-block" id="error-msg"><c:out value="${errormsg}"/></span>
         <div class="toast-container position-fixed bottom-0 start-0 p-3">
             <div id="liveToast" class="shadow rounded toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -114,6 +107,7 @@
             </div>
         </div>
         <script src="bootstrap-5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<<<<<<< HEAD
         <script>
 
             // get node Error Message
@@ -143,5 +137,6 @@
              } catch (IllegalStateException ignored) {}
         %>
 
+        <script type="text/javascript" src="js/login.js"></script>
     </body>
 </html>

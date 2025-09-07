@@ -1,0 +1,150 @@
+[hidden] {
+    display: none;
+}
+
+section {
+    margin: 5px;
+}
+
+label {
+    display: block;
+}
+
+label>span {
+    float: left;
+    margin-right: 5px;
+    min-width: 200px;
+    font-size: 13px;
+}
+
+button[type='submit']:before {
+    content: "OK";
+}
+
+button.add:before {
+    content: "+ ";
+}
+
+button.remove:before {
+    content: "-";
+}
+
+input[data-xsd2html2xml-duration='days']+span:after {
+    content: " (days)";
+}
+
+input[data-xsd2html2xml-duration='minutes']+span:after {
+    content: " (minutes)";
+}
+
+fieldset {
+    width: 99%;
+    border-color: #2e8085;
+    border-radius: 5px;
+}
+
+button[class="add"],
+[class="remove"] {
+    all: revert;
+    cursor: pointer;
+    background-color: transparent;
+    color: #2e8085;
+    border: 1px solid #2e8085;
+    border-radius: 0.25rem
+}
+
+button[class="add"]:hover,
+[class="remove"]:hover {
+    all: revert;
+    cursor: pointer;
+    background-color: #2e8085;
+    color: white;
+    border: 1px solid #2e8085;
+    border-radius: 0.25rem
+}
+
+input[type="text"] {
+    all: revert;
+    width: 30%;
+    /* w-full */
+    padding: 0.25rem;
+    /* p-2 */
+    color: #111827;
+    /* text-gray-900 */
+    border: 1px solid #d1d5db;
+    /* border border-gray-300 */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    font-size: 13px;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    /* focus:border-blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input[type="number"] {
+    all: revert;
+    width: 30%;
+    /* w-full */
+    padding: 0.25rem;
+    /* p-2 */
+    color: #111827;
+    /* text-gray-900 */
+    border: 1px solid #d1d5db;
+    /* border border-gray-300 */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    font-size: 13px;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    /* focus:border-blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input[type="time"] {
+    all: revert;
+    width: 30%;
+    /* w-full */
+    padding: 0.25rem;
+    /* p-2 */
+    color: #111827;
+    /* text-gray-900 */
+    border: 1px solid #d1d5db;
+    /* border border-gray-300 */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    font-size: 13px;
+}
+
+input[type="time"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    /* focus:border-blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input[required="required"] {
+    background-color: #DEFCF9;
+}
+
+input[disabled="disabled"] {
+    background-color: #ECCFD1;
+}
+
+input[data-xsd2html2xml-description="BICFI"] {
+    text-transform: uppercase;
+}
+
+input[data-xsd2html2xml-description="Currency"] {
+    text-transform: uppercase;
+}
+
+input[data-xsd2html2xml-description="AnyBIC"] {
+    text-transform: uppercase;
+}
