@@ -70,6 +70,7 @@ public class DBWorkflowLogs {
                     DataWorkflowLogs data = new DataWorkflowLogs();
                     data.setDate_time(rs.getString("date_time"));
                     data.setComponent_name(rs.getString("component_name"));
+                    data.setMessage_type(rs.getString("message_type"));
                     data.setFile_name_original(rs.getString("file_name_original"));
                     data.setFile_name(rs.getString("file_name"));
                     data.setRefference(rs.getString("refference"));

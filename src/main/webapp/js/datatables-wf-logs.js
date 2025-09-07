@@ -4,7 +4,11 @@
     enableSeconds: true, 
     dateFormat: "Y-m-d H:i:S",
     time_24hr: true,
-    defaultDate: new Date()
+    defaultDate: (function () {
+      const d = new Date();
+      d.setHours(0, 0, 0, 0); // jam:menit:detik:ms
+      return d;
+    })()
   });
 
   flatpickr("#date_end", {
