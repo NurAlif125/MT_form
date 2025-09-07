@@ -60,11 +60,7 @@ public class NoCacheFilter implements Filter {
             httpResp.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
             httpResp.setHeader("Content-Security-Policy",
                     "default-src 'self'; "
-<<<<<<< HEAD
-                    + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
-=======
                     + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
->>>>>>> 456cde7b088c877dc5303c86bf6e759e78506e72
                     + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
                     + "img-src 'self' data: https://flickr.com; "
                     + "font-src 'self' https://cdn.jsdelivr.net; "

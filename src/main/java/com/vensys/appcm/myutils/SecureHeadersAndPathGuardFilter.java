@@ -40,11 +40,7 @@ public class SecureHeadersAndPathGuardFilter implements Filter {
 
     private String csp
             = "default-src 'self'; "
-<<<<<<< HEAD
-            + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
-=======
             + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
->>>>>>> 456cde7b088c877dc5303c86bf6e759e78506e72
             + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
             + "img-src 'self' data: https://flickr.com; "
             + "font-src 'self' https://cdn.jsdelivr.net; "

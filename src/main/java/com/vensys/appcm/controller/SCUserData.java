@@ -298,10 +298,12 @@ public class SCUserData extends HttpServlet {
                                 //single session user login
                                 SessionRegistry.registerSession(user_id, session);
                             } else {
-                                dbo.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
-                                evl.updateLogUser(user_id, "login", tanggal);
-                                dbo.disableUser(user_id);
-                                strErrMsg = "User never login more than " + data.getAuto_disable() + " days, User is disable";
+                                if (!"1".equals(String.valueOf(data.getRole()))) { //disable tidak berlaku untuk role admin
+                                    dbo.insertDataLogin(user_id, "1", ip_access, comp_name, tanggal, "1");
+                                    evl.updateLogUser(user_id, "login", tanggal);
+                                    dbo.disableUser(user_id);
+                                    strErrMsg = "User never login more than " + data.getAuto_disable() + " days, User is disable";
+                                }
                             }
                         } else {
                             session.setAttribute("user_id", user_id);
@@ -344,8 +346,8 @@ public class SCUserData extends HttpServlet {
                 if (successLogin) {
 //                    dispatcher = request.getRequestDispatcher("controllerHeaders");
                     setSecurityHeaders(response);
-                    dispatcher = request.getRequestDispatcher("home.jsp");
-                    dispatcher.forward(request, response);
+                    response.sendRedirect("home.jsp");
+                    return;
 //                    log.info("controllerHeaders");
                 } else {
                     if (changepassword) {
@@ -422,11 +424,7 @@ public class SCUserData extends HttpServlet {
         response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
         response.setHeader("Content-Security-Policy",
                 "default-src 'self'; "
-<<<<<<< HEAD
-                + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
-=======
                 + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
->>>>>>> 456cde7b088c877dc5303c86bf6e759e78506e72
                 + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
                 + "img-src 'self' data: https://flickr.com; "
                 + "font-src 'self' https://cdn.jsdelivr.net; "
