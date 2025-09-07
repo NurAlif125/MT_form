@@ -27,17 +27,7 @@
 <script type="text/javascript" src="js/editorjs@latest.js"></script>
 <script src="js/json-xml-data-tree/data-tree.js"></script>
 <link rel="stylesheet" href="js/json-xml-data-tree/data-tree.css" />
-<style>
-    .scrl {
-        position: relative;
-        height: 600px;
-        overflow: auto;
-    }
-    .codex-editor__redactor {
-        padding-bottom: 30px !important;
-    }
 
-</style>
 <div id="isi">
     <div id="judul">${headerById.messageType}</div>
     <form id="form1" class="form-mx" name="form1" method="post" action="#">
@@ -73,19 +63,4 @@
         <%@ include file="button_action.jsp" %>
     </form>
 </div>
-<script>
-var mxviewValue = document.getElementById("mxview2").value;
-var parts = mxviewValue.split("\n");
-const editor = new EditorJS({
-    holderId : 'editor',
-    readOnly: true, 
-    data: {
-        blocks: parts.map(part => ({
-            type: 'paragraph',
-            data: {
-                text: part
-            }
-        }))
-    }
-});
-</script>
+<script type="text/javascript" src="js/validate-mt/tab-contens-custom.js"></script>

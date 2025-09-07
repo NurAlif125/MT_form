@@ -1,10 +1,12 @@
-<%-- 
-    Document   : validate_rule_mt202
-    Created on : Aug 12, 2012, 2:16:33 PM
-    Author     : M Abdul Hadi
---%>
+function loadCss(filename) {
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type = "text/css";
+  link.href = filename;
+  document.head.appendChild(link);
+}
 
-<script type="text/javascript">
+
     $(document).ready(function() {
         let validator = $("#form1").validate({
             ignore: [],  
@@ -189,17 +191,15 @@
         });
         
         $.validator.addMethod("regex", function(value, element, param) {
-            //this.optional(element) lewati validasi jika kosong dan param.test(value) check regex
             return this.optional(element) || param.test(value); 
-//            Jika tidak ada pesan khusus dalam messages tampilkan "Format tidak valid"
         }, "Format tidak valid");
         
     });
-</script>
 
-<link rel="stylesheet" type="text/css" href="css/validate.css" />
 
-<script type="text/javascript">
+loadCss("../../css/validate.css");
+
+
     $(document).ready(function(){
         //of13c
         $("#div_of13c_").hide();
@@ -419,10 +419,10 @@
             }
         });
     });
-</script>
 
-<!-- rule view -->
-<script type="text/javascript">
+
+//rule view 
+
     $(document).ready(function(){
         //of13c
         if ($("#_022_of13c_code").val() != ""){
@@ -506,32 +506,6 @@
             $("#_136_of54d_name_address").attr("disabled", true);
         }
 
-        //of56_a_d
-//        if ($("#_160_of56a_party_identifier").val() != "" || $("#_161_of56a_identifier_code").val() != ""){
-//            $("#type_of56_").val("a").attr("selected",true);
-//            $("#div_of56a_").show();
-//            $("#div_of56d_").hide();
-//            $("#_160_of56a_party_identifier").attr("disabled", false);
-//            $("#_161_of56a_identifier_code").attr("disabled", false);
-//            $("#_164_of56d_party_identifier").attr("disabled", true);
-//            $("#_165_of56d_name_address").attr("disabled", true);
-//        } else if ($("#_164_of56d_party_identifier").val() != "" || $("#_165_of56d_name_address").val() != ""){
-//            $("#type_of56_").val("d").attr("selected",true);
-//            $("#div_of56a_").hide();
-//            $("#div_of56d_").show();
-//            $("#_160_of56a_party_identifier").attr("disabled", true);
-//            $("#_161_of56a_identifier_code").attr("disabled", true);
-//            $("#_164_of56d_party_identifier").attr("disabled", false);
-//            $("#_165_of56d_name_address").attr("disabled", false);
-//        } else{
-//            $("#div_of56a_").hide();
-//            $("#div_of56d_").hide();
-//            $("#_160_of56a_party_identifier").attr("disabled", true);
-//            $("#_161_of56a_identifier_code").attr("disabled", true);
-//            $("#_164_of56d_party_identifier").attr("disabled", true);
-//            $("#_165_of56d_name_address").attr("disabled", true);
-//        }
-        
         // of56_a_d
 if ($("#_160_of56a_party_identifier").val() != "" || $("#_161_of56a_identifier_code").val() != ""){
     $("#type_of56_").val("a").attr("selected",true);
@@ -632,4 +606,4 @@ if ($("#_160_of56a_party_identifier").val() != "" || $("#_161_of56a_identifier_c
         }
 
     });
-</script>
+

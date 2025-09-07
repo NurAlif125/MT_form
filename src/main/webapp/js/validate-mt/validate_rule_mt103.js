@@ -1,11 +1,14 @@
-<%-- 
-    Document   : validate_rule_mt103
-    Created on : Aug 12, 2012, 2:16:33 PM
-    Author     : M Abdul Hadi
---%>
+function loadCss(filename) {
+  var link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type = "text/css";
+  link.href = filename;
+  document.head.appendChild(link);
+}
+   
 
-<script type="text/javascript">
-    $(document).ready(function () {
+
+$(document).ready(function () {
 
         function toggleSenderChargesRequirement() {
             const chargeVal = $('#_210_of71a_details_charges').val();
@@ -315,20 +318,17 @@
         });
         
         $.validator.addMethod("regex", function(value, element, param) {
-            //this.optional(element) lewati validasi jika kosong dan param.test(value) check regex
             return this.optional(element) || param.test(value); 
-//            Jika tidak ada pesan khusus dalam messages tampilkan "Format tidak valid"
         }, "Format tidak valid");
    
     
     });
     
     
-</script>
 
-<link rel="stylesheet" type="text/css" href="css/validate.css" />
+loadCss("../../css/validate.css");
 
-<script type="text/javascript">
+
     $(document).ready(function () {
         
         $("#check_special_rate").hide();
@@ -1040,21 +1040,6 @@
             }
         });
 
-//        //of71f
-//        $("#div_of71f_sender_charges").hide();
-//        $("#_222_of71f_currency").attr("disabled", true);
-//        $("#_223_of71f_amount").attr("disabled", true);
-//        $("#_210_of71f_sender_charges_add").click(function() {
-//            $("#div_of71f_sender_charges").show();
-//            $("#_222_of71f_currency").attr("disabled", false);
-//            $("#_223_of71f_amount").attr("disabled", false);
-//        });
-//        $("#_211_of71f_sender_charges_remove").click(function() {
-//            $("#div_of71f_sender_charges").hide();
-//            $("#_222_of71f_currency").attr("disabled", true);
-//            $("#_223_of71f_amount").attr("disabled", true);
-//        });
-
         //of71f_1
         $("#check_of71f_1").hide();
         $("#_220_of71f_currency").prop("required", false);
@@ -1152,11 +1137,11 @@
         
         
     });
-</script>
 
 
-<!-- rule view -->
-<script language="javascript">
+
+//rule view
+
     $(document).ready(function () {
         //OF71
         if ($("#_210_of71a_details_charges").val() == "OUR") {
@@ -1203,52 +1188,7 @@
             $("#_042_of23e_code").attr("disabled", true);
         }
 
-        //mf50_a_f_k
-//        if ($("#_090_mf50a_account").val() != "" || $("#_091_mf50a_identifier_code").val() != "") {
-//            $("#type_mf50_ordering_customer").val("a").attr("selected", true);
-//            $("#div_mf50a_").show();
-//            $("#div_mf50f_").hide();
-//            $("#div_mf50k_").hide();
-//            $("#_090_mf50a_account").attr("disabled", false);
-//            $("#_091_mf50a_identifier_code").attr("disabled", false);
-//            $("#_093_mf50f_party_identifier").attr("disabled", true);
-//            $("#_094_mf50f_name_address").attr("disabled", true);
-//            $("#_105_mf50k_account").attr("disabled", true);
-//            $("#_106_mf50k_name_address").attr("disabled", true);
-//        } else if ($("#_093_mf50f_party_identifier").val() != "" || $("#_094_mf50f_name_address").val() != "") {
-//            $("#type_mf50_ordering_customer").val("f").attr("selected", true);
-//            $("#div_mf50a_").hide();
-//            $("#div_mf50f_").show();
-//            $("#div_mf50k_").hide();
-//            $("#_090_mf50a_account").attr("disabled", true);
-//            $("#_091_mf50a_identifier_code").attr("disabled", true);
-//            $("#_093_mf50f_party_identifier").attr("disabled", false);
-//            $("#_094_mf50f_name_address").attr("disabled", false);
-//            $("#_105_mf50k_account").attr("disabled", true);
-//            $("#_106_mf50k_name_address").attr("disabled", true);
-//        } else if ($("#_105_mf50k_account").val() != "" || $("#_106_mf50k_name_address").val() != "") {
-//            $("#type_mf50_ordering_customer").val("k").attr("selected", true);
-//            $("#div_mf50a_").hide();
-//            $("#div_mf50f_").hide();
-//            $("#div_mf50k_").show();
-//            $("#_090_mf50a_account").attr("disabled", true);
-//            $("#_091_mf50a_identifier_code").attr("disabled", true);
-//            $("#_093_mf50f_party_identifier").attr("disabled", true);
-//            $("#_094_mf50f_name_address").attr("disabled", true);
-//            $("#_105_mf50k_account").attr("disabled", false);
-//            $("#_106_mf50k_name_address").attr("disabled", false);
-//        } else {
-//            $("#div_mf50a_").hide();
-//            $("#div_mf50f_").hide();
-//            $("#div_mf50k_").hide();
-//            $("#_090_mf50a_account").attr("disabled", true);
-//            $("#_091_mf50a_identifier_code").attr("disabled", true);
-//            $("#_093_mf50f_party_identifier").attr("disabled", true);
-//            $("#_094_mf50f_name_address").attr("disabled", true);
-//            $("#_105_mf50k_account").attr("disabled", true);
-//            $("#_106_mf50k_name_address").attr("disabled", true);
-//        }
-//        --------------------
+       
 //            50_a_f_k
             if ($("#_090_mf50a_account").val() != "" || $("#_091_mf50a_identifier_code").val() != "") {
             $("#type_mf50_ordering_customer").val("a").attr("selected", true);
@@ -1639,51 +1579,7 @@
             $("#_177_of57d_name_address").attr("disabled", true);
         }
 
-        //mf59_59a
-//        if ($("#_180_mf59_account").val() != "" || $("#_181_mf59_name_address").val() != "") {
-//            $("#type_of59_59a_").val("59").attr("selected", true);
-//            $("#div_mf59_").show();
-//            $("#div_mf59a_").hide();
-//            $("#div_mf59f_").hide();
-//            $("#_180_mf59_account").attr("disabled", false);
-//            $("#_181_mf59_name_address").attr("disabled", false);
-//            $("#_182_mf59a_account").attr("disabled", true);
-//            $("#_183_mf59a_identifier_code").attr("disabled", true);
-//            $("#_185_mf59f_account").attr("disabled", true);
-//            $("#_186_mf59f_name_address").attr("disabled", true);
-//        } else if ($("#_182_mf59a_account").val() != "" || $("#_183_mf59a_identifier_code").val() != "") {
-//            $("#type_of59_59a_").val("59a").attr("selected", true);
-//            $("#div_mf59_").hide();
-//            $("#div_mf59a_").show();
-//            $("#div_mf59f_").hide();
-//            $("#_180_mf59_account").attr("disabled", true);
-//            $("#_181_mf59_name_address").attr("disabled", true);
-//            $("#_182_mf59a_account").attr("disabled", false);
-//            $("#_183_mf59a_identifier_code").attr("disabled", false);
-//            $("#_185_mf59f_account").attr("disabled", true);
-//            $("#_186_mf59f_name_address").attr("disabled", true);
-//        } else if ($("#_185_mf59f_account").val() != "" || $("#_186_mf59f_name_address").val() != "") {
-//            $("#type_of59_59a_").val("59f").attr("selected", true);
-//            $("#div_mf59_").hide();
-//            $("#div_mf59a_").hide();
-//            $("#div_mf59f_").show();
-//            $("#_180_mf59_account").attr("disabled", true);
-//            $("#_181_mf59_name_address").attr("disabled", true);
-//            $("#_182_mf59a_account").attr("disabled", true);
-//            $("#_183_mf59a_identifier_code").attr("disabled", true);
-//            $("#_185_mf59f_account").attr("disabled", false);
-//            $("#_186_mf59f_name_address").attr("disabled", false);
-//        } else {
-//            $("#div_mf59_").hide();
-//            $("#div_mf59a_").hide();
-//            $("#div_mf59f_").hide();
-//            $("#_180_mf59_account").attr("disabled", true);
-//            $("#_181_mf59_name_address").attr("disabled", true);
-//            $("#_182_mf59a_account").attr("disabled", true);
-//            $("#_183_mf59a_identifier_code").attr("disabled", true);
-//            $("#_185_mf59f_account").attr("disabled", true);
-//            $("#_186_mf59f_name_address").attr("disabled", true);
-//        }
+      
         if ($("#_180_mf59_account").val() != "" || $("#_181_mf59_name_address").val() != "") {
             $("#type_of59_59a_").val("59").attr("selected", true);
             $("#div_mf59_").show();
@@ -1796,16 +1692,7 @@
             $("#_192_mf59f_number").prop("required", false);
             $("#_193_mf59f_details").prop("required", false);
         }
-//        //of71f
-//        if ($("#_222_of71f_currency").val() != "" || $("#_223_of71f_amount").val() != ""){
-//            $("#div_of71f_sender_charges").show();
-//            $("#_222_of71f_currency").attr("disabled", false);
-//            $("#_223_of71f_amount").attr("disabled", false);
-//        }else{
-//            $("#div_of71f_sender_charges").hide();
-//            $("#_222_of71f_currency").attr("disabled", true);
-//            $("#_223_of71f_amount").attr("disabled", true);
-//        }
+
 
         //of71f_1
         if ($("#_220_of71f_currency").val() != "" || $("#_221_of71f_amount").val() != "") {
@@ -1878,19 +1765,9 @@
         }
         
         
-        //OF26t
-//        if ($("#_050_of26t_code").val() != "") {
-//            $("#transaction_type_code_checkbox").attr("checked", true);
-//            $("#check_of26t").show();
-//            $("#_050_of26t_code").attr("disabled", false);
-//        } else {
-//            $("#check_of26t").hide();
-//            $("#_050_of26t_code").attr("disabled", true);
-//        }
-        //end of the line
-        
         
 
     });
     
-</script>
+
+

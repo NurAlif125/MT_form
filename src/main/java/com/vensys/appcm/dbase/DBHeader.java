@@ -1025,7 +1025,6 @@ public class DBHeader {
                 header.setIo_type("INCOMING");
             }
             String receiver = rs.getString(7);
-
             header.setReceiverAddress(receiver != null ? receiver.toUpperCase() : "");
             header.setTanggal(rs.getString(8));
             header.setId_headers(rs.getInt(9));

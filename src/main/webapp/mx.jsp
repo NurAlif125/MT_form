@@ -61,13 +61,4 @@
     </form>
 </div>
 <script type="text/javascript" src="js/data-tree.js"></script>
-<script>
-    var xmldata = document.getElementById("hiddenmxfull").value;
-//    console.log(xmldata);
-    new DataTree({
-        xml: xmldata,
-        container: '#mxfull',
-        attrs: 'show',
-        startExpanded: true
-    });
-</script>
+<script type="text/javascript" src="js/fullMX.js"></script>

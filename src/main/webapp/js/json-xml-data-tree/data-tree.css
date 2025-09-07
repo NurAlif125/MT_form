@@ -26,3 +26,12 @@
 .xmltree .plusMin:hover { background: #777; }
 .xmltree .noKids .plusMin { display: none; }
 .xmltree.subTreeRequestsOnAllNodes .plusMin, .xmltree .subTreeNode .plusMin { display: block; }
+
+.scrl {
+        position: relative;
+        height: 600px;
+        overflow: auto;
+    }
+    .codex-editor__redactor {
+        padding-bottom: 30px !important;
+    }
