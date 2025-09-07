@@ -45,7 +45,7 @@
                         <input type="text" name="description" id="description" maxlength="255" value="<c:out value="${dataUserById.description}" />" />
                     </div>
                     <div class="form-row"><span class="labelL2">Role</span>
-                        <select name="role" id="role" onchange="handleRoleChange()">
+                        <select name="role" id="role">
                             <option value=""></option>
                             <c:forEach var="item" items="${dataRoleList}">
                                 <option value="${item.role_id}" <c:if test="${item.role_id == dataUserById.role}"> selected="true" </c:if> 
@@ -122,26 +122,32 @@
 </div>
 
 <script>
-    function handleRoleChange() {
-        const roleSelect = document.getElementById("role");
-        const subRoleContainer = document.getElementById("sub-role-container");
-        const subRoleRadios = document.querySelectorAll('input[name="subrole"]');
+  document.addEventListener("DOMContentLoaded", function () {
+      const roleSelect = document.getElementById("role");
+      const subRoleContainer = document.getElementById("sub-role-container");
+      const subRoleRadios = document.querySelectorAll('input[name="subrole"]');
 
-        if (roleSelect.value === "1") {
-            subRoleContainer.style.display = "block";
-            subRoleRadios.forEach(radio => {
-                radio.setAttribute("required", "required");
-            });
+      function handleRoleChange() {
+        const selectedOption = roleSelect.options[roleSelect.selectedIndex];
+        const selectedText = selectedOption ? selectedOption.textContent.toLowerCase() : "";
+
+        if (selectedText.includes("adm")) {
+          subRoleContainer.style.display = "block";
+          subRoleRadios.forEach(radio => radio.setAttribute("required", "required"));
         } else {
-            subRoleContainer.style.display = "none";
-            subRoleRadios.forEach(radio => {
-                radio.removeAttribute("required");
-                radio.checked = false;
-            });
+          subRoleContainer.style.display = "none";
+          subRoleRadios.forEach(radio => {
+            radio.removeAttribute("required");
+            radio.checked = false;
+          });
         }
-    }
+      }
 
-    window.onload = handleRoleChange;
+    if (roleSelect) {
+      roleSelect.addEventListener("change", handleRoleChange);
+     handleRoleChange(); // jalan sekali saat load
+    }
+  });
 </script>
 
 <script>

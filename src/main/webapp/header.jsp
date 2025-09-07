@@ -18,7 +18,7 @@ response.setHeader("X-Frame-Options", "DENY");
 response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
 response.setHeader("Content-Security-Policy",
             "default-src 'self'; "
-            + "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+            + "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
             + "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
             + "img-src 'self' data: https://flickr.com; "
             + "font-src 'self' https://cdn.jsdelivr.net; "
