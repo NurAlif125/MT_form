@@ -106,10 +106,30 @@ public class MT700Servlet extends HttpServlet {
                 out.println("<script>alert('Mandatory fields MT700 belum lengkap.'); window.history.back();</script>");
                 return;
             }
+            
+            // === Generate custom ID untuk MT700 ===
+            String newId = null;
+            String prefix = "MT700";
+            String sqlNextId = "SELECT COALESCE(MAX(CAST(SUBSTRING(form_id FROM '[0-9]+$') AS INTEGER)),0)+1 AS next_id " +
+                               "FROM mt.mt700_message";
+            try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
+                 java.sql.Statement stmt = conn.createStatement();
+                 java.sql.ResultSet rs = stmt.executeQuery(sqlNextId)) {
+
+                if (rs.next()) {
+                    int next = rs.getInt("next_id");
+                    newId = prefix + "_" + next;
+                } else {
+                    newId = prefix + "_1";
+                }
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace(out);
+                newId = "MT700_1";
+            }
 
             // === Query Insert (contoh sederhana) ===
             String sql = "INSERT INTO mt.mt700_message(" +
-                "message_type, mf27_sequence_of_total, mf40a_form_of_credit, mf20_documentary_credit_number, " +
+                "form_id, message_type, mf27_sequence_of_total, mf40a_form_of_credit, mf20_documentary_credit_number, " +
                 "of23_reference_to_preadvice, mf31c_date_of_issue, mf40e_applicable_rules, mf40e_narrative, " +
                 "mf31d_date_of_expiry, mf31d_place_of_expiry, of51a_option, of51a_bic, of51a_name_address, " +
                 "mf50_applicant, mf59_account, mf59_name_address, mf32b_currency, mf32b_amount, " +
@@ -122,12 +142,14 @@ public class MT700Servlet extends HttpServlet {
                 "of49h_special_payment_bank, of71d_charges, of48_days, of48_narrative, mf49_confirmation, " +
                 "of58a_option, of58a_bic, of58a_name_address, of53a_option, of53a_bic, of53a_name_address, " +
                 "of78_instructions, of57a_option, of57a_bic, of57a_location, of57a_name_address, of72z_information" +
-                ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
 
             try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
                  PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 int idx = 1;
+                ps.setString(idx++, newId);
                 ps.setString(idx++, "700");
                 ps.setString(idx++, seqTotal);
                 ps.setString(idx++, formCredit);
@@ -191,6 +213,8 @@ public class MT700Servlet extends HttpServlet {
 
                 ps.executeUpdate();
                 out.println("<script>alert('MT700 data saved successfully!'); window.location='mt700.jsp';</script>");
+                
+                response.sendRedirect("Category7/viewForm.jsp?id=");
 
             } catch (Exception e) {
                 e.printStackTrace(out);

@@ -3,10 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* =========================================================
-   MT700 JavaScript Handler
-   Final Version - Full Compatible with mt700.jsp
-   ========================================================= */
 
 /* ========== Utility Functions ========== */
 
@@ -58,14 +54,14 @@ function bindDateField(id) {
     if (!input) return;
 
     input.addEventListener("focus", () => {
-        input.type = "date"; // native datepicker
+        input.type = "date"; 
     });
     input.addEventListener("blur", () => {
-        input.type = "text"; // kembali ke text
+        input.type = "text"; 
         if (input.value) {
-            let val = input.value.replace(/-/g, ""); // YYYYMMDD
+            let val = input.value.replace(/-/g, "");
             if (val.length === 8) {
-                input.value = val.substring(2); // simpan YYMMDD
+                input.value = val.substring(2); 
             }
         }
     });
@@ -140,9 +136,9 @@ function handle57aOption() {
 document.addEventListener("DOMContentLoaded", () => {
 
     // Bind date fields sesuai id di mt700.jsp
-    bindDateField("_050_mf31c_date_of_issue");    // Field 31C
-    bindDateField("_070_mf31d_date_of_expiry");   // Field 31D
-    bindDateField("_250_of44c_latest_date");      // Field 44C
+    bindDateField("_050_mf31c_date_of_issue");   
+    bindDateField("_070_mf31d_date_of_expiry"); 
+    bindDateField("_250_of44c_latest_date");     
 
     // Handler untuk Option Fields
     const el40e = document.getElementById("_060_mf40e_applicable_rules");

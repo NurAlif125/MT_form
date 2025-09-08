@@ -129,9 +129,28 @@ public class MT707Servlet extends HttpServlet {
                 return;
             }
 
+            // === Generate custom form_id untuk MT707 ===
+            String newId = null;
+            String sqlNextId =
+                "SELECT COALESCE(MAX(CAST(SUBSTRING(form_id FROM '[0-9]+$') AS INTEGER)),0)+1 AS next_id " +
+                "FROM mt.mt707_message";
+            try (Connection conn = DatabaseConnection.getConnection();
+                 java.sql.Statement stmt = conn.createStatement();
+                 java.sql.ResultSet rs = stmt.executeQuery(sqlNextId)) {
+                if (rs.next()) {
+                    int next = rs.getInt("next_id");
+                    newId = "MT707_" + next;
+                } else {
+                    newId = "MT707_1";
+                }
+            } catch (Exception e) {
+                e.printStackTrace(out);
+                newId = "MT707_1"; 
+            }
+            
             // === Query Insert ===
             String sql = "INSERT INTO mt.mt707_message(" +
-                    "message_type, _010_mf27_sequence_of_total, _020_mf20_sender_reference, _030_mf21_receiver_reference, _040_mf23_issuing_bank_reference, " +
+                    "form_id, message_type, _010_mf27_sequence_of_total, _020_mf20_sender_reference, _030_mf21_receiver_reference, _040_mf23_issuing_bank_reference, " +
                     "_050_of52a_option, _051_of52a_identifier_code, _052_of52a_name_address, _060_of50b_non_bank_issuer, " +
                     "_070_mf31c_date_of_issue, _080_mf26e_number_of_amendment, _090_mf30_date_of_amendment, _100_mf22a_purpose_of_message, " +
                     "_110_of23s_cancellation_request, _120_of40a_form_of_credit, _130_of40e_applicable_rules, _131_of40e_narrative, " +
@@ -146,11 +165,12 @@ public class MT707Servlet extends HttpServlet {
                     "_410_of48_days, _411_of48_narrative, _420_of49_confirmation_instructions, _430_of58a_option, _431_of58a_identifier_code, _432_of58a_name_address, " +
                     "_440_of53a_option, _441_of53a_identifier_code, _442_of53a_name_address, _450_of78_instructions, _460_of57a_option, _461_of57a_identifier_code, " +
                     "_462_of57a_location, _463_of57a_name_address, _470_of72z_sender_to_receiver" +
-                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    ") VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
             try (Connection conn = DatabaseConnection.getConnection();
                  PreparedStatement ps = conn.prepareStatement(sql)) {
                 int idx = 1;
+                ps.setString(idx++, newId);
                 ps.setString(idx++, "707");
                 ps.setString(idx++, mf27);
                 ps.setString(idx++, mf20);

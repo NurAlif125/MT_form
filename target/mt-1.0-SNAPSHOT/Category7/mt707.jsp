@@ -43,8 +43,6 @@
                 <div class="form-body tabcontents">
                     <div id="view2" class="tabcontent active">
 
-                        <%-- ================= MT707 Batch 1 (Fields 27 – 22A) ================= --%>
-
                         <!-- MF27 Sequence of Total -->
                         <div class="form-row">
                             <span class="label_body">MF27</span>
@@ -108,7 +106,7 @@
                             <span class="label_body">OF52a</span>
                             <span class="label">Issuing Bank (Option A or D)</span>
                             <select id="_050_of52a_option" name="_050_of52a_option">
-                                <option value="">-- option --</option>
+                                <option value="">choose a type</option>
                                 <option value="A"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_050_of52a_option' and item.detail eq 'A'}">selected</c:if>
@@ -208,7 +206,7 @@
                             <span class="label_body">MF22A</span>
                             <span class="label"><a style="color:red">*</a> Purpose of Message</span>
                             <select name="_100_mf22a_purpose_of_message" id="_100_mf22a_purpose_of_message" class="mandatory">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="ACNF"
                                     <c:if test="${_100_mf22a_purpose_of_message eq 'ACNF'}">selected</c:if>>
                                     ACNF - Advice &amp; Confirmation
@@ -225,14 +223,12 @@
                         </div>
                         <hr/>
 
-                        <%-- ================= MT707 Batch 2 (Fields 23S – 31D) ================= --%>
-
                         <!-- OF23S Cancellation Request -->
                         <div class="form-row">
                             <span class="label_body">OF23S</span>
                             <span class="label">Cancellation Request</span>
                             <select name="_110_of23s_cancellation_request" id="_110_of23s_cancellation_request">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="CANCEL"
                                     <c:if test="${_110_of23s_cancellation_request eq 'CANCEL'}">selected</c:if>>
                                     CANCEL - Request to cancel the instrument
@@ -246,7 +242,7 @@
                             <span class="label_body">OF40A</span>
                             <span class="label">Form of Documentary Credit</span>
                             <select name="_120_of40a_form_of_credit" id="_120_of40a_form_of_credit">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="IRREVOCABLE"
                                     <c:if test="${_120_of40a_form_of_credit eq 'IRREVOCABLE'}">selected</c:if>>
                                     IRREVOCABLE
@@ -264,7 +260,7 @@
                             <span class="label_body">OF40E</span>
                             <span class="label">Applicable Rules</span>
                             <select name="_130_of40e_applicable_rules" id="_130_of40e_applicable_rules">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="UCP LATEST VERSION"
                                     <c:if test="${_130_of40e_applicable_rules eq 'UCP LATEST VERSION'}">selected</c:if>>
                                     UCP LATEST VERSION
@@ -321,9 +317,6 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 3 (Fields 50 – 59) ================= --%>
-
                         <!-- OF50 Changed Applicant Details -->
                         <div class="form-row">
                            <span class="label_body">OF50</span>
@@ -362,15 +355,12 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 4 (Fields 32B – 39C) ================= --%>
-
                         <!-- OF32B Increase of Documentary Credit Amount -->
                         <div class="form-row">
                             <span class="label_body">OF32B</span>
                             <span class="label">Increase of Documentary Credit Amount</span>
                             <input type="text" name="_170_of32b_currency" id="_170_of32b_currency"
-                                   maxlength="3" placeholder="Currency (ISO 4217)"
+                                   maxlength="3" placeholder="Currency"
                                    value="<c:forEach var='item' items='${tags}'>
                                               <c:if test='${item.tagName eq "_170_of32b_currency"}'>
                                                   <c:out value='${item.detail}'/>
@@ -391,7 +381,7 @@
                             <span class="label_body">OF33B</span>
                             <span class="label">Decrease of Documentary Credit Amount</span>
                             <input type="text" name="_180_of33b_currency" id="_180_of33b_currency"
-                                   maxlength="3" placeholder="Currency (ISO 4217)"
+                                   maxlength="3" placeholder="Currency"
                                    value="<c:forEach var='item' items='${tags}'>
                                               <c:if test='${item.tagName eq "_180_of33b_currency"}'>
                                                   <c:out value='${item.detail}'/>
@@ -441,15 +431,12 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 5 (Fields 41a – 42a) ================= --%>
-
                         <!-- OF41a Available With ... By ... -->
                         <div class="form-row">
                             <span class="label_body">OF41a</span>
                             <span class="label">Available With ... By ... (Option A or D)</span>
                             <select id="_210_of41a_option" name="_210_of41a_option">
-                                <option value="">-- option --</option>
+                                <option value="">choose a type</option>
                                 <option value="A"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_210_of41a_option' and item.detail eq 'A'}">selected</c:if>
@@ -492,7 +479,7 @@
                             <span class="label_body">&nbsp;</span>
                             <span class="label">Code</span>
                             <select id="_213_of41a_code" name="_213_of41a_code">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="BY ACCEPTANCE"
                                     <c:if test="${_213_of41a_code eq 'BY ACCEPTANCE'}">selected</c:if>>
                                     BY ACCEPTANCE
@@ -535,7 +522,7 @@
                             <span class="label_body">OF42a</span>
                             <span class="label">Drawee (Option A or D)</span>
                             <select id="_230_of42a_option" name="_230_of42a_option">
-                                <option value="">-- option --</option>
+                                <option value="">choose a type</option>
                                 <option value="A"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_230_of42a_option' and item.detail eq 'A'}">selected</c:if>
@@ -587,9 +574,6 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 6 (Fields 42M – 43T) ================= --%>
-
                         <!-- OF42M Mixed Payment Details -->
                         <div class="form-row">
                             <span class="label_body">OF42M</span>
@@ -621,7 +605,7 @@
                             <span class="label_body">OF43P</span>
                             <span class="label">Partial Shipments</span>
                             <select id="_260_of43p_partial_shipments" name="_260_of43p_partial_shipments">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="ALLOWED"
                                     <c:if test="${_260_of43p_partial_shipments eq 'ALLOWED'}">selected</c:if>>
                                     ALLOWED
@@ -643,7 +627,7 @@
                             <span class="label_body">OF43T</span>
                             <span class="label">Transhipment</span>
                             <select id="_270_of43t_transhipment" name="_270_of43t_transhipment">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="ALLOWED"
                                     <c:if test="${_270_of43t_transhipment eq 'ALLOWED'}">selected</c:if>>
                                     ALLOWED
@@ -659,9 +643,6 @@
                             </select>
                         </div>
                         <hr/>
-
-
-                        <%-- ================= MT707 Batch 7 (Fields 44A – 44D) ================= --%>
 
                         <!-- OF44A Place of Taking in Charge / Dispatch from / Place of Receipt -->
                         <div class="form-row">
@@ -742,15 +723,12 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 8 (Fields 45B – 47B) ================= --%>
-
                         <!-- OF45B Description of Goods and/or Services -->
                         <div class="form-row">
                             <span class="label_body">OF45B</span>
                             <span class="label">Description of Goods and/or Services</span>
                             <textarea name="_340_of45b_description_goods" id="_340_of45b_description_goods"
-                                      rows="6" maxlength="6500" placeholder="/ADD/ item details, /DELETE/ old item, /REPALL/ new text"><c:forEach var="item" items="${tags}">
+                                      rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_340_of45b_description_goods'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
@@ -763,7 +741,7 @@
                             <span class="label_body">OF46B</span>
                             <span class="label">Documents Required</span>
                             <textarea name="_350_of46b_documents_required" id="_350_of46b_documents_required"
-                                      rows="6" maxlength="6500" placeholder="/ADD/ invoice, /DELETE/ old doc, /REPALL/ new list"><c:forEach var="item" items="${tags}">
+                                      rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_350_of46b_documents_required'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
@@ -776,7 +754,7 @@
                             <span class="label_body">OF47B</span>
                             <span class="label">Additional Conditions</span>
                             <textarea name="_360_of47b_additional_conditions" id="_360_of47b_additional_conditions"
-                                      rows="6" maxlength="6500" placeholder="/ADD/ clause, /DELETE/ old clause, /REPALL/ all new conditions"><c:forEach var="item" items="${tags}">
+                                      rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_360_of47b_additional_conditions'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
@@ -784,15 +762,12 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 9 (Fields 49M – 49N) ================= --%>
-
                         <!-- OF49M Special Payment Conditions for Beneficiary -->
                         <div class="form-row">
                             <span class="label_body">OF49M</span>
                             <span class="label">Special Payment Conditions for Beneficiary</span>
                             <textarea name="_370_of49m_special_payment_beneficiary" id="_370_of49m_special_payment_beneficiary"
-                                      rows="6" maxlength="6500" placeholder="/ADD/ clause, /DELETE/ clause, /REPALL/ new conditions"><c:forEach var="item" items="${tags}">
+                                      rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_370_of49m_special_payment_beneficiary'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
@@ -805,7 +780,7 @@
                             <span class="label_body">OF49N</span>
                             <span class="label">Special Payment Conditions for Bank Only</span>
                             <textarea name="_380_of49n_special_payment_bank" id="_380_of49n_special_payment_bank"
-                                      rows="6" maxlength="6500" placeholder="/ADD/ internal bank note, /DELETE/ old clause, /REPALL/ all new terms"><c:forEach var="item" items="${tags}">
+                                      rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_380_of49n_special_payment_bank'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
@@ -813,15 +788,12 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 10 (Fields 71D – 71N) ================= --%>
-
                         <!-- OF71D Charges -->
                         <div class="form-row">
                             <span class="label_body">OF71D</span>
                             <span class="label">Charges (to be borne by Beneficiary)</span>
                             <textarea name="_390_of71d_charges" id="_390_of71d_charges"
-                                      rows="4" maxlength="210" placeholder="/COMM/USD100 Commission, /INSUR/EUR50 Insurance"><c:forEach var="item" items="${tags}">
+                                      rows="4" maxlength="210"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_390_of71d_charges'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
@@ -834,7 +806,7 @@
                             <span class="label_body">OF71N</span>
                             <span class="label">Amendment Charge Payable By</span>
                             <select id="_400_of71n_charge_code" name="_400_of71n_charge_code">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="APPL"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_400_of71n_charge_code' and item.detail eq 'APPL'}">selected</c:if>
@@ -868,10 +840,6 @@
                         </div>
                         <hr/>
 
-
-
-                        <%-- ================= MT707 Batch 11 (Fields 48 – 49) ================= --%>
-
                         <!-- OF48 Period for Presentation in Days -->
                         <div class="form-row">
                             <span class="label_body">OF48</span>
@@ -903,7 +871,7 @@
                             <span class="label_body">OF49</span>
                             <span class="label">Confirmation Instructions</span>
                             <select id="_420_of49_confirmation_instructions" name="_420_of49_confirmation_instructions">
-                                <option value="">-- select --</option>
+                                <option value="">choose a type</option>
                                 <option value="CONFIRM"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_420_of49_confirmation_instructions' and item.detail eq 'CONFIRM'}">selected</c:if>
@@ -926,15 +894,12 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 12 (Fields 58a – 53a) ================= --%>
-
                         <!-- OF58a Requested Confirmation Party -->
                         <div class="form-row">
                             <span class="label_body">OF58a</span>
                             <span class="label">Requested Confirmation Party (Option A or D)</span>
                             <select id="_430_of58a_option" name="_430_of58a_option">
-                                <option value="">-- option --</option>
+                                <option value="">choose a type</option>
                                 <option value="A"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_430_of58a_option' and item.detail eq 'A'}">selected</c:if>
@@ -979,7 +944,7 @@
                             <span class="label_body">OF53a</span>
                             <span class="label">Reimbursing Bank (Option A or D)</span>
                             <select id="_440_of53a_option" name="_440_of53a_option">
-                                <option value="">-- option --</option>
+                                <option value="">choose a type</option>
                                 <option value="A"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_440_of53a_option' and item.detail eq 'A'}">selected</c:if>
@@ -1019,9 +984,6 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 13 (Fields 78 – 57a) ================= --%>
-
                         <!-- OF78 Instructions to the Paying/Accepting/Negotiating Bank -->
                         <div class="form-row">
                             <span class="label_body">OF78</span>
@@ -1040,7 +1002,7 @@
                             <span class="label_body">OF57a</span>
                             <span class="label">'Advise Through' Bank (Option A, B, or D)</span>
                             <select id="_460_of57a_option" name="_460_of57a_option">
-                                <option value="">-- option --</option>
+                                <option value="">choose a type</option>
                                 <option value="A"
                                     <c:forEach var="item" items="${tags}">
                                         <c:if test="${item.tagName eq '_460_of57a_option' and item.detail eq 'A'}">selected</c:if>
@@ -1098,16 +1060,12 @@
                         </div>
                         <hr/>
 
-
-                        <%-- ================= MT707 Batch 14 (Field 72Z) ================= --%>
-
                         <!-- OF72Z Sender to Receiver Information -->
                         <div class="form-row">
                             <span class="label_body">OF72Z</span>
                             <span class="label">Sender to Receiver Information</span>
                             <textarea name="_470_of72z_sender_to_receiver" id="_470_of72z_sender_to_receiver"
-                                      rows="6" maxlength="210"
-                                      placeholder="/PHONBEN/ Call beneficiary by phone&#10;/TELEBEN/ Advise beneficiary via telecom"><c:forEach var="item" items="${tags}">
+                                      rows="6" maxlength="210"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_470_of72z_sender_to_receiver'}">
                                     <c:out value="${item.detail}"/>
                                 </c:if>

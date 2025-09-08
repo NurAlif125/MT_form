@@ -114,7 +114,7 @@
       <tr>
         <td><%= formId %></td>
         <td><%= formType %></td>
-        <td><%= rs.getTimestamp("created_at") %></td>
+        <td><%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(rs.getTimestamp("created_at")) %></td>
         <td>
             <a class="view-btn" href="viewForm.jsp?id=<%= formId %>&type=<%= formType %>">
                 View

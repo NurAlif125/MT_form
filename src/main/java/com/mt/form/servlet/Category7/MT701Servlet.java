@@ -28,7 +28,6 @@ public class MT701Servlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-
             // === Paksa load driver PostgreSQL ===
             try {
                 Class.forName("org.postgresql.Driver");
@@ -52,17 +51,37 @@ public class MT701Servlet extends HttpServlet {
                 return;
             }
 
-            // === Query Insert sederhana ===
+            // === Generate custom ID untuk MT701 ===
+            String newId = null;
+            String prefix = "MT701";
+            String sqlNextId = "SELECT COALESCE(MAX(CAST(SUBSTRING(form_id FROM '[0-9]+$') AS INTEGER)),0)+1 AS next_id " +
+                               "FROM mt.mt701_message";
+            try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
+                 java.sql.Statement stmt = conn.createStatement();
+                 java.sql.ResultSet rs = stmt.executeQuery(sqlNextId)) {
+                if (rs.next()) {
+                    int next = rs.getInt("next_id");
+                    newId = "MT701_" + next;
+                } else {
+                    newId = "MT701_1";
+                }
+            } catch (Exception e) {
+                e.printStackTrace(out);
+                newId = "MT701_1";
+            }
+
+            // === Query Insert ===
             String sql = "INSERT INTO mt.mt701_message(" +
-                    "message_type, mf27_sequence_of_total, mf20_documentary_credit_number, " +
+                    "form_id, message_type, mf27_sequence_of_total, mf20_documentary_credit_number, " +
                     "of45a_description, of46a_documents, of47a_additional_conditions, " +
                     "of49g_special_payment_beneficiary, of49h_special_payment_bank" +
-                    ") VALUES (?,?,?,?,?,?,?,?)";
+                    ") VALUES (?,?,?,?,?,?,?,?,?)";
 
             try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
                  PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 int idx = 1;
+                ps.setString(idx++, newId);
                 ps.setString(idx++, "701");
                 ps.setString(idx++, seqTotal);
                 ps.setString(idx++, creditNumber);
@@ -86,4 +105,3 @@ public class MT701Servlet extends HttpServlet {
         return (s == null || s.trim().isEmpty());
     }
 }
-    

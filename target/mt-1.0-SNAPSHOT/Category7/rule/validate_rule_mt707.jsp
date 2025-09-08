@@ -481,8 +481,6 @@
                 });
             });
 
-        // bind toggles already present in mt707.js; no duplicate toggles here
-
     });
 
 })(window, document);

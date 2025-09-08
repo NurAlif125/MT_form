@@ -3,11 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* =========================================================
- * MT707 — UX & lightweight client validation
- * Compatible with mt707.jsp structure & field IDs
- * ========================================================= */
-
 /* -------------------- Utilities -------------------- */
 function q(id) { return document.getElementById(id); }
 function show(id, on = true) { const el = q(id); if (el) el.style.display = on ? "block" : "none"; }
@@ -187,17 +182,9 @@ function toggle57a() {
 }
 
 /* -------------------- Structured Text Validators & Helpers -------------------- */
-/**
- * Validate structured fields with codes at line start: /CODE/...
- * - allowedCodes: array of allowed codes (e.g., ["ADD","DELETE","REPALL"])
- * - repallExclusive: if true, REPALL can appear only once and no other code can appear
- * Behavior:
- * - Lines starting with "/" must have allowed code
- * - Continuation lines (not starting with "/") are accepted as narrative continuation
- */
 function validateStructuredField(id, allowedCodes, repallExclusive) {
   const text = val(id);
-  if (isEmpty(text)) return true; // nothing to validate
+  if (isEmpty(text)) return true;
   const lines = text.split(/\r?\n/);
 
   let repallCount = 0;
@@ -206,7 +193,6 @@ function validateStructuredField(id, allowedCodes, repallExclusive) {
   for (let i = 0; i < lines.length; i++) {
     const ln = lines[i].trim();
     if (ln.startsWith("/")) {
-      // format "/CODE/" or "/CODE/ rest"
       const m = ln.match(/^\/([A-Z]{3,6})\//);
       if (!m) {
         alert(`Invalid code format at line ${i + 1} in ${id}. Expected "/CODE/..."`);
@@ -259,11 +245,9 @@ function validate72Z(id) {
           return false;
         }
       } else if (ln.trim() !== "") {
-        // narrative begins; must be last block
         narrativeStarted = true;
       }
     } else {
-      // after narrative started, no line may start with "/"
       if (ln.startsWith("/")) {
         alert("In OF72Z, narrative must be last. No codes allowed after narrative begins.");
         q(id).focus();
@@ -295,7 +279,6 @@ function validate71D(id) {
         q(id).focus();
         return false;
       }
-      // If currency present, must be ISO
       const ccy = m[2] || "";
       if (ccy && !isCurrency(ccy)) {
         alert(`Invalid currency at line ${i + 1} in OF71D.`);

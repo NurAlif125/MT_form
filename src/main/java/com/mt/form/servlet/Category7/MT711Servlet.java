@@ -28,7 +28,6 @@ public class MT711Servlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try (PrintWriter out = response.getWriter()) {
-
             // === Load driver PostgreSQL ===
             try {
                 Class.forName("org.postgresql.Driver");
@@ -47,24 +46,44 @@ public class MT711Servlet extends HttpServlet {
             String specialPayBenef= request.getParameter("_070_of49g_special_payment_beneficiary");
             String specialPayBank = request.getParameter("_080_of49h_special_payment_bank");
 
-            // === Basic validation (server-side mandatory fields) ===
+            // === Basic validation ===
             if (isEmpty(seqTotal) || isEmpty(senderRef) || isEmpty(creditNumber)) {
                 out.println("<script>alert('Mandatory fields MT711 belum lengkap (27, 20, 21).'); window.history.back();</script>");
                 return;
             }
 
-            // === Query Insert sederhana ===
+            // === Generate custom form_id (MT711_1, MT711_2, ...) ===
+            String newId = null;
+            String prefix = "MT711";
+            String sqlNextId = "SELECT COALESCE(MAX(CAST(SUBSTRING(form_id FROM '[0-9]+$') AS INTEGER)),0)+1 AS next_id " +
+                               "FROM mt.mt711_message";
+            try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
+                 java.sql.Statement stmt = conn.createStatement();
+                 java.sql.ResultSet rs = stmt.executeQuery(sqlNextId)) {
+                if (rs.next()) {
+                    int next = rs.getInt("next_id");
+                    newId = "MT711_" + next;
+                } else {
+                    newId = "MT711_1"; 
+                }
+            } catch (Exception e) {
+                e.printStackTrace(out);
+                newId = "MT711_1"; 
+            }
+
+            // === Query Insert ===
             String sql = "INSERT INTO mt.mt711_message(" +
-                    "message_type, mf27_sequence_of_total, mf20_sender_reference, mf21_documentary_credit_number, " +
+                    "form_id, message_type, mf27_sequence_of_total, mf20_sender_reference, mf21_documentary_credit_number, " +
                     "of45a_description, of46a_documents, of47a_additional_conditions, " +
                     "of49g_special_payment_beneficiary, of49h_special_payment_bank" +
-                    ") VALUES (?,?,?,?,?,?,?,?,?)";
+                    ") VALUES (?,?,?,?,?,?,?,?,?,?)";
 
             try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASS);
                  PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 int idx = 1;
-                ps.setString(idx++, "711");      // message_type
+                ps.setString(idx++, newId);
+                ps.setString(idx++, "711");
                 ps.setString(idx++, seqTotal);
                 ps.setString(idx++, senderRef);
                 ps.setString(idx++, creditNumber);

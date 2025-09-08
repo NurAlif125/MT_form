@@ -29,7 +29,7 @@
         // === FIELD 27 : Sequence of Total ===
         $("#_010_mf27_sequence_of_total").off("blur").on("blur", function () {
             var val = $(this).val().trim();
-            var regex = /^[0-9]{1}\/[0-9]{1}$/; // format 1!n/1!n
+            var regex = /^[0-9]{1}\/[0-9]{1}$/;
             if (val !== "" && regex.test(val)) {
                 var parts = val.split("/");
                 var num = parseInt(parts[0], 10);
