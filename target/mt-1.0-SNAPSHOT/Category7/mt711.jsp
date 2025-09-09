@@ -45,7 +45,7 @@
                     <!-- MF27 Sequence of Total -->
                     <div class="form-row">
                         <span class="label_body">MF27</span>
-                        <span class="label"><a>*</a>Sequence of Total</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total</span>
                         <input type="text" name="_010_mf27_sequence_of_total" 
                                id="_010_mf27_sequence_of_total"
                                class="mandatory" maxlength="3"/>
@@ -63,7 +63,7 @@
                     <!-- MF21 Documentary Credit Number -->
                     <div class="form-row">
                         <span class="label_body">MF21</span>
-                        <span class="label"><a>*</a>Documentary Credit Number</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Documentary Credit Number</span>
                         <input type="text" name="_030_mf21_documentary_credit_number" 
                                id="_030_mf21_documentary_credit_number"
                                class="mandatory" maxlength="16"/>

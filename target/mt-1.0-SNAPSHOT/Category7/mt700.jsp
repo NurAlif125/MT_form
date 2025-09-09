@@ -46,7 +46,7 @@
                     <!-- MF27 Sequence of Total -->
                     <div class="form-row">
                         <span class="label_body">MF27</span>
-                        <span class="label"><a>*</a>Sequence of Total</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total</span>
                         <input type="text" name="_010_mf27_sequence_of_total" 
                             id="_010_mf27_sequence_of_total"
                             class="mandatory" maxlength="3"
@@ -61,7 +61,7 @@
                     <!-- MF40A Form of Documentary Credit -->
                     <div class="form-row">
                         <span class="label_body">MF40A</span>
-                        <span class="label"><a>*</a>Form of Documentary Credit</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Form of Documentary Credit</span>
                         <select name="_020_mf40a_form_of_credit" 
                                 id="_020_mf40a_form_of_credit" 
                                 class="mandatory">
@@ -81,7 +81,7 @@
                     <!-- MF20 Documentary Credit Number -->
                     <div class="form-row">
                         <span class="label_body">MF20</span>
-                        <span class="label"><a>*</a>Documentary Credit Number</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Documentary Credit Number</span>
                         <input type="text" name="_030_mf20_documentary_credit_number" 
                                id="_030_mf20_documentary_credit_number"
                                class="mandatory" maxlength="16"
@@ -111,7 +111,7 @@
                     <!-- MF31C Date of Issue -->
                     <div class="form-row">
                         <span class="label_body">MF31C</span>
-                        <span class="label"><a>*</a>Date of Issue</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Date of Issue</span>
                         <input type="text" name="_050_mf31c_date_of_issue" 
                                id="_050_mf31c_date_of_issue"
                                class="mandatory" maxlength="6"
@@ -126,7 +126,7 @@
                     <!-- MF40E Applicable Rules -->
                     <div class="form-row">
                         <span class="label_body">MF40E</span>
-                        <span class="label"><a>*</a>Applicable Rules</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Applicable Rules</span>
                         <select name="_060_mf40e_applicable_rules" 
                                 id="_060_mf40e_applicable_rules"
                                 class="mandatory">
@@ -171,7 +171,7 @@
                     <!-- MF31D Date and Place of Expiry -->
                     <div class="form-row">
                         <span class="label_body">MF31D</span>
-                        <span class="label"><a>*</a>Date and Place of Expiry</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Date and Place of Expiry</span>
                         <input type="text" name="_070_mf31d_date_of_expiry"
                                id="_070_mf31d_date_of_expiry"
                                class="mandatory" maxlength="6"
@@ -241,7 +241,7 @@
                     <!-- MF50 Applicant -->
                     <div class="form-row">
                         <span class="label_body">MF50</span>
-                        <span class="label"><a>*</a>Applicant</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Applicant</span>
                         <textarea name="_090_mf50_applicant"
                                   id="_090_mf50_applicant"
                                   class="mandatory"
@@ -256,7 +256,7 @@
                     <!-- MF59 Beneficiary -->
                     <div class="form-row">
                         <span class="label_body">MF59</span>
-                        <span class="label"><a>*</a>Beneficiary</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Beneficiary</span>
                     </div>
                     <div class="form-row">
                         <span class="label_body">&nbsp;</span>
@@ -287,7 +287,7 @@
                     <!-- MF32B Currency Code, Amount -->
                     <div class="form-row">
                         <span class="label_body">MF32B</span>
-                        <span class="label"><a>*</a>Currency</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Currency</span>
                         <input type="text" name="_110_mf32b_currency" id="_110_mf32b_currency"
                                class="mandatory"
                                onkeypress="return textonly(event)"
@@ -303,7 +303,7 @@
 
                     <div class="form-row">
                         <span class="label_body">&nbsp;</span>
-                        <span class="label"><a>*</a>Amount</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
                         <input type="text" name="_111_mf32b_amount" id="_111_mf32b_amount"
                                class="mandatory"
                                onblur="cek_koma(this);"
@@ -381,7 +381,7 @@
                     <!-- MF41A Available With ... By ... -->
                     <div class="form-row">
                         <span class="label_body">MF41A</span>
-                        <span class="label"><a>*</a>Available With ... By ...</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Available With ... By ...</span>
                         <select id="_140_mf41a_option" name="_140_mf41a_option">
                             <option value="">choose a type</option>
                             <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_140_mf41a_option' and item.detail eq 'A'}">selected</c:if></c:forEach>>Option A (BIC)</option>
@@ -707,7 +707,7 @@
                     <!-- MF49 Confirmation Instructions -->
                     <div class="form-row">
                         <span class="label_body">MF49</span>
-                        <span class="label"><a>*</a>Confirmation Instructions</span>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a>Confirmation Instructions</span>
                         <select id="_340_mf49_confirmation" name="_340_mf49_confirmation" class="mandatory">
                             <option value="">choose a type</option>
                             <option value="CONFIRM"
@@ -755,7 +755,7 @@
                             </div>
                             <div class="mt-col" id="wrap_352_of58a_name_address" style="display:none;">
                                 <textarea name="_352_of58a_name_address" id="_352_of58a_name_address"
-                                          rows="3" maxlength="140" placeholder="4*35x"><c:forEach var='item' items='${tags}'>
+                                          rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
                                     <c:if test='${item.tagName eq "_352_of58a_name_address"}'>
                                         <c:out value='${item.detail}' />
                                     </c:if>
@@ -794,7 +794,7 @@
                             </div>
                             <div class="mt-col" id="wrap_362_of53a_name_address" style="display:none;">
                                 <textarea name="_362_of53a_name_address" id="_362_of53a_name_address"
-                                          rows="3" maxlength="140" placeholder="4*35x"><c:forEach var='item' items='${tags}'>
+                                          rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
                                     <c:if test='${item.tagName eq "_362_of53a_name_address"}'>
                                         <c:out value='${item.detail}' />
                                     </c:if>
@@ -860,7 +860,7 @@
                             </div>
                             <div class="mt-col" id="wrap_383_of57a_name_address" style="display:none;">
                                 <textarea name="_383_of57a_name_address" id="_383_of57a_name_address"
-                                          rows="3" maxlength="140" placeholder="4*35x"><c:forEach var='item' items='${tags}'>
+                                          rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
                                     <c:if test='${item.tagName eq "_383_of57a_name_address"}'>
                                         <c:out value='${item.detail}' />
                                     </c:if>
@@ -896,3 +896,5 @@
 <%@ include file="rule/validate_rule_mt700.jsp" %>
 </body>
 </html>
+
+

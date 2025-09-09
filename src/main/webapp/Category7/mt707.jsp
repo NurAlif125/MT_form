@@ -46,7 +46,7 @@
                         <!-- MF27 Sequence of Total -->
                         <div class="form-row">
                             <span class="label_body">MF27</span>
-                            <span class="label"><a style="color:red">*</a> Sequence of Total (Number/Total)</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Sequence of Total (Number/Total)</span>
                             <input type="text" name="_010_mf27_sequence_of_total" id="_010_mf27_sequence_of_total"
                                    class="mandatory" maxlength="5"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -60,7 +60,7 @@
                         <!-- MF20 Sender's Reference -->
                         <div class="form-row">
                             <span class="label_body">MF20</span>
-                            <span class="label"><a style="color:red">*</a> Sender's Reference</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Sender's Reference</span>
                             <input type="text" name="_020_mf20_sender_reference" id="_020_mf20_sender_reference"
                                    class="mandatory" maxlength="16"
                                    onkeypress="avoidSplChars(event)"
@@ -75,7 +75,7 @@
                         <!-- MF21 Receiver's Reference -->
                         <div class="form-row">
                             <span class="label_body">MF21</span>
-                            <span class="label"><a style="color:red">*</a> Receiver's Reference</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Receiver's Reference</span>
                             <input type="text" name="_030_mf21_receiver_reference" id="_030_mf21_receiver_reference"
                                    class="mandatory" maxlength="16"
                                    onkeypress="avoidSplChars(event)"
@@ -90,7 +90,7 @@
                         <!-- MF23 Issuing Bank's Reference -->
                         <div class="form-row">
                             <span class="label_body">MF23</span>
-                            <span class="label"><a style="color:red">*</a> Issuing Bank's Reference</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Issuing Bank's Reference</span>
                             <input type="text" name="_040_mf23_issuing_bank_reference" id="_040_mf23_issuing_bank_reference"
                                    class="mandatory" maxlength="16"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -162,7 +162,7 @@
                         <!-- MF31C Date of Issue -->
                         <div class="form-row">
                             <span class="label_body">MF31C</span>
-                            <span class="label"><a style="color:red">*</a> Date of Issue (YYMMDD)</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Date of Issue (YYMMDD)</span>
                             <input type="text" name="_070_mf31c_date_of_issue" id="_070_mf31c_date_of_issue"
                                    class="mandatory" maxlength="6" placeholder="YYMMDD"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -176,7 +176,7 @@
                         <!-- MF26E Number of Amendment -->
                         <div class="form-row">
                             <span class="label_body">MF26E</span>
-                            <span class="label"><a style="color:red">*</a> Number of Amendment</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Number of Amendment</span>
                             <input type="text" name="_080_mf26e_number_of_amendment" id="_080_mf26e_number_of_amendment"
                                    class="mandatory" maxlength="3"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -190,7 +190,7 @@
                         <!-- MF30 Date of Amendment -->
                         <div class="form-row">
                             <span class="label_body">MF30</span>
-                            <span class="label"><a style="color:red">*</a> Date of Amendment (YYMMDD)</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Date of Amendment (YYMMDD)</span>
                             <input type="text" name="_090_mf30_date_of_amendment" id="_090_mf30_date_of_amendment"
                                    class="mandatory" maxlength="6" placeholder="YYMMDD"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -204,7 +204,7 @@
                         <!-- MF22A Purpose of Message -->
                         <div class="form-row">
                             <span class="label_body">MF22A</span>
-                            <span class="label"><a style="color:red">*</a> Purpose of Message</span>
+                            <span class="label"><a style="color:red;text-decoration:none">*</a> Purpose of Message</span>
                             <select name="_100_mf22a_purpose_of_message" id="_100_mf22a_purpose_of_message" class="mandatory">
                                 <option value="">choose a type</option>
                                 <option value="ACNF"

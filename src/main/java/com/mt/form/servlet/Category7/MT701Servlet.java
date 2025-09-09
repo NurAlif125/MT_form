@@ -93,6 +93,8 @@ public class MT701Servlet extends HttpServlet {
 
                 ps.executeUpdate();
                 out.println("<script>alert('MT701 data saved successfully!'); window.location='mt701.jsp';</script>");
+                
+                response.sendRedirect("Category7/mt701.jsp");
 
             } catch (Exception e) {
                 e.printStackTrace(out);

@@ -91,7 +91,7 @@
                 "#_110_mf32b_currency": "32B Currency",
                 "#_111_mf32b_amount": "32B Amount",
                 "#_140_mf41a_option": "41A Available With",
-                "#_143_mf41a_by": "41A By"
+                "#_143_mf41a_by": "41A By",
                 "#_340_mf49_confirmation": "49 Confirmation Instructions"
             };
             Object.keys(fieldNames).forEach(id => {

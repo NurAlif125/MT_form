@@ -214,7 +214,7 @@ public class MT700Servlet extends HttpServlet {
                 ps.executeUpdate();
                 out.println("<script>alert('MT700 data saved successfully!'); window.location='mt700.jsp';</script>");
                 
-                response.sendRedirect("Category7/viewForm.jsp?id=");
+                response.sendRedirect("Category7/mt700.jsp");
 
             } catch (Exception e) {
                 e.printStackTrace(out);

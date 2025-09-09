@@ -95,6 +95,8 @@ public class MT711Servlet extends HttpServlet {
 
                 ps.executeUpdate();
                 out.println("<script>alert('MT711 data saved successfully!'); window.location='mt711.jsp';</script>");
+                
+                response.sendRedirect("Category7/mt711.jsp");
 
             } catch (Exception e) {
                 e.printStackTrace(out);

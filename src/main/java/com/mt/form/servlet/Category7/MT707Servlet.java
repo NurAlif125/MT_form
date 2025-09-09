@@ -245,6 +245,9 @@ public class MT707Servlet extends HttpServlet {
 
                 ps.executeUpdate();
                 out.println("<script>alert('MT707 data saved successfully!'); window.location='mt707.jsp';</script>");
+                
+                response.sendRedirect("Category7/mt707.jsp");
+                
             } catch (Exception e) {
                 e.printStackTrace(out);
                 out.println("<script>alert('Error simpan MT707: " + e.getMessage() + "'); window.history.back();</script>");
