@@ -25,7 +25,6 @@ public class AMT700 {
         } catch (IOException ex) {
             log.error("getAtributeMT700():" + ex.toString());
         }
-
         data.setMf27(prop.getProperty("mf27"));
         data.setMf40a(prop.getProperty("mf40a"));
         data.setMf20(prop.getProperty("mf20"));
@@ -65,7 +64,6 @@ public class AMT700 {
         data.setOf78(prop.getProperty("of78"));
         data.setOf57a(prop.getProperty("of57a"));
         data.setOf72z(prop.getProperty("of72z"));
-
         return data;
     }
 }

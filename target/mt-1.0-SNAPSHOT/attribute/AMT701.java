@@ -15,26 +15,23 @@ import java.util.Properties;
  */
 public class AMT701 {
 
-    public static MT701 loadData(String propsPath) {
+    Logger log = Logger.getLogger(AMT701.class);
+
+    public MT701 getAtributeMT701() {
         MT701 data = new MT701();
         Properties prop = new Properties();
-
-        try (FileInputStream fis = new FileInputStream(propsPath)) {
-            prop.load(fis);
-
-            data.setMf27(prop.getProperty("mf27"));
-            data.setMf20(prop.getProperty("mf20"));
-            data.setOf45a(prop.getProperty("of45a"));
-            data.setOf46a(prop.getProperty("of46a"));
-            data.setOf47a(prop.getProperty("of47a"));
-            data.setOf49g(prop.getProperty("of49g"));
-            data.setOf49h(prop.getProperty("of49h"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        try {
+            prop.load(getClass().getClassLoader().getResourceAsStream("mt701.properties"));
+        } catch (IOException ex) {
+            log.error("getAtributeMT701():" + ex.toString());
         }
-
+        data.setMf27(prop.getProperty("mf27"));
+        data.setMf20(prop.getProperty("mf20"));
+        data.setOf45a(prop.getProperty("of45a"));
+        data.setOf46a(prop.getProperty("of46a"));
+        data.setOf47a(prop.getProperty("of47a"));
+        data.setOf49g(prop.getProperty("of49g"));
+        data.setOf49h(prop.getProperty("of49h"));
         return data;
     }
 }
-

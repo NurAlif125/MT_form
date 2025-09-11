@@ -57,6 +57,8 @@
               <a href="Category7/mt700.jsp">700 - Issue of a Documentary Credit</a>
               <a href="Category7/mt701.jsp">701 - Issue of a Documentary Credit (Continuation)</a>
               <a href="Category7/mt707.jsp">707 - Amendment to a Documentary Credit</a>
+              <a href="Category7/mt708.jsp">708 - Amendment to a Documentary Credit (Continuation)</a>
+              <a href="Category7/mt710.jsp">710 - Advice of a Third Bank's or a Non-Bank's Documentary Credit</a>
               <a href="Category7/mt711.jsp">711 - Issue of a Documentary Credit (Continuation)</a>
             </div>
           </div>

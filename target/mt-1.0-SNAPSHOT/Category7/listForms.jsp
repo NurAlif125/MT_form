@@ -128,26 +128,31 @@
                 int start = (pageNum - 1) * recordsPerPage;
 
                 String sql = ""
-                    + "SELECT form_id, 'MT700' AS type, created_at FROM mt.mt700_message "
-                    + "UNION ALL "
-                    + "SELECT form_id, 'MT701' AS type, created_at FROM mt.mt701_message "
-                    + "UNION ALL "
-                    + "SELECT form_id, 'MT707' AS type, created_at FROM mt.mt707_message "
-                    + "UNION ALL "
-                    + "SELECT form_id, 'MT711' AS type, created_at FROM mt.mt711_message "
-                    + "ORDER BY created_at DESC "
-                    + "LIMIT " + recordsPerPage + " OFFSET " + start;
+                  + "SELECT form_id, type, created_at FROM ("
+                  + "  SELECT form_id, 'MT700' AS type, created_at FROM mt.mt700_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT701' AS type, created_at FROM mt.mt701_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT707' AS type, created_at FROM mt.mt707_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT708' AS type, created_at FROM mt.mt708_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT710' AS type, created_at FROM mt.mt710_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT711' AS type, created_at FROM mt.mt711_message"
+                  + ") AS all_msgs "
+                  + "ORDER BY created_at DESC "
+                  + "LIMIT " + recordsPerPage + " OFFSET " + start;
 
                 String countSql = ""
-                    + "SELECT COUNT(*) AS total FROM ("
-                    + "SELECT form_id FROM mt.mt700_message "
-                    + "UNION ALL "
-                    + "SELECT form_id FROM mt.mt701_message "
-                    + "UNION ALL "
-                    + "SELECT form_id FROM mt.mt707_message "
-                    + "UNION ALL "
-                    + "SELECT form_id FROM mt.mt711_message "
-                    + ") AS all_msgs";
+                  + "SELECT COUNT(*) AS total FROM ("
+                  + "  SELECT form_id FROM mt.mt700_message"
+                  + "  UNION ALL SELECT form_id FROM mt.mt701_message"
+                  + "  UNION ALL SELECT form_id FROM mt.mt707_message"
+                  + "  UNION ALL SELECT form_id FROM mt.mt708_message"
+                  + "  UNION ALL SELECT form_id FROM mt.mt710_message"
+                  + "  UNION ALL SELECT form_id FROM mt.mt711_message"
+                  + ") AS all_msgs";
 
                 int totalRecords = 0;
                 int totalPages = 0;
@@ -171,21 +176,20 @@
                     while (rs.next()) {
                         String formId = rs.getString("form_id");
                         String formType = rs.getString("type");
-            %>
-              <tr>
-                <td><%= formId %></td>
-                <td><%= formType %></td>
-                <td><%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(rs.getTimestamp("created_at")) %></td>
-                <td>
-                    <a class="view-btn" href="viewForm.jsp?id=<%= formId %>&type=<%= formType %>">View</a>
-                </td>
-              </tr>
-            <%
+                        java.sql.Timestamp ts = rs.getTimestamp("created_at");
+              %>
+                  <tr>
+                    <td><%= formId %></td>
+                    <td><%= formType %></td>
+                    <td><%= ts == null ? "-" : new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(ts) %></td>
+                    <td><a class="view-btn" href="viewForm.jsp?id=<%= formId %>&type=<%= formType %>">View</a></td>
+                  </tr>
+              <%
                     }
                 } catch (Exception e) {
                     out.println("<tr><td colspan='4'>Error: " + e.getMessage() + "</td></tr>");
                 }
-            %>
+              %>
         </table>
         <div class="pagination">
             <%

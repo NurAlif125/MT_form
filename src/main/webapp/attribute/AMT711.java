@@ -21,7 +21,6 @@ public class AMT711 {
         MT711 data = new MT711();
         Properties prop = new Properties();
         try {
-            // load properti MT711
             prop.load(getClass().getClassLoader().getResourceAsStream("mt711.properties"));
         } catch (IOException ex) {
             log.error("getAtributeMT711():" + ex.toString());
