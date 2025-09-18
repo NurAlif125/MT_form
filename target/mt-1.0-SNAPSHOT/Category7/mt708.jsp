@@ -13,10 +13,10 @@
         <meta charset="UTF-8">
         <title>MT708 Amendment to a Documentary Credit (Continuation)</title>
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-        <link rel="stylesheet" href="assets/mt708.css">
+        <link rel="stylesheet" href="assets/css/mt708.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-        <script src="assets/mt708.js"></script>
+        <script src="assets/js/mt708.js"></script>
     </head>
     <body>
 
@@ -133,9 +133,9 @@
                         <div class="form-row">
                             <span class="label_body">OF45B</span>
                             <span class="label">Description of Goods and/or Services</span>
-                            <textarea name="_070_of45b_description_goods" id="_070_of45b_description_goods"
+                            <textarea name="_070_of45b_description_of_goods_and_or_services" id="_070_of45b_description_of_goods_and_or_services"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                                <c:if test="${item.tagName eq '_070_of45b_description_goods'}">
+                                <c:if test="${item.tagName eq '_070_of45b_description_of_goods_and_or_services'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
                             </c:forEach></textarea>
@@ -172,9 +172,9 @@
                         <div class="form-row">
                             <span class="label_body">OF49M</span>
                             <span class="label">Special Payment Conditions for Beneficiary</span>
-                            <textarea name="_100_of49m_special_payment_beneficiary" id="_100_of49m_special_payment_beneficiary"
+                            <textarea name="_100_of49m_special_payment_conditions_for_beneficiary" id="_100_of49m_special_payment_conditions_for_beneficiary"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                                <c:if test="${item.tagName eq '_100_of49m_special_payment_beneficiary'}">
+                                <c:if test="${item.tagName eq '_100_of49m_special_payment_conditions_for_beneficiary'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
                             </c:forEach></textarea>
@@ -185,9 +185,9 @@
                         <div class="form-row">
                             <span class="label_body">OF49N</span>
                             <span class="label">Special Payment Conditions for Bank Only</span>
-                            <textarea name="_110_of49n_special_payment_bank" id="_110_of49n_special_payment_bank"
+                            <textarea name="_110_of49n_special_payment_conditions_for_bank_only" id="_110_of49n_special_payment_conditions_for_bank_only"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                                <c:if test="${item.tagName eq '_110_of49n_special_payment_bank'}">
+                                <c:if test="${item.tagName eq '_110_of49n_special_payment_conditions_for_bank_only'}">
                                     <c:out value="${item.detail}" />
                                 </c:if>
                             </c:forEach></textarea>

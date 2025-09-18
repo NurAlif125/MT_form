@@ -31,11 +31,11 @@ public class MT708Servlet extends HttpServlet {
             String mf23 = request.getParameter("_040_mf23_issuing_bank_reference");
             String mf26e = request.getParameter("_050_mf26e_number_of_amendment");
             String mf30 = request.getParameter("_060_mf30_date_of_amendment");
-            String of45b = request.getParameter("_070_of45b_description_goods");
+            String of45b = request.getParameter("_070_of45b_description_of_goods_and_or_services");
             String of46b = request.getParameter("_080_of46b_documents_required");
             String of47b = request.getParameter("_090_of47b_additional_conditions");
-            String of49m = request.getParameter("_100_of49m_special_payment_beneficiary");
-            String of49n = request.getParameter("_110_of49n_special_payment_bank");
+            String of49m = request.getParameter("_100_of49m_special_payment_conditions_for_beneficiary");
+            String of49n = request.getParameter("_110_of49n_special_payment_conditions_for_bank_only");
 
             // === Server-side mandatory check ===
             if (isEmpty(mf27) || isEmpty(mf20) || isEmpty(mf21) ||
@@ -90,8 +90,7 @@ public class MT708Servlet extends HttpServlet {
                 ps.setString(idx++, of49n);
 
                 ps.executeUpdate();
-                out.println("<script>alert('MT708 data saved successfully!'); window.location='mt708.jsp';</script>");
-                response.sendRedirect("Category7/mt708.jsp");
+                out.println("<script>alert('MT700 data saved successfully!'); window.location='Category7/mt708.jsp';</script>");
 
             } catch (Exception e) {
                 e.printStackTrace(out);

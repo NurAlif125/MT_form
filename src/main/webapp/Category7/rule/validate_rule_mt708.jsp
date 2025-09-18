@@ -88,11 +88,11 @@ $(document).ready(function () {
             _060_mf30_date_of_amendment: {required:true, yymmdd:true},
 
             // Optional structured
-            _070_of45b_description_goods: {structured:true},
+            _070_of45b_description_of_goods_and_or_services: {structured:true},
             _080_of46b_documents_required: {structured:true},
             _090_of47b_additional_conditions: {structured:true},
-            _100_of49m_special_payment_beneficiary: {structured:true},
-            _110_of49n_special_payment_bank: {structured:true}
+            _100_of49m_special_payment_conditions_for_beneficiary: {structured:true},
+            _110_of49n_special_payment_conditions_for_bank_only: {structured:true}
         },
         messages: {
             _010_mf27_sequence_of_total: {required:"MF27 harus diisi", mf27rule:"Format MF27 tidak valid (contoh 2/3)"},
@@ -102,11 +102,11 @@ $(document).ready(function () {
             _050_mf26e_number_of_amendment: {required:"MF26E harus diisi", digits:"Harus angka", maxlength:"Maks 3 digit"},
             _060_mf30_date_of_amendment: {required:"MF30 harus diisi", yymmdd:"Harus format YYMMDD yang valid"},
 
-            _070_of45b_description_goods: {structured:"OF45B tidak valid"},
+            _070_of45b_description_of_goods_and_or_services: {structured:"OF45B tidak valid"},
             _080_of46b_documents_required: {structured:"OF46B tidak valid"},
             _090_of47b_additional_conditions: {structured:"OF47B tidak valid"},
-            _100_of49m_special_payment_beneficiary: {structured:"OF49M tidak valid"},
-            _110_of49n_special_payment_bank: {structured:"OF49N tidak valid"}
+            _100_of49m_special_payment_conditions_for_beneficiary: {structured:"OF49M tidak valid"},
+            _110_of49n_special_payment_conditions_for_bank_only: {structured:"OF49N tidak valid"}
         },
         errorPlacement: function(error, element) {
             error.insertAfter(element);

@@ -42,7 +42,7 @@ $(document).ready(function () {
 
             // ===== Body Mandatory =====
             _010_mf27_sequence_of_total: "required",
-            _020_mf40b_form_of_credit: "required",
+            _020_mf40b_form_of_documentary_credit: "required",
             _030_mf20_sender_reference: "required",
             _040_mf21_documentary_credit_number: "required",
 
@@ -66,11 +66,11 @@ $(document).ready(function () {
             _151_of39a_minus: { isPercent: true },
 
             // 41a Available With...By... (M)
-            _170_mf41a_option: "required",
+            _170_mf41a_available_with_by: "required",
             _173_mf41a_by: "required",
 
             // 49 Confirmation Instructions (M)
-            _370_mf49_confirmation: "required",
+            _370_mf49_confirmation_instructions: "required",
 
             // BIC Checks for Option A fields
             _091_of52a_bic: { isBIC: true },
@@ -82,8 +82,8 @@ $(document).ready(function () {
             _422_of57a_bic: { isBIC: true },
 
             // Structured narrative fields
-            _300_of45a_description: { maxlength: 6500 },
-            _310_of46a_documents: { maxlength: 6500 },
+            _300_of45a_description_of_goods_and_or_services: { maxlength: 6500 },
+            _310_of46a_documents_required: { maxlength: 6500 },
             _320_of47a_conditions: { maxlength: 6500 },
             _350_of71d_charges: {
                 regex: /^((\/[A-Z]+)([A-Z]{3}\d+)?(.*)?|.*)?$/
@@ -97,7 +97,7 @@ $(document).ready(function () {
             receiver_institution: { required: "Receiver Institution wajib diisi..!!" },
             priority: { required: "Priority wajib diisi..!!" },
             _010_mf27_sequence_of_total: { required: "Sequence of Total (27) wajib diisi..!!" },
-            _020_mf40b_form_of_credit: { required: "Form of Credit (40B) wajib diisi..!!" },
+            _020_mf40b_form_of_documentary_credit: { required: "Form of Credit (40B) wajib diisi..!!" },
             _030_mf20_sender_reference: { required: "Sender Reference (20) wajib diisi..!!" },
             _040_mf21_documentary_credit_number: { required: "Credit Number (21) wajib diisi..!!" },
             _060_mf31c_date_of_issue: { required: "Date of Issue (31C) wajib diisi..!!" },
@@ -108,9 +108,9 @@ $(document).ready(function () {
             _131_mf59_name_address: { required: "Beneficiary (59) wajib diisi..!!" },
             _140_mf32b_currency: { required: "Currency (32B) wajib diisi..!!" },
             _141_mf32b_amount: { required: "Amount (32B) wajib diisi..!!" },
-            _170_mf41a_option: { required: "Available With... (41a) wajib dipilih..!!" },
+            _170_mf41a_available_with_by: { required: "Available With... (41a) wajib dipilih..!!" },
             _173_mf41a_by: { required: "By... (41a) wajib diisi..!!" },
-            _370_mf49_confirmation: { required: "Confirmation (49) wajib diisi..!!" }
+            _370_mf49_confirmation_instructions: { required: "Confirmation (49) wajib diisi..!!" }
         },
         errorPlacement: function (error, element) {
             error.insertAfter(element);
@@ -174,21 +174,21 @@ $(document).ready(function () {
     $("#form_mt710").submit(function (e) {
 
         // Rule C4: Either 52a or 50B, but not both
-        if ($("#_090_of52a_option").val() && $("#_100_of50b_non_bank_issuer").val()) {
+        if ($("#_090_of52a_issuing_bank").val() && $("#_100_of50b_non_bank_issuer").val()) {
             alert("C4: Either 52a or 50B must be present, but not both.");
             e.preventDefault(); return false;
         }
 
         // Rule C1: If 42C used, 42a must also be present
-        if ($("#_180_of42c_drafts").val() && !$("#_190_of42a_option").val()) {
+        if ($("#_180_of42c_drafts_at").val() && !$("#_190_of42a_drawee").val()) {
             alert("C1: When 42C is used, 42a must also be present.");
             e.preventDefault(); return false;
         }
 
         // Rule C2: Only one of (42C+42a), 42M, or 42P allowed
-        let has42C42a = ($("#_180_of42c_drafts").val() && $("#_190_of42a_option").val());
-        let has42M = $("#_200_of42m_mixed_payment").val();
-        let has42P = $("#_210_of42p_deferred_payment").val();
+        let has42C42a = ($("#_180_of42c_drafts_at").val() && $("#_190_of42a_drawee").val());
+        let has42M = $("#_200_of42m_mixed_payment_details").val();
+        let has42P = $("#_210_of42p_negotiation_deferred_payment_details").val();
         let count = (has42C42a ? 1 : 0) + (has42M ? 1 : 0) + (has42P ? 1 : 0);
         if (count > 1) {
             alert("C2: Only one of (42C+42a), 42M, or 42P may be present.");
@@ -208,9 +208,9 @@ $(document).ready(function () {
         }
 
         // Confirmation (49) = CONFIRM/MAY ADD → 58a required
-        let conf = $("#_370_mf49_confirmation").val();
+        let conf = $("#_370_mf49_confirmation_instructions").val();
         if ((conf === "CONFIRM" || conf === "MAY ADD") &&
-            !$("#_380_of58a_option").val() && !$("#_381_of58a_name_address").val()) {
+            !$("#_380_of58a_requested_confirmation_party").val() && !$("#_381_of58a_name_address").val()) {
             alert("Rule: Field 58a must be present when 49 = CONFIRM or MAY ADD.");
             e.preventDefault(); return false;
         }

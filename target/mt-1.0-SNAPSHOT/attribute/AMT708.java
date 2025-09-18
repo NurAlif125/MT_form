@@ -25,7 +25,6 @@ public class AMT708 {
         } catch (IOException ex) {
             log.error("getAtributeMT708():" + ex.toString());
         }
-
         data.setMf27(prop.getProperty("mf27"));
         data.setMf20(prop.getProperty("mf20"));
         data.setMf21(prop.getProperty("mf21"));

@@ -39,11 +39,11 @@ public class MT701Servlet extends HttpServlet {
             // === Ambil parameter dari JSP (MT701) ===
             String seqTotal = request.getParameter("_010_mf27_sequence_of_total");
             String creditNumber = request.getParameter("_020_mf20_documentary_credit_number");
-            String descGoods = request.getParameter("_030_of45a_description");
-            String docsRequired = request.getParameter("_040_of46a_documents");
+            String descGoods = request.getParameter("_030_of45a_description_of_goods_and_or_services");
+            String docsRequired = request.getParameter("_040_of46a_documents_required");
             String addConditions = request.getParameter("_050_of47a_additional_conditions");
-            String specialPayBenef = request.getParameter("_060_of49g_special_payment_beneficiary");
-            String specialPayBank = request.getParameter("_070_of49h_special_payment_bank");
+            String specialPayBenef = request.getParameter("_060_of49g_special_payment_conditions_for_beneficiary");
+            String specialPayBank = request.getParameter("_070_of49h_special_payment_conditions_for_bank_only");
 
             // === Basic validation (server-side mandatory fields) ===
             if (isEmpty(seqTotal) || isEmpty(creditNumber)) {
@@ -92,9 +92,7 @@ public class MT701Servlet extends HttpServlet {
                 ps.setString(idx++, specialPayBank);
 
                 ps.executeUpdate();
-                out.println("<script>alert('MT701 data saved successfully!'); window.location='mt701.jsp';</script>");
-                
-                response.sendRedirect("Category7/mt701.jsp");
+                out.println("<script>alert('MT700 data saved successfully!'); window.location='Category7/mt701.jsp';</script>");
 
             } catch (Exception e) {
                 e.printStackTrace(out);

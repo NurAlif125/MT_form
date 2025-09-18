@@ -90,13 +90,15 @@
                 "#_100_mf59_account": "59 Beneficiary Account",
                 "#_110_mf32b_currency": "32B Currency",
                 "#_111_mf32b_amount": "32B Amount",
-                "#_140_mf41a_option": "41A Available With",
+                "#_140_mf41a_available_with_by": "41A Available With",
                 "#_143_mf41a_by": "41A By",
                 "#_340_mf49_confirmation": "49 Confirmation Instructions"
             };
             Object.keys(fieldNames).forEach(id => {
-                if (!t($(id).val()))
+                const $el = $(id);
+                if ($el.is(":visible") && !t($el.val())) {
                     E.push(`${fieldNames[id]} wajib diisi`);
+                }
             });
 
             // FIELD 27 : Sequence of Total
@@ -202,7 +204,7 @@
 
 
             // FIELD 51a : Applicant Bank
-            $("#_080_of51a_option").on("change", function () {
+            $("#_080_of51a_applicant_bank").on("change", function () {
                 var opt = $(this).val();
                 if (opt === "A") {
                     $("#_081_of51a_bic").show();
@@ -306,7 +308,7 @@
             });
 
             // FIELD 39C : Additional Amounts Covered
-            $("#_130_of39c_additional_amounts").on("input", function () {
+            $("#_130_of39c_additional_amounts_covered").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 140) {
                     alert("Field 39C maksimal 140 karakter.");
@@ -315,7 +317,7 @@
             });
 
             // FIELD 41a : Available With... By...
-            $("#_140_mf41a_option").on("change", function () {
+            $("#_140_mf41a_available_with_by").on("change", function () {
                 var opt = $(this).val();
                 if (opt === "A") {
                     $("#wrap_141_mf41a_identifier_code").show();
@@ -360,7 +362,7 @@
 
 
             // FIELD 42C : Drafts at...
-            $("#_150_of42c_drafts").on("input", function () {
+            $("#_150_of42c_drafts_at").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 105) {
                     alert("Field 42C maksimal 105 karakter.");
@@ -369,7 +371,7 @@
             });
 
             // FIELD 42a : Drawee
-            $("#_160_of42a_option").on("change", function () {
+            $("#_160_of42a_drawee").on("change", function () {
                 var opt = $(this).val();
                 if (opt === "A") {
                     $("#_161_of42a_bic").show();
@@ -401,7 +403,7 @@
             });
 
             // FIELD 42M : Mixed Payment Details
-            $("#_170_of42m_mixed_payment").on("input", function () {
+            $("#_170_of42m_mixed_payment_details").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 140) {
                     alert("Field 42M maksimal 140 karakter.");
@@ -410,7 +412,7 @@
             });
 
             // FIELD 42P : Negotiation/Deferred Payment Details
-            $("#_180_of42p_deferred_payment").on("input", function () {
+            $("#_180_of42p_negotiation_deferred_payment_details").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 140) {
                     alert("Field 42P maksimal 140 karakter.");
@@ -439,7 +441,7 @@
             });
 
             // FIELD 44A : Place of Taking in Charge / Dispatch from / Place of Receipt
-            $("#_210_of44a_place_of_receipt").on("input", function () {
+            $("#_210_of44a_place_taking_in_charge_dispatch_from_place_of_receipt").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 140) {
                     alert("Field 44A maksimal 140 karakter.");
@@ -448,7 +450,7 @@
             });
 
             // FIELD 44E : Port of Loading / Airport of Departure
-            $("#_220_of44e_port_of_loading").on("input", function () {
+            $("#_220_of44e_port_of_loading_airport_of_departure").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 140) {
                     alert("Field 44E maksimal 140 karakter.");
@@ -457,7 +459,7 @@
             });
 
             // FIELD 44F : Port of Discharge / Airport of Destination
-            $("#_230_of44f_port_of_discharge").on("input", function () {
+            $("#_230_of44f_port_of_discharge_airport_of_destination").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 140) {
                     alert("Field 44F maksimal 140 karakter.");
@@ -466,7 +468,7 @@
             });
 
             // FIELD 44B : Place of Final Destination / Place of Delivery
-            $("#_240_of44b_place_of_delivery").on("input", function () {
+            $("#_240_of44b_place_of_final_destination_for_transportation_to_place_of_delivery").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 140) {
                     alert("Field 44B maksimal 140 karakter.");
@@ -475,7 +477,7 @@
             });
 
             // FIELD 44C : Latest Date of Shipment
-            $("#_250_of44c_latest_shipment").on("blur", function () {
+            $("#_250_of44c_latest_date_of_shipment").on("blur", function () {
                 var val = $(this).val();
                 if (val !== "" && !isYYMMDD(val)) {
                     alert("Field 44C harus format tanggal YYMMDD yang valid.");
@@ -493,7 +495,7 @@
             });
 
             // FIELD 45A : Description of Goods and/or Services
-            $("#_270_of45a_description_goods").on("input", function () {
+            $("#_270_of45a_description_of_goods_and_or_services").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 6500) {
                     alert("Field 45A maksimal 6500 karakter.");
@@ -520,7 +522,7 @@
             });
 
             // FIELD 49G : Special Payment Conditions for Beneficiary
-            $("#_300_of49g_special_payment_beneficiary").on("input", function () {
+            $("#_300_of49g_special_payment_conditions_for_beneficiary").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 6500) {
                     alert("Field 49G maksimal 6500 karakter.");
@@ -529,7 +531,7 @@
             });
 
             // FIELD 49H : Special Payment Conditions for Bank Only
-            $("#_310_of49h_special_payment_bank").on("input", function () {
+            $("#_310_of49h_special_payment_conditions_for_bank_only").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 6500) {
                     alert("Field 49H maksimal 6500 karakter.");
@@ -564,7 +566,7 @@
             });
 
             // FIELD 49 : Confirmation Instructions
-            $("#_340_mf49_confirmation").on("blur", function () {
+            $("#_340_mf49_confirmation_instructions").on("blur", function () {
                 var val = $(this).val().trim().toUpperCase();
                 var allowed = ["CONFIRM", "MAY ADD", "WITHOUT"];
                 if (val !== "" && allowed.indexOf(val) === -1) {
@@ -574,7 +576,7 @@
             });
 
             // FIELD 58a : Requested Confirmation Party
-            $("#_350_of58a_option").on("change", function () {
+            $("#_350_of58a_requested_confirmation_party").on("change", function () {
                 var opt = $(this).val();
                 if (opt === "A") {
                     $("#_350_of58a_identifier_code").show();
@@ -604,7 +606,7 @@
             });
 
             // FIELD 53a : Reimbursing Bank
-            $("#_360_of53a_option").on("change", function () {
+            $("#_360_of53a_reimbursing_bank").on("change", function () {
                 var opt = $(this).val();
                 if (opt === "A") {
                     $("#_360_of53a_identifier_code").show();
@@ -643,7 +645,7 @@
             });
 
             // FIELD 78 : Instructions to the Paying/Accepting/Negotiating Bank
-            $("#_370_of78_instructions_to_bank").on("blur", function () {
+            $("#_370_of78_instructions_to_the_paying_accepting_negotiating_bank").on("blur", function () {
                 var val = $(this).val();
                 var lines = val.split("\n");
                 if (lines.length > 12) {
@@ -660,7 +662,7 @@
             });
 
             // FIELD 57a : 'Advise Through' Bank
-            $("#_380_of57a_option").on("change", function () {
+            $("#_380_of57a_advise_through_bank").on("change", function () {
                 var opt = $(this).val();
                 if (opt === "A") {
                     $("#_380_of57a_identifier_code").show();

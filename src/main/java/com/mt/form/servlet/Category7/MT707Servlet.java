@@ -30,7 +30,7 @@ public class MT707Servlet extends HttpServlet {
             String mf21 = request.getParameter("_030_mf21_receiver_reference");
             String mf23 = request.getParameter("_040_mf23_issuing_bank_reference");
 
-            String of52aOpt = request.getParameter("_050_of52a_option");
+            String of52aOpt = request.getParameter("_050_of52a_issuing_bank");
             String of52aBic = request.getParameter("_051_of52a_identifier_code");
             String of52aName = request.getParameter("_052_of52a_name_address");
 
@@ -42,7 +42,7 @@ public class MT707Servlet extends HttpServlet {
             String mf22a = request.getParameter("_100_mf22a_purpose_of_message");
 
             String of23s = request.getParameter("_110_of23s_cancellation_request");
-            String of40a = request.getParameter("_120_of40a_form_of_credit");
+            String of40a = request.getParameter("_120_of40a_form_of_documentary_credit");
             String of40e = request.getParameter("_130_of40e_applicable_rules");
             String of40eNarr = request.getParameter("_131_of40e_narrative");
 
@@ -60,40 +60,40 @@ public class MT707Servlet extends HttpServlet {
 
             String of39aPlus = request.getParameter("_190_of39a_plus");
             String of39aMinus = request.getParameter("_191_of39a_minus");
-            String of39c = request.getParameter("_200_of39c_additional_amounts");
+            String of39c = request.getParameter("_200_of39c_additional_amounts_covered");
 
-            String of41aOpt = request.getParameter("_210_of41a_option");
+            String of41aOpt = request.getParameter("_210_of41a_available_with_by");
             String of41aBic = request.getParameter("_211_of41a_identifier_code");
             String of41aName = request.getParameter("_212_of41a_name_address");
             String of41aBy = request.getParameter("_213_of41a_code");
 
-            String of42c = request.getParameter("_220_of42c_drafts");
+            String of42c = request.getParameter("_220_of42c_drafts_at");
 
-            String of42aOpt = request.getParameter("_230_of42a_option");
+            String of42aOpt = request.getParameter("_230_of42a_drawee");
             String of42aParty = request.getParameter("_231_of42a_party_identifier");
             String of42aBic = request.getParameter("_232_of42a_identifier_code");
             String of42aName = request.getParameter("_233_of42a_name_address");
 
-            String of42m = request.getParameter("_240_of42m_mixed_payment");
-            String of42p = request.getParameter("_250_of42p_negotiation_details");
+            String of42m = request.getParameter("_240_of42m_mixed_payment_details");
+            String of42p = request.getParameter("_250_of42p_negotiation_deferred_payment_details");
 
             String of43p = request.getParameter("_260_of43p_partial_shipments");
             String of43t = request.getParameter("_270_of43t_transhipment");
 
-            String of44a = request.getParameter("_280_of44a_place_dispatch");
-            String of44e = request.getParameter("_290_of44e_port_loading");
-            String of44f = request.getParameter("_300_of44f_port_discharge");
-            String of44b = request.getParameter("_310_of44b_final_destination");
+            String of44a = request.getParameter("_280_of44a_place_taking_in_charge_dispatch_from_place_of_receipt");
+            String of44e = request.getParameter("_290_of44e_port_of_loading_airport_of_departure");
+            String of44f = request.getParameter("_300_of44f_port_of_discharge_airport_of_destination");
+            String of44b = request.getParameter("_310_of44b_place_of_final_destination_for_transportation_to_place_of_delivery");
 
-            String of44c = request.getParameter("_320_of44c_latest_date");
+            String of44c = request.getParameter("_320_of44c_latest_date_of_shipment");
             String of44d = request.getParameter("_330_of44d_shipment_period");
 
-            String of45b = request.getParameter("_340_of45b_description_goods");
+            String of45b = request.getParameter("_340_of45b_description_of_goods_and_or_services");
             String of46b = request.getParameter("_350_of46b_documents_required");
             String of47b = request.getParameter("_360_of47b_additional_conditions");
 
-            String of49m = request.getParameter("_370_of49m_special_payment_beneficiary");
-            String of49n = request.getParameter("_380_of49n_special_payment_bank");
+            String of49m = request.getParameter("_370_of49m_special_payment_conditions_for_beneficiary");
+            String of49n = request.getParameter("_380_of49n_special_payment_conditions_for_bank_only");
 
             String of71d = request.getParameter("_390_of71d_charges");
             String of71nCode = request.getParameter("_400_of71n_charge_code");
@@ -104,22 +104,22 @@ public class MT707Servlet extends HttpServlet {
 
             String of49 = request.getParameter("_420_of49_confirmation_instructions");
 
-            String of58aOpt = request.getParameter("_430_of58a_option");
+            String of58aOpt = request.getParameter("_430_of58a_requested_confirmation_party");
             String of58aBic = request.getParameter("_431_of58a_identifier_code");
             String of58aName = request.getParameter("_432_of58a_name_address");
 
-            String of53aOpt = request.getParameter("_440_of53a_option");
+            String of53aOpt = request.getParameter("_440_of53a_reimbursing_bank");
             String of53aBic = request.getParameter("_441_of53a_identifier_code");
             String of53aName = request.getParameter("_442_of53a_name_address");
 
-            String of78 = request.getParameter("_450_of78_instructions");
+            String of78 = request.getParameter("_450_of78_instructions_to_the_paying_accepting_negotiating_bank");
 
-            String of57aOpt = request.getParameter("_460_of57a_option");
+            String of57aOpt = request.getParameter("_460_of57a_advise_through_bank");
             String of57aBic = request.getParameter("_461_of57a_identifier_code");
             String of57aLoc = request.getParameter("_462_of57a_location");
             String of57aName = request.getParameter("_463_of57a_name_address");
 
-            String of72z = request.getParameter("_470_of72z_sender_to_receiver");
+            String of72z = request.getParameter("_470_of72z_sender_to_receiver_information");
 
             // === Server-side mandatory check ===
             if (isEmpty(mf27) || isEmpty(mf20) || isEmpty(mf21) ||
@@ -244,9 +244,7 @@ public class MT707Servlet extends HttpServlet {
                 ps.setString(idx++, of72z);
 
                 ps.executeUpdate();
-                out.println("<script>alert('MT707 data saved successfully!'); window.location='mt707.jsp';</script>");
-                
-                response.sendRedirect("Category7/mt707.jsp");
+                out.println("<script>alert('MT700 data saved successfully!'); window.location='Category7/mt707.jsp';</script>");
                 
             } catch (Exception e) {
                 e.printStackTrace(out);

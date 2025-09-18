@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <title>MT711 Issue of a Documentary Credit (Continuation)</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="assets/mt711.css">
+    <link rel="stylesheet" href="assets/css/mt711.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 </head>
@@ -45,10 +45,14 @@
                     <!-- MF27 Sequence of Total -->
                     <div class="form-row">
                         <span class="label_body">MF27</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total</span>
-                        <input type="text" name="_010_mf27_sequence_of_total" 
-                               id="_010_mf27_sequence_of_total"
-                               class="mandatory" maxlength="3"/>
+                        <span class="label"><a style="color:red;text-decoration:none">*</a> Sequence of Total </span>
+                        <input type="text" name="_010_mf27_sequence_of_total" id="_010_mf27_sequence_of_total"
+                               class="mandatory" maxlength="5"
+                               value="<c:forEach var='item' items='${tags}'>
+                                          <c:if test='${item.tagName eq "_010_mf27_sequence_of_total"}'>
+                                              <c:out value='${item.detail}'/>
+                                          </c:if>
+                                      </c:forEach>"/>
                     </div>
                     <hr/>
 
@@ -56,7 +60,13 @@
                     <div class="form-row">
                         <span class="label_body">MF20</span>
                         <span class="label"><a style="color:red;text-decoration:none">*</a>Sender's Reference</span>
-                        <input type="text" onkeypress="avoidSplChars(event)" name="_020_mf20_sender_reference" id="_020_mf20_sender_reference" class="mandatory" maxlength="16" input_type="MF20 Sender Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_020_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                        <input type="text" onkeypress="avoidSplChars(event)" name="_020_mf20_sender_reference" id="_020_mf20_sender_reference" 
+                               class="mandatory" maxlength="16" input_type="MF20 Sender Reference" location="Body" 
+                               value="<c:forEach var="item" items="${tags}">
+                                   <c:if test="${item.tagName=='_020_mf20_sender_reference'}">
+                                       <c:out value="${item.detail}" />
+                                   </c:if>
+                               </c:forEach>" />
                     </div>
                     <hr/>
                     
@@ -65,8 +75,13 @@
                         <span class="label_body">MF21</span>
                         <span class="label"><a style="color:red;text-decoration:none">*</a>Documentary Credit Number</span>
                         <input type="text" name="_030_mf21_documentary_credit_number" 
-                               id="_030_mf21_documentary_credit_number"
-                               class="mandatory" maxlength="16"/>
+                                id="_030_mf21_documentary_credit_number"
+                                class="mandatory" maxlength="16"
+                                value="<c:forEach var='item' items='${tags}'>
+                                            <c:if test='${item.tagName eq "_030_mf21_documentary_credit_number"}'>
+                                                <c:out value='${item.detail}' />
+                                            </c:if>
+                                        </c:forEach>" />
                     </div>
                     <hr/>
 
@@ -74,9 +89,9 @@
                     <div class="form-row">
                         <span class="label_body">OF45A</span>
                         <span class="label">Description of Goods and/or Services</span>
-                        <textarea name="_040_of45a_description" id="_040_of45a_description"
+                        <textarea name="_040_of45a_description_of_goods_and_or_services" id="_040_of45a_description_of_goods_and_or_services"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_040_of45a_description'}">
+                            <c:if test="${item.tagName eq '_040_of45a_description_of_goods_and_or_services'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>
@@ -87,9 +102,9 @@
                     <div class="form-row">
                         <span class="label_body">OF46A</span>
                         <span class="label">Documents Required</span>
-                        <textarea name="_050_of46a_documents" id="_050_of46a_documents"
+                        <textarea name="_050_of46a_documents_required" id="_050_of46a_documents_required"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_050_of46a_documents'}">
+                            <c:if test="${item.tagName eq '_050_of46a_documents_required'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>
@@ -113,9 +128,9 @@
                     <div class="form-row">
                         <span class="label_body">OF49G</span>
                         <span class="label">Special Payment Conditions for Beneficiary</span>
-                        <textarea name="_070_of49g_special_payment_beneficiary" id="_070_of49g_special_payment_beneficiary"
+                        <textarea name="_070_of49g_special_payment_conditions_for_beneficiary" id="_070_of49g_special_payment_conditions_for_beneficiary"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_070_of49g_special_payment_beneficiary'}">
+                            <c:if test="${item.tagName eq '_070_of49g_special_payment_conditions_for_beneficiary'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>
@@ -126,9 +141,9 @@
                     <div class="form-row">
                         <span class="label_body">OF49H</span>
                         <span class="label">Special Payment Conditions for Bank Only</span>
-                        <textarea name="_080_of49h_special_payment_bank" id="_080_of49h_special_payment_bank"
+                        <textarea name="_080_of49h_special_payment_conditions_for_bank_only" id="_080_of49h_special_payment_conditions_for_bank_only"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_080_of49h_special_payment_bank'}">
+                            <c:if test="${item.tagName eq '_080_of49h_special_payment_conditions_for_bank_only'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>

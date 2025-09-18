@@ -279,7 +279,7 @@
         if (!isEmptyStr(pminus) && !isPct(pminus)) pushErr("39A Minus % must be 0–99.", "_191_of39a_minus");
 
         // --- 41a (Available With) option logic ---
-        var opt41 = t("_210_of41a_option");
+        var opt41 = t("_210_of41a_available_with_by");
         if (opt41 === "A") {
             var bic41 = t("_211_of41a_identifier_code");
             if (isEmptyStr(bic41) || !isBIC(bic41)) pushErr("41a Option A: Identifier Code (BIC) required and must be valid.", "_211_of41a_identifier_code");
@@ -291,7 +291,7 @@
         else if (!isEmptyStr(t("_213_of41a_code")) && ALLOWED_41A_BY.indexOf(t("_213_of41a_code")) === -1) pushErr("41a Code invalid.", "_213_of41a_code");
 
         // --- 42a Drawee ---
-        var opt42 = t("_230_of42a_option");
+        var opt42 = t("_230_of42a_drawee");
         if (opt42 === "A") {
             var bic42 = t("_232_of42a_identifier_code");
             if (isEmptyStr(bic42) || !isBIC(bic42)) pushErr("42a Option A: Identifier Code (BIC) required and must be valid.", "_232_of42a_identifier_code");
@@ -304,11 +304,11 @@
         }
 
         // --- 52a Issuing Bank vs 50B (C3) ---
-        var opt52 = t("_050_of52a_option");
+        var opt52 = t("_050_of52a_issuing_bank");
         var has50b = !isEmptyStr(t("_060_of50b_non_bank_issuer"));
         var has52a = (opt52 === "A" || opt52 === "D");
         if ((has50b && has52a) || (!has50b && !has52a)) {
-            pushErr("C3: Either field 50B or field 52a must be present, but not both.", "_050_of52a_option");
+            pushErr("C3: Either field 50B or field 52a must be present, but not both.", "_050_of52a_issuing_bank");
         }
         if (opt52 === "A") {
             var bic52 = t("_051_of52a_identifier_code");
@@ -324,23 +324,23 @@
         if (!isEmptyStr(v44c) && !isYYMMDD(v44c)) pushErr("44C must be YYMMDD.", "_320_of44c_latest_date");
 
         // --- Structured text fields: 45B, 46B, 47B, 49M, 49N ---
-        var s45 = t("_340_of45b_description_goods");
+        var s45 = t("_340_of45b_description_of_goods_and_or_services");
         var s46 = t("_350_of46b_documents_required");
         var s47 = t("_360_of47b_additional_conditions");
-        var s49m = t("_370_of49m_special_payment_beneficiary");
-        var s49n = t("_380_of49n_special_payment_bank");
+        var s49m = t("_370_of49m_special_payment_conditions_for_beneficiary");
+        var s49n = t("_380_of49n_special_payment_conditions_for_bank_only");
         var structErr;
 
         structErr = validateStructuredFieldValue(s45, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF45B: " + structErr, "_340_of45b_description_goods");
+        if (structErr) pushErr("OF45B: " + structErr, "_340_of45b_description_of_goods_and_or_services");
         structErr = validateStructuredFieldValue(s46, ALLOWED_REP_CODES, true);
         if (structErr) pushErr("OF46B: " + structErr, "_350_of46b_documents_required");
         structErr = validateStructuredFieldValue(s47, ALLOWED_REP_CODES, true);
         if (structErr) pushErr("OF47B: " + structErr, "_360_of47b_additional_conditions");
         structErr = validateStructuredFieldValue(s49m, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF49M: " + structErr, "_370_of49m_special_payment_beneficiary");
+        if (structErr) pushErr("OF49M: " + structErr, "_370_of49m_special_payment_conditions_for_beneficiary");
         structErr = validateStructuredFieldValue(s49n, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF49N: " + structErr, "_380_of49n_special_payment_bank");
+        if (structErr) pushErr("OF49N: " + structErr, "_380_of49n_special_payment_conditions_for_bank_only");
 
         // --- 71D Charges structured-light check ---
         var vv71d = t("_390_of71d_charges");
@@ -348,15 +348,15 @@
         if (v71derr) pushErr("OF71D: " + v71derr, "_390_of71d_charges");
 
         // --- 72Z structured text rules ---
-        var vv72z = t("_470_of72z_sender_to_receiver");
+        var vv72z = t("_470_of72z_sender_to_receiver_information");
         var v72err = validate72ZField(vv72z);
-        if (v72err) pushErr("OF72Z: " + v72err, "_470_of72z_sender_to_receiver");
+        if (v72err) pushErr("OF72Z: " + v72err, "_470_of72z_sender_to_receiver_information");
 
         // --- 49 Confirmation -> 58a requirement ---
         var v49 = t("_420_of49_confirmation_instructions");
         if (v49 === "CONFIRM" || v49 === "MAY ADD") {
-            var opt58 = t("_430_of58a_option");
-            if (isEmptyStr(opt58)) pushErr("Field 58a is required when Confirmation Instructions = CONFIRM or MAY ADD.", "_430_of58a_option");
+            var opt58 = t("_430_of58a_requested_confirmation_party");
+            if (isEmptyStr(opt58)) pushErr("Field 58a is required when Confirmation Instructions = CONFIRM or MAY ADD.", "_430_of58a_requested_confirmation_party");
             else if (opt58 === "A") {
                 var bic58 = t("_431_of58a_identifier_code");
                 if (isEmptyStr(bic58) || !isBIC(bic58)) pushErr("Field 58a (Option A): Identifier Code (BIC) required and must be valid.", "_431_of58a_identifier_code");
@@ -366,7 +366,7 @@
         }
 
         // --- 53a Reimbursing Bank ---
-        var opt53 = t("_440_of53a_option");
+        var opt53 = t("_440_of53a_reimbursing_bank");
         if (opt53 === "A") {
             if (!isBIC(t("_441_of53a_identifier_code"))) pushErr("53a Option A: Identifier Code must be valid BIC.", "_441_of53a_identifier_code");
         } else if (opt53 === "D") {
@@ -374,7 +374,7 @@
         }
 
         // --- 57a Advise Through Bank ---
-        var opt57 = t("_460_of57a_option");
+        var opt57 = t("_460_of57a_advise_through_bank");
         if (opt57 === "A") {
             if (!isBIC(t("_461_of57a_identifier_code"))) pushErr("57a Option A: Identifier Code must be valid BIC.", "_461_of57a_identifier_code");
         } else if (opt57 === "B") {
@@ -401,12 +401,12 @@
 
         // --- Basic length checks for common name/address fields (as in JSP maxlength) ---
         var max140Ids = ["_052_of52a_name_address","_150_of50_changed_applicant_details","_161_of59_name_address",
-                         "_212_of41a_name_address","_233_of42a_name_address","_240_of42m_mixed_payment",
-                         "_250_of42p_negotiation_details","_280_of44a_place_dispatch","_290_of44e_port_loading",
-                         "_300_of44f_port_discharge","_310_of44b_final_destination","_330_of44d_shipment_period",
-                         "_340_of45b_description_goods","_350_of46b_documents_required","_360_of47b_additional_conditions",
-                         "_370_of49m_special_payment_beneficiary","_380_of49n_special_payment_bank","_450_of78_instructions",
-                         "_463_of57a_name_address","_442_of53a_name_address","_401_of71n_narrative","_470_of72z_sender_to_receiver"];
+                         "_212_of41a_name_address","_233_of42a_name_address","_240_of42m_mixed_payment_details",
+                         "_250_of42p_negotiation_deferred_payment_details","_280_of44a_place_taking_in_charge_dispatch_from_place_of_receipt","_290_of44e_port_of_loading_airport_of_departure",
+                         "_300_of44f_port_of_discharge_airport_of_destination","_310_of44b_place_of_final_destination_for_transportation_to_place_of_delivery","_330_of44d_shipment_period",
+                         "_340_of45b_description_of_goods_and_or_services","_350_of46b_documents_required","_360_of47b_additional_conditions",
+                         "_370_of49m_special_payment_conditions_for_beneficiary","_380_of49n_special_payment_conditions_for_bank_only","_450_of78_instructions_to_the_paying_accepting_negotiating_bank",
+                         "_463_of57a_name_address","_442_of53a_name_address","_401_of71n_narrative","_470_of72z_sender_to_receiver_information"];
         for (var ii=0; ii<max140Ids.length; ii++){
             var id = max140Ids[ii];
             var vv = t(id);
@@ -419,16 +419,16 @@
 
         // --- Network rule C1: at least one field after 22A must be present ---
         var fieldsAfter22A = [
-            "_110_of23s_cancellation_request","_120_of40a_form_of_credit","_130_of40e_applicable_rules","_140_of31d_date_of_expiry",
+            "_110_of23s_cancellation_request","_120_of40a_form_of_documentary_credit","_130_of40e_applicable_rules","_140_of31d_date_of_expiry",
             "_150_of50_changed_applicant_details","_160_of59_account","_170_of32b_currency","_171_of32b_amount",
-            "_180_of33b_currency","_181_of33b_amount","_190_of39a_plus","_191_of39a_minus","_200_of39c_additional_amounts",
-            "_210_of41a_option","_220_of42c_drafts","_230_of42a_option","_240_of42m_mixed_payment",
-            "_250_of42p_negotiation_details","_260_of43p_partial_shipments","_270_of43t_transhipment",
-            "_280_of44a_place_dispatch","_290_of44e_port_loading","_300_of44f_port_discharge","_310_of44b_final_destination",
-            "_320_of44c_latest_date","_330_of44d_shipment_period","_340_of45b_description_goods","_350_of46b_documents_required",
-            "_360_of47b_additional_conditions","_370_of49m_special_payment_beneficiary","_380_of49n_special_payment_bank",
+            "_180_of33b_currency","_181_of33b_amount","_190_of39a_plus","_191_of39a_minus","_200_of39c_additional_amounts_covered",
+            "_210_of41a_available_with_by","_220_of42c_drafts_at","_230_of42a_drawee","_240_of42m_mixed_payment_details",
+            "_250_of42p_negotiation_deferred_payment_details","_260_of43p_partial_shipments","_270_of43t_transhipment",
+            "_280_of44a_place_taking_in_charge_dispatch_from_place_of_receipt","_290_of44e_port_of_loading_airport_of_departure","_300_of44f_port_of_discharge_airport_of_destination","_310_of44b_place_of_final_destination_for_transportation_to_place_of_delivery",
+            "_320_of44c_latest_date_of_shipment","_330_of44d_shipment_period","_340_of45b_description_of_goods_and_or_services","_350_of46b_documents_required",
+            "_360_of47b_additional_conditions","_370_of49m_special_payment_conditions_for_beneficiary","_380_of49n_special_payment_conditions_for_bank_only",
             "_390_of71d_charges","_400_of71n_charge_code","_410_of48_days","_420_of49_confirmation_instructions",
-            "_430_of58a_option","_440_of53a_option","_450_of78_instructions","_460_of57a_option","_470_of72z_sender_to_receiver"
+            "_430_of58a_requested_confirmation_party","_440_of53a_reimbursing_bank","_450_of78_instructions_to_the_paying_accepting_negotiating_bank","_460_of57a_advise_through_bank","_470_of72z_sender_to_receiver_information"
         ];
         var anyAfter22A = false;
         for (var k=0;k<fieldsAfter22A.length;k++){
@@ -440,7 +440,7 @@
         if (!isEmptyStr(vv71d) && vv71d.length > 210) pushErr("OF71D exceeds maxlength 210 characters.", "_390_of71d_charges");
 
         // --- OF72Z length limit per JSP maxlength 210 ---
-        if (!isEmptyStr(vv72z) && vv72z.length > 210) pushErr("OF72Z exceeds maxlength 210 characters.", "_470_of72z_sender_to_receiver");
+        if (!isEmptyStr(vv72z) && vv72z.length > 210) pushErr("OF72Z exceeds maxlength 210 characters.", "_470_of72z_sender_to_receiver_information");
 
         // --- final: show errors if any ---
         if (E.length > 0) {
@@ -467,7 +467,7 @@
         });
 
         // date inputs: limit to digits
-        ["_070_mf31c_date_of_issue","_090_mf30_date_of_amendment","_320_of44c_latest_date","_140_of31d_date_of_expiry"]
+        ["_070_mf31c_date_of_issue","_090_mf30_date_of_amendment","_320_of44c_latest_date_of_shipment","_140_of31d_date_of_expiry"]
             .forEach(function(id){
                 var e = document.getElementById(id);
                 if (!e) return;

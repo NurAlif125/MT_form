@@ -55,7 +55,7 @@
             });
 
             // FIELD 45A : Description of Goods and/or Services
-            $("#_030_of45a_description").off("input").on("input", function () {
+            $("#_030_of45a_description_of_goods_and_or_services").off("input").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 6500) {
                     alert("Field 45A maksimal 6500 karakter.");
@@ -64,7 +64,7 @@
             });
 
             // FIELD 46A : Documents Required
-            $("#_040_of46a_documents").off("input").on("input", function () {
+            $("#_040_of46a_documents_required").off("input").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 6500) {
                     alert("Field 46A maksimal 6500 karakter.");
@@ -82,7 +82,7 @@
             });
 
             // FIELD 49G : Special Payment Conditions for Beneficiary
-            $("#_060_of49g_special_payment_beneficiary").off("input").on("input", function () {
+            $("#_060_of49g_special_payment_conditions_for_beneficiary").off("input").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 6500) {
                     alert("Field 49G maksimal 6500 karakter.");
@@ -91,7 +91,7 @@
             });
 
             // FIELD 49H : Special Payment Conditions for Bank Only
-            $("#_070_of49h_special_payment_bank").off("input").on("input", function () {
+            $("#_070_of49h_special_payment_conditions_for_bank_only").off("input").on("input", function () {
                 var val = $(this).val();
                 if (val.length > 6500) {
                     alert("Field 49H maksimal 6500 karakter.");

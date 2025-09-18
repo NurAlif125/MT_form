@@ -13,10 +13,10 @@
     <meta charset="UTF-8">
     <title>MT700 Issue of a Documentary Credit</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="assets/mt700.css">
+    <link rel="stylesheet" href="assets/css/mt700.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <script src="assets/mt700.js"></script>
+    <script src="assets/js/mt700.js"></script>
 </head>
 <body>
 
@@ -197,15 +197,15 @@
                     <div class="form-row">
                         <span class="label_body">OF51a</span>
                         <span class="label">Applicant Bank</span>
-                        <select name="_080_of51a_option" id="_080_of51a_option">
+                        <select name="_080_of51a_applicant_bank" id="_080_of51a_applicant_bank">
                             <option value="">choose a type</option>
                             <option value="A"
                                 <c:forEach var="item" items="${tags}">
-                                    <c:if test="${item.tagName eq '_080_of51a_option' and item.detail eq 'A'}">selected</c:if>
+                                    <c:if test="${item.tagName eq '_080_of51a_applicant_bank' and item.detail eq 'A'}">selected</c:if>
                                 </c:forEach>>Option A (BIC)</option>
                             <option value="D"
                                 <c:forEach var="item" items="${tags}">
-                                    <c:if test="${item.tagName eq '_080_of51a_option' and item.detail eq 'D'}">selected</c:if>
+                                    <c:if test="${item.tagName eq '_080_of51a_applicant_bank' and item.detail eq 'D'}">selected</c:if>
                                 </c:forEach>>Option D (Name & Address)</option>
                         </select>
                     </div>
@@ -368,10 +368,10 @@
                     <div class="form-row">
                         <span class="label_body">OF39C</span>
                         <span class="label">Additional Amounts Covered</span>
-                        <textarea name="_130_of39c_additional_amounts"
-                                  id="_130_of39c_additional_amounts"
+                        <textarea name="_130_of39c_additional_amounts_covered"
+                                  id="_130_of39c_additional_amounts_covered"
                                   rows="4" maxlength="140"><c:forEach var='item' items='${tags}'>
-                                      <c:if test='${item.tagName eq "_130_of39c_additional_amounts"}'>
+                                      <c:if test='${item.tagName eq "_130_of39c_additional_amounts_covered"}'>
                                           <c:out value='${item.detail}' />
                                       </c:if>
                                   </c:forEach></textarea>
@@ -382,10 +382,10 @@
                     <div class="form-row">
                         <span class="label_body">MF41A</span>
                         <span class="label"><a style="color:red;text-decoration:none">*</a>Available With ... By ...</span>
-                        <select id="_140_mf41a_option" name="_140_mf41a_option">
+                        <select id="_140_mf41a_available_with_by" name="_140_mf41a_available_with_by">
                             <option value="">choose a type</option>
-                            <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_140_mf41a_option' and item.detail eq 'A'}">selected</c:if></c:forEach>>Option A (BIC)</option>
-                            <option value="D" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_140_mf41a_option' and item.detail eq 'D'}">selected</c:if></c:forEach>>Option D (Name &amp; Address)</option>
+                            <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_140_mf41a_available_with_by' and item.detail eq 'A'}">selected</c:if></c:forEach>>Option A (BIC)</option>
+                            <option value="D" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_140_mf41a_available_with_by' and item.detail eq 'D'}">selected</c:if></c:forEach>>Option D (Name &amp; Address)</option>
                         </select>
                     </div>
 
@@ -422,8 +422,8 @@
                     <div class="form-row">
                         <span class="label_body">OF42C</span>
                         <span class="label">Drafts at ...</span>
-                        <textarea name="_150_of42c_drafts" id="_150_of42c_drafts"
-                                  rows="3" maxlength="105"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_150_of42c_drafts"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
+                        <textarea name="_150_of42c_drafts_at" id="_150_of42c_drafts_at"
+                                  rows="3" maxlength="105"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_150_of42c_drafts_at"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
                     </div>
                     <hr/>
 
@@ -431,13 +431,13 @@
                     <div class="form-row">
                         <span class="label_body">OF42A</span>
                         <span class="label">Drawee</span>
-                        <select id="_160_of42a_option" name="_160_of42a_option">
+                        <select id="_160_of42a_drawee" name="_160_of42a_drawee">
                             <option value="">choose a type</option>
                             <option value="A" <c:forEach var="item" items="${tags}">
-                                <c:if test="${item.tagName eq '_160_of42a_option' and item.detail eq 'A'}">selected</c:if>
+                                <c:if test="${item.tagName eq '_160_of42a_drawee' and item.detail eq 'A'}">selected</c:if>
                             </c:forEach>>Option A (BIC)</option>
                             <option value="D" <c:forEach var="item" items="${tags}">
-                                <c:if test="${item.tagName eq '_160_of42a_option' and item.detail eq 'D'}">selected</c:if>
+                                <c:if test="${item.tagName eq '_160_of42a_drawee' and item.detail eq 'D'}">selected</c:if>
                             </c:forEach>>Option D (Name &amp; Address)</option>
                         </select>
                     </div>
@@ -462,8 +462,8 @@
                     <div class="form-row">
                         <span class="label_body">OF42M</span>
                         <span class="label">Mixed Payment Details</span>
-                        <textarea name="_170_of42m_mixed_payment" id="_170_of42m_mixed_payment"
-                                  rows="4" maxlength="140"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_170_of42m_mixed_payment"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
+                        <textarea name="_170_of42m_mixed_payment_details" id="_170_of42m_mixed_payment_details"
+                                  rows="4" maxlength="140"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_170_of42m_mixed_payment_details"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
                     </div>
                     <hr/>
 
@@ -471,8 +471,8 @@
                     <div class="form-row">
                         <span class="label_body">OF42P</span>
                         <span class="label">Negotiation/Deferred Payment Details</span>
-                        <textarea name="_180_of42p_negotiation" id="_180_of42p_negotiation"
-                                  rows="4" maxlength="140"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_180_of42p_negotiation"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
+                        <textarea name="_180_of42p_negotiation_deferred_payment_details" id="_180_of42p_negotiation_deferred_payment_details"
+                                  rows="4" maxlength="140"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_180_of42p_negotiation_deferred_payment_details"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
                     </div>
                     <hr/>
                     
@@ -518,10 +518,10 @@
                     <div class="form-row">
                         <span class="label_body">OF44A</span>
                         <span class="label">Place of Taking in Charge / Dispatch from / Place of Receipt</span>
-                        <textarea name="_210_of44a_place_dispatch"
-                                  id="_210_of44a_place_dispatch"
+                        <textarea name="_210_of44a_place_taking_in_charge_dispatch_from_place_of_receipt"
+                                  id="_210_of44a_place_taking_in_charge_dispatch_from_place_of_receipt"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
-                            <c:if test='${item.tagName eq "_210_of44a_place_dispatch"}'>
+                            <c:if test='${item.tagName eq "_210_of44a_place_taking_in_charge_dispatch_from_place_of_receipt"}'>
                                 <c:out value='${item.detail}' />
                             </c:if>
                         </c:forEach></textarea>
@@ -532,10 +532,10 @@
                     <div class="form-row">
                         <span class="label_body">OF44E</span>
                         <span class="label">Port of Loading / Airport of Departure</span>
-                        <textarea name="_220_of44e_port_loading"
-                                  id="_220_of44e_port_loading"
+                        <textarea name="_220_of44e_port_of_loading_airport_of_departure"
+                                  id="_220_of44e_port_of_loading_airport_of_departure"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
-                            <c:if test='${item.tagName eq "_220_of44e_port_loading"}'>
+                            <c:if test='${item.tagName eq "_220_of44e_port_of_loading_airport_of_departure"}'>
                                 <c:out value='${item.detail}' />
                             </c:if>
                         </c:forEach></textarea>
@@ -546,10 +546,10 @@
                     <div class="form-row">
                         <span class="label_body">OF44F</span>
                         <span class="label">Port of Discharge / Airport of Destination</span>
-                        <textarea name="_230_of44f_port_discharge"
-                                  id="_230_of44f_port_discharge"
+                        <textarea name="_230_of44f_port_of_discharge_airport_of_destination"
+                                  id="_230_of44f_port_of_discharge_airport_of_destination"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
-                            <c:if test='${item.tagName eq "_230_of44f_port_discharge"}'>
+                            <c:if test='${item.tagName eq "_230_of44f_port_of_discharge_airport_of_destination"}'>
                                 <c:out value='${item.detail}' />
                             </c:if>
                         </c:forEach></textarea>
@@ -560,10 +560,10 @@
                     <div class="form-row">
                         <span class="label_body">OF44B</span>
                         <span class="label">Place of Final Destination / Place of Delivery</span>
-                        <textarea name="_240_of44b_place_destination"
-                                  id="_240_of44b_place_destination"
+                        <textarea name="_240_of44b_place_of_final_destination_for_transportation_to_place_of_delivery"
+                                  id="_240_of44b_place_of_final_destination_for_transportation_to_place_of_delivery"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
-                            <c:if test='${item.tagName eq "_240_of44b_place_destination"}'>
+                            <c:if test='${item.tagName eq "_240_of44b_place_of_final_destination_for_transportation_to_place_of_delivery"}'>
                                 <c:out value='${item.detail}' />
                             </c:if>
                         </c:forEach></textarea>
@@ -574,12 +574,12 @@
                     <div class="form-row">
                         <span class="label_body">OF44C</span>
                         <span class="label">Latest Date of Shipment</span>
-                        <input type="text" name="_250_of44c_latest_date"
-                               id="_250_of44c_latest_date"
+                        <input type="text" name="_250_of44c_latest_date_of_shipment"
+                               id="_250_of44c_latest_date_of_shipment"
                                maxlength="6"
                                placeholder="YYMMDD"
                                value="<c:forEach var='item' items='${tags}'>
-                                          <c:if test='${item.tagName eq "_250_of44c_latest_date"}'>
+                                          <c:if test='${item.tagName eq "_250_of44c_latest_date_of_shipment"}'>
                                               <c:out value='${item.detail}' />
                                           </c:if>
                                       </c:forEach>" />
@@ -604,9 +604,9 @@
                     <div class="form-row">
                         <span class="label_body">OF45A</span>
                         <span class="label">Description of Goods and/or Services</span>
-                        <textarea name="_270_of45a_description" id="_270_of45a_description"
+                        <textarea name="_270_of45a_description_of_goods_and_or_services" id="_270_of45a_description_of_goods_and_or_services"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_270_of45a_description'}">
+                            <c:if test="${item.tagName eq '_270_of45a_description_of_goods_and_or_services'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>
@@ -617,9 +617,9 @@
                     <div class="form-row">
                         <span class="label_body">OF46A</span>
                         <span class="label">Documents Required</span>
-                        <textarea name="_280_of46a_documents" id="_280_of46a_documents"
+                        <textarea name="_280_of46a_documents_required" id="_280_of46a_documents_required"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_280_of46a_documents'}">
+                            <c:if test="${item.tagName eq '_280_of46a_documents_required'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>
@@ -643,9 +643,9 @@
                     <div class="form-row">
                         <span class="label_body">OF49G</span>
                         <span class="label">Special Payment Conditions for Beneficiary</span>
-                        <textarea name="_300_of49g_special_payment_beneficiary" id="_300_of49g_special_payment_beneficiary"
+                        <textarea name="_300_of49g_special_payment_conditions_for_beneficiary" id="_300_of49g_special_payment_conditions_for_beneficiary"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_300_of49g_special_payment_beneficiary'}">
+                            <c:if test="${item.tagName eq '_300_of49g_special_payment_conditions_for_beneficiary'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>
@@ -656,9 +656,9 @@
                     <div class="form-row">
                         <span class="label_body">OF49H</span>
                         <span class="label">Special Payment Conditions for Bank Only</span>
-                        <textarea name="_310_of49h_special_payment_bank" id="_310_of49h_special_payment_bank"
+                        <textarea name="_310_of49h_special_payment_conditions_for_bank_only" id="_310_of49h_special_payment_conditions_for_bank_only"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
-                            <c:if test="${item.tagName eq '_310_of49h_special_payment_bank'}">
+                            <c:if test="${item.tagName eq '_310_of49h_special_payment_conditions_for_bank_only'}">
                                 <c:out value="${item.detail}" />
                             </c:if>
                         </c:forEach></textarea>
@@ -708,19 +708,19 @@
                     <div class="form-row">
                         <span class="label_body">MF49</span>
                         <span class="label"><a style="color:red;text-decoration:none">*</a>Confirmation Instructions</span>
-                        <select id="_340_mf49_confirmation" name="_340_mf49_confirmation" class="mandatory">
+                        <select id="_340_mf49_confirmation_instructions" name="_340_mf49_confirmation_instructions" class="mandatory">
                             <option value="">choose a type</option>
                             <option value="CONFIRM"
                                 <c:forEach var="item" items="${tags}">
-                                    <c:if test="${item.tagName eq '_340_mf49_confirmation' and item.detail eq 'CONFIRM'}">selected</c:if>
+                                    <c:if test="${item.tagName eq '_340_mf49_confirmation_instructions' and item.detail eq 'CONFIRM'}">selected</c:if>
                                 </c:forEach>>CONFIRM</option>
                             <option value="MAY ADD"
                                 <c:forEach var="item" items="${tags}">
-                                    <c:if test="${item.tagName eq '_340_mf49_confirmation' and item.detail eq 'MAY ADD'}">selected</c:if>
+                                    <c:if test="${item.tagName eq '_340_mf49_confirmation_instructions' and item.detail eq 'MAY ADD'}">selected</c:if>
                                 </c:forEach>>MAY ADD</option>
                             <option value="WITHOUT"
                                 <c:forEach var="item" items="${tags}">
-                                    <c:if test="${item.tagName eq '_340_mf49_confirmation' and item.detail eq 'WITHOUT'}">selected</c:if>
+                                    <c:if test="${item.tagName eq '_340_mf49_confirmation_instructions' and item.detail eq 'WITHOUT'}">selected</c:if>
                                 </c:forEach>>WITHOUT</option>
                         </select>
                     </div>
@@ -732,15 +732,15 @@
                         <span class="label">Requested Confirmation Party</span>
                         <div class="mt-row">
                             <div class="mt-col">
-                                <select id="_350_of58a_option" name="_350_of58a_option">
+                                <select id="_350_of58a_requested_confirmation_party" name="_350_of58a_requested_confirmation_party">
                                     <option value="">choose a type</option>
                                     <option value="A"
                                         <c:forEach var="item" items="${tags}">
-                                            <c:if test="${item.tagName eq '_350_of58a_option' and item.detail eq 'A'}">selected</c:if>
+                                            <c:if test="${item.tagName eq '_350_of58a_requested_confirmation_party' and item.detail eq 'A'}">selected</c:if>
                                         </c:forEach>>Option A (BIC)</option>
                                     <option value="D"
                                         <c:forEach var="item" items="${tags}">
-                                            <c:if test="${item.tagName eq '_350_of58a_option' and item.detail eq 'D'}">selected</c:if>
+                                            <c:if test="${item.tagName eq '_350_of58a_requested_confirmation_party' and item.detail eq 'D'}">selected</c:if>
                                         </c:forEach>>Option D (Name &amp; Address)</option>
                                 </select>
                             </div>
@@ -771,15 +771,15 @@
                         <span class="label">Reimbursing Bank</span>
                         <div class="mt-row">
                             <div class="mt-col">
-                                <select id="_360_of53a_option" name="_360_of53a_option">
+                                <select id="_360_of53a_reimbursing_bank" name="_360_of53a_reimbursing_bank">
                                     <option value="">choose a type</option>
                                     <option value="A"
                                         <c:forEach var="item" items="${tags}">
-                                            <c:if test="${item.tagName eq '_360_of53a_option' and item.detail eq 'A'}">selected</c:if>
+                                            <c:if test="${item.tagName eq '_360_of53a_reimbursing_bank' and item.detail eq 'A'}">selected</c:if>
                                         </c:forEach>>Option A (BIC)</option>
                                     <option value="D"
                                         <c:forEach var="item" items="${tags}">
-                                            <c:if test="${item.tagName eq '_360_of53a_option' and item.detail eq 'D'}">selected</c:if>
+                                            <c:if test="${item.tagName eq '_360_of53a_reimbursing_bank' and item.detail eq 'D'}">selected</c:if>
                                         </c:forEach>>Option D (Name &amp; Address)</option>
                                 </select>
                             </div>
@@ -808,10 +808,10 @@
                     <div class="form-row">
                         <span class="label_body">OF78</span>
                         <span class="label">Instructions to the Paying/Accepting/Negotiating Bank</span>
-                        <textarea name="_370_of78_instructions"
-                                  id="_370_of78_instructions"
+                        <textarea name="_370_of78_instructions_to_the_paying_accepting_negotiating_bank"
+                                  id="_370_of78_instructions_to_the_paying_accepting_negotiating_bank"
                                   rows="6" maxlength="780"><c:forEach var='item' items='${tags}'>
-                            <c:if test='${item.tagName eq "_370_of78_instructions"}'>
+                            <c:if test='${item.tagName eq "_370_of78_instructions_to_the_paying_accepting_negotiating_bank"}'>
                                 <c:out value='${item.detail}' />
                             </c:if>
                         </c:forEach></textarea>
@@ -824,19 +824,19 @@
                         <span class="label">'Advise Through' Bank</span>
                         <div class="mt-row">
                             <div class="mt-col">
-                                <select id="_380_of57a_option" name="_380_of57a_option">
+                                <select id="_380_of57a_advise_through_bank" name="_380_of57a_advise_through_bank">
                                     <option value="">choose a type</option>
                                     <option value="A"
                                         <c:forEach var="item" items="${tags}">
-                                            <c:if test="${item.tagName eq '_380_of57a_option' and item.detail eq 'A'}">selected</c:if>
+                                            <c:if test="${item.tagName eq '_380_of57a_advise_through_bank' and item.detail eq 'A'}">selected</c:if>
                                         </c:forEach>>Option A (BIC)</option>
                                     <option value="B"
                                         <c:forEach var="item" items="${tags}">
-                                            <c:if test="${item.tagName eq '_380_of57a_option' and item.detail eq 'B'}">selected</c:if>
+                                            <c:if test="${item.tagName eq '_380_of57a_advise_through_bank' and item.detail eq 'B'}">selected</c:if>
                                         </c:forEach>>Option B (Location)</option>
                                     <option value="D"
                                         <c:forEach var="item" items="${tags}">
-                                            <c:if test="${item.tagName eq '_380_of57a_option' and item.detail eq 'D'}">selected</c:if>
+                                            <c:if test="${item.tagName eq '_380_of57a_advise_through_bank' and item.detail eq 'D'}">selected</c:if>
                                         </c:forEach>>Option D (Name &amp; Address)</option>
                                 </select>
                             </div>
@@ -874,10 +874,10 @@
                     <div class="form-row">
                         <span class="label_body">OF72Z</span>
                         <span class="label">Sender to Receiver Information</span>
-                        <textarea name="_390_of72z_information"
-                                  id="_390_of72z_information"
+                        <textarea name="_390_of72z_sender_to_receiver_information"
+                                  id="_390_of72z_sender_to_receiver_information"
                                   rows="6" maxlength="210"><c:forEach var='item' items='${tags}'>
-                            <c:if test='${item.tagName eq "_390_of72z_information"}'>
+                            <c:if test='${item.tagName eq "_390_of72z_sender_to_receiver_information"}'>
                                 <c:out value='${item.detail}' />
                             </c:if>
                         </c:forEach></textarea>

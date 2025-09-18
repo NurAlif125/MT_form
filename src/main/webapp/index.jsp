@@ -60,6 +60,12 @@
               <a href="Category7/mt708.jsp">708 - Amendment to a Documentary Credit (Continuation)</a>
               <a href="Category7/mt710.jsp">710 - Advice of a Third Bank's or a Non-Bank's Documentary Credit</a>
               <a href="Category7/mt711.jsp">711 - Issue of a Documentary Credit (Continuation)</a>
+              <a href="Category7/mt720.jsp">720 - Transfer of a Documentary Credit</a>
+              <a href="Category7/mt730.jsp">730 - Acknowledgement</a>
+              <a href="Category7/mt734.jsp">734 - Advice of Refusal</a>
+              <a href="Category7/mt740.jsp">740 - Authorisation to Reimburse</a>
+              <a href="Category7/mt742.jsp">742 - Reimbursement Claim</a>
+              <a href="Category7/mt747.jsp">747 - Amendement to an Authorisation to Reimburse</a>
             </div>
           </div>
         </div>
