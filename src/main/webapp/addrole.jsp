@@ -181,7 +181,19 @@
                         <!-- <label>296 <input type="checkbox" name="role_detail" id="role_detail" value="MT:296" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:296'}"> checked="true" </c:if></c:forEach> /></label> -->
                         <!-- <label>298 <input type="checkbox" name="role_detail" id="role_detail" value="MT:298" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:298'}"> checked="true" </c:if></c:forEach> /></label> -->
                         <!--<label>299 <input type="checkbox" name="role_detail" id="role_detail" value="MT:299" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:299'}"> checked="true" </c:if></c:forEach> /></label>-->
-                            </div>
+                        </div>
+                        <div class="form-row"><span class="labelL">Message Category 3</span>
+                        <label>300 <input type="checkbox" name="role_detail" id="role_detail" value="MT:300" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:300'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>320 <input type="checkbox" name="role_detail" id="role_detail" value="MT:320" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:320'}"> checked="true" </c:if></c:forEach> /></label>
+                        </div>
+                        <div class="form-row"><span class="labelL">Message Category 4</span>
+                        <label>400 <input type="checkbox" name="role_detail" id="role_detail" value="MT:400" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:400'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>412 <input type="checkbox" name="role_detail" id="role_detail" value="MT:412" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:412'}"> checked="true" </c:if></c:forEach> /></label>
+                        <label>499 <input type="checkbox" name="role_detail" id="role_detail" value="MT:499" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:499'}"> checked="true" </c:if></c:forEach> /></label>
+                        </div>
+                        <div class="form-row"><span class="labelL">Message Category 7</span>
+                        <label>799 <input type="checkbox" name="role_detail" id="role_detail" value="MT:799" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:799'}"> checked="true" </c:if></c:forEach> /></label>
+                        </div>
                             <!--<div class="form-row">
                                                                  <div class="form-row"><span class="labelL">Message Category 3</span>
                                                                      <label>300 <input type="checkbox" name="role_detail" id="role_detail" value="MT:300" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:300'}"> checked="true" </c:if></c:forEach> /></label>

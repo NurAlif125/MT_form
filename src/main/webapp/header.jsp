@@ -219,6 +219,42 @@ response.setHeader("X-Powered-By", "Unknown");
                                             </c:forEach>
                                     </ul>
                                 </li>
+                                <li><span class="dir">Message Category 3</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'MT:300'}">
+                                                <li><a onclick="userTrackMenuClick('300 - Foreign Exchange Confirmation')" href="mt300.jsp?create=true">300 - Foreign Exchange Confirmation</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:320'}">
+                                                <li><a onclick="userTrackMenuClick('320 - Fixed Loan/Deposit Confirmation')" href="mt320.jsp?create=true">320 - Fixed Loan/Deposit Confirmation</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
+                                <li><span class="dir">Message Category 4</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'MT:400'}">
+                                                <li><a onclick="userTrackMenuClick('400 - Advice of Payment')" href="mt400.jsp?create=true">400 - Advice of Payment</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:412'}">
+                                                <li><a onclick="userTrackMenuClick('412 - Advice of Acceptance')" href="mt412.jsp?create=true">412 - Advice of Acceptance</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:499'}">
+                                                <li><a onclick="userTrackMenuClick('499 - Free Format Message')" href="mt499.jsp?create=true">499 - Free Format Message</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
+                                <li><span class="dir">Message Category 7</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'MT:499'}">
+                                                <li><a onclick="userTrackMenuClick('799 - Free Format Message')" href="mt799.jsp?create=true">799 - Free Format Message</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
                                 <!--                        <li><span class="dir">Message Category 4</span>
                                 
                                                         </li>

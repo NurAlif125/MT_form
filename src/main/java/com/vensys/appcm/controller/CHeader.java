@@ -212,6 +212,31 @@ public class CHeader {
             } else if (messageType.equalsIgnoreCase("200")) {
                 tagMT200(sb4, id);
             }
+
+            else if (messageType.equalsIgnoreCase("300")) {
+                TagMT300 mt300 = new TagMT300(this);
+                mt300.tagMT300(sb4, id);
+            } else if (messageType.equalsIgnoreCase("320")) {
+                TagMT320 mt320 = new TagMT320(this);
+                mt320.tagMT320(sb4, id);
+            }
+
+            else if (messageType.equalsIgnoreCase("400")) {
+                TagMT400 mt400 = new TagMT400(this);
+                mt400.tagMT400(sb4, id);
+            } else if (messageType.equalsIgnoreCase("412")) {
+                TagMT412 mt412 = new TagMT412(this);
+                mt412.tagMT412(sb4, id);
+            } else if (messageType.equalsIgnoreCase("499")) {
+                TagMT499 mt499 = new TagMT499(this);
+                mt499.tagMT499(sb4, id);
+            }
+
+            else if (messageType.equalsIgnoreCase("799")) {
+                TagMT799 mt799 = new TagMT799(this);
+                mt799.tagMT799(sb4, id);
+            }
+
             log.info("wifeParser() is successfully");
 
         } catch (IOException e) {

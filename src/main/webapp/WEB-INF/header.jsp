@@ -258,11 +258,35 @@
                                 <c:forEach var="item" items="${role}">
                                     <c:if test="${item == 'MT:300'}">
                                         <li><a href="mt300.jsp">300 - Foreign Exchange Confirmation</a></li>
-                                        </c:if>
-                                        <c:if test="${item == 'MT:320'}">
+                                    </c:if>
+                                    <c:if test="${item == 'MT:320'}">
                                         <li><a href="mt320.jsp">320 - Fixed Load/Deposit Confirmation</a></li>
-                                        </c:if>
-                                    </c:forEach>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                        <li><span class="dir">Message Category 4</span>
+                            <ul>
+                                <c:forEach var="item" items="${role}">
+                                    <c:if test="${item == 'MT:400'}">
+                                        <li><a href="mt400.jsp">400 - Advice of Payment</a></li>
+                                    </c:if>
+                                    <c:if test="${item == 'MT:412'}">
+                                        <li><a href="mt412.jsp">412 - Advice of Acceptance</a></li>
+                                    </c:if>
+                                    <c:if test="${item == 'MT:499'}">
+                                        <li><a href="mt499.jsp">499 - Free Format Message</a></li>
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                        <li><span class="dir">Message Category 7</span>
+                            <ul>
+                                <c:forEach var="item" items="${role}">
+                                    <c:if test="${item == 'MT:799'}">
+                                        <li><a href="mt799.jsp">799 - Free Format Message</a></li>
+                                    </c:if>
+                                </c:forEach>
                             </ul>
                         </li>
 <!--                        <li><span class="dir">Message Category 4</span>

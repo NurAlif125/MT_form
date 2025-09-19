@@ -234,17 +234,36 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         tag.setDetail(request.getParameter(tags));  //detail
                         tag.setTagName(tags);   //tagName
                         //20211216 penambahan get tagMT 103 untuk pengecekan duplikat
-                        if (tag.getTagName().equalsIgnoreCase("_010_mf20_sender_reference")) {
+                        if (tag.getTagName().equalsIgnoreCase("_010_mf20_sender_reference")
+                        || tag.getTagName().equalsIgnoreCase("_010_mf20_sending_bank_trn")) { // MT400
                             header.setTrans_refference(tag.getDetail());
-                        } else if (tag.getTagName().equalsIgnoreCase("_011_mf21_")) {
+                        } else if (tag.getTagName().equalsIgnoreCase("_011_mf21_")
+                        || tag.getTagName().equalsIgnoreCase("_320_of21g_brokers_reference") // MT300
+                        || tag.getTagName().equalsIgnoreCase("_060_mf22c_common_reference") // MT320
+                        || tag.getTagName().equalsIgnoreCase("_020_mf21_related_reference") // MT400, MT412
+                        || tag.getTagName().equalsIgnoreCase("_011_of21_related_Reference")) { // MTN99
                             header.setTrans_related_refference(tag.getDetail());
-                        } else if (tag.getTagName().equalsIgnoreCase("_062_mf32a_amount")) {
+                        } else if (tag.getTagName().equalsIgnoreCase("_062_mf32a_amount")
+                        || tag.getTagName().equalsIgnoreCase("_201_mf33b_amount") // MT300
+                        || tag.getTagName().equalsIgnoreCase("_151_mf32b_amount") // MT320
+                        || tag.getTagName().equalsIgnoreCase("_032_mf32a_amount_accepted") // MT412
+                        || tag.getTagName().equalsIgnoreCase("_043_mf33a_a_amount")) { // MT400
                             header.setTrans_amount(tag.getDetail().replace(",", "."));
-                        } else if (tag.getTagName().equalsIgnoreCase("_061_mf32a_currency")) {
+                        } else if (tag.getTagName().equalsIgnoreCase("_061_mf32a_currency")
+                        || tag.getTagName().equalsIgnoreCase("_200_mf33b_currency") // MT300
+                        || tag.getTagName().equalsIgnoreCase("_150_mf32b_currency") // MT320
+                        || tag.getTagName().equalsIgnoreCase("_031_mf32a_currency_code") // MT412
+                        || tag.getTagName().equalsIgnoreCase("_042_mf33a_a_currency")) { // MT400
                             header.setTrans_ccy(tag.getDetail());
-                        } else if (tag.getTagName().equalsIgnoreCase("_060_mf32a_date")) {
+                        } else if (tag.getTagName().equalsIgnoreCase("_060_mf32a_date")
+                        || tag.getTagName().equalsIgnoreCase("_120_mf30t_trade_date") // MT300, MT320
+                        || tag.getTagName().equalsIgnoreCase("_030_mf32a_maturity_date") // MT412
+                        || tag.getTagName().equalsIgnoreCase("_041_mf33a_a_date")) { // MT400
                             header.setTrans_date_value(tag.getDetail());
-                        } else if (tag.getTagName().equalsIgnoreCase("_171_of57a_identifier_code")) {
+                        } else if (tag.getTagName().equalsIgnoreCase("_171_of57a_identifier_code")
+                        || tag.getTagName().equalsIgnoreCase("_320_mf57a_party_identifier") // MT300
+                        || tag.getTagName().equalsIgnoreCase("_391_mf57a_party_identifier") // MT320
+                        || tag.getTagName().equalsIgnoreCase("_081_of57a_party_identifier")) { // MT400
                             header.setTag57(tag.getDetail());
                         } else if (tag.getTagName().equalsIgnoreCase("_180_mf59_account") || (tag.getTagName().equalsIgnoreCase("_185_mf59f_account"))) {
                             header.setTag59Acc(tag.getDetail());
@@ -283,7 +302,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     if (idDupe > 1) {
                         dBDataTransaksiOutgoing2.updateDuplikat(id_headers, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                     }
-                    if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) {
+                    if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || messageType.equals("400")) {
                         dBDataTransaksiOutgoing2.addMTText(ctn.createFinalMT(ctn.getHeaderById(id_headers)), id_headers);
                     } else {
                         String text = "";
@@ -295,7 +314,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         log.info("update data MX");
                     } else {
                         log.info("update data MT");
-                        if ((messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320")) && (!flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF"))) {
+                        if ((messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || messageType.equals("400")) && (!flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF"))) {
                             dBDataTransaksiOutgoing2.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
                         } else if (!flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
                             dBDataTransaksiOutgoing2.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));

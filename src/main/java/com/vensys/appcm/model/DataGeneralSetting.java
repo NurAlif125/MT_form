@@ -18,6 +18,12 @@ public class DataGeneralSetting {
     private String MT191;
     private String MT192;
     private String MT202;
+    private String MT300;
+    private String MT320;
+    private String MT400;
+    private String MT412;
+    private String MT499;
+    private String MT799;
     private String MT196;
     private String MT950;
     private String MT199;
@@ -94,6 +100,54 @@ public class DataGeneralSetting {
 
     public void setMT202(String MT202) {
         this.MT202 = MT202;
+    }
+
+    public String getMT300() {
+        return MT300;
+    }
+
+    public void setMT300(String MT300) {
+        this.MT300 = MT300;
+    }
+
+    public String getMT320() {
+        return MT320;
+    }
+
+    public void setMT320(String MT320) {
+        this.MT320 = MT320;
+    }
+
+    public String getMT400() {
+        return MT400;
+    }
+
+    public void setMT400(String MT400) {
+        this.MT400 = MT400;
+    }
+
+    public String getMT412() {
+        return MT412;
+    }
+
+    public void setMT412(String MT412) {
+        this.MT412 = MT412;
+    }
+
+    public String getMT499() {
+        return MT499;
+    }
+
+    public void setMT499(String MT499) {
+        this.MT499 = MT499;
+    }
+
+    public String getMT799() {
+        return MT799;
+    }
+
+    public void setMT799(String MT799) {
+        this.MT799 = MT799;
     }
 
     public String getMT196() {
