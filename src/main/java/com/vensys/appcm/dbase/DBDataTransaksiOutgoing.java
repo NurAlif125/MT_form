@@ -1804,12 +1804,49 @@ public class DBDataTransaksiOutgoing {
     }
 
     public int cekDuplikatID(Header data) throws Exception {
+        log.info("Masuk cekduplicate");
+        log.info("MT:" + data.getMessageType());
         int dupe = 0;
         SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyy");
         SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = originalFormat.parse(data.getTrans_date_value());
-        String sqlFormattedDate = sqlFormat.format(date);
-        BigDecimal amount = new BigDecimal(data.getTrans_amount());
+        //Date date = originalFormat.parse(data.getTrans_date_value());
+        //log.info("date:" + date);
+        //String sqlFormattedDate = sqlFormat.format(date);
+        //log.info("date:" + sqlFormattedDate);
+        //20250811 date parsing
+        Date date = null;
+        String sqlFormattedDate = null;
+        if (data.getTrans_date_value() != null && data.getTrans_date_value().length() == 6) {
+            try {
+                date = originalFormat.parse(data.getTrans_date_value());
+                sqlFormattedDate = sqlFormat.format(date);
+                log.info("date: " + date);
+                log.info("sqlFormattedDate: " + sqlFormattedDate);
+            } catch (ParseException e) {
+                log.error("Format tanggal salah: " + data.getTrans_date_value(), e);
+            }
+        } else {
+            log.warn("trans_date_value tidak sesuai format ddMMyy: " + data.getTrans_date_value());
+            sqlFormattedDate = data.getTrans_date_value(); // fallback langsung string
+        }
+        //sampe sini ya if nya
+
+        //BigDecimal amount = new BigDecimal(data.getTrans_amount());  //dikomen karena ditambahkan if
+        //20250806 IF AMOUNT
+        int amountInt = 0;
+        BigDecimal amountBig = BigDecimal.ZERO;
+
+        String amountStr = data.getTrans_amount();
+
+        if (amountStr != null && !amountStr.trim().isEmpty() && !"null".equalsIgnoreCase(amountStr.trim())) {
+            amountBig = new BigDecimal(amountStr.trim());
+            log.info("amountbig:"+amountBig);
+        } else {
+            amountInt = 0; // default fallback
+            log.info("amountInt:"+amountInt);
+        }
+        //sampe sini ya if nya
+
         try {
             String sql = "SELECT DISTINCT h.id_headers, messageType, logicalTerminal, sessionNumber, sequenceNumber, io_type,\n"
                     + "receiverAddress, tanggal, flag, isDuplicate, trx.trans_reference, trx.trans_related_reference, trx.trans_date_value, trx.trans_amount,\n"
@@ -1822,19 +1859,41 @@ public class DBDataTransaksiOutgoing {
             log.info("logical terminal : " + data.getLogicalTerminal());
             st.setString(2, data.getReceiverAddress());
             log.info("receiver Address : " + data.getReceiverAddress());
-            st.setString(3, data.getTrans_refference().toLowerCase());
-            log.info("trans_reference : " + data.getTrans_refference().toLowerCase());
-            if (data.getTrans_date_value().length() == 6) {
+            //st.setString(3, data.getTrans_refference().toLowerCase());
+            //log.info("trans_reference : " + data.getTrans_refference().toLowerCase());
+            st.setString(3, data.getTrans_refference() != null ? data.getTrans_refference().toLowerCase() : null); //20250811
+            log.info("trans_reference : " + data.getTrans_refference());
+
+            //if (data.getTrans_date_value().length() == 6) {
+            if (data.getTrans_date_value() != null && data.getTrans_date_value().length() == 6) {
                 st.setString(4, "20" + data.getTrans_date_value().substring(0, 2) + "-" + data.getTrans_date_value().substring(2, 4) + "-" + data.getTrans_date_value().substring(4, 6));
             } else {
                 st.setString(4, data.getTrans_date_value());
             }
             log.info("trans_date_value : " + data.getTrans_date_value());
-            st.setBigDecimal(5, amount);
+
+            //20250806 IF AMOUNT
+            //st.setBigDecimal(5, amount);  //dikomen karena ditambahin if
+            //if (data.getTrans_amount() == null ? "null" == null : data.getTrans_amount().equals("null") || data.getTrans_amount().isEmpty()) {
+            //    st.setInt(5, amountInt);
+            //} else {
+            //    st.setBigDecimal(5, amountBig);
+            //}
+            if (amountStr != null && !amountStr.trim().isEmpty() && !"null".equalsIgnoreCase(amountStr.trim())) {
+                st.setBigDecimal(5, amountBig);
+            } else {
+                st.setInt(5, amountInt);
+            }
+            //sampe sini perubahan if
+
+            //20250807 not null
             log.info("trans_amount : " + data.getTrans_amount());
-            st.setString(6, data.getTrans_ccy());
+            st.setString(6, data.getTrans_ccy() != null ? data.getTrans_ccy().trim() : null);
+            //st.setString(6, data.getTrans_ccy()); //dikomen karena ditambahin if
             log.info("trans_ccy : " + data.getTrans_ccy());
-            st.setString(7, data.getMessageType());
+            st.setString(7, data.getMessageType() != null ? data.getMessageType().trim() : null);
+            //st.setString(7, data.getMessageType()); //dikomen karena ditambahin if
+
             log.info("messageType : " + data.getMessageType());
             ResultSet rs = st.executeQuery();
             while (rs.next()) {

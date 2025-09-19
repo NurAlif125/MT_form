@@ -302,11 +302,9 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                     if (idDupe > 1) {
                         dBDataTransaksiOutgoing2.updateDuplikat(id_headers, (String) session.getAttribute("user_id"), (String) session.getAttribute("ip_access"), (String) session.getAttribute("comp_name"));
                     }
-                    if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || messageType.equals("400")) {
+                    if (messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || messageType.equals("400") || messageType.equals("412")) {
                         dBDataTransaksiOutgoing2.addMTText(ctn.createFinalMT(ctn.getHeaderById(id_headers)), id_headers);
                     } else {
-                        String text = "";
-                        text = ct.createFinalMT(ct.getHeaderById(id_headers));
                         dBDataTransaksiOutgoing2.addMTText(ct.createFinalMT(ct.getHeaderById(id_headers)), id_headers);
                     }
                 } else {
@@ -314,7 +312,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         log.info("update data MX");
                     } else {
                         log.info("update data MT");
-                        if ((messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || messageType.equals("400")) && (!flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF"))) {
+                        if ((messageType.equals("760") || messageType.equals("767") || messageType.equals("300") || messageType.equals("320") || messageType.equals("400") || messageType.equals("412")) && (!flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF"))) {
                             dBDataTransaksiOutgoing2.updateMTText(ctn.createFinalMT(ctn.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));
                         } else if (!flagStatus.equalsIgnoreCase("DUPL") || !flagStatus.equalsIgnoreCase("DUPL-CNF")) {
                             dBDataTransaksiOutgoing2.updateMTText(ct.createFinalMT(ct.getHeaderById(Integer.parseInt(id))), Integer.parseInt(id));

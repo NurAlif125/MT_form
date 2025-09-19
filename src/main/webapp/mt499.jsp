@@ -24,7 +24,7 @@
         <c:if test="${item == 'MT:499'}">
             <div id="judul">MT 499 Free Format Message</div>
             <!--js submitnya diubah menjadi di sini buak di validate_button 20180413-->
-            <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" onsubmit="return confirm('Do you want to save this MT data?');">
+            <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" autocomplete="off" onsubmit="return confirm('Do you want to save this MT data?');">
                 <input name="messageType" id="messageType" type="hidden" value="499" />
                 <div style="width: 100%; margin: 0 auto; font: 0.85em arial;">
                     <ul class="tabs">
@@ -34,37 +34,32 @@
                         <li id="tab-view4"><a href="#" rel="view4">Histories</a></li>
                         <li id="tab-view5"><a href="#" rel="view5">Log MT Text</a></li>
                         <li id="tab-view6"><a href="#" rel="view6">MT Relation</a></li>
-                        <li  id="tab-view7"><a href="#" rel="view7" id="tabView7">Translation</a></li>
+                        <li id="tab-view7"><a href="#" rel="view7" id="tabView7">Translation</a></li>
                         <li hidden id="tab-validate"><a href="#" rel="view8" id="tabView8">Validate</a></li>
                     </ul>
                     <div class="tabcontents">
                         <div id="view1" class="tabcontent">
                             <%@ include file="header_mt.jsp" %>
+                            <%@ include file="special_rate.jsp" %>
                         </div>
                         <div id="view2" class="tabcontent">
                             <!-- MF20 -->
-                            <div class="form-row"><span class="label_body">MF20</span><span class="label">*Transaction Reference Number</span>
-                                <input type="text" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" input_type="MF20 Sender Reference" location="Body" maxlength="16" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                            <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Transaction Reference Number</span>
+                                <input type="text" onkeypress="avoidSplChars(event)" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" input_type="MF20 Sender Reference" location="Body" class="mandatory" maxlength="16" input_type="MF20 Sender Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <hr/>
 
                             <!-- OF21 -->
                             <div class="form-row"><span class="label_body">OF21</span><span class="label">Related Reference</span>
-                                <input type="text" name="_011_of21_Related_Reference" id="_011_of21_Related_Reference" input_type="OF21 Related Reference" location="Body" maxlength="16" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_011_of21_Related_Reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" name="_011_of21_Related_Reference" id="_011_of21_Related_Reference" input_type="OF21 Related Reference" location="Body" maxlength="16" size="16" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_011_of21_Related_Reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <hr/>
 
                             <!-- MF79 -->
-                            <div class="form-row"><span class="label_body">MF79</span><span class="label">*Narrative</span>
-                                <textarea cols="50" rows="35" maxlength="1750" wrap="hard" style="resize:none;" name="_012_mf79_Narrative" id="_012_mf79_Narrative" input_type="MF79 Narrative" location="Body" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_012_mf79_Narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                            <div class="form-row"><span class="label_body">MF79</span><span class="label"><a style="color:red;text-decoration:none">*</a>Narrative</span>
+                                <textarea cols="50" rows="35" maxlength="1750" wrap="hard" style="resize:none;" name="_012_mf79_Narrative" id="_012_mf79_Narrative" input_type="MF79 Narrative" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_012_mf79_Narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                             </div>
                             <hr/>
-
-                            <!-- Hidden for cekduplikat -->
-                            <div>
-                                <input type="hidden" name="_060_mf32a_date" id="_060_mf32a_date" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_060_mf32a_date'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                <input type="hidden" name="_062_mf32a_amount" id="_062_mf32a_amount" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                            </div>
                         </div>
                         <div id="view3" class="tabcontent">
                             <%@ include file="comment_mt.jsp" %>
@@ -88,9 +83,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <%@ include file="button_action.jsp" %>
-        </form>
+                <%@ include file="button_action.jsp" %>
+            </form>
     </c:if>
     </c:forEach>
 </div>
