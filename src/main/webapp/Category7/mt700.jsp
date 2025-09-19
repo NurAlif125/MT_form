@@ -44,9 +44,7 @@
                 <div id="view2" class="tabcontent active">
 
                     <!-- MF27 Sequence of Total -->
-                    <div class="form-row">
-                        <span class="label_body">MF27</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total</span>
+                    <div class="form-row"><span class="label_body">MF27</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total</span>
                         <input type="text" name="_010_mf27_sequence_of_total" 
                             id="_010_mf27_sequence_of_total"
                             class="mandatory" maxlength="3"
@@ -59,9 +57,7 @@
                     <hr/>
 
                     <!-- MF40A Form of Documentary Credit -->
-                    <div class="form-row">
-                        <span class="label_body">MF40A</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Form of Documentary Credit</span>
+                    <div class="form-row"><span class="label_body">MF40A</span><span class="label"><a style="color:red;text-decoration:none">*</a>Form of Documentary Credit</span>
                         <select name="_020_mf40a_form_of_credit" 
                                 id="_020_mf40a_form_of_credit" 
                                 class="mandatory">
@@ -79,9 +75,7 @@
                     <hr/>
 
                     <!-- MF20 Documentary Credit Number -->
-                    <div class="form-row">
-                        <span class="label_body">MF20</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Documentary Credit Number</span>
+                    <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Documentary Credit Number</span>
                         <input type="text" name="_030_mf20_documentary_credit_number" 
                                id="_030_mf20_documentary_credit_number"
                                class="mandatory" maxlength="16"
@@ -94,9 +88,7 @@
                     <hr/>
 
                     <!-- OF23 Reference to Pre-Advice -->
-                    <div class="form-row">
-                        <span class="label_body">OF23</span>
-                        <span class="label">Reference to Pre-Advice</span>
+                    <div class="form-row"><span class="label_body">OF23</span><span class="label">Reference to Pre-Advice</span>
                         <input type="text" name="_040_of23_reference_to_preadvice" 
                                id="_040_of23_reference_to_preadvice"
                                maxlength="16"
@@ -109,9 +101,7 @@
                     <hr/>
 
                     <!-- MF31C Date of Issue -->
-                    <div class="form-row">
-                        <span class="label_body">MF31C</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Date of Issue</span>
+                    <div class="form-row"><span class="label_body">MF31C</span><span class="label"><a style="color:red;text-decoration:none">*</a>Date of Issue</span>
                         <input type="text" name="_050_mf31c_date_of_issue" 
                                id="_050_mf31c_date_of_issue"
                                class="mandatory" maxlength="6"
@@ -124,9 +114,7 @@
                     <hr/>
 
                     <!-- MF40E Applicable Rules -->
-                    <div class="form-row">
-                        <span class="label_body">MF40E</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Applicable Rules</span>
+                    <div class="form-row"><span class="label_body">MF40E</span><span class="label"><a style="color:red;text-decoration:none">*</a>Applicable Rules</span>
                         <select name="_060_mf40e_applicable_rules" 
                                 id="_060_mf40e_applicable_rules"
                                 class="mandatory">
@@ -154,9 +142,7 @@
                         </select>
                     </div>
                     <div id="div_060_mf40e_narrative" style="display:none;">
-                        <div class="form-row">
-                            <span class="label_body">&nbsp;</span>
-                            <span class="label">Narrative (if OTHR)</span>
+                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Narrative (if OTHR)</span>
                             <textarea name="_061_mf40e_narrative" 
                                       id="_061_mf40e_narrative"
                                       rows="2" maxlength="35"><c:forEach var="item" items="${tags}">
@@ -169,9 +155,7 @@
                     <hr/>
                     
                     <!-- MF31D Date and Place of Expiry -->
-                    <div class="form-row">
-                        <span class="label_body">MF31D</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Date and Place of Expiry</span>
+                    <div class="form-row"><span class="label_body">MF31D</span><span class="label"><a style="color:red;text-decoration:none">*</a>Date and Place of Expiry</span>
                         <input type="text" name="_070_mf31d_date_of_expiry"
                                id="_070_mf31d_date_of_expiry"
                                class="mandatory" maxlength="6"
@@ -194,9 +178,7 @@
                     <hr/>
 
                     <!-- OF51a Applicant Bank (Option A or D) -->
-                    <div class="form-row">
-                        <span class="label_body">OF51a</span>
-                        <span class="label">Applicant Bank</span>
+                    <div class="form-row"><span class="label_body">OF51a</span><span class="label">Applicant Bank</span>
                         <select name="_080_of51a_applicant_bank" id="_080_of51a_applicant_bank">
                             <option value="">choose a type</option>
                             <option value="A"
@@ -210,9 +192,7 @@
                         </select>
                     </div>
                     <div id="div_080_of51a_A" style="display:none;">
-                        <div class="form-row">
-                            <span class="label_body">&nbsp;</span>
-                            <span class="label">Identifier Code (BIC)</span>
+                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code (BIC)</span>
                             <input type="text" name="_081_of51a_bic"
                                    id="_081_of51a_bic"
                                    maxlength="11"
@@ -224,9 +204,7 @@
                         </div>
                     </div>
                     <div id="div_080_of51a_D" style="display:none;">
-                        <div class="form-row">
-                            <span class="label_body">&nbsp;</span>
-                            <span class="label">Name & Address</span>
+                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name & Address</span>
                             <textarea name="_082_of51a_name_address"
                                       id="_082_of51a_name_address"
                                       rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
@@ -239,9 +217,7 @@
                     <hr/>
 
                     <!-- MF50 Applicant -->
-                    <div class="form-row">
-                        <span class="label_body">MF50</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Applicant</span>
+                    <div class="form-row"><span class="label_body">MF50</span><span class="label"><a style="color:red;text-decoration:none">*</a>Applicant</span>
                         <textarea name="_090_mf50_applicant"
                                   id="_090_mf50_applicant"
                                   class="mandatory"
@@ -254,13 +230,9 @@
                     <hr/>
                     
                     <!-- MF59 Beneficiary -->
-                    <div class="form-row">
-                        <span class="label_body">MF59</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Beneficiary</span>
+                    <div class="form-row"><span class="label_body">MF59</span><span class="label"><a style="color:red;text-decoration:none">*</a>Beneficiary</span>
                     </div>
-                    <div class="form-row">
-                        <span class="label_body">&nbsp;</span>
-                        <span class="label">Account</span>
+                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Account</span>
                         <input type="text" name="_100_mf59_account"
                                id="_100_mf59_account"
                                maxlength="34"
@@ -270,9 +242,7 @@
                                           </c:if>
                                       </c:forEach>" />
                     </div>
-                    <div class="form-row">
-                        <span class="label_body">&nbsp;</span>  
-                        <span class="label">Name & Address</span>
+                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name & Address</span>
                         <textarea name="_101_mf59_name_address"
                                   id="_101_mf59_name_address"
                                   class="mandatory"
@@ -285,9 +255,7 @@
                     <hr/>
 
                     <!-- MF32B Currency Code, Amount -->
-                    <div class="form-row">
-                        <span class="label_body">MF32B</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Currency</span>
+                    <div class="form-row"><span class="label_body">MF32B</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency</span>
                         <input type="text" name="_110_mf32b_currency" id="_110_mf32b_currency"
                                class="mandatory"
                                onkeypress="return textonly(event)"
@@ -301,9 +269,7 @@
                                       </c:forEach>" />
                     </div>
 
-                    <div class="form-row">
-                        <span class="label_body">&nbsp;</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
+                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
                         <input type="text" name="_111_mf32b_amount" id="_111_mf32b_amount"
                                class="mandatory"
                                onblur="cek_koma(this);"
@@ -340,9 +306,7 @@
                     <hr/>
 
                     <!-- OF39A Percentage Credit Amount Tolerance -->
-                    <div class="form-row">
-                        <span class="label_body">OF39A</span>
-                        <span class="label">Percentage Credit Amount Tolerance</span>
+                    <div class="form-row"><span class="label_body">OF39A</span><span class="label">Percentage Credit Amount Tolerance</span>
                         <input type="text" name="_120_of39a_tolerance_plus"
                                id="_120_of39a_tolerance_plus"
                                maxlength="2"
@@ -365,9 +329,7 @@
                     <hr/>
 
                     <!-- OF39C Additional Amounts Covered -->
-                    <div class="form-row">
-                        <span class="label_body">OF39C</span>
-                        <span class="label">Additional Amounts Covered</span>
+                    <div class="form-row"><span class="label_body">OF39C</span><span class="label">Additional Amounts Covered</span>
                         <textarea name="_130_of39c_additional_amounts_covered"
                                   id="_130_of39c_additional_amounts_covered"
                                   rows="4" maxlength="140"><c:forEach var='item' items='${tags}'>
@@ -379,9 +341,7 @@
                     <hr/>
 
                     <!-- MF41A Available With ... By ... -->
-                    <div class="form-row">
-                        <span class="label_body">MF41A</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Available With ... By ...</span>
+                    <div class="form-row"><span class="label_body">MF41A</span><span class="label"><a style="color:red;text-decoration:none">*</a>Available With ... By ...</span>
                         <select id="_140_mf41a_available_with_by" name="_140_mf41a_available_with_by">
                             <option value="">choose a type</option>
                             <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_140_mf41a_available_with_by' and item.detail eq 'A'}">selected</c:if></c:forEach>>Option A (BIC)</option>
@@ -389,24 +349,18 @@
                         </select>
                     </div>
 
-                    <div class="form-row" id="wrap_141_mf41a_identifier_code" style="display:none;">
-                        <span class="label_body">&nbsp;</span>
-                        <span class="label">Identifier Code (BIC)</span>
+                    <div class="form-row" id="wrap_141_mf41a_identifier_code" style="display:none;"><span class="label_body">&nbsp;</span><span class="label">Identifier Code (BIC)</span>
                         <input type="text" id="_141_mf41a_identifier_code" name="_141_mf41a_identifier_code"
                                maxlength="11"
                                value="<c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_141_mf41a_identifier_code"}'><c:out value='${item.detail}'/></c:if></c:forEach>" />
                     </div>
 
-                    <div class="form-row" id="wrap_142_mf41d_name_and_address" style="display:none;">
-                        <span class="label_body">&nbsp;</span>
-                        <span class="label">Name & Address</span>
+                    <div class="form-row" id="wrap_142_mf41d_name_and_address" style="display:none;"><span class="label_body">&nbsp;</span><span class="label">Name & Address</span>
                         <textarea id="_142_mf41d_name_and_address" name="_142_mf41d_name_and_address"
                                   rows="3" maxlength="140"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_142_mf41d_name_and_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                     </div>
 
-                    <div class="form-row">
-                        <span class="label_body">&nbsp;</span>
-                        <span class="label">By</span>
+                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">By</span>
                         <select id="_143_mf41a_by" name="_143_mf41a_by">
                             <option value="">choose a type</option>
                             <option <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_143_mf41a_by' and item.detail eq 'BY ACCEPTANCE'}">selected</c:if></c:forEach>>BY ACCEPTANCE</option>
@@ -419,18 +373,14 @@
                     <hr/>
 
                     <!-- OF42C Drafts at ... -->
-                    <div class="form-row">
-                        <span class="label_body">OF42C</span>
-                        <span class="label">Drafts at ...</span>
+                    <div class="form-row"><span class="label_body">OF42C</span><span class="label">Drafts at ...</span>
                         <textarea name="_150_of42c_drafts_at" id="_150_of42c_drafts_at"
                                   rows="3" maxlength="105"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_150_of42c_drafts_at"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
                     </div>
                     <hr/>
 
                     <!-- OF42A Drawee -->
-                    <div class="form-row">
-                        <span class="label_body">OF42A</span>
-                        <span class="label">Drawee</span>
+                    <div class="form-row"><span class="label_body">OF42A</span><span class="label">Drawee</span>
                         <select id="_160_of42a_drawee" name="_160_of42a_drawee">
                             <option value="">choose a type</option>
                             <option value="A" <c:forEach var="item" items="${tags}">
@@ -442,44 +392,34 @@
                         </select>
                     </div>
 
-                    <div class="form-row" id="wrap_161_of42a_identifier_code" style="display:none;">
-                        <span class="label_body">&nbsp;</span>
-                        <span class="label">Identifier Code (BIC)</span>
+                    <div class="form-row" id="wrap_161_of42a_identifier_code" style="display:none;"><span class="label_body">&nbsp;</span><span class="label">Identifier Code (BIC)</span>
                         <input type="text" id="_161_of42a_identifier_code" name="_161_of42a_identifier_code"
                                maxlength="11"
                                value="<c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_161_of42a_identifier_code"}'><c:out value='${item.detail}'/></c:if></c:forEach>" />
                     </div>
 
-                    <div class="form-row" id="wrap_162_of42d_name_and_address" style="display:none;">
-                        <span class="label_body">&nbsp;</span>
-                        <span class="label">Name & Address</span>
+                    <div class="form-row" id="wrap_162_of42d_name_and_address" style="display:none;"><span class="label_body">&nbsp;</span><span class="label">Name & Address</span>
                         <textarea id="_162_of42d_name_and_address" name="_162_of42d_name_and_address"
                                   rows="3" maxlength="140"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_162_of42d_name_and_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                     </div>
                     <hr/>
 
                     <!-- OF42M Mixed Payment Details -->
-                    <div class="form-row">
-                        <span class="label_body">OF42M</span>
-                        <span class="label">Mixed Payment Details</span>
+                    <div class="form-row"><span class="label_body">OF42M</span><span class="label">Mixed Payment Details</span>
                         <textarea name="_170_of42m_mixed_payment_details" id="_170_of42m_mixed_payment_details"
                                   rows="4" maxlength="140"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_170_of42m_mixed_payment_details"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
                     </div>
                     <hr/>
 
                     <!-- OF42P Negotiation/Deferred Payment Details -->
-                    <div class="form-row">
-                        <span class="label_body">OF42P</span>
-                        <span class="label">Negotiation/Deferred Payment Details</span>
+                    <div class="form-row"><span class="label_body">OF42P</span><span class="label">Negotiation/Deferred Payment Details</span>
                         <textarea name="_180_of42p_negotiation_deferred_payment_details" id="_180_of42p_negotiation_deferred_payment_details"
                                   rows="4" maxlength="140"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_180_of42p_negotiation_deferred_payment_details"}'><c:out value='${item.detail}'/></c:if></c:forEach></textarea>
                     </div>
                     <hr/>
                     
                     <!-- OF43P Partial Shipments -->
-                    <div class="form-row">
-                        <span class="label_body">OF43P</span>
-                        <span class="label">Partial Shipments</span>
+                    <div class="form-row"><span class="label_body">OF43P</span><span class="label">Partial Shipments</span>
                         <select name="_190_of43p_partial_shipments" id="_190_of43p_partial_shipments">
                             <option value="">choose a type</option>
                             <option value="ALLOWED" <c:forEach var="item" items="${tags}">
@@ -496,9 +436,7 @@
                     <hr/>
 
                     <!-- OF43T Transhipment -->
-                    <div class="form-row">
-                        <span class="label_body">OF43T</span>
-                        <span class="label">Transhipment</span>
+                    <div class="form-row"><span class="label_body">OF43T</span><span class="label">Transhipment</span>
                         <select name="_200_of43t_transhipment" id="_200_of43t_transhipment">
                             <option value="">choose a type</option>
                             <option value="ALLOWED" <c:forEach var="item" items="${tags}">
@@ -515,9 +453,7 @@
                     <hr/>
 
                     <!-- OF44A Place of Taking in Charge/Dispatch/Receipt -->
-                    <div class="form-row">
-                        <span class="label_body">OF44A</span>
-                        <span class="label">Place of Taking in Charge / Dispatch from / Place of Receipt</span>
+                    <div class="form-row"><span class="label_body">OF44A</span><span class="label">Place of Taking in Charge / Dispatch from / Place of Receipt</span>
                         <textarea name="_210_of44a_place_taking_in_charge_dispatch_from_place_of_receipt"
                                   id="_210_of44a_place_taking_in_charge_dispatch_from_place_of_receipt"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
@@ -529,9 +465,7 @@
                     <hr/>
 
                     <!-- OF44E Port of Loading / Airport of Departure -->
-                    <div class="form-row">
-                        <span class="label_body">OF44E</span>
-                        <span class="label">Port of Loading / Airport of Departure</span>
+                    <div class="form-row"><span class="label_body">OF44E</span><span class="label">Port of Loading / Airport of Departure</span>
                         <textarea name="_220_of44e_port_of_loading_airport_of_departure"
                                   id="_220_of44e_port_of_loading_airport_of_departure"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
@@ -543,9 +477,7 @@
                     <hr/>
 
                     <!-- OF44F Port of Discharge / Airport of Destination -->
-                    <div class="form-row">
-                        <span class="label_body">OF44F</span>
-                        <span class="label">Port of Discharge / Airport of Destination</span>
+                    <div class="form-row"><span class="label_body">OF44F</span><span class="label">Port of Discharge / Airport of Destination</span>
                         <textarea name="_230_of44f_port_of_discharge_airport_of_destination"
                                   id="_230_of44f_port_of_discharge_airport_of_destination"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
@@ -557,9 +489,7 @@
                     <hr/>
 
                     <!-- OF44B Place of Final Destination / Place of Delivery -->
-                    <div class="form-row">
-                        <span class="label_body">OF44B</span>
-                        <span class="label">Place of Final Destination / Place of Delivery</span>
+                    <div class="form-row"><span class="label_body">OF44B</span><span class="label">Place of Final Destination / Place of Delivery</span>
                         <textarea name="_240_of44b_place_of_final_destination_for_transportation_to_place_of_delivery"
                                   id="_240_of44b_place_of_final_destination_for_transportation_to_place_of_delivery"
                                   rows="3" maxlength="140"><c:forEach var='item' items='${tags}'>
@@ -571,9 +501,7 @@
                     <hr/>
 
                     <!-- OF44C Latest Date of Shipment -->
-                    <div class="form-row">
-                        <span class="label_body">OF44C</span>
-                        <span class="label">Latest Date of Shipment</span>
+                    <div class="form-row"><span class="label_body">OF44C</span><span class="label">Latest Date of Shipment</span>
                         <input type="text" name="_250_of44c_latest_date_of_shipment"
                                id="_250_of44c_latest_date_of_shipment"
                                maxlength="6"
@@ -587,9 +515,7 @@
                     <hr/>
 
                     <!-- OF44D Shipment Period -->
-                    <div class="form-row">
-                        <span class="label_body">OF44D</span>
-                        <span class="label">Shipment Period</span>
+                    <div class="form-row"><span class="label_body">OF44D</span><span class="label">Shipment Period</span>
                         <textarea name="_260_of44d_shipment_period"
                                   id="_260_of44d_shipment_period"
                                   rows="3" maxlength="390"><c:forEach var='item' items='${tags}'>
@@ -601,9 +527,7 @@
                     <hr/>
                     
                     <!-- OF45A Description of Goods and/or Services -->
-                    <div class="form-row">
-                        <span class="label_body">OF45A</span>
-                        <span class="label">Description of Goods and/or Services</span>
+                    <div class="form-row"><span class="label_body">OF45A</span><span class="label">Description of Goods and/or Services</span>
                         <textarea name="_270_of45a_description_of_goods_and_or_services" id="_270_of45a_description_of_goods_and_or_services"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                             <c:if test="${item.tagName eq '_270_of45a_description_of_goods_and_or_services'}">
@@ -614,9 +538,7 @@
                     <hr/>
 
                     <!-- OF46A Documents Required -->
-                    <div class="form-row">
-                        <span class="label_body">OF46A</span>
-                        <span class="label">Documents Required</span>
+                    <div class="form-row"><span class="label_body">OF46A</span><span class="label">Documents Required</span>
                         <textarea name="_280_of46a_documents_required" id="_280_of46a_documents_required"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                             <c:if test="${item.tagName eq '_280_of46a_documents_required'}">
@@ -627,9 +549,7 @@
                     <hr/>
 
                     <!-- OF47A Additional Conditions -->
-                    <div class="form-row">
-                        <span class="label_body">OF47A</span>
-                        <span class="label">Additional Conditions</span>
+                    <div class="form-row"><span class="label_body">OF47A</span><span class="label">Additional Conditions</span>
                         <textarea name="_290_of47a_additional_conditions" id="_290_of47a_additional_conditions"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                             <c:if test="${item.tagName eq '_290_of47a_additional_conditions'}">
@@ -640,9 +560,7 @@
                     <hr/>
 
                     <!-- OF49G Special Payment Conditions for Beneficiary -->
-                    <div class="form-row">
-                        <span class="label_body">OF49G</span>
-                        <span class="label">Special Payment Conditions for Beneficiary</span>
+                    <div class="form-row"><span class="label_body">OF49G</span><span class="label">Special Payment Conditions for Beneficiary</span>
                         <textarea name="_300_of49g_special_payment_conditions_for_beneficiary" id="_300_of49g_special_payment_conditions_for_beneficiary"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                             <c:if test="${item.tagName eq '_300_of49g_special_payment_conditions_for_beneficiary'}">
@@ -653,9 +571,7 @@
                     <hr/>
 
                     <!-- OF49H Special Payment Conditions for Bank Only -->
-                    <div class="form-row">
-                        <span class="label_body">OF49H</span>
-                        <span class="label">Special Payment Conditions for Bank Only</span>
+                    <div class="form-row"><span class="label_body">OF49H</span><span class="label">Special Payment Conditions for Bank Only</span>
                         <textarea name="_310_of49h_special_payment_conditions_for_bank_only" id="_310_of49h_special_payment_conditions_for_bank_only"
                                   rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                             <c:if test="${item.tagName eq '_310_of49h_special_payment_conditions_for_bank_only'}">
@@ -666,9 +582,7 @@
                     <hr/>
 
                     <!-- MF71D Charges -->
-                    <div class="form-row">
-                        <span class="label_body">OF71D</span>
-                        <span class="label">Charges</span>
+                    <div class="form-row"><span class="label_body">OF71D</span><span class="label">Charges</span>
                         <textarea name="_320_of71d_charges"
                                   id="_320_of71d_charges"
                                   rows="6" maxlength="210"><c:forEach var='item' items='${tags}'>
@@ -680,9 +594,7 @@
                     <hr/>
 
                     <!-- OF48 Period for Presentation in Days -->
-                    <div class="form-row">
-                        <span class="label_body">OF48</span>
-                        <span class="label">Period for Presentation in Days</span>
+                    <div class="form-row"><span class="label_body">OF48</span><span class="label">Period for Presentation in Days</span>
                         <input type="text" name="_330_of48_days"
                                id="_330_of48_days"
                                maxlength="3"
@@ -705,9 +617,7 @@
                     <hr/>
 
                     <!-- MF49 Confirmation Instructions -->
-                    <div class="form-row">
-                        <span class="label_body">MF49</span>
-                        <span class="label"><a style="color:red;text-decoration:none">*</a>Confirmation Instructions</span>
+                    <div class="form-row"><span class="label_body">MF49</span><span class="label"><a style="color:red;text-decoration:none">*</a>Confirmation Instructions</span>
                         <select id="_340_mf49_confirmation_instructions" name="_340_mf49_confirmation_instructions" class="mandatory">
                             <option value="">choose a type</option>
                             <option value="CONFIRM"
@@ -727,9 +637,7 @@
                     <hr/>
 
                     <!-- OF58a Requested Confirmation Party -->
-                    <div class="form-row">
-                        <span class="label_body">OF58a</span>
-                        <span class="label">Requested Confirmation Party</span>
+                    <div class="form-row"><span class="label_body">OF58a</span><span class="label">Requested Confirmation Party</span>
                         <div class="mt-row">
                             <div class="mt-col">
                                 <select id="_350_of58a_requested_confirmation_party" name="_350_of58a_requested_confirmation_party">
@@ -766,9 +674,7 @@
                     <hr/>
 
                     <!-- OF53a Reimbursing Bank -->
-                    <div class="form-row">
-                        <span class="label_body">OF53a</span>
-                        <span class="label">Reimbursing Bank</span>
+                    <div class="form-row"><span class="label_body">OF53a</span><span class="label">Reimbursing Bank</span>
                         <div class="mt-row">
                             <div class="mt-col">
                                 <select id="_360_of53a_reimbursing_bank" name="_360_of53a_reimbursing_bank">
@@ -805,9 +711,7 @@
                     <hr/>
 
                     <!-- OF78 Instructions to Paying/Accepting/Negotiating Bank -->
-                    <div class="form-row">
-                        <span class="label_body">OF78</span>
-                        <span class="label">Instructions to the Paying/Accepting/Negotiating Bank</span>
+                    <div class="form-row"><span class="label_body">OF78</span><span class="label">Instructions to the Paying/Accepting/Negotiating Bank</span>
                         <textarea name="_370_of78_instructions_to_the_paying_accepting_negotiating_bank"
                                   id="_370_of78_instructions_to_the_paying_accepting_negotiating_bank"
                                   rows="6" maxlength="780"><c:forEach var='item' items='${tags}'>
@@ -819,9 +723,7 @@
                     <hr/>
 
                     <!-- OF57a Advise Through Bank -->
-                    <div class="form-row">
-                        <span class="label_body">OF57a</span>
-                        <span class="label">'Advise Through' Bank</span>
+                    <div class="form-row"><span class="label_body">OF57a</span><span class="label">'Advise Through' Bank</span>
                         <div class="mt-row">
                             <div class="mt-col">
                                 <select id="_380_of57a_advise_through_bank" name="_380_of57a_advise_through_bank">
@@ -871,9 +773,7 @@
                     <hr/>
 
                     <!-- OF72Z Sender to Receiver Information -->
-                    <div class="form-row">
-                        <span class="label_body">OF72Z</span>
-                        <span class="label">Sender to Receiver Information</span>
+                    <div class="form-row"><span class="label_body">OF72Z</span><span class="label">Sender to Receiver Information</span>
                         <textarea name="_390_of72z_sender_to_receiver_information"
                                   id="_390_of72z_sender_to_receiver_information"
                                   rows="6" maxlength="210"><c:forEach var='item' items='${tags}'>

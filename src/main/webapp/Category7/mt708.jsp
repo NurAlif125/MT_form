@@ -44,9 +44,7 @@
                     <div id="view2" class="tabcontent active">
 
                         <!-- MF27 Sequence of Total -->
-                        <div class="form-row">
-                            <span class="label_body">MF27</span>
-                            <span class="label"><a style="color:red;text-decoration:none">*</a> Sequence of Total </span>
+                        <div class="form-row"><span class="label_body">MF27</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total </span>
                             <input type="text" name="_010_mf27_sequence_of_total" id="_010_mf27_sequence_of_total"
                                    class="mandatory" maxlength="5"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -58,9 +56,7 @@
                         <hr/>
 
                         <!-- MF20 Sender's Reference -->
-                        <div class="form-row">
-                            <span class="label_body">MF20</span>
-                            <span class="label"><a style="color:red;text-decoration:none">*</a> Sender's Reference</span>
+                        <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sender's Reference</span>
                             <input type="text" name="_020_mf20_sender_reference" id="_020_mf20_sender_reference"
                                    class="mandatory" maxlength="16"
                                    onkeypress="avoidSplChars(event)"
@@ -73,9 +69,7 @@
                         <hr/>
 
                         <!-- MF21 Receiver's Reference -->
-                        <div class="form-row">
-                            <span class="label_body">MF21</span>
-                            <span class="label"><a style="color:red;text-decoration:none">*</a> Receiver's Reference</span>
+                        <div class="form-row"><span class="label_body">MF21</span><span class="label"><a style="color:red;text-decoration:none">*</a>Receiver's Reference</span>
                             <input type="text" name="_030_mf21_receiver_reference" id="_030_mf21_receiver_reference"
                                    class="mandatory" maxlength="16"
                                    onkeypress="avoidSplChars(event)"
@@ -88,9 +82,7 @@
                         <hr/>
 
                         <!-- MF23 Issuing Bank's Reference -->
-                        <div class="form-row">
-                            <span class="label_body">MF23</span>
-                            <span class="label"><a style="color:red;text-decoration:none">*</a> Issuing Bank's Reference</span>
+                        <div class="form-row"><span class="label_body">MF23</span><span class="label"><a style="color:red;text-decoration:none">*</a>Issuing Bank's Reference</span>
                             <input type="text" name="_040_mf23_issuing_bank_reference" id="_040_mf23_issuing_bank_reference"
                                    class="mandatory" maxlength="16"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -102,9 +94,7 @@
                         <hr/>
 
                         <!-- MF26E Number of Amendment -->
-                        <div class="form-row">
-                            <span class="label_body">MF26E</span>
-                            <span class="label"><a style="color:red;text-decoration:none">*</a> Number of Amendment</span>
+                        <div class="form-row"><span class="label_body">MF26E</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number of Amendment</span>
                             <input type="text" name="_050_mf26e_number_of_amendment" id="_050_mf26e_number_of_amendment"
                                    class="mandatory" maxlength="3"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -116,9 +106,7 @@
                         <hr/>
 
                         <!-- MF30 Date of Amendment -->
-                        <div class="form-row">
-                            <span class="label_body">MF30</span>
-                            <span class="label"><a style="color:red;text-decoration:none">*</a> Date of Amendment (YYMMDD)</span>
+                        <div class="form-row"><span class="label_body">MF30</span><span class="label"><a style="color:red;text-decoration:none">*</a>Date of Amendment</span>
                             <input type="text" name="_060_mf30_date_of_amendment" id="_060_mf30_date_of_amendment"
                                    class="mandatory" maxlength="6" placeholder="YYMMDD"
                                    value="<c:forEach var='item' items='${tags}'>
@@ -130,9 +118,7 @@
                         <hr/>
 
                         <!-- OF45B Description of Goods and/or Services -->
-                        <div class="form-row">
-                            <span class="label_body">OF45B</span>
-                            <span class="label">Description of Goods and/or Services</span>
+                        <div class="form-row"><span class="label_body">OF45B</span><span class="label">Description of Goods and/or Services</span>
                             <textarea name="_070_of45b_description_of_goods_and_or_services" id="_070_of45b_description_of_goods_and_or_services"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_070_of45b_description_of_goods_and_or_services'}">
@@ -143,9 +129,7 @@
                         <hr/>
 
                         <!-- OF46B Documents Required -->
-                        <div class="form-row">
-                            <span class="label_body">OF46B</span>
-                            <span class="label">Documents Required</span>
+                        <div class="form-row"><span class="label_body">OF46B</span><span class="label">Documents Required</span>
                             <textarea name="_080_of46b_documents_required" id="_080_of46b_documents_required"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_080_of46b_documents_required'}">
@@ -156,9 +140,7 @@
                         <hr/>
 
                         <!-- OF47B Additional Conditions -->
-                        <div class="form-row">
-                            <span class="label_body">OF47B</span>
-                            <span class="label">Additional Conditions</span>
+                        <div class="form-row"><span class="label_body">OF47B</span><span class="label">Additional Conditions</span>
                             <textarea name="_090_of47b_additional_conditions" id="_090_of47b_additional_conditions"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_090_of47b_additional_conditions'}">
@@ -169,9 +151,7 @@
                         <hr/>
 
                         <!-- OF49M Special Payment Conditions for Beneficiary -->
-                        <div class="form-row">
-                            <span class="label_body">OF49M</span>
-                            <span class="label">Special Payment Conditions for Beneficiary</span>
+                        <div class="form-row"><span class="label_body">OF49M</span><span class="label">Special Payment Conditions for Beneficiary</span>
                             <textarea name="_100_of49m_special_payment_conditions_for_beneficiary" id="_100_of49m_special_payment_conditions_for_beneficiary"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_100_of49m_special_payment_conditions_for_beneficiary'}">
@@ -182,9 +162,7 @@
                         <hr/>
 
                         <!-- OF49N Special Payment Conditions for Bank Only -->
-                        <div class="form-row">
-                            <span class="label_body">OF49N</span>
-                            <span class="label">Special Payment Conditions for Bank Only</span>
+                        <div class="form-row"><span class="label_body">OF49N</span><span class="label">Special Payment Conditions for Bank Only</span>
                             <textarea name="_110_of49n_special_payment_conditions_for_bank_only" id="_110_of49n_special_payment_conditions_for_bank_only"
                                       rows="6" maxlength="6500"><c:forEach var="item" items="${tags}">
                                 <c:if test="${item.tagName eq '_110_of49n_special_payment_conditions_for_bank_only'}">
