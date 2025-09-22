@@ -129,6 +129,13 @@ function toggle52a() {
   show("wrap_052_of52a_name_address", opt === "D");
 }
 
+// 59 Beneficiary (checkbox)
+function toggle59() {
+  const checked = q("beneficiary_checkbox").checked;
+  show("check_of59", checked);
+}
+
+
 /* 41a Available With...By... */
 function toggle41a() {
   const opt = val("_210_of41a_available_with_by");
@@ -324,6 +331,7 @@ function checkConfirmationDependency() {
 function initMt707Form() {
   // Initial toggles
   toggle52a();
+  toggle59();
   toggle41a();
   toggle42a();
   toggle40e();
@@ -336,6 +344,7 @@ function initMt707Form() {
   const bind = (id, fn) => { const el = q(id); if (el) el.addEventListener("change", fn); };
 
   bind("_050_of52a_issuing_bank", toggle52a);
+  bind("beneficiary_checkbox", toggle59, "click");
   bind("_210_of41a_available_with_by", toggle41a);
   bind("_230_of42a_drawee", toggle42a);
   bind("_130_of40e_applicable_rules", toggle40e);

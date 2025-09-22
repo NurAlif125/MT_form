@@ -170,12 +170,16 @@
                         <hr/>
 
                         <!-- OF59 Beneficiary -->
-                        <div class="form-row"><span class="label_body">OF59</span><span class="label">Beneficiary - Account</span>
-                            <input type="text" name="_160_of59_account" id="_160_of59_account" maxlength="34" value="<c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_160_of59_account"}'><c:out value='${item.detail}'/></c:if></c:forEach>" />
-                        </div>
-
-                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Beneficiary - Name &amp; Address</span>
-                            <textarea name="_161_of59_name_address" id="_161_of59_name_address" rows="4" maxlength="140"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_161_of59_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                        <div class="form-row"><span class="label_body">OF59</span><span class="label">Beneficiary</span>
+                            <input type="checkbox" name="beneficiary_checkbox" id="beneficiary_checkbox" />
+                            <div id="check_of59">
+                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Account</span>
+                                    <input type="text" name="_160_of59_account" id="_160_of59_account" maxlength="34" size="34" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_160_of59_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
+                                </div>
+                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                    <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_161_of59_name_address" id="_161_of59_name_address"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_161_of59_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                </div>
+                            </div>
                         </div>
                         <hr/>
 

@@ -101,6 +101,26 @@
                         <input type="text" name="_071_mf31d_place_of_expiry" id="_071_mf31d_place_of_expiry" maxlength="29" placeholder="Place" value="<c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_071_mf31d_place_of_expiry"}'><c:out value='${item.detail}' /></c:if></c:forEach>" />
                     </div>
                     <hr/>
+                    
+                    <!-- OF51a Applicant Bank (Option A or D) -->
+                    <div class="form-row"><span class="label_body">OF51a</span><span class="label">Applicant Bank</span>
+                        <select name="_080_of51a_applicant_bank" id="_080_of51a_applicant_bank">
+                            <option value="">choose a type</option>
+                            <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_080_of51a_applicant_bank' and item.detail eq 'A'}">selected</c:if></c:forEach>>Option A (BIC)</option>
+                            <option value="D" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_080_of51a_applicant_bank' and item.detail eq 'D'}">selected</c:if></c:forEach>>Option D (Name & Address)</option>
+                        </select>
+                    </div>
+                    <div id="div_080_of51a_A" style="display:none;">
+                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code (BIC)</span>
+                            <input type="text" name="_081_of51a_bic" id="_081_of51a_bic" maxlength="11" value="<c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_081_of51a_bic"}'><c:out value='${item.detail}' /></c:if></c:forEach>" />
+                        </div>
+                    </div>
+                    <div id="div_080_of51a_D" style="display:none;">
+                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name & Address</span>
+                            <textarea name="_082_of51a_name_address" id="_082_of51a_name_address" rows="3" maxlength="140"><c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_082_of51a_name_address"}'><c:out value='${item.detail}' /></c:if></c:forEach></textarea>
+                        </div>
+                    </div>
+                    <hr/>
 
                     <!-- MF50 Applicant -->
                     <div class="form-row"><span class="label_body">MF50</span><span class="label"><a style="color:red;text-decoration:none">*</a>Applicant</span>
