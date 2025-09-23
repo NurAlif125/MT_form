@@ -305,7 +305,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             if (headerById.getMessageType().contains("103") || headerById.getMessageType().contains("111") || headerById.getMessageType().contains("191") || headerById.getMessageType().contains("192") || headerById.getMessageType().contains("200") || headerById.getMessageType().contains("202")
             || headerById.getMessageType().contains("300") || headerById.getMessageType().contains("320") // MT300, MT320
             || headerById.getMessageType().contains("400") || headerById.getMessageType().contains("412") || headerById.getMessageType().contains("499") // MT400, MT412, MT499
-            || headerById.getMessageType().contains("499")) { // MT799
+            || headerById.getMessageType().contains("799")) { // MT799
                 view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
             } else {
                 view = request.getRequestDispatcher("mt.jsp");

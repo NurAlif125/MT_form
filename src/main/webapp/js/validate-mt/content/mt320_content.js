@@ -18,7 +18,7 @@ const mt320_content = {
     },
     _393_of88d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_mf57_: {
       required: true,
@@ -29,28 +29,28 @@ const mt320_content = {
     _273_mf57d_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _323_mf57d_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _373_mf57d_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _293_of53d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of53_: {
       required: false,
     },
     _243_of53d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _389_mf15h_: {},
     _315_of56j_party_identification: {
@@ -70,14 +70,14 @@ const mt320_content = {
     },
     _310_of56a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _311_of56a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
     },
     _260_of56a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _075_mf82j_party_identification: {
       required: true,
@@ -91,7 +91,7 @@ const mt320_content = {
     _073_mf82d_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_mf82_: {
       required: true,
@@ -114,11 +114,11 @@ const mt320_content = {
     },
     _290_of53a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _240_of53a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _241_of53a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -126,7 +126,7 @@ const mt320_content = {
     _289_mf15d_: {},
     _090_of83a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of83_: {
       required: false,
@@ -148,7 +148,7 @@ const mt320_content = {
     _080_mf87a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _191_mf37g_rate: {
       required: true,
@@ -187,7 +187,7 @@ const mt320_content = {
     },
     _280_of58a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of58_: {
       required: false,
@@ -197,7 +197,7 @@ const mt320_content = {
     },
     _330_of58a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _281_of58a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -209,18 +209,18 @@ const mt320_content = {
     },
     _253_of86d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of86_: {
       required: false,
     },
     _303_of86d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _093_of83d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _140_mf30p_maturity_date: {
       required: true,
@@ -233,7 +233,7 @@ const mt320_content = {
     _070_mf82a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _335_of58j_party_identification: {
       fieldValidator:
@@ -245,11 +245,11 @@ const mt320_content = {
     },
     _263_of56d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _313_of56d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _210_of30f_last_day_of_the_first_interest_period: {
       fieldValidator: "^[0-9]{8}$",
@@ -258,7 +258,7 @@ const mt320_content = {
     _320_mf57a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _371_mf57a_identifier_code: {
       required: true,
@@ -271,12 +271,12 @@ const mt320_content = {
     _270_mf57a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _370_mf57a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _321_mf57a_identifier_code: {
       required: true,
@@ -294,23 +294,23 @@ const mt320_content = {
     },
     _390_of88a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _170_of30x_next_interest_due_date: {
       fieldValidator: "^[0-9]{8}$",
     },
     _333_of58d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _283_of58d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _083_mf87d_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _221_of38j_number: {
       fieldValidator: "^[A-Z]{1}[0-9]{3}$",
@@ -337,11 +337,11 @@ const mt320_content = {
     },
     _300_of86a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _250_of86a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _301_of86a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",

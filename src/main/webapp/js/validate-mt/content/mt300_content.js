@@ -39,16 +39,16 @@ const mt300_content = {
       fieldValidator: "^[A-Z]{3}$",
     },
     _361_mf32b_amount: {
-      required: true,
+      required: "#seq_D_checkbox:checked",
       fieldValidator: "^[0-9,]{0,15}$",
     },
     _360_mf32b_currency: {
-      required: true,
+      required: "#seq_D_checkbox:checked",
       fieldValidator: "^[A-Z]{3}$",
     },
     _276_of84d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of84_: {
       required: false,
@@ -101,7 +101,7 @@ const mt300_content = {
     _081_mf87a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _082_mf87a_identifier_code: {
       required: true,
@@ -125,7 +125,7 @@ const mt300_content = {
     },
     _291_of88a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of88_: {
       required: false,
@@ -148,12 +148,12 @@ const mt300_content = {
       required: true,
     },
     type_mf57_d: {
-      required: true,
+      required: "#seq_D_checkbox:checked",
     },
     _394_mf57d_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _372_of53a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -163,15 +163,15 @@ const mt300_content = {
     },
     _211_of53a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _371_of53a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _171_of53a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _212_of53a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -188,7 +188,7 @@ const mt300_content = {
     },
     _274_of84b_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _010_mf20_sender_reference: {
       required: true,
@@ -206,7 +206,7 @@ const mt300_content = {
     },
     _286_of85d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _103_of17o_ndf_open_indicator: {
       fieldValidator: "^[A-Z]{1}$",
@@ -216,7 +216,7 @@ const mt300_content = {
         "^(?:[A-Za-z0-9/\\-?:().,'+ ]{0,35}(?:\\r?\\n[A-Za-z0-9/\\-?:().,'+ ]{0,35}){0,3})$",
     },
     _410_mf16a_number_of_settlements: {
-      required: true,
+      required: "#seq_D_checkbox:checked",
       fieldValidator: "^[0-9]{0,5}$",
     },
     _030_mf22a_type_of_operation: {
@@ -233,7 +233,7 @@ const mt300_content = {
     },
     _271_of84a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _272_of84a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -250,11 +250,11 @@ const mt300_content = {
     },
     _241_of58a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _401_of58a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _242_of58a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -276,7 +276,7 @@ const mt300_content = {
     },
     _294_of88d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _295_of88d_name_and_address: {
       fieldValidator:
@@ -289,7 +289,7 @@ const mt300_content = {
     _231_mf57a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _232_mf57a_identifier_code: {
       required: true,
@@ -306,12 +306,12 @@ const mt300_content = {
     _391_mf57a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _191_mf57a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _105_of30u_valuation_date: {
       fieldValidator: "^[0-9]{8}$",
@@ -327,7 +327,7 @@ const mt300_content = {
     _071_mf82a_party_identifier: {
       required: true,
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_mf82_: {
       required: true,
@@ -345,14 +345,14 @@ const mt300_content = {
     },
     _384_of56d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _285_of85b_location: {
       fieldValidator: "^(?:[A-Za-z0-9/\\-?:().,'+ ]{0,35})?$",
     },
     _284_of85b_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _119_mf15b_: {},
     _320_of21g_brokers_reference: {
@@ -367,14 +367,14 @@ const mt300_content = {
     },
     _404_of58d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of83_: {
       required: false,
     },
     _091_of83a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _092_of83a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -402,16 +402,16 @@ const mt300_content = {
       fieldValidator: "^[A-Z0-9]{4}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,35})?$",
     },
     _350_mf17a_buy_sell_indicator: {
-      required: true,
+      required: "#seq_D_checkbox:checked",
       fieldValidator: "^[A-Z]{1}$",
     },
     _181_of56a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _221_of56a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _222_of56a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -421,7 +421,7 @@ const mt300_content = {
     },
     _381_of56a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _182_of56a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
@@ -431,7 +431,7 @@ const mt300_content = {
     },
     _374_of53d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _301_of71f_amount: {
       fieldValidator: "^[0-9,]{0,15}$",
@@ -444,7 +444,7 @@ const mt300_content = {
     },
     _281_of85a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _065_of17i_payment_versus_payment_settlement_indicator: {
       fieldValidator: "^[A-Z]{1}$",

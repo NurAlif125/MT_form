@@ -161,6 +161,14 @@
                                         <textarea name="_073_mf82a_address" id="_073_mf82a_address" input_type="MF82A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_073_mf82a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
                                 </div>
+                                <div id="div_mf82_d">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_074_mf82d_party_identifier" id="_074_mf82d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_074_mf82d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_075_mf82d_name_address" id="_075_mf82d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_075_mf82d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
+                                </div>
                                 <div id="div_mf82_j">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
                                         <textarea onkeypress="avoidSplChars(event)" cols="40" rows="5" maxlength="200" style="resize:none;" name="_076_mf82j_party_identification" id="_076_mf82j_party_identification" input_type="MF82J Party Identification" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_076_mf82j_party_identification'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -185,6 +193,14 @@
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_083_mf87a_address" id="_083_mf87a_address" input_type="MF87A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_083_mf87a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
+                                </div>
+                                <div id="div_mf87_d">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_084_mf87d_party_identifier" id="_084_mf87d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_084_mf87d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_085_mf87d_name_address" id="_085_mf87d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_085_mf87d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
                                 </div>
                                 <div id="div_mf87_j">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
@@ -213,6 +229,14 @@
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_093_of83a_address" id="_093_of83a_address" input_type="OF83A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_093_of83a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                             </div>
+                                        </div>
+                                        <div id="div_of83_d">
+                                        	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                        		<input type="text" name="_094_of83d_party_identifier" id="_094_of83d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_094_of83d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                        	</div>
+                                        	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                        		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_095_of83d_name_address" id="_095_of83d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_095_of83d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                        	</div>
                                         </div>
                                         <div id="div_of83_j">
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
@@ -476,6 +500,14 @@
                                         <textarea name="_173_of53a_address" id="_173_of53a_address" input_type="OF53A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_173_of53a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
                                 </div>
+                                <div id="div_of53_d">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_174_of53d_party_identifier" id="_174_of53d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_174_of53d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_175_of53d_name_address" id="_175_of53d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_175_of53d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
+                                </div>
                                 <div id="div_of53_j">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
                                         <textarea onkeypress="avoidSplChars(event)" cols="40" rows="5" style="resize:none;" maxlength="200" name="_176_of53j_party_identification" id="_176_of53j_party_identification" input_type="OF53J Party Identification" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_176_of53j_party_identification'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -501,6 +533,14 @@
                                         <textarea name="_183_of56a_address" id="_183_of56a_address" input_type="OF56A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_183_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
                                 </div>
+                                <div id="div_of56_d">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_184_of56d_party_identifier" id="_184_of56d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_185_of56d_name_address" id="_185_of56d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_185_of56d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
+                                </div>
                                 <div id="div_of56_j">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
                                         <textarea onkeypress="avoidSplChars(event)" cols="40" rows="5" maxlength="200" style="resize:none;" name="_186_of56j_party_identification" id="_186_of56j_party_identification" input_type="OF56J Party Identification" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of56j_party_identification'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -525,6 +565,14 @@
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expension</span>
                                         <textarea name="_193_mf57a_addresss" id="_193_mf57a_addresss" input_type="MF57A Addresss" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_193_mf57a_addresss'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
+                                </div>
+                                <div id="div_mf57_d">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_194_mf57d_party_identifier" id="_194_mf57d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_194_mf57d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_195_mf57d_name_address" id="_195_mf57d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_195_mf57d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
                                 </div>
                                 <div id="div_mf57_j">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
@@ -593,6 +641,14 @@
                                         <textarea name="_213_of53a_address" id="_213_of53a_address" input_type="OF53A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_213_of53a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
                                 </div>
+                                <div id="div_of53_d_b2">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_214_of53d_party_identifier" id="_214_of53d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_214_of53d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_215_of53d_name_address" id="_215_of53d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_215_of53d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
+                                </div>
                                 <div id="div_of53_j_b2">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
                                         <textarea onkeypress="avoidSplChars(event)" cols="40" rows="5" maxlength="200" style="resize:none;" name="_216_of53j_party_identification" id="_216_of53j_party_identification" input_type="OF53J Party Identification" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_216_of53j_party_identification'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -617,6 +673,14 @@
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expension</span>
                                         <textarea name="_223_of56a_address" id="_223_of56a_address" input_type="OF56A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_223_of56a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
+                                </div>
+                                <div id="div_of56_d_b2">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_224_of56d_party_identifier" id="_224_of56d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_224_of56d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_225_of56d_name_address" id="_225_of56d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_225_of56d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
                                 </div>
                                 <div id="div_of56_j_b2">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
@@ -643,6 +707,14 @@
                                         <textarea name="_233_mf57a_addresss" id="_233_mf57a_addresss" input_type="MF57A Addresss" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_233_mf57a_addresss'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
                                 </div>
+                                <div id="div_mf57_d_b2">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_234_mf57d_party_identifier" id="_234_mf57d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_234_mf57d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_235_mf57d_name_address" id="_235_mf57d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_235_mf57d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
+                                </div>
                                 <div id="div_mf57_j_b2">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>
                                         <textarea onkeypress="avoidSplChars(event)" cols="40" rows="5" maxlength="200" style="resize:none;" name="_236_mf57j_party_identification" id="_236_mf57j_party_identification" input_type="MF57J Party Identification" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_236_mf57j_party_identification'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -667,6 +739,14 @@
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                         <textarea name="_243_of58a_address" id="_243_of58a_address" input_type="OF58A Address" location="Body" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_243_of58a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
+                                </div>
+                                <div id="div_of58_d">
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                		<input type="text" name="_244_of58d_party_identifier" id="_244_of58d_party_identifier" input_type="OF53D Party Identifier" location="Body" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_244_of58d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                	</div>
+                                	<div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
+                                		<textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" type="text" name="_245_of58d_name_address" id="_245_of58d_name_address" input_type="OF53D Name Address" location="Body" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_245_of58d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                	</div>
                                 </div>
                                 <div id="div_of58_j">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identification</span>

@@ -11,7 +11,7 @@ const mt400_content = {
     },
     _093_of58b_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_mf32_amount_collected: {
       required: true,
@@ -27,7 +27,7 @@ const mt400_content = {
     },
     _053_of52d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of52_: {
       required: false,
@@ -37,7 +37,7 @@ const mt400_content = {
     },
     _083_of57d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _041_mf33a_a_date: {
       required: true,
@@ -53,11 +53,11 @@ const mt400_content = {
     },
     _095_of58d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _063_of53b_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of53_: {
       required: false,
@@ -70,23 +70,22 @@ const mt400_content = {
     },
     _051_of52a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _082_of57a_identifier_code: {
       fieldValidator: "^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
     },
     _081_of57a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _065_of53d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _031_mf32a_date: {
       required: true,
-      fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?\\|\\|[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}(?:[A-Z0-9]{3})?$",
+      fieldValidator:"^[0-9]{6}$",
     },
     type_mf32_: {
       required: true,
@@ -105,7 +104,7 @@ const mt400_content = {
     },
     _061_of53a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _062_of53a_Identifier_code: {
       fieldValidator:
@@ -117,21 +116,21 @@ const mt400_content = {
     },
     _075_of54d_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     type_of54_: {
       required: false,
     },
     _073_of54b_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _074_of54b_location: {
       fieldValidator: "^(?:[A-Za-z0-9/\\-?:().,'+ ]{0,35})?$",
     },
     _091_of58a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _092_of58a_Identifier_code: {
       fieldValidator:
@@ -158,7 +157,7 @@ const mt400_content = {
     },
     _071_of54a_party_identifier: {
       fieldValidator:
-        "^(?:\\/[A-Z]{1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
+        "^(?:\\/(C|D){1}(?:\\/[A-Za-z0-9/\\-?:().,'+ ]{0,34})?)?$",
     },
     _010_mf20_sending_bank_trn: {
       required: true,
@@ -274,7 +273,7 @@ const mt400_content = {
     _031_mf32a_date: {
       required: "_031_mf32a_date harus diisi..!!",
       fieldValidator:
-        "Format _031_mf32a_date tidak sesuai..!! ([/1!a][/34x]||4!a2!a2!c[3!c])",
+        "Format _031_mf32a_date tidak sesuai..!! 6!n",
     },
     type_mf32_: {
       required: "type_mf32_ harus diisi..!!",
