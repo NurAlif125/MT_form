@@ -112,7 +112,7 @@
                         </div>
                         <hr/>
 
-                        <!-- OF33B Additional Amount Claimed -->
+                        <!-- OF33B Additional Amount Claimed as Allowed for in Excess of Principal Amount -->
                         <div class="form-row"><span class="label_body">OF33B</span><span class="label">Additional Amount Claimed as Allowed for in Excess of Principal Amount</span>
                             <input type="text" id="_060_of33b_currency" name="_060_of33b_currency" maxlength="3" style="text-transform:uppercase;" value="<c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_060_of33b_currency"}'><c:out value='${item.detail}'/></c:if></c:forEach>" />
                             <input type="text" id="_061_of33b_amount" name="_061_of33b_amount" maxlength="15" value="<c:forEach var='item' items='${tags}'><c:if test='${item.tagName eq "_061_of33b_amount"}'><c:out value='${item.detail}'/></c:if></c:forEach>" />
@@ -127,7 +127,7 @@
 
                         <!-- MF34a Total Amount Claimed -->
                         <div class="form-row"><span class="label_body">MF34a</span><span class="label"><a style="color:red;text-decoration:none">*</a>Total Amount Claimed</span>
-                            <select id="_080_mf34a_total_amount_claimed" name="_080_mf34a_total_amount_claimed" onchange="toggle34aOption(this.value)" input_type="MF34a Total Amount Claimed" location="Body">
+                            <select id="_080_mf34a_total_amount_claimed" name="_080_mf34a_total_amount_claimed" class="mandatory" onchange="toggle34aOption(this.value)" input_type="MF34a Total Amount Claimed" location="Body">
                                 <option value="">choose a type</option>
                                 <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_080_mf34a_total_amount_claimed' and item.detail eq 'A'}">selected</c:if></c:forEach>>Option A (Date + Currency + Amount)</option>
                                 <option value="B" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName eq '_080_mf34a_total_amount_claimed' and item.detail eq 'B'}">selected</c:if></c:forEach>>Option B (Currency + Amount)</option>

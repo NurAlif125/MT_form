@@ -66,6 +66,11 @@
               <a href="Category7/mt740.jsp">740 - Authorisation to Reimburse</a>
               <a href="Category7/mt742.jsp">742 - Reimbursement Claim</a>
               <a href="Category7/mt747.jsp">747 - Amendement to an Authorisation to Reimburse</a>
+              <a href="Category7/mt750.jsp">750 - Advice of Discrepancy</a>             
+              <a href="Category7/mt752.jsp">752 - Authorisation to Pay, Accept or Negotiate</a>             
+              <a href="Category7/mt754.jsp">754 - Advice of Payment/Acceptance/Negotiation</a>             
+              <a href="Category7/mt756.jsp">756 - Advice of Reimbursement or Payment</a>             
+              <a href="Category7/mt759.jsp">759 - Ancillary Trade Structured Message</a>             
             </div>
           </div>
         </div>

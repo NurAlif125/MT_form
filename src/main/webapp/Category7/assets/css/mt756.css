@@ -1,0 +1,134 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : Sep 24, 2025, 1:42:50 PM
+    Author     : mslam
+*/
+
+/* Body dan form */
+body { 
+    font-family: Arial, sans-serif; 
+    padding: 20px; 
+    background:#f9f9f9; 
+}
+
+.form-row { 
+    margin-bottom: 12px; 
+    display:flex; 
+    align-items:flex-start; 
+}
+
+.label_body { 
+    width: 100px; 
+    font-weight: bold; 
+}
+
+.label { 
+    width: 300px; 
+    text-align:right; 
+    margin-right:10px; 
+}
+
+.label a { 
+    color:red; 
+}
+
+input, textarea, select { 
+    padding:5px; 
+    border:1px solid #999; 
+    border-radius:4px; 
+}
+
+input.mandatory, textarea.mandatory, select.mandatory { 
+    border: 1px solid #666; 
+}
+
+/* Tabs */
+.tabs { 
+    list-style: none; 
+    margin: 0; 
+    padding: 0; 
+    display: flex; 
+}
+.tabs li { 
+    margin-right: 10px; 
+}
+.tabs a { 
+    text-decoration: none; 
+    padding: 5px 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+}
+.tabcontent { 
+    display: none; 
+}
+.tabcontent.active { 
+    display: block; 
+}
+
+/* Container */
+.form-container {
+    border:1px solid #ccc;
+    border-radius:6px;
+    overflow:hidden;  
+    background:#fff;
+    margin-top:10px;
+}
+
+.form-body { 
+    padding:15px; 
+    background:#fff; 
+}
+
+/* Footer */
+.footer {
+    padding:12px;
+    background:#2a7d80; 
+    display:flex;
+    justify-content:flex-start;
+    gap:10px;
+    border-top:1px solid #ccc;
+}
+
+.footer button {
+    padding:8px 18px; 
+    border:1px solid #aaa; 
+    border-radius:4px;
+    background:#f0f0f0; 
+    color:#000; 
+    font-weight:bold; 
+    cursor:pointer;
+}
+.footer button:hover { 
+    background:#e0e0e0; 
+}
+
+/* --- Perbaikan untuk sub input --- */
+
+/* Wrapper untuk kolom utama */
+.mt-col { 
+    flex: 1; 
+    display:flex; 
+    flex-direction:column; 
+    gap:6px;       /* jarak antara option dan sub input */
+}
+
+/* Agar select dan input align penuh */
+.mt-col select,
+.mt-col input,
+.mt-col textarea {
+    width: 100%;
+}
+
+/* Spesifik untuk field ganda seperti 31D, 39A, 48 */
+.mt-row.multi { 
+    flex-wrap:wrap; 
+    gap:10px;
+}
+
+.mt-row.multi .mt-col { 
+    flex:0 0 auto;
+    min-width:180px;
+}

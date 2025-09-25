@@ -6,6 +6,7 @@
 //
 //import com.vensys.appcm.model.MT747;
 import com.enterprisedt.util.debug.Logger;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -37,7 +38,6 @@ public class AMT747 {
         data.setOf39c(prop.getProperty("of39c"));
         data.setOf72z(prop.getProperty("of72z"));
         data.setOf77(prop.getProperty("of77"));
-
         return data;
     }
 }

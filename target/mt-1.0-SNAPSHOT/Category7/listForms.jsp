@@ -152,6 +152,16 @@
                   + "  SELECT form_id, 'MT742' AS type, created_at FROM mt.mt742_message"
                   + "  UNION ALL"
                   + "  SELECT form_id, 'MT747' AS type, created_at FROM mt.mt747_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT750' AS type, created_at FROM mt.mt750_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT752' AS type, created_at FROM mt.mt752_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT754' AS type, created_at FROM mt.mt754_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT756' AS type, created_at FROM mt.mt756_message"
+                  + "  UNION ALL"
+                  + "  SELECT form_id, 'MT759' AS type, created_at FROM mt.mt759_message"                        
                   + ") AS all_msgs "
                   + "ORDER BY created_at DESC "
                   + "LIMIT " + recordsPerPage + " OFFSET " + start;
@@ -170,6 +180,11 @@
                   + "  UNION ALL SELECT form_id FROM mt.mt740_message"      
                   + "  UNION ALL SELECT form_id FROM mt.mt742_message"      
                   + "  UNION ALL SELECT form_id FROM mt.mt747_message"      
+                  + "  UNION ALL SELECT form_id FROM mt.mt750_message"      
+                  + "  UNION ALL SELECT form_id FROM mt.mt752_message"      
+                  + "  UNION ALL SELECT form_id FROM mt.mt754_message"      
+                  + "  UNION ALL SELECT form_id FROM mt.mt756_message"      
+                  + "  UNION ALL SELECT form_id FROM mt.mt759_message"      
                   + ") AS all_msgs";
 
                 int totalRecords = 0;
