@@ -3,10 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* 
- * MT759 Ancillary Trade Structured Message - UI/UX Script (Final Polished)
- * Sesuai pedoman SWIFT MT759
- */
 
 /* ===================== Utilities ===================== */
 function q(id) { return document.getElementById(id); }

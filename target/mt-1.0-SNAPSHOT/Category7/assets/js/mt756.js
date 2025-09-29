@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* 
- * MT756 Advice of Reimbursement or Payment - UI/UX Script (Final)
- */
 
 /* ===================== Utilities ===================== */
 function q(id) { return document.getElementById(id); }
@@ -86,7 +83,7 @@ function isValidCurrency(code) {
 function isValidBIC(code) {
   if (!code) return false;
   const bic = code.trim().toUpperCase();
-  const regex = /^[A-Z0-9]{8}([A-Z0-9]{3})?$/; // 8 or 11 chars
+  const regex = /^[A-Z0-9]{8}([A-Z0-9]{3})?$/;
   return regex.test(bic);
 }
 

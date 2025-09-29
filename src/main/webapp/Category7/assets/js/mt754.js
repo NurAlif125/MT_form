@@ -3,10 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* 
- * MT754 Advice of Payment/Acceptance/Negotiation - UI/UX Script (Final)
- */
-
 /* ===================== Utilities ===================== */
 function q(id) { return document.getElementById(id); }
 function show(id, on = true) { const el = q(id); if (el) el.style.display = on ? "block" : "none"; }

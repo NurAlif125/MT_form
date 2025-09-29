@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* 
- * MT747 Amendment to an Authorisation to Reimburse - UI/UX Script
- */
 
 /* ===================== Utilities ===================== */
 function q(id) { return document.getElementById(id); }

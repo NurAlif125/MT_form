@@ -3,10 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* 
- * MT742 Reimbursement Claim - UI/UX Script (Final with Auto Calculation)
- */
-
 /* ===================== Utilities ===================== */
 function q(id) { return document.getElementById(id); }
 function show(id, on = true) { const el = q(id); if (el) el.style.display = on ? "block" : "none"; }

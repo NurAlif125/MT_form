@@ -7,9 +7,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     Author     : mslam
 */
 
-/*
-
-/* Body dan form */
 body { 
     font-family: Arial, sans-serif; 
     padding: 20px; 
@@ -47,7 +44,6 @@ input.mandatory, textarea.mandatory, select.mandatory {
     border: 1px solid #666; 
 }
 
-/* Tabs */
 .tabs { 
     list-style: none; 
     margin: 0; 
@@ -70,7 +66,6 @@ input.mandatory, textarea.mandatory, select.mandatory {
     display: block; 
 }
 
-/* Container */
 .form-container {
     border:1px solid #ccc;
     border-radius:6px;
@@ -84,7 +79,6 @@ input.mandatory, textarea.mandatory, select.mandatory {
     background:#fff; 
 }
 
-/* Footer */
 .footer {
     padding:12px;
     background:#2a7d80; 
@@ -107,24 +101,19 @@ input.mandatory, textarea.mandatory, select.mandatory {
     background:#e0e0e0; 
 }
 
-/* --- Perbaikan untuk sub input --- */
-
-/* Wrapper untuk kolom utama */
 .mt-col { 
     flex: 1; 
     display:flex; 
     flex-direction:column; 
-    gap:6px;       /* jarak antara option dan sub input */
+    gap:6px;      
 }
 
-/* Agar select dan input align penuh */
 .mt-col select,
 .mt-col input,
 .mt-col textarea {
     width: 100%;
 }
 
-/* Spesifik untuk field ganda seperti 31D, 39A, 48 */
 .mt-row.multi { 
     flex-wrap:wrap; 
     gap:10px;
@@ -134,4 +123,3 @@ input.mandatory, textarea.mandatory, select.mandatory {
     flex:0 0 auto;
     min-width:180px;
 }
-
