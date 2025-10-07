@@ -123,3 +123,9 @@ input.mandatory, textarea.mandatory, select.mandatory {
     flex:0 0 auto;
     min-width:180px;
 }
+
+textarea {
+    height: 100px;
+    width: 300px;
+    resize: vertical;      
+}

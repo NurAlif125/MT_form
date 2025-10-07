@@ -52,6 +52,12 @@
             </div>
           </div>
           <div class="sub">
+            <a href="#">Message Category 2 <span class="arrow">▸</span></a>
+            <div class="submenu">
+              <a href="Category2/mt210.jsp">210 - Notice to Receive</a>
+            </div>
+          </div>  
+          <div class="sub">
             <a href="#">Message Category 7 <span class="arrow">▸</span></a>
             <div class="submenu">
               <a href="Category7/mt700.jsp">700 - Issue of a Documentary Credit</a>
@@ -71,6 +77,9 @@
               <a href="Category7/mt754.jsp">754 - Advice of Payment/Acceptance/Negotiation</a>             
               <a href="Category7/mt756.jsp">756 - Advice of Reimbursement or Payment</a>             
               <a href="Category7/mt759.jsp">759 - Ancillary Trade Structured Message</a>             
+              <a href="Category7/mt760.jsp">760 - Issue of a Demand Guarantee/Standby Letter of Credit</a>             
+              <a href="Category7/mt761.jsp">761 - Issue of a Demand Guarantee/Standby Letter of Credit</a>             
+              <a href="Category7/mt767.jsp">767 - Amendment to a Demand Guarantee/Standby Letter of Credit</a>             
             </div>
           </div>
         </div>
@@ -89,6 +98,7 @@
     <a class="nav-btn" href="#">Reporting ▾</a>
     <div class="menu">
       <a href="Category1/listForms.jsp">Category 1</a>
+      <a href="Category2/listForms.jsp">Category 2</a>
       <a href="Category7/listForms.jsp">Category 7</a>
     </div>
   </div>
