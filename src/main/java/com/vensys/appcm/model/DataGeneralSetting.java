@@ -23,6 +23,7 @@ public class DataGeneralSetting {
     private String MT400;
     private String MT412;
     private String MT499;
+    private String MT775;
     private String MT799;
     private String MT196;
     private String MT950;
@@ -140,6 +141,14 @@ public class DataGeneralSetting {
 
     public void setMT499(String MT499) {
         this.MT499 = MT499;
+    }
+
+    public String getMT775() {
+        return MT775;
+    }
+
+    public void setMT775(String MT775) {
+        this.MT799 = MT775;
     }
 
     public String getMT799() {

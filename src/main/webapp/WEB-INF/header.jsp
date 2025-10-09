@@ -283,6 +283,9 @@
                         <li><span class="dir">Message Category 7</span>
                             <ul>
                                 <c:forEach var="item" items="${role}">
+                                    <c:if test="${item == 'MT:775'}">
+                                        <li><a href="mt775.jsp">775 - Amendment to a Demand Guarantee/Standby Letter of Credit</a></li>
+                                    </c:if>
                                     <c:if test="${item == 'MT:799'}">
                                         <li><a href="mt799.jsp">799 - Free Format Message</a></li>
                                     </c:if>

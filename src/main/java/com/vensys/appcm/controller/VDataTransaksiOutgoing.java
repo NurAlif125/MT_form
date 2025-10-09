@@ -116,7 +116,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
         if ("103".equalsIgnoreCase(typeMT) || "110".equalsIgnoreCase(typeMT) || "111".equalsIgnoreCase(typeMT) || "191".equalsIgnoreCase(typeMT) || "202".equalsIgnoreCase(typeMT) || "202COV".equalsIgnoreCase(typeMT)
         || "300".equalsIgnoreCase(typeMT) || "320".equalsIgnoreCase(typeMT)
         || "400".equalsIgnoreCase(typeMT) || "412".equalsIgnoreCase(typeMT) || "499".equalsIgnoreCase(typeMT)
-        || "799".equalsIgnoreCase(typeMT)) {
+        || "775".equalsIgnoreCase(typeMT) || "799".equalsIgnoreCase(typeMT)) {
             try {
                 System.out.println("Message Type: " + headerById.getMessageType());
                 CHeader headermt = new CHeader();
@@ -305,7 +305,7 @@ public class VDataTransaksiOutgoing extends HttpServlet {
             if (headerById.getMessageType().contains("103") || headerById.getMessageType().contains("111") || headerById.getMessageType().contains("191") || headerById.getMessageType().contains("192") || headerById.getMessageType().contains("200") || headerById.getMessageType().contains("202")
             || headerById.getMessageType().contains("300") || headerById.getMessageType().contains("320") // MT300, MT320
             || headerById.getMessageType().contains("400") || headerById.getMessageType().contains("412") || headerById.getMessageType().contains("499") // MT400, MT412, MT499
-            || headerById.getMessageType().contains("799")) { // MT799
+            || headerById.getMessageType().contains("775") || headerById.getMessageType().contains("799")) { // MT799
                 view = request.getRequestDispatcher("mt" + headerById.getMessageType().trim() + ".jsp");
             } else {
                 view = request.getRequestDispatcher("mt.jsp");

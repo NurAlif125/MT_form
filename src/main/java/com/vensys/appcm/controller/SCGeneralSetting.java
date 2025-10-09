@@ -59,6 +59,7 @@ public class SCGeneralSetting extends HttpServlet {
         data.setMT412(request.getParameter("mt412"));
         data.setMT499(request.getParameter("mt499"));
 
+        data.setMT799(request.getParameter("mt775"));
         data.setMT799(request.getParameter("mt799"));
 
         data.setMT192(request.getParameter("mt192"));

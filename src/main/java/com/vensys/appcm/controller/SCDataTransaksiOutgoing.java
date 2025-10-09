@@ -235,7 +235,8 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
                         tag.setTagName(tags);   //tagName
                         //20211216 penambahan get tagMT 103 untuk pengecekan duplikat
                         if (tag.getTagName().equalsIgnoreCase("_010_mf20_sender_reference")
-                        || tag.getTagName().equalsIgnoreCase("_010_mf20_sending_bank_trn")) { // MT400
+                        || tag.getTagName().equalsIgnoreCase("_010_mf20_sending_bank_trn") // MT400
+                        || tag.getTagName().equalsIgnoreCase("_010_mf20_reference")) { // MT775
                             header.setTrans_refference(tag.getDetail());
                         } else if (tag.getTagName().equalsIgnoreCase("_011_mf21_")
                         || tag.getTagName().equalsIgnoreCase("_320_of21g_brokers_reference") // MT300

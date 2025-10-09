@@ -232,6 +232,10 @@ public class CHeader {
                 mt499.tagMT499(sb4, id);
             }
 
+            else if (messageType.equalsIgnoreCase("775")) {
+                TagMT775 mt775 = new TagMT775(this);
+                mt775.tagMT775(sb4, id);
+            }
             else if (messageType.equalsIgnoreCase("799")) {
                 TagMT799 mt799 = new TagMT799(this);
                 mt799.tagMT799(sb4, id);

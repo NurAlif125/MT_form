@@ -6,10 +6,7 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ include file ="header.jsp" %>
-<script src="js/validate-mt/content/mt300_content.js"></script>
-<script src="js/validate-mt/validate_rule_mt300.js"></script>
-<script src="js/validate-mt/validateList_scr.js"></script>
-<link rel="stylesheet" type="text/css" href="css/validate_case.css"/>
+
 <script src="js/tabcontent.js" type="text/javascript"></script>
 <script src="js/mt.js" type="text/javascript"></script>
 <link href="css/helper.css" media="screen" rel="stylesheet" type="text/css"/>
@@ -19,6 +16,11 @@
 <link rel="icon" href="images/favicon.ico"/>
 <link rel="stylesheet" href="css/displaytag.css" type="text/css">
 <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.22.custom.css" rel="stylesheet" />
+
+<script src="js/validate-mt/content/mt300_content.js"></script>
+<script src="js/validate-mt/validate_rule_mt300.js"></script>
+<script src="js/validate-mt/validateList_scr.js"></script>
+<link rel="stylesheet" type="text/css" href="css/validate_case.css"/>
 
 <div id="isi">
     <c:forEach var="item" items="${role}">

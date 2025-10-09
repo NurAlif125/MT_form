@@ -249,7 +249,10 @@ response.setHeader("X-Powered-By", "Unknown");
                                 <li><span class="dir">Message Category 7</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
-                                            <c:if test="${item == 'MT:499'}">
+                                            <c:if test="${item == 'MT:775'}">
+                                                <li><a onclick="userTrackMenuClick('775 - Amendment to a Demand Guarantee/Standby Letter of Credit')" href="mt775.jsp?create=true">775 - Amendment to a Demand Guarantee/Standby Letter of Credit</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:799'}">
                                                 <li><a onclick="userTrackMenuClick('799 - Free Format Message')" href="mt799.jsp?create=true">799 - Free Format Message</a></li>
                                             </c:if>
                                         </c:forEach>
