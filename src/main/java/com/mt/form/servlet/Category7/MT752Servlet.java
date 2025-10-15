@@ -26,33 +26,50 @@ public class MT752Servlet extends HttpServlet {
 
         try (PrintWriter out = response.getWriter()) {
             /* ========== Ambil parameter dari mt752.jsp ========== */
+            
+            // Mandatory Fields
             String mf20 = request.getParameter("_010_mf20_documentary_credit_number");
-            String mf21 = request.getParameter("_020_mf21_presenting_banks_reference"); // fixed
+            String mf21 = request.getParameter("_020_mf21_presenting_banks_reference");
             String mf23 = request.getParameter("_030_mf23_further_identification");
             String mf30 = request.getParameter("_040_mf30_date_of_advice_of_discrepancy_or_mailing");
 
+            // Field 32B - Total Amount Advised
             String of32bCurrency = request.getParameter("_050_of32b_currency");
             String of32bAmount = request.getParameter("_051_of32b_amount");
 
+            // Field 71D - Charges Deducted
             String of71d = request.getParameter("_060_of71d_charges_deducted");
 
-            String of33aDate = request.getParameter("_070_of33a_date");
-            String of33aCurrency = request.getParameter("_071_of33a_currency");
-            String of33aAmount = request.getParameter("_072_of33a_amount");
+            // Field 33a - Net Amount (Option A atau B)
+            String of33aOption = request.getParameter("_070_of33a_net_amount");
+            String of33aDateA = request.getParameter("_071_of33a_date");       // Option A
+            String of33aCurrencyA = request.getParameter("_072_of33a_currency"); // Option A
+            String of33aAmountA = request.getParameter("_073_of33a_amount");   // Option A
+            String of33aCurrencyB = request.getParameter("_074_of33a_currency"); // Option B
+            String of33aAmountB = request.getParameter("_075_of33a_amount");   // Option B
 
-            String of53aOpt = request.getParameter("_080_of53a_senders_correspondent");
-            String of53aPartyId = request.getParameter("_081_of53a_party_identifier");
-            String of53aIdentifierCode = request.getParameter("_082_of53a_identifier_code"); // fixed
-            String of53aLocation = request.getParameter("_083_of53a_location");
-            String of53aNameAddr = request.getParameter("_084_of53a_name_address");
+            // Field 53a - Sender's Correspondent (Option A, B, atau D)
+            String of53aOption = request.getParameter("_080_of53a_senders_correspondent");
+            String of53aPartyIdA = request.getParameter("_081_of53a_party_identifier");
+            String of53aIdentifierCode = request.getParameter("_082_of53a_identifier_code");
+            String of53aPartyIdB = request.getParameter("_083_of53a_party_identifier");
+            String of53aLocation = request.getParameter("_084_of53a_location");
+            String of53aPartyIdD = request.getParameter("_085_of53a_party_identifier");
+            String of53aNameAddress = request.getParameter("_086_of53a_name_address");
 
-            String of54aOpt = request.getParameter("_090_of54a_receivers_correspondent");
-            String of54aPartyId = request.getParameter("_091_of54a_party_identifier"); // added
-            String of54aIdentifierCode = request.getParameter("_092_of54a_identifier_code"); // fixed
-            String of54aLocation = request.getParameter("_093_of54a_location"); // fixed
-            String of54aNameAddr = request.getParameter("_094_of54a_name_address"); // fixed
+            // Field 54a - Receiver's Correspondent (Option A, B, atau D)
+            String of54aOption = request.getParameter("_090_of54a_receivers_correspondent");
+            String of54aPartyIdA = request.getParameter("_091_of54a_party_identifier");
+            String of54aIdentifierCode = request.getParameter("_092_of54a_identifier_code");
+            String of54aPartyIdB = request.getParameter("_093_of54a_party_identifier");
+            String of54aLocation = request.getParameter("_094_of54a_location");
+            String of54aPartyIdD = request.getParameter("_095_of54a_party_identifier");
+            String of54aNameAddress = request.getParameter("_096_of54a_name_address");
 
+            // Field 72Z - Sender to Receiver Information
             String of72z = request.getParameter("_100_of72z_sender_to_receiver_information");
+
+            // Field 79Z - Narrative
             String of79z = request.getParameter("_110_of79z_narrative");
 
             /* ========== Mandatory check ========== */
@@ -82,13 +99,35 @@ public class MT752Servlet extends HttpServlet {
 
             /* ========== Column list (sesuai DDL table mt752_message) ========== */
             String columns = "form_id, message_type, " +
-                    "_010_mf20_documentary_credit_number, _020_mf21_presenting_banks_reference, _030_mf23_further_identification, _040_mf30_date_of_advice_of_discrepancy_or_mailing, " +
-                    "_050_of32b_currency, _051_of32b_amount, " +
+                    "_010_mf20_documentary_credit_number, " +
+                    "_020_mf21_presenting_banks_reference, " +
+                    "_030_mf23_further_identification, " +
+                    "_040_mf30_date_of_advice_of_discrepancy_or_mailing, " +
+                    "_050_of32b_currency, " +
+                    "_051_of32b_amount, " +
                     "_060_of71d_charges_deducted, " +
-                    "_070_of33a_date, _071_of33a_currency, _072_of33a_amount, " +
-                    "_080_of53a_senders_correspondent, _081_of53a_party_identifier, _082_of53a_identifier_code, _083_of53a_location, _084_of53a_name_address, " +
-                    "_090_of54a_receivers_correspondent, _091_of54a_party_identifier, _092_of54a_identifier_code, _093_of54a_location, _094_of54a_name_address, " +
-                    "_100_of72z_sender_to_receiver_information, _110_of79z_narrative";
+                    "_070_of33a_net_amount, " +
+                    "_071_of33a_date, " +
+                    "_072_of33a_currency, " +
+                    "_073_of33a_amount, " +
+                    "_074_of33a_currency, " +
+                    "_075_of33a_amount, " +
+                    "_080_of53a_senders_correspondent, " +
+                    "_081_of53a_party_identifier, " +
+                    "_082_of53a_identifier_code, " +
+                    "_083_of53a_party_identifier, " +
+                    "_084_of53a_location, " +
+                    "_085_of53a_party_identifier, " +
+                    "_086_of53a_name_address, " +
+                    "_090_of54a_receivers_correspondent, " +
+                    "_091_of54a_party_identifier, " +
+                    "_092_of54a_identifier_code, " +
+                    "_093_of54a_party_identifier, " +
+                    "_094_of54a_location, " +
+                    "_095_of54a_party_identifier, " +
+                    "_096_of54a_name_address, " +
+                    "_100_of72z_sender_to_receiver_information, " +
+                    "_110_of79z_narrative";
 
             int paramCount = (int) Arrays.stream(columns.split(","))
                     .map(String::trim).filter(s -> !s.isEmpty()).count();
@@ -104,11 +143,13 @@ public class MT752Servlet extends HttpServlet {
                 ps.setString(idx++, newId);
                 ps.setString(idx++, "752");
 
+                // Mandatory fields
                 ps.setString(idx++, mf20);
                 ps.setString(idx++, mf21);
                 ps.setString(idx++, mf23);
                 ps.setString(idx++, mf30);
 
+                // Field 32B
                 ps.setString(idx++, of32bCurrency);
                 if (!isEmpty(of32bAmount)) {
                     ps.setBigDecimal(idx++, new java.math.BigDecimal(of32bAmount.replace(",", ".")));
@@ -116,29 +157,51 @@ public class MT752Servlet extends HttpServlet {
                     ps.setNull(idx++, java.sql.Types.NUMERIC);
                 }
 
+                // Field 71D
                 ps.setString(idx++, of71d);
 
-                ps.setString(idx++, of33aDate);
-                ps.setString(idx++, of33aCurrency);
-                if (!isEmpty(of33aAmount)) {
-                    ps.setBigDecimal(idx++, new java.math.BigDecimal(of33aAmount.replace(",", ".")));
+                // Field 33a - Net Amount
+                ps.setString(idx++, of33aOption);
+                
+                // Field 33a Option A
+                ps.setString(idx++, of33aDateA);
+                ps.setString(idx++, of33aCurrencyA);
+                if (!isEmpty(of33aAmountA)) {
+                    ps.setBigDecimal(idx++, new java.math.BigDecimal(of33aAmountA.replace(",", ".")));
+                } else {
+                    ps.setNull(idx++, java.sql.Types.NUMERIC);
+                }
+                
+                // Field 33a Option B
+                ps.setString(idx++, of33aCurrencyB);
+                if (!isEmpty(of33aAmountB)) {
+                    ps.setBigDecimal(idx++, new java.math.BigDecimal(of33aAmountB.replace(",", ".")));
                 } else {
                     ps.setNull(idx++, java.sql.Types.NUMERIC);
                 }
 
-                ps.setString(idx++, of53aOpt);
-                ps.setString(idx++, of53aPartyId);
+                // Field 53a - Sender's Correspondent
+                ps.setString(idx++, of53aOption);
+                ps.setString(idx++, of53aPartyIdA);
                 ps.setString(idx++, of53aIdentifierCode);
+                ps.setString(idx++, of53aPartyIdB);
                 ps.setString(idx++, of53aLocation);
-                ps.setString(idx++, of53aNameAddr);
+                ps.setString(idx++, of53aPartyIdD);
+                ps.setString(idx++, of53aNameAddress);
 
-                ps.setString(idx++, of54aOpt);
-                ps.setString(idx++, of54aPartyId);
+                // Field 54a - Receiver's Correspondent
+                ps.setString(idx++, of54aOption);
+                ps.setString(idx++, of54aPartyIdA);
                 ps.setString(idx++, of54aIdentifierCode);
+                ps.setString(idx++, of54aPartyIdB);
                 ps.setString(idx++, of54aLocation);
-                ps.setString(idx++, of54aNameAddr);
+                ps.setString(idx++, of54aPartyIdD);
+                ps.setString(idx++, of54aNameAddress);
 
+                // Field 72Z
                 ps.setString(idx++, of72z);
+
+                // Field 79Z
                 ps.setString(idx++, of79z);
 
                 int setCount = idx - 1;

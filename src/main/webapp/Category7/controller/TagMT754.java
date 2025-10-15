@@ -45,19 +45,25 @@ public class TagMT754 {
             } else if (tagName.equalsIgnoreCase("73A")) {
                 tags = mt754.getOf73a();
                 this.ch.readBlock4(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("34A")) {
+            } else if (tagName.equalsIgnoreCase("34A") || tagName.equalsIgnoreCase("34B")) {
                 tags = mt754.getOf34a();
                 this.ch.splitMT32A(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("53A")) {
+            } else if (tagName.equalsIgnoreCase("53A") || 
+                       tagName.equalsIgnoreCase("53B") || 
+                       tagName.equalsIgnoreCase("53D")) {
                 tags = mt754.getOf53a();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("57A")) {
+            } else if (tagName.equalsIgnoreCase("57A") || 
+                       tagName.equalsIgnoreCase("57B") || 
+                       tagName.equalsIgnoreCase("57D")) {
                 tags = mt754.getOf57a();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("58A")) {
+            } else if (tagName.equalsIgnoreCase("58A") || 
+                       tagName.equalsIgnoreCase("58D")) {
                 tags = mt754.getOf58a();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("72")) {
+            } else if (tagName.equalsIgnoreCase("72") || 
+                       tagName.equalsIgnoreCase("72Z")) {
                 tags = mt754.getOf72z();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("77")) {

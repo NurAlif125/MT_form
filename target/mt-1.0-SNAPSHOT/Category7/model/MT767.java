@@ -18,6 +18,7 @@ public class MT767 {
     private String of23s;
     private String of72z;
     private String of23x;
+
     private String mf15b;
     private String mf20;
     private String mf26e;
@@ -33,16 +34,17 @@ public class MT767 {
     private String of77u;
     private String of24e;
     private String of24g;
+
     private String mf15c;
-    private String of32b2;
-    private String of33b2;
-    private String of23b2;
-    private String of31e2;
-    private String of35g2;
+    private String of32b_c;
+    private String of33b_c;
+    private String of23b_c;
+    private String of31e_c;
+    private String of35g_c;
     private String of59;
     private String of77l;
-    private String of24e2;
-    private String of24g2;
+    private String of24e_c;
+    private String of24g_c;
 
     public String getMf15a() { return mf15a; }
     public void setMf15a(String mf15a) { this.mf15a = mf15a; }
@@ -113,20 +115,20 @@ public class MT767 {
     public String getMf15c() { return mf15c; }
     public void setMf15c(String mf15c) { this.mf15c = mf15c; }
 
-    public String getOf32b2() { return of32b2; }
-    public void setOf32b2(String of32b2) { this.of32b2 = of32b2; }
+    public String getOf32b_c() { return of32b_c; }
+    public void setOf32b_c(String of32b_c) { this.of32b_c = of32b_c; }
 
-    public String getOf33b2() { return of33b2; }
-    public void setOf33b2(String of33b2) { this.of33b2 = of33b2; }
+    public String getOf33b_c() { return of33b_c; }
+    public void setOf33b_c(String of33b_c) { this.of33b_c = of33b_c; }
 
-    public String getOf23b2() { return of23b2; }
-    public void setOf23b2(String of23b2) { this.of23b2 = of23b2; }
+    public String getOf23b_c() { return of23b_c; }
+    public void setOf23b_c(String of23b_c) { this.of23b_c = of23b_c; }
 
-    public String getOf31e2() { return of31e2; }
-    public void setOf31e2(String of31e2) { this.of31e2 = of31e2; }
+    public String getOf31e_c() { return of31e_c; }
+    public void setOf31e_c(String of31e_c) { this.of31e_c = of31e_c; }
 
-    public String getOf35g2() { return of35g2; }
-    public void setOf35g2(String of35g2) { this.of35g2 = of35g2; }
+    public String getOf35g_c() { return of35g_c; }
+    public void setOf35g_c(String of35g_c) { this.of35g_c = of35g_c; }
 
     public String getOf59() { return of59; }
     public void setOf59(String of59) { this.of59 = of59; }
@@ -134,9 +136,9 @@ public class MT767 {
     public String getOf77l() { return of77l; }
     public void setOf77l(String of77l) { this.of77l = of77l; }
 
-    public String getOf24e2() { return of24e2; }
-    public void setOf24e2(String of24e2) { this.of24e2 = of24e2; }
+    public String getOf24e_c() { return of24e_c; }
+    public void setOf24e_c(String of24e_c) { this.of24e_c = of24e_c; }
 
-    public String getOf24g2() { return of24g2; }
-    public void setOf24g2(String of24g2) { this.of24g2 = of24g2; }
+    public String getOf24g_c() { return of24g_c; }
+    public void setOf24g_c(String of24g_c) { this.of24g_c = of24g_c; }
 }

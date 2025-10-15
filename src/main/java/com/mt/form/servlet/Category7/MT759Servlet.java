@@ -27,26 +27,42 @@ public class MT759Servlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
             /* ========== Ambil parameter dari mt759.jsp ========== */
-            String f27 = request.getParameter("_010_mf27_sequence_of_total");
+            // Field 27 - Sequence of Total (2 separate fields)
+            String f27Number = request.getParameter("_010_mf27_number");
+            String f27Total = request.getParameter("_011_mf27_total");
+            
+            // Field 20 - Transaction Reference Number
             String f20 = request.getParameter("_020_mf20_transaction_reference_number");
+            
+            // Field 21 - Related Reference Number
             String f21 = request.getParameter("_030_of21_related_reference_number");
+            
+            // Field 22D - Form of Undertaking
             String f22d = request.getParameter("_040_mf22d_form_of_undertaking");
+            
+            // Field 23 - Undertaking Number
             String f23 = request.getParameter("_050_of23_undertaking_number");
 
+            // Field 52a - Issuer (Option A or D)
             String opt52a = request.getParameter("_060_of52a_issuer");
-            String of52aPartyId = request.getParameter("_061_of52a_party_identifier");
-            String of52aIdentifier = request.getParameter("_062_of52a_identifier_code");
-            String of52aNameAddr = request.getParameter("_063_of52a_name_address");
+            String of52aPartyIdA = request.getParameter("_061_of52a_party_identifier");
+            String of52aIdentifierCode = request.getParameter("_062_of52a_identifier_code");
+            String of52aPartyIdD = request.getParameter("_063_of52a_party_identifier");
+            String of52aNameAddr = request.getParameter("_064_of52a_name_address");
 
+            // Field 23H - Function of Message
             String f23h = request.getParameter("_070_mf23h_function_of_message");
+            
+            // Field 45D - Narrative
             String f45d = request.getParameter("_080_mf45d_narrative");
 
+            // Field 23X - File Identification
             String f23xCode = request.getParameter("_090_of23x_file_identification");
             String f23xFilename = request.getParameter("_091_of23x_file_name");
 
-            /* ========== Mandatory check ========== */
-            if (isEmpty(f27) || isEmpty(f20) || isEmpty(f22d)
-                    || isEmpty(f23h) || isEmpty(f45d)) {
+            /* ========== Mandatory field validation ========== */
+            if (isEmpty(f27Number) || isEmpty(f27Total) || isEmpty(f20) || 
+                isEmpty(f22d) || isEmpty(f23h) || isEmpty(f45d)) {
                 out.println("<script>alert('Mandatory fields MT759 belum lengkap.'); window.history.back();</script>");
                 return;
             }
@@ -72,12 +88,20 @@ public class MT759Servlet extends HttpServlet {
 
             /* ========== Column list (sesuai DDL table mt759_message) ========== */
             String columns = "form_id, message_type, " +
-                    "_010_mf27_sequence_of_total, _020_mf20_transaction_reference_number, " +
-                    "_030_mf21_related_reference_number, _040_mf22d_form_of_undertaking, " +
+                    "_010_mf27_number, _011_mf27_total, " +
+                    "_020_mf20_transaction_reference_number, " +
+                    "_030_of21_related_reference_number, " +
+                    "_040_mf22d_form_of_undertaking, " +
                     "_050_of23_undertaking_number, " +
-                    "_060_of52a_issuer, _061_of52a_party_identifier, _062_of52a_identifier_code, _063_of52a_name_address, " +
-                    "_070_mf23h_function_of_message, _080_mf45d_narrative, " +
-                    "_090_of23x_file_identification, _091_of23x_file_name";
+                    "_060_of52a_issuer, " +
+                    "_061_of52a_party_identifier, " +
+                    "_062_of52a_identifier_code, " +
+                    "_063_of52a_party_identifier, " +
+                    "_064_of52a_name_address, " +
+                    "_070_mf23h_function_of_message, " +
+                    "_080_mf45d_narrative, " +
+                    "_090_of23x_file_identification, " +
+                    "_091_of23x_file_name";
 
             int paramCount = (int) Arrays.stream(columns.split(","))
                     .map(String::trim).filter(s -> !s.isEmpty()).count();
@@ -90,25 +114,27 @@ public class MT759Servlet extends HttpServlet {
                  PreparedStatement ps = conn.prepareStatement(sql)) {
 
                 int idx = 1;
-                ps.setString(idx++, newId);
-                ps.setString(idx++, "759");
+                ps.setString(idx++, newId);           // form_id
+                ps.setString(idx++, "759");           // message_type
 
-                ps.setString(idx++, f27);
-                ps.setString(idx++, f20);
-                ps.setString(idx++, f21);
-                ps.setString(idx++, f22d);
-                ps.setString(idx++, f23);
+                ps.setString(idx++, f27Number);       // _010_mf27_number
+                ps.setString(idx++, f27Total);        // _011_mf27_total
+                ps.setString(idx++, f20);             // _020_mf20_transaction_reference_number
+                ps.setString(idx++, f21);             // _030_of21_related_reference_number
+                ps.setString(idx++, f22d);            // _040_mf22d_form_of_undertaking
+                ps.setString(idx++, f23);             // _050_of23_undertaking_number
 
-                ps.setString(idx++, opt52a);
-                ps.setString(idx++, of52aPartyId);
-                ps.setString(idx++, of52aIdentifier);
-                ps.setString(idx++, of52aNameAddr);
+                ps.setString(idx++, opt52a);          // _060_of52a_issuer
+                ps.setString(idx++, of52aPartyIdA);   // _061_of52a_party_identifier (Option A)
+                ps.setString(idx++, of52aIdentifierCode); // _062_of52a_identifier_code (Option A)
+                ps.setString(idx++, of52aPartyIdD);   // _063_of52a_party_identifier (Option D)
+                ps.setString(idx++, of52aNameAddr);   // _064_of52a_name_address (Option D)
 
-                ps.setString(idx++, f23h);
-                ps.setString(idx++, f45d);
+                ps.setString(idx++, f23h);            // _070_mf23h_function_of_message
+                ps.setString(idx++, f45d);            // _080_mf45d_narrative
 
-                ps.setString(idx++, f23xCode);
-                ps.setString(idx++, f23xFilename);
+                ps.setString(idx++, f23xCode);        // _090_of23x_file_identification
+                ps.setString(idx++, f23xFilename);    // _091_of23x_file_name
 
                 int setCount = idx - 1;
                 if (setCount != paramCount) {

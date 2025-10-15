@@ -48,7 +48,7 @@ public class TagMT700 {
             } else if (tagName.equalsIgnoreCase("31D")) {
                 tags = mt700.getMf31d();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("51A")) {
+            } else if (tagName.equalsIgnoreCase("51A") || tagName.equalsIgnoreCase("51D")) {
                 tags = mt700.getOf51a();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("50")) {
@@ -141,7 +141,7 @@ public class TagMT700 {
             } else if (tagName.equalsIgnoreCase("57A") || tagName.equalsIgnoreCase("57B") || tagName.equalsIgnoreCase("57D")) {
                 tags = mt700.getOf57a();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("72")) {
+            } else if (tagName.equalsIgnoreCase("72") || tagName.equalsIgnoreCase("72Z")) {
                 tags = mt700.getOf72z();
                 this.ch.readBlock4(tags, tagName, tagValue);
             }

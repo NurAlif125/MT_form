@@ -43,6 +43,10 @@ public class TagMT710 {
                 tags = mt710.getMf21();
                 this.ch.readBlock4(tags, tagName, tagValue);
 
+            } else if (tagName.equalsIgnoreCase("23")) {
+                tags = mt710.getOf23();
+                this.ch.readBlock4(tags, tagName, tagValue);
+
             } else if (tagName.equalsIgnoreCase("31C")) {
                 tags = mt710.getMf31c();
                 this.ch.readBlock4(tags, tagName, tagValue);
@@ -55,7 +59,7 @@ public class TagMT710 {
                 tags = mt710.getMf31d();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("52A")) {
+            } else if (tagName.equalsIgnoreCase("52A") || tagName.equalsIgnoreCase("52D")) {
                 tags = mt710.getOf52a();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
@@ -63,7 +67,7 @@ public class TagMT710 {
                 tags = mt710.getOf50b();
                 this.ch.readBlock4(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("51A")) {
+            } else if (tagName.equalsIgnoreCase("51A") || tagName.equalsIgnoreCase("51D")) {
                 tags = mt710.getOf51a();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
@@ -72,7 +76,7 @@ public class TagMT710 {
                 this.ch.readBlock4(tags, tagName, tagValue);
 
             } else if (tagName.equalsIgnoreCase("59")) {
-                tags = mt710.getOf59();
+                tags = mt710.getMf59(); 
                 this.ch.splitRowData(tags, tagName, tagValue);
 
             } else if (tagName.equalsIgnoreCase("32B")) {
@@ -83,11 +87,11 @@ public class TagMT710 {
                 tags = mt710.getOf39a();
                 this.ch.readBlock4(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("39B")) {
-                tags = mt710.getOf39b();
+            } else if (tagName.equalsIgnoreCase("39C")) { 
+                tags = mt710.getOf39c();
                 this.ch.readBlock4(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("41A")) {
+            } else if (tagName.equalsIgnoreCase("41A") || tagName.equalsIgnoreCase("41D")) {
                 tags = mt710.getMf41a();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
@@ -95,7 +99,7 @@ public class TagMT710 {
                 tags = mt710.getOf42c();
                 this.ch.readBlock4(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("42A")) {
+            } else if (tagName.equalsIgnoreCase("42A") || tagName.equalsIgnoreCase("42D")) {
                 tags = mt710.getOf42a();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
@@ -171,11 +175,11 @@ public class TagMT710 {
                 tags = mt710.getMf49();
                 this.ch.readBlock4(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("58A")) {
+            } else if (tagName.equalsIgnoreCase("58A") || tagName.equalsIgnoreCase("58D")) {
                 tags = mt710.getOf58a();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("53A")) {
+            } else if (tagName.equalsIgnoreCase("53A") || tagName.equalsIgnoreCase("53D")) {
                 tags = mt710.getOf53a();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
@@ -187,11 +191,11 @@ public class TagMT710 {
                 tags = mt710.getOf78d();
                 this.ch.readBlock4(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("57A")) {
+            } else if (tagName.equalsIgnoreCase("57A") || tagName.equalsIgnoreCase("57B") || tagName.equalsIgnoreCase("57D")) {
                 tags = mt710.getOf57a();
                 this.ch.splitRowData(tags, tagName, tagValue);
 
-            } else if (tagName.equalsIgnoreCase("72")) {
+            } else if (tagName.equalsIgnoreCase("72") || tagName.equalsIgnoreCase("72Z")) {
                 tags = mt710.getOf72z();
                 this.ch.readBlock4(tags, tagName, tagValue);
             }

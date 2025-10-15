@@ -5,185 +5,595 @@
 --%>
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript">
 $(document).ready(function () {
+
+    /* ===================== CUSTOM VALIDATORS ===================== */
+    
+    // Custom validator: Regex pattern matching
+    $.validator.addMethod("regex", function(value, element, param) {
+        return this.optional(element) || param.test(value);
+    }, "Invalid format");
+    
+    // Custom validator: Currency code validation (T52)
+    $.validator.addMethod("validCurrency", function(value, element) {
+        if (!value || value.trim() === "") return true; // Optional
+        return window.isValidCurrency ? window.isValidCurrency(value) : true;
+    }, "Invalid ISO 4217 currency code (Error T52)");
+    
+    // Custom validator: BIC validation (T27, T28, T29, C05)
+    $.validator.addMethod("validBIC", function(value, element) {
+        if (!value || value.trim() === "") return true; // Optional
+        return window.isValidBIC ? window.isValidBIC(value) : true;
+    }, "Invalid BIC format - must be 8 or 11 characters (Error T27/T28/T29)");
+    
+    // Custom validator: Amount validation by currency (T40, T43, C03)
+    $.validator.addMethod("validAmount", function(value, element, params) {
+        if (!value || value.trim() === "") return true; // Optional
+        
+        // Get currency from specified field
+        const currencyField = $(params.currencyField);
+        const currency = currencyField.val();
+        
+        if (!currency) return true; // If no currency yet, skip amount validation
+        
+        if (window.validateAmountByCurrency) {
+            const result = window.validateAmountByCurrency(currency, value);
+            return result.valid;
+        }
+        
+        return true;
+    }, "Invalid amount format (Error T40/T43/C03)");
+    
+    // Custom validator: Date validation (T50)
+    $.validator.addMethod("validDate", function(value, element, allowEmpty) {
+        if (allowEmpty && (!value || value.trim() === "")) return true;
+        if (!value || value.trim() === "") return false;
+        
+        if (!/^\d{6}$/.test(value)) return false;
+        
+        return window.isYYMMDD ? window.isYYMMDD(value) : true;
+    }, "Invalid date - must be YYMMDD format (Error T50)");
+    
+    // Custom validator: Party identifier format
+    $.validator.addMethod("validPartyId", function(value, element) {
+        if (!value || value.trim() === "") return true; // Optional
+        return window.isValidPartyIdentifier ? window.isValidPartyIdentifier(value) : true;
+    }, "Party identifier must start with single slash '/'");
+
+    /* ===================== FORM VALIDATION RULES ===================== */
+
     let validator = $("#form_mt754").validate({
         ignore: [],
         onkeyup: false,
         onfocusout: false,
         rules: {
-            // --- Header ---
-            sender_logical_terminal: "required",
-            receiver_institution: "required",
-            priority: "required",
+            /* ========== MANDATORY BODY FIELDS ========== */
+            
+            // Field 20: Sender's Reference (T26)
+            _010_mf20_sender_reference: {
+                required: true,
+                maxlength: 16,
+                regex: /^(?!\/)(?!.*\/\/)(?!.*\/$).+$/
+            },
+            
+            // Field 21: Related Reference (T26)
+            _020_mf21_related_reference: {
+                required: true,
+                maxlength: 16,
+                regex: /^(?!\/)(?!.*\/\/)(?!.*\/$).+$/
+            },
 
-            // --- Mandatory Body ---
-            _010_mf20_sender_reference: {required:true, regex:/^(?!\/)(?!.*\/\/)(?!.*\/$).{1,16}$/},
-            _020_mf21_related_reference: {required:true, regex:/^(?!\/)(?!.*\/\/)(?!.*\/$).{1,16}$/},
+            /* ========== FIELD 32a - Principal Amount (MANDATORY) ========== */
+            
+            _030_mf32a_principal_amount_paid_accepted_negotiated: {
+                required: true
+            },
+            
+            // Option A: Date (T50)
+            _031_mf32a_date: {
+                required: function() {
+                    return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "A";
+                },
+                validDate: false // false = not allow empty
+            },
+            
+            // Option A: Currency (T52)
+            _032_mf32a_currency: {
+                required: function() {
+                    return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "A";
+                },
+                validCurrency: true,
+                regex: /^[A-Z]{3}$/
+            },
+            
+            // Option A: Amount (T40, T43, C03)
+            _033_mf32a_amount: {
+                required: function() {
+                    return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "A";
+                },
+                validAmount: {
+                    currencyField: "#_032_mf32a_currency"
+                }
+            },
+            
+            // Option B: Currency (T52)
+            _034_mf32a_currency: {
+                required: function() {
+                    return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "B";
+                },
+                validCurrency: true,
+                regex: /^[A-Z]{3}$/
+            },
+            
+            // Option B: Amount (T40, T43, C03)
+            _035_mf32a_amount: {
+                required: function() {
+                    return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "B";
+                },
+                validAmount: {
+                    currencyField: "#_034_mf32a_currency"
+                }
+            },
 
-            // --- 32a Principal Amount (Option A or B) ---
-            _030_mf32a_principal_amount_paid_accepted_negotiated: "required",
-            _031_mf32a_date: {required:function(){return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val()=="A";}, regex:/^\d{6}$/},
-            _032_mf32a_currency: {required:true, regex:/^[A-Z]{3}$/},
-            _033_mf32a_amount: {required:true, regex:/^\d+(,\d{1,2})?$/},
+            /* ========== FIELD 33B - Additional Amount (OPTIONAL) ========== */
+            
+            _040_of33b_currency: {
+                validCurrency: true,
+                regex: /^[A-Z]{3}$/
+            },
+            
+            _041_of33b_amount: {
+                validAmount: {
+                    currencyField: "#_040_of33b_currency"
+                }
+            },
 
-            // --- 34a Total Amount Claimed (Option A or B) ---
-            _070_of34a_total_amount_claimed: "required",
-            _071_of34a_date: {required:function(){return $("#_070_of34a_total_amount_claimed").val()=="A";}, regex:/^\d{6}$/},
-            _072_of34a_currency: {required:true, regex:/^[A-Z]{3}$/},
-            _073_of34a_amount: {required:true, regex:/^\d+(,\d{1,2})?$/},
+            /* ========== FIELD 71D - Charges Deducted (OPTIONAL) ========== */
+            
+            _050_of71d_charges_deducted: {
+                maxlength: 210
+            },
 
-            // --- 53a Reimbursing Bank ---
-            _080_of53a_reimbursing_bank: {regex:/^[ABD]?$/},
-            _082_of53a_identifier_code: {regex:/^[A-Z0-9]{8}([A-Z0-9]{3})?$/},
-            _083_of53a_location: {maxlength:35},
-            _084_of53a_name_address: {maxlength:140},
+            /* ========== FIELD 73A - Charges Added (OPTIONAL) ========== */
+            
+            _060_of73a_charges_added: {
+                maxlength: 210
+            },
 
-            // --- 57a Account With Bank ---
-            _090_of57a_account_with_bank: {regex:/^[ABD]?$/},
-            _092_of57a_identifier_code: {regex:/^[A-Z0-9]{8}([A-Z0-9]{3})?$/},
-            _093_of57a_location: {maxlength:35},
-            _094_of57a_name_address: {maxlength:140},
+            /* ========== FIELD 34a - Total Amount Claimed (OPTIONAL) ========== */
+            
+            // Option A: Date (T50) - OPTIONAL
+            _071_of34a_date: {
+                validDate: true // true = allow empty
+            },
+            
+            // Option A: Currency (T52)
+            _072_of34a_currency: {
+                required: function() {
+                    return $("#_070_of34a_total_amount_claimed").val() === "A";
+                },
+                validCurrency: true,
+                regex: /^[A-Z]{3}$/
+            },
+            
+            // Option A: Amount (T40, T43, C03)
+            _073_of34a_amount: {
+                required: function() {
+                    return $("#_070_of34a_total_amount_claimed").val() === "A";
+                },
+                validAmount: {
+                    currencyField: "#_072_of34a_currency"
+                }
+            },
+            
+            // Option B: Currency (T52)
+            _074_of34a_currency: {
+                required: function() {
+                    return $("#_070_of34a_total_amount_claimed").val() === "B";
+                },
+                validCurrency: true,
+                regex: /^[A-Z]{3}$/
+            },
+            
+            // Option B: Amount (T40, T43, C03)
+            _075_of34a_amount: {
+                required: function() {
+                    return $("#_070_of34a_total_amount_claimed").val() === "B";
+                },
+                validAmount: {
+                    currencyField: "#_074_of34a_currency"
+                }
+            },
 
-            // --- 58a Beneficiary Bank ---
-            _100_of58a_beneficiary_bank: {regex:/^[AD]?$/},
-            _102_of58a_identifier_code: {regex:/^[A-Z0-9]{8}([A-Z0-9]{3})?$/},
-            _103_of58a_name_address: {maxlength:140},
+            /* ========== FIELD 53a - Reimbursing Bank (OPTIONAL) ========== */
+            
+            // Option A
+            _081_of53a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _082_of53a_identifier_code: {
+                maxlength: 11,
+                validBIC: true
+            },
+            
+            // Option B
+            _083_of53a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _084_of53a_location: {
+                maxlength: 35
+            },
+            
+            // Option D
+            _085_of53a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _086_of53a_name_address: {
+                maxlength: 140
+            },
 
-            // --- 72Z / 77 ---
-            _110_of72z_sender_to_receiver_information: {maxlength:8000},
-            _120_of77_narrative: {maxlength:1750}
+            /* ========== FIELD 57a - Account With Bank (OPTIONAL) ========== */
+            
+            // Option A
+            _091_of57a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _092_of57a_identifier_code: {
+                maxlength: 11,
+                validBIC: true
+            },
+            
+            // Option B
+            _093_of57a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _094_of57a_location: {
+                maxlength: 35
+            },
+            
+            // Option D
+            _095_of57a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _096_of57a_name_address: {
+                maxlength: 140
+            },
+
+            /* ========== FIELD 58a - Beneficiary Bank (OPTIONAL) ========== */
+            
+            // Option A
+            _101_of58a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _102_of58a_identifier_code: {
+                maxlength: 11,
+                validBIC: true
+            },
+            
+            // Option D
+            _103_of58a_party_identifier: {
+                maxlength: 35,
+                validPartyId: true
+            },
+            _104_of58a_name_address: {
+                maxlength: 140
+            },
+
+            /* ========== FIELD 72Z / 77 - Narrative (OPTIONAL) ========== */
+            
+            _110_of72z_sender_to_receiver_information: {
+                maxlength: 210
+            },
+            
+            _120_of77_narrative: {
+                maxlength: 1750
+            }
         },
+
         messages: {
-            sender_logical_terminal: {required:"Sender Logical Terminal wajib."},
-            receiver_institution: {required:"Receiver Institution wajib."},
-            priority: {required:"Priority wajib."},
+            // Field 20
+            _010_mf20_sender_reference: {
+                required: "Field 20 (Sender's Reference) is mandatory",
+                maxlength: "Maximum 16 characters",
+                regex: "Cannot start/end with '/' or contain '//' (Error T26)"
+            },
 
-            _010_mf20_sender_reference: {required:"Field 20 wajib.", regex:"Format Field 20 tidak valid."},
-            _020_mf21_related_reference: {required:"Field 21 wajib.", regex:"Format Field 21 tidak valid."},
+            // Field 21
+            _020_mf21_related_reference: {
+                required: "Field 21 (Related Reference) is mandatory",
+                maxlength: "Maximum 16 characters",
+                regex: "Cannot start/end with '/' or contain '//' (Error T26)"
+            },
 
-            _030_mf32a_principal_amount_paid_accepted_negotiated: {required:"Option 32a harus dipilih."},
-            _031_mf32a_date: {required:"Tanggal 32a wajib untuk Option A.", regex:"Format YYMMDD."},
-            _032_mf32a_currency: {required:"Currency 32a wajib.", regex:"Harus 3 huruf ISO."},
-            _033_mf32a_amount: {required:"Amount 32a wajib.", regex:"Format amount tidak valid."},
+            // Field 32a
+            _030_mf32a_principal_amount_paid_accepted_negotiated: {
+                required: "Field 32a option must be selected"
+            },
+            _031_mf32a_date: {
+                required: "Date is required for Option A"
+            },
+            _032_mf32a_currency: {
+                required: "Currency is required for Option A",
+                regex: "Must be 3-letter code"
+            },
+            _033_mf32a_amount: {
+                required: "Amount is required for Option A"
+            },
+            _034_mf32a_currency: {
+                required: "Currency is required for Option B",
+                regex: "Must be 3-letter code"
+            },
+            _035_mf32a_amount: {
+                required: "Amount is required for Option B"
+            },
 
-            _070_of34a_total_amount_claimed: {required:"Option 34a harus dipilih."},
-            _071_of34a_date: {required:"Tanggal 34a wajib untuk Option A.", regex:"Format YYMMDD."},
-            _072_of34a_currency: {required:"Currency 34a wajib.", regex:"Harus 3 huruf ISO."},
-            _073_of34a_amount: {required:"Amount 34a wajib.", regex:"Format amount tidak valid."},
-
-            _082_of53a_identifier_code: {regex:"BIC 53a tidak valid."},
-            _092_of57a_identifier_code: {regex:"BIC 57a tidak valid."},
-            _102_of58a_identifier_code: {regex:"BIC 58a tidak valid."}
+            // Field 34a
+            _072_of34a_currency: {
+                required: "Currency is required for Option A",
+                regex: "Must be 3-letter code"
+            },
+            _073_of34a_amount: {
+                required: "Amount is required for Option A"
+            },
+            _074_of34a_currency: {
+                required: "Currency is required for Option B",
+                regex: "Must be 3-letter code"
+            },
+            _075_of34a_amount: {
+                required: "Amount is required for Option B"
+            }
         },
+
         errorPlacement: function (error, element) {
             error.insertAfter(element);
             $("#tab-validate").removeAttr("hidden");
         },
+
         showErrors: function (errorMap, errorList) {
             this.defaultShowErrors();
             $("#tab-validate").removeAttr("hidden");
 
-            let tableHTML = `<table border="0" style="width:100%;font-size:8pt;border-collapse:collapse;border:1px solid gray;">
-                <tr style="background:#d6d6d6;"><th>Type</th><th>Field</th><th>Message</th></tr>`;
-            errorList.forEach(err=>{
-                let inputID = err.element.id || "";
-                let fieldLabel = $(err.element).attr("input_type") || inputID;
-                tableHTML += `<tr class="error__row" data-input-id="${inputID}">
-                    <td>Error</td><td>${fieldLabel}</td><td>${err.message}</td></tr>`;
-            });
-            tableHTML += `</table>`;
-            $("#error-container").html(tableHTML);
+            // Switch to validation tab if exists
+            if ($("#view8").length > 0) {
+                $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
+                $("#view8").css("display", "block");
+                $('#tab-view1, #tab-view2, #tab-view3, #tab-view4, #tab-view5, #tab-view6, #tab-view7').removeClass("selected");
+                $('#tab-validate').addClass("selected");
+            }
 
-            $(".error__row").on("click", function(){
-                let input = $("#"+$(this).data("input-id"));
-                if(input.length){ input.focus(); }
+            let errorContainer = document.getElementById("error-container");
+
+            if (errorList.length === 0) {
+                if (errorContainer) errorContainer.innerHTML = "";
+                return;
+            }
+
+            if (!errorContainer) return;
+
+            let tableHTML = `<table border="0" style="width:100% !important; caption-side: bottom; font-size:8pt !important; border-collapse: collapse; border:1px gray solid;">
+                                <tr style="background:#d6d6d6;">
+                                <th style="padding:5px;">Type</th>
+                                <th style="padding:5px;">Location</th>
+                                <th style="padding:5px;">Field</th>
+                                <th style="padding:5px;">Message</th></tr>`;
+
+            errorList.forEach(errors => {
+                let inputID = errors.element.id || "";
+                let locationTab = errors.element.getAttribute("location") || "Body";
+                let inputType = errors.element.getAttribute("input_type") || inputID;
+
+                tableHTML += '<tr class="error__row" data-input-id="' + inputID + '" content-body="' + locationTab + '" onmouseover="this.style.background=\'#f6f6f6\'" onmouseout="this.style.backgroundColor=\'transparent\'" style="cursor:pointer;">';
+                tableHTML += '<td style="padding: 5px;">Error</td>';
+                tableHTML += '<td style="padding: 5px;">' + locationTab + '</td>';
+                tableHTML += '<td style="padding: 5px;">' + inputType + '</td>';
+                tableHTML += '<td style="padding: 5px;">' + errors.message + '</td></tr>';
+            });
+
+            tableHTML += `</table>`;
+            errorContainer.innerHTML = tableHTML;
+
+            // Click handler for error rows
+            document.querySelectorAll(".error__row").forEach(row => {
+                row.addEventListener("click", function () {
+                    let targetRow = this;
+                    let inputId = this.getAttribute("data-input-id");
+                    let tabContentGroup = this.getAttribute("content-body");
+
+                    if (targetRow) {
+                        let input = document.getElementById(inputId);
+                        if (input) {
+                            if (tabContentGroup == "Header") {
+                                $("#view2, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $("#view1").css("display", "block");
+                                $('#tab-view1').addClass("selected");
+                                $('#tab-view2, #tab-view3, #tab-view4, #tab-view5, #tab-view6, #tab-view7, #tab-validate').removeClass("selected");
+                            } else if (tabContentGroup == "Body") {
+                                $("#view1, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $("#view2").css("display", "block");
+                                $('#tab-view2').addClass("selected");
+                                $('#tab-view1, #tab-view3, #tab-view4, #tab-view5, #tab-view6, #tab-view7, #tab-validate').removeClass("selected");
+                            }
+                            input.focus();
+                        }
+                    }
+                });
             });
         }
     });
 
-    // --- Custom regex ---
-    $.validator.addMethod("regex", function(value, element, param) {
-        return this.optional(element) || param.test(value);
-    }, "Format tidak valid");
-
-    // --- Extra Checks (pedoman SWIFT) ---
-    function extraChecks(){
-        let f72 = $("#_110_of72z_sender_to_receiver_information").val().trim();
+    /* ===================== EXTRA MT754 BUSINESS RULES ===================== */
+    
+    function extraMT754Checks() {
+        console.log('Performing extra MT754 business rule checks...');
+        
+        // RULE C1: Either field 72Z or 77 may be present, but not both (Error C19)
+        let f72z = $("#_110_of72z_sender_to_receiver_information").val().trim();
         let f77 = $("#_120_of77_narrative").val().trim();
-        if(f72!=="" && f77!==""){ alert("C1: Hanya salah satu 72Z atau 77 boleh diisi."); return false; }
+        
+        if (f72z !== "" && f77 !== "") {
+            alert("Error C19 (Rule C1): Either field 72Z or 77 may be present, but not both.");
+            $("#_110_of72z_sender_to_receiver_information").focus();
+            return false;
+        }
 
-        let f53 = $("#_080_of53a_reimbursing_bank").val();
-        let f57 = $("#_090_of57a_account_with_bank").val();
-        if(f53 && f57){ alert("C2: Hanya salah satu 53a atau 57a boleh diisi."); return false; }
+        // RULE C2: Either field 53a or 57a may be present, but not both (Error C14)
+        let f53a = $("#_080_of53a_reimbursing_bank").val();
+        let f57a = $("#_090_of57a_account_with_bank").val();
+        
+        if (f53a && f57a) {
+            alert("Error C14 (Rule C2): Either field 53a (Reimbursing Bank) or 57a (Account With Bank) may be present, but not both.");
+            $("#_080_of53a_reimbursing_bank").focus();
+            return false;
+        }
 
-        let c32 = $("#_032_mf32a_currency").val();
-        let c34 = $("#_072_of34a_currency").val();
-        if(c32 && c34 && c32!==c34){ alert("C3: Currency 32a dan 34a harus sama."); return false; }
+        // RULE C3: Currency code in 32a and 34a must be the same (Error C02)
+        let opt32a = $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val();
+        let opt34a = $("#_070_of34a_total_amount_claimed").val();
+        
+        if (opt34a) {
+            let currency32a = "";
+            if (opt32a === "A") {
+                currency32a = $("#_032_mf32a_currency").val().trim();
+            } else if (opt32a === "B") {
+                currency32a = $("#_034_mf32a_currency").val().trim();
+            }
 
-        // --- Tambahan pedoman: jika 33B ada dan currency ≠ 32a, harus ada penjelasan di 72Z atau 77 ---
-        let c33 = $("#_040_of33b_currency").val();
-        if(c33 && c32 && c33!==c32){
-            if(f72==="" && f77===""){
-                alert("Rule: Jika 33B currency berbeda dengan 32a, wajib ada penjelasan di 72Z atau 77.");
+            let currency34a = "";
+            if (opt34a === "A") {
+                currency34a = $("#_072_of34a_currency").val().trim();
+            } else if (opt34a === "B") {
+                currency34a = $("#_074_of34a_currency").val().trim();
+            }
+
+            if (currency32a && currency34a && currency32a !== currency34a) {
+                alert("Error C02 (Rule C3): Currency code in field 32a and 34a must be the same.");
+                if (opt34a === "A") {
+                    $("#_072_of34a_currency").focus();
+                } else {
+                    $("#_074_of34a_currency").focus();
+                }
                 return false;
             }
         }
 
+        // USAGE RULE: If 33B currency differs from 32a, explanation required in 72Z or 77
+        let currency33b = $("#_040_of33b_currency").val().trim();
+        let amount33b = $("#_041_of33b_amount").val().trim();
+        
+        if (currency33b && amount33b) {
+            let currency32a = "";
+            if (opt32a === "A") {
+                currency32a = $("#_032_mf32a_currency").val().trim();
+            } else if (opt32a === "B") {
+                currency32a = $("#_034_mf32a_currency").val().trim();
+            }
+
+            if (currency33b !== currency32a) {
+                if (f72z === "" && f77 === "") {
+                    alert("Usage Rule: If field 33B currency differs from 32a, explanation must be provided in field 72Z or 77.");
+                    $("#_040_of33b_currency").focus();
+                    return false;
+                }
+            }
+        }
+
+        console.log('Extra business rule checks passed');
         return true;
     }
 
-    // --- Button validate ---
+    /* ===================== VALIDATE BUTTON (if exists) ===================== */
+    
     $("#btn-validate").click(function () {
-        if($("#form_mt754").valid() && extraChecks()){ alert("Semua input valid!"); }
-    });
-
-    // --- Button submit ---
-    $("#submit_mt").click(function (e) {
-        e.preventDefault();
-        if($("#form_mt754").valid() && extraChecks()){
-            $("#form_mt754").submit();
+        console.log('Validate button clicked');
+        
+        let isJQueryValid = $("#form_mt754").valid();
+        console.log('jQuery validation result:', isJQueryValid);
+        
+        if (isJQueryValid) {
+            let isExtraValid = extraMT754Checks();
+            console.log('Extra checks result:', isExtraValid);
+            
+            if (isExtraValid) {
+                alert("All inputs are valid!");
+            }
         } else {
-            alert("Masih ada error. Periksa kembali!");
+            alert("There are validation errors. Please check the form.");
         }
     });
 
-    // --- Toggle groups ---
-    function toggleGroups(){
-        // 32a
-        if($("#_030_mf32a_principal_amount_paid_accepted_negotiated").val()=="A"){ $("#wrap_031_mf32a_date").show(); }
-        else { $("#wrap_031_mf32a_date").hide(); }
+    /* ===================== FORM SUBMIT HANDLER ===================== */
+    
+    $("#form_mt754").submit(function (e) {
+        console.log('Form submit triggered');
+        
+        // Prevent default submission
+        e.preventDefault();
+        
+        // Step 1: jQuery validation
+        let isJQueryValid = $("#form_mt754").valid();
+        console.log('jQuery validation result:', isJQueryValid);
+        
+        if (!isJQueryValid) {
+            alert("There are validation errors. Please fix them before saving.");
+            return false;
+        }
+        
+        // Step 2: Extra MT754 business rules
+        let isExtraValid = extraMT754Checks();
+        console.log('Extra checks result:', isExtraValid);
+        
+        if (!isExtraValid) {
+            return false;
+        }
+        
+        // Step 3: Final comprehensive validation using validateMT754()
+        if (window.validateMT754) {
+            let isFinalValid = window.validateMT754();
+            console.log('Final validation result:', isFinalValid);
+            
+            if (!isFinalValid) {
+                return false;
+            }
+        }
+        
+        // Step 4: Confirm before submission
+        let confirmed = confirm('Do you want to save this MT754 data?');
+        
+        if (confirmed) {
+            console.log('Validation passed - submitting form');
+            // Remove submit handler and submit
+            $(this).off('submit');
+            this.submit();
+        } else {
+            console.log('User cancelled submission');
+            return false;
+        }
+    });
 
-        // 34a
-        if($("#_070_of34a_total_amount_claimed").val()=="A"){ $("#wrap_071_of34a_date").show(); }
-        else { $("#wrap_071_of34a_date").hide(); }
+    /* ===================== BUTTON HANDLERS ===================== */
+    
+    // Save button handler
+    $("button[type='submit']").click(function(e) {
+        console.log('Save button clicked');
+        // Let the form submit handler take care of validation
+    });
 
-        // 53a
-        let opt53 = $("#_080_of53a_reimbursing_bank").val();
-        $("#wrap_081_of53a_party_identifier,#wrap_082_of53a_identifier_code,#wrap_083_of53a_location,#wrap_084_of53a_name_address").hide();
-        if(opt53=="A"){ $("#wrap_081_of53a_party_identifier,#wrap_082_of53a_identifier_code").show(); }
-        else if(opt53=="B"){ $("#wrap_081_of53a_party_identifier,#wrap_083_of53a_location").show(); }
-        else if(opt53=="D"){ $("#wrap_081_of53a_party_identifier,#wrap_084_of53a_name_address").show(); }
+    // Back button - no validation needed
+    $("button[type='button']").click(function() {
+        console.log('Back button clicked');
+        // Navigation handled by onclick in JSP
+    });
 
-        // 57a
-        let opt57 = $("#_090_of57a_account_with_bank").val();
-        $("#wrap_091_of57a_party_identifier,#wrap_092_of57a_identifier_code,#wrap_093_of57a_location,#wrap_094_of57a_name_address").hide();
-        if(opt57=="A"){ $("#wrap_091_of57a_party_identifier,#wrap_092_of57a_identifier_code").show(); }
-        else if(opt57=="B"){ $("#wrap_091_of57a_party_identifier,#wrap_093_of57a_location").show(); }
-        else if(opt57=="D"){ $("#wrap_091_of57a_party_identifier,#wrap_094_of57a_name_address").show(); }
-
-        // 58a
-        let opt58 = $("#_100_of58a_beneficiary_bank").val();
-        $("#wrap_101_of58a_party_identifier,#wrap_102_of58a_identifier_code,#wrap_103_of58a_name_address").hide();
-        if(opt58=="A"){ $("#wrap_101_of58a_party_identifier,#wrap_102_of58a_identifier_code").show(); }
-        else if(opt58=="D"){ $("#wrap_101_of58a_party_identifier,#wrap_103_of58a_name_address").show(); }
-    }
-
-    // Bind change events
-    $("#_030_mf32a_principal_amount_paid_accepted_negotiated,#_070_of34a_total_amount_claimed,#_080_of53a_reimbursing_bank,#_090_of57a_account_with_bank,#_100_of58a_beneficiary_bank").change(toggleGroups);
-
-    // Initial call
-    toggleGroups();
+    console.log('MT754 validation rules initialized successfully');
 });
 </script>
 

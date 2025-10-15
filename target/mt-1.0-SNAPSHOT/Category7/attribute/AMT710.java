@@ -17,7 +17,7 @@ import java.util.Properties;
 public class AMT710 {
     
     Logger log = Logger.getLogger(AMT710.class);
-
+    
     public MT710 getAtributeMT710() {
         MT710 data = new MT710();
         Properties prop = new Properties();
@@ -33,16 +33,15 @@ public class AMT710 {
         data.setOf23(prop.getProperty("of23"));
         data.setMf31c(prop.getProperty("mf31c"));
         data.setMf40e(prop.getProperty("mf40e"));
-        data.setMf40eNarr(prop.getProperty("mf40eNarr"));
         data.setMf31d(prop.getProperty("mf31d"));
         data.setOf52a(prop.getProperty("of52a"));
         data.setOf50b(prop.getProperty("of50b"));
         data.setOf51a(prop.getProperty("of51a"));
         data.setMf50(prop.getProperty("mf50"));
-        data.setOf59(prop.getProperty("of59"));
+        data.setMf59(prop.getProperty("mf59"));  
         data.setMf32b(prop.getProperty("mf32b"));
         data.setOf39a(prop.getProperty("of39a"));
-        data.setOf39b(prop.getProperty("of39b"));
+        data.setOf39c(prop.getProperty("of39c")); 
         data.setMf41a(prop.getProperty("mf41a"));
         data.setOf42c(prop.getProperty("of42c"));
         data.setOf42a(prop.getProperty("of42a"));

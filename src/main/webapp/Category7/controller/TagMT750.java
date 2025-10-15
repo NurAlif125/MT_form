@@ -51,7 +51,7 @@ public class TagMT750 {
             } else if (tagName.equalsIgnoreCase("57A") || tagName.equalsIgnoreCase("57B") || tagName.equalsIgnoreCase("57D")) {
                 tags = mt750.getOf57a();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("72")) {
+            } else if (tagName.equalsIgnoreCase("72Z")) {
                 tags = mt750.getOf72z();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("77J")) {

@@ -30,34 +30,48 @@ public class TagMT752 {
             if (tagName.equalsIgnoreCase("20")) {
                 tags = mt752.getMf20();
                 this.ch.readBlock4(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("21")) {
+            } 
+            else if (tagName.equalsIgnoreCase("21")) {
                 tags = mt752.getMf21();
                 this.ch.readBlock4(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("23")) {
+            } 
+            else if (tagName.equalsIgnoreCase("23")) {
                 tags = mt752.getMf23();
                 this.ch.readBlock4(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("30")) {
+            } 
+            else if (tagName.equalsIgnoreCase("30")) {
                 tags = mt752.getMf30();
                 this.ch.readBlock4(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("32B")) {
+            } 
+            else if (tagName.equalsIgnoreCase("32B")) {
                 tags = mt752.getOf32b();
                 this.ch.splitMT32B(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("71D")) {
+            } 
+            else if (tagName.equalsIgnoreCase("71D")) {
                 tags = mt752.getOf71d();
                 this.ch.readBlock4(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("33A")) {
+            } 
+            else if (tagName.equalsIgnoreCase("33A") || tagName.equalsIgnoreCase("33B")) {
                 tags = mt752.getOf33a();
                 this.ch.splitMT33A(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("53A")) {
+            } 
+            else if (tagName.equalsIgnoreCase("53A") || 
+                     tagName.equalsIgnoreCase("53B") || 
+                     tagName.equalsIgnoreCase("53D")) {
                 tags = mt752.getOf53a();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("54A")) {
+            } 
+            else if (tagName.equalsIgnoreCase("54A") || 
+                     tagName.equalsIgnoreCase("54B") || 
+                     tagName.equalsIgnoreCase("54D")) {
                 tags = mt752.getOf54a();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("72")) {
+            } 
+            else if (tagName.equalsIgnoreCase("72Z")) {
                 tags = mt752.getOf72z();
                 this.ch.readBlock4(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("79")) {
+            } 
+            else if (tagName.equalsIgnoreCase("79Z")) {
                 tags = mt752.getOf79z();
                 this.ch.readBlock4(tags, tagName, tagValue);
             }

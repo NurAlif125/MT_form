@@ -11,16 +11,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MT711 Issue of a Documentary Credit (Continuation)</title>
+    <title>MT711 Advice of a Third Bank's or a Non-Bank's Documentary Credit</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="assets/css/mt711.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script src="assets/js/mt711.js"></script>
 </head>
 <body>
 
 <div id="isi">
-    <div id="judul"><h2>MT711 Issue of a Documentary Credit (Continuation)</h2></div>
+    <div id="judul"><h2>MT711 Advice of a Third Bank's or a Non-Bank's Documentary Credit</h2></div>
     <form id="form_mt711" method="post" 
           action="${pageContext.request.contextPath}/MT711Servlet"
           autocomplete="off"
@@ -43,14 +44,17 @@
                 <div id="view2" class="tabcontent active">
 
                     <!-- MF27 Sequence of Total -->
-                    <div class="form-row"><span class="label_body">MF27</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total </span>
-                        <input type="text" name="_010_mf27_sequence_of_total" id="_010_mf27_sequence_of_total" class="mandatory" maxlength="5" input_type="MF27 Sequence of Total" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf27_sequence_of_total'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                    <div class="form-row"><span class="label_body">MF27</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>                                
+                        <input type="text" onkeypress="avoidSplChars(event)" name="_010_mf27_number" id="_010_mf27_number" class="mandatory" maxlength="1" size="1" input_type="MF27 Sequence of Total" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf27_number'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                    </div>
+                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Total</span>
+                        <input type="text" onkeypress="avoidSplChars(event)" name="_011_mf27_total" id="_011_mf27_total" class="mandatory" maxlength="1" size="1" input_type="MF27 Sequence of Total" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_011_mf27_total'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                     </div>
                     <hr/>
 
                     <!-- MF20 Sender's Reference -->
                     <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sender's Reference</span>
-                        <input type="text" onkeypress="avoidSplChars(event)" name="_020_mf20_sender_reference" id="_020_mf20_sender_reference" class="mandatory" maxlength="16" input_type="MF20 Sender Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_020_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                        <input type="text" onkeypress="avoidSplChars(event)" name="_020_mf20_sender_reference" id="_020_mf20_sender_reference" class="mandatory" maxlength="16" input_type="MF20 Sender's Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_020_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                     </div>
                     <hr/>
 
@@ -102,5 +106,4 @@
 <%@ include file="rule/validate_rule_mt711.jsp" %>
 </body>
 </html>
-
 

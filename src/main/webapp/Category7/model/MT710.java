@@ -18,18 +18,17 @@ public class MT710 {
     private String of23;      
     private String mf31c;
     private String mf40e;
-    private String mf40eNarr;
     private String mf31d;
 
     private String of52a;
     private String of50b;
     private String of51a;
     private String mf50;
-    private String of59;
+    private String mf59;  
     private String mf32b;
 
     private String of39a;
-    private String of39b;
+    private String of39c;  
 
     private String mf41a;
     private String of42c;
@@ -88,9 +87,6 @@ public class MT710 {
     public String getMf40e() { return mf40e; }
     public void setMf40e(String mf40e) { this.mf40e = mf40e; }
 
-    public String getMf40eNarr() { return mf40eNarr; }
-    public void setMf40eNarr(String mf40eNarr) { this.mf40eNarr = mf40eNarr; }
-
     public String getMf31d() { return mf31d; }
     public void setMf31d(String mf31d) { this.mf31d = mf31d; }
 
@@ -106,8 +102,8 @@ public class MT710 {
     public String getMf50() { return mf50; }
     public void setMf50(String mf50) { this.mf50 = mf50; }
 
-    public String getOf59() { return of59; }
-    public void setOf59(String of59) { this.of59 = of59; }
+    public String getMf59() { return mf59; }
+    public void setMf59(String mf59) { this.mf59 = mf59; }
 
     public String getMf32b() { return mf32b; }
     public void setMf32b(String mf32b) { this.mf32b = mf32b; }
@@ -115,8 +111,8 @@ public class MT710 {
     public String getOf39a() { return of39a; }
     public void setOf39a(String of39a) { this.of39a = of39a; }
 
-    public String getOf39b() { return of39b; }
-    public void setOf39b(String of39b) { this.of39b = of39b; }
+    public String getOf39c() { return of39c; }
+    public void setOf39c(String of39c) { this.of39c = of39c; }
 
     public String getMf41a() { return mf41a; }
     public void setMf41a(String mf41a) { this.mf41a = mf41a; }

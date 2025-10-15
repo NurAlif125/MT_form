@@ -5,483 +5,645 @@
 --%>
 
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript">
-(function(window, document) {
-    "use strict";
+    $(document).ready(function () {
 
-    // ====== REGEX & CHARSETS ======
-    const X_RE = /^[A-Z0-9 \/\-\?:\(\)\.,'"+]*$/; // basic X
-    const Z_RE = /^[A-Z0-9 \/\-\?:\(\)\.,'"+\r\n]*$/; // z (multiline allowed)
-    const A3_RE = /^[A-Z]{3}$/;
-    const BIC_RE = /^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$/;
-    const SWIFT_AMOUNT_RE = /^\d+(,\d{1,3})?$/; // n,dd
-    const PCT_RE = /^\d{1,2}$/;
+        let validator = $("#form_mt707").validate({
+            ignore: [],  
+            onkeyup: false,
+            onfocusout: false,
+            rules: {
+                // ========== MANDATORY FIELDS ==========
+                _010_mf27_number: {
+                    required: true,
+                    digits: true,
+                    min: 1,
+                    max: 8
+                },
+                _011_mf27_total: {
+                    required: true,
+                    digits: true,
+                    min: 1,
+                    max: 8
+                },
+                _020_mf20_sender_reference: {
+                    required: true,
+                    maxlength: 16
+                },
+                _030_mf21_receiver_reference: {
+                    required: true,
+                    maxlength: 16
+                },
+                _040_mf23_issuing_bank_reference: {
+                    required: true,
+                    maxlength: 16
+                },
+                _070_mf31c_date_of_issue: {
+                    required: true,
+                    digits: true,
+                    minlength: 6,
+                    maxlength: 6
+                },
+                _080_mf26e_number_of_amendment: {
+                    required: true,
+                    digits: true,
+                    maxlength: 3
+                },
+                _090_mf30_date_of_amendment: {
+                    required: true,
+                    digits: true,
+                    minlength: 6,
+                    maxlength: 6
+                },
+                _100_mf22a_purpose_of_message: {
+                    required: true
+                },
 
-    // charge codes (71D)
-    const CHARGE_CODES = ["AGENT","COMM","CORCOM","DISC","INSUR","POST","STAMP","TELECHAR","WAREHOUS"];
-    const ALLOWED_41A_BY = ["BY ACCEPTANCE","BY DEF PAYMENT","BY MIXED PYMT","BY NEGOTIATION","BY PAYMENT"];
-    const ALLOWED_43P = ["ALLOWED","CONDITIONAL","NOT ALLOWED"];
-    const ALLOWED_43T = ["ALLOWED","CONDITIONAL","NOT ALLOWED"];
-    const ALLOWED_22A = ["ACNF","ADVI","ISSU"];
-    const ALLOWED_40E = ["EUCP LATEST VERSION","EUCPURR LATEST VERSION","OTHR","UCP LATEST VERSION","UCPURR LATEST VERSION"];
-    const ALLOWED_49 = ["CONFIRM","MAY ADD","WITHOUT"];
-    const ALLOWED_71N = ["APPL","BENE","OTHR"];
-    const ALLOWED_REP_CODES = ["ADD","DELETE","REPALL"];
-    const ALLOWED_72Z = ["PHONBEN","TELEBEN"];
+                // ========== OPTIONAL DATE FIELDS ==========
+                _140_of31d_date_of_expiry: {
+                    digits: true,
+                    minlength: 6,
+                    maxlength: 6
+                },
+                _320_of44c_latest_date_of_shipment: {
+                    digits: true,
+                    minlength: 6,
+                    maxlength: 6
+                },
 
-    // ====== HELPERS ======
-    function t(id) {
-        var el = document.getElementById(id);
-        return el ? (el.value || "").trim() : "";
-    }
-    function setFocus(id) { var el=document.getElementById(id); if(el) el.focus(); }
-    function isEmptyStr(s) { return s === null || s === undefined || (""+s).trim() === ""; }
+                // ========== CURRENCY & AMOUNT FIELDS ==========
+                _170_of32b_currency: {
+                    minlength: 3,
+                    maxlength: 3
+                },
+                _171_of32b_amount: {
+                    // Custom validation in custom method
+                },
+                _180_of33b_currency: {
+                    minlength: 3,
+                    maxlength: 3
+                },
+                _181_of33b_amount: {
+                    // Custom validation in custom method
+                },
 
-    function isYYMMDD(v) {
-        if (!/^\d{6}$/.test(v)) return false;
-        const yy = parseInt(v.slice(0,2),10);
-        const mm = parseInt(v.slice(2,4),10);
-        const dd = parseInt(v.slice(4,6),10);
-        if (mm < 1 || mm > 12) return false;
-        if (dd < 1 || dd > 31) return false;
-        // quick month-day validity including simple leap-year for Feb from two-digit year
-        const thisYear = new Date().getFullYear();
-        const thisCentury = Math.floor(thisYear/100)*100;
-        let fullYear = thisCentury + yy;
-        if (fullYear - thisYear > 10) fullYear -= 100;
-        const dim = [31, ( (fullYear%4===0 && fullYear%100!==0) || (fullYear%400===0) ) ? 29 : 28, 31,30,31,30,31,31,30,31,30,31];
-        return dd <= dim[mm-1];
-    }
-    function isCurrency(v) { return A3_RE.test((v||"").toUpperCase()); }
-    function isSwiftAmount(v) { return SWIFT_AMOUNT_RE.test((v||"").trim()); }
-    function isBIC(v) { return BIC_RE.test((v||"").toUpperCase()); }
-    function isPct(v) { return PCT_RE.test((v||"").trim()) && Number(v) >= 0 && Number(v) <= 99; }
+                // ========== PERCENTAGE FIELDS ==========
+                _190_of39a_plus: {
+                    digits: true,
+                    min: 0,
+                    max: 99
+                },
+                _191_of39a_minus: {
+                    digits: true,
+                    min: 0,
+                    max: 99
+                },
 
-    function checkT26(v) {
-        if (isEmptyStr(v)) return null;
-        if (v.startsWith("/") || v.endsWith("/")) return "Must not start or end with '/'.";
-        if (v.indexOf("//") !== -1) return "Must not contain consecutive '//' characters.";
-        return null;
-    }
+                // ========== BIC FIELDS (OPTION A) ==========
+                _052_of52a_identifier_code: {
+                    minlength: 8,
+                    maxlength: 11
+                },
+                _211_of41a_identifier_code: {
+                    minlength: 8,
+                    maxlength: 11
+                },
+                _232_of42a_identifier_code: {
+                    minlength: 8,
+                    maxlength: 11
+                },
+                _432_of58a_identifier_code: {
+                    minlength: 8,
+                    maxlength: 11
+                },
+                _442_of53a_identifier_code: {
+                    minlength: 8,
+                    maxlength: 11
+                },
+                _462_of57a_identifier_code: {
+                    minlength: 8,
+                    maxlength: 11
+                },
 
-    // Structured text: lines starting with /CODE/...
-    function validateStructuredFieldValue(value, allowedCodes, repallExclusive) {
-        if (isEmptyStr(value)) return null;
-        const lines = value.split(/\r?\n/);
-        let repallCount = 0;
-        let anyOtherCode = false;
-        for (let i=0;i<lines.length;i++) {
-            const ln = lines[i].trim();
-            if (ln.startsWith("/")) {
-                const m = ln.match(/^\/([A-Z]{3,6})\//);
-                if (!m) return `Invalid code format at line ${i+1}: expected "/CODE/..."`;
-                const code = m[1];
-                if (!allowedCodes.includes(code)) return `Invalid code "${code}" at line ${i+1}. Allowed: ${allowedCodes.join(", ")}`;
-                if (code === "REPALL") repallCount++;
-                else anyOtherCode = true;
-            } else {
-                // ok — continuation or narrative line
-            }
-        }
-        if (repallExclusive && repallCount > 1) return "REPALL must be used at most once.";
-        if (repallExclusive && repallCount === 1 && anyOtherCode) return "When REPALL is used, no other code may be used in this field.";
-        return null;
-    }
-
-    function validate71DField(value) {
-        if (isEmptyStr(value)) return null;
-        const lines = value.split(/\r?\n/);
-        for (let i=0;i<lines.length;i++) {
-            const ln = lines[i].trim();
-            if (ln.startsWith("/")) {
-                // /CODE/CCYAmount Details
-                const m = ln.match(/^\/([A-Z]{3,8})\/([A-Z]{3})?([0-9\.,]*)?(.*)$/);
-                if (!m) return `Invalid OF71D line ${i+1}. Expect /CODE/CCYAmount Details`;
-                const code = m[1];
-                if (CHARGE_CODES.indexOf(code) === -1) return `Invalid charge code "${code}" in OF71D line ${i+1}.`;
-                const ccy = m[2] || "";
-                if (ccy && !isCurrency(ccy)) return `Invalid currency "${ccy}" in OF71D line ${i+1}.`;
-                const amt = (m[3] || "").replace(/\./g, "").replace(/,/g,'.'); // tolerate comma/dot
-                if (amt && !/^\d+(\.\d{1,2})?$/.test(amt)) return `Invalid amount in OF71D line ${i+1}.`;
-            } else {
-                // narrative — ok
-            }
-        }
-        return null;
-    }
-
-    function validate72ZField(value) {
-        if (isEmptyStr(value)) return null;
-        const lines = value.split(/\r?\n/);
-        let narrativeStarted = false;
-        for (let i=0;i<lines.length;i++) {
-            const ln = lines[i];
-            if (!narrativeStarted) {
-                if (ln.startsWith("/")) {
-                    const m = ln.match(/^\/([A-Z]{6,8})\//);
-                    if (!m) return `Invalid code at line ${i+1} in OF72Z.`;
-                    if (ALLOWED_72Z.indexOf(m[1]) === -1) return `Invalid code "${m[1]}" at line ${i+1} in OF72Z.`;
-                } else if (ln.trim() !== "") {
-                    narrativeStarted = true;
+                // ========== PERIOD FOR PRESENTATION ==========
+                _410_of48_days: {
+                    digits: true,
+                    maxlength: 3
                 }
-            } else {
-                if (ln.startsWith("/")) return `In OF72Z, narrative must be last (line ${i+1}).`;
-            }
-        }
-        return null;
-    }
-
-    // check amount decimals for certain currencies (basic)
-    const DEC0 = new Set(['JPY','KRW','VND','HUF','XOF','XAF','XPF']);
-    const DEC3 = new Set(['BHD','JOD','KWD','OMR','TND','LYD','IQD']);
-    function checkAmountByCcy(ccy, amt) {
-        if (isEmptyStr(ccy) || isEmptyStr(amt)) return null;
-        // mt707.jsp enforces formatting using our isSwiftAmount (n,dd). For safety:
-        if (!isSwiftAmount(amt)) return `Amount format invalid. Use comma as decimal separator (example: 123,45).`;
-        const dp = (amt.split(",")[1] || "").length;
-        let allowed = 2;
-        if (DEC0.has(ccy)) allowed = 0;
-        if (DEC3.has(ccy)) allowed = 3;
-        if (dp > allowed) return `Decimal digits for ${ccy} must be at most ${allowed}.`;
-        if (allowed === 0 && dp !== 0) return `Currency ${ccy} must not have decimals.`;
-        return null;
-    }
-
-    // ====== MAIN VALIDATOR ======
-    window.validateMT707 = function() {
-        var E = [];
-
-        // Helper to add error and optionally focus later
-        function pushErr(msg, idFocus) {
-            E.push(msg);
-            // store first focus id
-            if (!pushErr.firstFocus && idFocus) pushErr.firstFocus = idFocus;
-        }
-        pushErr.firstFocus = null;
-
-        // --- Mandatory basics (from mt707.jsp) ---
-        var v27 = t("_010_mf27_sequence_of_total");
-        if (isEmptyStr(v27)) {
-            pushErr("MF27 Sequence of Total is mandatory.", "_010_mf27_sequence_of_total");
-        } else {
-            var m = v27.match(/^(\d+)\/(\d+)$/);
-            if (!m) {
-                pushErr("MF27 must be in format n/n (e.g. 1/1).", "_010_mf27_sequence_of_total");
-            } else {
-                var num = parseInt(m[1],10);
-                var tot = parseInt(m[2],10);
-                // network rule: Number must have fixed value 1; Total 1..8
-                if (num !== 1) pushErr("MF27 Number must be 1 (message number).", "_010_mf27_sequence_of_total");
-                if (tot < 1 || tot > 8) pushErr("MF27 Total must be between 1 and 8.", "_010_mf27_sequence_of_total");
-            }
-        }
-
-        var v20 = t("_020_mf20_sender_reference");
-        if (isEmptyStr(v20)) pushErr("MF20 Sender's Reference is mandatory.", "_020_mf20_sender_reference");
-        else {
-            if (v20.length > 16) pushErr("MF20 max 16 characters.", "_020_mf20_sender_reference");
-            var t26 = checkT26(v20);
-            if (t26) pushErr("MF20: " + t26, "_020_mf20_sender_reference");
-        }
-
-        var v21 = t("_030_mf21_receiver_reference");
-        if (isEmptyStr(v21)) pushErr("MF21 Receiver's Reference is mandatory (use NONREF if unknown).", "_030_mf21_receiver_reference");
-        else {
-            if (v21.length > 16) pushErr("MF21 max 16 characters.", "_030_mf21_receiver_reference");
-            var t26b = checkT26(v21);
-            if (t26b) pushErr("MF21: " + t26b, "_030_mf21_receiver_reference");
-        }
-
-        var v23 = t("_040_mf23_issuing_bank_reference");
-        if (isEmptyStr(v23)) pushErr("MF23 Issuing Bank's Reference is mandatory.", "_040_mf23_issuing_bank_reference");
-        else if (v23.length > 16) pushErr("MF23 max 16 characters.", "_040_mf23_issuing_bank_reference");
-
-        var v31c = t("_070_mf31c_date_of_issue");
-        if (isEmptyStr(v31c)) pushErr("MF31C Date of Issue is mandatory (YYMMDD).", "_070_mf31c_date_of_issue");
-        else if (!isYYMMDD(v31c)) pushErr("MF31C Date of Issue must be valid YYMMDD.", "_070_mf31c_date_of_issue");
-
-        var v26e = t("_080_mf26e_number_of_amendment");
-        if (isEmptyStr(v26e)) pushErr("MF26E Number of Amendment is mandatory.", "_080_mf26e_number_of_amendment");
-        else if (!/^\d{1,3}$/.test(v26e)) pushErr("MF26E must be numeric up to 3 digits.", "_080_mf26e_number_of_amendment");
-
-        var v30 = t("_090_mf30_date_of_amendment");
-        if (isEmptyStr(v30)) pushErr("MF30 Date of Amendment is mandatory (YYMMDD).", "_090_mf30_date_of_amendment");
-        else if (!isYYMMDD(v30)) pushErr("MF30 Date of Amendment must be valid YYMMDD.", "_090_mf30_date_of_amendment");
-
-        var v22a = t("_100_mf22a_purpose_of_message");
-        if (isEmptyStr(v22a)) pushErr("MF22A Purpose of Message is mandatory.", "_100_mf22a_purpose_of_message");
-        else if (ALLOWED_22A.indexOf(v22a) === -1) pushErr("MF22A must be one of: " + ALLOWED_22A.join(", "), "_100_mf22a_purpose_of_message");
-
-        
-        var v71n = t("_400_of71n_charge_code");
-        if (!isEmptyStr(v71n)) {
-            if (ALLOWED_71N.indexOf(v71n) === -1) {
-                pushErr("OF71N must be APPL / BENE / OTHR.", "_400_of71n_charge_code");
-            }
-            if (v71n === "OTHR") {
-                var v71nNarr = t("_401_of71n_narrative");
-                if (isEmptyStr(v71nNarr)) {
-                    pushErr("OF71N Narrative is required when code = OTHR.", "_401_of71n_narrative");
-                } else if (v71nNarr.length > 210) {
-                    pushErr("OF71N Narrative max 210 characters.", "_401_of71n_narrative");
+            },
+            messages: {
+                _010_mf27_number: {
+                    required: "MF27 Number is mandatory",
+                    digits: "Must be numeric",
+                    min: "Must be between 1-8",
+                    max: "Must be between 1-8"
+                },
+                _011_mf27_total: {
+                    required: "MF27 Total is mandatory",
+                    digits: "Must be numeric",
+                    min: "Must be between 1-8",
+                    max: "Must be between 1-8"
+                },
+                _020_mf20_sender_reference: {
+                    required: "MF20 Sender's Reference is mandatory",
+                    maxlength: "Maximum 16 characters"
+                },
+                _030_mf21_receiver_reference: {
+                    required: "MF21 Receiver's Reference is mandatory",
+                    maxlength: "Maximum 16 characters"
+                },
+                _040_mf23_issuing_bank_reference: {
+                    required: "MF23 Issuing Bank's Reference is mandatory",
+                    maxlength: "Maximum 16 characters"
+                },
+                _070_mf31c_date_of_issue: {
+                    required: "MF31C Date of Issue is mandatory",
+                    digits: "Must be numeric YYMMDD",
+                    minlength: "Must be 6 digits (YYMMDD)",
+                    maxlength: "Must be 6 digits (YYMMDD)"
+                },
+                _080_mf26e_number_of_amendment: {
+                    required: "MF26E Number of Amendment is mandatory",
+                    digits: "Must be numeric",
+                    maxlength: "Maximum 3 digits"
+                },
+                _090_mf30_date_of_amendment: {
+                    required: "MF30 Date of Amendment is mandatory",
+                    digits: "Must be numeric YYMMDD",
+                    minlength: "Must be 6 digits (YYMMDD)",
+                    maxlength: "Must be 6 digits (YYMMDD)"
+                },
+                _100_mf22a_purpose_of_message: {
+                    required: "MF22A Purpose of Message is mandatory"
+                },
+                _140_of31d_date_of_expiry: {
+                    digits: "Must be numeric YYMMDD",
+                    minlength: "Must be 6 digits (YYMMDD)",
+                    maxlength: "Must be 6 digits (YYMMDD)"
+                },
+                _320_of44c_latest_date_of_shipment: {
+                    digits: "Must be numeric YYMMDD",
+                    minlength: "Must be 6 digits (YYMMDD)",
+                    maxlength: "Must be 6 digits (YYMMDD)"
+                },
+                _170_of32b_currency: {
+                    minlength: "Must be 3-letter ISO currency code",
+                    maxlength: "Must be 3-letter ISO currency code"
+                },
+                _180_of33b_currency: {
+                    minlength: "Must be 3-letter ISO currency code",
+                    maxlength: "Must be 3-letter ISO currency code"
+                },
+                _190_of39a_plus: {
+                    digits: "Must be numeric",
+                    min: "Must be 0-99",
+                    max: "Must be 0-99"
+                },
+                _191_of39a_minus: {
+                    digits: "Must be numeric",
+                    min: "Must be 0-99",
+                    max: "Must be 0-99"
+                },
+                _052_of52a_identifier_code: {
+                    minlength: "BIC must be 8 or 11 characters",
+                    maxlength: "BIC must be 8 or 11 characters"
+                },
+                _211_of41a_identifier_code: {
+                    minlength: "BIC must be 8 or 11 characters",
+                    maxlength: "BIC must be 8 or 11 characters"
+                },
+                _232_of42a_identifier_code: {
+                    minlength: "BIC must be 8 or 11 characters",
+                    maxlength: "BIC must be 8 or 11 characters"
+                },
+                _432_of58a_identifier_code: {
+                    minlength: "BIC must be 8 or 11 characters",
+                    maxlength: "BIC must be 8 or 11 characters"
+                },
+                _442_of53a_identifier_code: {
+                    minlength: "BIC must be 8 or 11 characters",
+                    maxlength: "BIC must be 8 or 11 characters"
+                },
+                _462_of57a_identifier_code: {
+                    minlength: "BIC must be 8 or 11 characters",
+                    maxlength: "BIC must be 8 or 11 characters"
+                },
+                _410_of48_days: {
+                    digits: "Must be numeric",
+                    maxlength: "Maximum 3 digits"
                 }
+            },
+            errorPlacement: function (error, element) {
+                error.insertAfter(element);
+                $("#tab-validate").removeAttr("hidden");
+            },
+            showErrors: function (errorMap, errorList) {
+                this.defaultShowErrors();
+                
+                $("#tab-validate").removeAttr("hidden");
+                 
+                $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
+                $("#view8").css("display", "block");
+                $('.tabs li').removeClass("selected");
+                $('#tab-validate').addClass("selected");
+
+                let errorContainer = document.getElementById("error-container");
+                
+                if (errorList.length === 0) {
+                    errorContainer.innerHTML = ""; 
+                } 
+                
+                let tableHTML = `<table border="0" style="width:100% !important; caption-side: bottom; font-size:8pt !important;border-collapse: collapse; border:1px gray solid;">
+                                    <tr style="background:#d6d6d6;">
+                                    <th>Type</th>
+                                    <th>Location</th>
+                                    <th>Node</th>
+                                    <th>Message</th></tr>`;
+
+                errorList.forEach(errors => {
+                    let inputID = errors.element.id || "";
+                    let locationTab = errors.element.getAttribute("location") || "";
+                    let inputType = errors.element.getAttribute("input_type") || "";
+
+                    tableHTML += '<tr class="error__row" data-input-id="'+inputID+'" content-body="'+locationTab+'" onmouseover="this.style.background=\'#f6f6f6\'" onmouseout="this.style.backgroundColor=\'transparent\'" style="cursor:pointer;">';
+                    tableHTML += '<td style="padding: 5px;">Error</td>';
+                    tableHTML += '<td style="padding: 5px;">'+locationTab+'</td>';
+                    tableHTML += '<td style="padding: 5px;">'+inputType+'</td>';
+                    tableHTML += '<td style="padding: 5px;">'+errors.message+'</td></tr>';
+                });
+
+                tableHTML += `</table>`;
+                errorContainer.innerHTML = tableHTML; 
+                
+                document.querySelectorAll(".error__row").forEach(row => {
+                    row.addEventListener("click", function () {
+                        let inputId = this.getAttribute("data-input-id");
+                        let tabContentGroup = this.getAttribute("content-body");
+                        
+                        let input = document.getElementById(inputId);
+                        if (input) {
+                            if(tabContentGroup === "Header") {
+                                $("#view2, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $("#view1").css("display", "block");
+                                $('.tabs li').removeClass("selected");
+                                $('#tab-view1').addClass("selected");
+                            } 
+                            else if (tabContentGroup === "Body") {
+                                $("#view1, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
+                                $("#view2").css("display", "block");
+                                $('.tabs li').removeClass("selected");
+                                $('#tab-view2').addClass("selected");
+                            }
+                            
+                            input.focus();
+                        }
+                    });
+                });
             }
-        }
-
-        // --- Format checks for dates after 22A if present (some optional) ---
-        var dateIds = ["_070_mf31c_date_of_issue","_090_mf30_date_of_amendment","_320_of44c_latest_date","_140_of31d_date_of_expiry"];
-        for (var di=0; di<dateIds.length; di++){
-            var did = dateIds[di];
-            var dv = t(did);
-            if (!isEmptyStr(dv) && !isYYMMDD(dv)) pushErr("Invalid date format (YYMMDD) in: " + did, did);
-        }
-
-        // --- 40E narrative rule ---
-        var v40e = t("_130_of40e_applicable_rules");
-        if (!isEmptyStr(v40e) && ALLOWED_40E.indexOf(v40e) === -1) {
-            pushErr("OF40E must be one of: " + ALLOWED_40E.join(", "), "_130_of40e_applicable_rules");
-        }
-        if (v40e === "OTHR") {
-            var v40en = t("_131_of40e_narrative");
-            if (isEmptyStr(v40en)) pushErr("OF40E Narrative required when Applicable Rules = OTHR.", "_131_of40e_narrative");
-            else if (v40en.length > 35) pushErr("OF40E Narrative max 35 chars.", "_131_of40e_narrative");
-        } else {
-            var v40enn = t("_131_of40e_narrative");
-            if (!isEmptyStr(v40enn)) pushErr("OF40E Narrative only allowed when Applicable Rules = OTHR.", "_131_of40e_narrative");
-        }
-
-        // --- 32B / 33B: either one or none (C2), but not both ---
-        var c32ccy = t("_170_of32b_currency"), c32amt = t("_171_of32b_amount");
-        var c33ccy = t("_180_of33b_currency"), c33amt = t("_181_of33b_amount");
-        var has32 = (!isEmptyStr(c32ccy) || !isEmptyStr(c32amt));
-        var has33 = (!isEmptyStr(c33ccy) || !isEmptyStr(c33amt));
-        if (has32 && has33) pushErr("C2: Either field 32B or field 33B may be present, but not both.");
-        if (has32) {
-            if (isEmptyStr(c32ccy) || !isCurrency(c32ccy)) pushErr("OF32B Currency must be 3-letter ISO.", "_170_of32b_currency");
-            if (isEmptyStr(c32amt) || !isSwiftAmount(c32amt)) pushErr("OF32B Amount must be n,dd (example: 123,45).", "_171_of32b_amount");
-            else {
-                var chk32 = checkAmountByCcy(c32ccy.toUpperCase(), c32amt);
-                if (chk32) pushErr("OF32B: " + chk32, "_171_of32b_amount");
-            }
-        }
-        if (has33) {
-            if (isEmptyStr(c33ccy) || !isCurrency(c33ccy)) pushErr("OF33B Currency must be 3-letter ISO.", "_180_of33b_currency");
-            if (isEmptyStr(c33amt) || !isSwiftAmount(c33amt)) pushErr("OF33B Amount must be n,dd (example: 123,45).", "_181_of33b_amount");
-            else {
-                var chk33 = checkAmountByCcy(c33ccy.toUpperCase(), c33amt);
-                if (chk33) pushErr("OF33B: " + chk33, "_181_of33b_amount");
-            }
-        }
-
-        // --- 39A percentages ---
-        var pplus = t("_190_of39a_plus"), pminus = t("_191_of39a_minus");
-        if (!isEmptyStr(pplus) && !isPct(pplus)) pushErr("39A Plus % must be 0–99.", "_190_of39a_plus");
-        if (!isEmptyStr(pminus) && !isPct(pminus)) pushErr("39A Minus % must be 0–99.", "_191_of39a_minus");
-
-        // --- 41a (Available With) option logic ---
-        var opt41 = t("_210_of41a_available_with_by");
-        if (opt41 === "A") {
-            var bic41 = t("_211_of41a_identifier_code");
-            if (isEmptyStr(bic41) || !isBIC(bic41)) pushErr("41a Option A: Identifier Code (BIC) required and must be valid.", "_211_of41a_identifier_code");
-        } else if (opt41 === "D") {
-            var na41 = t("_212_of41a_name_address");
-            if (isEmptyStr(na41)) pushErr("41a Option D: Name & Address required.", "_212_of41a_name_address");
-        }
-        if ((opt41 === "A" || opt41 === "D") && isEmptyStr(t("_213_of41a_code"))) pushErr("41a: Please select the availability code (BY ...).", "_213_of41a_code");
-        else if (!isEmptyStr(t("_213_of41a_code")) && ALLOWED_41A_BY.indexOf(t("_213_of41a_code")) === -1) pushErr("41a Code invalid.", "_213_of41a_code");
-
-        // --- 42a Drawee ---
-        var opt42 = t("_230_of42a_drawee");
-        if (opt42 === "A") {
-            var bic42 = t("_232_of42a_identifier_code");
-            if (isEmptyStr(bic42) || !isBIC(bic42)) pushErr("42a Option A: Identifier Code (BIC) required and must be valid.", "_232_of42a_identifier_code");
-            var pi = t("_231_of42a_party_identifier");
-            if (!isEmptyStr(pi) && pi.length > 35) pushErr("42a Party Identifier must be up to 35 characters.", "_231_of42a_party_identifier");
-        } else if (opt42 === "D") {
-            if (isEmptyStr(t("_233_of42a_name_address"))) pushErr("42a Option D: Name & Address required.", "_233_of42a_name_address");
-            var pi2 = t("_231_of42a_party_identifier");
-            if (!isEmptyStr(pi2) && pi2.length > 35) pushErr("42a Party Identifier must be up to 35 characters.", "_231_of42a_party_identifier");
-        }
-
-        // --- 52a Issuing Bank vs 50B (C3) ---
-        var opt52 = t("_050_of52a_issuing_bank");
-        var has50b = !isEmptyStr(t("_060_of50b_non_bank_issuer"));
-        var has52a = (opt52 === "A" || opt52 === "D");
-        if ((has50b && has52a) || (!has50b && !has52a)) {
-            pushErr("C3: Either field 50B or field 52a must be present, but not both.", "_050_of52a_issuing_bank");
-        }
-        if (opt52 === "A") {
-            var bic52 = t("_051_of52a_identifier_code");
-            if (isEmptyStr(bic52) || !isBIC(bic52)) pushErr("52a Option A: Identifier Code (BIC) must be valid.", "_051_of52a_identifier_code");
-        } else if (opt52 === "D") {
-            if (isEmptyStr(t("_052_of52a_name_address"))) pushErr("52a Option D: Name & Address is required.", "_052_of52a_name_address");
-        }
-
-        // --- 44C vs 44D (C4) ---
-        var v44c = t("_320_of44c_latest_date");
-        var v44d = t("_330_of44d_shipment_period");
-        if (!isEmptyStr(v44c) && !isEmptyStr(v44d)) pushErr("C4: Either field 44C or 44D may be present, but not both.");
-        if (!isEmptyStr(v44c) && !isYYMMDD(v44c)) pushErr("44C must be YYMMDD.", "_320_of44c_latest_date");
-
-        // --- Structured text fields: 45B, 46B, 47B, 49M, 49N ---
-        var s45 = t("_340_of45b_description_of_goods_and_or_services");
-        var s46 = t("_350_of46b_documents_required");
-        var s47 = t("_360_of47b_additional_conditions");
-        var s49m = t("_370_of49m_special_payment_conditions_for_beneficiary");
-        var s49n = t("_380_of49n_special_payment_conditions_for_bank_only");
-        var structErr;
-
-        structErr = validateStructuredFieldValue(s45, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF45B: " + structErr, "_340_of45b_description_of_goods_and_or_services");
-        structErr = validateStructuredFieldValue(s46, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF46B: " + structErr, "_350_of46b_documents_required");
-        structErr = validateStructuredFieldValue(s47, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF47B: " + structErr, "_360_of47b_additional_conditions");
-        structErr = validateStructuredFieldValue(s49m, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF49M: " + structErr, "_370_of49m_special_payment_conditions_for_beneficiary");
-        structErr = validateStructuredFieldValue(s49n, ALLOWED_REP_CODES, true);
-        if (structErr) pushErr("OF49N: " + structErr, "_380_of49n_special_payment_conditions_for_bank_only");
-
-        // --- 71D Charges structured-light check ---
-        var vv71d = t("_390_of71d_charges");
-        var v71derr = validate71DField(vv71d);
-        if (v71derr) pushErr("OF71D: " + v71derr, "_390_of71d_charges");
-
-        // --- 72Z structured text rules ---
-        var vv72z = t("_470_of72z_sender_to_receiver_information");
-        var v72err = validate72ZField(vv72z);
-        if (v72err) pushErr("OF72Z: " + v72err, "_470_of72z_sender_to_receiver_information");
-
-        // --- 49 Confirmation -> 58a requirement ---
-        var v49 = t("_420_of49_confirmation_instructions");
-        if (v49 === "CONFIRM" || v49 === "MAY ADD") {
-            var opt58 = t("_430_of58a_requested_confirmation_party");
-            if (isEmptyStr(opt58)) pushErr("Field 58a is required when Confirmation Instructions = CONFIRM or MAY ADD.", "_430_of58a_requested_confirmation_party");
-            else if (opt58 === "A") {
-                var bic58 = t("_431_of58a_identifier_code");
-                if (isEmptyStr(bic58) || !isBIC(bic58)) pushErr("Field 58a (Option A): Identifier Code (BIC) required and must be valid.", "_431_of58a_identifier_code");
-            } else if (opt58 === "D") {
-                if (isEmptyStr(t("_432_of58a_name_address"))) pushErr("Field 58a (Option D): Name & Address is required.", "_432_of58a_name_address");
-            }
-        }
-
-        // --- 53a Reimbursing Bank ---
-        var opt53 = t("_440_of53a_reimbursing_bank");
-        if (opt53 === "A") {
-            if (!isBIC(t("_441_of53a_identifier_code"))) pushErr("53a Option A: Identifier Code must be valid BIC.", "_441_of53a_identifier_code");
-        } else if (opt53 === "D") {
-            if (isEmptyStr(t("_442_of53a_name_address"))) pushErr("53a Option D: Name & Address required.", "_442_of53a_name_address");
-        }
-
-        // --- 57a Advise Through Bank ---
-        var opt57 = t("_460_of57a_advise_through_bank");
-        if (opt57 === "A") {
-            if (!isBIC(t("_461_of57a_identifier_code"))) pushErr("57a Option A: Identifier Code must be valid BIC.", "_461_of57a_identifier_code");
-        } else if (opt57 === "B") {
-            if (isEmptyStr(t("_462_of57a_location"))) pushErr("57a Option B: Location required.", "_462_of57a_location");
-        } else if (opt57 === "D") {
-            if (isEmptyStr(t("_463_of57a_name_address"))) pushErr("57a Option D: Name & Address required.", "_463_of57a_name_address");
-        }
-
-        // --- 48 Period for Presentation check ---
-        var v48d = t("_410_of48_days");
-        if (!isEmptyStr(v48d) && !/^\d{1,3}$/.test(v48d)) pushErr("OF48 Days must be numeric up to 3 digits.", "_410_of48_days");
-
-        // --- 43P & 43T codes ---
-        var v43p = t("_260_of43p_partial_shipments");
-        if (!isEmptyStr(v43p) && ALLOWED_43P.indexOf(v43p) === -1) pushErr("OF43P must be one of: " + ALLOWED_43P.join(", "), "_260_of43p_partial_shipments");
-        var v43t = t("_270_of43t_transhipment");
-        if (!isEmptyStr(v43t) && ALLOWED_43T.indexOf(v43t) === -1) pushErr("OF43T must be one of: " + ALLOWED_43T.join(", "), "_270_of43t_transhipment");
-
-        // --- 31D date/place length ---
-        var v31d = t("_140_of31d_date_of_expiry");
-        if (!isEmptyStr(v31d) && !isYYMMDD(v31d)) pushErr("OF31D date must be YYMMDD.", "_140_of31d_date_of_expiry");
-        var v31dPlace = t("_141_of31d_place_of_expiry");
-        if (!isEmptyStr(v31dPlace) && v31dPlace.length > 29) pushErr("OF31D Place max 29 chars.", "_141_of31d_place_of_expiry");
-
-        // --- Basic length checks for common name/address fields (as in JSP maxlength) ---
-        var max140Ids = ["_052_of52a_name_address","_150_of50_changed_applicant_details","_161_of59_name_address",
-                         "_212_of41a_name_address","_233_of42a_name_address","_240_of42m_mixed_payment_details",
-                         "_250_of42p_negotiation_deferred_payment_details","_280_of44a_place_taking_in_charge_dispatch_from_place_of_receipt","_290_of44e_port_of_loading_airport_of_departure",
-                         "_300_of44f_port_of_discharge_airport_of_destination","_310_of44b_place_of_final_destination_for_transportation_to_place_of_delivery","_330_of44d_shipment_period",
-                         "_340_of45b_description_of_goods_and_or_services","_350_of46b_documents_required","_360_of47b_additional_conditions",
-                         "_370_of49m_special_payment_conditions_for_beneficiary","_380_of49n_special_payment_conditions_for_bank_only","_450_of78_instructions_to_the_paying_accepting_negotiating_bank",
-                         "_463_of57a_name_address","_442_of53a_name_address","_401_of71n_narrative","_470_of72z_sender_to_receiver_information"];
-        for (var ii=0; ii<max140Ids.length; ii++){
-            var id = max140Ids[ii];
-            var vv = t(id);
-            if (!isEmptyStr(vv) && vv.length > 140) pushErr(id + " exceeds maxlength 140 characters.", id);
-        }
-
-        // --- Fields 32B/33B currency case-sensitivity: enforce uppercase & 3 letters ---
-        if (!isEmptyStr(c32ccy) && !isCurrency(c32ccy)) pushErr("OF32B Currency invalid (3 letters).", "_170_of32b_currency");
-        if (!isEmptyStr(c33ccy) && !isCurrency(c33ccy)) pushErr("OF33B Currency invalid (3 letters).", "_180_of33b_currency");
-
-        // --- Network rule C1: at least one field after 22A must be present ---
-        var fieldsAfter22A = [
-            "_110_of23s_cancellation_request","_120_of40a_form_of_documentary_credit","_130_of40e_applicable_rules","_140_of31d_date_of_expiry",
-            "_150_of50_changed_applicant_details","_160_of59_account","_170_of32b_currency","_171_of32b_amount",
-            "_180_of33b_currency","_181_of33b_amount","_190_of39a_plus","_191_of39a_minus","_200_of39c_additional_amounts_covered",
-            "_210_of41a_available_with_by","_220_of42c_drafts_at","_230_of42a_drawee","_240_of42m_mixed_payment_details",
-            "_250_of42p_negotiation_deferred_payment_details","_260_of43p_partial_shipments","_270_of43t_transhipment",
-            "_280_of44a_place_taking_in_charge_dispatch_from_place_of_receipt","_290_of44e_port_of_loading_airport_of_departure","_300_of44f_port_of_discharge_airport_of_destination","_310_of44b_place_of_final_destination_for_transportation_to_place_of_delivery",
-            "_320_of44c_latest_date_of_shipment","_330_of44d_shipment_period","_340_of45b_description_of_goods_and_or_services","_350_of46b_documents_required",
-            "_360_of47b_additional_conditions","_370_of49m_special_payment_conditions_for_beneficiary","_380_of49n_special_payment_conditions_for_bank_only",
-            "_390_of71d_charges","_400_of71n_charge_code","_410_of48_days","_420_of49_confirmation_instructions",
-            "_430_of58a_requested_confirmation_party","_440_of53a_reimbursing_bank","_450_of78_instructions_to_the_paying_accepting_negotiating_bank","_460_of57a_advise_through_bank","_470_of72z_sender_to_receiver_information"
-        ];
-        var anyAfter22A = false;
-        for (var k=0;k<fieldsAfter22A.length;k++){
-            if (!isEmptyStr(t(fieldsAfter22A[k]))) { anyAfter22A = true; break; }
-        }
-        if (!anyAfter22A) pushErr("C1: At least one field after field 22A must be present (amendment details).", "_100_mf22a_purpose_of_message");
-
-        // --- 71D length limit (JSP maxlength 210) ---
-        if (!isEmptyStr(vv71d) && vv71d.length > 210) pushErr("OF71D exceeds maxlength 210 characters.", "_390_of71d_charges");
-
-        // --- OF72Z length limit per JSP maxlength 210 ---
-        if (!isEmptyStr(vv72z) && vv72z.length > 210) pushErr("OF72Z exceeds maxlength 210 characters.", "_470_of72z_sender_to_receiver_information");
-
-        // --- final: show errors if any ---
-        if (E.length > 0) {
-            var msg = "Please correct the following validation errors:\n\n- " + E.join("\n- ");
-            alert(msg);
-            if (pushErr.firstFocus) setFocus(pushErr.firstFocus);
-            return false;
-        }
-        return true;
-    };
-
-    // Optionally attach light UI handlers (blur/change) for a few key fields to improve UX
-    document.addEventListener("DOMContentLoaded", function() {
-        // uppercase currency and bic fields
-        var currencyIds = [
-            "_170_of32b_currency","_180_of33b_currency","_171_of32b_amount","_181_of33b_amount",
-            "_431_of58a_identifier_code","_051_of52a_identifier_code","_232_of42a_identifier_code",
-            "_211_of41a_identifier_code","_441_of53a_identifier_code","_461_of57a_identifier_code"
-        ];
-        currencyIds.forEach(function(id){
-            var el = document.getElementById(id);
-            if (!el) return;
-            el.addEventListener("blur", function(){ this.value = (this.value || "").toUpperCase().trim(); });
         });
 
-        // date inputs: limit to digits
-        ["_070_mf31c_date_of_issue","_090_mf30_date_of_amendment","_320_of44c_latest_date_of_shipment","_140_of31d_date_of_expiry"]
-            .forEach(function(id){
-                var e = document.getElementById(id);
-                if (!e) return;
-                e.addEventListener("input", function() {
-                    this.value = (this.value || "").replace(/[^\d]/g, "").slice(0,6);
-                });
-                e.addEventListener("blur", function(){
-                    if (this.value && !isYYMMDD(this.value)) {
-                        // do not autoshow alert here to avoid annoyance, final validate will catch
-                    }
-                });
-            });
+        // ========== CUSTOM VALIDATION METHODS ==========
+
+        // Custom method for T26 validation (Reference fields)
+        $.validator.addMethod("noSlashStartEnd", function(value, element) {
+            if (!value) return true;
+            return !value.startsWith('/') && !value.endsWith('/') && value.indexOf('//') === -1;
+        }, "Cannot start/end with '/' or contain '//'");
+
+        // Custom method for BIC validation
+        $.validator.addMethod("validBIC", function(value, element) {
+            if (!value) return true;
+            return /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(value.toUpperCase());
+        }, "Invalid BIC format (Error T27/T28/T29)");
+
+        // Custom method for Currency validation
+        $.validator.addMethod("validCurrency", function(value, element) {
+            if (!value) return true;
+            return /^[A-Z]{3}$/.test(value.toUpperCase());
+        }, "Invalid currency code (Error T52)");
+
+        // Custom method for SWIFT Amount validation
+        $.validator.addMethod("validAmount", function(value, element) {
+            if (!value) return true;
+            return /^\d+,\d{1,3}$/.test(value);
+        }, "Invalid amount format. Use n,dd (example: 123,45)");
+
+        // Custom method for YYMMDD date validation
+        $.validator.addMethod("validYYMMDD", function(value, element) {
+            if (!value) return true;
+            if (!/^\d{6}$/.test(value)) return false;
+            
+            const yy = parseInt(value.slice(0, 2), 10);
+            const mm = parseInt(value.slice(2, 4), 10);
+            const dd = parseInt(value.slice(4, 6), 10);
+            
+            if (mm < 1 || mm > 12) return false;
+            if (dd < 1 || dd > 31) return false;
+            
+            const dim = [31, (yy % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            return dd <= dim[mm - 1];
+        }, "Invalid date (Error T50)");
+
+        // Apply custom validations to fields
+        $("#_020_mf20_sender_reference").rules("add", { noSlashStartEnd: true });
+        $("#_030_mf21_receiver_reference").rules("add", { noSlashStartEnd: true });
+        $("#_040_mf23_issuing_bank_reference").rules("add", { noSlashStartEnd: true });
+
+        $("#_070_mf31c_date_of_issue").rules("add", { validYYMMDD: true });
+        $("#_090_mf30_date_of_amendment").rules("add", { validYYMMDD: true });
+        $("#_140_of31d_date_of_expiry").rules("add", { validYYMMDD: true });
+        $("#_320_of44c_latest_date_of_shipment").rules("add", { validYYMMDD: true });
+
+        $("#_170_of32b_currency").rules("add", { validCurrency: true });
+        $("#_180_of33b_currency").rules("add", { validCurrency: true });
+
+        $("#_171_of32b_amount").rules("add", { validAmount: true });
+        $("#_181_of33b_amount").rules("add", { validAmount: true });
+
+        const bicFields = [
+            "_052_of52a_identifier_code",
+            "_211_of41a_identifier_code",
+            "_232_of42a_identifier_code",
+            "_432_of58a_identifier_code",
+            "_442_of53a_identifier_code",
+            "_462_of57a_identifier_code"
+        ];
+        bicFields.forEach(id => {
+            $("#" + id).rules("add", { validBIC: true });
+        });
+
+        // ========== BUTTON HANDLERS ==========
+
+        $("#btn-validate").click(function () {
+            let isValid = $("#form_mt707").valid();
+            
+            // Additional custom validations from mt707.js
+            if (isValid) {
+                isValid = validateMT707();
+            }
+            
+            if (isValid) {
+                alert("All inputs are valid!");
+            }
+        });
+
+        $("#submit_mt").click(function (e) {
+            e.preventDefault();
+            
+            let isValid = $("#form_mt707").valid();
+            
+            // Additional custom validations from mt707.js
+            if (isValid) {
+                isValid = validateMT707();
+            }
+            
+            if (isValid) {
+                if (confirm('Do you want to save this MT707 data?')) {
+                    $("#form_mt707").submit();
+                }
+            } else {
+                alert("There are still errors! Please fix them before saving.");
+            }
+        });
+
+        // ========== NETWORK VALIDATED RULES CHECKS ==========
+
+        // Rule C1: At least one field must be present after field 22A
+        function validateRuleC1() {
+            const optionalFields = [
+                "_110_of23s_cancellation_request",
+                "_120_of40a_form_of_documentary_credit",
+                "_130_of40e_applicable_rules",
+                "_140_of31d_date_of_expiry",
+                "_150_of50_changed_applicant_details",
+                "_160_of59_account",
+                "_170_of32b_currency",
+                "_180_of33b_currency",
+                "_190_of39a_plus",
+                "_200_of39c_additional_amounts_covered",
+                "_210_of41a_available_with_by",
+                "_220_of42c_drafts_at",
+                "_230_of42a_drawee",
+                "_240_of42m_mixed_payment_details",
+                "_250_of42p_negotiation_deferred_payment_details",
+                "_260_of43p_partial_shipments",
+                "_270_of43t_transhipment",
+                "_280_of44a_place_taking_in_charge_dispatch_from_place_of_receipt",
+                "_290_of44e_port_of_loading_airport_of_departure",
+                "_300_of44f_port_of_discharge_airport_of_destination",
+                "_310_of44b_place_of_final_destination_for_transportation_to_place_of_delivery",
+                "_320_of44c_latest_date_of_shipment",
+                "_330_of44d_shipment_period",
+                "_340_of45b_description_of_goods_and_or_services",
+                "_350_of46b_documents_required",
+                "_360_of47b_additional_conditions",
+                "_370_of49m_special_payment_conditions_for_beneficiary",
+                "_380_of49n_special_payment_conditions_for_bank_only",
+                "_390_of71d_charges",
+                "_400_of71n_charge_code",
+                "_410_of48_days",
+                "_420_of49_confirmation_instructions",
+                "_430_of58a_requested_confirmation_party",
+                "_440_of53a_reimbursing_bank",
+                "_450_of78_instructions_to_the_paying_accepting_negotiating_bank",
+                "_460_of57a_advise_through_bank",
+                "_470_of72z_sender_to_receiver_information"
+            ];
+            
+            let hasAtLeastOne = false;
+            for (let fieldId of optionalFields) {
+                const val = $("#" + fieldId).val();
+                if (val && val.trim() !== "") {
+                    hasAtLeastOne = true;
+                    break;
+                }
+            }
+            
+            return hasAtLeastOne;
+        }
+
+        // Rule C2: Either field 32B or 33B may be present, but not both
+        function validateRuleC2() {
+            const field32B_ccy = $("#_170_of32b_currency").val().trim();
+            const field32B_amt = $("#_171_of32b_amount").val().trim();
+            const field33B_ccy = $("#_180_of33b_currency").val().trim();
+            const field33B_amt = $("#_181_of33b_amount").val().trim();
+            
+            const has32B = field32B_ccy || field32B_amt;
+            const has33B = field33B_ccy || field33B_amt;
+            
+            return !(has32B && has33B);
+        }
+
+        // Rule C3: Either field 50B or 52a, but not both, must be present
+        function validateRuleC3() {
+            const field50B = $("#_060_of50b_non_bank_issuer").val().trim();
+            const field52a = $("#_050_of52a_issuing_bank").val().trim();
+            
+            if (!field50B && !field52a) return false;
+            if (field50B && field52a) return false;
+            
+            return true;
+        }
+
+        // Rule C4: Either field 44C or 44D, but not both
+        function validateRuleC4() {
+            const field44C = $("#_320_of44c_latest_date_of_shipment").val().trim();
+            const field44D = $("#_330_of44d_shipment_period").val().trim();
+            
+            return !(field44C && field44D);
+        }
+
+        // Override validateMT707 to include Network Validated Rules
+        window.originalValidateMT707 = window.validateMT707;
+        window.validateMT707 = function() {
+            // First run the original validation from mt707.js
+            if (!window.originalValidateMT707()) {
+                return false;
+            }
+
+            // Then check Network Validated Rules
+            if (!validateRuleC1()) {
+                alert("Error C30 (Rule C1): At least one field must be present after field 22A (Purpose of Message)");
+                return false;
+            }
+
+            if (!validateRuleC2()) {
+                alert("Error C12 (Rule C2): Either field 32B (Increase) or 33B (Decrease) may be present, but not both");
+                $("#_170_of32b_currency").focus();
+                return false;
+            }
+
+            if (!validateRuleC3()) {
+                alert("Error C06 (Rule C3): Either field 50B (Non-Bank Issuer) or field 52a (Issuing Bank) must be present, but not both");
+                $("#_050_of52a_issuing_bank").focus();
+                return false;
+            }
+
+            if (!validateRuleC4()) {
+                alert("Error D06 (Rule C4): Either field 44C (Latest Date of Shipment) or 44D (Shipment Period) may be present, but not both");
+                $("#_320_of44c_latest_date_of_shipment").focus();
+                return false;
+            }
+
+            return true;
+        };
 
     });
+</script>
 
-})(window, document);
+<link rel="stylesheet" type="text/css" href="css/validate.css" />
+
+<!-- ========== FIELD VISIBILITY RULES ON PAGE LOAD ========== -->
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // ========== OF52a Issuing Bank (A or D) ==========
+        if ($("#_052_of52a_identifier_code").val() != "" || $("#_051_of52a_party_identifier").val() != "") {
+            $("#_050_of52a_issuing_bank").val("A").attr("selected", true);
+            $("#div_050_of52a_A").show();
+            $("#div_050_of52a_D").hide();
+        } else if ($("#_054_of52a_name_address").val() != "" || $("#_053_of52a_party_identifier").val() != "") {
+            $("#_050_of52a_issuing_bank").val("D").attr("selected", true);
+            $("#div_050_of52a_A").hide();
+            $("#div_050_of52a_D").show();
+        } else {
+            $("#div_050_of52a_A").hide();
+            $("#div_050_of52a_D").hide();
+        }
+
+        // ========== OF40E Applicable Rules (OTHR) ==========
+        if ($("#_130_of40e_applicable_rules").val() === "OTHR") {
+            $("#div_130_of40e_narrative").show();
+        } else {
+            $("#div_130_of40e_narrative").hide();
+        }
+
+        // ========== OF41a Available With ... By ... ==========
+        if ($("#_211_of41a_identifier_code").val() != "") {
+            $("#_210_of41a_available_with_by").val("A").attr("selected", true);
+            $("#div_210_of41a_A").show();
+            $("#div_210_of41a_D").hide();
+        } else if ($("#_212_of41a_name_address").val() != "") {
+            $("#_210_of41a_available_with_by").val("D").attr("selected", true);
+            $("#div_210_of41a_A").hide();
+            $("#div_210_of41a_D").show();
+        } else {
+            $("#div_210_of41a_A").hide();
+            $("#div_210_of41a_D").hide();
+        }
+
+        // ========== OF42a Drawee ==========
+        if ($("#_232_of42a_identifier_code").val() != "" || $("#_231_of42a_party_identifier").val() != "") {
+            $("#_230_of42a_drawee").val("A").attr("selected", true);
+            $("#div_230_of42a_A").show();
+            $("#div_230_of42a_D").hide();
+        } else if ($("#_234_of42a_name_address").val() != "" || $("#_233_of42a_party_identifier").val() != "") {
+            $("#_230_of42a_drawee").val("D").attr("selected", true);
+            $("#div_230_of42a_A").hide();
+            $("#div_230_of42a_D").show();
+        } else {
+            $("#div_230_of42a_A").hide();
+            $("#div_230_of42a_D").hide();
+        }
+
+        // ========== OF71N Amendment Charge Payable By ==========
+        if ($("#_400_of71n_charge_code").val() === "OTHR") {
+            $("#div_400_of71n_narrative").show();
+        } else {
+            $("#div_400_of71n_narrative").hide();
+        }
+
+        // ========== OF58a Requested Confirmation Party ==========
+        if ($("#_432_of58a_identifier_code").val() != "" || $("#_431_of58a_party_identifier").val() != "") {
+            $("#_430_of58a_requested_confirmation_party").val("A").attr("selected", true);
+            $("#div_430_of58a_A").show();
+            $("#div_430_of58a_D").hide();
+        } else if ($("#_434_of58a_name_address").val() != "" || $("#_433_of58a_party_identifier").val() != "") {
+            $("#_430_of58a_requested_confirmation_party").val("D").attr("selected", true);
+            $("#div_430_of58a_A").hide();
+            $("#div_430_of58a_D").show();
+        } else {
+            $("#div_430_of58a_A").hide();
+            $("#div_430_of58a_D").hide();
+        }
+
+        // ========== OF53a Reimbursing Bank ==========
+        if ($("#_442_of53a_identifier_code").val() != "" || $("#_441_of53a_party_identifier").val() != "") {
+            $("#_440_of53a_reimbursing_bank").val("A").attr("selected", true);
+            $("#div_440_of53a_A").show();
+            $("#div_440_of53a_D").hide();
+        } else if ($("#_444_of53a_name_address").val() != "" || $("#_443_of53a_party_identifier").val() != "") {
+            $("#_440_of53a_reimbursing_bank").val("D").attr("selected", true);
+            $("#div_440_of53a_A").hide();
+            $("#div_440_of53a_D").show();
+        } else {
+            $("#div_440_of53a_A").hide();
+            $("#div_440_of53a_D").hide();
+        }
+
+        // ========== OF57a Advise Through Bank ==========
+        if ($("#_462_of57a_identifier_code").val() != "" || $("#_461_of57a_party_identifier").val() != "") {
+            $("#_460_of57a_advise_through_bank").val("A").attr("selected", true);
+            $("#div_460_of57a_A").show();
+            $("#div_460_of57a_B").hide();
+            $("#div_460_of57a_D").hide();
+        } else if ($("#_464_of57a_location").val() != "" || $("#_463_of57a_party_identifier").val() != "") {
+            $("#_460_of57a_advise_through_bank").val("B").attr("selected", true);
+            $("#div_460_of57a_A").hide();
+            $("#div_460_of57a_B").show();
+            $("#div_460_of57a_D").hide();
+        } else if ($("#_466_of57a_name_address").val() != "" || $("#_465_of57a_party_identifier").val() != "") {
+            $("#_460_of57a_advise_through_bank").val("D").attr("selected", true);
+            $("#div_460_of57a_A").hide();
+            $("#div_460_of57a_B").hide();
+            $("#div_460_of57a_D").show();
+        } else {
+            $("#div_460_of57a_A").hide();
+            $("#div_460_of57a_B").hide();
+            $("#div_460_of57a_D").hide();
+        }
+
+    });
 </script>

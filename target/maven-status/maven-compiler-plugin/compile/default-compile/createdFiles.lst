@@ -21,6 +21,7 @@ com\mt\form\servlet\Category7\MT720Servlet.class
 com\mt\form\util\DatabaseConnection.class
 com\mt\form\servlet\Category7\MT700Servlet.class
 com\mt\form\servlet\Category2\MT210Servlet.class
+com\mt\form\servlet\Category7\MT701Servlet$MT701Data.class
 com\mt\form\servlet\Category1\MT110Servlet.class
 com\mt\form\servlet\Category7\MT707Servlet.class
 com\mt\form\servlet\Category7\MT742Servlet.class

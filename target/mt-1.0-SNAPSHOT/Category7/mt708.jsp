@@ -21,7 +21,7 @@
     <body>
 
     <div id="isi">
-        <div id="judul"><h2>MT 708 Amendment to a Documentary Credit (Continuation)</h2></div>
+        <div id="judul"><h2>MT 708 Amendment to a Documentary Credit</h2></div>
         <form id="form_mt708" method="post" 
               action="${pageContext.request.contextPath}/MT708Servlet"
               autocomplete="off"
@@ -44,8 +44,11 @@
                     <div id="view2" class="tabcontent active">
 
                         <!-- MF27 Sequence of Total -->
-                        <div class="form-row"><span class="label_body">MF27</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sequence of Total </span>
-                            <input type="text" name="_010_mf27_sequence_of_total" id="_010_mf27_sequence_of_total" class="mandatory" maxlength="5" input_type="MF27 Sequence of Total" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf27_sequence_of_total'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                        <div class="form-row"><span class="label_body">MF27</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>                                
+                            <input type="text" onkeypress="avoidSplChars(event)" name="_010_mf27_number" id="_010_mf27_number" class="mandatory" maxlength="1" size="1" input_type="MF27 Sequence of Total" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf27_number'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                        </div>
+                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Total</span>
+                            <input type="text" onkeypress="avoidSplChars(event)" name="_011_mf27_total" id="_011_mf27_total" class="mandatory" maxlength="1" size="1" input_type="MF27 Sequence of Total" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_011_mf27_total'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                         </div>
                         <hr/>
 
