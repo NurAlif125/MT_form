@@ -9,34 +9,27 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-    /* ===================== CUSTOM VALIDATORS ===================== */
-    
-    // Custom validator: Regex pattern matching
     $.validator.addMethod("regex", function(value, element, param) {
         return this.optional(element) || param.test(value);
     }, "Invalid format");
     
-    // Custom validator: Currency code validation (T52)
     $.validator.addMethod("validCurrency", function(value, element) {
         if (!value || value.trim() === "") return true; // Optional
         return window.isValidCurrency ? window.isValidCurrency(value) : true;
     }, "Invalid ISO 4217 currency code (Error T52)");
     
-    // Custom validator: BIC validation (T27, T28, T29, C05)
     $.validator.addMethod("validBIC", function(value, element) {
         if (!value || value.trim() === "") return true; // Optional
         return window.isValidBIC ? window.isValidBIC(value) : true;
     }, "Invalid BIC format - must be 8 or 11 characters (Error T27/T28/T29)");
     
-    // Custom validator: Amount validation by currency (T40, T43, C03)
     $.validator.addMethod("validAmount", function(value, element, params) {
-        if (!value || value.trim() === "") return true; // Optional
+        if (!value || value.trim() === "") return true; 
         
-        // Get currency from specified field
         const currencyField = $(params.currencyField);
         const currency = currencyField.val();
         
-        if (!currency) return true; // If no currency yet, skip amount validation
+        if (!currency) return true; 
         
         if (window.validateAmountByCurrency) {
             const result = window.validateAmountByCurrency(currency, value);
@@ -46,7 +39,6 @@ $(document).ready(function () {
         return true;
     }, "Invalid amount format (Error T40/T43/C03)");
     
-    // Custom validator: Date validation (T50)
     $.validator.addMethod("validDate", function(value, element, allowEmpty) {
         if (allowEmpty && (!value || value.trim() === "")) return true;
         if (!value || value.trim() === "") return false;
@@ -56,50 +48,41 @@ $(document).ready(function () {
         return window.isYYMMDD ? window.isYYMMDD(value) : true;
     }, "Invalid date - must be YYMMDD format (Error T50)");
     
-    // Custom validator: Party identifier format
     $.validator.addMethod("validPartyId", function(value, element) {
-        if (!value || value.trim() === "") return true; // Optional
+        if (!value || value.trim() === "") return true;
         return window.isValidPartyIdentifier ? window.isValidPartyIdentifier(value) : true;
     }, "Party identifier must start with single slash '/'");
 
-    /* ===================== FORM VALIDATION RULES ===================== */
 
     let validator = $("#form_mt754").validate({
         ignore: [],
         onkeyup: false,
         onfocusout: false,
         rules: {
-            /* ========== MANDATORY BODY FIELDS ========== */
-            
-            // Field 20: Sender's Reference (T26)
+   
             _010_mf20_sender_reference: {
                 required: true,
                 maxlength: 16,
                 regex: /^(?!\/)(?!.*\/\/)(?!.*\/$).+$/
             },
             
-            // Field 21: Related Reference (T26)
             _020_mf21_related_reference: {
                 required: true,
                 maxlength: 16,
                 regex: /^(?!\/)(?!.*\/\/)(?!.*\/$).+$/
             },
-
-            /* ========== FIELD 32a - Principal Amount (MANDATORY) ========== */
             
             _030_mf32a_principal_amount_paid_accepted_negotiated: {
                 required: true
             },
             
-            // Option A: Date (T50)
             _031_mf32a_date: {
                 required: function() {
                     return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "A";
                 },
-                validDate: false // false = not allow empty
+                validDate: false 
             },
             
-            // Option A: Currency (T52)
             _032_mf32a_currency: {
                 required: function() {
                     return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "A";
@@ -108,7 +91,6 @@ $(document).ready(function () {
                 regex: /^[A-Z]{3}$/
             },
             
-            // Option A: Amount (T40, T43, C03)
             _033_mf32a_amount: {
                 required: function() {
                     return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "A";
@@ -118,7 +100,6 @@ $(document).ready(function () {
                 }
             },
             
-            // Option B: Currency (T52)
             _034_mf32a_currency: {
                 required: function() {
                     return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "B";
@@ -127,7 +108,6 @@ $(document).ready(function () {
                 regex: /^[A-Z]{3}$/
             },
             
-            // Option B: Amount (T40, T43, C03)
             _035_mf32a_amount: {
                 required: function() {
                     return $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val() === "B";
@@ -137,7 +117,6 @@ $(document).ready(function () {
                 }
             },
 
-            /* ========== FIELD 33B - Additional Amount (OPTIONAL) ========== */
             
             _040_of33b_currency: {
                 validCurrency: true,
@@ -150,26 +129,20 @@ $(document).ready(function () {
                 }
             },
 
-            /* ========== FIELD 71D - Charges Deducted (OPTIONAL) ========== */
             
             _050_of71d_charges_deducted: {
                 maxlength: 210
             },
 
-            /* ========== FIELD 73A - Charges Added (OPTIONAL) ========== */
             
             _060_of73a_charges_added: {
                 maxlength: 210
             },
 
-            /* ========== FIELD 34a - Total Amount Claimed (OPTIONAL) ========== */
-            
-            // Option A: Date (T50) - OPTIONAL
             _071_of34a_date: {
-                validDate: true // true = allow empty
+                validDate: true 
             },
             
-            // Option A: Currency (T52)
             _072_of34a_currency: {
                 required: function() {
                     return $("#_070_of34a_total_amount_claimed").val() === "A";
@@ -178,7 +151,6 @@ $(document).ready(function () {
                 regex: /^[A-Z]{3}$/
             },
             
-            // Option A: Amount (T40, T43, C03)
             _073_of34a_amount: {
                 required: function() {
                     return $("#_070_of34a_total_amount_claimed").val() === "A";
@@ -188,7 +160,6 @@ $(document).ready(function () {
                 }
             },
             
-            // Option B: Currency (T52)
             _074_of34a_currency: {
                 required: function() {
                     return $("#_070_of34a_total_amount_claimed").val() === "B";
@@ -197,7 +168,6 @@ $(document).ready(function () {
                 regex: /^[A-Z]{3}$/
             },
             
-            // Option B: Amount (T40, T43, C03)
             _075_of34a_amount: {
                 required: function() {
                     return $("#_070_of34a_total_amount_claimed").val() === "B";
@@ -207,9 +177,6 @@ $(document).ready(function () {
                 }
             },
 
-            /* ========== FIELD 53a - Reimbursing Bank (OPTIONAL) ========== */
-            
-            // Option A
             _081_of53a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -219,7 +186,6 @@ $(document).ready(function () {
                 validBIC: true
             },
             
-            // Option B
             _083_of53a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -228,7 +194,6 @@ $(document).ready(function () {
                 maxlength: 35
             },
             
-            // Option D
             _085_of53a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -237,9 +202,6 @@ $(document).ready(function () {
                 maxlength: 140
             },
 
-            /* ========== FIELD 57a - Account With Bank (OPTIONAL) ========== */
-            
-            // Option A
             _091_of57a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -249,7 +211,6 @@ $(document).ready(function () {
                 validBIC: true
             },
             
-            // Option B
             _093_of57a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -258,7 +219,6 @@ $(document).ready(function () {
                 maxlength: 35
             },
             
-            // Option D
             _095_of57a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -267,9 +227,6 @@ $(document).ready(function () {
                 maxlength: 140
             },
 
-            /* ========== FIELD 58a - Beneficiary Bank (OPTIONAL) ========== */
-            
-            // Option A
             _101_of58a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -279,7 +236,6 @@ $(document).ready(function () {
                 validBIC: true
             },
             
-            // Option D
             _103_of58a_party_identifier: {
                 maxlength: 35,
                 validPartyId: true
@@ -287,8 +243,6 @@ $(document).ready(function () {
             _104_of58a_name_address: {
                 maxlength: 140
             },
-
-            /* ========== FIELD 72Z / 77 - Narrative (OPTIONAL) ========== */
             
             _110_of72z_sender_to_receiver_information: {
                 maxlength: 210
@@ -300,21 +254,18 @@ $(document).ready(function () {
         },
 
         messages: {
-            // Field 20
             _010_mf20_sender_reference: {
                 required: "Field 20 (Sender's Reference) is mandatory",
                 maxlength: "Maximum 16 characters",
                 regex: "Cannot start/end with '/' or contain '//' (Error T26)"
             },
 
-            // Field 21
             _020_mf21_related_reference: {
                 required: "Field 21 (Related Reference) is mandatory",
                 maxlength: "Maximum 16 characters",
                 regex: "Cannot start/end with '/' or contain '//' (Error T26)"
             },
 
-            // Field 32a
             _030_mf32a_principal_amount_paid_accepted_negotiated: {
                 required: "Field 32a option must be selected"
             },
@@ -336,7 +287,6 @@ $(document).ready(function () {
                 required: "Amount is required for Option B"
             },
 
-            // Field 34a
             _072_of34a_currency: {
                 required: "Currency is required for Option A",
                 regex: "Must be 3-letter code"
@@ -362,7 +312,6 @@ $(document).ready(function () {
             this.defaultShowErrors();
             $("#tab-validate").removeAttr("hidden");
 
-            // Switch to validation tab if exists
             if ($("#view8").length > 0) {
                 $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
                 $("#view8").css("display", "block");
@@ -401,7 +350,6 @@ $(document).ready(function () {
             tableHTML += `</table>`;
             errorContainer.innerHTML = tableHTML;
 
-            // Click handler for error rows
             document.querySelectorAll(".error__row").forEach(row => {
                 row.addEventListener("click", function () {
                     let targetRow = this;
@@ -430,12 +378,10 @@ $(document).ready(function () {
         }
     });
 
-    /* ===================== EXTRA MT754 BUSINESS RULES ===================== */
     
     function extraMT754Checks() {
         console.log('Performing extra MT754 business rule checks...');
         
-        // RULE C1: Either field 72Z or 77 may be present, but not both (Error C19)
         let f72z = $("#_110_of72z_sender_to_receiver_information").val().trim();
         let f77 = $("#_120_of77_narrative").val().trim();
         
@@ -445,7 +391,6 @@ $(document).ready(function () {
             return false;
         }
 
-        // RULE C2: Either field 53a or 57a may be present, but not both (Error C14)
         let f53a = $("#_080_of53a_reimbursing_bank").val();
         let f57a = $("#_090_of57a_account_with_bank").val();
         
@@ -455,7 +400,6 @@ $(document).ready(function () {
             return false;
         }
 
-        // RULE C3: Currency code in 32a and 34a must be the same (Error C02)
         let opt32a = $("#_030_mf32a_principal_amount_paid_accepted_negotiated").val();
         let opt34a = $("#_070_of34a_total_amount_claimed").val();
         
@@ -485,7 +429,6 @@ $(document).ready(function () {
             }
         }
 
-        // USAGE RULE: If 33B currency differs from 32a, explanation required in 72Z or 77
         let currency33b = $("#_040_of33b_currency").val().trim();
         let amount33b = $("#_041_of33b_amount").val().trim();
         
@@ -510,7 +453,6 @@ $(document).ready(function () {
         return true;
     }
 
-    /* ===================== VALIDATE BUTTON (if exists) ===================== */
     
     $("#btn-validate").click(function () {
         console.log('Validate button clicked');
@@ -530,15 +472,12 @@ $(document).ready(function () {
         }
     });
 
-    /* ===================== FORM SUBMIT HANDLER ===================== */
     
     $("#form_mt754").submit(function (e) {
         console.log('Form submit triggered');
         
-        // Prevent default submission
         e.preventDefault();
         
-        // Step 1: jQuery validation
         let isJQueryValid = $("#form_mt754").valid();
         console.log('jQuery validation result:', isJQueryValid);
         
@@ -547,7 +486,6 @@ $(document).ready(function () {
             return false;
         }
         
-        // Step 2: Extra MT754 business rules
         let isExtraValid = extraMT754Checks();
         console.log('Extra checks result:', isExtraValid);
         
@@ -555,7 +493,6 @@ $(document).ready(function () {
             return false;
         }
         
-        // Step 3: Final comprehensive validation using validateMT754()
         if (window.validateMT754) {
             let isFinalValid = window.validateMT754();
             console.log('Final validation result:', isFinalValid);
@@ -565,12 +502,10 @@ $(document).ready(function () {
             }
         }
         
-        // Step 4: Confirm before submission
         let confirmed = confirm('Do you want to save this MT754 data?');
         
         if (confirmed) {
             console.log('Validation passed - submitting form');
-            // Remove submit handler and submit
             $(this).off('submit');
             this.submit();
         } else {
@@ -579,18 +514,12 @@ $(document).ready(function () {
         }
     });
 
-    /* ===================== BUTTON HANDLERS ===================== */
-    
-    // Save button handler
     $("button[type='submit']").click(function(e) {
         console.log('Save button clicked');
-        // Let the form submit handler take care of validation
     });
 
-    // Back button - no validation needed
     $("button[type='button']").click(function() {
         console.log('Back button clicked');
-        // Navigation handled by onclick in JSP
     });
 
     console.log('MT754 validation rules initialized successfully');

@@ -8,14 +8,10 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-    // ========== Custom Validator Methods ==========
-    
-    // Regex validator (reusable)
     $.validator.addMethod("regex", function(value, element, pattern) {
         return this.optional(element) || pattern.test(value);
     }, "Format tidak valid");
 
-    // T26: Must not start or end with '/' and must not contain two consecutive slashes '//'
     $.validator.addMethod("noSlashEdges", function(value, element) {
         if (this.optional(element)) return true;
         if (value.length === 0) return true;
@@ -24,7 +20,6 @@ $(document).ready(function () {
         return true;
     }, "Tidak boleh diawali/diakhiri '/', atau mengandung '//' (Error T26)");
 
-    // T52: ISO 4217 Currency Code (3 uppercase letters)
     $.validator.addMethod("isCurrency", function(value, element) {
         if (this.optional(element)) return true;
         const ISO4217 = [
@@ -43,17 +38,13 @@ $(document).ready(function () {
     // T43: Decimal digits must not exceed allowed decimals for currency
     $.validator.addMethod("isSwiftAmount", function(value, element) {
         if (this.optional(element)) return true;
-        // Must contain comma
         if (!/,/.test(value)) return false;
-        // Pattern: digits, comma, 1-3 decimal digits
         if (!/^[0-9]+,[0-9]{1,3}$/.test(value)) return false;
-        // Integer part must be at least 1 digit
         const parts = value.split(',');
         if (parts[0].length === 0) return false;
         return true;
     }, "Format amount harus n,dd (gunakan koma sebagai desimal, Error T40/C03/T43)");
 
-    // C05, T27, T28, T29, T45: BIC validation (basic format check)
     $.validator.addMethod("isBIC", function(value, element) {
         if (this.optional(element)) return true;
         // BIC format: 4 letters + 2 letters + 2 alphanumeric + optional 3 alphanumeric
@@ -75,9 +66,7 @@ $(document).ready(function () {
             if (ln.length > 35) return false;
             if (ln.length === 0) continue;
             
-            // If line starts with '/', validate structure
             if (/^\//.test(ln)) {
-                // Allow /CODE/, /8a/, or // continuation
                 if (!(/^\/[A-Z0-9]{1,8}\//.test(ln) || /^\/\//.test(ln))) {
                     return false;
                 }
@@ -86,8 +75,6 @@ $(document).ready(function () {
         return true;
     }, "Format charges tidak valid (maks 6 baris, tiap baris ≤35 karakter)");
 
-    // Validate 72Z field (Sender to Receiver Information)
-    // Similar to charges field but with /8c/ code pattern
     $.validator.addMethod("is72ZField", function(value, element) {
         if (this.optional(element)) return true;
         if (value.length > 210) return false;
@@ -104,11 +91,9 @@ $(document).ready(function () {
         return true;
     }, "Format 72Z tidak valid (maks 6 baris, tiap baris ≤35 karakter)");
 
-    // Validate 77J field (Discrepancies)
-    // Max 70 lines, each line max 50 characters
     $.validator.addMethod("is77JField", function(value, element) {
         if (this.optional(element)) return true;
-        if (value.length > 3500) return false; // 70 lines * 50 chars
+        if (value.length > 3500) return false;
         
         const lines = value.split(/\r?\n/);
         if (lines.length > 70) return false;
@@ -122,7 +107,6 @@ $(document).ready(function () {
         return true;
     }, "Format 77J tidak valid (maks 70 baris, tiap baris ≤50 karakter)");
 
-    // ========== Main Validator Setup ==========
     
     let validator = $("#form_mt750").validate({
         ignore: [],               // Don't ignore hidden fields
@@ -135,58 +119,44 @@ $(document).ready(function () {
             receiver_institution: { required: false },
             priority: { required: false },
 
-            // ===== MANDATORY FIELDS =====
-            
-            // Field 20: Sender's Reference (M)
             _010_mf20_sender_reference: { 
                 required: true, 
                 maxlength: 16, 
                 noSlashEdges: true 
             },
             
-            // Field 21: Related Reference (M)
             _020_mf21_related_reference: { 
                 required: true, 
                 maxlength: 16, 
                 noSlashEdges: true 
             },
             
-            // Field 32B: Principal Amount - Currency (M)
             _030_mf32b_currency: { 
                 required: true, 
                 isCurrency: true 
             },
             
-            // Field 32B: Principal Amount - Amount (M)
             _031_mf32b_amount: { 
                 required: true, 
                 isSwiftAmount: true, 
                 maxlength: 15 
             },
             
-            // Field 77J: Discrepancies (M)
             _100_mf77j_discrepancies: { 
                 required: true, 
                 is77JField: true 
             },
 
-            // ===== OPTIONAL FIELDS =====
-            
-            // Field 33B: Additional Amount
             _040_of33b_currency: { isCurrency: true },
             _041_of33b_amount: { isSwiftAmount: true, maxlength: 15 },
             
-            // Field 71D: Charges to be Deducted
             _050_of71d_charges_to_be_deducted: { isChargesField: true },
             
-            // Field 73A: Charges to be Added
             _060_of73a_charges_to_be_added: { isChargesField: true },
             
-            // Field 34B: Total Amount to be Paid
             _070_of34b_currency: { isCurrency: true },
             _071_of34b_amount: { isSwiftAmount: true, maxlength: 15 },
             
-            // Field 57a: Account With Bank (subfields)
             _081_of57a_party_identifier: { maxlength: 35 },
             _082_of57a_identifier_code: { maxlength: 11, isBIC: true },
             _083_of57a_party_identifier: { maxlength: 35 },
@@ -194,12 +164,10 @@ $(document).ready(function () {
             _085_of57a_party_identifier: { maxlength: 35 },
             _086_of57a_name_address: { maxlength: 140 },
             
-            // Field 72Z: Sender to Receiver Information
             _090_of72z_sender_to_receiver_information: { is72ZField: true }
         },
         
         messages: {
-            // Mandatory fields
             _010_mf20_sender_reference: { 
                 required: "Field 20 (Sender's Reference) wajib diisi", 
                 maxlength: "Maksimal 16 karakter", 
@@ -223,7 +191,6 @@ $(document).ready(function () {
                 is77JField: "Format 77J tidak valid (maks 70 baris, tiap baris ≤50 karakter)" 
             },
             
-            // Optional fields
             _040_of33b_currency: { 
                 isCurrency: "Format mata uang 3 huruf ISO 4217 yang valid (Error T52)" 
             },
@@ -259,15 +226,12 @@ $(document).ready(function () {
             this.defaultShowErrors();
             $("#tab-validate").removeAttr("hidden");
 
-            // Hide all content tabs and show validate tab
             $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
             $("#view8").css("display", "block");
             
-            // Update tab selection
             $('.tabs li').removeClass("selected").removeAttr('class');
             $('#tab-validate').addClass("selected");
 
-            // Build error table
             let errorContainer = document.getElementById("error-container");
             let tableHTML = `<table border="0" style="width:100% !important; caption-side: bottom; font-size:8pt !important; border-collapse: collapse; border:1px gray solid;">
                                 <tr style="background:#d6d6d6;">
@@ -291,7 +255,6 @@ $(document).ready(function () {
             tableHTML += `</table>`;
             errorContainer.innerHTML = tableHTML;
 
-            // Click-to-focus behavior
             document.querySelectorAll(".error__row").forEach(row => {
                 row.addEventListener("click", function () {
                     let inputId = this.getAttribute("data-input-id");
@@ -299,7 +262,6 @@ $(document).ready(function () {
                     
                     let input = document.getElementById(inputId);
                     if (input) {
-                        // Switch to appropriate tab
                         if (tabContentGroup === "Header") {
                             $("#view2, #view3, #view4, #view5, #view6, #view7, #view8").css("display", "none");
                             $("#view1").css("display", "block");
@@ -319,7 +281,6 @@ $(document).ready(function () {
         }
     });
 
-    // ========== Helper Functions ==========
     
     function isEmptyVal(selector) {
         let el = $(selector);
@@ -327,10 +288,6 @@ $(document).ready(function () {
         return $.trim(el.val() || "") === "";
     }
 
-    // ========== Validate Button Handler (Optional - for manual validation) ==========
-    
-    // Note: Main validation is handled by mt750.js via form onsubmit event
-    // This button handler is optional for manual validation without submit
     $("#btn-validate").click(function () {
         let isValid = $("#form_mt750").valid();
         
@@ -338,7 +295,6 @@ $(document).ready(function () {
             return false;
         }
         
-        // Additional validations (already handled by mt750.js but included here for completeness)
         if (!validateConditional57a()) return false;
         if (!validateRuleC1()) return false;
         if (!validateRuleC2()) return false;
@@ -347,7 +303,6 @@ $(document).ready(function () {
         return true;
     });
 
-    // ===== Conditional Validation: Field 57a =====
     function validateConditional57a() {
         let opt57 = $.trim($("#_080_of57a_account_with_bank").val() || "");
         
@@ -381,7 +336,6 @@ $(document).ready(function () {
         return true;
     }
 
-    // ===== Network Rule C1 =====
     function validateRuleC1() {
         let present33B = !isEmptyVal("#_040_of33b_currency") || !isEmptyVal("#_041_of33b_amount");
         let present71D = !isEmptyVal("#_050_of71d_charges_to_be_deducted");
@@ -398,7 +352,6 @@ $(document).ready(function () {
         return true;
     }
 
-    // ===== Network Rule C2 =====
     function validateRuleC2() {
         if (!isEmptyVal("#_070_of34b_currency")) {
             let c32 = $.trim($("#_030_mf32b_currency").val() || "").toUpperCase();
@@ -413,8 +366,6 @@ $(document).ready(function () {
         
         return true;
     }
-
-    // ========== Toggle 57a Option Handling ==========
     
     function toggle57aForValidation() {
         let opt = $.trim($("#_080_of57a_account_with_bank").val() || "");
@@ -450,17 +401,13 @@ $(document).ready(function () {
         }
     }
 
-    // Attach change handler to 57a select
     $("#_080_of57a_account_with_bank").on("change", function () {
         toggle57aForValidation();
     });
     
-    // Run once on page load
     toggle57aForValidation();
 
-    // ========== UX Enhancements ==========
     
-    // Trim narrative fields on blur
     ["#_050_of71d_charges_to_be_deducted", 
      "#_060_of73a_charges_to_be_added", 
      "#_090_of72z_sender_to_receiver_information", 
@@ -475,11 +422,9 @@ $(document).ready(function () {
 
 <link rel="stylesheet" type="text/css" href="css/validate.css" />
 
-<!-- ========== Rule View: Initialize Field States on Page Load ========== -->
 <script language="javascript">
 $(document).ready(function () {
     
-    // ===== Initialize Field 57a based on existing values =====
     if ($("#_081_of57a_party_identifier").val() != "" || $("#_082_of57a_identifier_code").val() != "") {
         $("#_080_of57a_account_with_bank").val("A").attr("selected", true);
         $("#div_080_of57a_A").show();

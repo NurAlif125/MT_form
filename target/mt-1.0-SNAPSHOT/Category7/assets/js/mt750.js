@@ -3,50 +3,33 @@
      * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
      */
 
-
-    /* 
-     * MT750 Advice of Discrepancy Form Validation
-     * Final Version with Complete Toggle Support
-     */
-
-    /* ========== Utility Functions ========== */
-
-    // Get element by ID
     function q(id) {
         return document.getElementById(id);
     }
 
-    // Get field value (trimmed)
     function val(id) {
         const el = q(id);
         return el ? (el.value || "").trim() : "";
     }
 
-    // Check if field is empty
     function isEmpty(v) {
         return !v || v.trim() === "";
     }
 
-    // Show/Hide element
     function show(id, on = true) {
         const el = q(id);
         if (el) el.style.display = on ? "block" : "none";
     }
 
-    /* ========== Character Validation Functions ========== */
-
-    // Only numbers (0-9) with comma support for amounts
     function numbersonly(e, currencyId) {
         const charCode = (e.which) ? e.which : e.keyCode;
         const currencyField = document.getElementById(currencyId);
 
-        // JPY and similar currencies don't allow decimals
         if (currencyField && currencyField.value.toUpperCase() === "JPY") {
             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 return false;
             }
         } else {
-            // Allow numbers and comma
             if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 44) {
                 return false;
             }
@@ -54,7 +37,6 @@
         return true;
     }
 
-    // Only letters
     function textonly(e) {
         const code = e.keyCode || e.which;
         const character = String.fromCharCode(code);
@@ -62,7 +44,6 @@
         return allowRegex.test(character);
     }
 
-    // Avoid special characters (allow: a-zA-Z, 0-9, space, . , ' ( ) - / :)
     function avoidSplChars(e) {
         e = e || window.event;
         let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
@@ -73,9 +54,6 @@
         }
     }
 
-    /* ========== Format Helper Functions ========== */
-
-    // Auto-add comma to amount fields if missing
     function cek_koma(obj) {
         if (obj.value && !obj.value.includes(",")) {
             obj.value = obj.value + ",00";
@@ -87,19 +65,16 @@
         }
     }
 
-    // Auto-add slash to party identifier if missing
     function cek_slash(obj) {
         if (obj.value && obj.value.length > 0 && !obj.value.startsWith("/")) {
             obj.value = "/" + obj.value;
         }
     }
 
-    // Format amount on input
     function formatAmountInput(el) {
         el.value = el.value.replace(/[^0-9,]/g, '');
     }
 
-    // Format amount on blur
     function formatAmountBlur(el) {
         let v = el.value;
         if (!v) return;
@@ -114,7 +89,6 @@
         el.value = v;
     }
 
-    /* ========== ISO 4217 Currency Validator ========== */
 
     const ISO4217 = [
         "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "CNY", "SEK", "NZD", 
@@ -165,8 +139,6 @@
         return { valid: true, error: null };
     }
 
-    /* ========== BIC Validator ========== */
-
     function isValidBIC(code) {
         if (!code) return false;
         const bic = code.trim().toUpperCase();
@@ -175,7 +147,6 @@
         return regex.test(bic);
     }
 
-    /* ========== Reference Field Validator (T26) ========== */
 
     function validateReferenceField(field) {
         if (!field) return true;
@@ -183,17 +154,14 @@
         const value = field.value.trim();
         if (!value) return true;
 
-        // T26: Cannot start with /
         if (value.startsWith('/')) {
             return false;
         }
 
-        // T26: Cannot end with /
         if (value.endsWith('/')) {
             return false;
         }
 
-        // T26: Cannot contain //
         if (value.indexOf('//') !== -1) {
             return false;
         }
@@ -201,15 +169,12 @@
         return true;
     }
 
-    /* ========== Toggle Functions ========== */
 
     function toggle57aOption(opt) {
-        // Hide all options first
         show("div_080_of57a_A", false);
         show("div_080_of57a_B", false);
         show("div_080_of57a_D", false);
 
-        // Show selected option
         if (opt === "A") {
             show("div_080_of57a_A", true);
         } else if (opt === "B") {
@@ -218,7 +183,6 @@
             show("div_080_of57a_D", true);
         }
 
-        // Clear all values when option changes
         q("_081_of57a_party_identifier").value = "";
         q("_082_of57a_identifier_code").value = "";
         q("_083_of57a_party_identifier").value = "";
@@ -227,9 +191,6 @@
         q("_086_of57a_name_address").value = "";
     }
 
-    /* ========== Field-Specific Validations ========== */
-
-    // Validate Currency Consistency (Rule C2)
     function validateCurrencyC2() {
         const currency32b = val("_030_mf32b_currency").trim();
         const currency34b = val("_070_of34b_currency").trim();
@@ -242,7 +203,6 @@
         return true;
     }
 
-    // Validate Rule C1 (Conditional field 34B)
     function validateRuleC1() {
         const has33B = !isEmpty(val("_040_of33b_currency")) || !isEmpty(val("_041_of33b_amount"));
         const has71D = !isEmpty(val("_050_of71d_charges_to_be_deducted"));
@@ -257,7 +217,6 @@
         return true;
     }
 
-    // Validate BIC in field 57a
     function validateBIC57a() {
         const option = val("_080_of57a_account_with_bank");
 
@@ -272,8 +231,6 @@
 
         return true;
     }
-
-    /* ========== Tab Navigation ========== */
 
     function setupTabNavigation() {
         const tabs = document.querySelectorAll('.tabs li a');
@@ -301,7 +258,6 @@
             });
         });
 
-        // Show Body tab by default
         const bodyTab = document.getElementById('view2');
         if (bodyTab) {
             bodyTab.style.display = 'block';
@@ -313,7 +269,6 @@
         }
     }
 
-    /* ========== Main Validation Function ========== */
 
     function validateMT750() {
         console.log('Starting MT750 validation...');
@@ -473,7 +428,6 @@
         return true;
     }
 
-    /* ========== Initialize Real-time Validations ========== */
 
     function setupRealtimeValidations() {
         // Field 20 - Sender's Reference (T26)
@@ -584,29 +538,23 @@
         }
     }
 
-    /* ========== Initialize on Page Load ========== */
 
     document.addEventListener("DOMContentLoaded", function() {
         console.log('Initializing MT750 form...');
 
-        // Setup tab navigation
         setupTabNavigation();
 
-        // Setup real-time validations
         setupRealtimeValidations();
 
-        // Setup field 57a toggle handler
         const select57a = document.getElementById("_080_of57a_account_with_bank");
         if (select57a) {
             console.log('Found field 57a select element');
 
-            // Add change event listener
             select57a.addEventListener("change", function(e) {
                 console.log('Field 57a changed to:', this.value);
                 toggle57aOption(this.value);
             });
 
-            // Trigger initial state based on current value
             const initialValue = select57a.value;
             console.log('Initial field 57a value:', initialValue);
             if (initialValue) {
@@ -619,7 +567,6 @@
         console.log('MT750 form initialized successfully');
     });
 
-    /* ========== Export functions for external use ========== */
 
     window.validateMT750 = validateMT750;
     window.toggle57aOption = toggle57aOption;

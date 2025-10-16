@@ -142,20 +142,16 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        
-        // ===== SEQUENCE C - OPTIONAL SEQUENCE TOGGLE =====
         $("#check_seq_c").hide();
         $("#check_seq_C").click(function () {
             if ($("#check_seq_C").is(":checked")) {
                 $("#check_seq_c").show();
             } else {
                 $("#check_seq_c").hide();
-                // Clear all Sequence C fields
                 clearSequenceC();
             }
         });
         
-        // ===== MF52a ISSUER TYPE TOGGLE (Option A or D) =====
         $("#div_mf52a_issuer").hide();
         $("#div_mf52d_issuer").hide();
         $("#_121_mf52a_party_identifier").attr("disabled", true);
@@ -172,18 +168,15 @@
                 $("#_122_mf52a_identifier_code").attr("disabled", false);
                 $("#_123_mf52d_party_identifier").attr("disabled", true);
                 $("#_124_mf52d_name_address").attr("disabled", true);
-                // Clear Option D
                 $("#_123_mf52d_party_identifier").val('');
                 $("#_124_mf52d_name_address").val('');
             } else if ($("#_120_mf52a_issuer").val() == "d") {
-                // Option D - Name & Address
                 $("#div_mf52a_issuer").hide();
                 $("#div_mf52d_issuer").show();
                 $("#_121_mf52a_party_identifier").attr("disabled", true);
                 $("#_122_mf52a_identifier_code").attr("disabled", true);
                 $("#_123_mf52d_party_identifier").attr("disabled", false);
                 $("#_124_mf52d_name_address").attr("disabled", false);
-                // Clear Option A
                 $("#_121_mf52a_party_identifier").val('');
                 $("#_122_mf52a_identifier_code").val('');
             } else {
@@ -196,7 +189,6 @@
             }
         });
 
-        // ===== OF59a BENEFICIARY TYPE TOGGLE (Sequence B) =====
         $("#div_of59no_beneficiary").hide();
         $("#div_of59a_beneficiary").hide();
         $("#_191_of59a_account").attr("disabled", true);
@@ -206,18 +198,15 @@
         
         $("#_190_of59a_beneficiary").change(function () {
             if ($("#_190_of59a_beneficiary").val() == "no") {
-                // No letter option - Name and Address
                 $("#div_of59no_beneficiary").show();
                 $("#div_of59a_beneficiary").hide();
                 $("#_191_of59a_account").attr("disabled", false);
                 $("#_192_of59a_name_address").attr("disabled", false);
                 $("#_193_of59a_account").attr("disabled", true);
                 $("#_194_of59a_identifier_code").attr("disabled", true);
-                // Clear Option A
                 $("#_193_of59a_account").val('');
                 $("#_194_of59a_identifier_code").val('');
             } else if ($("#_190_of59a_beneficiary").val() == "a") {
-                // Option A - BIC
                 $("#div_of59no_beneficiary").hide();
                 $("#div_of59a_beneficiary").show();
                 $("#_191_of59a_account").attr("disabled", true);
@@ -237,39 +226,32 @@
             }
         });
 
-        // ===== NETWORK VALIDATED RULES =====
-        
-        // Rule C1: Field 32B and 33B cannot both be present in Sequence B
+        // NETWORK VALIDATED RULES 
         $("#_140_of32b_currency, #_141_of32b_amount, #_150_of33b_currency, #_151_of33b_amount").on('change blur', function() {
             validateRuleC1_SequenceB();
         });
         
-        // Rule C1: Field 32B and 33B cannot both be present in Sequence C
         $("#_240_of32b_currency, #_241_of32b_amount, #_250_of33b_currency, #_251_of33b_amount").on('change blur', function() {
             validateRuleC1_SequenceC();
         });
         
-        // Rule C2: If 23B is COND, then 35G must be present (Sequence B)
         $("#_160_of23b_expiry_type, #_180_of35g_expiry_conditions_event").on('change blur', function() {
             validateRuleC2_SequenceB();
         });
         
-        // Rule C2: If 23B is COND, then 35G must be present (Sequence C)
         $("#_260_of23b_expiry_type, #_280_of35g_expiry_conditions_event").on('change blur', function() {
             validateRuleC2_SequenceC();
         });
         
-        // Rule C3 & C6: Based on field 22A (Purpose of Message)
         $("#_040_mf22a_purpose_of_message").on('change', function() {
             validateRuleC3_C6();
         });
         
-        // Rule C5: Field 23 only allowed if 22A is ACNA or ADVA
         $("#_040_mf22a_purpose_of_message, #_130_of23_advising_bank_reference").on('change blur', function() {
             validateRuleC5();
         });
 
-        // ===== FUNCTION: Clear Sequence C =====
+        // FUNCTION: Clear Sequence C 
         function clearSequenceC() {
             $("#_240_of32b_currency").val('');
             $("#_241_of32b_amount").val('');
@@ -287,8 +269,7 @@
             $("#_320_of24g_narrative").val('');
         }
 
-        // ===== VALIDATION FUNCTIONS =====
-        
+        // VALIDATION FUNCTIONS 
         function validateRuleC1_SequenceB() {
             var has32B = ($("#_140_of32b_currency").val() != '' || $("#_141_of32b_amount").val() != '');
             var has33B = ($("#_150_of33b_currency").val() != '' || $("#_151_of33b_amount").val() != '');
@@ -364,7 +345,6 @@
         function validateRuleC3_C6() {
             var purpose = $("#_040_mf22a_purpose_of_message").val();
             
-            // Rule C3: If 22A is ISCA or ICCA, Sequence C must be present
             if (purpose == "ISCA" || purpose == "ICCA") {
                 if (!$("#check_seq_C").is(":checked")) {
                     alert("Error C19: When Purpose of Message is " + purpose + ", Sequence C must be present.");
@@ -374,7 +354,6 @@
                     $("#check_seq_C").css("outline", "");
                 }
                 
-                // Rule C6: Fields 24E and 24G not allowed in Sequence B
                 if ($("#_210_of24e_delivery_of_amendment_to_undertaking").val() != '' || 
                     $("#_220_of24g_delivery_to_collection_by").val() != '') {
                     alert("Error C19: When Purpose is " + purpose + ", fields 24E and 24G are not allowed in Sequence B.");
@@ -386,7 +365,6 @@
                     $("#_220_of24g_delivery_to_collection_by").css("background-color", "");
                 }
             } else {
-                // If not ISCA/ICCA, Sequence C should not be present
                 if ($("#check_seq_C").is(":checked")) {
                     alert("Error C19: Sequence C is only allowed when Purpose of Message is ISCA or ICCA.");
                     $("#check_seq_C").css("outline", "2px solid red");
@@ -416,13 +394,8 @@
     });
 </script>
 
-<!-- rule view -->
 <script language="javascript">
     $(document).ready(function () {
-        
-        // ===== RESTORE SAVED STATE ON PAGE LOAD =====
-        
-        // Check if Sequence C should be shown
         var hasSequenceCData = (
             $("#_240_of32b_currency").val() != '' || 
             $("#_241_of32b_amount").val() != '' ||
@@ -445,7 +418,6 @@
             $("#check_seq_c").hide();
         }
         
-        // Restore MF52a Issuer type
         if ($("#_121_mf52a_party_identifier").val() != "" || $("#_122_mf52a_identifier_code").val() != "") {
             $("#_120_mf52a_issuer").val("a").attr("selected", true);
             $("#div_mf52a_issuer").show();
@@ -471,7 +443,6 @@
             $("#_124_mf52d_name_address").attr("disabled", true);
         }
 
-        // Restore OF59a Beneficiary type (Sequence B)
         if ($("#_191_of59a_account").val() != "" || $("#_192_of59a_name_address").val() != "") {
             $("#_190_of59a_beneficiary").val("no").attr("selected", true);
             $("#div_of59no_beneficiary").show();

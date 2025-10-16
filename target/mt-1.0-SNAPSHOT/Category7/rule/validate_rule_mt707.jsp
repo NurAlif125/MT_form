@@ -14,7 +14,6 @@
             onkeyup: false,
             onfocusout: false,
             rules: {
-                // ========== MANDATORY FIELDS ==========
                 _010_mf27_number: {
                     required: true,
                     digits: true,
@@ -60,7 +59,6 @@
                     required: true
                 },
 
-                // ========== OPTIONAL DATE FIELDS ==========
                 _140_of31d_date_of_expiry: {
                     digits: true,
                     minlength: 6,
@@ -72,23 +70,18 @@
                     maxlength: 6
                 },
 
-                // ========== CURRENCY & AMOUNT FIELDS ==========
                 _170_of32b_currency: {
                     minlength: 3,
                     maxlength: 3
                 },
                 _171_of32b_amount: {
-                    // Custom validation in custom method
                 },
                 _180_of33b_currency: {
                     minlength: 3,
                     maxlength: 3
                 },
                 _181_of33b_amount: {
-                    // Custom validation in custom method
                 },
-
-                // ========== PERCENTAGE FIELDS ==========
                 _190_of39a_plus: {
                     digits: true,
                     min: 0,
@@ -100,7 +93,6 @@
                     max: 99
                 },
 
-                // ========== BIC FIELDS (OPTION A) ==========
                 _052_of52a_identifier_code: {
                     minlength: 8,
                     maxlength: 11
@@ -126,7 +118,6 @@
                     maxlength: 11
                 },
 
-                // ========== PERIOD FOR PRESENTATION ==========
                 _410_of48_days: {
                     digits: true,
                     maxlength: 3
@@ -303,33 +294,26 @@
             }
         });
 
-        // ========== CUSTOM VALIDATION METHODS ==========
-
-        // Custom method for T26 validation (Reference fields)
         $.validator.addMethod("noSlashStartEnd", function(value, element) {
             if (!value) return true;
             return !value.startsWith('/') && !value.endsWith('/') && value.indexOf('//') === -1;
         }, "Cannot start/end with '/' or contain '//'");
 
-        // Custom method for BIC validation
         $.validator.addMethod("validBIC", function(value, element) {
             if (!value) return true;
             return /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(value.toUpperCase());
         }, "Invalid BIC format (Error T27/T28/T29)");
 
-        // Custom method for Currency validation
         $.validator.addMethod("validCurrency", function(value, element) {
             if (!value) return true;
             return /^[A-Z]{3}$/.test(value.toUpperCase());
         }, "Invalid currency code (Error T52)");
 
-        // Custom method for SWIFT Amount validation
         $.validator.addMethod("validAmount", function(value, element) {
             if (!value) return true;
             return /^\d+,\d{1,3}$/.test(value);
         }, "Invalid amount format. Use n,dd (example: 123,45)");
 
-        // Custom method for YYMMDD date validation
         $.validator.addMethod("validYYMMDD", function(value, element) {
             if (!value) return true;
             if (!/^\d{6}$/.test(value)) return false;
@@ -345,7 +329,6 @@
             return dd <= dim[mm - 1];
         }, "Invalid date (Error T50)");
 
-        // Apply custom validations to fields
         $("#_020_mf20_sender_reference").rules("add", { noSlashStartEnd: true });
         $("#_030_mf21_receiver_reference").rules("add", { noSlashStartEnd: true });
         $("#_040_mf23_issuing_bank_reference").rules("add", { noSlashStartEnd: true });
@@ -373,12 +356,9 @@
             $("#" + id).rules("add", { validBIC: true });
         });
 
-        // ========== BUTTON HANDLERS ==========
-
         $("#btn-validate").click(function () {
             let isValid = $("#form_mt707").valid();
             
-            // Additional custom validations from mt707.js
             if (isValid) {
                 isValid = validateMT707();
             }
@@ -393,7 +373,6 @@
             
             let isValid = $("#form_mt707").valid();
             
-            // Additional custom validations from mt707.js
             if (isValid) {
                 isValid = validateMT707();
             }
@@ -407,9 +386,6 @@
             }
         });
 
-        // ========== NETWORK VALIDATED RULES CHECKS ==========
-
-        // Rule C1: At least one field must be present after field 22A
         function validateRuleC1() {
             const optionalFields = [
                 "_110_of23s_cancellation_request",
@@ -463,7 +439,6 @@
             return hasAtLeastOne;
         }
 
-        // Rule C2: Either field 32B or 33B may be present, but not both
         function validateRuleC2() {
             const field32B_ccy = $("#_170_of32b_currency").val().trim();
             const field32B_amt = $("#_171_of32b_amount").val().trim();
@@ -476,7 +451,6 @@
             return !(has32B && has33B);
         }
 
-        // Rule C3: Either field 50B or 52a, but not both, must be present
         function validateRuleC3() {
             const field50B = $("#_060_of50b_non_bank_issuer").val().trim();
             const field52a = $("#_050_of52a_issuing_bank").val().trim();
@@ -487,7 +461,6 @@
             return true;
         }
 
-        // Rule C4: Either field 44C or 44D, but not both
         function validateRuleC4() {
             const field44C = $("#_320_of44c_latest_date_of_shipment").val().trim();
             const field44D = $("#_330_of44d_shipment_period").val().trim();
@@ -495,15 +468,12 @@
             return !(field44C && field44D);
         }
 
-        // Override validateMT707 to include Network Validated Rules
         window.originalValidateMT707 = window.validateMT707;
         window.validateMT707 = function() {
-            // First run the original validation from mt707.js
             if (!window.originalValidateMT707()) {
                 return false;
             }
 
-            // Then check Network Validated Rules
             if (!validateRuleC1()) {
                 alert("Error C30 (Rule C1): At least one field must be present after field 22A (Purpose of Message)");
                 return false;
@@ -535,11 +505,9 @@
 
 <link rel="stylesheet" type="text/css" href="css/validate.css" />
 
-<!-- ========== FIELD VISIBILITY RULES ON PAGE LOAD ========== -->
 <script type="text/javascript">
     $(document).ready(function () {
 
-        // ========== OF52a Issuing Bank (A or D) ==========
         if ($("#_052_of52a_identifier_code").val() != "" || $("#_051_of52a_party_identifier").val() != "") {
             $("#_050_of52a_issuing_bank").val("A").attr("selected", true);
             $("#div_050_of52a_A").show();
@@ -553,14 +521,12 @@
             $("#div_050_of52a_D").hide();
         }
 
-        // ========== OF40E Applicable Rules (OTHR) ==========
         if ($("#_130_of40e_applicable_rules").val() === "OTHR") {
             $("#div_130_of40e_narrative").show();
         } else {
             $("#div_130_of40e_narrative").hide();
         }
 
-        // ========== OF41a Available With ... By ... ==========
         if ($("#_211_of41a_identifier_code").val() != "") {
             $("#_210_of41a_available_with_by").val("A").attr("selected", true);
             $("#div_210_of41a_A").show();
@@ -574,7 +540,6 @@
             $("#div_210_of41a_D").hide();
         }
 
-        // ========== OF42a Drawee ==========
         if ($("#_232_of42a_identifier_code").val() != "" || $("#_231_of42a_party_identifier").val() != "") {
             $("#_230_of42a_drawee").val("A").attr("selected", true);
             $("#div_230_of42a_A").show();
@@ -588,14 +553,12 @@
             $("#div_230_of42a_D").hide();
         }
 
-        // ========== OF71N Amendment Charge Payable By ==========
         if ($("#_400_of71n_charge_code").val() === "OTHR") {
             $("#div_400_of71n_narrative").show();
         } else {
             $("#div_400_of71n_narrative").hide();
         }
 
-        // ========== OF58a Requested Confirmation Party ==========
         if ($("#_432_of58a_identifier_code").val() != "" || $("#_431_of58a_party_identifier").val() != "") {
             $("#_430_of58a_requested_confirmation_party").val("A").attr("selected", true);
             $("#div_430_of58a_A").show();
@@ -609,7 +572,6 @@
             $("#div_430_of58a_D").hide();
         }
 
-        // ========== OF53a Reimbursing Bank ==========
         if ($("#_442_of53a_identifier_code").val() != "" || $("#_441_of53a_party_identifier").val() != "") {
             $("#_440_of53a_reimbursing_bank").val("A").attr("selected", true);
             $("#div_440_of53a_A").show();
@@ -623,7 +585,6 @@
             $("#div_440_of53a_D").hide();
         }
 
-        // ========== OF57a Advise Through Bank ==========
         if ($("#_462_of57a_identifier_code").val() != "" || $("#_461_of57a_party_identifier").val() != "") {
             $("#_460_of57a_advise_through_bank").val("A").attr("selected", true);
             $("#div_460_of57a_A").show();

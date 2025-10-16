@@ -3,31 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/* ===================== UTILITY FUNCTIONS ===================== */
-
-// Get element by ID
 function q(id) { 
     return document.getElementById(id); 
 }
 
-// Show/hide element
 function show(id, visible = true) { 
     const el = q(id); 
     if (el) el.style.display = visible ? "block" : "none"; 
 }
 
-// Get field value (trimmed)
 function val(id) { 
     const el = q(id); 
     return el ? (el.value || "").trim() : ""; 
 }
 
-// Check if value is empty
 function isEmpty(v) { 
     return !v || v.trim() === ""; 
 }
 
-// Clear field values
 function clearFieldValues(fieldIds) {
     fieldIds.forEach(id => {
         const field = q(id);
@@ -35,9 +28,6 @@ function clearFieldValues(fieldIds) {
     });
 }
 
-/* ===================== INPUT RESTRICTION FUNCTIONS ===================== */
-
-// Only numbers (0-9)
 function numbersonly(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -46,26 +36,21 @@ function numbersonly(e) {
     return true;
 }
 
-// Only numbers with comma for amounts
 function numbersonlyWithComma(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
-    // Allow: backspace, delete, tab, escape, enter, comma
     if ([8, 9, 27, 13, 44].indexOf(charCode) !== -1 ||
-        // Allow: Ctrl+A/C/V/X
         (charCode === 65 && e.ctrlKey === true) ||
         (charCode === 67 && e.ctrlKey === true) ||
         (charCode === 86 && e.ctrlKey === true) ||
         (charCode === 88 && e.ctrlKey === true)) {
         return true;
     }
-    // Ensure it's a number
     if (charCode < 48 || charCode > 57) {
         return false;
     }
     return true;
 }
 
-// Only letters and spaces
 function textonly(e) {
     let code = e.keyCode || e.which;
     let character = String.fromCharCode(code);
@@ -73,7 +58,6 @@ function textonly(e) {
     return allowRegex.test(character);
 }
 
-// Avoid special characters (allow: letters, numbers, space, .,'-/:())
 function avoidSplChars(e) {
     e = e || window.event;
     let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
@@ -84,14 +68,10 @@ function avoidSplChars(e) {
     }
 }
 
-/* ===================== AMOUNT FORMATTING ===================== */
-
-// Format amount during input (only numbers and comma)
 function formatAmountInput(el) {
     el.value = el.value.replace(/[^0-9,]/g, '');
 }
 
-// Format amount on blur (add ,00 if no comma)
 function formatAmountBlur(el) {
     let v = el.value.trim();
     if (!v) return;
@@ -107,16 +87,12 @@ function formatAmountBlur(el) {
     el.value = v;
 }
 
-// Auto-add slash for party identifier fields
 function cek_slash(obj) {
     if (obj.value && obj.value.length > 0 && !obj.value.startsWith("/")) {
         obj.value = "/" + obj.value;
     }
 }
 
-/* ===================== DATE FUNCTIONS ===================== */
-
-// Validate YYMMDD format with proper calendar validation
 function isYYMMDD(d) {
     if (!/^\d{6}$/.test(d)) return false;
     
@@ -127,12 +103,10 @@ function isYYMMDD(d) {
     if (mm < 1 || mm > 12) return false;
     if (dd < 1 || dd > 31) return false;
     
-    // Days in month validation (including leap year)
     const dim = [31, (yy % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     return dd <= dim[mm - 1];
 }
 
-// Attach jQuery datepicker with YYMMDD format
 function yymmdd(id) {
     const el = q(id);
     if (!el || typeof jQuery === "undefined" || !jQuery.fn.datepicker) return;
@@ -155,7 +129,6 @@ function yymmdd(id) {
             }
         });
 
-        // Set initial date if value exists
         const cur = el.value && el.value.trim();
         if (cur && /^\d{6}$/.test(cur)) {
             const yy = parseInt(cur.slice(0, 2), 10);
@@ -174,9 +147,6 @@ function yymmdd(id) {
     });
 }
 
-/* ===================== TOGGLE OPTION FUNCTIONS ===================== */
-
-// Toggle Field 32a - Principal Amount Paid/Accepted/Negotiated
 function toggle32aOption(opt) {
     show("div_030_mf32a_A", opt === "A");
     show("div_030_mf32a_B", opt === "B");
@@ -190,7 +160,6 @@ function toggle32aOption(opt) {
     }
 }
 
-// Toggle Field 34a - Total Amount Claimed
 function toggle34aOption(opt) {
     show("div_070_of34a_A", opt === "A");
     show("div_070_of34a_B", opt === "B");
@@ -204,13 +173,11 @@ function toggle34aOption(opt) {
     }
 }
 
-// Toggle Field 53a - Reimbursing Bank
 function toggle53aOption(opt) {
     show("div_080_of53a_A", opt === "A");
     show("div_080_of53a_B", opt === "B");
     show("div_080_of53a_D", opt === "D");
     
-    // Clear fields when switching options
     if (opt !== "A") {
         clearFieldValues(["_081_of53a_party_identifier", "_082_of53a_identifier_code"]);
     }
@@ -222,13 +189,11 @@ function toggle53aOption(opt) {
     }
 }
 
-// Toggle Field 57a - Account With Bank
 function toggle57aOption(opt) {
     show("div_090_of57a_A", opt === "A");
     show("div_090_of57a_B", opt === "B");
     show("div_090_of57a_D", opt === "D");
     
-    // Clear fields when switching options
     if (opt !== "A") {
         clearFieldValues(["_091_of57a_party_identifier", "_092_of57a_identifier_code"]);
     }
@@ -240,12 +205,10 @@ function toggle57aOption(opt) {
     }
 }
 
-// Toggle Field 58a - Beneficiary Bank
 function toggle58aOption(opt) {
     show("div_100_of58a_A", opt === "A");
     show("div_100_of58a_D", opt === "D");
     
-    // Clear fields when switching options
     if (opt !== "A") {
         clearFieldValues(["_101_of58a_party_identifier", "_102_of58a_identifier_code"]);
     }
@@ -254,9 +217,6 @@ function toggle58aOption(opt) {
     }
 }
 
-/* ===================== CURRENCY VALIDATION ===================== */
-
-// ISO 4217 Currency Codes (comprehensive list)
 const ISO4217 = [
     "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN",
     "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL",
@@ -276,27 +236,22 @@ const ISO4217 = [
     "XCD", "XOF", "XPF", "YER", "ZAR", "ZMW", "ZWD"
 ];
 
-// Currencies with 0 decimal places (Error T43)
 const DEC0 = new Set([
     'BIF', 'CLP', 'DJF', 'GNF', 'ISK', 'JPY', 'KMF', 'KRW', 'PYG', 
     'RWF', 'UGX', 'VND', 'VUV', 'XAF', 'XOF', 'XPF'
 ]);
 
-// Currencies with 3 decimal places (Error T43)
 const DEC3 = new Set(['BHD', 'IQD', 'JOD', 'KWD', 'LYD', 'OMR', 'TND']);
 
-// Check if currency code is valid (Error T52)
 function isValidCurrency(code) {
     return ISO4217.includes(code.toUpperCase());
 }
 
-// Validate amount by currency (T40, T43, C03)
 function validateAmountByCurrency(ccy, amt) {
     if (!ccy || !amt) return { valid: true, error: null };
     
     ccy = ccy.toUpperCase();
     
-    // T40: Amount must contain comma
     if (!amt.includes(',')) {
         return { valid: false, error: "Amount must contain comma (Error T40)" };
     }
@@ -306,18 +261,16 @@ function validateAmountByCurrency(ccy, amt) {
         return { valid: false, error: "Invalid amount format (Error T43)" };
     }
     
-    // C03: Integer part must contain at least one digit
     if (!/^\d+$/.test(parts[0]) || parts[0].length === 0) {
         return { valid: false, error: "Invalid integer part (Error C03)" };
     }
     
     const decimalPart = parts[1];
-    let allowedDecimals = 2; // Default
+    let allowedDecimals = 2; 
     
     if (DEC0.has(ccy)) allowedDecimals = 0;
     if (DEC3.has(ccy)) allowedDecimals = 3;
     
-    // T43: Check decimal places
     if (allowedDecimals === 0 && decimalPart.length > 0) {
         return { valid: false, error: `Currency ${ccy} must not have decimals (Error T43)` };
     }
@@ -329,14 +282,10 @@ function validateAmountByCurrency(ccy, amt) {
     return { valid: true, error: null };
 }
 
-/* ===================== BIC VALIDATION ===================== */
-
-// Validate BIC format (T27, T28, T29, C05)
 function isValidBIC(bic) {
     if (!bic) return false;
     const bicTrimmed = bic.trim().toUpperCase();
     
-    // BIC must be 8 or 11 characters (T27, T28)
     if (bicTrimmed.length !== 8 && bicTrimmed.length !== 11) {
         return false;
     }
@@ -352,7 +301,6 @@ function isValidBIC(bic) {
         return false;
     }
     
-    // T29: Location code (positions 7-8) cannot be 00 or 01
     const locationCode = bicTrimmed.substring(6, 8);
     if (locationCode === '00' || locationCode === '01') {
         return false;
@@ -361,26 +309,21 @@ function isValidBIC(bic) {
     return true;
 }
 
-/* ===================== PARTY IDENTIFIER VALIDATION ===================== */
 
-// Validate party identifier format
 function isValidPartyIdentifier(partyId) {
-    if (!partyId) return true; // Optional field
+    if (!partyId) return true; 
     
     const trimmed = partyId.trim();
     if (trimmed.length === 0) return true;
     
-    // Must start with single slash
     if (!trimmed.startsWith('/')) {
         return false;
     }
     
-    // Cannot start with //
     if (trimmed.startsWith('//')) {
         return false;
     }
     
-    // Must have content after slash
     if (trimmed.length < 2) {
         return false;
     }
@@ -388,22 +331,17 @@ function isValidPartyIdentifier(partyId) {
     return true;
 }
 
-/* ===================== VALIDATION HELPER FUNCTIONS ===================== */
-
-// Show field error
 function showFieldError(field, message) {
     if (!field) return;
     
     field.classList.add('error-border');
     field.classList.remove('valid-border');
     
-    // Remove existing error message
     const existingError = field.parentElement.querySelector('.inline-error');
     if (existingError) {
         existingError.remove();
     }
     
-    // Add new error message
     const errorSpan = document.createElement('span');
     errorSpan.className = 'inline-error';
     errorSpan.style.color = 'red';
@@ -413,7 +351,6 @@ function showFieldError(field, message) {
     field.parentElement.appendChild(errorSpan);
 }
 
-// Clear field error
 function clearFieldError(field) {
     if (!field) return;
     
@@ -425,9 +362,6 @@ function clearFieldError(field) {
     }
 }
 
-/* ===================== FIELD VALIDATIONS ===================== */
-
-// Validate Field 20 & 21 - Reference fields (T26)
 function validateReferenceField(field) {
     if (!field) return true;
     
@@ -437,19 +371,16 @@ function validateReferenceField(field) {
     clearFieldError(field);
     let isValid = true;
     
-    // T26: Cannot start with /
     if (value.startsWith('/')) {
         showFieldError(field, 'Cannot start with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot end with /
     if (value.endsWith('/')) {
         showFieldError(field, 'Cannot end with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot contain //
     if (value.indexOf('//') !== -1) {
         showFieldError(field, 'Cannot contain "//" (Error T26)');
         isValid = false;
@@ -462,13 +393,11 @@ function validateReferenceField(field) {
     return isValid;
 }
 
-// Validate Date Format (T50 - YYMMDD)
 function validateDateFormat(field, allowEmpty = false) {
     if (!field) return true;
     
     const value = field.value.trim();
     
-    // Allow empty if specified
     if (allowEmpty && !value) {
         clearFieldError(field);
         return true;
@@ -478,13 +407,11 @@ function validateDateFormat(field, allowEmpty = false) {
     
     clearFieldError(field);
     
-    // Must be exactly 6 digits
     if (!/^\d{6}$/.test(value)) {
         showFieldError(field, 'Date must be YYMMDD format (Error T50)');
         return false;
     }
     
-    // Validate using isYYMMDD function
     if (!isYYMMDD(value)) {
         showFieldError(field, 'Invalid date (Error T50)');
         return false;
@@ -494,7 +421,6 @@ function validateDateFormat(field, allowEmpty = false) {
     return true;
 }
 
-/* ===================== MAIN VALIDATION FUNCTION ===================== */
 
 function validateMT754() {
     console.log('Starting MT754 validation...');
@@ -822,10 +748,8 @@ function validateMT754() {
     return true;
 }
 
-/* ===================== SETUP REAL-TIME VALIDATIONS ===================== */
 
 function setupRealtimeValidations() {
-    // Field 20 - Sender's Reference
     const field20 = q("_010_mf20_sender_reference");
     if (field20) {
         field20.addEventListener('blur', function() {
@@ -833,8 +757,7 @@ function setupRealtimeValidations() {
         });
         field20.addEventListener('keypress', avoidSplChars);
     }
-    
-    // Field 21 - Related Reference
+
     const field21 = q("_020_mf21_related_reference");
     if (field21) {
         field21.addEventListener('blur', function() {
@@ -843,7 +766,6 @@ function setupRealtimeValidations() {
         field21.addEventListener('keypress', avoidSplChars);
     }
     
-    // Currency fields: uppercase only (all options)
     const currencyFields = [
         "_032_mf32a_currency", "_034_mf32a_currency",  // Field 32a Option A & B
         "_040_of33b_currency",                          // Field 33B
@@ -858,7 +780,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Amount fields: formatting (all options)
     const amountFields = [
         "_033_mf32a_amount", "_035_mf32a_amount",      // Field 32a Option A & B
         "_041_of33b_amount",                            // Field 33B
@@ -873,7 +794,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Date fields: YYMMDD only
     const dateFields = ["_031_mf32a_date", "_071_of34a_date"];
     dateFields.forEach(id => {
         const el = q(id);
@@ -882,7 +802,6 @@ function setupRealtimeValidations() {
                 this.value = this.value.replace(/[^\d]/g, "").slice(0, 6);
             });
             el.addEventListener("blur", function() { 
-                // Field 34a date is optional, field 32a date is mandatory when Option A
                 const isOptional = (id === "_071_of34a_date");
                 validateDateFormat(this, isOptional); 
             });
@@ -890,7 +809,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // BIC fields: uppercase alphanumeric
     const bicFields = ["_082_of53a_identifier_code", "_092_of57a_identifier_code", "_102_of58a_identifier_code"];
     bicFields.forEach(id => {
         const el = q(id);
@@ -901,7 +819,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Party Identifier fields: auto-add slash
     const partyIdFields = [
         "_081_of53a_party_identifier", "_083_of53a_party_identifier", "_085_of53a_party_identifier",
         "_091_of57a_party_identifier", "_093_of57a_party_identifier", "_095_of57a_party_identifier",
@@ -915,19 +832,16 @@ function setupRealtimeValidations() {
     });
 }
 
-/* ===================== INITIALIZE ON PAGE LOAD ===================== */
 
 function initMt754Form() {
     console.log('Initializing MT754 form...');
     
-    // Initialize toggle states based on existing values
     toggle32aOption(val("_030_mf32a_principal_amount_paid_accepted_negotiated"));
     toggle34aOption(val("_070_of34a_total_amount_claimed"));
     toggle53aOption(val("_080_of53a_reimbursing_bank"));
     toggle57aOption(val("_090_of57a_account_with_bank"));
     toggle58aOption(val("_100_of58a_beneficiary_bank"));
     
-    // Bind select change events
     const sel32a = q("_030_mf32a_principal_amount_paid_accepted_negotiated");
     if (sel32a) {
         sel32a.addEventListener("change", function() {
@@ -963,54 +877,45 @@ function initMt754Form() {
         });
     }
     
-    // Setup real-time validations
     setupRealtimeValidations();
     
-    // Attach jQuery datepickers
     yymmdd("_031_mf32a_date");
     yymmdd("_071_of34a_date");
     
-    // Setup tab navigation (if tabs exist)
     setupTabNavigation();
     
     console.log('MT754 form initialized successfully');
 }
 
-/* ===================== TAB NAVIGATION ===================== */
 
 function setupTabNavigation() {
     const tabs = document.querySelectorAll('.tabs li a');
     const tabContents = document.querySelectorAll('.tabcontent');
 
-    if (tabs.length === 0) return; // No tabs found
+    if (tabs.length === 0) return; 
 
     tabs.forEach(tab => {
         tab.addEventListener('click', function(e) {
             e.preventDefault();
             const targetId = this.getAttribute('rel');
 
-            // Hide all tab contents
             tabContents.forEach(content => {
                 content.style.display = 'none';
                 content.classList.remove('active');
             });
 
-            // Remove active class from all tabs
             tabs.forEach(t => t.parentElement.classList.remove('selected'));
 
-            // Show target tab content
             const targetContent = document.getElementById(targetId);
             if (targetContent) {
                 targetContent.style.display = 'block';
                 targetContent.classList.add('active');
             }
 
-            // Add active class to clicked tab
             this.parentElement.classList.add('selected');
         });
     });
 
-    // Show Body tab by default
     const bodyTab = document.getElementById('view2');
     if (bodyTab) {
         bodyTab.style.display = 'block';
@@ -1023,35 +928,22 @@ function setupTabNavigation() {
     }
 }
 
-/* ===================== BOOT ON DOMCONTENTLOADED ===================== */
 
 window.addEventListener("DOMContentLoaded", initMt754Form);
-
-/* ===================== EXPORT FUNCTIONS FOR EXTERNAL USE ===================== */
-
-// Export main validation function
 window.validateMT754 = validateMT754;
-
-// Export toggle functions
 window.toggle32aOption = toggle32aOption;
 window.toggle34aOption = toggle34aOption;
 window.toggle53aOption = toggle53aOption;
 window.toggle57aOption = toggle57aOption;
 window.toggle58aOption = toggle58aOption;
-
-// Export input restriction functions
 window.avoidSplChars = avoidSplChars;
 window.numbersonly = numbersonly;
 window.numbersonlyWithComma = numbersonlyWithComma;
 window.textonly = textonly;
 window.cek_slash = cek_slash;
-
-// Export formatting functions
 window.formatAmountInput = formatAmountInput;
 window.formatAmountBlur = formatAmountBlur;
 window.yymmdd = yymmdd;
-
-// Export validation functions
 window.isValidCurrency = isValidCurrency;
 window.isValidBIC = isValidBIC;
 window.isValidPartyIdentifier = isValidPartyIdentifier;

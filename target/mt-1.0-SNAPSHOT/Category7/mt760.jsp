@@ -747,7 +747,7 @@
 
                             <!--OF52a Issuer-->
                             <div class="form-row"><span class="label_body">OF52a </span><span class="label">Issuer</span>
-                                <select id="_500_of52a_issuer" name="_500_of52a_issuer"">
+                                <select id="_500_of52a_issuer" name="_500_of52a_issuer">
                                     <option value="">choose a type</option>
                                     <option value="a">A - BIC</option>
                                     <option value="d">D - Name & Address</option>
@@ -821,7 +821,7 @@
                                     <option value="a">A - BIC</option>
                                     <option value="d">D - Name & Address</option>
                                 </select>
-                                <div id="div_of57a_advise_through_bank">
+                                <div id="div_of57a_advise_through_bank_2">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                         <input type="text" name="_541_of57a_party_identifier" id="_541_of57a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_541_of57a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
@@ -829,7 +829,7 @@
                                         <input type="text" onkeypress="avoidSplChars(event)" name="_542_of57a_identifier_code" id="_542_of57a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_542_of57a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                 </div>
-                                <div id="div_of57d_advise_through_bank">
+                                <div id="div_of57d_advise_through_bank_2">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                         <input type="text" name="_543_of57d_party_identifier" id="_543_of57d_party_identifier" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_543_of57d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
@@ -966,7 +966,7 @@
 
                             <!--MF45L Underlying Transaction Details-->
                             <div class="form-row"><span class="label_body">MF45L</span><span class="label"><a style="color:red;text-decoration:none">*</a>Underlying Transaction Details</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="50" maxlength="3250" style="resize:none;" name="_690_mf45l_underlying_transaction_details" id="_690_mf45l_underlying_transaction_details" class ="mandatory" input_type="MF30 Date of Amendment" location="Body"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_690_mf45l_underlying_transaction_details'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="50" maxlength="3250" style="resize:none;" name="_690_mf45l_underlying_transaction_details" id="_690_mf45l_underlying_transaction_details" class ="mandatory" input_type="MF45L Underlying Transaction Details" location="Body"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_690_mf45l_underlying_transaction_details'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                             </div>
                             <hr/>
 

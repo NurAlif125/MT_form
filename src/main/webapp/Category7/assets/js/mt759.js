@@ -4,39 +4,29 @@
  */
 
 
-/* ========== Utility Functions ========== */
-
-// Get element by ID
 function q(id) {
     return document.getElementById(id);
 }
 
-// Get field value
 function val(id) {
     const el = q(id);
     return el ? (el.value || "").trim() : "";
 }
 
-// Check if field is empty
 function isEmpty(v) {
     return !v || v.trim() === "";
 }
 
-// Show/hide element
 function show(id, display = true) {
     const el = q(id);
     if (el) el.style.display = display ? "block" : "none";
 }
 
-// Set value to uppercase
 function setUpper(id) {
     const el = q(id);
     if (el) el.value = el.value.toUpperCase();
 }
 
-/* ========== Input Filter Functions ========== */
-
-// Only numbers (0-9)
 function numbersonly(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -45,7 +35,6 @@ function numbersonly(e) {
     return true;
 }
 
-// Only letters and spaces
 function textonly(e) {
     let code = e.keyCode || e.which;
     let character = String.fromCharCode(code);
@@ -53,7 +42,6 @@ function textonly(e) {
     return allowRegex.test(character);
 }
 
-// Avoid special characters (allow: letters, numbers, space, .,'-/:())
 function avoidSplChars(e) {
     e = e || window.event;
     let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
@@ -64,14 +52,11 @@ function avoidSplChars(e) {
     }
 }
 
-// Avoid special characters for narrative fields - SWIFT 65z format
-// Allowed: A-Z, 0-9, space, . / , - ( ) ? : ' +
 function avoidSplCharsNarrative(e) {
     e = e || window.event;
     let allowed = /^[A-Z0-9\s\.\/\,\-\(\)\?\:\'\+]$/;
     let key = String.fromCharCode(e.keyCode || e.which);
     
-    // Allow control keys (backspace, delete, arrows, tab, enter)
     if (e.keyCode === 8 || e.keyCode === 9 || e.keyCode === 13 || 
         e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
         return true;
@@ -85,7 +70,6 @@ function avoidSplCharsNarrative(e) {
     return true;
 }
 
-// Convert to uppercase on input for narrative fields
 function convertToUppercase(field) {
     if (field) {
         field.addEventListener('input', function() {
@@ -97,14 +81,12 @@ function convertToUppercase(field) {
     }
 }
 
-// Auto-add slash for party identifier fields
 function cek_slash(obj) {
     if (obj.value && obj.value.length > 0 && !obj.value.startsWith("/")) {
         obj.value = "/" + obj.value;
     }
 }
 
-/* ========== Tab Navigation ========== */
 function setupTabNavigation() {
     const tabs = document.querySelectorAll('.tabs li a');
     const tabContents = document.querySelectorAll('.tabcontent');
@@ -114,28 +96,23 @@ function setupTabNavigation() {
             e.preventDefault();
             const targetId = this.getAttribute('rel');
 
-            // Hide all tab contents
             tabContents.forEach(content => {
                 content.style.display = 'none';
                 content.classList.remove('active');
             });
 
-            // Remove active class from all tabs
             tabs.forEach(t => t.parentElement.classList.remove('selected'));
 
-            // Show target tab content
             const targetContent = document.getElementById(targetId);
             if (targetContent) {
                 targetContent.style.display = 'block';
                 targetContent.classList.add('active');
             }
 
-            // Add active class to clicked tab
             this.parentElement.classList.add('selected');
         });
     });
 
-    // Show Body tab by default
     const bodyTab = document.getElementById('view2');
     if (bodyTab) {
         bodyTab.style.display = 'block';
@@ -147,9 +124,6 @@ function setupTabNavigation() {
     }
 }
 
-/* ========== Option Field Handlers ========== */
-
-// Handle 52a - Issuer
 function handle52aOption() {
     const select = q("_060_of52a_issuer");
     if (!select) return;
@@ -160,7 +134,6 @@ function handle52aOption() {
     if (divA) divA.style.display = (select.value === "A") ? "block" : "none";
     if (divD) divD.style.display = (select.value === "D") ? "block" : "none";
     
-    // Clear unused option fields
     if (select.value !== "A") {
         clearFieldValues(["_061_of52a_party_identifier", "_062_of52a_identifier_code"]);
     }
@@ -169,7 +142,6 @@ function handle52aOption() {
     }
 }
 
-// Clear field values
 function clearFieldValues(fieldIds) {
     fieldIds.forEach(id => {
         const field = q(id);
@@ -179,24 +151,19 @@ function clearFieldValues(fieldIds) {
     });
 }
 
-/* ========== Character Counter for Narrative Field ========== */
 function setupCharacterCounter() {
     const narrative = q('_080_mf45d_narrative');
     if (narrative) {
-        // Create counter element
         const counter = document.createElement('div');
         counter.id = 'counter_narrative';
         counter.style.fontSize = '10pt';
         counter.style.marginTop = '5px';
         counter.style.color = 'green';
         narrative.parentElement.appendChild(counter);
-        
-        // Update counter on input
         narrative.addEventListener('input', function() {
             updateNarrativeCounter(this, counter);
         });
         
-        // Initialize counter
         updateNarrativeCounter(narrative, counter);
     }
 }
@@ -206,13 +173,12 @@ function updateNarrativeCounter(textarea, counterElement) {
     const lines = content.split('\n');
     const lineCount = lines.length;
     const charCount = content.length;
-    const maxChars = 9750; // 150 lines * 65 chars
+    const maxChars = 9750; 
     const maxLines = 150;
     
     const counterText = `${charCount} / ${maxChars.toLocaleString()} characters | ${lineCount} / ${maxLines} lines`;
     counterElement.textContent = counterText;
     
-    // Color coding
     if (lineCount > maxLines || charCount > maxChars) {
         counterElement.style.color = 'red';
         counterElement.style.fontWeight = 'bold';
@@ -225,21 +191,16 @@ function updateNarrativeCounter(textarea, counterElement) {
     }
 }
 
-/* ========== Validation Helper Functions ========== */
-
-// Show field error
 function showFieldError(field, message) {
     if (!field) return;
     field.classList.add('error-border');
     field.classList.remove('valid-border');
     
-    // Remove existing error message
     const existingError = field.parentElement.querySelector('.inline-error');
     if (existingError) {
         existingError.remove();
     }
     
-    // Add new error message
     const errorSpan = document.createElement('span');
     errorSpan.className = 'inline-error';
     errorSpan.style.color = 'red';
@@ -249,7 +210,6 @@ function showFieldError(field, message) {
     field.parentElement.appendChild(errorSpan);
 }
 
-// Clear field error
 function clearFieldError(field) {
     if (!field) return;
     field.classList.remove('error-border');
@@ -260,19 +220,13 @@ function clearFieldError(field) {
     }
 }
 
-// Validate BIC format
 function isValidBIC(bic) {
     if (!bic) return false;
     const trimmed = bic.trim().toUpperCase();
-    // BIC must be 8 or 11 alphanumeric characters
-    // Format: 4 letters (institution code) + 2 letters (country code) + 2 alphanumeric (location) + optional 3 alphanumeric (branch)
     if (trimmed.length !== 8 && trimmed.length !== 11) return false;
     return /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/.test(trimmed);
 }
 
-/* ========== Real-time Field Validations ========== */
-
-// Validate Field 27 - Sequence of Total (T75)
 function validateField27Realtime() {
     const numberField = q("_010_mf27_number");
     const totalField = q("_011_mf27_total");
@@ -282,25 +236,21 @@ function validateField27Realtime() {
     const number = parseInt(numberField.value);
     const total = parseInt(totalField.value);
     
-    // Clear previous errors
     clearFieldError(numberField);
     clearFieldError(totalField);
     
     let isValid = true;
     
-    // T75: Number must be in range 1-8
     if (isNaN(number) || number < 1 || number > 8) {
         showFieldError(numberField, "Number must be 1-8 (Error T75)");
         isValid = false;
     }
     
-    // T75: Total must be in range 1-8
     if (isNaN(total) || total < 1 || total > 8) {
         showFieldError(totalField, "Total must be 1-8 (Error T75)");
         isValid = false;
     }
     
-    // Number must not exceed Total
     if (!isNaN(number) && !isNaN(total) && number > total) {
         showFieldError(numberField, "Number cannot exceed Total");
         isValid = false;
@@ -312,7 +262,6 @@ function validateField27Realtime() {
     }
 }
 
-// Validate Reference fields (T26)
 function validateReferenceField(field) {
     if (!field) return true;
     
@@ -322,19 +271,16 @@ function validateReferenceField(field) {
     clearFieldError(field);
     let isValid = true;
     
-    // T26: Cannot start with /
     if (value.startsWith('/')) {
         showFieldError(field, 'Cannot start with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot end with /
     if (value.endsWith('/')) {
         showFieldError(field, 'Cannot end with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot contain //
     if (value.indexOf('//') !== -1) {
         showFieldError(field, 'Cannot contain "//" (Error T26)');
         isValid = false;
@@ -347,7 +293,6 @@ function validateReferenceField(field) {
     return isValid;
 }
 
-// Validate BIC field
 function validateBICField(field) {
     if (!field) return true;
     
@@ -365,9 +310,7 @@ function validateBICField(field) {
     return true;
 }
 
-/* ========== Setup Real-time Validations ========== */
 function setupRealtimeValidations() {
-    // Field 27 - Sequence of Total
     const numberField = q("_010_mf27_number");
     const totalField = q("_011_mf27_total");
     if (numberField && totalField) {
@@ -376,7 +319,6 @@ function setupRealtimeValidations() {
         numberField.addEventListener('keypress', numbersonly);
         totalField.addEventListener('keypress', numbersonly);
         
-        // Restrict input to 1 digit only
         numberField.addEventListener('input', function() {
             this.value = this.value.replace(/[^\d]/g, '').slice(0, 1);
         });
@@ -385,7 +327,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Field 20 - Transaction Reference Number
     const field20 = q("_020_mf20_transaction_reference_number");
     if (field20) {
         field20.addEventListener('blur', function() { 
@@ -395,7 +336,6 @@ function setupRealtimeValidations() {
         field20.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 21 - Related Reference Number
     const field21 = q("_030_of21_related_reference_number");
     if (field21) {
         field21.addEventListener('blur', function() { 
@@ -405,13 +345,11 @@ function setupRealtimeValidations() {
         field21.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 23 - Undertaking Number
     const field23 = q("_050_of23_undertaking_number");
     if (field23) {
         field23.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 22D - Form of Undertaking (auto uppercase)
     const field22d = q("_040_mf22d_form_of_undertaking");
     if (field22d) {
         field22d.addEventListener('change', function() {
@@ -419,7 +357,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Field 23H - Function of Message (auto uppercase)
     const field23h = q("_070_mf23h_function_of_message");
     if (field23h) {
         field23h.addEventListener('change', function() {
@@ -427,7 +364,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // BIC field (52a Option A)
     const bicField = q("_062_of52a_identifier_code");
     if (bicField) {
         bicField.addEventListener('input', function() {
@@ -438,7 +374,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Narrative field - uppercase and special chars
     const narrative = q("_080_mf45d_narrative");
     if (narrative) {
         convertToUppercase(narrative);
@@ -446,12 +381,11 @@ function setupRealtimeValidations() {
     }
 }
 
-/* ========== Rule C1 Real-time Validation ========== */
 function validateRuleC1Realtime() {
     const f22d = val("_040_mf22d_form_of_undertaking");
     const f23h = val("_070_mf23h_function_of_message");
     
-    if (!f22d || !f23h) return; // Only validate if both fields have values
+    if (!f22d || !f23h) return; 
     
     const field22d = q("_040_mf22d_form_of_undertaking");
     const field23h = q("_070_mf23h_function_of_message");
@@ -462,7 +396,6 @@ function validateRuleC1Realtime() {
     let isValid = true;
     let errorMsg = "";
     
-    // Rule C1 validation
     if (["ISSUANCE", "REQISSUE", "REQAMEND", "ISSAMEND"].includes(f23h)) {
         if (f22d !== "UNDK") {
             errorMsg = "Rule C1: 22D must be UNDK for this 23H function";
@@ -489,7 +422,6 @@ function validateRuleC1Realtime() {
     }
 }
 
-/* ========== Main Validation Function (called from form onsubmit) ========== */
 function validateMT759() {
     console.log('Starting MT759 validation...');
     
@@ -672,7 +604,6 @@ function validateMT759() {
     return true;
 }
 
-/* ========== Helper Functions for External Use ========== */
 function getFieldValue(id) {
     return val(id);
 }
@@ -681,30 +612,23 @@ function isFieldEmpty(id) {
     return isEmpty(getFieldValue(id));
 }
 
-/* ========== Initialize on Page Load ========== */
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Initializing MT759 form...');
     
-    // Setup tab navigation
     setupTabNavigation();
     
-    // Setup option handlers
     const issuerSelect = q("_060_of52a_issuer");
     if (issuerSelect) {
         issuerSelect.addEventListener("change", handle52aOption);
-        handle52aOption(); // Initialize on load
+        handle52aOption(); 
     }
     
-    // Setup real-time validations
     setupRealtimeValidations();
-    
-    // Setup character counter
     setupCharacterCounter();
     
     console.log('MT759 form initialized successfully');
 });
 
-/* ========== Export functions for external use ========== */
 window.validateMT759 = validateMT759;
 window.getFieldValue = getFieldValue;
 window.isFieldEmpty = isFieldEmpty;

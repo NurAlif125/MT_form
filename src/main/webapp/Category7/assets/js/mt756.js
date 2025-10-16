@@ -4,37 +4,29 @@
  */
 
 
-/* ========== Utility Functions ========== */
-
-// Get element by ID
 function q(id) {
     return document.getElementById(id);
 }
 
-// Get field value
 function val(id) {
     const el = q(id);
     return el ? (el.value || "").trim() : "";
 }
 
-// Check if field is empty
 function isEmpty(v) {
     return !v || v.trim() === "";
 }
 
-// Show/hide element
 function show(id, display = true) {
     const el = q(id);
     if (el) el.style.display = display ? "block" : "none";
 }
 
-// Set value to uppercase
 function setUpper(id) {
     const el = q(id);
     if (el) el.value = el.value.toUpperCase();
 }
 
-// Only numbers (0-9)
 function onlyNumber(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -43,7 +35,6 @@ function onlyNumber(e) {
     return true;
 }
 
-// Only letters (A-Z, a-z)
 function onlyAlpha(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
     if ((charCode >= 65 && charCode <= 90) || (charCode >= 97 && charCode <= 122)) {
@@ -52,7 +43,6 @@ function onlyAlpha(e) {
     return false;
 }
 
-// Avoid special characters (allow: letters, numbers, space, .,'-/:())
 function avoidSplChars(e) {
     e = e || window.event;
     let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
@@ -63,43 +53,32 @@ function avoidSplChars(e) {
     }
 }
 
-// REVISED: Auto-add slash and validate Party Identifier format
-// Format: [/1!a][/34x] = /A/ACCOUNTNUMBER (slash + 1 letter + slash + max 34 chars)
 function cek_slash(obj) {
     if (!obj || !obj.value) return;
     
     let v = obj.value.trim();
     if (!v) return;
     
-    // If doesn't start with /, add it
     if (!v.startsWith("/")) {
         v = "/" + v;
     }
     
-    // Validate format: /X/xxxxx where X is single letter
-    // Pattern: starts with /, followed by 1 letter, followed by /, followed by up to 34 chars
     const parts = v.split('/');
     
-    // Should have at least 3 parts: ['', 'A', 'account...']
     if (parts.length >= 3) {
-        // Second part should be single letter
         if (parts[1].length > 1) {
-            // Take only first character
             parts[1] = parts[1].charAt(0).toUpperCase();
         } else if (parts[1].length === 1) {
             parts[1] = parts[1].toUpperCase();
         }
         
-        // Reconstruct
         v = '/' + parts[1] + '/' + parts.slice(2).join('/');
         
-        // Limit third part to 34 chars
         const thirdPart = parts.slice(2).join('/');
         if (thirdPart.length > 34) {
             v = '/' + parts[1] + '/' + thirdPart.substring(0, 34);
         }
     } else if (parts.length === 2 && parts[0] === '' && parts[1].length > 0) {
-        // Only has /X format, add second slash
         const letter = parts[1].charAt(0).toUpperCase();
         const rest = parts[1].substring(1);
         v = '/' + letter + '/' + rest;
@@ -108,13 +87,11 @@ function cek_slash(obj) {
     obj.value = v;
 }
 
-// Format amount on input (remove non-numeric except comma)
 function formatAmountInput(el) {
     if (!el) return;
     el.value = el.value.replace(/[^0-9,]/g, '');
 }
 
-// Format amount on blur (ensure decimal format)
 function formatAmountBlur(el) {
     if (!el) return;
     let v = el.value;
@@ -130,9 +107,6 @@ function formatAmountBlur(el) {
     el.value = v;
 }
 
-/* ========== Date Helper Functions ========== */
-
-// Validate YYMMDD format
 function isYYMMDD(d) {
     if (!/^\d{6}$/.test(d)) return false;
     
@@ -143,12 +117,10 @@ function isYYMMDD(d) {
     if (mm < 1 || mm > 12) return false;
     if (dd < 1 || dd > 31) return false;
     
-    // Days in month validation (considering leap year)
     const dim = [31, (yy % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     return dd <= dim[mm - 1];
 }
 
-// Attach jQuery datepicker with YYMMDD format
 function attachDatePicker(id) {
     const el = q(id);
     if (!el || typeof jQuery === "undefined" || !jQuery.fn.datepicker) return;
@@ -171,7 +143,6 @@ function attachDatePicker(id) {
             }
         });
 
-        // Set initial date if value exists
         const cur = el.value && el.value.trim();
         if (cur && /^\d{6}$/.test(cur)) {
             const yy = parseInt(cur.slice(0, 2), 10);
@@ -190,7 +161,6 @@ function attachDatePicker(id) {
     });
 }
 
-/* ========== Tab Navigation ========== */
 function setupTabNavigation() {
     const tabs = document.querySelectorAll('.tabs li a');
     const tabContents = document.querySelectorAll('.tabcontent');
@@ -200,28 +170,23 @@ function setupTabNavigation() {
             e.preventDefault();
             const targetId = this.getAttribute('rel');
 
-            // Hide all tab contents
             tabContents.forEach(content => {
                 content.style.display = 'none';
                 content.classList.remove('active');
             });
 
-            // Remove active class from all tabs
             tabs.forEach(t => t.parentElement.classList.remove('selected'));
 
-            // Show target tab content
             const targetContent = document.getElementById(targetId);
             if (targetContent) {
                 targetContent.style.display = 'block';
                 targetContent.classList.add('active');
             }
 
-            // Add active class to clicked tab
             this.parentElement.classList.add('selected');
         });
     });
 
-    // Show Body tab by default
     const bodyTab = document.getElementById('view2');
     if (bodyTab) {
         bodyTab.style.display = 'block';
@@ -233,9 +198,6 @@ function setupTabNavigation() {
     }
 }
 
-/* ========== Option Field Handlers ========== */
-
-// Handle 53a - Sender's Correspondent
 function handle53aOption() {
     const select = q("_050_of53a_senders_correspondent");
     if (!select) return;
@@ -248,7 +210,6 @@ function handle53aOption() {
     if (divB) divB.style.display = (select.value === "B") ? "block" : "none";
     if (divD) divD.style.display = (select.value === "D") ? "block" : "none";
     
-    // Clear fields that are not selected
     if (select.value !== "A") {
         clearFieldValues(["_051_of53a_party_identifier", "_052_of53a_identifier_code"]);
     }
@@ -260,7 +221,6 @@ function handle53aOption() {
     }
 }
 
-// Handle 54a - Receiver's Correspondent
 function handle54aOption() {
     const select = q("_060_of54a_receivers_correspondent");
     if (!select) return;
@@ -273,7 +233,6 @@ function handle54aOption() {
     if (divB) divB.style.display = (select.value === "B") ? "block" : "none";
     if (divD) divD.style.display = (select.value === "D") ? "block" : "none";
     
-    // Clear fields that are not selected
     if (select.value !== "A") {
         clearFieldValues(["_061_of54a_party_identifier", "_062_of54a_identifier_code"]);
     }
@@ -285,7 +244,6 @@ function handle54aOption() {
     }
 }
 
-// Clear field values
 function clearFieldValues(fieldIds) {
     fieldIds.forEach(id => {
         const field = q(id);
@@ -295,21 +253,16 @@ function clearFieldValues(fieldIds) {
     });
 }
 
-/* ========== Validation Helper Functions ========== */
-
-// Show field error
 function showFieldError(field, message) {
     if (!field) return;
     field.classList.add('error-border');
     field.classList.remove('valid-border');
     
-    // Remove existing error message
     const existingError = field.parentElement.querySelector('.inline-error');
     if (existingError) {
         existingError.remove();
     }
     
-    // Add new error message
     const errorSpan = document.createElement('span');
     errorSpan.className = 'inline-error';
     errorSpan.style.color = 'red';
@@ -319,7 +272,6 @@ function showFieldError(field, message) {
     field.parentElement.appendChild(errorSpan);
 }
 
-// Clear field error
 function clearFieldError(field) {
     if (!field) return;
     field.classList.remove('error-border');
@@ -330,7 +282,6 @@ function clearFieldError(field) {
     }
 }
 
-/* ========== ISO 4217 Currency Validator ========== */
 const ISO4217 = [
     "AED", "AFN", "ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN",
     "BAM", "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL",
@@ -355,7 +306,6 @@ function isValidCurrency(code) {
     return ISO4217.includes(code.toUpperCase());
 }
 
-/* ========== BIC Validator ========== */
 function isValidBIC(code) {
     if (!code) return false;
     const bic = code.trim().toUpperCase();
@@ -364,14 +314,12 @@ function isValidBIC(code) {
     return regex.test(bic);
 }
 
-/* ========== Currency-Specific Decimal Validation ========== */
 const DEC0 = new Set(['JPY', 'KRW', 'VND', 'HUF', 'XOF', 'XAF', 'XPF', 'CLP', 'ISK', 'PYG', 'UGX', 'VUV']);
 const DEC3 = new Set(['BHD', 'JOD', 'KWD', 'OMR', 'TND', 'LYD', 'IQD']);
 
 function validateAmountByCurrency(ccy, amt) {
     if (!ccy || !amt) return { valid: true, error: null };
     
-    // Amount must contain comma (Error T40)
     if (!amt.includes(',')) {
         return { valid: false, error: "Amount must contain comma (Error T40)" };
     }
@@ -381,18 +329,16 @@ function validateAmountByCurrency(ccy, amt) {
         return { valid: false, error: "Invalid amount format (Error T43)" };
     }
     
-    // Integer part validation: must have at least 1 digit (Error C03)
     if (!/^\d+$/.test(parts[0]) || parts[0].length === 0) {
         return { valid: false, error: "Invalid integer part (Error C03)" };
     }
     
     const decimalPart = parts[1];
-    let allowedDecimals = 2; // Default for most currencies
+    let allowedDecimals = 2; 
     
     if (DEC0.has(ccy)) allowedDecimals = 0;
     if (DEC3.has(ccy)) allowedDecimals = 3;
     
-    // Check decimal places (Error T43)
     if (decimalPart.length > allowedDecimals) {
         return { valid: false, error: `Max ${allowedDecimals} decimal places for ${ccy} (Error T43)` };
     }
@@ -404,20 +350,16 @@ function validateAmountByCurrency(ccy, amt) {
     return { valid: true, error: null };
 }
 
-/* ========== Party Identifier Validator ========== */
-// Format: [/1!a][/34x] = /A/ACCOUNTNUMBER
 function isValidPartyIdentifier(value) {
-    if (!value) return true; // Optional field
+    if (!value) return true;
     
     const v = value.trim();
     if (!v) return true;
     
-    // Must start with /
     if (!v.startsWith('/')) {
         return { valid: false, error: "Must start with '/' (Error T26)" };
     }
     
-    // Format: /X/xxxxx where X is single uppercase letter
     const regex = /^\/[A-Z]\/[^\s\/]{1,34}$/;
     if (!regex.test(v)) {
         return { valid: false, error: "Invalid format. Expected: /A/ACCOUNTNUMBER (Error T26)" };
@@ -426,14 +368,12 @@ function isValidPartyIdentifier(value) {
     return { valid: true, error: null };
 }
 
-/* ========== NEW: Name & Address Validator (4*35x) ========== */
 function validateNameAddress(fieldId, fieldName) {
     const value = val(fieldId);
     if (!value) return { valid: true, error: null };
     
     const lines = value.split('\n');
     
-    // Max 4 lines
     if (lines.length > 4) {
         return { 
             valid: false, 
@@ -441,7 +381,6 @@ function validateNameAddress(fieldId, fieldName) {
         };
     }
     
-    // Each line max 35 characters
     for (let i = 0; i < lines.length; i++) {
         if (lines[i].length > 35) {
             return { 
@@ -454,7 +393,6 @@ function validateNameAddress(fieldId, fieldName) {
     return { valid: true, error: null };
 }
 
-/* ========== Validation Functions ========== */
 
 function getFieldValue(id) {
     return val(id);
@@ -464,7 +402,6 @@ function isFieldEmpty(id) {
     return isEmpty(getFieldValue(id));
 }
 
-// Validate Reference Fields (T26)
 function validateReferenceField(field) {
     if (!field) return true;
     
@@ -474,19 +411,16 @@ function validateReferenceField(field) {
     clearFieldError(field);
     let isValid = true;
     
-    // T26: Cannot start with /
     if (value.startsWith('/')) {
         showFieldError(field, 'Cannot start with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot end with /
     if (value.endsWith('/')) {
         showFieldError(field, 'Cannot end with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot contain //
     if (value.indexOf('//') !== -1) {
         showFieldError(field, 'Cannot contain "//" (Error T26)');
         isValid = false;
@@ -499,7 +433,6 @@ function validateReferenceField(field) {
     return isValid;
 }
 
-// Validate Date Format (T50 - YYMMDD)
 function validateDateFormat(field) {
     if (!field) return true;
     
@@ -508,13 +441,11 @@ function validateDateFormat(field) {
     
     clearFieldError(field);
     
-    // Must be exactly 6 digits
     if (!/^\d{6}$/.test(value)) {
         showFieldError(field, 'Date must be YYMMDD format (Error T50)');
         return false;
     }
     
-    // Validate using isYYMMDD function
     if (!isYYMMDD(value)) {
         showFieldError(field, 'Invalid date (Error T50)');
         return false;
@@ -524,9 +455,7 @@ function validateDateFormat(field) {
     return true;
 }
 
-/* ========== Real-time Validation Setup ========== */
 function setupRealtimeValidations() {
-    // Field 20 - Sender's Reference
     const field20 = q("_010_mf20_sender_reference");
     if (field20) {
         field20.addEventListener('blur', function() { 
@@ -535,7 +464,6 @@ function setupRealtimeValidations() {
         field20.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 21 - Presenting Bank's Reference
     const field21 = q("_020_mf21_presenting_banks_reference");
     if (field21) {
         field21.addEventListener('blur', function() { 
@@ -544,7 +472,6 @@ function setupRealtimeValidations() {
         field21.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 32B - Currency (auto-uppercase, 3 letters only)
     const field32BCcy = q("_030_mf32b_currency");
     if (field32BCcy) {
         field32BCcy.addEventListener('input', function() {
@@ -560,7 +487,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Field 32B - Amount (format with comma)
     const field32BAmt = q("_031_mf32b_amount");
     if (field32BAmt) {
         field32BAmt.addEventListener('input', function() { formatAmountInput(this); });
@@ -580,7 +506,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Field 33A - Date (YYMMDD)
     const field33ADate = q("_040_mf33a_date");
     if (field33ADate) {
         field33ADate.addEventListener('keypress', onlyNumber);
@@ -593,7 +518,6 @@ function setupRealtimeValidations() {
         attachDatePicker("_040_mf33a_date");
     }
     
-    // Field 33A - Currency (auto-uppercase, 3 letters only)
     const field33ACcy = q("_041_mf33a_currency");
     if (field33ACcy) {
         field33ACcy.addEventListener('input', function() {
@@ -609,7 +533,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Field 33A - Amount (format with comma)
     const field33AAmt = q("_042_mf33a_amount");
     if (field33AAmt) {
         field33AAmt.addEventListener('input', function() { formatAmountInput(this); });
@@ -629,7 +552,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // BIC Fields - auto uppercase and alphanumeric only
     const bicFields = [
         "_052_of53a_identifier_code",
         "_062_of54a_identifier_code"
@@ -651,7 +573,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Party Identifier fields - auto add slash and validate on blur
     const partyIdFields = [
         "_051_of53a_party_identifier",
         "_053_of53a_party_identifier",
@@ -676,7 +597,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // NEW: Name & Address fields - validate on blur
     const nameAddrFields = [
         { id: "_056_of53a_name_address", name: "Field 53a Name & Address" },
         { id: "_066_of54a_name_address", name: "Field 54a Name & Address" }
@@ -697,11 +617,9 @@ function setupRealtimeValidations() {
     });
 }
 
-/* ========== Main Validation Function (called from form onsubmit) ========== */
 function validateMT756() {
     console.log('Starting MT756 validation...');
     
-    // 1. Validate Mandatory Fields
     const mandatoryFields = [
         { id: "_010_mf20_sender_reference", name: "MF20 Sender's Reference" },
         { id: "_020_mf21_presenting_banks_reference", name: "MF21 Presenting Bank's Reference" },
@@ -729,7 +647,6 @@ function validateMT756() {
         return false;
     }
     
-    // 2. Validate Reference Fields (T26)
     const refFields = [
         { id: "_010_mf20_sender_reference", name: "Sender's Reference" },
         { id: "_020_mf21_presenting_banks_reference", name: "Presenting Bank's Reference" }
@@ -746,7 +663,6 @@ function validateMT756() {
         }
     }
     
-    // 3. Validate Date Format (T50)
     const dateField = q("_040_mf33a_date");
     if (dateField && dateField.value.trim() !== "") {
         if (!validateDateFormat(dateField)) {
@@ -756,7 +672,6 @@ function validateMT756() {
         }
     }
     
-    // 4. Validate Currency Codes (T52)
     const ccy32B = val("_030_mf32b_currency").toUpperCase();
     const ccy33A = val("_041_mf33a_currency").toUpperCase();
     
@@ -772,14 +687,12 @@ function validateMT756() {
         return false;
     }
     
-    // 5. Network Validated Rule C1: Currency codes must match (Error C02)
     if (ccy32B !== ccy33A) {
         alert("Error C02: Currency code in fields 32B and 33A must be the same");
         q("_030_mf32b_currency").focus();
         return false;
     }
     
-    // 6. Validate Amount Formats (T40, T43, C03)
     const amt32B = val("_031_mf32b_amount");
     const amt33A = val("_042_mf33a_amount");
     
@@ -801,7 +714,6 @@ function validateMT756() {
         }
     }
     
-    // 7. Validate BIC Fields (T27, T28, T29, T45, C05)
     const bicConfigs = [
         { optionField: "_050_of53a_senders_correspondent", bicField: "_052_of53a_identifier_code", name: "Sender's Correspondent" },
         { optionField: "_060_of54a_receivers_correspondent", bicField: "_062_of54a_identifier_code", name: "Receiver's Correspondent" }
@@ -819,7 +731,6 @@ function validateMT756() {
         }
     }
     
-    // 8. NEW: Validate Party Identifier format for all options
     const partyIdConfigs = [
         { optionField: "_050_of53a_senders_correspondent", fields: [
             { opt: "A", id: "_051_of53a_party_identifier" },
@@ -850,7 +761,6 @@ function validateMT756() {
         }
     }
     
-    // 9. NEW: Validate Name & Address (4*35x)
     const nameAddrConfigs = [
         { optionField: "_050_of53a_senders_correspondent", fieldId: "_056_of53a_name_address", name: "Field 53a Name & Address" },
         { optionField: "_060_of54a_receivers_correspondent", fieldId: "_066_of54a_name_address", name: "Field 54a Name & Address" }
@@ -868,7 +778,6 @@ function validateMT756() {
         }
     }
     
-    // 10. MT 756 Usage Rule: RCB code validation
     const field72Z = val("_070_of72z_sender_to_receiver_information").toUpperCase();
     if (field72Z.includes("/RCB/") || field72Z.includes("RCB/")) {
         const field53a = val("_050_of53a_senders_correspondent");
@@ -881,7 +790,6 @@ function validateMT756() {
         }
     }
     
-    // 11. Validate Field 72Z - Sender to Receiver Information (6*35z)
     const field72ZRaw = val("_070_of72z_sender_to_receiver_information");
     if (field72ZRaw) {
         const lines = field72ZRaw.split('\n');
@@ -899,7 +807,6 @@ function validateMT756() {
         }
     }
     
-    // 12. Validate Field 79Z - Narrative (35*50z)
     const field79Z = val("_080_of79z_narrative");
     if (field79Z) {
         const lines = field79Z.split('\n');
@@ -917,7 +824,6 @@ function validateMT756() {
         }
     }
     
-    // 13. Validate Option A requires BIC
     const option53a = val("_050_of53a_senders_correspondent");
     if (option53a === "A") {
         const bic53a = val("_052_of53a_identifier_code");
@@ -938,7 +844,6 @@ function validateMT756() {
         }
     }
     
-    // 14. Validate Option B requires Location
     if (option53a === "B") {
         const loc53a = val("_054_of53a_location");
         if (!loc53a) {
@@ -957,7 +862,6 @@ function validateMT756() {
         }
     }
     
-    // 15. Validate Option D requires Name & Address
     if (option53a === "D") {
         const nameAddr53a = val("_056_of53a_name_address");
         if (!nameAddr53a) {
@@ -980,7 +884,6 @@ function validateMT756() {
     return true;
 }
 
-/* ========== Character Counter for Text Areas ========== */
 function setupCharacterCounters() {
     const textAreas = [
         { id: '_070_of72z_sender_to_receiver_information', maxChars: 210, maxLines: 6, charsPerLine: 35 },
@@ -990,7 +893,6 @@ function setupCharacterCounters() {
     textAreas.forEach(config => {
         const textarea = q(config.id);
         if (textarea) {
-            // Create counter element
             const counter = document.createElement('div');
             counter.id = 'counter_' + config.id;
             counter.style.fontSize = '10pt';
@@ -998,12 +900,10 @@ function setupCharacterCounters() {
             counter.style.color = 'green';
             textarea.parentElement.appendChild(counter);
             
-            // Update counter on input
             textarea.addEventListener('input', function() {
                 updateCharCounter(this, counter, config.maxChars, config.maxLines, config.charsPerLine);
             });
             
-            // Initialize counter
             updateCharCounter(textarea, counter, config.maxChars, config.maxLines, config.charsPerLine);
         }
     });
@@ -1015,7 +915,6 @@ function updateCharCounter(textarea, counterElement, maxChars, maxLines, charsPe
     const lineCount = lines.length;
     const charCount = content.length;
     
-    // Check if any line exceeds max chars per line
     let longestLine = 0;
     lines.forEach(line => {
         if (line.length > longestLine) longestLine = line.length;
@@ -1024,7 +923,6 @@ function updateCharCounter(textarea, counterElement, maxChars, maxLines, charsPe
     const counterText = `${charCount} / ${maxChars.toLocaleString()} chars | ${lineCount} / ${maxLines} lines | Longest line: ${longestLine} / ${charsPerLine}`;
     counterElement.textContent = counterText;
     
-    // Color coding
     if (lineCount > maxLines || charCount > maxChars || longestLine > charsPerLine) {
         counterElement.style.color = 'red';
         counterElement.style.fontWeight = 'bold';
@@ -1037,7 +935,6 @@ function updateCharCounter(textarea, counterElement, maxChars, maxLines, charsPe
     }
 }
 
-/* ========== Auto-uppercase for narrative fields ========== */
 function convertToUppercase(field) {
     if (field) {
         field.addEventListener('input', function() {
@@ -1049,9 +946,7 @@ function convertToUppercase(field) {
     }
 }
 
-/* ========== Setup Narrative Fields ========== */
 function setupNarrativeFields() {
-    // Field 72Z and 79Z should be uppercase
     const narrativeFields = [
         '_070_of72z_sender_to_receiver_information',
         '_080_of79z_narrative'
@@ -1065,9 +960,7 @@ function setupNarrativeFields() {
     });
 }
 
-/* ========== Tooltip Helper for Complex Fields ========== */
 function setupTooltips() {
-    // Add tooltip for RCB code in field 72Z
     const field72Z = q("_070_of72z_sender_to_receiver_information");
     if (field72Z) {
         const tooltip = document.createElement('div');
@@ -1077,7 +970,6 @@ function setupTooltips() {
         field72Z.parentElement.appendChild(tooltip);
     }
     
-    // Add tooltip for field 79Z
     const field79Z = q("_080_of79z_narrative");
     if (field79Z) {
         const tooltip = document.createElement('div');
@@ -1087,7 +979,6 @@ function setupTooltips() {
         field79Z.parentElement.appendChild(tooltip);
     }
     
-    // Add tooltip for Party Identifier fields
     const partyIdTooltipText = '<strong>Format:</strong> /X/ACCOUNTNUMBER (e.g., /A/123456789)<br>' +
                                'X = Single letter, followed by slash, then account details (max 34 chars)';
     
@@ -1113,14 +1004,11 @@ function setupTooltips() {
     });
 }
 
-/* ========== Initialize on Page Load ========== */
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Initializing MT756 form...');
     
-    // Setup tab navigation
     setupTabNavigation();
     
-    // Setup option field handlers
     const optionHandlers = [
         { id: "_050_of53a_senders_correspondent", handler: handle53aOption },
         { id: "_060_of54a_receivers_correspondent", handler: handle54aOption }
@@ -1130,26 +1018,21 @@ document.addEventListener("DOMContentLoaded", function() {
         const element = q(config.id);
         if (element) {
             element.addEventListener("change", config.handler);
-            config.handler(); // Initialize on load
+            config.handler(); 
         }
     });
     
-    // Setup real-time validations
     setupRealtimeValidations();
     
-    // Setup character counters
     setupCharacterCounters();
     
-    // Setup narrative fields
     setupNarrativeFields();
     
-    // Setup tooltips
     setupTooltips();
     
     console.log('MT756 form initialized successfully');
 });
 
-/* ========== Export functions for external use ========== */
 window.validateMT756 = validateMT756;
 window.getFieldValue = getFieldValue;
 window.isFieldEmpty = isFieldEmpty;

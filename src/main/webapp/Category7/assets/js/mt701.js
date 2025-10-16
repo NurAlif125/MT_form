@@ -4,19 +4,14 @@
  */
 
 $(document).ready(function() {
-    // Initialize form on page load
     initializeMT701Form();
     
-    // Setup tab navigation
     setupTabNavigation();
     
-    // Setup real-time validations
     setupRealtimeValidations();
     
-    // Setup character counters
     setupCharacterCounters();
     
-    // Setup field helpers
     setupFieldHelpers();
 });
 
@@ -24,71 +19,56 @@ $(document).ready(function() {
 function initializeMT701Form() {
     console.log('Initializing MT 701 form...');
     
-    // Set default Number to 2 if empty (MT 701 starts at 2)
     if (!$('#_010_mf27_number').val()) {
         $('#_010_mf27_number').val('2');
     }
-    
-    // Set default Total to 2 if empty
+
     if (!$('#_011_mf27_total').val()) {
         $('#_011_mf27_total').val('2');
     }
     
-    // Initialize field tooltips
     initializeFieldTooltips();
     
-    // Add placeholder hints to textareas
     addTextareaPlaceholders();
 }
 
-/**
- * Setup Tab Navigation
- */
+
 function setupTabNavigation() {
     $('.tabs li a').click(function(e) {
         e.preventDefault();
         var rel = $(this).attr('rel');
         
-        // Hide all tab contents
         $('.tabcontent').hide();
         
-        // Show selected tab content
         $('#' + rel).show();
         
-        // Update tab selection visual
         $('.tabs li').removeClass('selected');
         $(this).parent().addClass('selected');
     });
-    
-    // Show Body tab by default
+
     $('.tabs li:has(a[rel="view2"])').addClass('selected');
     $('#view2').show();
 }
 
-/**
- * Setup Real-time Validations
- */
+
 function setupRealtimeValidations() {
     
-    // ===== FIELD 27: Sequence of Total =====
+    //FIELD 27: Sequence of Total 
     $('#_010_mf27_number, #_011_mf27_total').on('blur', function() {
         validateField27Realtime();
     });
     
-    // Only allow numbers 0-9
     $('#_010_mf27_number, #_011_mf27_total').on('keypress', function(e) {
         return numbersonly2(e);
     });
     
-    // Auto-validate on input
     $('#_010_mf27_number, #_011_mf27_total').on('input', function() {
-        // Limit to 1 digit
         if ($(this).val().length > 1) {
             $(this).val($(this).val().substring(0, 1));
         }
     });
     
-    // ===== FIELD 20: Documentary Credit Number =====
+    //FIELD 20: Documentary Credit Number
     $('#_020_mf20_documentary_credit_number').on('blur', function() {
         validateField20Realtime();
     });
@@ -97,7 +77,6 @@ function setupRealtimeValidations() {
         return avoidSplChars(e);
     });
     
-    // ===== TEXT AREAS: Line length validation =====
     $('#_030_of45a_description_of_goods_and_or_services').on('blur', function() {
         checkLongLines('_030_of45a_description_of_goods_and_or_services', 'OF45A', 65);
     });
@@ -119,9 +98,6 @@ function setupRealtimeValidations() {
     });
 }
 
-/**
- * Setup Character Counters for Text Areas
- */
 function setupCharacterCounters() {
     var textareaFields = [
         { id: '_030_of45a_description_of_goods_and_or_services', counterId: 'counter_45a', maxLines: 100, maxChars: 6500 },
@@ -132,26 +108,20 @@ function setupCharacterCounters() {
     ];
     
     textareaFields.forEach(function(field) {
-        // Create counter element if it doesn't exist
         if ($('#' + field.counterId).length === 0) {
             $('#' + field.id).after(
                 '<div id="' + field.counterId + '" style="font-size:10pt; margin-top:5px; color:green;"></div>'
             );
         }
         
-        // Update counter on input
         $('#' + field.id).on('input', function() {
             updateCharacterCounter(field.id, field.counterId, field.maxLines, field.maxChars);
         });
         
-        // Initialize counter on page load
         updateCharacterCounter(field.id, field.counterId, field.maxLines, field.maxChars);
     });
 }
 
-/**
- * Update Character Counter Display
- */
 function updateCharacterCounter(textareaId, counterId, maxLines, maxChars) {
     var content = $('#' + textareaId).val();
     var lines = content.split('\n');
@@ -162,7 +132,6 @@ function updateCharacterCounter(textareaId, counterId, maxLines, maxChars) {
                       lineCount + ' / ' + maxLines + ' lines';
     $('#' + counterId).text(counterText);
     
-    // Color coding based on usage
     if (lineCount > maxLines || charCount > maxChars) {
         $('#' + counterId).css('color', 'red');
     } else if (lineCount > (maxLines * 0.8) || charCount > (maxChars * 0.8)) {
@@ -172,11 +141,8 @@ function updateCharacterCounter(textareaId, counterId, maxLines, maxChars) {
     }
 }
 
-/**
- * Setup Field Helpers
- */
+
 function setupFieldHelpers() {
-    // Add visual feedback on focus
     $('input[type="text"], textarea').on('focus', function() {
         $(this).css('border-color', '#4CAF50');
     });
@@ -184,17 +150,13 @@ function setupFieldHelpers() {
     $('input[type="text"], textarea').on('blur', function() {
         $(this).css('border-color', '');
     });
-    
-    // Auto-trim spaces on blur for text inputs
+
     $('input[type="text"]').on('blur', function() {
         $(this).val($(this).val().trim());
     });
 }
 
 
-/**
- * Validate Field 27 Real-time (T75)
- */
 function validateField27Realtime() {
     var number = $('#_010_mf27_number').val().trim();
     var total = $('#_011_mf27_total').val().trim();
@@ -213,49 +175,39 @@ function validateField27Realtime() {
     var totalInt = parseInt(total);
     var isValid = true;
     
-    // T75: Number must be 2-8 (MT 701 starts at 2)
     if (numberInt < 2 || numberInt > 8) {
         $('#_010_mf27_number').addClass('error-border');
         showInlineError('_010_mf27_number', 'Number must be 2-8 (Error T75). MT 701 starts at 2.');
         isValid = false;
     }
     
-    // T75: Total must be 2-8
     if (totalInt < 2 || totalInt > 8) {
         $('#_011_mf27_total').addClass('error-border');
         showInlineError('_011_mf27_total', 'Total must be 2-8 (Error T75)');
         isValid = false;
     }
     
-    // T75: Number must be <= Total
     if (numberInt > totalInt) {
         $('#_010_mf27_number').addClass('error-border');
         showInlineError('_010_mf27_number', 'Number must be ≤ Total (Error T75)');
         isValid = false;
     }
-    
-    // Usage Rule: Remind about sequence
+
     if (isValid && numberInt === 2) {
         showInlineInfo('_010_mf27_number', 'First MT 701 (Number = 2)');
     } else if (isValid && numberInt > 2) {
         showInlineInfo('_010_mf27_number', 'Subsequent MT 701 (Number = ' + numberInt + ')');
     }
-    
-    // Show success if all valid
+
     if (isValid) {
         $('#_010_mf27_number').addClass('valid-border');
         $('#_011_mf27_total').addClass('valid-border');
     }
 }
 
-/**
- * Validate Field 20 Real-time (T26)
- * Cannot start/end with '/' and cannot contain '//'
- */
 function validateField20Realtime() {
     var docCreditNumber = $('#_020_mf20_documentary_credit_number').val().trim();
     
-    // Clear previous feedback
     $('#_020_mf20_documentary_credit_number').removeClass('error-border valid-border');
     removeInlineError('_020_mf20_documentary_credit_number');
     
@@ -265,38 +217,31 @@ function validateField20Realtime() {
     
     var isValid = true;
     
-    // T26: Cannot start with slash
     if (docCreditNumber.startsWith('/')) {
         $('#_020_mf20_documentary_credit_number').addClass('error-border');
         showInlineError('_020_mf20_documentary_credit_number', 'Cannot start with "/" (Error T26)');
         isValid = false;
     }
-    
-    // T26: Cannot end with slash
+
     if (docCreditNumber.endsWith('/')) {
         $('#_020_mf20_documentary_credit_number').addClass('error-border');
         showInlineError('_020_mf20_documentary_credit_number', 'Cannot end with "/" (Error T26)');
         isValid = false;
     }
-    
-    // T26: Cannot contain consecutive slashes
+
     if (docCreditNumber.indexOf('//') !== -1) {
         $('#_020_mf20_documentary_credit_number').addClass('error-border');
         showInlineError('_020_mf20_documentary_credit_number', 'Cannot contain "//" (Error T26)');
         isValid = false;
     }
     
-    // Usage Rule: Must match field 20 in related MT 700
     if (isValid) {
         $('#_020_mf20_documentary_credit_number').addClass('valid-border');
         showInlineInfo('_020_mf20_documentary_credit_number', 'Must match field 20 in related MT 700');
     }
 }
 
-/**
- * Check Long Lines in Text Areas
- * MT 701: All narrative fields have max 65 characters per line
- */
+
 function checkLongLines(textareaId, fieldName, maxCharsPerLine) {
     var content = $('#' + textareaId).val();
     
@@ -325,9 +270,6 @@ function checkLongLines(textareaId, fieldName, maxCharsPerLine) {
     }
 }
 
-/**
- * Show Inline Error Message
- */
 function showInlineError(fieldId, message) {
     removeInlineError(fieldId);
     $('#' + fieldId).after(
@@ -337,9 +279,7 @@ function showInlineError(fieldId, message) {
     );
 }
 
-/**
- * Show Inline Warning Message
- */
+
 function showInlineWarning(fieldId, message) {
     removeInlineError(fieldId);
     $('#' + fieldId).after(
@@ -349,11 +289,7 @@ function showInlineWarning(fieldId, message) {
     );
 }
 
-/**
- * Show Inline Info Message
- */
 function showInlineInfo(fieldId, message) {
-    // Remove any existing info first
     $('#info_' + fieldId).remove();
     $('#' + fieldId).after(
         '<span class="inline-info" id="info_' + fieldId + '" style="color:blue; font-size:9pt; margin-left:10px; font-style:italic;">' + 
@@ -362,17 +298,12 @@ function showInlineInfo(fieldId, message) {
     );
 }
 
-/**
- * Remove Inline Error/Warning
- */
 function removeInlineError(fieldId) {
     $('#err_' + fieldId).remove();
     $('#info_' + fieldId).remove();
 }
 
-/**
- * Initialize Field Tooltips
- */
+
 function initializeFieldTooltips() {
     var tooltips = {
         '_010_mf27_number': 'Sequence number (2-8). For MT 701, Number starts at 2 and increments for each subsequent MT 701. Up to 7 MT 701 messages can be sent.',
@@ -392,31 +323,22 @@ function initializeFieldTooltips() {
     }
 }
 
-/**
- * Helper: Check if field has value
- */
+
 function hasValue(fieldId) {
     var value = $('#' + fieldId).val();
     return value && value.trim() !== '';
 }
 
-/**
- * Helper: Get field value
- */
+
 function getFieldValue(fieldId) {
     return $('#' + fieldId).val().trim();
 }
 
-/**
- * Helper: Set field value
- */
+
 function setFieldValue(fieldId, value) {
     $('#' + fieldId).val(value);
 }
 
-/**
- * Helper Functions from mt767.js
- */
 
 function textonly(e) {
     var code;
@@ -456,7 +378,6 @@ function avoidSplChars(e) {
     }
 }
 
-/* ===== Utilities ===== */
 function q(id) { 
     return document.getElementById(id); 
 }

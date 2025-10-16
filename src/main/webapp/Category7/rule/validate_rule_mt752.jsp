@@ -9,7 +9,6 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-    /* ===================== Custom Validators ===================== */
     $.validator.addMethod("regex", function(value, element, param) {
         return this.optional(element) || param.test(value);
     }, "Format tidak valid");
@@ -46,18 +45,15 @@ $(document).ready(function () {
         return !value.startsWith('/') && !value.endsWith('/') && !value.includes('//');
     }, "Tidak boleh diawali/diakhiri '/' atau berisi '//'..!!");
 
-    /* ===================== Validator Init ===================== */
     let validator = $("#form_mt752").validate({
         ignore: [],
         onkeyup: false,
         onfocusout: false,
         rules: {
-            /* ===== Header ===== */
             sender_logical_terminal: "required",
             receiver_institution: "required",
             priority: "required",
 
-            /* ===== Body Mandatory ===== */
             _010_mf20_documentary_credit_number: {
                 required: true,
                 maxlength: 16,
@@ -76,8 +72,6 @@ $(document).ready(function () {
                 isDateYYMMDD: true
             },
 
-            /* ===== Optional Fields ===== */
-            // Field 32B - Total Amount Advised
             _050_of32b_currency: {
                 isCurrency: true
             },
@@ -85,12 +79,10 @@ $(document).ready(function () {
                 isSwiftAmount: true
             },
 
-            // Field 71D - Charges Deducted
             _060_of71d_charges_deducted: {
                 maxlength: 210
             },
 
-            // Field 33a Option A - Net Amount
             _071_of33a_date: {
                 isDateYYMMDD: true
             },
@@ -101,7 +93,6 @@ $(document).ready(function () {
                 isSwiftAmount: true
             },
 
-            // Field 33a Option B - Net Amount
             _074_of33a_currency: {
                 isCurrency: true
             },
@@ -109,15 +100,12 @@ $(document).ready(function () {
                 isSwiftAmount: true
             },
 
-            // Field 53a - Sender's Correspondent
             _081_of53a_party_identifier: { maxlength: 35 },
             _082_of53a_identifier_code: { isBIC: true },
             _083_of53a_party_identifier: { maxlength: 35 },
             _084_of53a_location: { maxlength: 35 },
             _085_of53a_party_identifier: { maxlength: 35 },
             _086_of53a_name_address: { maxlength: 140 },
-
-            // Field 54a - Receiver's Correspondent
             _091_of54a_party_identifier: { maxlength: 35 },
             _092_of54a_identifier_code: { isBIC: true },
             _093_of54a_party_identifier: { maxlength: 35 },
@@ -125,18 +113,15 @@ $(document).ready(function () {
             _095_of54a_party_identifier: { maxlength: 35 },
             _096_of54a_name_address: { maxlength: 140 },
 
-            // Field 72Z - Sender to Receiver Information
             _100_of72z_sender_to_receiver_information: {
                 maxlength: 210
             },
 
-            // Field 79Z - Narrative
             _110_of79z_narrative: {
                 maxlength: 1750
             }
         },
         messages: {
-            /* ===== Header ===== */
             sender_logical_terminal: {
                 required: "Sender Logical Terminal wajib diisi..!!"
             },
@@ -147,7 +132,6 @@ $(document).ready(function () {
                 required: "Priority wajib diisi..!!"
             },
 
-            /* ===== Body Mandatory ===== */
             _010_mf20_documentary_credit_number: {
                 required: "Field 20 (Documentary Credit Number) wajib diisi..!!",
                 maxlength: "Field 20 maksimal 16 karakter..!!",
@@ -166,7 +150,6 @@ $(document).ready(function () {
                 isDateYYMMDD: "Field 30 harus format YYMMDD yang valid (Error T50)..!!"
             },
 
-            /* ===== Optional Fields ===== */
             _050_of32b_currency: {
                 isCurrency: "Field 32B Currency harus 3 huruf (ISO 4217) (Error T52)..!!"
             },
@@ -244,7 +227,6 @@ $(document).ready(function () {
             tableHTML += `</table>`;
             errorContainer.innerHTML = tableHTML;
 
-            // Click handler for error rows
             document.querySelectorAll(".error__row").forEach(row => {
                 row.addEventListener("click", function () {
                     let inputId = this.getAttribute("data-input-id");
@@ -270,17 +252,14 @@ $(document).ready(function () {
         }
     });
 
-    /* ===================== Button Validate ===================== */
     $("#btn-validate").click(function () {
         let isValid = $("#form_mt752").valid();
         if (!isValid) {
             return false;
         }
 
-        // Cross-field validations
         let errMsgs = [];
 
-        // Get field values
         let f23 = $("#_030_mf23_further_identification").val();
         let f32bCur = $("#_050_of32b_currency").val().trim();
         let f32bAmt = $("#_051_of32b_amount").val().trim();
@@ -295,12 +274,10 @@ $(document).ready(function () {
         let f54a = $("#_090_of54a_receivers_correspondent").val();
         let f72z = $("#_100_of72z_sender_to_receiver_information").val().trim();
 
-        // Rule C1: If 32B and 71D both present → 33a must be present
         if (f32bCur && f32bAmt && f71d && !f33aOpt) {
             errMsgs.push("Rule C1 (Error C18): Jika Field 32B dan 71D ada, maka Field 33a wajib diisi.");
         }
 
-        // Rule C2: Currency in 32B and 33a must match
         if (f32bCur && f33aOpt) {
             let f33aCur = (f33aOpt === "A") ? f33aCurA : f33aCurB;
             if (f33aCur && f32bCur !== f33aCur) {
@@ -308,22 +285,18 @@ $(document).ready(function () {
             }
         }
 
-        // Usage Rule: REMITTED or DEBIT → 33a Option A required
         if ((f23 === "REMITTED" || f23 === "DEBIT") && f33aOpt !== "A") {
             errMsgs.push("Usage Rule: Jika Field 23 = REMITTED/DEBIT, maka Field 33a Option A (dengan Date) wajib diisi.");
         }
 
-        // Usage Rule: If 33a Option A used, all fields must be filled
         if (f33aOpt === "A" && (!f33aDateA || !f33aCurA || !f33aAmtA)) {
             errMsgs.push("Field 33a Option A: Date, Currency, dan Amount wajib diisi semua.");
         }
 
-        // Usage Rule: If 33a Option B used, both fields must be filled
         if (f33aOpt === "B" && (!f33aCurB || !f33aAmtB)) {
             errMsgs.push("Field 33a Option B: Currency dan Amount wajib diisi.");
         }
 
-        // Usage Rule: RCB code in 72Z → 53a and 54a must be present
         if (f72z && f72z.includes("RCB") && (!f53a || !f54a)) {
             errMsgs.push("Usage Rule: Jika Field 72Z berisi kode RCB, maka Field 53a dan 54a wajib diisi.");
         }
@@ -336,7 +309,6 @@ $(document).ready(function () {
         alert("Semua validasi berhasil!");
     });
 
-    /* ===================== Submit Handler ===================== */
     $("#submit_mt").click(function (e) {
         e.preventDefault();
         
@@ -346,10 +318,8 @@ $(document).ready(function () {
             return false;
         }
 
-        // Cross-field validations
         let errMsgs = [];
 
-        // Get field values
         let f23 = $("#_030_mf23_further_identification").val();
         let f32bCur = $("#_050_of32b_currency").val().trim();
         let f32bAmt = $("#_051_of32b_amount").val().trim();
@@ -364,12 +334,10 @@ $(document).ready(function () {
         let f54a = $("#_090_of54a_receivers_correspondent").val();
         let f72z = $("#_100_of72z_sender_to_receiver_information").val().trim();
 
-        // Rule C1: If 32B and 71D both present → 33a must be present
         if (f32bCur && f32bAmt && f71d && !f33aOpt) {
             errMsgs.push("Rule C1 (Error C18): Jika Field 32B dan 71D ada, maka Field 33a wajib diisi.");
         }
 
-        // Rule C2: Currency in 32B and 33a must match
         if (f32bCur && f33aOpt) {
             let f33aCur = (f33aOpt === "A") ? f33aCurA : f33aCurB;
             if (f33aCur && f32bCur !== f33aCur) {
@@ -377,27 +345,22 @@ $(document).ready(function () {
             }
         }
 
-        // Usage Rule: REMITTED or DEBIT → 33a Option A required
         if ((f23 === "REMITTED" || f23 === "DEBIT") && f33aOpt !== "A") {
             errMsgs.push("Usage Rule: Jika Field 23 = REMITTED/DEBIT, maka Field 33a Option A (dengan Date) wajib diisi.");
         }
 
-        // Usage Rule: If 33a Option A used, all fields must be filled
         if (f33aOpt === "A" && (!f33aDateA || !f33aCurA || !f33aAmtA)) {
             errMsgs.push("Field 33a Option A: Date, Currency, dan Amount wajib diisi semua.");
         }
 
-        // Usage Rule: If 33a Option B used, both fields must be filled
         if (f33aOpt === "B" && (!f33aCurB || !f33aAmtB)) {
             errMsgs.push("Field 33a Option B: Currency dan Amount wajib diisi.");
         }
 
-        // Usage Rule: RCB code in 72Z → 53a and 54a must be present
         if (f72z && f72z.includes("RCB") && (!f53a || !f54a)) {
             errMsgs.push("Usage Rule: Jika Field 72Z berisi kode RCB, maka Field 53a dan 54a wajib diisi.");
         }
 
-        // Field 32B: If currency filled, amount must be filled too
         if ((f32bCur && !f32bAmt) || (!f32bCur && f32bAmt)) {
             errMsgs.push("Field 32B: Currency dan Amount harus diisi bersamaan.");
         }
@@ -410,9 +373,6 @@ $(document).ready(function () {
         $("#form_mt752").submit();
     });
 
-    /* ===================== Initialize Option Visibility ===================== */
-    
-    // Field 33a - Net Amount
     if ($("#_070_of33a_net_amount").val() !== "") {
         let opt = $("#_070_of33a_net_amount").val();
         if (opt === "A") {
@@ -427,7 +387,6 @@ $(document).ready(function () {
         $("#div_070_of33a_B").hide();
     }
 
-    // Field 53a - Sender's Correspondent
     if ($("#_080_of53a_senders_correspondent").val() !== "") {
         let opt = $("#_080_of53a_senders_correspondent").val();
         $("#div_080_of53a_A").toggle(opt === "A");
@@ -437,7 +396,6 @@ $(document).ready(function () {
         $("#div_080_of53a_A, #div_080_of53a_B, #div_080_of53a_D").hide();
     }
 
-    // Field 54a - Receiver's Correspondent
     if ($("#_090_of54a_receivers_correspondent").val() !== "") {
         let opt = $("#_090_of54a_receivers_correspondent").val();
         $("#div_090_of54a_A").toggle(opt === "A");

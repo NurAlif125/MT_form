@@ -14,12 +14,10 @@
             onkeyup: false,
             onfocusout: false,
             rules: {
-                // --- Header ---
                 sender_logical_terminal: "required",
                 receiver_institution: "required",
                 priority: "required",
 
-                // --- Mandatory Body Fields ---
                 _010_mf20_sender_reference: {
                     required: true,
                     regex: /^(?!\/)(?!.*\/\/)(?!.*\/$).{1,16}$/
@@ -29,17 +27,14 @@
                     regex: /^(?!\/)(?!.*\/\/)(?!.*\/$).{1,16}$/
                 },
 
-                // --- MF32B Total Amount Claimed ---
                 _030_mf32b_currency: {
                     required: true,
                     regex: /^[A-Z]{3}$/
                 },
                 _031_mf32b_amount: {
                     required: true
-                    // REMOVED: regex validation - handled by currency-specific validation in extraChecks()
                 },
 
-                // --- MF33A Amount Reimbursed or Paid ---
                 _040_mf33a_date: {
                     required: true,
                     regex: /^\d{6}$/
@@ -50,10 +45,8 @@
                 },
                 _042_mf33a_amount: {
                     required: true
-                    // REMOVED: regex validation - handled by currency-specific validation in extraChecks()
                 },
 
-                // --- OF53a Sender's Correspondent (optional) ---
                 _050_of53a_senders_correspondent: {
                     regex: /^[ABD]?$/
                 },
@@ -63,9 +56,6 @@
                 _054_of53a_location: {
                     maxlength: 35
                 }
-                // REMOVED: _056_of53a_name_address maxlength - handled by per-line validation in extraChecks()
-
-                // --- OF54a Receiver's Correspondent (optional) ---
                 _060_of54a_receivers_correspondent: {
                     regex: /^[ABD]?$/
                 },
@@ -75,15 +65,9 @@
                 _064_of54a_location: {
                     maxlength: 35
                 }
-                // REMOVED: _066_of54a_name_address maxlength - handled by per-line validation in extraChecks()
 
-                // --- OF72Z / OF79Z ---
-                // REMOVED: maxlength for these fields - handled by per-line validation in extraChecks()
-                // Field 72Z: 6 lines × 35 chars
-                // Field 79Z: 35 lines × 50 chars
             },
             messages: {
-                // Header
                 sender_logical_terminal: {
                     required: "Sender Logical Terminal must be filled"
                 },
@@ -94,7 +78,6 @@
                     required: "Priority must be filled"
                 },
 
-                // Mandatory Body
                 _010_mf20_sender_reference: {
                     required: "Field 20 (Sender's Reference) is mandatory",
                     regex: "Field 20: Invalid format (Error T26). Cannot start/end with '/' or contain '//'"
@@ -104,7 +87,6 @@
                     regex: "Field 21: Invalid format (Error T26). Cannot start/end with '/' or contain '//'"
                 },
 
-                // MF32B
                 _030_mf32b_currency: {
                     required: "Field 32B Currency is mandatory",
                     regex: "Field 32B Currency must be 3 letters (Error T52)"
@@ -113,7 +95,6 @@
                     required: "Field 32B Amount is mandatory"
                 },
 
-                // MF33A
                 _040_mf33a_date: {
                     required: "Field 33A Date is mandatory",
                     regex: "Field 33A Date must be YYMMDD format (Error T50)"
@@ -126,12 +107,10 @@
                     required: "Field 33A Amount is mandatory"
                 },
 
-                // OF53a
                 _052_of53a_identifier_code: {
                     regex: "Field 53a BIC invalid (Error T27/T28/T29/C05)"
                 },
 
-                // OF54a
                 _062_of54a_identifier_code: {
                     regex: "Field 54a BIC invalid (Error T27/T28/T29/C05)"
                 }
@@ -212,7 +191,6 @@
             }
         });
 
-        // --- Button Validate ---
         $("#btn-validate").click(function () {
             let isValid = $("#form_mt756").valid();
             if (isValid && extraChecks()) {
@@ -220,7 +198,6 @@
             }
         });
 
-        // --- Button Submit ---
         $("#submit_mt").click(function (e) {
             e.preventDefault();
             let isValid = $("#form_mt756").valid();
@@ -231,24 +208,17 @@
             }
         });
 
-        // --- Custom Regex Validator ---
         $.validator.addMethod("regex", function (value, element, param) {
             return this.optional(element) || param.test(value);
         }, "Invalid format");
 
-        // --- Extra Validation Checks (SWIFT MT756 Rules) ---
         function extraChecks() {
-            // ===== CURRENCY-SPECIFIC DECIMAL VALIDATION =====
-            // Currencies with 0 decimals
             const DEC0 = new Set(['JPY', 'KRW', 'VND', 'HUF', 'XOF', 'XAF', 'XPF', 'CLP', 'ISK', 'PYG', 'UGX', 'VUV']);
-            // Currencies with 3 decimals
             const DEC3 = new Set(['BHD', 'JOD', 'KWD', 'OMR', 'TND', 'LYD', 'IQD']);
             
-            // Validate Amount format with currency-specific decimals
             function validateAmount(ccy, amt, fieldName) {
                 if (!amt) return true;
                 
-                // Must contain comma (Error T40)
                 if (!amt.includes(',')) {
                     alert(`${fieldName}: Amount must contain comma (Error T40)`);
                     return false;
@@ -260,19 +230,17 @@
                     return false;
                 }
                 
-                // Integer part must have at least 1 digit (Error C03)
                 if (!/^\d+$/.test(parts[0]) || parts[0].length === 0) {
                     alert(`${fieldName}: Invalid integer part (Error C03)`);
                     return false;
                 }
                 
                 const decimalPart = parts[1];
-                let allowedDecimals = 2; // Default
+                let allowedDecimals = 2; 
                 
                 if (DEC0.has(ccy)) allowedDecimals = 0;
                 if (DEC3.has(ccy)) allowedDecimals = 3;
                 
-                // Check decimal places (Error T43)
                 if (decimalPart.length > allowedDecimals) {
                     alert(`${fieldName}: Maximum ${allowedDecimals} decimal places for ${ccy} (Error T43)`);
                     return false;
@@ -286,7 +254,6 @@
                 return true;
             }
             
-            // ===== VALIDATE AMOUNTS =====
             let ccy32B = $("#_030_mf32b_currency").val().toUpperCase().trim();
             let amt32B = $("#_031_mf32b_amount").val().trim();
             
@@ -307,14 +274,12 @@
                 }
             }
 
-            // ===== Rule C1 (Error C02): Currency 32B and 33A must be the same =====
             if (ccy32B && ccy33A && ccy32B !== ccy33A) {
                 alert("Error C02 (Rule C1): Currency code in fields 32B and 33A must be the same");
                 $("#_030_mf32b_currency").focus();
                 return false;
             }
 
-            // ===== Rule T50: Date must be valid YYMMDD =====
             let date33A = $("#_040_mf33a_date").val().trim();
             if (date33A && !/^\d{6}$/.test(date33A)) {
                 alert("Field 33A Date must be YYMMDD format (Error T50)");
@@ -322,7 +287,6 @@
                 return false;
             }
 
-            // Validate date is valid (not 990231, etc.)
             if (date33A && date33A.length === 6) {
                 let yy = parseInt(date33A.slice(0, 2), 10);
                 let mm = parseInt(date33A.slice(2, 4), 10);
@@ -340,7 +304,6 @@
                     return false;
                 }
 
-                // Days in month validation
                 const dim = [31, (yy % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
                 if (dd > dim[mm - 1]) {
                     alert("Field 33A Date: Invalid date for the month (Error T50)");
@@ -349,19 +312,16 @@
                 }
             }
 
-            // ===== NEW: Validate Party Identifier format [/1!a][/34x] =====
             function validatePartyIdentifier(fieldId, fieldName) {
                 let value = $(fieldId).val().trim();
                 if (!value) return true;
                 
-                // Must start with /
                 if (!value.startsWith('/')) {
                     alert(`${fieldName}: Must start with '/' (Error T26)`);
                     $(fieldId).focus();
                     return false;
                 }
                 
-                // Format: /X/xxxxx where X is single letter, xxxxx max 34 chars
                 const regex = /^\/[A-Z]\/[^\s\/]{1,34}$/;
                 if (!regex.test(value)) {
                     alert(`${fieldName}: Invalid format. Expected: /A/ACCOUNTNUMBER (Error T26)`);
@@ -372,7 +332,6 @@
                 return true;
             }
             
-            // Validate Party Identifiers for 53a
             let opt53 = $("#_050_of53a_senders_correspondent").val();
             if (opt53 === "A") {
                 if (!validatePartyIdentifier("#_051_of53a_party_identifier", "Field 53a Party Identifier")) return false;
@@ -382,7 +341,6 @@
                 if (!validatePartyIdentifier("#_055_of53a_party_identifier", "Field 53a Party Identifier")) return false;
             }
             
-            // Validate Party Identifiers for 54a
             let opt54 = $("#_060_of54a_receivers_correspondent").val();
             if (opt54 === "A") {
                 if (!validatePartyIdentifier("#_061_of54a_party_identifier", "Field 54a Party Identifier")) return false;
@@ -392,21 +350,18 @@
                 if (!validatePartyIdentifier("#_065_of54a_party_identifier", "Field 54a Party Identifier")) return false;
             }
 
-            // ===== NEW: Validate Name & Address (4*35x) =====
             function validateNameAddress(fieldId, fieldName) {
                 let value = $(fieldId).val().trim();
                 if (!value) return true;
                 
                 const lines = value.split('\n');
                 
-                // Max 4 lines
                 if (lines.length > 4) {
                     alert(`${fieldName}: Maximum 4 lines allowed (Error T13)`);
                     $(fieldId).focus();
                     return false;
                 }
                 
-                // Each line max 35 characters
                 for (let i = 0; i < lines.length; i++) {
                     if (lines[i].length > 35) {
                         alert(`${fieldName}: Line ${i + 1} exceeds 35 characters (Error T13)`);
@@ -418,17 +373,14 @@
                 return true;
             }
             
-            // Validate Name & Address for 53a Option D
             if (opt53 === "D") {
                 if (!validateNameAddress("#_056_of53a_name_address", "Field 53a Name & Address")) return false;
             }
             
-            // Validate Name & Address for 54a Option D
             if (opt54 === "D") {
                 if (!validateNameAddress("#_066_of54a_name_address", "Field 54a Name & Address")) return false;
             }
 
-            // ===== MT 756 Usage Rule: RCB code may only be used if both 53a and 54a are present =====
             let field72Z = $("#_070_of72z_sender_to_receiver_information").val().trim().toUpperCase();
             if (field72Z.includes("/RCB/") || field72Z.includes("RCB/")) {
                 let field53a = $("#_050_of53a_senders_correspondent").val().trim();
@@ -441,7 +393,6 @@
                 }
             }
 
-            // ===== Validate Field 72Z: Max 6 lines, 35 chars per line =====
             if (field72Z) {
                 const lines72Z = field72Z.split('\n');
                 if (lines72Z.length > 6) {
@@ -458,7 +409,6 @@
                 }
             }
 
-            // ===== Validate Field 79Z: Max 35 lines, 50 chars per line =====
             let field79Z = $("#_080_of79z_narrative").val().trim();
             if (field79Z) {
                 const lines79Z = field79Z.split('\n');
@@ -476,7 +426,6 @@
                 }
             }
 
-            // ===== Validate Option A requires BIC =====
             let option53a = $("#_050_of53a_senders_correspondent").val();
             if (option53a === "A") {
                 let bic53a = $("#_052_of53a_identifier_code").val().trim();
@@ -497,7 +446,6 @@
                 }
             }
 
-            // ===== Validate Option B requires Location =====
             if (option53a === "B") {
                 let loc53a = $("#_054_of53a_location").val().trim();
                 if (!loc53a) {
@@ -516,7 +464,6 @@
                 }
             }
 
-            // ===== Validate Option D requires Name & Address =====
             if (option53a === "D") {
                 let nameAddr53a = $("#_056_of53a_name_address").val().trim();
                 if (!nameAddr53a) {
@@ -538,10 +485,7 @@
             return true;
         }
 
-        // --- Toggle Groups for Option Fields ---
-        // FIXED: Make function accessible in global scope
         window.toggleGroups = function() {
-            // OF53a Sender's Correspondent
             let opt53 = $("#_050_of53a_senders_correspondent").val();
             $("#div_050_of53a_A, #div_050_of53a_B, #div_050_of53a_D").hide();
             
@@ -553,7 +497,6 @@
                 $("#div_050_of53a_D").show();
             }
 
-            // OF54a Receiver's Correspondent
             let opt54 = $("#_060_of54a_receivers_correspondent").val();
             $("#div_060_of54a_A, #div_060_of54a_B, #div_060_of54a_D").hide();
             
@@ -566,10 +509,8 @@
             }
         };
 
-        // Bind change events
         $("#_050_of53a_senders_correspondent, #_060_of54a_receivers_correspondent").change(window.toggleGroups);
 
-        // Initial call to set correct state on page load
         window.toggleGroups();
 
     });
@@ -577,11 +518,9 @@
 
 <link rel="stylesheet" type="text/css" href="css/validate.css" />
 
-<!-- Rule View: Initialize form state based on existing values -->
 <script language="javascript">
     $(document).ready(function () {
 
-        // Initialize OF53a based on existing values
         if ($("#_052_of53a_identifier_code").val() != "") {
             $("#_050_of53a_senders_correspondent").val("A");
         } else if ($("#_054_of53a_location").val() != "") {
@@ -590,7 +529,6 @@
             $("#_050_of53a_senders_correspondent").val("D");
         }
 
-        // Initialize OF54a based on existing values
         if ($("#_062_of54a_identifier_code").val() != "") {
             $("#_060_of54a_receivers_correspondent").val("A");
         } else if ($("#_064_of54a_location").val() != "") {
@@ -599,7 +537,6 @@
             $("#_060_of54a_receivers_correspondent").val("D");
         }
 
-        // Trigger toggleGroups after initialization
         if (typeof window.toggleGroups === 'function') {
             setTimeout(function() {
                 window.toggleGroups();

@@ -8,8 +8,6 @@
 <link rel="stylesheet" type="text/css" href="css/validate.css" />
 <script type="text/javascript">
     $(document).ready(function () {
-
-        // ================= Custom Regex Validators =================
         $.validator.addMethod("isDateYYMMDD", function (value, element) {
             if (this.optional(element)) return true;
             if (!/^\d{6}$/.test(value)) return false;
@@ -32,13 +30,10 @@
         $.validator.addMethod("isAmount", function (value, element) {
             if (this.optional(element)) return true;
             
-            // Must contain comma
             if (!value.includes(',')) return false;
             
-            // Format validation
             if (!/^\d{1,12}(,\d{0,3})?$/.test(value)) return false;
             
-            // Cannot be zero
             const amountValue = parseFloat(value.replace(',', '.'));
             if (amountValue === 0) return false;
             
@@ -75,13 +70,11 @@
             return true;
         }, "Error C03: Line exceeds maximum characters");
 
-        // ================= Main Form Validator =================
         let validator = $("#form_mt710").validate({
             ignore: [],
             onkeyup: false,
             onfocusout: false,
             rules: {
-                // ========== HEADER ==========
                 sender_logical_terminal: {
                     required: true,
                     input_type: "Sender Logical Terminal",
@@ -97,10 +90,7 @@
                     input_type: "Priority",
                     location: "Header"
                 },
-
-                // ========== BODY - MANDATORY FIELDS ==========
                 
-                // Field 27: Sequence of Total
                 _010_mf27_number: {
                     required: true,
                     min: 1,
@@ -116,7 +106,6 @@
                     location: "Body"
                 },
 
-                // Field 40B: Form of Documentary Credit
                 _020_mf40b_form_of_documentary_credit_type: {
                     required: true,
                     input_type: "MF40B Form of Documentary Credit",
@@ -128,7 +117,6 @@
                     location: "Body"
                 },
 
-                // Field 20: Sender's Reference
                 _030_mf20_sender_reference: {
                     required: true,
                     maxlength: 16,
@@ -137,7 +125,6 @@
                     location: "Body"
                 },
 
-                // Field 21: Documentary Credit Number
                 _040_mf21_documentary_credit_number: {
                     required: true,
                     maxlength: 16,
@@ -146,14 +133,12 @@
                     location: "Body"
                 },
 
-                // Field 23: Reference to Pre-Advice (Optional)
                 _050_of23_reference_to_preadvice: {
                     maxlength: 16,
                     input_type: "OF23 Reference to Pre-Advice",
                     location: "Body"
                 },
 
-                // Field 31C: Date of Issue
                 _060_mf31c_date_of_issue: {
                     required: true,
                     isDateYYMMDD: true,
@@ -161,7 +146,6 @@
                     location: "Body"
                 },
 
-                // Field 40E: Applicable Rules
                 _070_mf40e_applicable_rules: {
                     required: true,
                     input_type: "MF40E Applicable Rules",
@@ -173,7 +157,6 @@
                     location: "Body"
                 },
 
-                // Field 31D: Date and Place of Expiry
                 _080_mf31d_date_of_expiry: {
                     required: true,
                     isDateYYMMDD: true,
@@ -187,7 +170,6 @@
                     location: "Body"
                 },
 
-                // Field 52a: Issuing Bank (Option A)
                 _091_of52a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF52a Issuing Bank",
@@ -199,7 +181,6 @@
                     location: "Body"
                 },
 
-                // Field 52a: Issuing Bank (Option D)
                 _093_of52a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF52a Issuing Bank",
@@ -213,7 +194,6 @@
                     location: "Body"
                 },
 
-                // Field 50B: Non-Bank Issuer
                 _100_of50b_non_bank_issuer: {
                     maxlength: 140,
                     maxLines: 4,
@@ -222,7 +202,6 @@
                     location: "Body"
                 },
 
-                // Field 51a: Applicant Bank (Option A)
                 _111_of51a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF51a Applicant Bank",
@@ -234,7 +213,6 @@
                     location: "Body"
                 },
 
-                // Field 51a: Applicant Bank (Option D)
                 _113_of51a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF51a Applicant Bank",
@@ -248,7 +226,6 @@
                     location: "Body"
                 },
 
-                // Field 50: Applicant
                 _120_mf50_applicant: {
                     required: true,
                     maxlength: 140,
@@ -258,7 +235,6 @@
                     location: "Body"
                 },
 
-                // Field 59: Beneficiary
                 _130_mf59_account: {
                     maxlength: 35,
                     input_type: "MF59 Beneficiary",
@@ -273,7 +249,6 @@
                     location: "Body"
                 },
 
-                // Field 32B: Currency Code, Amount
                 _140_mf32b_currency: {
                     required: true,
                     isCurrency: true,
@@ -287,7 +262,6 @@
                     location: "Body"
                 },
 
-                // Field 39A: Percentage Credit Amount Tolerance
                 _150_of39a_tolerance_plus: {
                     isPercent: true,
                     input_type: "OF39A Percentage Credit Amount Tolerance",
@@ -299,7 +273,6 @@
                     location: "Body"
                 },
 
-                // Field 39C: Additional Amounts Covered
                 _160_of39c_additional_amounts_covered: {
                     maxlength: 140,
                     maxLines: 4,
@@ -308,7 +281,6 @@
                     location: "Body"
                 },
 
-                // Field 41a: Available With ... By ... (Option A)
                 _170_mf41a_available_with_by: {
                     required: true,
                     input_type: "MF41A Available With ... By ...",
@@ -320,7 +292,6 @@
                     location: "Body"
                 },
 
-                // Field 41a: Available With ... By ... (Option D)
                 _172_mf41d_name_and_address: {
                     maxlength: 140,
                     maxLines: 4,
@@ -329,14 +300,12 @@
                     location: "Body"
                 },
 
-                // Field 41a: By (Mandatory)
                 _173_mf41a_by: {
                     required: true,
                     input_type: "MF41A Available With ... By ...",
                     location: "Body"
                 },
 
-                // Field 42C: Drafts at ...
                 _180_of42c_drafts_at: {
                     maxlength: 105,
                     maxLines: 3,
@@ -345,7 +314,6 @@
                     location: "Body"
                 },
 
-                // Field 42a: Drawee (Option A)
                 _191_of42a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF42A Drawee",
@@ -357,7 +325,6 @@
                     location: "Body"
                 },
 
-                // Field 42a: Drawee (Option D)
                 _193_of42a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF42A Drawee",
@@ -371,7 +338,6 @@
                     location: "Body"
                 },
 
-                // Field 42M: Mixed Payment Details
                 _200_of42m_mixed_payment_details: {
                     maxlength: 140,
                     maxLines: 4,
@@ -380,7 +346,6 @@
                     location: "Body"
                 },
 
-                // Field 42P: Negotiation/Deferred Payment Details
                 _210_of42p_negotiation: {
                     maxlength: 140,
                     maxLines: 4,
@@ -389,54 +354,46 @@
                     location: "Body"
                 },
 
-                // Field 43P: Partial Shipments
                 _220_of43p_partial_shipments: {
                     input_type: "OF43P Partial Shipments",
                     location: "Body"
                 },
 
-                // Field 43T: Transhipment
                 _230_of43t_transhipment: {
                     input_type: "OF43T Transhipment",
                     location: "Body"
                 },
 
-                // Field 44A: Place of Taking in Charge
                 _240_of44a_place_taking_in_charge_dispatch_from_place_of_receipt: {
                     maxlength: 140,
                     input_type: "OF44A Place of Taking in Charge",
                     location: "Body"
                 },
 
-                // Field 44E: Port of Loading
                 _250_of44e_port_of_loading_airport_of_departure: {
                     maxlength: 140,
                     input_type: "OF44E Port of Loading",
                     location: "Body"
                 },
 
-                // Field 44F: Port of Discharge
                 _260_of44f_port_of_discharge_airport_of_destination: {
                     maxlength: 140,
                     input_type: "OF44F Port of Discharge",
                     location: "Body"
                 },
 
-                // Field 44B: Place of Final Destination
                 _270_of44b_place_of_final_destination_for_transportation_to_place_of_delivery: {
                     maxlength: 140,
                     input_type: "OF44B Place of Final Destination",
                     location: "Body"
                 },
 
-                // Field 44C: Latest Date of Shipment
                 _280_of44c_latest_date_of_shipment: {
                     isDateYYMMDD: true,
                     input_type: "OF44C Latest Date of Shipment",
                     location: "Body"
                 },
 
-                // Field 44D: Shipment Period
                 _290_of44d_shipment_period: {
                     maxlength: 390,
                     maxLines: 6,
@@ -445,7 +402,6 @@
                     location: "Body"
                 },
 
-                // Field 45A: Description of Goods
                 _300_of45a_description_of_goods_and_or_services: {
                     maxlength: 6500,
                     maxLines: 100,
@@ -454,7 +410,6 @@
                     location: "Body"
                 },
 
-                // Field 46A: Documents Required
                 _310_of46a_documents_required: {
                     maxlength: 6500,
                     maxLines: 100,
@@ -463,7 +418,6 @@
                     location: "Body"
                 },
 
-                // Field 47A: Additional Conditions
                 _320_of47a_additional_conditions: {
                     maxlength: 6500,
                     maxLines: 100,
@@ -472,7 +426,6 @@
                     location: "Body"
                 },
 
-                // Field 49G: Special Payment Conditions for Beneficiary
                 _330_of49g_special_payment_conditions_for_beneficiary: {
                     maxlength: 6500,
                     maxLines: 100,
@@ -481,7 +434,6 @@
                     location: "Body"
                 },
 
-                // Field 49H: Special Payment Conditions for Bank Only
                 _340_of49h_special_payment_conditions_for_bank_only: {
                     maxlength: 6500,
                     maxLines: 100,
@@ -490,7 +442,6 @@
                     location: "Body"
                 },
 
-                // Field 71D: Charges
                 _350_of71d_charges: {
                     maxlength: 210,
                     maxLines: 6,
@@ -499,7 +450,6 @@
                     location: "Body"
                 },
 
-                // Field 48: Period for Presentation
                 _360_of48_days: {
                     maxlength: 3,
                     input_type: "OF48 Period for Presentation",
@@ -511,14 +461,12 @@
                     location: "Body"
                 },
 
-                // Field 49: Confirmation Instructions
                 _370_mf49_confirmation_instructions: {
                     required: true,
                     input_type: "MF49 Confirmation Instructions",
                     location: "Body"
                 },
 
-                // Field 58a: Requested Confirmation Party (Option A)
                 _381_of58a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF58a Requested Confirmation Party",
@@ -530,7 +478,6 @@
                     location: "Body"
                 },
 
-                // Field 58a: Requested Confirmation Party (Option D)
                 _383_of58a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF58a Requested Confirmation Party",
@@ -544,7 +491,6 @@
                     location: "Body"
                 },
 
-                // Field 53a: Reimbursing Bank (Option A)
                 _391_of53a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF53a Reimbursing Bank",
@@ -556,7 +502,6 @@
                     location: "Body"
                 },
 
-                // Field 53a: Reimbursing Bank (Option D)
                 _393_of53a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF53a Reimbursing Bank",
@@ -570,7 +515,6 @@
                     location: "Body"
                 },
 
-                // Field 78: Instructions to Paying Bank
                 _400_of78_instructions_to_the_paying_accepting_negotiating_bank: {
                     maxlength: 780,
                     maxLines: 12,
@@ -579,7 +523,6 @@
                     location: "Body"
                 },
 
-                // Field 78D: Instructions from Intermediary Bank
                 _410_of78d_instructions_from_intermediary_bank: {
                     maxlength: 780,
                     maxLines: 12,
@@ -588,7 +531,6 @@
                     location: "Body"
                 },
 
-                // Field 57a: Advise Through Bank (Option A)
                 _421_of57a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF57a Advise Through Bank",
@@ -600,7 +542,6 @@
                     location: "Body"
                 },
 
-                // Field 57a: Advise Through Bank (Option B)
                 _423_of57a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF57a Advise Through Bank",
@@ -612,7 +553,6 @@
                     location: "Body"
                 },
 
-                // Field 57a: Advise Through Bank (Option D)
                 _425_of57a_party_identifier: {
                     maxlength: 35,
                     input_type: "OF57a Advise Through Bank",
@@ -626,7 +566,6 @@
                     location: "Body"
                 },
 
-                // Field 72Z: Sender to Receiver Information
                 _430_of72z_information: {
                     maxlength: 210,
                     maxLines: 6,
@@ -636,7 +575,6 @@
                 }
             },
             messages: {
-                // Header
                 sender_logical_terminal: {
                     required: "Sender Logical Terminal must be filled..!!"
                 },
@@ -647,7 +585,6 @@
                     required: "Priority must be filled..!!"
                 },
 
-                // Body - Mandatory
                 _010_mf27_number: {
                     required: "Error T75: MF27 Number must be filled..!!",
                     min: "Error T75: MF27 Number must be between 1-8",
@@ -714,7 +651,6 @@
                     return;
                 }
 
-                // Build error table
                 let errorContainer = document.getElementById("error-container");
                 if (!errorContainer) return;
 
@@ -747,7 +683,6 @@
                 tableHTML += `</tbody></table>`;
                 errorContainer.innerHTML = tableHTML;
 
-                // Add click handlers to error rows
                 document.querySelectorAll(".error__row").forEach(row => {
                     row.addEventListener("click", function () {
                         let inputId = this.getAttribute("data-input-id");
@@ -774,15 +709,12 @@
             }
         });
 
-        // ================= Cross-field & Network Validated Rules =================
         
         $("#form_mt710").submit(function (e) {
             
-            // Rule C4: Either field 52a or field 50B, but not both, must be present
             const field52aOption = $("#_090_of52a_issuing_bank").val();
             const field50B = $("#_100_of50b_non_bank_issuer").val().trim();
             
-            // Check if 52a has actual data
             let has52aData = false;
             if (field52aOption === "A") {
                 const bic = $("#_092_of52a_identifier_code").val().trim();
@@ -808,7 +740,6 @@
                 return false;
             }
 
-            // Rule C1: When used, fields 42C and 42a must both be present
             const field42C = $("#_180_of42c_drafts_at").val().trim();
             const field42aOption = $("#_190_of42a_drawee").val();
             
@@ -826,7 +757,6 @@
                 return false;
             }
 
-            // Rule C2: Either fields 42C and 42a together, or field 42M alone, or field 42P alone
             const field42M = $("#_200_of42m_mixed_payment_details").val().trim();
             const field42P = $("#_210_of42p_negotiation").val().trim();
             
@@ -845,7 +775,6 @@
                 return false;
             }
 
-            // Rule C3: Either field 44C or 44D, but not both
             const field44C = $("#_280_of44c_latest_date_of_shipment").val().trim();
             const field44D = $("#_290_of44d_shipment_period").val().trim();
             
@@ -856,7 +785,6 @@
                 return false;
             }
 
-            // Field 40E: Applicable Rules - OTHR requires narrative
             const field40E = $("#_070_mf40e_applicable_rules").val();
             const field40ENarrative = $("#_071_mf40e_narrative").val().trim();
             
@@ -874,7 +802,6 @@
                 return false;
             }
 
-            // Field 49 & 58a: Confirmation Instructions relationship - ENHANCED
             const field49 = $("#_370_mf49_confirmation_instructions").val();
             const field58aOption = $("#_380_of58a_requested_confirmation_party").val();
             
@@ -901,7 +828,6 @@
                 return false;
             }
 
-            // Field 27: Number cannot exceed Total
             const number = parseInt($("#_010_mf27_number").val());
             const total = parseInt($("#_011_mf27_total").val());
             
@@ -912,7 +838,6 @@
                 return false;
             }
 
-            // Validate Amount format based on Currency
             const currency = $("#_140_mf32b_currency").val().trim();
             const amount = $("#_141_mf32b_amount").val().trim();
             
@@ -932,7 +857,6 @@
                     return false;
                 }
                 
-                // Check decimal places based on currency
                 const DEC0 = ['JPY', 'KRW', 'VND', 'HUF', 'XOF', 'XAF', 'XPF', 'CLP', 'ISK', 'PYG', 'UGX', 'VUV'];
                 const DEC3 = ['BHD', 'JOD', 'KWD', 'OMR', 'TND', 'LYD', 'IQD'];
                 
@@ -969,7 +893,6 @@
             return true;
         });
 
-        // ================= Manual Validate Button =================
         $("#btn-validate").click(function () {
             if ($("#form_mt710").valid()) {
                 // Trigger the submit validation rules
@@ -979,11 +902,9 @@
             }
         });
 
-        // ================= Save Button Handler =================
         $("#submit_mt").click(function (e) {
             e.preventDefault();
             if ($("#form_mt710").valid()) {
-                // Trigger the submit validation rules
                 if ($("#form_mt710").triggerHandler("submit") !== false) {
                     $("#form_mt710").submit();
                 }
@@ -992,9 +913,7 @@
             }
         });
 
-        // ================= Dynamic Field Visibility Rules =================
 
-        // Field 40E: Show/hide narrative based on OTHR selection
         $("#_070_mf40e_applicable_rules").change(function () {
             if ($(this).val() === "OTHR") {
                 $("#div_070_mf40e_narrative").show();
@@ -1005,7 +924,6 @@
             }
         });
 
-        // Field 52a: Issuing Bank option toggle
         $("#_090_of52a_issuing_bank").change(function () {
             const option = $(this).val();
             
@@ -1022,7 +940,6 @@
             }
         });
 
-        // Field 51a: Applicant Bank option toggle
         $("#_110_of51a_applicant_bank").change(function () {
             const option = $(this).val();
             
@@ -1039,7 +956,6 @@
             }
         });
 
-        // Field 41a: Available With option toggle
         $("#_170_mf41a_available_with_by").change(function () {
             const option = $(this).val();
             
@@ -1056,7 +972,6 @@
             }
         });
 
-        // Field 42a: Drawee option toggle
         $("#_190_of42a_drawee").change(function () {
             const option = $(this).val();
             
@@ -1073,7 +988,6 @@
             }
         });
 
-        // Field 58a: Requested Confirmation Party option toggle
         $("#_380_of58a_requested_confirmation_party").change(function () {
             const option = $(this).val();
             
@@ -1090,7 +1004,6 @@
             }
         });
 
-        // Field 53a: Reimbursing Bank option toggle
         $("#_390_of53a_reimbursing_bank").change(function () {
             const option = $(this).val();
             
@@ -1107,7 +1020,6 @@
             }
         });
 
-        // Field 57a: Advise Through Bank option toggle
         $("#_420_of57a_advise_through_bank").change(function () {
             const option = $(this).val();
             
@@ -1128,9 +1040,6 @@
             }
         });
 
-        // ================= Initialize Field States on Page Load =================
-
-        // Initialize Field 40E
         if ($("#_070_mf40e_applicable_rules").val() === "OTHR") {
             $("#div_070_mf40e_narrative").show();
             $("#_071_mf40e_narrative").prop("disabled", false);
@@ -1139,7 +1048,6 @@
             $("#_071_mf40e_narrative").prop("disabled", true);
         }
 
-        // Initialize Field 52a
         const field52aOption = $("#_090_of52a_issuing_bank").val();
         if (field52aOption === "A") {
             $("#div_090_of52a_A").show();
@@ -1153,7 +1061,6 @@
             $("#_093_of52a_party_identifier, #_094_of52a_name_address").prop("disabled", true);
         }
 
-        // Initialize Field 51a
         const field51aOption = $("#_110_of51a_applicant_bank").val();
         if (field51aOption === "A") {
             $("#div_110_of51a_A").show();
@@ -1167,7 +1074,6 @@
             $("#_113_of51a_party_identifier, #_114_of51a_name_address").prop("disabled", true);
         }
 
-        // Initialize Field 41a
         const field41aOption = $("#_170_mf41a_available_with_by").val();
         if (field41aOption === "A") {
             $("#div_170_mf41a_A").show();
@@ -1181,7 +1087,6 @@
             $("#_172_mf41d_name_and_address").prop("disabled", true);
         }
 
-        // Initialize Field 42a
         const field42aOption = $("#_190_of42a_drawee").val();
         if (field42aOption === "A") {
             $("#div_190_of42a_A").show();
@@ -1195,7 +1100,6 @@
             $("#_193_of42a_party_identifier, #_194_of42d_name_and_address").prop("disabled", true);
         }
 
-        // Initialize Field 58a
         const field58aOption = $("#_380_of58a_requested_confirmation_party").val();
         if (field58aOption === "A") {
             $("#div_380_of58a_A").show();
@@ -1209,7 +1113,6 @@
             $("#_383_of58a_party_identifier, #_384_of58a_name_address").prop("disabled", true);
         }
 
-        // Initialize Field 53a
         const field53aOption = $("#_390_of53a_reimbursing_bank").val();
         if (field53aOption === "A") {
             $("#div_390_of53a_A").show();
@@ -1223,7 +1126,6 @@
             $("#_393_of53a_party_identifier, #_394_of53a_name_address").prop("disabled", true);
         }
 
-        // Initialize Field 57a
         const field57aOption = $("#_420_of57a_advise_through_bank").val();
         if (field57aOption === "A") {
             $("#div_420_of57a_A").show();

@@ -14,12 +14,10 @@ $(document).ready(function () {
         onfocusout: false,
 
         rules: {
-            // === Header (common) ===
             sender_logical_terminal: "required",
             receiver_institution: "required",
             priority: "required",
 
-            // === Body MT759 ===
             _010_mf27_number: {
                 required: true,
                 regex: /^[1-8]$/
@@ -40,7 +38,6 @@ $(document).ready(function () {
                 maxlength: 16
             },
             
-            // Field 52a - Issuer
             _061_of52a_party_identifier: {
                 maxlength: 35
             },
@@ -57,7 +54,6 @@ $(document).ready(function () {
             _070_mf23h_function_of_message: "required",
             _080_mf45d_narrative: "required",
             
-            // Field 23X - File Identification
             _090_of23x_file_identification: {
                 regex: /^(COUR|EMAL|FACT|FAXT|HOST|MAIL|OTHR)?$/
             },
@@ -238,12 +234,10 @@ $(document).ready(function () {
         }
     });
     
-    // === Custom regex method ===
     $.validator.addMethod("regex", function(value, element, param) {
         return this.optional(element) || param.test(value);
     }, "Invalid format");
 
-    // === Cross-field & Business Rules ===
     $("#form_mt759").on("submit", function (e) {
         
         // Field 27 logic: Number/Total range check
@@ -375,8 +369,6 @@ $(document).ready(function () {
 
 <script type="text/javascript">
     $(document).ready(function () {
-        
-        // === Field 52a - Issuer Option Handler ===
         $("#_060_of52a_issuer").change(function () {
             const option = $(this).val();
             
@@ -410,7 +402,6 @@ $(document).ready(function () {
             }
         });
         
-        // Initialize on page load based on existing values
         const issuerVal = $("#_060_of52a_issuer").val();
         if (issuerVal === "A") {
             $("#div_060_of52a_A").show();

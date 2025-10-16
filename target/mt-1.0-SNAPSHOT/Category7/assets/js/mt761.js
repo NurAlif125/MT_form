@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-/**
- * MT761.js
- */
 
 $(document).ready(function() {
     // Initialize form on page load

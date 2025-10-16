@@ -40,7 +40,6 @@
             onkeyup: false,
             onfocusout: false,
             rules: {
-                // === MANDATORY FIELDS ===
                 _010_mf27_number: "required",
                 _011_mf27_total: "required",
                 _020_mf40a_form_of_credit: "required",
@@ -137,9 +136,7 @@
             }
         });
 
-        /* ========== REAL-TIME FIELD VALIDATIONS ========== */
 
-        // FIELD 27 : Sequence of Total (T75)
         $("#_010_mf27_number, #_011_mf27_total").on("blur", function () {
             var number = parseInt($("#_010_mf27_number").val() || 0);
             var total = parseInt($("#_011_mf27_total").val() || 0);
@@ -161,7 +158,6 @@
             }
         });
 
-        // FIELD 40A : Form of Documentary Credit (T60)
         $("#_020_mf40a_form_of_credit").on("change", function () {
             var val = $(this).val().trim().toUpperCase();
             var allowed = ["IRREVOCABLE", "IRREVOCABLE TRANSFERABLE"];
@@ -172,7 +168,6 @@
             }
         });
 
-        // FIELD 20 : Documentary Credit Number (T26)
         $("#_030_mf20_documentary_credit_number").on("input", function () {
             var val = $(this).val().toUpperCase();
             val = val.replace(/[^A-Z0-9\/]/g, "").substring(0, 16);
@@ -195,13 +190,11 @@
             }
         });
 
-        // FIELD 23 : Reference to Pre-Advice
         $("#_040_of23_reference_to_preadvice").on("input", function () {
             var val = $(this).val().toUpperCase().substring(0, 16);
             $(this).val(val);
         });
 
-        // FIELD 31C : Date of Issue (T50)
         $("#_050_mf31c_date_of_issue").on("blur", function () {
             var val = $(this).val().trim();
             if (val !== "" && !isYYMMDD(val)) {
@@ -210,7 +203,6 @@
             }
         });
 
-        // FIELD 40E : Applicable Rules (T59, D81)
         $("#_060_mf40e_applicable_rules").on("change", function () {
             var val = $(this).val().trim().toUpperCase();
             var allowed = ["EUCP LATEST VERSION", "EUCPURR LATEST VERSION", "OTHR", "UCP LATEST VERSION", "UCPURR LATEST VERSION"];
@@ -235,7 +227,6 @@
             }
         });
 
-        // FIELD 31D : Date and Place of Expiry (T50)
         $("#_070_mf31d_date_of_expiry").on("blur", function () {
             var val = $(this).val().trim();
             if (val !== "" && !isYYMMDD(val)) {
@@ -249,14 +240,12 @@
             $(this).val(val);
         });
 
-        // FIELD 50 : Applicant
         $("#_090_mf50_applicant").on("input", function () {
             if ($(this).val().length > 140) {
                 $(this).val($(this).val().substring(0, 140));
             }
         });
 
-        // FIELD 59 : Beneficiary
         $("#_100_mf59_account").on("input", function () {
             if ($(this).val().length > 34) {
                 $(this).val($(this).val().substring(0, 34));
@@ -269,7 +258,6 @@
             }
         });
 
-        // FIELD 32B : Currency Code & Amount (T52, T40, T43, C03)
         $("#_110_mf32b_currency").on("input", function () {
             var val = $(this).val().toUpperCase().replace(/[^A-Z]/g, "").substring(0, 3);
             $(this).val(val);
@@ -295,7 +283,6 @@
                     return;
                 }
 
-                // Check currency-specific decimal rules
                 var err = checkAmountByCcy(ccy, amt);
                 if (err) {
                     alert("Field 32B Amount: " + err);
@@ -303,7 +290,6 @@
                     return;
                 }
                 
-                // Check zero amount
                 var amtValue = parseFloat(amt.replace(',', '.'));
                 if (amtValue === 0) {
                     alert("Amount must not be 0 (zero)");
@@ -312,20 +298,17 @@
             }
         });
 
-        // FIELD 39A : Tolerance
         $("#_120_of39a_tolerance_plus, #_121_of39a_tolerance_minus").on("input", function () {
             var val = $(this).val().replace(/[^0-9]/g, "").substring(0, 2);
             $(this).val(val);
         });
 
-        // FIELD 39C : Additional Amounts Covered
         $("#_130_of39c_additional_amounts_covered").on("input", function () {
             if ($(this).val().length > 140) {
                 $(this).val($(this).val().substring(0, 140));
             }
         });
 
-        // FIELD 41A : By (T68)
         $("#_143_mf41a_by").on("change", function () {
             var code = $(this).val();
             var allowed = ["BY ACCEPTANCE", "BY DEF PAYMENT", "BY MIXED PYMT", "BY NEGOTIATION", "BY PAYMENT"];
@@ -335,21 +318,18 @@
             }
         });
 
-        // FIELD 42C : Drafts at
         $("#_150_of42c_drafts_at").on("input", function () {
             if ($(this).val().length > 105) {
                 $(this).val($(this).val().substring(0, 105));
             }
         });
 
-        // FIELD 42M/42P : Payment Details
         $("#_170_of42m_mixed_payment_details, #_180_of42p_negotiation_deferred_payment_details").on("input", function () {
             if ($(this).val().length > 140) {
                 $(this).val($(this).val().substring(0, 140));
             }
         });
 
-        // FIELD 43P/43T : Partial Shipments / Transhipment (T64, T65)
         $("#_190_of43p_partial_shipments, #_200_of43t_transhipment").on("change", function () {
             var val = $(this).val().toUpperCase();
             var allowed = ["ALLOWED", "CONDITIONAL", "NOT ALLOWED"];
@@ -359,14 +339,12 @@
             }
         });
 
-        // FIELD 44A/44E/44F/44B : Place/Port fields (140z)
         $("#_210_of44a_place_taking_in_charge_dispatch_from_place_of_receipt, #_220_of44e_port_of_loading_airport_of_departure, #_230_of44f_port_of_discharge_airport_of_destination, #_240_of44b_place_of_final_destination_for_transportation_to_place_of_delivery").on("input", function () {
             if ($(this).val().length > 140) {
                 $(this).val($(this).val().substring(0, 140));
             }
         });
 
-        // FIELD 44C : Latest Date of Shipment (T50)
         $("#_250_of44c_latest_date_of_shipment").on("blur", function () {
             var val = $(this).val().trim();
             if (val !== "" && !isYYMMDD(val)) {
@@ -375,21 +353,18 @@
             }
         });
 
-        // FIELD 44D : Shipment Period
         $("#_260_of44d_shipment_period").on("input", function () {
             if ($(this).val().length > 390) {
                 $(this).val($(this).val().substring(0, 390));
             }
         });
 
-        // FIELD 45A/46A/47A/49G/49H : Large text fields (6500 chars, 100 lines)
         $("#_270_of45a_description_of_goods_and_or_services, #_280_of46a_documents_required, #_290_of47a_additional_conditions, #_300_of49g_special_payment_conditions_for_beneficiary, #_310_of49h_special_payment_conditions_for_bank_only").on("input", function () {
             if ($(this).val().length > 6500) {
                 $(this).val($(this).val().substring(0, 6500));
             }
         });
 
-        // FIELD 71D : Charges (6*35z)
         $("#_320_of71d_charges").on("blur", function () {
             var lines = $(this).val().split("\n");
             if (lines.length > 6) {
@@ -406,7 +381,6 @@
             }
         });
 
-        // FIELD 48 : Period for Presentation
         $("#_330_of48_days").on("input", function () {
             var val = $(this).val().replace(/[^0-9]/g, "").substring(0, 3);
             $(this).val(val);
@@ -418,7 +392,6 @@
             }
         });
 
-        // FIELD 49 : Confirmation Instructions (T67)
         $("#_340_mf49_confirmation_instructions").on("change", function () {
             var val = $(this).val().trim().toUpperCase();
             var allowed = ["CONFIRM", "MAY ADD", "WITHOUT"];
@@ -429,7 +402,6 @@
             }
         });
 
-        // FIELD 78 : Instructions (12*65x)
         $("#_370_of78_instructions_to_the_paying_accepting_negotiating_bank").on("blur", function () {
             var lines = $(this).val().split("\n");
             if (lines.length > 12) {
@@ -446,7 +418,6 @@
             }
         });
 
-        // FIELD 72Z : Sender to Receiver Information (6*35z)
         $("#_390_of72z_sender_to_receiver_information").on("blur", function () {
             var lines = $(this).val().split("\n");
             if (lines.length > 6) {
@@ -463,7 +434,6 @@
             }
         });
 
-        // BIC Fields Auto-uppercase and Validation (T27, T28, T29)
         $("#_082_of51a_identifier_code, #_141_mf41a_identifier_code, #_162_of42a_identifier_code, #_352_of58a_identifier_code, #_362_of53a_identifier_code, #_382_of57a_identifier_code").on("input", function () {
             $(this).val($(this).val().toUpperCase());
         });
@@ -484,9 +454,6 @@
             }
         });
 
-        /* ========== FIELD VISIBILITY TOGGLES ========== */
-        
-        // OF51a - Applicant Bank
         $("#_080_of51a_applicant_bank").change(function () {
             const opt = $(this).val();
             if (opt === "A") {
@@ -505,7 +472,6 @@
             }
         });
 
-        // MF41A - Available With
         $("#_140_mf41a_available_with_by").change(function () {
             const opt = $(this).val();
             if (opt === "A") {
@@ -524,7 +490,6 @@
             }
         });
 
-        // OF42A - Drawee
         $("#_160_of42a_drawee").change(function () {
             const opt = $(this).val();
             if (opt === "A") {
@@ -543,7 +508,6 @@
             }
         });
 
-        // OF58a - Requested Confirmation Party
         $("#_350_of58a_requested_confirmation_party").change(function () {
             const opt = $(this).val();
             if (opt === "A") {
@@ -562,7 +526,6 @@
             }
         });
 
-        // OF53a - Reimbursing Bank
         $("#_360_of53a_reimbursing_bank").change(function () {
             const opt = $(this).val();
             if (opt === "A") {
@@ -581,7 +544,6 @@
             }
         });
 
-        // OF57a - Advise Through Bank
         $("#_380_of57a_advise_through_bank").change(function () {
             const opt = $(this).val();
             if (opt === "A") {
@@ -605,9 +567,6 @@
             }
         });
 
-        /* ========== INITIALIZE FIELD VISIBILITY ON PAGE LOAD ========== */
-        
-        // OF51a - Applicant Bank
         if ($("#_081_of51a_party_identifier").val() != "" || $("#_082_of51a_identifier_code").val() != "") {
             $("#_080_of51a_applicant_bank").val("A").attr("selected", true);
             $("#div_080_of51a_A").show();
@@ -625,7 +584,6 @@
             $("#_081_of51a_party_identifier, #_082_of51a_identifier_code, #_083_of51a_party_identifier, #_084_of51a_name_address").attr("disabled", true);
         }
 
-        // MF41A - Available With
         if ($("#_141_mf41a_identifier_code").val() != "") {
             $("#_140_mf41a_available_with_by").val("A").attr("selected", true);
             $("#div_140_mf41a_A").show();
@@ -643,7 +601,6 @@
             $("#_141_mf41a_identifier_code, #_142_mf41d_name_and_address").attr("disabled", true);
         }
 
-        // OF42A - Drawee
         if ($("#_161_of42a_party_identifier").val() != "" || $("#_162_of42a_identifier_code").val() != "") {
             $("#_160_of42a_drawee").val("A").attr("selected", true);
             $("#div_160_of42a_A").show();
@@ -661,7 +618,6 @@
             $("#_161_of42a_party_identifier, #_162_of42a_identifier_code, #_163_of42a_party_identifier, #_164_of42a_name_and_address").attr("disabled", true);
         }
 
-        // OF58a - Requested Confirmation Party
         if ($("#_351_of58a_party_identifier").val() != "" || $("#_352_of58a_identifier_code").val() != "") {
             $("#_350_of58a_requested_confirmation_party").val("A").attr("selected", true);
             $("#div_350_of58a_A").show();
@@ -679,7 +635,6 @@
             $("#_351_of58a_party_identifier, #_352_of58a_identifier_code, #_353_of58a_party_identifier, #_354_of58a_name_address").attr("disabled", true);
         }
 
-        // OF53a - Reimbursing Bank
         if ($("#_361_of53a_party_identifier").val() != "" || $("#_362_of53a_identifier_code").val() != "") {
             $("#_360_of53a_reimbursing_bank").val("A").attr("selected", true);
             $("#div_360_of53a_A").show();
@@ -697,7 +652,6 @@
             $("#_361_of53a_party_identifier, #_362_of53a_identifier_code, #_363_of53a_party_identifier, #_364_of53a_name_address").attr("disabled", true);
         }
 
-        // OF57a - Advise Through Bank
         if ($("#_381_of57a_party_identifier").val() != "" || $("#_382_of57a_identifier_code").val() != "") {
             $("#_380_of57a_advise_through_bank").val("A").attr("selected", true);
             $("#div_380_of57a_A").show();
@@ -721,17 +675,11 @@
             $("#_381_of57a_party_identifier, #_382_of57a_identifier_code, #_383_of57a_party_identifier, #_384_of57a_location, #_385_of57a_party_identifier, #_386_of57a_name_address").attr("disabled", true);
         }
 
-        /* ========== VALIDATE BUTTON ========== */
         $("#btn-validate").click(function () {
             let isValid = $("#form_mt700").valid();
             if (isValid) {
                 alert("All mandatory fields are valid! Click Save to proceed.");
             }
         });
-
-        /* ========== SUBMIT HANDLER (REMOVED - Handled by form onsubmit) ========== */
-        // Note: Submit validation is now handled by the form's onsubmit attribute in mt700.jsp
-        // which calls validateMT700() from mt700.js
-        
     });
 </script>

@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
-
-/* ========== Utility Functions ========== */
-// Only numbers (0-9) with currency exception
 function numbersonly(e, currencyId) {
     const charCode = (e.which) ? e.which : e.keyCode;
     const currencyField = document.getElementById(currencyId);
@@ -21,7 +18,6 @@ function numbersonly(e, currencyId) {
     return true;
 }
 
-// Only numbers (strict - no comma)
 function numbersonly2(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -30,7 +26,6 @@ function numbersonly2(e) {
     return true;
 }
 
-// Only letters and spaces
 function textonly(e) {
     let code = e.keyCode || e.which;
     let character = String.fromCharCode(code);
@@ -38,7 +33,6 @@ function textonly(e) {
     return allowRegex.test(character);
 }
 
-// Avoid special characters
 function avoidSplChars(e) {
     e = e || window.event;
     let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
@@ -49,21 +43,18 @@ function avoidSplChars(e) {
     }
 }
 
-// Auto-add comma for amount fields
 function cek_koma(obj) {
     if (obj.value && !obj.value.includes(",")) {
         obj.value = obj.value + ",";
     }
 }
 
-// Auto-add slash for account/party identifier fields
 function cek_slash(obj) {
     if (obj.value && obj.value.length > 0 && !obj.value.startsWith("/")) {
         obj.value = "/" + obj.value;
     }
 }
 
-// Format amount on blur
 function formatAmountBlur(el) {
     let v = el.value;
     if (!v) return;
@@ -78,12 +69,10 @@ function formatAmountBlur(el) {
     el.value = v;
 }
 
-// Format amount during input
 function formatAmountInput(el) {
     el.value = el.value.replace(/[^0-9,]/g, '');
 }
 
-/* ========== Datepicker Handler (YYMMDD) ========== */
 function yymmdd(id) {
     const input = document.getElementById(id);
     if (!input) return;
@@ -126,7 +115,6 @@ function yymmdd(id) {
     }
 }
 
-/* ========== Tab Navigation ========== */
 function setupTabNavigation() {
     const tabs = document.querySelectorAll('.tabs li a');
     const tabContents = document.querySelectorAll('.tabcontent');
@@ -164,7 +152,6 @@ function setupTabNavigation() {
     }
 }
 
-/* ========== Option Field Handlers ========== */
 
 function handle40eOption() {
     const select = document.getElementById("_060_mf40e_applicable_rules");
@@ -305,7 +292,6 @@ function clearFieldValues(fieldIds) {
     });
 }
 
-/* ========== Character Counter for Large Text Areas ========== */
 function setupCharacterCounters() {
     const largeTextAreas = [
         { id: '_270_of45a_description_of_goods_and_or_services', max: 6500, lines: 100 },
@@ -352,7 +338,6 @@ function updateCharCounter(textarea, counterElement, maxChars, maxLines) {
     }
 }
 
-/* ========== Validation Helper Functions ========== */
 
 function getFieldValue(id) {
     const field = document.getElementById(id);
@@ -393,7 +378,6 @@ function isValidCurrency(ccy) {
     return /^[A-Z]{3}$/.test(ccy);
 }
 
-/* ========== Currency-Specific Decimal Validation ========== */
 const DEC0 = new Set(['JPY', 'KRW', 'VND', 'HUF', 'XOF', 'XAF', 'XPF', 'CLP', 'ISK', 'PYG', 'UGX', 'VUV']);
 const DEC3 = new Set(['BHD', 'JOD', 'KWD', 'OMR', 'TND', 'LYD', 'IQD']);
 
@@ -430,7 +414,6 @@ function validateAmountByCurrency(ccy, amt) {
     return { valid: true, error: null };
 }
 
-/* ========== Network Validated Rules ========== */
 
 // C1: When used, fields 42C and 42a must both be present
 function validateRuleC1() {
@@ -452,7 +435,6 @@ function validateRuleC1() {
     return true;
 }
 
-// C2: Either fields 42C and 42a together, or field 42M alone, or field 42P alone
 function validateRuleC2() {
     const field42C = getFieldValue("_150_of42c_drafts_at");
     const field42aOption = getFieldValue("_160_of42a_drawee");
@@ -476,7 +458,6 @@ function validateRuleC2() {
     return true;
 }
 
-// C3: Either field 44C or 44D, but not both
 function validateRuleC3() {
     const field44C = getFieldValue("_250_of44c_latest_date_of_shipment");
     const field44D = getFieldValue("_260_of44d_shipment_period");
@@ -490,7 +471,6 @@ function validateRuleC3() {
     return true;
 }
 
-/* ========== Field-Specific Validations ========== */
 
 // Field 27: Sequence of Total (T75)
 function validateField27() {
@@ -648,7 +628,6 @@ function validateField58a() {
     return true;
 }
 
-// Validate Date Fields
 function validateDateFields() {
     const dateFields = [
         { id: "_050_mf31c_date_of_issue", name: "Date of Issue (Field 31C)" },
@@ -668,7 +647,6 @@ function validateDateFields() {
     return true;
 }
 
-// Validate BIC Fields
 function validateBICFields() {
     const bicFields = [
         { id: "_082_of51a_identifier_code", name: "Applicant Bank BIC (Field 51a)" },
@@ -691,7 +669,6 @@ function validateBICFields() {
     return true;
 }
 
-// Validate Currency and Amount
 function validateCurrencyAmount() {
     const ccy = getFieldValue("_110_mf32b_currency");
     const amt = getFieldValue("_111_mf32b_amount");
@@ -719,7 +696,6 @@ function validateCurrencyAmount() {
     return true;
 }
 
-// Validate Line Count for Multi-line Fields
 function validateLineCount() {
     const lineFields = [
         { id: "_320_of71d_charges", maxLines: 6, maxChars: 35, name: "Field 71D (Charges)" },
@@ -751,7 +727,6 @@ function validateLineCount() {
     return true;
 }
 
-/* ========== Main Validation Function ========== */
 function validateMT700() {
     console.log('Starting MT700 validation...');
     
@@ -832,19 +807,15 @@ function validateMT700() {
     return true;
 }
 
-/* ========== Initialize on Page Load ========== */
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Initializing MT700 form...');
     
-    // Setup tab navigation
     setupTabNavigation();
     
-    // Bind date fields with jQuery datepicker
     yymmdd("_050_mf31c_date_of_issue");
     yymmdd("_070_mf31d_date_of_expiry");
     yymmdd("_250_of44c_latest_date_of_shipment");
     
-    // Setup Option Field Handlers
     const optionHandlers = [
         { id: "_060_mf40e_applicable_rules", handler: handle40eOption },
         { id: "_080_of51a_applicant_bank", handler: handle51aOption },
@@ -859,17 +830,15 @@ document.addEventListener("DOMContentLoaded", function() {
         const element = document.getElementById(config.id);
         if (element) {
             element.addEventListener("change", config.handler);
-            config.handler(); // Initialize on load
+            config.handler(); 
         }
     });
     
-    // Setup Character Counters
     setupCharacterCounters();
     
     console.log('MT700 form initialized successfully');
 });
 
-/* ========== Export functions for external use ========== */
 window.validateMT700 = validateMT700;
 window.validateRuleC1 = validateRuleC1;
 window.validateRuleC2 = validateRuleC2;

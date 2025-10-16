@@ -4,37 +4,29 @@
  */
 
 
-/* ========== Utility Functions ========== */
-
-// Get element by ID
 function q(id) {
     return document.getElementById(id);
 }
 
-// Get field value
 function val(id) {
     const el = q(id);
     return el ? (el.value || "").trim() : "";
 }
 
-// Check if field is empty
 function isEmpty(v) {
     return !v || v.trim() === "";
 }
 
-// Show/hide element
 function show(id, display = true) {
     const el = q(id);
     if (el) el.style.display = display ? "block" : "none";
 }
 
-// Set value to uppercase
 function setUpper(id) {
     const el = q(id);
     if (el) el.value = el.value.toUpperCase();
 }
 
-// Only numbers (0-9)
 function numbersonly(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -43,7 +35,6 @@ function numbersonly(e) {
     return true;
 }
 
-// Only letters and spaces
 function textonly(e) {
     let code = e.keyCode || e.which;
     let character = String.fromCharCode(code);
@@ -51,7 +42,6 @@ function textonly(e) {
     return allowRegex.test(character);
 }
 
-// Avoid special characters (allow: letters, numbers, space, .,'-/:())
 function avoidSplChars(e) {
     e = e || window.event;
     let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
@@ -62,14 +52,11 @@ function avoidSplChars(e) {
     }
 }
 
-// Avoid special characters for structured text - SWIFT 65z format
 function avoidSplCharsNarrative(e) {
     e = e || window.event;
-    // 65z format: A-Z, 0-9, space, . / , - ( ) ? : ' +
     let allowed = /^[A-Z0-9\s\.\/\,\-\(\)\?\:\'\+]$/;
     let key = String.fromCharCode(e.keyCode || e.which);
     
-    // Allow control keys
     if (e.keyCode === 8 || e.keyCode === 9 || e.keyCode === 13 || 
         e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
         return true;
@@ -83,7 +70,6 @@ function avoidSplCharsNarrative(e) {
     return true;
 }
 
-// Convert to uppercase on input
 function convertToUppercase(field) {
     if (field) {
         field.addEventListener('input', function() {
@@ -95,19 +81,16 @@ function convertToUppercase(field) {
     }
 }
 
-// Auto-add slash for party identifier fields
 function cek_slash(obj) {
     if (obj.value && obj.value.length > 0 && !obj.value.startsWith("/")) {
         obj.value = "/" + obj.value;
     }
 }
 
-// Format amount on input
 function formatAmountInput(el) {
     el.value = el.value.replace(/[^0-9,]/g, '');
 }
 
-// Format amount on blur
 function formatAmountBlur(el) {
     let v = el.value;
     if (!v) return;
@@ -122,9 +105,7 @@ function formatAmountBlur(el) {
     el.value = v;
 }
 
-/* ========== Date Helper Functions ========== */
 
-// Validate YYMMDD format
 function isYYMMDD(d) {
     if (!/^\d{6}$/.test(d)) return false;
     
@@ -135,12 +116,10 @@ function isYYMMDD(d) {
     if (mm < 1 || mm > 12) return false;
     if (dd < 1 || dd > 31) return false;
     
-    // Days in month validation (considering leap year)
     const dim = [31, (yy % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     return dd <= dim[mm - 1];
 }
 
-// Attach jQuery datepicker with YYMMDD format
 function attachDatePicker(id) {
     const el = q(id);
     if (!el || typeof jQuery === "undefined" || !jQuery.fn.datepicker) return;
@@ -163,7 +142,6 @@ function attachDatePicker(id) {
             }
         });
 
-        // Set initial date if value exists
         const cur = el.value && el.value.trim();
         if (cur && /^\d{6}$/.test(cur)) {
             const yy = parseInt(cur.slice(0, 2), 10);
@@ -182,7 +160,6 @@ function attachDatePicker(id) {
     });
 }
 
-/* ========== Tab Navigation ========== */
 function setupTabNavigation() {
     const tabs = document.querySelectorAll('.tabs li a');
     const tabContents = document.querySelectorAll('.tabcontent');
@@ -221,9 +198,7 @@ function setupTabNavigation() {
     }
 }
 
-/* ========== Option Field Handlers ========== */
 
-// Handle 52a - Issuing Bank
 function handle52aOption() {
     const select = q("_050_of52a_issuing_bank");
     if (!select) return;
@@ -242,7 +217,6 @@ function handle52aOption() {
     }
 }
 
-// Handle 40E - Applicable Rules
 function handle40eOption() {
     const select = q("_130_of40e_applicable_rules");
     const narrativeDiv = q("div_130_of40e_narrative");
@@ -260,7 +234,6 @@ function handle40eOption() {
     }
 }
 
-// Handle 41a - Available With ... By ...
 function handle41aOption() {
     const select = q("_210_of41a_available_with_by");
     if (!select) return;
@@ -279,7 +252,6 @@ function handle41aOption() {
     }
 }
 
-// Handle 42a - Drawee
 function handle42aOption() {
     const select = q("_230_of42a_drawee");
     if (!select) return;
@@ -298,7 +270,6 @@ function handle42aOption() {
     }
 }
 
-// Handle 71N - Amendment Charge Payable By
 function handle71nOption() {
     const select = q("_400_of71n_charge_code");
     const narrativeDiv = q("div_400_of71n_narrative");
@@ -316,7 +287,6 @@ function handle71nOption() {
     }
 }
 
-// Handle 58a - Requested Confirmation Party
 function handle58aOption() {
     const select = q("_430_of58a_requested_confirmation_party");
     if (!select) return;
@@ -335,7 +305,6 @@ function handle58aOption() {
     }
 }
 
-// Handle 53a - Reimbursing Bank
 function handle53aOption() {
     const select = q("_440_of53a_reimbursing_bank");
     if (!select) return;
@@ -354,7 +323,6 @@ function handle53aOption() {
     }
 }
 
-// Handle 57a - Advise Through Bank
 function handle57aOption() {
     const select = q("_460_of57a_advise_through_bank");
     if (!select) return;
@@ -378,7 +346,6 @@ function handle57aOption() {
     }
 }
 
-// Clear field values
 function clearFieldValues(fieldIds) {
     fieldIds.forEach(id => {
         const field = q(id);
@@ -388,7 +355,6 @@ function clearFieldValues(fieldIds) {
     });
 }
 
-/* ========== Character Counter ========== */
 function setupCharacterCounters() {
     const largeTextAreas = [
         { id: '_340_of45b_description_of_goods_and_or_services', max: 6500, lines: 100 },
@@ -438,7 +404,6 @@ function updateCharCounter(textarea, counterElement, maxChars, maxLines) {
     }
 }
 
-/* ========== Structured Text Helper ========== */
 function setupStructuredTextAutoComplete(textareaId) {
     const textarea = q(textareaId);
     if (!textarea) return;
@@ -578,7 +543,6 @@ function setupStructuredTextAutoComplete(textareaId) {
     });
 }
 
-/* ========== Validation Helpers ========== */
 
 function showFieldError(field, message) {
     if (!field) return;
@@ -620,7 +584,6 @@ function isValidCurrency(ccy) {
     return /^[A-Z]{3}$/.test(ccy);
 }
 
-// Currency-specific decimal validation
 const DEC0 = new Set(['JPY', 'KRW', 'VND', 'HUF', 'XOF', 'XAF', 'XPF', 'CLP', 'ISK', 'PYG', 'UGX', 'VUV']);
 const DEC3 = new Set(['BHD', 'JOD', 'KWD', 'OMR', 'TND', 'LYD', 'IQD']);
 
@@ -721,7 +684,6 @@ function validateStructuredText(field, errorCodeType) {
     return isValid;
 }
 
-/* ========== Validation Functions ========== */
 
 function getFieldValue(id) {
     return val(id);
@@ -731,7 +693,6 @@ function isFieldEmpty(id) {
     return isEmpty(getFieldValue(id));
 }
 
-// Field 27: Sequence of Total (T75)
 function validateField27() {
     const number = parseInt(val("_010_mf27_number"));
     const total = parseInt(val("_011_mf27_total"));
@@ -757,7 +718,6 @@ function validateField27() {
     return true;
 }
 
-// Field 20, 21, 23: Reference fields (T26)
 function validateReferenceFields() {
     const refFields = [
         { id: "_020_mf20_sender_reference", name: "Sender's Reference" },
@@ -784,7 +744,6 @@ function validateReferenceFields() {
     return true;
 }
 
-// Rule C1: At least one field must be present after field 22A
 function validateRuleC1() {
     const optionalFields = [
         "_110_of23s_cancellation_request",
@@ -843,7 +802,6 @@ function validateRuleC1() {
     return true;
 }
 
-// Rule C2: Either field 32B or 33B may be present, but not both
 function validateRuleC2() {
     const field32B_ccy = val("_170_of32b_currency");
     const field32B_amt = val("_171_of32b_amount");
@@ -862,7 +820,6 @@ function validateRuleC2() {
     return true;
 }
 
-// Rule C3: Either field 50B or 52a, but not both, must be present
 function validateRuleC3() {
     const field50B = val("_060_of50b_non_bank_issuer");
     const field52a = val("_050_of52a_issuing_bank");
@@ -882,7 +839,6 @@ function validateRuleC3() {
     return true;
 }
 
-// Rule C4: Either field 44C or 44D, but not both
 function validateRuleC4() {
     const field44C = val("_320_of44c_latest_date_of_shipment");
     const field44D = val("_330_of44d_shipment_period");
@@ -896,7 +852,6 @@ function validateRuleC4() {
     return true;
 }
 
-// Validate Date Fields (T50)
 function validateDateFields() {
     const dateFields = [
         { id: "_070_mf31c_date_of_issue", name: "Date of Issue" },
@@ -917,7 +872,6 @@ function validateDateFields() {
     return true;
 }
 
-// Validate BIC Fields (T27, T28, T29)
 function validateBICFields() {
     const bicConfigs = [
         { optionField: "_050_of52a_issuing_bank", bicField: "_052_of52a_identifier_code", name: "Issuing Bank" },
@@ -943,9 +897,7 @@ function validateBICFields() {
     return true;
 }
 
-// Validate Currency and Amount Fields (T52, T40, T43, C03)
 function validateCurrencyAmount() {
-    // Field 32B - Increase
     const ccy32B = val("_170_of32b_currency").toUpperCase();
     const amt32B = val("_171_of32b_amount");
     
@@ -971,8 +923,7 @@ function validateCurrencyAmount() {
             return false;
         }
     }
-    
-    // Field 33B - Decrease
+
     const ccy33B = val("_180_of33b_currency").toUpperCase();
     const amt33B = val("_181_of33b_amount");
     
@@ -1002,7 +953,6 @@ function validateCurrencyAmount() {
     return true;
 }
 
-// Validate Field 40E - Applicable Rules (D81)
 function validateField40E() {
     const code = val("_130_of40e_applicable_rules");
     const narrative = val("_131_of40e_narrative");
@@ -1032,7 +982,6 @@ function validateField40E() {
     return true;
 }
 
-// Validate Field 22A - Purpose of Message (T36)
 function validateField22A() {
     const value = val("_100_mf22a_purpose_of_message");
     const allowed = ["ACNF", "ADVI", "ISSU"];
@@ -1046,7 +995,6 @@ function validateField22A() {
     return true;
 }
 
-// Validate Field 41a - Available With ... By ... (T68)
 function validateField41a() {
     const option = val("_210_of41a_available_with_by");
     const byCode = val("_213_of41a_code");
@@ -1086,7 +1034,6 @@ function validateField41a() {
     return true;
 }
 
-// Validate Field 43P/43T - Partial Shipments/Transhipment (T64, T65)
 function validateField43() {
     const field43P = val("_260_of43p_partial_shipments");
     const field43T = val("_270_of43t_transhipment");
@@ -1107,7 +1054,6 @@ function validateField43() {
     return true;
 }
 
-// Validate Field 49 - Confirmation Instructions (T67)
 function validateField49() {
     const value = val("_420_of49_confirmation_instructions");
     
@@ -1120,7 +1066,6 @@ function validateField49() {
             return false;
         }
         
-        // Field 58a required if 49 = CONFIRM or MAY ADD
         if ((value === "CONFIRM" || value === "MAY ADD")) {
             const field58aOption = val("_430_of58a_requested_confirmation_party");
             if (!field58aOption) {
@@ -1134,7 +1079,6 @@ function validateField49() {
     return true;
 }
 
-// Validate Field 71N - Amendment Charge Payable By (T67)
 function validateField71N() {
     const code = val("_400_of71n_charge_code");
     const narrative = val("_401_of71n_narrative");
@@ -1164,7 +1108,6 @@ function validateField71N() {
     return true;
 }
 
-// Validate Structured Text Fields (T67, T93, D06)
 function validateStructuredTextFields() {
     const structuredFields = [
         { id: '_340_of45b_description_of_goods_and_or_services', name: 'Description of Goods', errorType: 'T67' },
@@ -1188,7 +1131,6 @@ function validateStructuredTextFields() {
     return true;
 }
 
-// Validate Percentage Fields (39A)
 function validatePercentageFields() {
     const plus = val("_190_of39a_plus");
     const minus = val("_191_of39a_minus");
@@ -1214,7 +1156,6 @@ function validatePercentageFields() {
     return true;
 }
 
-/* ========== Main Validation Function ========== */
 function validateMT707() {
     console.log('Starting MT707 validation...');
     
@@ -1293,9 +1234,7 @@ function validateMT707() {
     return true;
 }
 
-/* ========== Setup Real-time Validations ========== */
 function setupRealtimeValidations() {
-    // Field 27 - Sequence validation
     const fields27 = ["_010_mf27_number", "_011_mf27_total"];
     fields27.forEach(id => {
         const el = q(id);
@@ -1307,7 +1246,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Reference fields - uppercase
     const refFields = ["_020_mf20_sender_reference", "_030_mf21_receiver_reference", "_040_mf23_issuing_bank_reference"];
     refFields.forEach(id => {
         const el = q(id);
@@ -1317,7 +1255,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Date fields
     const dateFields = ["_070_mf31c_date_of_issue", "_090_mf30_date_of_amendment", "_140_of31d_date_of_expiry", "_320_of44c_latest_date_of_shipment"];
     dateFields.forEach(id => {
         const el = q(id);
@@ -1330,7 +1267,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Currency fields - auto uppercase
     const currencyFields = ["_170_of32b_currency", "_180_of33b_currency"];
     currencyFields.forEach(id => {
         const el = q(id);
@@ -1341,7 +1277,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Amount fields
     const amountFields = ["_171_of32b_amount", "_181_of33b_amount"];
     amountFields.forEach(id => {
         const el = q(id);
@@ -1351,7 +1286,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // BIC fields - auto uppercase
     const bicFields = [
         "_052_of52a_identifier_code",
         "_211_of41a_identifier_code",
@@ -1369,7 +1303,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Percentage fields
     const pctFields = ["_190_of39a_plus", "_191_of39a_minus"];
     pctFields.forEach(id => {
         const el = q(id);
@@ -1381,7 +1314,6 @@ function setupRealtimeValidations() {
         }
     });
     
-    // Structured text fields - uppercase
     const structuredFields = [
         '_340_of45b_description_of_goods_and_or_services',
         '_350_of46b_documents_required',
@@ -1398,14 +1330,11 @@ function setupRealtimeValidations() {
     });
 }
 
-/* ========== Initialize on Page Load ========== */
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Initializing MT707 form...');
     
-    // Setup tab navigation
     setupTabNavigation();
     
-    // Setup option handlers
     const optionHandlers = [
         { id: "_050_of52a_issuing_bank", handler: handle52aOption },
         { id: "_130_of40e_applicable_rules", handler: handle40eOption },
@@ -1421,17 +1350,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const element = q(config.id);
         if (element) {
             element.addEventListener("change", config.handler);
-            config.handler(); // Initialize on load
+            config.handler(); 
         }
     });
     
-    // Setup real-time validations
     setupRealtimeValidations();
     
-    // Setup character counters
     setupCharacterCounters();
     
-    // Setup structured text auto-complete
     const structuredFields = [
         '_340_of45b_description_of_goods_and_or_services',
         '_350_of46b_documents_required',
@@ -1444,7 +1370,6 @@ document.addEventListener("DOMContentLoaded", function() {
     console.log('MT707 form initialized successfully');
 });
 
-/* ========== Export functions for external use ========== */
 window.validateMT707 = validateMT707;
 window.getFieldValue = getFieldValue;
 window.isFieldEmpty = isFieldEmpty;

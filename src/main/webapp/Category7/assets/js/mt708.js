@@ -4,31 +4,24 @@
  */
 
 
-/* ========== Utility Functions ========== */
-
-// Get element by ID
 function q(id) {
     return document.getElementById(id);
 }
 
-// Get field value
 function val(id) {
     const el = q(id);
     return el ? (el.value || "").trim() : "";
 }
 
-// Check if field is empty
 function isEmpty(v) {
     return !v || v.trim() === "";
 }
 
-// Set value to uppercase
 function setUpper(id) {
     const el = q(id);
     if (el) el.value = el.value.toUpperCase();
 }
 
-// Only numbers (0-9)
 function numbersonly(e) {
     const charCode = (e.which) ? e.which : e.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -37,7 +30,6 @@ function numbersonly(e) {
     return true;
 }
 
-// Only letters and spaces
 function textonly(e) {
     let code = e.keyCode || e.which;
     let character = String.fromCharCode(code);
@@ -45,7 +37,6 @@ function textonly(e) {
     return allowRegex.test(character);
 }
 
-// Avoid special characters (allow: letters, numbers, space, .,'-/:())
 function avoidSplChars(e) {
     e = e || window.event;
     let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
@@ -56,15 +47,11 @@ function avoidSplChars(e) {
     }
 }
 
-// Avoid special characters for structured text - SWIFT 65z format
-// Allowed: UPPERCASE letters, digits, space, and ./,-()?:'+
 function avoidSplCharsNarrative(e) {
     e = e || window.event;
-    // 65z format: A-Z, 0-9, space, . / , - ( ) ? : ' +
     let allowed = /^[A-Z0-9\s\.\/\,\-\(\)\?\:\'\+]$/;
     let key = String.fromCharCode(e.keyCode || e.which);
     
-    // Allow control keys (backspace, delete, arrows, etc.)
     if (e.keyCode === 8 || e.keyCode === 9 || e.keyCode === 13 || 
         e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
         return true;
@@ -78,7 +65,6 @@ function avoidSplCharsNarrative(e) {
     return true;
 }
 
-// Convert to uppercase on input for narrative fields
 function convertToUppercase(field) {
     if (field) {
         field.addEventListener('input', function() {
@@ -90,9 +76,7 @@ function convertToUppercase(field) {
     }
 }
 
-/* ========== Date Helper Functions ========== */
 
-// Validate YYMMDD format
 function isYYMMDD(d) {
     if (!/^\d{6}$/.test(d)) return false;
     
@@ -103,12 +87,10 @@ function isYYMMDD(d) {
     if (mm < 1 || mm > 12) return false;
     if (dd < 1 || dd > 31) return false;
     
-    // Days in month validation (considering leap year)
     const dim = [31, (yy % 4 === 0 ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     return dd <= dim[mm - 1];
 }
 
-// Attach jQuery datepicker with YYMMDD format
 function attachDatePicker(id) {
     const el = q(id);
     if (!el || typeof jQuery === "undefined" || !jQuery.fn.datepicker) return;
@@ -131,7 +113,6 @@ function attachDatePicker(id) {
             }
         });
 
-        // Set initial date if value exists
         const cur = el.value && el.value.trim();
         if (cur && /^\d{6}$/.test(cur)) {
             const yy = parseInt(cur.slice(0, 2), 10);
@@ -150,7 +131,6 @@ function attachDatePicker(id) {
     });
 }
 
-/* ========== Tab Navigation ========== */
 function setupTabNavigation() {
     const tabs = document.querySelectorAll('.tabs li a');
     const tabContents = document.querySelectorAll('.tabcontent');
@@ -160,28 +140,23 @@ function setupTabNavigation() {
             e.preventDefault();
             const targetId = this.getAttribute('rel');
 
-            // Hide all tab contents
             tabContents.forEach(content => {
                 content.style.display = 'none';
                 content.classList.remove('active');
             });
 
-            // Remove active class from all tabs
             tabs.forEach(t => t.parentElement.classList.remove('selected'));
 
-            // Show target tab content
             const targetContent = document.getElementById(targetId);
             if (targetContent) {
                 targetContent.style.display = 'block';
                 targetContent.classList.add('active');
             }
 
-            // Add active class to clicked tab
             this.parentElement.classList.add('selected');
         });
     });
 
-    // Show Body tab by default
     const bodyTab = document.getElementById('view2');
     if (bodyTab) {
         bodyTab.style.display = 'block';
@@ -193,16 +168,13 @@ function setupTabNavigation() {
     }
 }
 
-/* ========== Structured Text Auto-Complete ========== */
 
-// Auto-complete for structured text codes
 function setupStructuredTextAutoComplete(textareaId) {
     const textarea = q(textareaId);
     if (!textarea) return;
     
     let suggestionBox = null;
     
-    // Create suggestion box
     function createSuggestionBox() {
         if (suggestionBox) return suggestionBox;
         
@@ -225,7 +197,6 @@ function setupStructuredTextAutoComplete(textareaId) {
         return suggestionBox;
     }
     
-    // Show suggestions
     function showSuggestions(suggestions, cursorPos) {
         const box = createSuggestionBox();
         box.innerHTML = '';
@@ -252,21 +223,18 @@ function setupStructuredTextAutoComplete(textareaId) {
             box.appendChild(div);
         });
         
-        // Position suggestion box
         const rect = textarea.getBoundingClientRect();
         box.style.top = (textarea.offsetTop + 25) + 'px';
         box.style.left = textarea.offsetLeft + 'px';
         box.style.display = 'block';
     }
     
-    // Hide suggestions
     function hideSuggestions() {
         if (suggestionBox) {
             suggestionBox.style.display = 'none';
         }
     }
     
-    // Insert structured code
     function insertStructuredCode(field, code, slashPos) {
         const text = field.value;
         const before = text.substring(0, slashPos);
@@ -274,24 +242,20 @@ function setupStructuredTextAutoComplete(textareaId) {
         
         field.value = before + '/' + code + '/ ' + after;
         
-        // Move cursor after the inserted code
         const newPos = before.length + code.length + 3;
         field.selectionStart = field.selectionEnd = newPos;
         field.focus();
     }
     
-    // Handle input for auto-complete
     textarea.addEventListener('input', function(e) {
         const cursorPos = this.selectionStart;
         const text = this.value;
         
-        // Check if user just typed "/" at beginning of line or after newline
         if (cursorPos > 0 && text[cursorPos - 1] === '/') {
             const beforeCursor = text.substring(0, cursorPos);
             const lines = beforeCursor.split('\n');
             const currentLine = lines[lines.length - 1];
             
-            // Only show if "/" is at start of line
             if (currentLine.trim() === '/') {
                 const suggestions = [
                     { code: 'ADD', desc: 'Add text' },
@@ -303,13 +267,11 @@ function setupStructuredTextAutoComplete(textareaId) {
             }
         }
         
-        // Check if user is typing after "/"
         if (cursorPos > 1) {
             const beforeCursor = text.substring(0, cursorPos);
             const lines = beforeCursor.split('\n');
             const currentLine = lines[lines.length - 1];
             
-            // Match pattern: / followed by letters
             const match = currentLine.match(/\/([A-Za-z]+)$/);
             if (match) {
                 const typed = match[1].toUpperCase();
@@ -319,7 +281,6 @@ function setupStructuredTextAutoComplete(textareaId) {
                     { code: 'REPALL', desc: 'Replace all' }
                 ];
                 
-                // Filter suggestions based on what user typed
                 const filtered = allCodes.filter(item => 
                     item.code.startsWith(typed)
                 );
@@ -335,12 +296,10 @@ function setupStructuredTextAutoComplete(textareaId) {
         hideSuggestions();
     });
     
-    // Hide suggestions on blur
     textarea.addEventListener('blur', function() {
         setTimeout(hideSuggestions, 200); 
     });
     
-    // Hide suggestions on Escape key
     textarea.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && suggestionBox && suggestionBox.style.display === 'block') {
             hideSuggestions();
@@ -349,7 +308,6 @@ function setupStructuredTextAutoComplete(textareaId) {
     });
 }
 
-/* ========== Character Counter for Large Text Areas ========== */
 function setupCharacterCounters() {
     const largeTextAreas = [
         { id: '_070_of45b_description_of_goods_and_or_services', max: 6500, lines: 100 },
@@ -362,7 +320,6 @@ function setupCharacterCounters() {
     largeTextAreas.forEach(config => {
         const textarea = q(config.id);
         if (textarea) {
-            // Create counter element
             const counter = document.createElement('div');
             counter.id = 'counter_' + config.id;
             counter.style.fontSize = '10pt';
@@ -370,12 +327,10 @@ function setupCharacterCounters() {
             counter.style.color = 'green';
             textarea.parentElement.appendChild(counter);
             
-            // Update counter on input
             textarea.addEventListener('input', function() {
                 updateCharCounter(this, counter, config.max, config.lines);
             });
             
-            // Initialize counter
             updateCharCounter(textarea, counter, config.max, config.lines);
         }
     });
@@ -390,7 +345,6 @@ function updateCharCounter(textarea, counterElement, maxChars, maxLines) {
     const counterText = `${charCount} / ${maxChars.toLocaleString()} characters | ${lineCount} / ${maxLines} lines`;
     counterElement.textContent = counterText;
     
-    // Color coding
     if (lineCount > maxLines || charCount > maxChars) {
         counterElement.style.color = 'red';
         counterElement.style.fontWeight = 'bold';
@@ -403,38 +357,32 @@ function updateCharCounter(textarea, counterElement, maxChars, maxLines) {
     }
 }
 
-/* ========== Structured Text Validation Functions ========== */
 
-// Validate structured text format (T67, T93, D06)
 function validateStructuredText(field, errorCodeType) {
     if (!field) return true;
     
     const value = field.value.trim();
-    if (!value) return true; // Optional field
+    if (!value) return true; 
     
     clearFieldError(field);
     let isValid = true;
     let errorMessages = [];
-    
-    // Split into lines
+
     const lines = value.split('\n');
     let hasCode = false;
     let repallCount = 0;
     let totalCodes = 0;
     let hasOtherCode = false;
     
-    // Check each line for codes
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         
-        // Check if line starts with a code
         const codeMatch = line.match(/^\/([A-Z]+)\//);
         if (codeMatch) {
             hasCode = true;
             totalCodes++;
             const code = codeMatch[1];
             
-            // Valid codes: ADD, DELETE, REPALL
             if (!['ADD', 'DELETE', 'REPALL'].includes(code)) {
                 errorMessages.push(`Invalid code: /${code}/ at line ${i + 1}`);
                 isValid = false;
@@ -448,14 +396,12 @@ function validateStructuredText(field, errorCodeType) {
         }
     }
     
-    // T67 or T93: At least one code must be used
     if (!hasCode) {
         const errorCode = errorCodeType === 'T93' ? 'T93' : 'T67';
         errorMessages.push(`At least one code (ADD/DELETE/REPALL) must be used (Error ${errorCode})`);
         isValid = false;
     }
     
-    // D06: If REPALL is used, it must be used only once and no other code
     if (repallCount > 0) {
         if (repallCount > 1) {
             errorMessages.push('REPALL can only be used once (Error D06)');
@@ -476,9 +422,7 @@ function validateStructuredText(field, errorCodeType) {
     return isValid;
 }
 
-/* ========== Real-time Field Validations ========== */
 
-// Validate Field 27 - Sequence of Total (T75)
 function validateField27Realtime() {
     const numberField = q("_010_mf27_number");
     const totalField = q("_011_mf27_total");
@@ -488,25 +432,21 @@ function validateField27Realtime() {
     const number = parseInt(numberField.value);
     const total = parseInt(totalField.value);
     
-    // Clear previous errors
     clearFieldError(numberField);
     clearFieldError(totalField);
     
     let isValid = true;
     
-    // T75: Number must be in range 2-8 (MT708 starts from 2)
     if (number < 2 || number > 8) {
         showFieldError(numberField, "Number must be 2-8 for MT708 (Error T75)");
         isValid = false;
     }
     
-    // T75: Total must be in range 2-8
     if (total < 2 || total > 8) {
         showFieldError(totalField, "Total must be 2-8 (Error T75)");
         isValid = false;
     }
     
-    // Number must not exceed Total
     if (number > total) {
         showFieldError(numberField, "Number cannot exceed Total");
         isValid = false;
@@ -518,7 +458,6 @@ function validateField27Realtime() {
     }
 }
 
-// Validate Field 20, 21, 23 - Reference fields (T26)
 function validateReferenceField(field) {
     if (!field) return true;
     
@@ -528,19 +467,16 @@ function validateReferenceField(field) {
     clearFieldError(field);
     let isValid = true;
     
-    // T26: Cannot start with /
     if (value.startsWith('/')) {
         showFieldError(field, 'Cannot start with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot end with /
     if (value.endsWith('/')) {
         showFieldError(field, 'Cannot end with "/" (Error T26)');
         isValid = false;
     }
     
-    // T26: Cannot contain //
     if (value.indexOf('//') !== -1) {
         showFieldError(field, 'Cannot contain "//" (Error T26)');
         isValid = false;
@@ -553,7 +489,6 @@ function validateReferenceField(field) {
     return isValid;
 }
 
-// Validate Date Format (T50 - YYMMDD)
 function validateDateFormat(field) {
     if (!field) return true;
     
@@ -562,13 +497,11 @@ function validateDateFormat(field) {
     
     clearFieldError(field);
     
-    // Must be exactly 6 digits
     if (!/^\d{6}$/.test(value)) {
         showFieldError(field, 'Date must be YYMMDD format (Error T50)');
         return false;
     }
     
-    // Validate using isYYMMDD function
     if (!isYYMMDD(value)) {
         showFieldError(field, 'Invalid date (Error T50)');
         return false;
@@ -578,18 +511,15 @@ function validateDateFormat(field) {
     return true;
 }
 
-// Show field error
 function showFieldError(field, message) {
     field.classList.add('error-border');
     field.classList.remove('valid-border');
     
-    // Remove existing error message
     const existingError = field.parentElement.querySelector('.inline-error');
     if (existingError) {
         existingError.remove();
     }
     
-    // Add new error message
     const errorSpan = document.createElement('span');
     errorSpan.className = 'inline-error';
     errorSpan.style.color = 'red';
@@ -599,7 +529,6 @@ function showFieldError(field, message) {
     field.parentElement.appendChild(errorSpan);
 }
 
-// Clear field error
 function clearFieldError(field) {
     field.classList.remove('error-border');
     
@@ -609,9 +538,7 @@ function clearFieldError(field) {
     }
 }
 
-/* ========== Setup Real-time Validations ========== */
 function setupRealtimeValidations() {
-    // Field 27 - Sequence of Total
     const numberField = q("_010_mf27_number");
     const totalField = q("_011_mf27_total");
     if (numberField && totalField) {
@@ -620,7 +547,6 @@ function setupRealtimeValidations() {
         numberField.addEventListener('keypress', numbersonly);
         totalField.addEventListener('keypress', numbersonly);
         
-        // Restrict input to 1 digit only
         numberField.addEventListener('input', function() {
             this.value = this.value.replace(/[^\d]/g, '').slice(0, 1);
         });
@@ -629,7 +555,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Field 20 - Sender's Reference
     const field20 = q("_020_mf20_sender_reference");
     if (field20) {
         field20.addEventListener('blur', function() { 
@@ -639,7 +564,6 @@ function setupRealtimeValidations() {
         field20.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 21 - Receiver's Reference
     const field21 = q("_030_mf21_receiver_reference");
     if (field21) {
         field21.addEventListener('blur', function() { 
@@ -649,7 +573,6 @@ function setupRealtimeValidations() {
         field21.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 23 - Issuing Bank's Reference
     const field23 = q("_040_mf23_issuing_bank_reference");
     if (field23) {
         field23.addEventListener('blur', function() { 
@@ -658,7 +581,6 @@ function setupRealtimeValidations() {
         field23.addEventListener('keypress', avoidSplChars);
     }
     
-    // Field 26E - Number of Amendment (3 digits only)
     const field26e = q("_050_mf26e_number_of_amendment");
     if (field26e) {
         field26e.addEventListener('keypress', numbersonly);
@@ -667,7 +589,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Field 30 - Date of Amendment
     const field30 = q("_060_mf30_date_of_amendment");
     if (field30) {
         field30.addEventListener('blur', function() { validateDateFormat(this); });
@@ -677,7 +598,6 @@ function setupRealtimeValidations() {
         });
     }
     
-    // Structured Text Fields - Add validation on blur
     const structuredFields = [
         { id: '_070_of45b_description_of_goods_and_or_services', errorType: 'T67' },
         { id: '_080_of46b_documents_required', errorType: 'T93' },
@@ -690,18 +610,15 @@ function setupRealtimeValidations() {
         const field = q(config.id);
         if (field) {
             field.addEventListener('blur', function() {
-                // Only validate if field has content
                 if (this.value.trim()) {
                     validateStructuredText(this, config.errorType);
                 }
             });
-            // Convert to uppercase
             convertToUppercase(field);
         }
     });
 }
 
-/* ========== Initialize Structured Text Fields ========== */
 function setupStructuredTextFields() {
     const structuredFields = [
         '_070_of45b_description_of_goods_and_or_services',
@@ -714,7 +631,6 @@ function setupStructuredTextFields() {
     structuredFields.forEach(id => {
         setupStructuredTextAutoComplete(id);
         
-        // Add keypress handler for narrative fields
         const field = q(id);
         if (field) {
             field.addEventListener('keypress', avoidSplCharsNarrative);
@@ -722,41 +638,31 @@ function setupStructuredTextFields() {
     });
 }
 
-/* ========== Initialize on Page Load ========== */
 document.addEventListener("DOMContentLoaded", function() {
     console.log('Initializing MT708 form...');
     
-    // Setup tab navigation
     setupTabNavigation();
     
-    // Attach jQuery datepicker to date field
     attachDatePicker("_060_mf30_date_of_amendment");
     
-    // Setup Real-time Validations
     setupRealtimeValidations();
     
-    // Setup Character Counters
     setupCharacterCounters();
     
-    // Setup Structured Text Fields with helper buttons
     setupStructuredTextFields();
     
     console.log('MT708 form initialized successfully');
 });
 
-/* ========== Validation Helper Functions (for validate_rule_mt708.jsp) ========== */
 
-// Get field value
 function getFieldValue(id) {
     return val(id);
 }
 
-// Check if field is empty
 function isFieldEmpty(id) {
     return isEmpty(getFieldValue(id));
 }
 
-// Validate mandatory fields
 function validateMandatoryFields() {
     const mandatoryFields = [
         { id: "_010_mf27_number", name: "MF27 Number" },
@@ -788,7 +694,6 @@ function validateMandatoryFields() {
     return true;
 }
 
-/* ========== Main Validation Function (called from form onsubmit) ========== */
 function validateMT708() {
     console.log('Starting MT708 validation...');
     
@@ -886,7 +791,6 @@ function validateMT708() {
     return true;
 }
 
-/* ========== Export functions for external use ========== */
 window.validateMT708 = validateMT708;
 window.getFieldValue = getFieldValue;
 window.isFieldEmpty = isFieldEmpty;

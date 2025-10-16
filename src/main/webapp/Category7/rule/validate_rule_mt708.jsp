@@ -8,9 +8,6 @@
 <script type="text/javascript">
 $(document).ready(function () {
 
-    // ========== CUSTOM VALIDATOR METHODS ==========
-
-    // YYMMDD date validation (T50)
     $.validator.addMethod("yymmdd", function(value, element) {
         if (!value) return true;
         if (!/^\d{6}$/.test(value)) return false;
@@ -22,7 +19,6 @@ $(document).ready(function () {
         if (mm < 1 || mm > 12) return false;
         if (dd < 1 || dd > 31) return false;
         
-        // Leap year calculation
         const thisYear = new Date().getFullYear();
         const century = Math.floor(thisYear / 100) * 100;
         let fullYear = century + yy;
@@ -32,7 +28,6 @@ $(document).ready(function () {
         return dd <= daysInMonth[mm - 1];
     }, "Format tanggal YYMMDD tidak valid");
 
-    // T26 Rule: Cannot start/end with "/" or contain "//"
     $.validator.addMethod("t26Rule", function(value, element) {
         if (!value) return true;
         if (value.startsWith("/") || value.endsWith("/")) return false;
@@ -40,7 +35,6 @@ $(document).ready(function () {
         return true;
     }, "Tidak boleh diawali/diakhiri '/' atau mengandung '//'");
 
-    // MF27 validation: Format n/n with range 2-8 and number ≤ total (T75)
     $.validator.addMethod("mf27rule", function(value, element) {
         if (!value) return true;
         const m = value.match(/^(\d{1,3})\/(\d{1,3})$/);
@@ -49,7 +43,6 @@ $(document).ready(function () {
         const num = parseInt(m[1], 10);
         const tot = parseInt(m[2], 10);
         
-        // T75: Number and Total must be 2-8, Number ≤ Total
         if (num < 2 || num > 8) return false;
         if (tot < 2 || tot > 8) return false;
         if (num > tot) return false;
@@ -57,7 +50,6 @@ $(document).ready(function () {
         return true;
     }, "MF27 harus format n/n (2-8), n ≤ total");
 
-    // Structured text validation: ADD/DELETE/REPALL codes (T67, T93, D06)
     $.validator.addMethod("structured", function(value, element) {
         if (!value) return true;
         
@@ -69,15 +61,13 @@ $(document).ready(function () {
         for (let i = 0; i < lines.length; i++) {
             const ln = lines[i].trim();
             
-            // Check if line starts with code
             if (ln.startsWith("/")) {
                 const codeMatch = ln.match(/^\/([A-Z]{3,6})\//);
-                if (!codeMatch) return false; // Invalid code format
+                if (!codeMatch) return false; 
                 
                 hasCode = true;
                 const code = codeMatch[1];
                 
-                // Valid codes: ADD, DELETE, REPALL
                 if (!["ADD", "DELETE", "REPALL"].includes(code)) {
                     return false;
                 }
@@ -90,22 +80,17 @@ $(document).ready(function () {
             }
         }
         
-        // D06: If REPALL is used, it must be alone
         if (repallCount > 1) return false;
         if (repallCount === 1 && anyOtherCode) return false;
-        
-        // T67/T93: At least one code must be present
         if (!hasCode) return false;
         
         return true;
     }, "Structured text tidak valid (gunakan ADD/DELETE/REPALL, REPALL hanya boleh satu)");
 
-    // Regex helper
     $.validator.addMethod("regex", function(value, element, param) {
         return this.optional(element) || param.test(value);
     }, "Format tidak valid");
 
-    // ========== INITIALIZE VALIDATOR ==========
 
     let validator = $("#form_mt708").validate({
         ignore: [],
@@ -113,7 +98,6 @@ $(document).ready(function () {
         onfocusout: false,
         
         rules: {
-            // Mandatory Fields
             _010_mf27_number: {
                 required: true,
                 digits: true,
@@ -152,7 +136,6 @@ $(document).ready(function () {
                 yymmdd: true
             },
             
-            // Optional Structured Text Fields
             _070_of45b_description_of_goods_and_or_services: {
                 structured: true
             },
@@ -171,7 +154,6 @@ $(document).ready(function () {
         },
         
         messages: {
-            // MF27 Messages
             _010_mf27_number: {
                 required: "MF27 Number harus diisi",
                 digits: "Harus angka",
@@ -187,40 +169,34 @@ $(document).ready(function () {
                 max: "Maksimal 8"
             },
             
-            // MF20 Messages
             _020_mf20_sender_reference: {
                 required: "MF20 Sender's Reference harus diisi",
                 maxlength: "Maks 16 karakter",
                 t26Rule: "Format MF20 tidak valid (Error T26)"
             },
             
-            // MF21 Messages
             _030_mf21_receiver_reference: {
                 required: "MF21 Receiver's Reference harus diisi",
                 maxlength: "Maks 16 karakter",
                 t26Rule: "Format MF21 tidak valid (Error T26)"
             },
             
-            // MF23 Messages
             _040_mf23_issuing_bank_reference: {
                 required: "MF23 Issuing Bank's Reference harus diisi",
                 maxlength: "Maks 16 karakter"
             },
             
-            // MF26E Messages
             _050_mf26e_number_of_amendment: {
                 required: "MF26E Number of Amendment harus diisi",
                 digits: "Harus angka",
                 maxlength: "Maks 3 digit"
             },
             
-            // MF30 Messages
             _060_mf30_date_of_amendment: {
                 required: "MF30 Date of Amendment harus diisi",
                 yymmdd: "Format YYMMDD tidak valid (Error T50)"
             },
             
-            // Structured Text Messages
             _070_of45b_description_of_goods_and_or_services: {
                 structured: "OF45B structured text tidak valid (Error T67/D06)"
             },
@@ -254,7 +230,6 @@ $(document).ready(function () {
                 return;
             }
             
-            // Build error table
             let tableHTML = `<table border="0" style="width:100% !important; caption-side: bottom; font-size:8pt !important; border-collapse: collapse; border:1px gray solid;">
                                 <tr style="background:#d6d6d6;">
                                 <th>Type</th>
@@ -277,7 +252,6 @@ $(document).ready(function () {
             tableHTML += `</table>`;
             errorContainer.innerHTML = tableHTML;
             
-            // Click to navigate to error field
             document.querySelectorAll(".error__row").forEach(row => {
                 row.addEventListener("click", function() {
                     let inputId = this.getAttribute("data-input-id");
@@ -285,7 +259,6 @@ $(document).ready(function () {
                     let input = document.getElementById(inputId);
                     
                     if (input) {
-                        // Switch to Body tab (only one tab with content)
                         if (tabContentGroup === "Body") {
                             $(".tabs li a[rel='view2']").click();
                         }
@@ -297,9 +270,6 @@ $(document).ready(function () {
         }
     });
 
-    // ========== BUTTON HANDLERS ==========
-
-    // Validate button
     $("#btn-validate").click(function() {
         let ok = $("#form_mt708").valid();
         if (ok) {
@@ -307,11 +277,9 @@ $(document).ready(function () {
         }
     });
 
-    // Submit button
     $("#submit_mt708").click(function(e) {
         e.preventDefault();
         
-        // Auto-fill NONREF for MF21 if empty
         let mf21 = $("#_030_mf21_receiver_reference");
         if (mf21.val().trim() === "") {
             mf21.val("NONREF");
@@ -327,11 +295,9 @@ $(document).ready(function () {
 });
 </script>
 
-<!-- ========== RULE VIEW - Initialize Form State ==========  -->
 <script type="text/javascript">
 $(document).ready(function() {
     
-    // Initialize MF27 display (show as n/n format if both fields have values)
     function initializeMF27Display() {
         const num = $("#_010_mf27_number").val();
         const tot = $("#_011_mf27_total").val();
@@ -342,15 +308,12 @@ $(document).ready(function() {
         }
     }
 
-    // Initialize MF21 default value
     function initializeMF21() {
         const mf21 = $("#_030_mf21_receiver_reference");
         if (mf21.val().trim() === "") {
-            // Don't auto-fill on load, only on submit
         }
     }
 
-    // Initialize structured text fields (if any data loaded)
     function initializeStructuredFields() {
         const structuredFields = [
             "_070_of45b_description_of_goods_and_or_services",
@@ -363,13 +326,11 @@ $(document).ready(function() {
         structuredFields.forEach(id => {
             const field = $("#" + id);
             if (field.val().trim() !== "") {
-                // Field has content - show it
                 field.show();
             }
         });
     }
 
-    // Run initialization functions
     initializeMF27Display();
     initializeMF21();
     initializeStructuredFields();

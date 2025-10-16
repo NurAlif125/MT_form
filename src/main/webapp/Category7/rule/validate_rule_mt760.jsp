@@ -8,9 +8,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        // Helper function untuk validasi conditional fields
         function updateConditionalRequirements() {
-            // C1: Field 31E based on field 23B in Sequence B
             const expiryTypeB = $('#_110_mf23b_expiry_type').val();
             if (expiryTypeB === 'FIXD') {
                 $('#_120_of31e_date_of_expiry').addClass('mandatory');
@@ -20,21 +18,18 @@
                 $('#_120_of31e_date_of_expiry').removeClass('mandatory');
             }
 
-            // C2: Field 35G based on field 23B in Sequence B
             if (expiryTypeB === 'COND') {
                 $('#_130_of35g_expiry_condition_event').addClass('mandatory');
             } else {
                 $('#_130_of35g_expiry_condition_event').removeClass('mandatory');
             }
 
-            // C3: Field 23F not allowed if 23B is OPEN
             if (expiryTypeB === 'OPEN') {
                 $('#_300_of23f_automatic_extension_period').val('').prop('disabled', true);
             } else {
                 $('#_300_of23f_automatic_extension_period').prop('disabled', false);
             }
 
-            // C8: Fields 78, 26E, 31S based on field 23F
             const autoExtPeriod = $('#_300_of23f_automatic_extension_period').val();
             if (!autoExtPeriod || autoExtPeriod === '') {
                 $('#_310_of78_automatic_extension_non_extension_notification').val('').prop('disabled', true);
@@ -46,7 +41,6 @@
                 $('#_330_of31s_automatic_extension_final_expiry_date').prop('disabled', false);
             }
 
-            // C4: Field 50 must be present if 22A is ISSU
             const purposeMsg = $('#_030_mf22a_purpose_of_message').val();
             if (purposeMsg === 'ISSU') {
                 $('#_140_of50_applicant').addClass('mandatory');
@@ -54,7 +48,6 @@
                 $('#_140_of50_applicant').removeClass('mandatory');
             }
 
-            // C5: Field 49 based on 22A and 22D
             const formUndertaking = $('#_090_mf22d_form_of_undertaking').val();
             if (purposeMsg === 'ISSU' && formUndertaking === 'STBY') {
                 $('#_270_of49_confirmation_instructions').addClass('mandatory');
@@ -68,7 +61,6 @@
                 $('#_270_of49_confirmation_instructions').prop('disabled', false);
             }
 
-            // C6: Sequence C based on 22A
             if (purposeMsg === 'ISCO' || purposeMsg === 'ICCO') {
                 $('#seq_C_checkbox').prop('checked', true);
                 $('#check_seq_c').show();
@@ -82,7 +74,6 @@
                 $('#_390_of24g_delivery_to_collection_by').prop('disabled', false);
             }
 
-            // C9: Field 58a based on field 49
             const confirmInstr = $('#_270_of49_confirmation_instructions').val();
             if (confirmInstr === 'CONFIRM' || confirmInstr === 'MAY ADD') {
                 $('#_280_of58a_requested_confirmation_party').addClass('mandatory');
@@ -90,7 +81,6 @@
                 $('#_280_of58a_requested_confirmation_party').removeClass('mandatory').val('');
             }
 
-            // C10: Field 22K in Sequence C
             const standardWording = $('#_590_of22y_standard_wording_required').val();
             if (standardWording === 'STND') {
                 $('#_440_of22k_type_of_undertaking').addClass('mandatory');
@@ -98,14 +88,12 @@
                 $('#_440_of22k_type_of_undertaking').removeClass('mandatory');
             }
 
-            // C11: Field 41a not allowed if 22D is DGAR
             if (formUndertaking === 'DGAR') {
                 $('#_230_of41a_available_with').val('').prop('disabled', true);
             } else {
                 $('#_230_of41a_available_with').prop('disabled', false);
             }
 
-            // Sequence C - similar validations
             const expiryTypeC = $('#_450_mf23b_expiry_type').val();
             if (expiryTypeC === 'FIXD') {
                 $('#_460_of31e_date_of_expiry').addClass('mandatory');
@@ -117,7 +105,6 @@
                 $('#_470_of35G_expiry_condition_events').removeClass('mandatory');
             }
 
-            // Field 45L in Sequence B
             if (purposeMsg === 'ISSU') {
                 $('#_370_of45l_underlying_transaction_details').addClass('mandatory');
             } else {
@@ -125,19 +112,16 @@
             }
         }
 
-        // Initialize validator
         let validator = $("#form_mt760").validate({
             ignore: [],
             onkeyup: false,
             onfocusout: false,
             rules: {
-                // Sequence A - General Information
                 _010_mf15a_new_sequence: "required",
                 _020_mf27_number: "required",
                 _021_mf27_total: "required",
                 _030_mf22a_purpose_of_message: "required",
 
-                // Sequence B - Undertaking Details
                 _060_mf15b_new_sequence: "required",
                 _070_mf20_undertaking_number: "required",
                 _080_mf30_date_of_issue: "required",
@@ -145,7 +129,6 @@
                 _100_mf40c_applicable_rules: "required",
                 _110_mf23b_expiry_type: "required",
                 
-                // MF52a - Issuer
                 _160_mf52a_issuer: "required",
                 _162_mf52a_identifier_code: {
                     required: function() {
@@ -158,7 +141,6 @@
                     }
                 },
 
-                // MF59a - Beneficiary
                 _170_mf59a_beneficiary: "required",
                 _172_mf59a_name_address: {
                     required: function() {
@@ -171,14 +153,11 @@
                     }
                 },
 
-                // MF32B - Undertaking Amount
                 _210_mf32b_currency: "required",
                 _211_mf32b_amount: "required",
 
-                // MF77U - Undertaking Terms
                 _260_mf77u_undertaking_terms_and_conditions: "required",
 
-                // Sequence C - Local Undertaking (if present)
                 _400_mf15c_new_sequence: {
                     required: function() {
                         return $('#seq_C_checkbox').is(':checked');
@@ -290,7 +269,6 @@
                 tableHTML += `</table>`;
                 errorContainer.innerHTML = tableHTML;
                 
-                // Click handler for error rows
                 document.querySelectorAll(".error__row").forEach(row => {
                     row.addEventListener("click", function () {
                         let inputId = this.getAttribute("data-input-id");
@@ -325,10 +303,8 @@
         $('#_450_mf23b_expiry_type').change(updateConditionalRequirements);
         $('#_590_of22y_standard_wording_required').change(updateConditionalRequirements);
         
-        // Initialize on page load
         updateConditionalRequirements();
 
-        // Validate button
         $("#btn-validate").click(function () {
             updateConditionalRequirements();
             let isValid = $("#form_mt760").valid();
@@ -337,7 +313,6 @@
             }
         });
 
-        // Submit button
         $("#submit_mt760").click(function (e) {
             e.preventDefault();
             updateConditionalRequirements();
@@ -350,8 +325,6 @@
         });
 
         // Field-specific validations
-        
-        // MF40C - Show/hide narrative based on type
         $('#_100_mf40c_applicable_rules, #_430_mf40c_applicable_rules').change(function() {
             const val = $(this).val();
             const narrativeId = $(this).attr('id').replace('applicable_rules', 'narrative');
@@ -362,7 +335,6 @@
             }
         });
 
-        // MF23F - Validate details based on period type
         $('#_300_of23f_automatic_extension_period, #_620_of23f_automatic_extension_period').change(function() {
             const val = $(this).val();
             const narrativeId = $(this).attr('id').replace('automatic_extension_period', 'narrative');
@@ -382,7 +354,6 @@
             }
         });
 
-        // OF24E - Show/hide additional information
         $('#_380_of24e_delivery_of_original_undertaking, #_700_of24e_delivery_of_local_undertaking').change(function() {
             const val = $(this).val();
             const narrativeId = $(this).attr('id').replace('delivery_of_original_undertaking', 'narrative').replace('delivery_of_local_undertaking', 'narrative');
@@ -393,7 +364,6 @@
             }
         });
 
-        // OF24G - Show/hide narrative based on code
         $('#_390_of24g_delivery_to_collection_by, #_710_of24g_delivery_to_collection_by').change(function() {
             const val = $(this).val();
             const narrativeId = $(this).attr('id').replace('delivery_to_collection_by', 'narrative');
@@ -404,7 +374,6 @@
             }
         });
 
-        // C7: Field 57a requires field 56a
         $('#_200_of57a_advise_through_bank').change(function() {
             if ($(this).val() !== '') {
                 $('#_180_of56a_advising_bank').addClass('mandatory');
@@ -419,7 +388,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         
-        // Sequence C checkbox logic
         $("#check_seq_c").hide();
         $("#seq_C_checkbox").click(function () {
             if ($("#seq_C_checkbox").is(":checked")) {
@@ -429,7 +397,6 @@
             }
         });
 
-        // MF52a Issuer - Option A/D
         $("#div_mf52a_issuer").hide();
         $("#div_mf52d_issuer").hide();
         $("#_160_mf52a_issuer").change(function () {
@@ -445,7 +412,6 @@
             }
         });
 
-        // MF59a Beneficiary - No option/A
         $("#div_mf59no_beneficiary").hide();
         $("#div_mf59a_beneficiary").hide();
         $("#_170_mf59a_beneficiary").change(function () {
@@ -461,7 +427,6 @@
             }
         });
 
-        // OF56a Advising Bank - Option A/D
         $("#div_of56a_advising_bank").hide();
         $("#div_of56d_advising_bank").hide();
         $("#_180_of56a_advising_bank").change(function () {
@@ -477,7 +442,6 @@
             }
         });
 
-        // OF57a Advise Through Bank - Option A/D
         $("#div_of57a_advise_through_bank").hide();
         $("#div_of57d_advise_through_bank").hide();
         $("#_200_of57a_advise_through_bank").change(function () {
@@ -493,7 +457,6 @@
             }
         });
 
-        // OF41a Available With - Option F/G
         $("#div_of41f_avaliable_with").hide();
         $("#div_of41g_avaliable_with").hide();
         $("#_230_of41a_available_with").change(function () {
@@ -509,7 +472,6 @@
             }
         });
 
-        // OF58a Requested Confirmation Party - Option A/D
         $("#div_of58a_requested_confirmation_party").hide();
         $("#div_of58d_requested_confirmation_party").hide();
         $("#_280_of58a_requested_confirmation_party").change(function () {
@@ -525,7 +487,6 @@
             }
         });
 
-        // Similar logic for Sequence C fields
         $("#div_of52a_issuer").hide();
         $("#div_of52d_issuer").hide();
         $("#_500_of52a_issuer").change(function () {
@@ -571,7 +532,6 @@
             }
         });
 
-        // Initialize on page load - show/hide based on existing values
         if ($("#_160_mf52a_issuer").val() == "a") {
             $("#div_mf52a_issuer").show();
         } else if ($("#_160_mf52a_issuer").val() == "d") {
@@ -584,7 +544,6 @@
             $("#div_mf59a_beneficiary").show();
         }
 
-        // Sequence C - check if should be visible
         if ($("#_400_mf15c_new_sequence").val() != "" || $("#seq_C_checkbox").is(":checked")) {
             $("#seq_C_checkbox").prop("checked", true);
             $("#check_seq_c").show();
