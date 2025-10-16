@@ -559,7 +559,7 @@
                             
                             <!--OF26E Automatic Extension Notification Period-->
                             <div class="form-row"><span class="label_body">OF26E</span><span class="label">Automatic Extension Notification Period</span>                                
-                                <input type="text" onkeypress="avoidSplChars(event)" name="_320_of26e_automatic_extension_notification_period" id="_320_of26e_automatic_extension_notification_period" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_320_of26e_automatic_extension_notification_period'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="return numbersonly2(event)" name="_320_of26e_automatic_extension_notification_period" id="_320_of26e_automatic_extension_notification_period" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_320_of26e_automatic_extension_notification_period'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <hr/>
                             
@@ -631,7 +631,7 @@
                             </div>
                             <!--Narrative-->
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Narrative</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_390_of24g_narrative" id="_390_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_390_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_391_of24g_narrative" id="_391_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_391_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                             </div>
                             
                         <h2 class="header-credit">End of Sequence B Undertaking Details</h2>
@@ -745,14 +745,14 @@
                             </div>
                             <hr/>
 
-                            <!--OF52a Issuer-->
+                            <!--OF52a Issuer (Sequence C)-->
                             <div class="form-row"><span class="label_body">OF52a </span><span class="label">Issuer</span>
                                 <select id="_500_of52a_issuer" name="_500_of52a_issuer">
                                     <option value="">choose a type</option>
                                     <option value="a">A - BIC</option>
                                     <option value="d">D - Name & Address</option>
                                 </select>
-                                <div id="div_of52a_issuer">
+                                <div id="div_of52a_issuer_2"> 
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                         <input type="text" name="_501_of52a_party_identifier" id="_501_of52a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_501_of52a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
@@ -760,7 +760,7 @@
                                         <input type="text" onkeypress="avoidSplChars(event)" name="_502_of52a_identifier_code" id="_502_of52a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_502_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                 </div>
-                                <div id="div_of52d_issuer">
+                                <div id="div_of52d_issuer_2">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                         <input type="text" name="_503_of52d_party_identifier" id="_503_of52d_party_identifier" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_503_of52d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
@@ -889,7 +889,7 @@
 
                             <!--OF40D Standard Wording Requested Language-->
                             <div class="form-row"><span class="label_body">OF40D</span><span class="label">Standard Wording Requested Language</span>                                
-                                <input type="text" onkeypress="avoidSplChars(event)" name="_600_of40d_standard_wording_reqested_language" id="_600_of40d_standard_wording_reqested_language" maxlength="2" size="2" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_600_of40d_standard_wording_reqested_language'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="avoidSplChars(event)" name="_600_of40d_standard_wording_requested_language" id="_600_of40d_standard_wording_requested_language" maxlength="2" size="2" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_600_of40d_standard_wording_requested_language'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <hr/>
 
@@ -928,7 +928,7 @@
 
                             <!--OF26E Automatic Extension Notification Period-->
                             <div class="form-row"><span class="label_body">OF26E</span><span class="label">Automatic Extension Notification Period</span>                                
-                                <input type="text" onkeypress="avoidSplChars(event)" name="_640_of26e_automatic_extension_notification_period" id="_640_of26e_automatic_extension_notification_period" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_640_of26e_automatic_extension_notification_period'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" onkeypress="return numbersonly2(event)" name="_640_of26e_automatic_extension_notification_period" id="_640_of26e_automatic_extension_notification_period" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_640_of26e_automatic_extension_notification_period'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <hr/>
 
@@ -1000,7 +1000,7 @@
                             </div>
                             <!--Narrative-->
                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Narrative</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_710_of24g_narrative" id="_710_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_710_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_711_of24g_narrative" id="_711_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_711_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                             </div>
                             <hr/>
                                 
@@ -1021,8 +1021,3 @@
 <%@ include file="rule/validate_rule_mt760.jsp" %>
 </body>
 </html>
-
-
-
-
- 

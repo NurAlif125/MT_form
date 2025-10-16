@@ -42,7 +42,7 @@ public class TagMT756 {
 
             } else if (tagName.equalsIgnoreCase("33A")) {
                 tags = mt756.getMf33a();
-                this.ch.splitMT32A(tags, tagName, tagValue);
+                this.ch.splitMT33A(tags, tagName, tagValue);
 
             } else if (tagName.equalsIgnoreCase("53A") || tagName.equalsIgnoreCase("53B") || tagName.equalsIgnoreCase("53D")) {
                 tags = mt756.getOf53a();

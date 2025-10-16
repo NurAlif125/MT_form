@@ -238,7 +238,7 @@ public class MT760Servlet extends HttpServlet {
             String f22yStandardWording = request.getParameter("_590_of22y_standard_wording_required");
             
             // Field 40D - Standard Wording Language
-            String f40dStandardLang = request.getParameter("_600_of40d_standard_wording_reqested_language");
+            String f40dStandardLang = request.getParameter("_600_of40d_standard_wording_requested_language");
             
             // Field 44J - Governing Law (Seq C)
             String f44jCountryCodeC = request.getParameter("_610_of44j_country_code");
@@ -275,7 +275,7 @@ public class MT760Servlet extends HttpServlet {
             
             // Field 24G - Delivery To (Seq C)
             String f24gDeliveryToC = request.getParameter("_710_of24g_delivery_to_collection_by");
-            String f24gNarrativeC = request.getParameter("_711_of24g_narrative"); // FIXED: was _710_of24g_narrative
+            String f24gNarrativeC = request.getParameter("_711_of24g_narrative"); 
 
             /* ======================================================
              *  VALIDASI MANDATORY FIELDS
@@ -394,7 +394,7 @@ public class MT760Servlet extends HttpServlet {
                     "_550_of41a_available_with, _551_of41f_identifier_code, _552_of41g_name_address, " +
                     "_560_of71D_charges, _570_of45c_document_and_presentation_instructions, " +
                     "_580_of77l_requested_local_undertaking_terms_and_conditions, " +
-                    "_590_of22y_standard_wording_required, _600_of40d_standard_wording_reqested_language, " +
+                    "_590_of22y_standard_wording_required, _600_of40d_standard_wording_requested_language, " +
                     "_610_of44j_country_code, _611_of44j_narrative, " +
                     "_620_of23f_automatic_extension_period, _621_of23f_narrative, " +
                     "_630_of78_automatic_extension_non_extenstion_notification, " +
@@ -403,7 +403,7 @@ public class MT760Servlet extends HttpServlet {
                     "_660_of48b_demand_indicator, _670_of48d_transfer_indicator, " +
                     "_680_of39e_transfer_conditions, _690_mf45l_underlying_transaction_details, " +
                     "_700_of24e_delivery_of_local_undertaking, _701_of24e_narrative, " +
-                    "_710_of24g_delivery_to_collection_by, _711_of24g_narrative"; // FIXED
+                    "_710_of24g_delivery_to_collection_by, _711_of24g_narrative";
 
             int paramCount = (int) Arrays.stream(columns.split(",")).map(String::trim).filter(s -> !s.isEmpty()).count();
             String placeholders = String.join(",", Collections.nCopies(paramCount, "?"));
@@ -422,7 +422,7 @@ public class MT760Servlet extends HttpServlet {
                 ps.setString(idx++, f27Total);
                 ps.setString(idx++, f22aPurpose);
                 ps.setString(idx++, emptyToNull(f72zSenderInfo));
-                ps.setString(idx++, emptyToNull(f23xFileId)); // FIXED: empty string to null
+                ps.setString(idx++, emptyToNull(f23xFileId)); 
                 ps.setString(idx++, emptyToNull(f23xFileName));
 
                 // Sequence B

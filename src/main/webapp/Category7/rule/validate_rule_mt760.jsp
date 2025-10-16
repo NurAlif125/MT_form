@@ -8,120 +8,18 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        function updateConditionalRequirements() {
-            const expiryTypeB = $('#_110_mf23b_expiry_type').val();
-            if (expiryTypeB === 'FIXD') {
-                $('#_120_of31e_date_of_expiry').addClass('mandatory');
-            } else if (expiryTypeB === 'COND') {
-                $('#_120_of31e_date_of_expiry').removeClass('mandatory');
-            } else if (expiryTypeB === 'OPEN') {
-                $('#_120_of31e_date_of_expiry').removeClass('mandatory');
-            }
-
-            if (expiryTypeB === 'COND') {
-                $('#_130_of35g_expiry_condition_event').addClass('mandatory');
-            } else {
-                $('#_130_of35g_expiry_condition_event').removeClass('mandatory');
-            }
-
-            if (expiryTypeB === 'OPEN') {
-                $('#_300_of23f_automatic_extension_period').val('').prop('disabled', true);
-            } else {
-                $('#_300_of23f_automatic_extension_period').prop('disabled', false);
-            }
-
-            const autoExtPeriod = $('#_300_of23f_automatic_extension_period').val();
-            if (!autoExtPeriod || autoExtPeriod === '') {
-                $('#_310_of78_automatic_extension_non_extension_notification').val('').prop('disabled', true);
-                $('#_320_of26e_automatic_extension_notification_period').val('').prop('disabled', true);
-                $('#_330_of31s_automatic_extension_final_expiry_date').val('').prop('disabled', true);
-            } else {
-                $('#_310_of78_automatic_extension_non_extension_notification').prop('disabled', false);
-                $('#_320_of26e_automatic_extension_notification_period').prop('disabled', false);
-                $('#_330_of31s_automatic_extension_final_expiry_date').prop('disabled', false);
-            }
-
-            const purposeMsg = $('#_030_mf22a_purpose_of_message').val();
-            if (purposeMsg === 'ISSU') {
-                $('#_140_of50_applicant').addClass('mandatory');
-            } else {
-                $('#_140_of50_applicant').removeClass('mandatory');
-            }
-
-            const formUndertaking = $('#_090_mf22d_form_of_undertaking').val();
-            if (purposeMsg === 'ISSU' && formUndertaking === 'STBY') {
-                $('#_270_of49_confirmation_instructions').addClass('mandatory');
-            } else {
-                $('#_270_of49_confirmation_instructions').removeClass('mandatory');
-            }
-
-            if (formUndertaking === 'DGAR') {
-                $('#_270_of49_confirmation_instructions').val('').prop('disabled', true);
-            } else {
-                $('#_270_of49_confirmation_instructions').prop('disabled', false);
-            }
-
-            if (purposeMsg === 'ISCO' || purposeMsg === 'ICCO') {
-                $('#seq_C_checkbox').prop('checked', true);
-                $('#check_seq_c').show();
-                // Fields not allowed in Sequence B
-                $('#_350_of48d_transfer_indicator').val('').prop('disabled', true);
-                $('#_380_of24e_delivery_of_original_undertaking').val('').prop('disabled', true);
-                $('#_390_of24g_delivery_to_collection_by').val('').prop('disabled', true);
-            } else {
-                $('#_350_of48d_transfer_indicator').prop('disabled', false);
-                $('#_380_of24e_delivery_of_original_undertaking').prop('disabled', false);
-                $('#_390_of24g_delivery_to_collection_by').prop('disabled', false);
-            }
-
-            const confirmInstr = $('#_270_of49_confirmation_instructions').val();
-            if (confirmInstr === 'CONFIRM' || confirmInstr === 'MAY ADD') {
-                $('#_280_of58a_requested_confirmation_party').addClass('mandatory');
-            } else {
-                $('#_280_of58a_requested_confirmation_party').removeClass('mandatory').val('');
-            }
-
-            const standardWording = $('#_590_of22y_standard_wording_required').val();
-            if (standardWording === 'STND') {
-                $('#_440_of22k_type_of_undertaking').addClass('mandatory');
-            } else {
-                $('#_440_of22k_type_of_undertaking').removeClass('mandatory');
-            }
-
-            if (formUndertaking === 'DGAR') {
-                $('#_230_of41a_available_with').val('').prop('disabled', true);
-            } else {
-                $('#_230_of41a_available_with').prop('disabled', false);
-            }
-
-            const expiryTypeC = $('#_450_mf23b_expiry_type').val();
-            if (expiryTypeC === 'FIXD') {
-                $('#_460_of31e_date_of_expiry').addClass('mandatory');
-            } else if (expiryTypeC === 'COND') {
-                $('#_460_of31e_date_of_expiry').removeClass('mandatory');
-                $('#_470_of35G_expiry_condition_events').addClass('mandatory');
-            } else {
-                $('#_460_of31e_date_of_expiry').removeClass('mandatory');
-                $('#_470_of35G_expiry_condition_events').removeClass('mandatory');
-            }
-
-            if (purposeMsg === 'ISSU') {
-                $('#_370_of45l_underlying_transaction_details').addClass('mandatory');
-            } else {
-                $('#_370_of45l_underlying_transaction_details').removeClass('mandatory');
-            }
-        }
-
         let validator = $("#form_mt760").validate({
             ignore: [],
             onkeyup: false,
             onfocusout: false,
             rules: {
+                //  SEQUENCE A - GENERAL INFORMATION 
                 _010_mf15a_new_sequence: "required",
                 _020_mf27_number: "required",
                 _021_mf27_total: "required",
                 _030_mf22a_purpose_of_message: "required",
 
+                // SEQUENCE B - UNDERTAKING DETAILS 
                 _060_mf15b_new_sequence: "required",
                 _070_mf20_undertaking_number: "required",
                 _080_mf30_date_of_issue: "required",
@@ -158,6 +56,7 @@
 
                 _260_mf77u_undertaking_terms_and_conditions: "required",
 
+                // SEQUENCE C - LOCAL UNDERTAKING (CONDITIONAL)
                 _400_mf15c_new_sequence: {
                     required: function() {
                         return $('#seq_C_checkbox').is(':checked');
@@ -179,6 +78,11 @@
                     }
                 },
                 _480_of50_applicant: {
+                    required: function() {
+                        return $('#seq_C_checkbox').is(':checked');
+                    }
+                },
+                _510_mf59_beneficiary: {
                     required: function() {
                         return $('#seq_C_checkbox').is(':checked');
                     }
@@ -223,7 +127,17 @@
                 _174_mf59a_identifier_code: {required: "MF59a Identifier Code must be filled"},
                 _210_mf32b_currency: {required: "MF32B Currency must be filled"},
                 _211_mf32b_amount: {required: "MF32B Amount must be filled"},
-                _260_mf77u_undertaking_terms_and_conditions: {required: "MF77U Undertaking Terms and Conditions must be filled"}
+                _260_mf77u_undertaking_terms_and_conditions: {required: "MF77U Undertaking Terms and Conditions must be filled"},
+                _400_mf15c_new_sequence: {required: "MF15C New Sequence must be filled (Sequence C)"},
+                _420_mf22d_form_of_undertaking: {required: "MF22D Form of Undertaking must be filled (Sequence C)"},
+                _430_mf40c_applicable_rules: {required: "MF40C Applicable Rules must be filled (Sequence C)"},
+                _450_mf23b_expiry_type: {required: "MF23B Expiry Type must be filled (Sequence C)"},
+                _480_of50_applicant: {required: "MF50 Applicant must be filled (Sequence C)"},
+                _510_mf59_beneficiary: {required: "MF59 Beneficiary Account must be filled (Sequence C)"},
+                _511_mf59_name_address: {required: "MF59 Name and Address must be filled (Sequence C)"},
+                _520_mf32b_currency: {required: "MF32B Currency must be filled (Sequence C)"},
+                _521_mf32b_amount: {required: "MF32B Amount must be filled (Sequence C)"},
+                _690_mf45l_underlying_transaction_details: {required: "MF45L Underlying Transaction Details must be filled (Sequence C)"}
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);
@@ -234,7 +148,6 @@
                 
                 $("#tab-validate").removeAttr("hidden");
                  
-                // Switch to validation tab
                 $("#view1, #view2, #view3, #view4, #view5, #view6, #view7").css("display", "none");
                 $("#view8").css("display", "block");
                 $('[id^="tab-view"]').removeClass("selected");
@@ -294,14 +207,168 @@
             }
         });
 
-        // Event listeners for conditional field updates
+        function updateConditionalRequirements() {
+            // Rule C1: Field 31E based on 23B (Sequence B)
+            const expiryTypeB = $('#_110_mf23b_expiry_type').val();
+            if (expiryTypeB === 'FIXD') {
+                $('#_120_of31e_date_of_expiry').addClass('mandatory');
+            } else if (expiryTypeB === 'COND' || expiryTypeB === 'OPEN') {
+                $('#_120_of31e_date_of_expiry').removeClass('mandatory');
+            }
+
+            if (expiryTypeB === 'COND') {
+                $('#_130_of35g_expiry_condition_event').addClass('mandatory');
+            } else {
+                $('#_130_of35g_expiry_condition_event').removeClass('mandatory');
+            }
+
+            if (expiryTypeB === 'OPEN') {
+                $('#_300_of23f_automatic_extension_period').val('').prop('disabled', true);
+                $('#_301_of23f_narrative').val('').prop('disabled', true);
+                $('#_310_of78_automatic_extension_non_extension_notification').val('').prop('disabled', true);
+                $('#_320_of26e_automatic_extension_notification_period').val('').prop('disabled', true);
+                $('#_330_of31s_automatic_extension_final_expiry_date').val('').prop('disabled', true);
+            } else {
+                $('#_300_of23f_automatic_extension_period').prop('disabled', false);
+            }
+
+            const autoExtPeriodB = $('#_300_of23f_automatic_extension_period').val();
+            if (!autoExtPeriodB || autoExtPeriodB === '') {
+                $('#_310_of78_automatic_extension_non_extension_notification').val('').prop('disabled', true);
+                $('#_320_of26e_automatic_extension_notification_period').val('').prop('disabled', true);
+                $('#_330_of31s_automatic_extension_final_expiry_date').val('').prop('disabled', true);
+            } else {
+                $('#_310_of78_automatic_extension_non_extension_notification').prop('disabled', false);
+                $('#_320_of26e_automatic_extension_notification_period').prop('disabled', false);
+                $('#_330_of31s_automatic_extension_final_expiry_date').prop('disabled', false);
+            }
+
+            const purposeMsg = $('#_030_mf22a_purpose_of_message').val();
+            if (purposeMsg === 'ISSU') {
+                $('#_140_of50_applicant').addClass('mandatory');
+                $('#_370_of45l_underlying_transaction_details').addClass('mandatory');
+            } else {
+                $('#_140_of50_applicant').removeClass('mandatory');
+                $('#_370_of45l_underlying_transaction_details').removeClass('mandatory');
+            }
+
+            const formUndertakingB = $('#_090_mf22d_form_of_undertaking').val();
+            if (purposeMsg === 'ISSU' && formUndertakingB === 'STBY') {
+                $('#_270_of49_confirmation_instructions').addClass('mandatory');
+            } else {
+                $('#_270_of49_confirmation_instructions').removeClass('mandatory');
+            }
+
+            if (formUndertakingB === 'DGAR') {
+                $('#_270_of49_confirmation_instructions').val('').prop('disabled', true);
+            } else {
+                $('#_270_of49_confirmation_instructions').prop('disabled', false);
+            }
+
+            if (purposeMsg === 'ISCO' || purposeMsg === 'ICCO') {
+                $('#seq_C_checkbox').prop('checked', true).prop('disabled', true);
+                $('#check_seq_c').show();
+                $('#_350_of48d_transfer_indicator').val('').prop('disabled', true);
+                $('#_380_of24e_delivery_of_original_undertaking').val('').prop('disabled', true);
+                $('#_381_of24e_narrative').val('').prop('disabled', true);
+                $('#_390_of24g_delivery_to_collection_by').val('').prop('disabled', true);
+                $('#_391_of24g_narrative').val('').prop('disabled', true);
+            } else {
+                $('#seq_C_checkbox').prop('disabled', false);
+                $('#_350_of48d_transfer_indicator').prop('disabled', false);
+                $('#_380_of24e_delivery_of_original_undertaking').prop('disabled', false);
+                $('#_390_of24g_delivery_to_collection_by').prop('disabled', false);
+            }
+
+            const adviseThroughB = $('#_200_of57a_advise_through_bank').val();
+            const adviseThroughC = $('#_540_of57a_advise_through_bank').val();
+            if (adviseThroughB !== '' || adviseThroughC !== '') {
+                $('#_180_of56a_advising_bank').addClass('mandatory');
+            } else {
+                $('#_180_of56a_advising_bank').removeClass('mandatory');
+            }
+
+            const confirmInstr = $('#_270_of49_confirmation_instructions').val();
+            if (confirmInstr === 'CONFIRM' || confirmInstr === 'MAY ADD') {
+                $('#_280_of58a_requested_confirmation_party').addClass('mandatory');
+            } else {
+                $('#_280_of58a_requested_confirmation_party').removeClass('mandatory').val('');
+            }
+
+            const standardWording = $('#_590_of22y_standard_wording_required').val();
+            if (standardWording === 'STND') {
+                $('#_440_of22k_type_of_undertaking').addClass('mandatory');
+            } else {
+                $('#_440_of22k_type_of_undertaking').removeClass('mandatory');
+            }
+
+            if (formUndertakingB === 'DGAR') {
+                $('#_230_of41a_available_with').val('').prop('disabled', true);
+                $('#_231_of41f_identifier_code').val('').prop('disabled', true);
+                $('#_232_of41g_name_address').val('').prop('disabled', true);
+            } else {
+                $('#_230_of41a_available_with').prop('disabled', false);
+            }
+
+            const formUndertakingC = $('#_420_mf22d_form_of_undertaking').val();
+            if (formUndertakingC === 'DGAR' || formUndertakingC === 'DEPU') {
+                $('#_550_of41a_available_with').val('').prop('disabled', true);
+                $('#_551_of41f_identifier_code').val('').prop('disabled', true);
+                $('#_552_of41g_name_address').val('').prop('disabled', true);
+            } else {
+                $('#_550_of41a_available_with').prop('disabled', false);
+            }
+
+            if ($('#seq_C_checkbox').is(':checked')) {
+                const expiryTypeC = $('#_450_mf23b_expiry_type').val();
+                
+                if (expiryTypeC === 'FIXD') {
+                    $('#_460_of31e_date_of_expiry').addClass('mandatory');
+                } else {
+                    $('#_460_of31e_date_of_expiry').removeClass('mandatory');
+                }
+
+                if (expiryTypeC === 'COND') {
+                    $('#_470_of35G_expiry_condition_events').addClass('mandatory');
+                } else {
+                    $('#_470_of35G_expiry_condition_events').removeClass('mandatory');
+                }
+
+                if (expiryTypeC === 'OPEN') {
+                    $('#_620_of23f_automatic_extension_period').val('').prop('disabled', true);
+                    $('#_621_of23f_narrative').val('').prop('disabled', true);
+                    $('#_630_of78_automatic_extension_non_extenstion_notification').val('').prop('disabled', true);
+                    $('#_640_of26e_automatic_extension_notification_period').val('').prop('disabled', true);
+                    $('#_650_of31s_automatic_extension_final_expiry_date').val('').prop('disabled', true);
+                } else {
+                    $('#_620_of23f_automatic_extension_period').prop('disabled', false);
+                }
+
+                const autoExtPeriodC = $('#_620_of23f_automatic_extension_period').val();
+                if (!autoExtPeriodC || autoExtPeriodC === '') {
+                    $('#_630_of78_automatic_extension_non_extenstion_notification').val('').prop('disabled', true);
+                    $('#_640_of26e_automatic_extension_notification_period').val('').prop('disabled', true);
+                    $('#_650_of31s_automatic_extension_final_expiry_date').val('').prop('disabled', true);
+                } else {
+                    $('#_630_of78_automatic_extension_non_extenstion_notification').prop('disabled', false);
+                    $('#_640_of26e_automatic_extension_notification_period').prop('disabled', false);
+                    $('#_650_of31s_automatic_extension_final_expiry_date').prop('disabled', false);
+                }
+            }
+        }
+
         $('#_030_mf22a_purpose_of_message').change(updateConditionalRequirements);
         $('#_090_mf22d_form_of_undertaking').change(updateConditionalRequirements);
         $('#_110_mf23b_expiry_type').change(updateConditionalRequirements);
         $('#_270_of49_confirmation_instructions').change(updateConditionalRequirements);
         $('#_300_of23f_automatic_extension_period').change(updateConditionalRequirements);
-        $('#_450_mf23b_expiry_type').change(updateConditionalRequirements);
+        $('#_200_of57a_advise_through_bank').change(updateConditionalRequirements);
+        $('#_540_of57a_advise_through_bank').change(updateConditionalRequirements);
         $('#_590_of22y_standard_wording_required').change(updateConditionalRequirements);
+        $('#_420_mf22d_form_of_undertaking').change(updateConditionalRequirements);
+        $('#_450_mf23b_expiry_type').change(updateConditionalRequirements);
+        $('#_620_of23f_automatic_extension_period').change(updateConditionalRequirements);
+        $('#seq_C_checkbox').change(updateConditionalRequirements);
         
         updateConditionalRequirements();
 
@@ -324,7 +391,6 @@
             }
         });
 
-        // Field-specific validations
         $('#_100_mf40c_applicable_rules, #_430_mf40c_applicable_rules').change(function() {
             const val = $(this).val();
             const narrativeId = $(this).attr('id').replace('applicable_rules', 'narrative');
@@ -342,15 +408,17 @@
             
             if (val === 'DAYS') {
                 narrative.prop('disabled', false).addClass('mandatory');
-                // Should be exactly 3 digits
                 narrative.attr('pattern', '[0-9]{3}');
+                narrative.attr('title', 'Must be exactly 3 digits');
             } else if (val === 'ONEY') {
                 narrative.val('').prop('disabled', true).removeClass('mandatory');
+                narrative.removeAttr('pattern');
             } else if (val === 'OTHR') {
                 narrative.prop('disabled', false).addClass('mandatory');
                 narrative.removeAttr('pattern');
             } else {
                 narrative.val('').prop('disabled', true).removeClass('mandatory');
+                narrative.removeAttr('pattern');
             }
         });
 
@@ -371,12 +439,6 @@
                 $('#' + narrativeId).prop('disabled', false).addClass('mandatory');
             } else {
                 $('#' + narrativeId).val('').prop('disabled', true).removeClass('mandatory');
-            }
-        });
-
-        $('#_200_of57a_advise_through_bank').change(function() {
-            if ($(this).val() !== '') {
-                $('#_180_of56a_advising_bank').addClass('mandatory');
             }
         });
 
@@ -487,33 +549,33 @@
             }
         });
 
-        $("#div_of52a_issuer").hide();
-        $("#div_of52d_issuer").hide();
+        $("#div_of52a_issuer_2").hide();
+        $("#div_of52d_issuer_2").hide();
         $("#_500_of52a_issuer").change(function () {
             if ($(this).val() == "a") {
-                $("#div_of52a_issuer").show();
-                $("#div_of52d_issuer").hide();
+                $("#div_of52a_issuer_2").show();
+                $("#div_of52d_issuer_2").hide();
             } else if ($(this).val() == "d") {
-                $("#div_of52a_issuer").hide();
-                $("#div_of52d_issuer").show();
+                $("#div_of52a_issuer_2").hide();
+                $("#div_of52d_issuer_2").show();
             } else {
-                $("#div_of52a_issuer").hide();
-                $("#div_of52d_issuer").hide();
+                $("#div_of52a_issuer_2").hide();
+                $("#div_of52d_issuer_2").hide();
             }
         });
 
-        $("#div_of57a_advise_through_bank").hide();
-        $("#div_of57d_advise_through_bank").hide();
+        $("#div_of57a_advise_through_bank_2").hide();
+        $("#div_of57d_advise_through_bank_2").hide();
         $("#_540_of57a_advise_through_bank").change(function () {
             if ($(this).val() == "a") {
-                $("#div_of57a_advise_through_bank").show();
-                $("#div_of57d_advise_through_bank").hide();
+                $("#div_of57a_advise_through_bank_2").show();
+                $("#div_of57d_advise_through_bank_2").hide();
             } else if ($(this).val() == "d") {
-                $("#div_of57a_advise_through_bank").hide();
-                $("#div_of57d_advise_through_bank").show();
+                $("#div_of57a_advise_through_bank_2").hide();
+                $("#div_of57d_advise_through_bank_2").show();
             } else {
-                $("#div_of57a_advise_through_bank").hide();
-                $("#div_of57d_advise_through_bank").hide();
+                $("#div_of57a_advise_through_bank_2").hide();
+                $("#div_of57d_advise_through_bank_2").hide();
             }
         });
 
@@ -544,9 +606,93 @@
             $("#div_mf59a_beneficiary").show();
         }
 
+        if ($("#_180_of56a_advising_bank").val() == "a") {
+            $("#div_of56a_advising_bank").show();
+        } else if ($("#_180_of56a_advising_bank").val() == "d") {
+            $("#div_of56d_advising_bank").show();
+        }
+
+        if ($("#_200_of57a_advise_through_bank").val() == "a") {
+            $("#div_of57a_advise_through_bank").show();
+        } else if ($("#_200_of57a_advise_through_bank").val() == "d") {
+            $("#div_of57d_advise_through_bank").show();
+        }
+
+        if ($("#_230_of41a_available_with").val() == "f") {
+            $("#div_of41f_avaliable_with").show();
+        } else if ($("#_230_of41a_available_with").val() == "g") {
+            $("#div_of41g_avaliable_with").show();
+        }
+
+        if ($("#_280_of58a_requested_confirmation_party").val() == "a") {
+            $("#div_of58a_requested_confirmation_party").show();
+        } else if ($("#_280_of58a_requested_confirmation_party").val() == "d") {
+            $("#div_of58d_requested_confirmation_party").show();
+        }
+
+        if ($("#_500_of52a_issuer").val() == "a") {
+            $("#div_of52a_issuer_2").show();
+        } else if ($("#_500_of52a_issuer").val() == "d") {
+            $("#div_of52d_issuer_2").show();
+        }
+
+        if ($("#_540_of57a_advise_through_bank").val() == "a") {
+            $("#div_of57a_advise_through_bank_2").show();
+        } else if ($("#_540_of57a_advise_through_bank").val() == "d") {
+            $("#div_of57d_advise_through_bank_2").show();
+        }
+
+        if ($("#_550_of41a_available_with").val() == "f") {
+            $("#div_of41f_avaliable_with_2").show();
+        } else if ($("#_550_of41a_available_with").val() == "g") {
+            $("#div_of41g_avaliable_with_2").show();
+        }
+
         if ($("#_400_mf15c_new_sequence").val() != "" || $("#seq_C_checkbox").is(":checked")) {
             $("#seq_C_checkbox").prop("checked", true);
             $("#check_seq_c").show();
+        }
+
+        if ($("#_100_mf40c_applicable_rules").val() === "OTHR") {
+            $("#_101_mf40c_narrative").prop('disabled', false).addClass('mandatory');
+        }
+
+        if ($("#_430_mf40c_applicable_rules").val() === "OTHR") {
+            $("#_431_mf40c_narrative").prop('disabled', false).addClass('mandatory');
+        }
+
+        const periodB = $("#_300_of23f_automatic_extension_period").val();
+        if (periodB === "DAYS") {
+            $("#_301_of23f_narrative").prop('disabled', false).addClass('mandatory').attr('pattern', '[0-9]{3}');
+        } else if (periodB === "OTHR") {
+            $("#_301_of23f_narrative").prop('disabled', false).addClass('mandatory');
+        }
+
+        const periodC = $("#_620_of23f_automatic_extension_period").val();
+        if (periodC === "DAYS") {
+            $("#_621_of23f_narrative").prop('disabled', false).addClass('mandatory').attr('pattern', '[0-9]{3}');
+        } else if (periodC === "OTHR") {
+            $("#_621_of23f_narrative").prop('disabled', false).addClass('mandatory');
+        }
+
+        const deliveryB = $("#_380_of24e_delivery_of_original_undertaking").val();
+        if (deliveryB === "COUR" || deliveryB === "OTHR") {
+            $("#_381_of24e_narrative").prop('disabled', false);
+        }
+
+        const deliveryC = $("#_700_of24e_delivery_of_local_undertaking").val();
+        if (deliveryC === "COUR" || deliveryC === "OTHR") {
+            $("#_701_of24e_narrative").prop('disabled', false);
+        }
+
+        const deliveryToB = $("#_390_of24g_delivery_to_collection_by").val();
+        if (deliveryToB === "OTHR") {
+            $("#_391_of24g_narrative").prop('disabled', false).addClass('mandatory');
+        }
+
+        const deliveryToC = $("#_710_of24g_delivery_to_collection_by").val();
+        if (deliveryToC === "OTHR") {
+            $("#_711_of24g_narrative").prop('disabled', false).addClass('mandatory');
         }
 
     });
