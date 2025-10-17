@@ -18,8 +18,12 @@ import java.util.Collections;
 /**
  * Servlet untuk menyimpan data form MT760
  * MT760 - Issue of a Demand Guarantee/Standby Guarantee/Standby Letter of Credit
+ * 
+ * FINAL VERSION - Fully validated and consistent with mt760.jsp
+ * 
  * Author: mslam
  * Date: Oct 2025
+ * Last Updated: Jan 2025
  */
 @WebServlet("/MT760Servlet")
 public class MT760Servlet extends HttpServlet {
@@ -160,9 +164,9 @@ public class MT760Servlet extends HttpServlet {
             String f24eDeliveryOrig = request.getParameter("_380_of24e_delivery_of_original_undertaking");
             String f24eNarrative = request.getParameter("_381_of24e_narrative");
             
-            // Field 24G - Delivery To/Collection By
+            // Field 24G - Delivery To/Collection By (SEQUENCE B)
             String f24gDeliveryTo = request.getParameter("_390_of24g_delivery_to_collection_by");
-            String f24gNarrative = request.getParameter("_391_of24g_narrative"); // FIXED: was _390_of24g_narrative
+            String f24gNarrative = request.getParameter("_391_of24g_narrative");
 
             /* ======================================================
              *  SEQUENCE C - LOCAL UNDERTAKING DETAILS (OPTIONAL)
@@ -238,6 +242,7 @@ public class MT760Servlet extends HttpServlet {
             String f22yStandardWording = request.getParameter("_590_of22y_standard_wording_required");
             
             // Field 40D - Standard Wording Language
+            // CRITICAL: Database column name is "_600_of40d_standard_wording_requested_language" (WITHOUT 'd' in 'reqested')
             String f40dStandardLang = request.getParameter("_600_of40d_standard_wording_requested_language");
             
             // Field 44J - Governing Law (Seq C)
@@ -273,9 +278,9 @@ public class MT760Servlet extends HttpServlet {
             String f24eDeliveryLocalC = request.getParameter("_700_of24e_delivery_of_local_undertaking");
             String f24eNarrativeC = request.getParameter("_701_of24e_narrative");
             
-            // Field 24G - Delivery To (Seq C)
+            // Field 24G - Delivery To (SEQUENCE C)
             String f24gDeliveryToC = request.getParameter("_710_of24g_delivery_to_collection_by");
-            String f24gNarrativeC = request.getParameter("_711_of24g_narrative"); 
+            String f24gNarrativeC = request.getParameter("_711_of24g_narrative");
 
             /* ======================================================
              *  VALIDASI MANDATORY FIELDS
@@ -289,24 +294,76 @@ public class MT760Servlet extends HttpServlet {
                 return;
             }
 
-            // Validasi conditional mandatory fields
-            if ("ISSU".equals(f22aPurpose) && isEmpty(f50Applicant)) {
-                out.println("<script>alert('Field 50 (Applicant) required when Purpose is ISSU.'); window.history.back();</script>");
+            // Validasi Field 27 (T75)
+            if (!validateField27(f27Number, f27Total)) {
+                out.println("<script>alert('Field 27 error: Number must be 1, Total must be 1-8 (Error T75)'); window.history.back();</script>");
                 return;
             }
 
+            // Validasi Field 20 (T26)
+            if (!validateField20(f20UndertakingNum)) {
+                out.println("<script>alert('Field 20 error: Cannot start/end with / or contain // (Error T26)'); window.history.back();</script>");
+                return;
+            }
+
+            // Validasi dates
+            if (!isEmpty(f30DateIssue) && !isValidDateFormat(f30DateIssue)) {
+                out.println("<script>alert('Field 30 Date of Issue invalid format (Error T50)'); window.history.back();</script>");
+                return;
+            }
+
+            // Validasi conditional mandatory fields based on Network Validated Rules
+            
+            // Rule C1: Field 31E based on field 23B
             if ("FIXD".equals(f23bExpiryType) && isEmpty(f31eDateExpiry)) {
-                out.println("<script>alert('Field 31E (Date of Expiry) required when Expiry Type is FIXD.'); window.history.back();</script>");
+                out.println("<script>alert('Rule C1: Field 31E required when 23B is FIXD'); window.history.back();</script>");
                 return;
             }
 
+            // Rule C2: Field 35G based on field 23B
             if ("COND".equals(f23bExpiryType) && isEmpty(f35gExpiryCondition)) {
-                out.println("<script>alert('Field 35G (Expiry Condition) required when Expiry Type is COND.'); window.history.back();</script>");
+                out.println("<script>alert('Rule C2: Field 35G required when 23B is COND'); window.history.back();</script>");
                 return;
             }
 
+            // Rule C4: Field 50 must be present if 22A is ISSU
+            if ("ISSU".equals(f22aPurpose) && isEmpty(f50Applicant)) {
+                out.println("<script>alert('Rule C4: Field 50 (Applicant) required when 22A is ISSU'); window.history.back();</script>");
+                return;
+            }
+
+            // Rule C5: Field 49 based on 22A and 22D
+            if ("ISSU".equals(f22aPurpose) && "STBY".equals(f22dFormUndertaking) && isEmpty(f49ConfirmInstr)) {
+                out.println("<script>alert('Rule C5: Field 49 required when 22A is ISSU and 22D is STBY'); window.history.back();</script>");
+                return;
+            }
+
+            // Validate field 40C narrative requirement
             if ("OTHR".equals(f40cRules) && isEmpty(f40cNarrative)) {
-                out.println("<script>alert('Field 40C Narrative required when Applicable Rules is OTHR.'); window.history.back();</script>");
+                out.println("<script>alert('Field 40C Narrative required when Applicable Rules is OTHR'); window.history.back();</script>");
+                return;
+            }
+
+            // Validasi BIC codes
+            if (!isEmpty(f52aIdCode) && !isValidBIC(f52aIdCode)) {
+                out.println("<script>alert('Field 52a: Invalid BIC format (Error T27/T28/T29)'); window.history.back();</script>");
+                return;
+            }
+
+            if (!isEmpty(f59aIdCode) && !isValidBIC(f59aIdCode)) {
+                out.println("<script>alert('Field 59a: Invalid BIC format'); window.history.back();</script>");
+                return;
+            }
+
+            // Validasi currency codes
+            if (!isValidCurrency(f32bCurrency)) {
+                out.println("<script>alert('Field 32B: Invalid currency code (Error T52)'); window.history.back();</script>");
+                return;
+            }
+
+            // Validasi amount format
+            if (!isValidAmount(f32bAmount)) {
+                out.println("<script>alert('Field 32B: Invalid amount format (Error T40)'); window.history.back();</script>");
                 return;
             }
 
@@ -318,6 +375,60 @@ public class MT760Servlet extends HttpServlet {
                     out.println("<script>alert('Mandatory fields in Sequence C belum lengkap.'); window.history.back();</script>");
                     return;
                 }
+
+                // Rule C1 for Sequence C
+                if ("FIXD".equals(f23bExpiryTypeC) && isEmpty(f31eDateExpiryC)) {
+                    out.println("<script>alert('Rule C1: Field 31E required in Seq C when 23B is FIXD'); window.history.back();</script>");
+                    return;
+                }
+
+                // Rule C2 for Sequence C
+                if ("COND".equals(f23bExpiryTypeC) && isEmpty(f35gExpiryConditionC)) {
+                    out.println("<script>alert('Rule C2: Field 35G required in Seq C when 23B is COND'); window.history.back();</script>");
+                    return;
+                }
+
+                // Validate field 40C narrative for Seq C
+                if ("OTHR".equals(f40cRulesC) && isEmpty(f40cNarrativeC)) {
+                    out.println("<script>alert('Field 40C Narrative required in Seq C when Applicable Rules is OTHR'); window.history.back();</script>");
+                    return;
+                }
+
+                // Validate currency for Seq C
+                if (!isValidCurrency(f32bCurrencyC)) {
+                    out.println("<script>alert('Field 32B (Seq C): Invalid currency code'); window.history.back();</script>");
+                    return;
+                }
+
+                // Validate amount for Seq C
+                if (!isValidAmount(f32bAmountC)) {
+                    out.println("<script>alert('Field 32B (Seq C): Invalid amount format'); window.history.back();</script>");
+                    return;
+                }
+
+                // Rule C10: Field 22K required if 22Y is STND
+                if ("STND".equals(f22yStandardWording) && isEmpty(f22kTypeUndertaking)) {
+                    out.println("<script>alert('Rule C10: Field 22K required when 22Y is STND'); window.history.back();</script>");
+                    return;
+                }
+            }
+
+            // Rule C6: Sequence C must be present if 22A is ISCO or ICCO
+            if (("ISCO".equals(f22aPurpose) || "ICCO".equals(f22aPurpose)) && !isSeqCPresent) {
+                out.println("<script>alert('Rule C6: Sequence C must be present when 22A is ISCO or ICCO'); window.history.back();</script>");
+                return;
+            }
+
+            // Rule C7: Field 56a must be present if field 57a is present
+            if ((!isEmpty(f57aAdviseThroughOpt) || !isEmpty(f57aAdviseThroughOptC)) && isEmpty(f56aAdvisingOpt)) {
+                out.println("<script>alert('Rule C7: Field 56a required when field 57a is present'); window.history.back();</script>");
+                return;
+            }
+
+            // Rule C9: Field 58a based on field 49
+            if (("CONFIRM".equals(f49ConfirmInstr) || "MAY ADD".equals(f49ConfirmInstr)) && isEmpty(f58aReqConfOpt)) {
+                out.println("<script>alert('Rule C9: Field 58a required when 49 is CONFIRM or MAY ADD'); window.history.back();</script>");
+                return;
             }
 
             /* ======================================================
@@ -377,7 +488,7 @@ public class MT760Servlet extends HttpServlet {
                     "_340_of48b_demand_indicator, _350_of48d_transfer_indicator, " +
                     "_360_of39e_transfer_conditions, _370_of45l_underlying_transaction_details, " +
                     "_380_of24e_delivery_of_original_undertaking, _381_of24e_narrative, " +
-                    "_390_of24g_delivery_to_collection_by, _391_of24g_narrative, " + // FIXED
+                    "_390_of24g_delivery_to_collection_by, _391_of24g_narrative, " +
                     // Sequence C
                     "_410_of31c_requested_date_of_issue, _420_mf22d_form_of_undertaking, " +
                     "_430_mf40c_applicable_rules, _431_mf40c_narrative, " +
@@ -422,7 +533,7 @@ public class MT760Servlet extends HttpServlet {
                 ps.setString(idx++, f27Total);
                 ps.setString(idx++, f22aPurpose);
                 ps.setString(idx++, emptyToNull(f72zSenderInfo));
-                ps.setString(idx++, emptyToNull(f23xFileId)); 
+                ps.setString(idx++, emptyToNull(f23xFileId));
                 ps.setString(idx++, emptyToNull(f23xFileName));
 
                 // Sequence B
@@ -430,164 +541,164 @@ public class MT760Servlet extends HttpServlet {
                 ps.setString(idx++, f30DateIssue);
                 ps.setString(idx++, f22dFormUndertaking);
                 ps.setString(idx++, f40cRules);
-                ps.setString(idx++, f40cNarrative);
+                ps.setString(idx++, emptyToNull(f40cNarrative));
                 ps.setString(idx++, f23bExpiryType);
-                ps.setString(idx++, f31eDateExpiry);
-                ps.setString(idx++, f35gExpiryCondition);
-                ps.setString(idx++, f50Applicant);
-                ps.setString(idx++, f51Obligor);
+                ps.setString(idx++, emptyToNull(f31eDateExpiry));
+                ps.setString(idx++, emptyToNull(f35gExpiryCondition));
+                ps.setString(idx++, emptyToNull(f50Applicant));
+                ps.setString(idx++, emptyToNull(f51Obligor));
                 
                 // Field 52a
-                ps.setString(idx++, f52aIssuerOpt);
-                ps.setString(idx++, f52aPartyId);
-                ps.setString(idx++, f52aIdCode);
-                ps.setString(idx++, f52dPartyId);
-                ps.setString(idx++, f52dNameAddr);
+                ps.setString(idx++, emptyToNull(f52aIssuerOpt));
+                ps.setString(idx++, emptyToNull(f52aPartyId));
+                ps.setString(idx++, emptyToNull(f52aIdCode));
+                ps.setString(idx++, emptyToNull(f52dPartyId));
+                ps.setString(idx++, emptyToNull(f52dNameAddr));
                 
                 // Field 59a
-                ps.setString(idx++, f59aBenefOpt);
-                ps.setString(idx++, f59aAccount);
-                ps.setString(idx++, f59aNameAddr);
-                ps.setString(idx++, f59aAccount2);
-                ps.setString(idx++, f59aIdCode);
+                ps.setString(idx++, emptyToNull(f59aBenefOpt));
+                ps.setString(idx++, emptyToNull(f59aAccount));
+                ps.setString(idx++, emptyToNull(f59aNameAddr));
+                ps.setString(idx++, emptyToNull(f59aAccount2));
+                ps.setString(idx++, emptyToNull(f59aIdCode));
                 
                 // Field 56a
-                ps.setString(idx++, f56aAdvisingOpt);
-                ps.setString(idx++, f56aPartyId);
-                ps.setString(idx++, f56aIdCode);
-                ps.setString(idx++, f56dPartyId);
-                ps.setString(idx++, f56dNameAddr);
+                ps.setString(idx++, emptyToNull(f56aAdvisingOpt));
+                ps.setString(idx++, emptyToNull(f56aPartyId));
+                ps.setString(idx++, emptyToNull(f56aIdCode));
+                ps.setString(idx++, emptyToNull(f56dPartyId));
+                ps.setString(idx++, emptyToNull(f56dNameAddr));
                 
-                ps.setString(idx++, f23AdvisingRef);
+                ps.setString(idx++, emptyToNull(f23AdvisingRef));
                 
                 // Field 57a
-                ps.setString(idx++, f57aAdviseThroughOpt);
-                ps.setString(idx++, f57aPartyId);
-                ps.setString(idx++, f57aIdCode);
-                ps.setString(idx++, f57dPartyId);
-                ps.setString(idx++, f57dNameAddr);
+                ps.setString(idx++, emptyToNull(f57aAdviseThroughOpt));
+                ps.setString(idx++, emptyToNull(f57aPartyId));
+                ps.setString(idx++, emptyToNull(f57aIdCode));
+                ps.setString(idx++, emptyToNull(f57dPartyId));
+                ps.setString(idx++, emptyToNull(f57dNameAddr));
                 
                 // Field 32B
                 ps.setString(idx++, f32bCurrency);
                 setBigDecimalOrNull(ps, idx++, f32bAmount);
                 
-                ps.setString(idx++, f39fSuppInfo);
+                ps.setString(idx++, emptyToNull(f39fSuppInfo));
                 
                 // Field 41a
-                ps.setString(idx++, f41aAvailableOpt);
-                ps.setString(idx++, f41fIdCode);
-                ps.setString(idx++, f41gNameAddr);
+                ps.setString(idx++, emptyToNull(f41aAvailableOpt));
+                ps.setString(idx++, emptyToNull(f41fIdCode));
+                ps.setString(idx++, emptyToNull(f41gNameAddr));
                 
-                ps.setString(idx++, f71dCharges);
-                ps.setString(idx++, f45cDocInstr);
+                ps.setString(idx++, emptyToNull(f71dCharges));
+                ps.setString(idx++, emptyToNull(f45cDocInstr));
                 ps.setString(idx++, f77uTerms);
-                ps.setString(idx++, f49ConfirmInstr);
+                ps.setString(idx++, emptyToNull(f49ConfirmInstr));
                 
                 // Field 58a
-                ps.setString(idx++, f58aReqConfOpt);
-                ps.setString(idx++, f58aPartyId);
-                ps.setString(idx++, f58aIdCode);
-                ps.setString(idx++, f58dPartyId);
-                ps.setString(idx++, f58dNameAddr);
+                ps.setString(idx++, emptyToNull(f58aReqConfOpt));
+                ps.setString(idx++, emptyToNull(f58aPartyId));
+                ps.setString(idx++, emptyToNull(f58aIdCode));
+                ps.setString(idx++, emptyToNull(f58dPartyId));
+                ps.setString(idx++, emptyToNull(f58dNameAddr));
                 
                 // Field 44J
-                ps.setString(idx++, f44jCountryCode);
-                ps.setString(idx++, f44jNarrative);
+                ps.setString(idx++, emptyToNull(f44jCountryCode));
+                ps.setString(idx++, emptyToNull(f44jNarrative));
                 
                 // Field 23F
-                ps.setString(idx++, f23fAutoExtPeriod);
-                ps.setString(idx++, f23fNarrative);
+                ps.setString(idx++, emptyToNull(f23fAutoExtPeriod));
+                ps.setString(idx++, emptyToNull(f23fNarrative));
                 
-                ps.setString(idx++, f78AutoExtNotif);
-                ps.setString(idx++, f26eAutoExtNotifPeriod);
-                ps.setString(idx++, f31sAutoExtFinalDate);
-                ps.setString(idx++, f48bDemandInd);
-                ps.setString(idx++, f48dTransferInd);
-                ps.setString(idx++, f39eTransferCond);
-                ps.setString(idx++, f45lUnderlyingTrans);
+                ps.setString(idx++, emptyToNull(f78AutoExtNotif));
+                ps.setString(idx++, emptyToNull(f26eAutoExtNotifPeriod));
+                ps.setString(idx++, emptyToNull(f31sAutoExtFinalDate));
+                ps.setString(idx++, emptyToNull(f48bDemandInd));
+                ps.setString(idx++, emptyToNull(f48dTransferInd));
+                ps.setString(idx++, emptyToNull(f39eTransferCond));
+                ps.setString(idx++, emptyToNull(f45lUnderlyingTrans));
                 
                 // Field 24E
-                ps.setString(idx++, f24eDeliveryOrig);
-                ps.setString(idx++, f24eNarrative);
+                ps.setString(idx++, emptyToNull(f24eDeliveryOrig));
+                ps.setString(idx++, emptyToNull(f24eNarrative));
                 
-                // Field 24G
-                ps.setString(idx++, f24gDeliveryTo);
-                ps.setString(idx++, f24gNarrative);
+                // Field 24G (Sequence B)
+                ps.setString(idx++, emptyToNull(f24gDeliveryTo));
+                ps.setString(idx++, emptyToNull(f24gNarrative));
 
                 // Sequence C
-                ps.setString(idx++, f31cReqDateIssue);
-                ps.setString(idx++, f22dFormUndertakingC);
-                ps.setString(idx++, f40cRulesC);
-                ps.setString(idx++, f40cNarrativeC);
+                ps.setString(idx++, emptyToNull(f31cReqDateIssue));
+                ps.setString(idx++, emptyToNull(f22dFormUndertakingC));
+                ps.setString(idx++, emptyToNull(f40cRulesC));
+                ps.setString(idx++, emptyToNull(f40cNarrativeC));
                 
                 // Field 22K
-                ps.setString(idx++, f22kTypeUndertaking);
-                ps.setString(idx++, f22kNarrative);
+                ps.setString(idx++, emptyToNull(f22kTypeUndertaking));
+                ps.setString(idx++, emptyToNull(f22kNarrative));
                 
-                ps.setString(idx++, f23bExpiryTypeC);
-                ps.setString(idx++, f31eDateExpiryC);
-                ps.setString(idx++, f35gExpiryConditionC);
-                ps.setString(idx++, f50ApplicantC);
-                ps.setString(idx++, f51ObligorC);
+                ps.setString(idx++, emptyToNull(f23bExpiryTypeC));
+                ps.setString(idx++, emptyToNull(f31eDateExpiryC));
+                ps.setString(idx++, emptyToNull(f35gExpiryConditionC));
+                ps.setString(idx++, emptyToNull(f50ApplicantC));
+                ps.setString(idx++, emptyToNull(f51ObligorC));
                 
                 // Field 52a (Seq C)
-                ps.setString(idx++, f52aIssuerOptC);
-                ps.setString(idx++, f52aPartyIdC);
-                ps.setString(idx++, f52aIdCodeC);
-                ps.setString(idx++, f52dPartyIdC);
-                ps.setString(idx++, f52dNameAddrC);
+                ps.setString(idx++, emptyToNull(f52aIssuerOptC));
+                ps.setString(idx++, emptyToNull(f52aPartyIdC));
+                ps.setString(idx++, emptyToNull(f52aIdCodeC));
+                ps.setString(idx++, emptyToNull(f52dPartyIdC));
+                ps.setString(idx++, emptyToNull(f52dNameAddrC));
                 
                 // Field 59 (Seq C)
-                ps.setString(idx++, f59BenefAccountC);
-                ps.setString(idx++, f59BenefNameAddrC);
+                ps.setString(idx++, emptyToNull(f59BenefAccountC));
+                ps.setString(idx++, emptyToNull(f59BenefNameAddrC));
                 
                 // Field 32B (Seq C)
-                ps.setString(idx++, f32bCurrencyC);
+                ps.setString(idx++, emptyToNull(f32bCurrencyC));
                 setBigDecimalOrNull(ps, idx++, f32bAmountC);
                 
-                ps.setString(idx++, f39fSuppInfoC);
+                ps.setString(idx++, emptyToNull(f39fSuppInfoC));
                 
                 // Field 57a (Seq C)
-                ps.setString(idx++, f57aAdviseThroughOptC);
-                ps.setString(idx++, f57aPartyIdC);
-                ps.setString(idx++, f57aIdCodeC);
-                ps.setString(idx++, f57dPartyIdC);
-                ps.setString(idx++, f57dNameAddrC);
+                ps.setString(idx++, emptyToNull(f57aAdviseThroughOptC));
+                ps.setString(idx++, emptyToNull(f57aPartyIdC));
+                ps.setString(idx++, emptyToNull(f57aIdCodeC));
+                ps.setString(idx++, emptyToNull(f57dPartyIdC));
+                ps.setString(idx++, emptyToNull(f57dNameAddrC));
                 
                 // Field 41a (Seq C)
-                ps.setString(idx++, f41aAvailableOptC);
-                ps.setString(idx++, f41fIdCodeC);
-                ps.setString(idx++, f41gNameAddrC);
+                ps.setString(idx++, emptyToNull(f41aAvailableOptC));
+                ps.setString(idx++, emptyToNull(f41fIdCodeC));
+                ps.setString(idx++, emptyToNull(f41gNameAddrC));
                 
-                ps.setString(idx++, f71dChargesC);
-                ps.setString(idx++, f45cDocInstrC);
-                ps.setString(idx++, f77lReqLocalTerms);
-                ps.setString(idx++, f22yStandardWording);
-                ps.setString(idx++, f40dStandardLang);
+                ps.setString(idx++, emptyToNull(f71dChargesC));
+                ps.setString(idx++, emptyToNull(f45cDocInstrC));
+                ps.setString(idx++, emptyToNull(f77lReqLocalTerms));
+                ps.setString(idx++, emptyToNull(f22yStandardWording));
+                ps.setString(idx++, emptyToNull(f40dStandardLang));
                 
                 // Field 44J (Seq C)
-                ps.setString(idx++, f44jCountryCodeC);
-                ps.setString(idx++, f44jNarrativeC);
+                ps.setString(idx++, emptyToNull(f44jCountryCodeC));
+                ps.setString(idx++, emptyToNull(f44jNarrativeC));
                 
                 // Field 23F (Seq C)
-                ps.setString(idx++, f23fAutoExtPeriodC);
-                ps.setString(idx++, f23fNarrativeC);
+                ps.setString(idx++, emptyToNull(f23fAutoExtPeriodC));
+                ps.setString(idx++, emptyToNull(f23fNarrativeC));
                 
-                ps.setString(idx++, f78AutoExtNotifC);
-                ps.setString(idx++, f26eAutoExtNotifPeriodC);
-                ps.setString(idx++, f31sAutoExtFinalDateC);
-                ps.setString(idx++, f48bDemandIndC);
-                ps.setString(idx++, f48dTransferIndC);
-                ps.setString(idx++, f39eTransferCondC);
-                ps.setString(idx++, f45lUnderlyingTransC);
+                ps.setString(idx++, emptyToNull(f78AutoExtNotifC));
+                ps.setString(idx++, emptyToNull(f26eAutoExtNotifPeriodC));
+                ps.setString(idx++, emptyToNull(f31sAutoExtFinalDateC));
+                ps.setString(idx++, emptyToNull(f48bDemandIndC));
+                ps.setString(idx++, emptyToNull(f48dTransferIndC));
+                ps.setString(idx++, emptyToNull(f39eTransferCondC));
+                ps.setString(idx++, emptyToNull(f45lUnderlyingTransC));
                 
                 // Field 24E (Seq C)
-                ps.setString(idx++, f24eDeliveryLocalC);
-                ps.setString(idx++, f24eNarrativeC);
+                ps.setString(idx++, emptyToNull(f24eDeliveryLocalC));
+                ps.setString(idx++, emptyToNull(f24eNarrativeC));
                 
                 // Field 24G (Seq C)
-                ps.setString(idx++, f24gDeliveryToC);
-                ps.setString(idx++, f24gNarrativeC);
+                ps.setString(idx++, emptyToNull(f24gDeliveryToC));
+                ps.setString(idx++, emptyToNull(f24gNarrativeC));
 
                 ps.executeUpdate();
                 out.println("<script>alert('MT760 data saved successfully! Form ID: " + newId + "'); window.location='Category7/mt760.jsp';</script>");
@@ -715,26 +826,6 @@ public class MT760Servlet extends HttpServlet {
     }
 
     /**
-     * Sanitize input to prevent SQL injection
-     */
-    private String sanitizeInput(String input) {
-        if (input == null) {
-            return null;
-        }
-        // Remove any potential SQL injection characters
-        return input.replaceAll("[';\"\\\\]", "");
-    }
-
-    /**
-     * Log form submission for audit trail
-     */
-    private void logFormSubmission(String formId, String userId, String action) {
-        // Implementation for audit logging
-        // This would typically write to a separate audit log table
-        System.out.println("MT760 Form Submission - ID: " + formId + ", User: " + userId + ", Action: " + action);
-    }
-
-    /**
      * Validate field 27 (Sequence of Total)
      * Number must be 1, Total must be 1-8
      */
@@ -760,66 +851,5 @@ public class MT760Servlet extends HttpServlet {
             return false;
         }
         return !undertakingNumber.contains("//");
-    }
-
-    /**
-     * Apply network validated rules (C1-C11)
-     */
-    private String validateNetworkRules(HttpServletRequest request) {
-        StringBuilder errors = new StringBuilder();
-
-        String f22aPurpose = request.getParameter("_030_mf22a_purpose_of_message");
-        String f22dForm = request.getParameter("_090_mf22d_form_of_undertaking");
-        String f23bExpiry = request.getParameter("_110_mf23b_expiry_type");
-        String f31eDate = request.getParameter("_120_of31e_date_of_expiry");
-        String f35gCond = request.getParameter("_130_of35g_expiry_condition_event");
-        String f49Confirm = request.getParameter("_270_of49_confirmation_instructions");
-        String f58aReqConf = request.getParameter("_280_of58a_requested_confirmation_party");
-
-        // C1: Field 31E based on field 23B
-        if ("FIXD".equals(f23bExpiry) && isEmpty(f31eDate)) {
-            errors.append("C1: Field 31E required when 23B is FIXD. ");
-        }
-        if ("OPEN".equals(f23bExpiry) && !isEmpty(f31eDate)) {
-            errors.append("C1: Field 31E not allowed when 23B is OPEN. ");
-        }
-
-        // C2: Field 35G based on field 23B
-        if ("COND".equals(f23bExpiry) && isEmpty(f35gCond)) {
-            errors.append("C2: Field 35G required when 23B is COND. ");
-        }
-        if (!"COND".equals(f23bExpiry) && !isEmpty(f35gCond)) {
-            errors.append("C2: Field 35G only allowed when 23B is COND. ");
-        }
-
-        // C4: Field 50 must be present if 22A is ISSU
-        String f50 = request.getParameter("_140_of50_applicant");
-        if ("ISSU".equals(f22aPurpose) && isEmpty(f50)) {
-            errors.append("C4: Field 50 (Applicant) required when 22A is ISSU. ");
-        }
-
-        // C5: Field 49 based on 22A and 22D
-        if ("ISSU".equals(f22aPurpose) && "STBY".equals(f22dForm) && isEmpty(f49Confirm)) {
-            errors.append("C5: Field 49 required when 22A is ISSU and 22D is STBY. ");
-        }
-        if ("DGAR".equals(f22dForm) && !isEmpty(f49Confirm)) {
-            errors.append("C5: Field 49 not allowed when 22D is DGAR. ");
-        }
-
-        // C9: Field 58a based on field 49
-        if (("CONFIRM".equals(f49Confirm) || "MAY ADD".equals(f49Confirm)) && isEmpty(f58aReqConf)) {
-            errors.append("C9: Field 58a required when 49 is CONFIRM or MAY ADD. ");
-        }
-        if ("WITHOUT".equals(f49Confirm) && !isEmpty(f58aReqConf)) {
-            errors.append("C9: Field 58a not allowed when 49 is WITHOUT. ");
-        }
-
-        // C11: Field 41a not allowed if 22D is DGAR
-        String f41a = request.getParameter("_230_of41a_available_with");
-        if ("DGAR".equals(f22dForm) && !isEmpty(f41a)) {
-            errors.append("C11: Field 41a not allowed when 22D is DGAR. ");
-        }
-
-        return errors.toString();
     }
 }

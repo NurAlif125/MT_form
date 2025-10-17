@@ -16,131 +16,7 @@
     <link rel="stylesheet" href="assets/css/mt767.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <script src="assets/js/mt767.js"></script>
-    <style>
-    body { 
-        font-family: Arial, sans-serif; 
-        padding: 20px; 
-        background:#f9f9f9; 
-    }
-
-    .form-row { 
-        margin-bottom: 12px; 
-        display:flex; 
-        align-items:flex-start; 
-    }
-
-    .label_body { 
-        width: 100px; 
-        font-weight: bold; 
-    }
-
-    .label { 
-        width: 300px; 
-        text-align:right; 
-        margin-right:10px; 
-    }
-
-    .label a { 
-        color:red; 
-    }
-
-    input, textarea, select { 
-        padding:5px; 
-        border:1px solid #999; 
-        border-radius:4px; 
-    }
-
-    input.mandatory, textarea.mandatory, select.mandatory { 
-        border: 1px solid #666; 
-    }
-
-    .tabs { 
-        list-style: none; 
-        margin: 0; 
-        padding: 0; 
-        display: flex; 
-    }
-    .tabs li { 
-        margin-right: 10px; 
-    }
-    .tabs a { 
-        text-decoration: none; 
-        padding: 5px 10px; 
-        border: 1px solid #ccc; 
-        border-radius: 4px; 
-    }
-    .tabcontent { 
-        display: none; 
-    }
-    .tabcontent.active { 
-        display: block; 
-    }
-
-    .form-container {
-        border:1px solid #ccc;
-        border-radius:6px;
-        overflow:hidden;  
-        background:#fff;
-        margin-top:10px;
-    }
-
-    .form-body { 
-        padding:15px; 
-        background:#fff; 
-    }
-
-    .footer {
-        padding:12px;
-        background:#2a7d80; 
-        display:flex;
-        justify-content:flex-start;
-        gap:10px;
-        border-top:1px solid #ccc;
-    }
-
-    .footer button {
-        padding:8px 18px; 
-        border:1px solid #aaa; 
-        border-radius:4px;
-        background:#f0f0f0; 
-        color:#000; 
-        font-weight:bold; 
-        cursor:pointer;
-    }
-    .footer button:hover { 
-        background:#e0e0e0; 
-    }
-
-    .mt-col { 
-        flex: 1; 
-        display:flex; 
-        flex-direction:column; 
-        gap:6px;      
-    }
-
-    .mt-col select,
-    .mt-col input,
-    .mt-col textarea {
-        width: 100%;
-    }
-
-    .mt-row.multi { 
-        flex-wrap:wrap; 
-        gap:10px;
-    }
-
-    .mt-row.multi .mt-col { 
-        flex:0 0 auto;
-        min-width:180px;    
-    }
-
-    textarea {
-        height: 100px;
-        width: 300px;
-        resize: vertical;      
-    }
-    </style>
+    <script src="assets/js/mt767.js"></script> 
 </head>
 <body>
 
@@ -216,7 +92,7 @@
 
                             <!--OF72Z Sender to Receiver Information -->
                             <div class="form-row"><span class="label_body">OF72Z</span><span class="label">Sender to Receiver Information</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_060_of72Z_sender_receiver_information" id="_060_of72Z_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_060_of72Z_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_060_of72z_sender_receiver_information" id="_060_of72z_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_060_of72z_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                             </div>
                             <hr/>
 
@@ -233,7 +109,7 @@
                                     <option value="OTHR" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_of23x_file_identification'}"><c:if test="${item.detail=='OTHR'}"> selected="true" </c:if></c:if></c:forEach>>OTHR</option>
                                 </select>
                             </div>
-                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Usage Rules</span>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">File Name or Reference</span>
                                 <input type="text" onkeypress="avoidSplChars(event)" name="_071_of23x_file_name_or_reference" id="_071_of23x_file_name_or_reference" maxlength="65" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_071_of23x_file_name_or_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
 
@@ -269,8 +145,8 @@
                             <div class="form-row"><span class="label_body">MF52a </span><span class="label"><a style="color:red;text-decoration:none">*</a>Issuer</span>
                                 <select id="_120_mf52a_issuer" name="_120_mf52a_issuer" class="mandatory" input_type="MF52a Issuer" location="Body">
                                     <option value="">choose a type</option>
-                                    <option value="a">A - BIC</option>
-                                    <option value="d">D - Name & Address</option>
+                                    <option value="a" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_120_mf52a_issuer'}"><c:if test="${item.detail=='a'}"> selected="true" </c:if></c:if></c:forEach>>A - BIC</option>
+                                    <option value="d" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_120_mf52a_issuer'}"><c:if test="${item.detail=='d'}"> selected="true" </c:if></c:if></c:forEach>>D - Name & Address</option>
                                 </select>
                                 <div id="div_mf52a_issuer">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
@@ -370,8 +246,8 @@
                             <div class="form-row"><span class="label_body">OF59a</span><span class="label">Beneficiary</span>
                                 <select id="_190_of59a_beneficiary" name="_190_of59a_beneficiary">
                                     <option value="">choose a type</option>
-                                    <option value="no">Name and Address</option>
-                                    <option value="a">A - BIC</option>
+                                    <option value="no" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of59a_beneficiary'}"><c:if test="${item.detail=='no'}"> selected="true" </c:if></c:if></c:forEach>>No letter option</option>
+                                    <option value="a" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of59a_beneficiary'}"><c:if test="${item.detail=='a'}"> selected="true" </c:if></c:if></c:forEach>>A - BIC</option>
                                 </select>
                                 <div id="div_of59no_beneficiary">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Account</span>
@@ -427,8 +303,8 @@
                                 </select>
                             </div>
                             <!--Narrative-->
-                            <div class="form-row"><span class="label">Narrative</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_220_of24g_narrative" id="_220_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_220_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Narrative</span>
+                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_221_of24g_narrative" id="_221_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_221_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                             </div>
                             
                             <h2 class="header-credit">End of Sequence B Undertaking Details</h2>
@@ -505,7 +381,7 @@
 
                             <!--OF31E Date of Expiry-->
                             <div class="form-row"><span class="label_body">OF31E</span><span class="label">Date of Expiry</span>
-                                <input type="text" name="_270_of31e_date_of_expiry" id="value_date_3" maxlength="6" size="6" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_270_of31e_date_of_expiry'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" name="_270_of31e_date_of_expiry" id="_270_of31e_date_of_expiry" maxlength="6" size="6" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_270_of31e_date_of_expiry'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <hr/>
 
@@ -561,8 +437,8 @@
                                 </select>
                             </div>
                             <!--Narrative-->
-                            <div class="form-row"><span class="label">Narrative</span>
-                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_320_of24g_narrative" id="_320_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_320_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Narrative</span>
+                                <textarea onkeypress="avoidSplChars(event)" cols="65" rows="12" maxlength="780" style="resize:none;" name="_321_of24g_narrative" id="_321_of24g_narrative" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_321_of24g_narrative'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                             </div>
                         </div>
                         <hr/>
@@ -579,9 +455,4 @@
 <%@ include file="rule/validate_rule_mt767.jsp" %>
 </body>
 </html>
-
-
-
-
- 
 

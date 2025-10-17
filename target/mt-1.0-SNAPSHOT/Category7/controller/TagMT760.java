@@ -1,3 +1,4 @@
+
 package com.vensys.appcm.controller;
 
 import com.prowidesoftware.swift.model.SwiftBlock4;
@@ -11,7 +12,9 @@ public class TagMT760 {
     Logger log = Logger.getLogger(getClass().getName());
     MT760 mt760 = new MT760();    
     AMT760 atributeMT760 = new AMT760();
-    CHeader ch;    
+    CHeader ch;
+    
+    private boolean inSequenceC = false;
     
     public TagMT760(CHeader ch) {
         this.ch = ch;
@@ -23,6 +26,8 @@ public class TagMT760 {
         log.info("tagMT760: " + sb4.getTags().size());
         
         String tagValue20 = "";
+        inSequenceC = false;
+        
         for (Tag t : sb4.getTags()) {
             String tagName = t.getName();
             String tagValue = t.getValue();
@@ -43,9 +48,8 @@ public class TagMT760 {
             } else if (tagName.equalsIgnoreCase("23X")) {
                 tags = mt760.getOf23x();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            }
-            
-            else if (tagName.equalsIgnoreCase("15B")) {
+            } else if (tagName.equalsIgnoreCase("15B")) {
+                inSequenceC = false;
                 tags = mt760.getMf15b();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("20")) {
@@ -57,31 +61,31 @@ public class TagMT760 {
                 tags = mt760.getMf30();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("22D")) {
-                tags = mt760.getMf22d();
+                tags = inSequenceC ? mt760.getMf22d_c() : mt760.getMf22d();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("40C")) {
-                tags = mt760.getMf40c();
+                tags = inSequenceC ? mt760.getMf40c_c() : mt760.getMf40c();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("23B")) {
-                tags = mt760.getMf23b();
+                tags = inSequenceC ? mt760.getMf23b_c() : mt760.getMf23b();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("31E")) {
-                tags = mt760.getOf31e();
+                tags = inSequenceC ? mt760.getOf31e_c() : mt760.getOf31e();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("35G")) {
-                tags = mt760.getOf35g();
+                tags = inSequenceC ? mt760.getOf35g_c() : mt760.getOf35g();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("50")) {
-                tags = mt760.getOf50();
+                tags = inSequenceC ? mt760.getMf50() : mt760.getOf50();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("51")) {
-                tags = mt760.getOf51();
+                tags = inSequenceC ? mt760.getOf51_c() : mt760.getOf51();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("52A") || tagName.equalsIgnoreCase("52D")) {
-                tags = mt760.getMf52a();
+                tags = inSequenceC ? mt760.getOf52a() : mt760.getMf52a();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("59") || tagName.equalsIgnoreCase("59A")) {
-                tags = mt760.getMf59a();
+                tags = inSequenceC ? mt760.getMf59() : mt760.getMf59a();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("56A") || tagName.equalsIgnoreCase("56D")) {
                 tags = mt760.getOf56a();
@@ -90,22 +94,22 @@ public class TagMT760 {
                 tags = mt760.getOf23();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("57A") || tagName.equalsIgnoreCase("57D")) {
-                tags = mt760.getOf57a();
+                tags = inSequenceC ? mt760.getOf57a_c() : mt760.getOf57a();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("32B")) {
-                tags = mt760.getMf32b();
+                tags = inSequenceC ? mt760.getMf32b_c() : mt760.getMf32b();
                 this.ch.splitMT32B(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("39F")) {
-                tags = mt760.getOf39f();
+                tags = inSequenceC ? mt760.getOf39f_c() : mt760.getOf39f();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("41A") || tagName.equalsIgnoreCase("41F") || tagName.equalsIgnoreCase("41G")) {
-                tags = mt760.getOf41a();
+                tags = inSequenceC ? mt760.getOf41a_c() : mt760.getOf41a();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("71D")) {
-                tags = mt760.getOf71d();
+                tags = inSequenceC ? mt760.getOf71d_c() : mt760.getOf71d();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("45C")) {
-                tags = mt760.getOf45c();
+                tags = inSequenceC ? mt760.getOf45c_c() : mt760.getOf45c();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("77U")) {
                 tags = mt760.getMf77u();
@@ -117,41 +121,40 @@ public class TagMT760 {
                 tags = mt760.getOf58a();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("44J")) {
-                tags = mt760.getOf44j();
+                tags = inSequenceC ? mt760.getOf44j_c() : mt760.getOf44j();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("23F")) {
-                tags = mt760.getOf23f();
+                tags = inSequenceC ? mt760.getOf23f_c() : mt760.getOf23f();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("78")) {
-                tags = mt760.getOf78();
+                tags = inSequenceC ? mt760.getOf78_c() : mt760.getOf78();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("26E")) {
-                tags = mt760.getOf26e();
+                tags = inSequenceC ? mt760.getOf26e_c() : mt760.getOf26e();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("31S")) {
-                tags = mt760.getOf31s();
+                tags = inSequenceC ? mt760.getOf31s_c() : mt760.getOf31s();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("48B")) {
-                tags = mt760.getOf48b();
+                tags = inSequenceC ? mt760.getOf48b_c() : mt760.getOf48b();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("48D")) {
-                tags = mt760.getOf48d();
+                tags = inSequenceC ? mt760.getOf48d_c() : mt760.getOf48d();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("39E")) {
-                tags = mt760.getOf39e();
+                tags = inSequenceC ? mt760.getOf39e_c() : mt760.getOf39e();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("45L")) {
-                tags = mt760.getOf45l();
+                tags = inSequenceC ? mt760.getMf45l() : mt760.getOf45l();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("24E")) {
-                tags = mt760.getOf24e();
+                tags = inSequenceC ? mt760.getOf24e_c() : mt760.getOf24e();
                 this.ch.splitRowData(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("24G")) {
-                tags = mt760.getOf24g();
+                tags = inSequenceC ? mt760.getOf24g_c() : mt760.getOf24g();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            }
-            
-            else if (tagName.equalsIgnoreCase("15C")) {
+            }else if (tagName.equalsIgnoreCase("15C")) {
+                inSequenceC = true;
                 tags = mt760.getMf15c();
                 this.ch.readBlock4(tags, tagName, tagValue);
             } else if (tagName.equalsIgnoreCase("31C")) {
@@ -172,11 +175,8 @@ public class TagMT760 {
             } else if (tagName.equalsIgnoreCase("44H")) {
                 tags = mt760.getOf44j_c();
                 this.ch.splitRowData(tags, tagName, tagValue);
-            } else if (tagName.equalsIgnoreCase("45L")) {
-                tags = mt760.getMf45l();
-                this.ch.readBlock4(tags, tagName, tagValue);
             }
         }
+        inSequenceC = false;
     }
 }
-            

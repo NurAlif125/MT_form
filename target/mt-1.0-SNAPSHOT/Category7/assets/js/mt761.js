@@ -1,592 +1,778 @@
 /* 
+ * mt761.js
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/javascript.js to edit this template
  */
 
 
-$(document).ready(function() {
-    // Initialize form on page load
-    initializeMT761Form();
-    
-    // Setup tab navigation
-    setupTabNavigation();
-    
-    // Setup real-time validations
-    setupRealtimeValidations();
-    
-    // Setup field visibility toggles
-    setupFieldVisibility();
-    
-    // Setup character counters
-    setupCharacterCounters();
-});
-
-/**
- * Initialize MT 761 Form
- */
-function initializeMT761Form() {
-    console.log('Initializing MT 761 form...');
-    
-    // Set default Sequence Number to 2 if empty (first MT 761)
-    if (!$('#_010_mf27_number').val()) {
-        $('#_010_mf27_number').val('2');
-    }
-    
-    // Set default Total to 2 if empty
-    if (!$('#_011_mf27_total').val()) {
-        $('#_011_mf27_total').val('2');
-    }
-    
-    // Initialize field tooltips
-    initializeFieldTooltips();
-    
-    // Check saved issuer type and show appropriate fields
-    checkSavedIssuerType();
+// UTILITY FUNCTIONS
+function q(id) {
+    return document.getElementById(id);
 }
 
-/**
- * Setup Tab Navigation
- */
-function setupTabNavigation() {
-    $('.tabs li a').click(function(e) {
-        e.preventDefault();
-        var rel = $(this).attr('rel');
-        
-        // Hide all tab contents
-        $('.tabcontent').hide();
-        
-        // Show selected tab content
-        $('#' + rel).show();
-        
-        // Update tab selection visual
-        $('.tabs li').removeClass('selected');
-        $(this).parent().addClass('selected');
-    });
-    
-    // Show Body tab by default
-    $('.tabs li:has(a[rel="view2"])').addClass('selected');
-    $('#view2').show();
+function val(id) {
+    const el = q(id);
+    return el ? (el.value || "").trim() : "";
 }
 
-/**
- * Setup Real-time Validations
- */
-function setupRealtimeValidations() {
-    
-    // ===== FIELD 27: Sequence of Total =====
-    $('#_010_mf27_number, #_011_mf27_total').on('blur', function() {
-        validateField27Realtime();
-    });
-    
-    // Only allow numbers 0-9
-    $('#_010_mf27_number, #_011_mf27_total').on('keypress', function(e) {
-        return numbersonly(e);
-    });
-    
-    // ===== FIELD 20: Undertaking Number =====
-    $('#_020_mf20_undertaking_number').on('blur', function() {
-        validateField20Realtime();
-    });
-    
-    // Prevent invalid characters
-    $('#_020_mf20_undertaking_number').on('keypress', function(e) {
-        return avoidSplChars(e);
-    });
-    
-    // ===== FIELD 52a: BIC Code =====
-    $('#_032_mf52a_identifier_code').on('input', function() {
-        // Auto uppercase
-        $(this).val($(this).val().toUpperCase());
-    });
-    
-    $('#_032_mf52a_identifier_code').on('blur', function() {
-        validateBICRealtime();
-    });
-    
-    // ===== FIELD 52d: Name and Address =====
-    $('#_034_mf52d_name_address').on('blur', function() {
-        validateNameAddressRealtime();
-    });
-    
-    // ===== FIELD 77U/77L: Line length checking =====
-    $('#_040_of77u_undertaking_terms_and_conditions').on('blur', function() {
-        checkLongLines('_040_of77u_undertaking_terms_and_conditions', 'OF77U', 65);
-    });
-    
-    $('#_050_of77l_requested_local_undertaking_terms_and_conditions').on('blur', function() {
-        checkLongLines('_050_of77l_requested_local_undertaking_terms_and_conditions', 'OF77L', 65);
-    });
+function isEmpty(v) {
+    return !v || v.trim() === "";
 }
 
-/**
- * Setup Field Visibility (Issuer Type Toggle)
- */
-function setupFieldVisibility() {
-    $('#_030_mf52a_issuer').change(function() {
-        var selectedType = $(this).val();
-        
-        if (selectedType === 'a') {
-            // Show Option A fields (BIC)
-            $('#div_mf52a_issuer').show();
-            $('#div_mf52d_issuer').hide();
-            
-            // Set mandatory status
-            $('#_032_mf52a_identifier_code').addClass('mandatory');
-            $('#_034_mf52d_name_address').removeClass('mandatory');
-            
-            // Clear Option D fields
-            $('#_033_mf52d_party_identifier').val('');
-            $('#_034_mf52d_name_address').val('');
-            
-        } else if (selectedType === 'd') {
-            // Show Option D fields (Name & Address)
-            $('#div_mf52a_issuer').hide();
-            $('#div_mf52d_issuer').show();
-            
-            // Set mandatory status
-            $('#_032_mf52a_identifier_code').removeClass('mandatory');
-            $('#_034_mf52d_name_address').addClass('mandatory');
-            
-            // Clear Option A fields
-            $('#_031_mf52a_party_identifier').val('');
-            $('#_032_mf52a_identifier_code').val('');
-            
-        } else {
-            // No option selected - hide both
-            $('#div_mf52a_issuer').hide();
-            $('#div_mf52d_issuer').hide();
-            
-            // Remove mandatory status from both
-            $('#_032_mf52a_identifier_code').removeClass('mandatory');
-            $('#_034_mf52d_name_address').removeClass('mandatory');
-        }
-    });
-    
-    // Hide both divs initially
-    $('#div_mf52a_issuer').hide();
-    $('#div_mf52d_issuer').hide();
+function setUpper(id) {
+    const el = q(id);
+    if (el) el.value = el.value.toUpperCase();
 }
 
-/**
- * Check Saved Issuer Type on Page Load
- */
-function checkSavedIssuerType() {
-    // Check which field has value to determine saved type
-    if ($('#_032_mf52a_identifier_code').val().trim() !== '') {
-        $('#_030_mf52a_issuer').val('a').trigger('change');
-    } else if ($('#_034_mf52d_name_address').val().trim() !== '') {
-        $('#_030_mf52a_issuer').val('d').trigger('change');
-    }
-}
-
-/**
- * Setup Character Counters for 77U and 77L
- */
-function setupCharacterCounters() {
-    // Create counter elements if they don't exist
-    if ($('#counter_77u').length === 0) {
-        $('#_040_of77u_undertaking_terms_and_conditions').after(
-            '<div id="counter_77u" style="font-size:10pt; margin-top:5px; color:green;"></div>'
-        );
-    }
-    
-    if ($('#counter_77l').length === 0) {
-        $('#_050_of77l_requested_local_undertaking_terms_and_conditions').after(
-            '<div id="counter_77l" style="font-size:10pt; margin-top:5px; color:green;"></div>'
-        );
-    }
-    
-    // Update counters on input
-    $('#_040_of77u_undertaking_terms_and_conditions').on('input', function() {
-        updateCharacterCounter('_040_of77u_undertaking_terms_and_conditions', 'counter_77u', 150, 9750);
-    });
-    
-    $('#_050_of77l_requested_local_undertaking_terms_and_conditions').on('input', function() {
-        updateCharacterCounter('_050_of77l_requested_local_undertaking_terms_and_conditions', 'counter_77l', 150, 9750);
-    });
-    
-    // Initialize counters on page load
-    updateCharacterCounter('_040_of77u_undertaking_terms_and_conditions', 'counter_77u', 150, 9750);
-    updateCharacterCounter('_050_of77l_requested_local_undertaking_terms_and_conditions', 'counter_77l', 150, 9750);
-}
-
-/**
- * Update Character Counter Display
- */
-function updateCharacterCounter(textareaId, counterId, maxLines, maxChars) {
-    var content = $('#' + textareaId).val();
-    var lines = content.split('\n');
-    var lineCount = lines.length;
-    var charCount = content.length;
-    
-    var counterText = charCount + ' / ' + maxChars.toLocaleString() + ' characters | ' + 
-                      lineCount + ' / ' + maxLines + ' lines';
-    $('#' + counterId).text(counterText);
-    
-    // Color coding based on usage
-    if (lineCount > maxLines || charCount > maxChars) {
-        $('#' + counterId).css('color', 'red');
-    } else if (lineCount > (maxLines * 0.8) || charCount > (maxChars * 0.8)) {
-        $('#' + counterId).css('color', 'orange');
-    } else {
-        $('#' + counterId).css('color', 'green');
-    }
-}
-
-/**
- * Validate Field 27 Real-time (T75)
- */
-function validateField27Realtime() {
-    var number = $('#_010_mf27_number').val().trim();
-    var total = $('#_011_mf27_total').val().trim();
-    
-    // Clear previous feedback
-    $('#_010_mf27_number').removeClass('error-border valid-border');
-    $('#_011_mf27_total').removeClass('error-border valid-border');
-    removeInlineError('_010_mf27_number');
-    removeInlineError('_011_mf27_total');
-    
-    if (number === '' || total === '') {
-        return;
-    }
-    
-    var numberInt = parseInt(number);
-    var totalInt = parseInt(total);
-    var isValid = true;
-    
-    // T75: Range must be 2-8
-    if (numberInt < 2 || numberInt > 8) {
-        $('#_010_mf27_number').addClass('error-border');
-        showInlineError('_010_mf27_number', 'Must be between 2-8');
-        isValid = false;
-    }
-    
-    if (totalInt < 2 || totalInt > 8) {
-        $('#_011_mf27_total').addClass('error-border');
-        showInlineError('_011_mf27_total', 'Must be between 2-8');
-        isValid = false;
-    }
-    
-    // T75: Number must be <= Total
-    if (numberInt > totalInt) {
-        $('#_010_mf27_number').addClass('error-border');
-        $('#_011_mf27_total').addClass('error-border');
-        showInlineError('_010_mf27_number', 'Sequence must be ≤ Total');
-        isValid = false;
-    }
-    
-    // Show success if all valid
-    if (isValid) {
-        $('#_010_mf27_number').addClass('valid-border');
-        $('#_011_mf27_total').addClass('valid-border');
-    }
-}
-
-/**
- * Validate Field 20 Real-time (T26)
- */
-function validateField20Realtime() {
-    var undertakingNumber = $('#_020_mf20_undertaking_number').val().trim();
-    
-    // Clear previous feedback
-    $('#_020_mf20_undertaking_number').removeClass('error-border valid-border');
-    removeInlineError('_020_mf20_undertaking_number');
-    
-    if (undertakingNumber === '') {
-        return;
-    }
-    
-    var isValid = true;
-    
-    // T26: Cannot start with slash
-    if (undertakingNumber.startsWith('/')) {
-        $('#_020_mf20_undertaking_number').addClass('error-border');
-        showInlineError('_020_mf20_undertaking_number', 'Cannot start with "/"');
-        isValid = false;
-    }
-    
-    // T26: Cannot end with slash
-    if (undertakingNumber.endsWith('/')) {
-        $('#_020_mf20_undertaking_number').addClass('error-border');
-        showInlineError('_020_mf20_undertaking_number', 'Cannot end with "/"');
-        isValid = false;
-    }
-    
-    // T26: Cannot contain consecutive slashes
-    if (undertakingNumber.indexOf('//') !== -1) {
-        $('#_020_mf20_undertaking_number').addClass('error-border');
-        showInlineError('_020_mf20_undertaking_number', 'Cannot contain "//"');
-        isValid = false;
-    }
-    
-    // Show success if valid
-    if (isValid) {
-        $('#_020_mf20_undertaking_number').addClass('valid-border');
-    }
-}
-
-/**
- * Validate BIC Code Real-time (T27, T28, T29)
- */
-function validateBICRealtime() {
-    var bicCode = $('#_032_mf52a_identifier_code').val().trim().toUpperCase();
-    
-    // Clear previous feedback
-    $('#_032_mf52a_identifier_code').removeClass('error-border valid-border');
-    removeInlineError('_032_mf52a_identifier_code');
-    
-    if (bicCode === '') {
-        return;
-    }
-    
-    var isValid = true;
-    
-    // T27/T28: BIC must be 8 or 11 characters
-    if (bicCode.length !== 8 && bicCode.length !== 11) {
-        $('#_032_mf52a_identifier_code').addClass('error-border');
-        showInlineError('_032_mf52a_identifier_code', 'BIC must be 8 or 11 characters');
-        isValid = false;
-    }
-    
-    // T29: BIC format validation
-    var bicPattern = /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/;
-    if (!bicPattern.test(bicCode)) {
-        $('#_032_mf52a_identifier_code').addClass('error-border');
-        showInlineError('_032_mf52a_identifier_code', 'Invalid BIC format (6 letters + 2 alphanumeric + optional 3 alphanumeric)');
-        isValid = false;
-    }
-    
-    // Show success if valid
-    if (isValid) {
-        $('#_032_mf52a_identifier_code').addClass('valid-border');
-    }
-}
-
-/**
- * Validate Name and Address Real-time
- */
-function validateNameAddressRealtime() {
-    var nameAddress = $('#_034_mf52d_name_address').val().trim();
-    
-    // Clear previous feedback
-    $('#_034_mf52d_name_address').removeClass('error-border valid-border');
-    removeInlineError('_034_mf52d_name_address');
-    
-    if (nameAddress === '') {
-        return;
-    }
-    
-    var lines = nameAddress.split('\n');
-    var isValid = true;
-    
-    // Max 4 lines
-    if (lines.length > 4) {
-        $('#_034_mf52d_name_address').addClass('error-border');
-        showInlineError('_034_mf52d_name_address', 'Maximum 4 lines allowed (currently: ' + lines.length + ')');
-        isValid = false;
-    }
-    
-    // Max 35 characters per line
-    for (var i = 0; i < lines.length; i++) {
-        if (lines[i].length > 35) {
-            $('#_034_mf52d_name_address').addClass('error-border');
-            showInlineError('_034_mf52d_name_address', 'Line ' + (i + 1) + ' exceeds 35 characters (' + lines[i].length + ')');
-            isValid = false;
-            break;
-        }
-    }
-    
-    // Show success if valid
-    if (isValid) {
-        $('#_034_mf52d_name_address').addClass('valid-border');
-    }
-}
-
-/**
- * Check Long Lines in Text Areas
- */
-function checkLongLines(textareaId, fieldName, maxCharsPerLine) {
-    var content = $('#' + textareaId).val();
-    
-    if (content.trim() === '') {
-        removeInlineError(textareaId);
-        return;
-    }
-    
-    var lines = content.split('\n');
-    var longLines = [];
-    
-    for (var i = 0; i < lines.length; i++) {
-        if (lines[i].length > maxCharsPerLine) {
-            longLines.push('Line ' + (i + 1) + ': ' + lines[i].length + ' chars');
-        }
-    }
-    
-    if (longLines.length > 0) {
-        var message = longLines.length + ' line(s) exceed ' + maxCharsPerLine + ' chars';
-        showInlineWarning(textareaId, message);
-        console.warn(fieldName + ' - ' + longLines.join(', '));
-    } else {
-        removeInlineError(textareaId);
-    }
-}
-
-/**
- * Show Inline Error Message
- */
-function showInlineError(fieldId, message) {
-    removeInlineError(fieldId);
-    $('#' + fieldId).after('<span class="inline-error" id="err_' + fieldId + '" style="color:red; font-size:9pt; margin-left:10px;">' + message + '</span>');
-}
-
-/**
- * Show Inline Warning Message
- */
-function showInlineWarning(fieldId, message) {
-    removeInlineError(fieldId);
-    $('#' + fieldId).after('<span class="inline-warning" id="err_' + fieldId + '" style="color:orange; font-size:9pt; margin-left:10px;">' + message + '</span>');
-}
-
-/**
- * Remove Inline Error/Warning
- */
-function removeInlineError(fieldId) {
-    $('#err_' + fieldId).remove();
-}
-
-/**
- * Initialize Field Tooltips
- */
-function initializeFieldTooltips() {
-    var tooltips = {
-        '_010_mf27_number': 'Sequence number of this MT 761 (range: 2-8). Start with 2 for first MT 761.',
-        '_011_mf27_total': 'Total number of MT 761 messages (range: 2-8). Must be greater than or equal to Sequence Number.',
-        '_020_mf20_undertaking_number': 'Must match field 20 in related MT 760. Cannot start/end with "/" or contain "//".',
-        '_030_mf52a_issuer': 'Select issuer type: Option A (BIC Code) or Option D (Name & Address).',
-        '_031_mf52a_party_identifier': 'Optional. Format: /[account] or //[code]/[account]',
-        '_032_mf52a_identifier_code': '8 or 11 character BIC code (e.g., MEGAIDJAXXXX). Must be a registered financial institution.',
-        '_033_mf52d_party_identifier': 'Optional. Format: /[account]',
-        '_034_mf52d_name_address': 'Maximum 4 lines, 35 characters per line.',
-        '_040_of77u_undertaking_terms_and_conditions': 'Undertaking terms and conditions. Max 150 lines × 65 chars per line. Either field 77U or 77L must be present.',
-        '_050_of77l_requested_local_undertaking_terms_and_conditions': 'Requested local undertaking terms. Max 150 lines × 65 chars per line. Only for counter-undertaking (ISCO/ICCO in MT 760).'
-    };
-    
-    for (var fieldId in tooltips) {
-        if ($('#' + fieldId).length) {
-            $('#' + fieldId).attr('title', tooltips[fieldId]);
-        }
-    }
-}
-
-/**
- * Helper: Only Allow Numbers
- */
+// INPUT VALIDATION HELPERS
 function numbersonly(e) {
-    var charCode = e.which ? e.which : e.keyCode;
+    const charCode = (e.which) ? e.which : e.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
         return false;
     }
     return true;
 }
 
-/**
- * Helper: Avoid Special Characters (SWIFT allowed chars only)
- */
+function textonly(e) {
+    let code = e.keyCode || e.which;
+    let character = String.fromCharCode(code);
+    let allowRegex = /^[a-zA-Z\s-]$/;
+    return allowRegex.test(character);
+}
+
 function avoidSplChars(e) {
     e = e || window.event;
-    var bad = /[^\sa-z\d\.\,\'\(\)\-\/\:]/i;
-    var key = String.fromCharCode(e.keyCode || e.which);
-
+    let bad = /[^\sa-zA-Z0-9\.\,\'\(\)\-\/\:]/i;
+    let key = String.fromCharCode(e.keyCode || e.which);
     if (e.which !== 0 && e.charCode !== 0 && bad.test(key)) {
         e.returnValue = false;
-        if (e.preventDefault) {
-            e.preventDefault();
-        }
+        if (e.preventDefault) e.preventDefault();
     }
 }
 
-/**
- * Helper: Check Party Identifier Slash Format
- */
 function cek_slash(obj) {
-    var value = $(obj).val().trim();
+    if (obj.value && obj.value.length > 0 && !obj.value.startsWith("/")) {
+        obj.value = "/" + obj.value;
+    }
+}
+
+// ERROR DISPLAY FUNCTIONS
+function showFieldError(field, message) {
+    if (!field) return;
+    field.classList.add('error-border');
+    field.classList.remove('valid-border');
     
-    if (value === '') {
-        $('#err_' + obj.id).remove();
-        $(obj).removeClass('error-border');
-        return true;
+    const existingError = field.parentElement.querySelector('.inline-error');
+    if (existingError) {
+        existingError.remove();
     }
     
-    // Party Identifier should start with /
-    if (!value.startsWith('/')) {
-        showInlineWarning(obj.id, 'Party Identifier should start with "/"');
-        return false;
+    const errorSpan = document.createElement('span');
+    errorSpan.className = 'inline-error';
+    errorSpan.style.color = 'red';
+    errorSpan.style.fontSize = '9pt';
+    errorSpan.style.marginLeft = '10px';
+    errorSpan.textContent = message;
+    field.parentElement.appendChild(errorSpan);
+}
+
+function showFieldWarning(field, message) {
+    if (!field) return;
+    field.classList.add('warning-border');
+    
+    const existingWarning = field.parentElement.querySelector('.inline-warning');
+    if (existingWarning) {
+        existingWarning.remove();
+    }
+    
+    const warningSpan = document.createElement('span');
+    warningSpan.className = 'inline-warning';
+    warningSpan.style.color = 'orange';
+    warningSpan.style.fontSize = '9pt';
+    warningSpan.style.marginLeft = '10px';
+    warningSpan.textContent = message;
+    field.parentElement.appendChild(warningSpan);
+}
+
+function clearFieldError(field) {
+    if (!field) return;
+    field.classList.remove('error-border');
+    field.classList.remove('warning-border');
+    
+    const existingError = field.parentElement.querySelector('.inline-error');
+    if (existingError) {
+        existingError.remove();
+    }
+    
+    const existingWarning = field.parentElement.querySelector('.inline-warning');
+    if (existingWarning) {
+        existingWarning.remove();
+    }
+}
+
+// TAB NAVIGATION
+function setupTabNavigation() {
+    const tabs = document.querySelectorAll('.tabs li a');
+    const tabContents = document.querySelectorAll('.tabcontent');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('rel');
+
+            tabContents.forEach(content => {
+                content.style.display = 'none';
+                content.classList.remove('active');
+            });
+
+            tabs.forEach(t => t.parentElement.classList.remove('selected'));
+
+            const targetContent = document.getElementById(targetId);
+            if (targetContent) {
+                targetContent.style.display = 'block';
+                targetContent.classList.add('active');
+            }
+
+            this.parentElement.classList.add('selected');
+        });
+    });
+
+    const bodyTab = document.getElementById('view2');
+    if (bodyTab) {
+        bodyTab.style.display = 'block';
+        bodyTab.classList.add('active');
+    }
+    const bodyTabLink = document.querySelector('.tabs li a[rel="view2"]');
+    if (bodyTabLink) {
+        bodyTabLink.parentElement.classList.add('selected');
+    }
+}
+
+// FIELD 52a ISSUER TYPE TOGGLE
+function setupFieldVisibility() {
+    const issuerSelect = q('_030_mf52a_issuer');
+    if (!issuerSelect) return;
+
+    issuerSelect.addEventListener('change', function() {
+        handleIssuerOptionChange();
+    });
+
+    const divA = q('div_mf52a_issuer');
+    const divD = q('div_mf52d_issuer');
+    if (divA) divA.style.display = 'none';
+    if (divD) divD.style.display = 'none';
+
+    checkSavedIssuerType();
+}
+
+function handleIssuerOptionChange() {
+    const issuerSelect = q('_030_mf52a_issuer');
+    if (!issuerSelect) return;
+
+    const selectedType = issuerSelect.value;
+    const divA = q('div_mf52a_issuer');
+    const divD = q('div_mf52d_issuer');
+
+    if (selectedType === 'a') {
+        if (divA) divA.style.display = 'block';
+        if (divD) divD.style.display = 'none';
+
+        const bicField = q('_032_mf52a_identifier_code');
+        const nameField = q('_034_mf52d_name_address');
+        if (bicField) bicField.classList.add('mandatory');
+        if (nameField) nameField.classList.remove('mandatory');
+
+        const partyIdD = q('_033_mf52d_party_identifier');
+        if (partyIdD) partyIdD.value = '';
+        if (nameField) nameField.value = '';
+
+    } else if (selectedType === 'd') {
+        if (divA) divA.style.display = 'none';
+        if (divD) divD.style.display = 'block';
+
+        const bicField = q('_032_mf52a_identifier_code');
+        const nameField = q('_034_mf52d_name_address');
+        if (bicField) bicField.classList.remove('mandatory');
+        if (nameField) nameField.classList.add('mandatory');
+
+        const partyIdA = q('_031_mf52a_party_identifier');
+        if (partyIdA) partyIdA.value = '';
+        if (bicField) bicField.value = '';
+
     } else {
-        removeInlineError(obj.id);
-        $(obj).removeClass('error-border');
-        return true;
+        if (divA) divA.style.display = 'none';
+        if (divD) divD.style.display = 'none';
+
+        const bicField = q('_032_mf52a_identifier_code');
+        const nameField = q('_034_mf52d_name_address');
+        if (bicField) bicField.classList.remove('mandatory');
+        if (nameField) nameField.classList.remove('mandatory');
     }
 }
 
-/**
- * Clear All Form Fields
- */
-function clearMT761Form() {
-    if (confirm('Are you sure you want to clear all fields?')) {
-        $('#form_mt761')[0].reset();
-        $('#div_mf52a_issuer').hide();
-        $('#div_mf52d_issuer').hide();
-        $('.inline-error').remove();
-        $('.inline-warning').remove();
-        $('input, textarea, select').removeClass('error-border valid-border');
-        
-        // Reset to defaults
-        $('#_010_mf27_number').val('2');
-        $('#_011_mf27_total').val('2');
-        
-        // Update counters
-        updateCharacterCounter('_040_of77u_undertaking_terms_and_conditions', 'counter_77u', 150, 9750);
-        updateCharacterCounter('_050_of77l_requested_local_undertaking_terms_and_conditions', 'counter_77l', 150, 9750);
+function checkSavedIssuerType() {
+    const issuerSelect = q('_030_mf52a_issuer');
+    if (!issuerSelect) return;
+
+    const savedOption = issuerSelect.value;
+    if (savedOption) {
+        handleIssuerOptionChange();
+        return;
+    }
+
+    const bicField = q('_032_mf52a_identifier_code');
+    const nameField = q('_034_mf52d_name_address');
+
+    if (bicField && bicField.value.trim() !== '') {
+        issuerSelect.value = 'a';
+        handleIssuerOptionChange();
+    } else if (nameField && nameField.value.trim() !== '') {
+        issuerSelect.value = 'd';
+        handleIssuerOptionChange();
     }
 }
 
-/**
- * Print Form
- */
-function printMT761Form() {
-    window.print();
-}
+// CHARACTER COUNTERS FOR FIELD 77U AND 77L
+function setupCharacterCounters() {
+    const textareaConfigs = [
+        { id: '_040_of77u_undertaking_terms_and_conditions', max: 9750, lines: 150 },
+        { id: '_050_of77l_requested_local_undertaking_terms_and_conditions', max: 9750, lines: 150 }
+    ];
 
-/**
- * Export Form Data as JSON
- */
-function exportMT761Data() {
-    var formData = $('#form_mt761').serializeArray();
-    var jsonData = {
-        messageType: '761',
-        exportDate: new Date().toISOString(),
-        fields: {}
-    };
-    
-    $.each(formData, function(i, field) {
-        if (field.value) {
-            jsonData.fields[field.name] = field.value;
+    textareaConfigs.forEach(config => {
+        const textarea = q(config.id);
+        if (textarea) {
+            const counter = document.createElement('div');
+            counter.id = 'counter_' + config.id;
+            counter.style.fontSize = '10pt';
+            counter.style.marginTop = '5px';
+            counter.style.color = 'green';
+            textarea.parentElement.appendChild(counter);
+
+            textarea.addEventListener('input', function() {
+                updateCharCounter(this, counter, config.max, config.lines);
+            });
+
+            updateCharCounter(textarea, counter, config.max, config.lines);
         }
     });
-    
-    console.log('MT761 Form Data:', jsonData);
-    
-    // Download as JSON file
-    var dataStr = JSON.stringify(jsonData, null, 2);
-    var dataBlob = new Blob([dataStr], {type: 'application/json'});
-    var url = URL.createObjectURL(dataBlob);
-    var link = document.createElement('a');
-    link.href = url;
-    link.download = 'mt761_' + new Date().getTime() + '.json';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    alert('MT761 data exported successfully!');
 }
+
+function updateCharCounter(textarea, counterElement, maxChars, maxLines) {
+    const content = textarea.value;
+    const lines = content.split('\n');
+    const lineCount = lines.length;
+    const charCount = content.length;
+
+    const counterText = `${charCount} / ${maxChars.toLocaleString()} characters | ${lineCount} / ${maxLines} lines`;
+    counterElement.textContent = counterText;
+
+    if (lineCount > maxLines || charCount > maxChars) {
+        counterElement.style.color = 'red';
+        counterElement.style.fontWeight = 'bold';
+    } else if (lineCount > (maxLines * 0.8) || charCount > (maxChars * 0.8)) {
+        counterElement.style.color = 'orange';
+        counterElement.style.fontWeight = 'normal';
+    } else {
+        counterElement.style.color = 'green';
+        counterElement.style.fontWeight = 'normal';
+    }
+}
+
+// REAL-TIME VALIDATION FUNCTIONS
+function validateField27Realtime() {
+    const numberField = q('_010_mf27_number');
+    const totalField = q('_011_mf27_total');
+
+    if (!numberField || !totalField) return;
+
+    const number = parseInt(numberField.value);
+    const total = parseInt(totalField.value);
+
+    clearFieldError(numberField);
+    clearFieldError(totalField);
+
+    let isValid = true;
+
+    if (isNaN(number) || number < 2 || number > 8) {
+        showFieldError(numberField, 'Must be between 2-8 (Error T75)');
+        isValid = false;
+    }
+
+    if (isNaN(total) || total < 2 || total > 8) {
+        showFieldError(totalField, 'Must be between 2-8 (Error T75)');
+        isValid = false;
+    }
+
+    if (!isNaN(number) && !isNaN(total) && number > total) {
+        showFieldError(numberField, 'Sequence must be ≤ Total (Error T75)');
+        isValid = false;
+    }
+
+    if (isValid) {
+        numberField.classList.add('valid-border');
+        totalField.classList.add('valid-border');
+    }
+
+    return isValid;
+}
+
+function validateField20Realtime() {
+    const field = q('_020_mf20_undertaking_number');
+    if (!field) return true;
+
+    const value = field.value.trim();
+    if (!value) {
+        clearFieldError(field);
+        return true;
+    }
+
+    clearFieldError(field);
+    let isValid = true;
+
+    if (value.startsWith('/')) {
+        showFieldError(field, 'Cannot start with "/" (Error T26)');
+        isValid = false;
+    }
+
+    if (value.endsWith('/')) {
+        showFieldError(field, 'Cannot end with "/" (Error T26)');
+        isValid = false;
+    }
+
+    if (value.indexOf('//') !== -1) {
+        showFieldError(field, 'Cannot contain "//" (Error T26)');
+        isValid = false;
+    }
+
+    if (isValid) {
+        field.classList.add('valid-border');
+    }
+
+    return isValid;
+}
+
+function validateBICRealtime() {
+    const field = q('_032_mf52a_identifier_code');
+    if (!field) return true;
+
+    const bicCode = field.value.trim().toUpperCase();
+    if (!bicCode) {
+        clearFieldError(field);
+        return true;
+    }
+
+    clearFieldError(field);
+    let isValid = true;
+
+    if (bicCode.length !== 8 && bicCode.length !== 11) {
+        showFieldError(field, 'BIC must be 8 or 11 characters (Error T27/T28)');
+        isValid = false;
+    }
+
+    const bicPattern = /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/;
+    if (bicCode.length > 0 && !bicPattern.test(bicCode)) {
+        showFieldError(field, 'Invalid BIC format (Error T29)');
+        isValid = false;
+    }
+
+    if (isValid && bicCode.length > 0) {
+        field.classList.add('valid-border');
+    }
+
+    return isValid;
+}
+
+function validateNameAddressRealtime() {
+    const field = q('_034_mf52d_name_address');
+    if (!field) return true;
+
+    const value = field.value.trim();
+    if (!value) {
+        clearFieldError(field);
+        return true;
+    }
+
+    clearFieldError(field);
+    const lines = value.split('\n');
+    let isValid = true;
+
+    if (lines.length > 4) {
+        showFieldError(field, `Maximum 4 lines allowed (currently: ${lines.length})`);
+        isValid = false;
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].length > 35) {
+            showFieldError(field, `Line ${i + 1} exceeds 35 characters (${lines[i].length})`);
+            isValid = false;
+            break;
+        }
+    }
+
+    if (isValid) {
+        field.classList.add('valid-border');
+    }
+
+    return isValid;
+}
+
+function checkLongLines(fieldId, fieldName, maxCharsPerLine) {
+    const field = q(fieldId);
+    if (!field) return true;
+
+    const content = field.value;
+    if (content.trim() === '') {
+        clearFieldError(field);
+        return true;
+    }
+
+    const lines = content.split('\n');
+    const longLines = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].length > maxCharsPerLine) {
+            longLines.push(`Line ${i + 1}: ${lines[i].length} chars`);
+        }
+    }
+
+    if (longLines.length > 0) {
+        const message = `${longLines.length} line(s) exceed ${maxCharsPerLine} chars`;
+        showFieldWarning(field, message);
+        console.warn(`${fieldName} - ${longLines.join(', ')}`);
+        return false;
+    } else {
+        clearFieldError(field);
+        return true;
+    }
+}
+
+// SETUP REAL-TIME VALIDATIONS
+function setupRealtimeValidations() {
+    const field27Number = q('_010_mf27_number');
+    const field27Total = q('_011_mf27_total');
+
+    if (field27Number && field27Total) {
+        field27Number.addEventListener('blur', validateField27Realtime);
+        field27Total.addEventListener('blur', validateField27Realtime);
+        field27Number.addEventListener('keypress', numbersonly);
+        field27Total.addEventListener('keypress', numbersonly);
+
+        field27Number.addEventListener('input', function() {
+            this.value = this.value.replace(/[^\d]/g, '').slice(0, 1);
+        });
+        field27Total.addEventListener('input', function() {
+            this.value = this.value.replace(/[^\d]/g, '').slice(0, 1);
+        });
+    }
+
+    const field20 = q('_020_mf20_undertaking_number');
+    if (field20) {
+        field20.addEventListener('blur', function() {
+            validateField20Realtime();
+            setUpper(this.id);
+        });
+        field20.addEventListener('keypress', avoidSplChars);
+    }
+
+    const bicField = q('_032_mf52a_identifier_code');
+    if (bicField) {
+        bicField.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+        bicField.addEventListener('blur', validateBICRealtime);
+    }
+
+    const nameAddressField = q('_034_mf52d_name_address');
+    if (nameAddressField) {
+        nameAddressField.addEventListener('blur', validateNameAddressRealtime);
+    }
+
+    const field77U = q('_040_of77u_undertaking_terms_and_conditions');
+    if (field77U) {
+        field77U.addEventListener('blur', function() {
+            checkLongLines('_040_of77u_undertaking_terms_and_conditions', 'OF77U', 65);
+        });
+    }
+
+    const field77L = q('_050_of77l_requested_local_undertaking_terms_and_conditions');
+    if (field77L) {
+        field77L.addEventListener('blur', function() {
+            checkLongLines('_050_of77l_requested_local_undertaking_terms_and_conditions', 'OF77L', 65);
+        });
+    }
+
+    const partyIdA = q('_031_mf52a_party_identifier');
+    const partyIdD = q('_033_mf52d_party_identifier');
+    if (partyIdA) partyIdA.addEventListener('blur', function() { cek_slash(this); });
+    if (partyIdD) partyIdD.addEventListener('blur', function() { cek_slash(this); });
+}
+
+// MAIN VALIDATION FUNCTION
+function validateMandatoryFields() {
+    const mandatoryFields = [
+        { id: '_010_mf27_number', name: 'MF27 Number' },
+        { id: '_011_mf27_total', name: 'MF27 Total' },
+        { id: '_020_mf20_undertaking_number', name: 'MF20 Undertaking Number' },
+        { id: '_030_mf52a_issuer', name: 'MF52a Issuer Type' }
+    ];
+
+    let errors = [];
+
+    mandatoryFields.forEach(config => {
+        const field = q(config.id);
+        if (field && isEmpty(field.value)) {
+            errors.push(config.name);
+            showFieldError(field, 'This field is required');
+        }
+    });
+
+    if (errors.length > 0) {
+        alert('Please fill all mandatory fields:\n\n' + errors.join('\n'));
+        return false;
+    }
+
+    return true;
+}
+
+function validateField27() {
+    const numberField = q('_010_mf27_number');
+    const totalField = q('_011_mf27_total');
+
+    if (!numberField || !totalField) return true;
+
+    const number = parseInt(numberField.value);
+    const total = parseInt(totalField.value);
+
+    if (isNaN(number) || number < 2 || number > 8) {
+        alert('Field 27 Number must be between 2-8 for MT761 (Error T75)');
+        numberField.focus();
+        return false;
+    }
+
+    if (isNaN(total) || total < 2 || total > 8) {
+        alert('Field 27 Total must be between 2-8 (Error T75)');
+        totalField.focus();
+        return false;
+    }
+
+    if (number > total) {
+        alert('Field 27 Number cannot exceed Total (Error T75)');
+        numberField.focus();
+        return false;
+    }
+
+    return true;
+}
+
+function validateField20() {
+    const field = q('_020_mf20_undertaking_number');
+    if (!field) return true;
+
+    const value = field.value.trim();
+    if (!value) {
+        alert('Field 20 Undertaking Number is required');
+        field.focus();
+        return false;
+    }
+
+    if (value.startsWith('/') || value.endsWith('/')) {
+        alert('Field 20 cannot start or end with "/" (Error T26)');
+        field.focus();
+        return false;
+    }
+
+    if (value.indexOf('//') !== -1) {
+        alert('Field 20 cannot contain "//" (Error T26)');
+        field.focus();
+        return false;
+    }
+
+    return true;
+}
+
+function validateField52a() {
+    const issuerSelect = q('_030_mf52a_issuer');
+    if (!issuerSelect) return true;
+
+    const issuerType = issuerSelect.value;
+
+    if (!issuerType) {
+        alert('Field 52a Issuer Type must be selected');
+        issuerSelect.focus();
+        return false;
+    }
+
+    if (issuerType === 'a') {
+        const bicField = q('_032_mf52a_identifier_code');
+        if (!bicField || !bicField.value.trim()) {
+            alert('Field 52a Option A requires Identifier Code (BIC)');
+            if (bicField) bicField.focus();
+            return false;
+        }
+
+        const bic = bicField.value.trim().toUpperCase();
+        if (bic.length !== 8 && bic.length !== 11) {
+            alert('Field 52a BIC must be 8 or 11 characters (Error T27/T28)');
+            bicField.focus();
+            return false;
+        }
+
+        const bicPattern = /^[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?$/;
+        if (!bicPattern.test(bic)) {
+            alert('Field 52a Invalid BIC format (Error T29)');
+            bicField.focus();
+            return false;
+        }
+
+    } else if (issuerType === 'd') {
+        const nameField = q('_034_mf52d_name_address');
+        if (!nameField || !nameField.value.trim()) {
+            alert('Field 52a Option D requires Name & Address');
+            if (nameField) nameField.focus();
+            return false;
+        }
+
+        const lines = nameField.value.split('\n');
+        if (lines.length > 4) {
+            alert('Field 52d Name & Address: Maximum 4 lines allowed');
+            nameField.focus();
+            return false;
+        }
+
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].length > 35) {
+                alert(`Field 52d Name & Address: Line ${i + 1} exceeds 35 characters`);
+                nameField.focus();
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function validateRuleC1() {
+    const field77U = q('_040_of77u_undertaking_terms_and_conditions');
+    const field77L = q('_050_of77l_requested_local_undertaking_terms_and_conditions');
+
+    const has77U = field77U && field77U.value.trim() !== '';
+    const has77L = field77L && field77L.value.trim() !== '';
+
+    if (!has77U && !has77L) {
+        alert('Error C19 (Rule C1): Either field 77U (Undertaking Terms) or field 77L (Requested Local Undertaking Terms) must be present, or both may be present.');
+        if (field77U) field77U.focus();
+        return false;
+    }
+
+    return true;
+}
+
+function validateField77MaxLength() {
+    const field77U = q('_040_of77u_undertaking_terms_and_conditions');
+    const field77L = q('_050_of77l_requested_local_undertaking_terms_and_conditions');
+
+    if (field77U && field77U.value.trim() !== '') {
+        const lines = field77U.value.split('\n');
+        if (lines.length > 150) {
+            alert('Field 77U: Maximum 150 lines allowed');
+            field77U.focus();
+            return false;
+        }
+        if (field77U.value.length > 9750) {
+            alert('Field 77U: Maximum 9750 characters allowed');
+            field77U.focus();
+            return false;
+        }
+    }
+
+    if (field77L && field77L.value.trim() !== '') {
+        const lines = field77L.value.split('\n');
+        if (lines.length > 150) {
+            alert('Field 77L: Maximum 150 lines allowed');
+            field77L.focus();
+            return false;
+        }
+        if (field77L.value.length > 9750) {
+            alert('Field 77L: Maximum 9750 characters allowed');
+            field77L.focus();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function validateMT761() {
+    console.log('Starting MT761 validation...');
+
+    if (!validateMandatoryFields()) {
+        console.log('Mandatory fields validation failed');
+        return false;
+    }
+
+    if (!validateField27()) {
+        console.log('Field 27 validation failed');
+        return false;
+    }
+
+    if (!validateField20()) {
+        console.log('Field 20 validation failed');
+        return false;
+    }
+
+    if (!validateField52a()) {
+        console.log('Field 52a validation failed');
+        return false;
+    }
+
+    if (!validateRuleC1()) {
+        console.log('Rule C1 validation failed');
+        return false;
+    }
+
+    if (!validateField77MaxLength()) {
+        console.log('Field 77U/77L max length validation failed');
+        return false;
+    }
+
+    console.log('MT761 validation completed successfully');
+    return true;
+}
+
+// FORM INITIALIZATION
+function initializeMT761Form() {
+    console.log('Initializing MT761 form...');
+
+    const field27Number = q('_010_mf27_number');
+    if (field27Number && !field27Number.value) {
+        field27Number.value = '2';
+    }
+
+    const field27Total = q('_011_mf27_total');
+    if (field27Total && !field27Total.value) {
+        field27Total.value = '2';
+    }
+
+    console.log('MT761 form initialized successfully');
+}
+
+// DOM READY
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('MT761 DOMContentLoaded event fired');
+
+    initializeMT761Form();
+    setupTabNavigation();
+    setupFieldVisibility();
+    setupRealtimeValidations();
+    setupCharacterCounters();
+
+    console.log('MT761 initialization complete');
+});
+
+// WINDOW EXPORTS
+window.validateMT761 = validateMT761;
+window.numbersonly = numbersonly;
+window.textonly = textonly;
+window.avoidSplChars = avoidSplChars;
+window.cek_slash = cek_slash;

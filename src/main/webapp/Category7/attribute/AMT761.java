@@ -4,7 +4,7 @@
  */
 package com.vensys.appcm.attribute;
 
-import com.vensys.appcm.model.MT759;
+import com.vensys.appcm.model.MT761;
 import com.enterprisedt.util.debug.Logger;
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -17,130 +17,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="assets/js/mt761.js"></script>
-    <style>
-    body { 
-        font-family: Arial, sans-serif; 
-        padding: 20px; 
-        background:#f9f9f9; 
-    }
-
-    .form-row { 
-        margin-bottom: 12px; 
-        display:flex; 
-        align-items:flex-start; 
-    }
-
-    .label_body { 
-        width: 100px; 
-        font-weight: bold; 
-    }
-
-    .label { 
-        width: 300px; 
-        text-align:right; 
-        margin-right:10px; 
-    }
-
-    .label a { 
-        color:red; 
-    }
-
-    input, textarea, select { 
-        padding:5px; 
-        border:1px solid #999; 
-        border-radius:4px; 
-    }
-
-    input.mandatory, textarea.mandatory, select.mandatory { 
-        border: 1px solid #666; 
-    }
-
-    .tabs { 
-        list-style: none; 
-        margin: 0; 
-        padding: 0; 
-        display: flex; 
-    }
-    .tabs li { 
-        margin-right: 10px; 
-    }
-    .tabs a { 
-        text-decoration: none; 
-        padding: 5px 10px; 
-        border: 1px solid #ccc; 
-        border-radius: 4px; 
-    }
-    .tabcontent { 
-        display: none; 
-    }
-    .tabcontent.active { 
-        display: block; 
-    }
-
-    .form-container {
-        border:1px solid #ccc;
-        border-radius:6px;
-        overflow:hidden;  
-        background:#fff;
-        margin-top:10px;
-    }
-
-    .form-body { 
-        padding:15px; 
-        background:#fff; 
-    }
-
-    .footer {
-        padding:12px;
-        background:#2a7d80; 
-        display:flex;
-        justify-content:flex-start;
-        gap:10px;
-        border-top:1px solid #ccc;
-    }
-
-    .footer button {
-        padding:8px 18px; 
-        border:1px solid #aaa; 
-        border-radius:4px;
-        background:#f0f0f0; 
-        color:#000; 
-        font-weight:bold; 
-        cursor:pointer;
-    }
-    .footer button:hover { 
-        background:#e0e0e0; 
-    }
-
-    .mt-col { 
-        flex: 1; 
-        display:flex; 
-        flex-direction:column; 
-        gap:6px;      
-    }
-
-    .mt-col select,
-    .mt-col input,
-    .mt-col textarea {
-        width: 100%;
-    }
-
-    .mt-row.multi { 
-        flex-wrap:wrap; 
-        gap:10px;
-    }
-
-    .mt-row.multi .mt-col { 
-        flex:0 0 auto;
-        min-width:180px;    
-    }
-
-    textarea {
-        height: 100px;
-        width: 300px;
-        resize: vertical;      
-    }
-    </style>
 </head>
 <body>
 
@@ -194,7 +70,7 @@
                                 </select>
                                 <div id="div_mf52a_issuer">
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
-                                        <input type="text" name="_031_mf52a_party_identifier" id="_031_mf52a_party_identifier" maxlength="37" input_type="MF52a Issuer" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_031_mf52a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                        <input type="text" name="_031_mf52a_party_identifier" id="_031_mf52a_party_identifier" maxlength="35" input_type="MF52a Issuer" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_031_mf52a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code</span>
                                         <input type="text" onkeypress="avoidSplChars(event)" name="_032_mf52a_identifier_code" id="_032_mf52a_identifier_code" maxlength="11" class="mandatory" input_type="MF52a Issuer" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_032_mf52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
@@ -235,9 +111,4 @@
 <%@ include file="rule/validate_rule_mt761.jsp" %>
 </body>
 </html>
-
-
-
-
- 
 
