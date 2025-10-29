@@ -1,0 +1,155 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 20, 2019, 9:17:31 AM
+    Author     : Azan
+*/
+#rowsearch{
+    /*background-color: red;*/
+}
+
+.btnLink{
+    float:left;
+    font: normal 11px Verdana;
+    text-decoration: none;
+    padding: 5px 12px;
+    border: 1px solid #CCC;
+    border-bottom-color:#B7B7B7;
+    color: #000;
+    background: #F0F0F0 url(../images/tabbg.gif) 0 0 repeat-x;
+    border-radius: 5px;
+    outline:none;
+}
+.btnLink:hover
+{
+    cursor: pointer;
+    border: 1px solid #B7B7B7;
+    background:#F0F0F0 url(../images/tabbg.gif) 0 -36px repeat-x;
+}
+
+#isi .my-navigation:after
+{
+	content: "";
+	display: table;
+	clear: both;
+}
+#isi .my-navigation div
+{
+	float: left;
+}
+#isi .my-navigation .simple-help
+{
+	float: right;
+}
+#isi .my-navigation div + div
+{
+	margin-left: .5rem;
+}
+
+#isi .my-navigation .simple-help .img-help
+{
+    height: 20px;
+}
+
+
+
+
+/*@media screen and (max-width: 959px){
+	body > div,
+	header
+	{
+		width: 90%;
+	}
+}*/
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 112px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-wrapper {
+  margin: auto;
+  width: 800px;
+  border: 1px solid #888;
+}
+.modal-head{
+    background-color: #358f94;
+    border-bottom: 2px solid #20696d;
+    padding: 12px;
+}
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  padding: 10px;
+  font-size: 12px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin-top: -15px;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.modal-content .modal-table td, .modal-content .modal-table th {
+  border: 1px solid black;
+  text-align: center;
+  padding: 3px;
+  font-size: 12px;
+}
+
+
+/*controllerHeader*/
+#example, .example {
+    width: 100% !important;
+    overflow-x: scroll !important;
+}
+
+#myBtn {
+    cursor: pointer !important;
+}
+
+.modal-content {
+    height: 60vh !important; 
+    width:780px !important; 
+    overflow-y: auto !important;
+}
+
+#modal-table, .modal-table {
+    border:1px solid black;
+}
+
+#th-incoming, #th-outgoing, #th-flagsementara {
+    background: #20696d !important;
+    color: #ffffff !important;
+}
+
+#tr-header, .tr-header {
+    font-weight: bold !important;
+}

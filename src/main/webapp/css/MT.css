@@ -1,0 +1,74 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 17, 2019, 10:11:41 AM
+    Author     : AplDev2
+*/
+/*.infoError {color: #FF0000}
+body
+{
+font: normal 11px Tahoma,sans-serif;
+}*/
+
+/*a:active     { color: #009543; font-family: Verdana; font-size: 10px; text-decoration: none}
+a:link       { color: #009543; font-family: Verdana; font-size: 10px; text-decoration: none}
+a:visited    { color: #009543; font-family: Verdana; font-size: 10px; text-decoration: none}
+a            { color: #009543; font-family: Verdana; font-size: 10px; text-decoration: none}
+a:hover		 { color: #FF6600; font-family: Verdana; font-size: 10px; text-decoration: none}*/
+
+.mandatory{
+/*background-color:#cfe1ff;*/
+/*background-color:#e8f0fe;*/
+background-color:#ccebf1;
+border:1px solid #ccc;
+}
+
+.header-title{
+text-align:center;
+/*width:800px;*/
+/*width:1255px;*/
+/*width:1295px;*/
+background-color:#2e8085;
+padding: 2px 0px 2px 0px;
+font: bold 11px Tahoma,sans-serif;
+height:15px;
+color: white;
+}
+
+.header-credit{
+text-align:center;
+/*width:800px;*/
+/*width:1255px;*/
+/*width:1295px;*/
+background-color:#f20505;
+padding: 2px 0px 2px 0px;
+font: bold 11px Tahoma,sans-serif;
+height:15px;
+color: white;
+}
+
+
+#content-mt-passthrough {
+    width:100%; 
+    margin: 0 auto; 
+    font: 0.85em DejaVu Sans;
+}
+#value-mt-passthrough {
+    width: fit-content; margin-top: -50px;
+    font: 0.85em DejaVu Sans;
+}
+.editor-passthrough {
+    font: 14px DejaVu Sans, sans-serif; 
+}
+#status-passthrough {
+    padding-top:0; padding-bottom: 0;
+    font-family: DejaVu Sans, sans-serif;
+    font-size: 9pt;
+}
+
+.content-mt {
+    width: 100%; margin: 0 auto; font: 0.85em;
+}

@@ -1,0 +1,49 @@
+
+#filterRow th {
+    padding: 8px;
+    text-align: center;
+    background-color: #f8f9fa; /* Light grey background */
+}
+
+#filterRow input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+/* Tambah jarak ke kanan teks header */
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+  padding-right: 20px !important; /* atur sesuai kebutuhan */
+}
+
+/* Tambah jarak pada ikon sort */
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+  right: 4px !important; /* geser ikon sort ke kanan */
+}
+
+#example th:nth-child(9),
+#example td:nth-child(9) {
+    width: 250px !important;
+    max-width: 250px !important;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.datetime-picker {
+  padding: 5px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 1mm !important;
+  outline: none !important;
+  transition: all 0.2s ease-in-out !important;
+  width: 170px !important;
+  font-size: 12px !important;
+}
+.datetime-picker:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+

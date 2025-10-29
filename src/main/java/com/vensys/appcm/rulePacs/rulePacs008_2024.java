@@ -1,0 +1,2118 @@
+/*
+ * Click to change this license
+ * Click to edit this template
+ */
+package com.vensys.appcm.rulePacs;
+
+import com.prowidesoftware.swift.model.mx.MxPacs00800108;
+import com.prowidesoftware.swift.model.mx.dic.ActiveCurrencyAndAmount;
+import com.prowidesoftware.swift.model.mx.dic.ActiveOrHistoricCurrencyAndAmount;
+import com.prowidesoftware.swift.model.mx.dic.BranchAndFinancialInstitutionIdentification6;
+import com.prowidesoftware.swift.model.mx.dic.CashAccount38;
+import com.prowidesoftware.swift.model.mx.dic.ChargeBearerType1Code;
+import com.prowidesoftware.swift.model.mx.dic.Charges7;
+import com.prowidesoftware.swift.model.mx.dic.FinancialInstitutionIdentification18;
+import com.prowidesoftware.swift.model.mx.dic.Instruction3Code;
+import com.prowidesoftware.swift.model.mx.dic.InstructionForCreditorAgent1;
+import com.prowidesoftware.swift.model.mx.dic.OrganisationIdentification29;
+import com.prowidesoftware.swift.model.mx.dic.Party38Choice;
+import com.prowidesoftware.swift.model.mx.dic.PartyIdentification135;
+import com.prowidesoftware.swift.model.mx.dic.PaymentIdentification7;
+import com.prowidesoftware.swift.model.mx.dic.PostalAddress24;
+import com.prowidesoftware.swift.model.mx.dic.SettlementInstruction7;
+import com.prowidesoftware.swift.model.mx.dic.SettlementMethod1Code;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ *
+ * @author rafli
+ */
+public class rulePacs008_2024 {
+
+    private MxPacs00800108 mxPacs00800108;
+    private List<String> validationRuleComment = new ArrayList<>();
+
+    public rulePacs008_2024(MxPacs00800108 mxPacs00800108) {
+        this.mxPacs00800108 = mxPacs00800108;
+    }
+
+    public String getErrorRule() {
+        if (!validationRuleComment.isEmpty()) {
+            return validationRuleComment.stream().collect(Collectors.joining(""));
+        }
+        return "";
+    }
+
+    public void runRules(String logicalTerminal, String receiverAddress) {
+        String msgId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getMsgId();
+        if (msgId == null || "".equalsIgnoreCase(msgId) || msgId.isEmpty()) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/MsgId\"><td>MessageIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/GrpHdr/MsgId</td></tr>");
+        }
+
+        OffsetDateTime creDtTm = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getCreDtTm();
+        if (creDtTm == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/CreDtTm\"><td>CreationDateTime is mandatory!</td><td>FIToFICstmrCdtTrf/GrpHdr/CreDtTm</td></tr>");
+        }
+
+        SettlementInstruction7 sttlmInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getGrpHdr().getSttlmInf();
+        if (sttlmInf != null) {
+            BranchAndFinancialInstitutionIdentification6 instgRmbrsmntAgt = sttlmInf.getInstgRmbrsmntAgt();
+            if (instgRmbrsmntAgt != null) {
+                FinancialInstitutionIdentification18 finInstnIdInstgRmbrmsntAgt = instgRmbrsmntAgt.getFinInstnId();
+                if (finInstnIdInstgRmbrmsntAgt != null) {
+                    String nameInstgRmbrmsntAgt = finInstnIdInstgRmbrmsntAgt.getNm();
+                    PostalAddress24 pstlAdrInstgRmbrsmntAgt = finInstnIdInstgRmbrmsntAgt.getPstlAdr();
+                    if (((nameInstgRmbrmsntAgt == null || nameInstgRmbrmsntAgt.isEmpty())
+                            && pstlAdrInstgRmbrsmntAgt != null) || (pstlAdrInstgRmbrsmntAgt == null && (nameInstgRmbrmsntAgt != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrInstgRmbrsmntAgt != null) {
+                        List<String> adrLineInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getAdrLine();
+                        String DeptInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getDept();
+                        String subDeptInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getSubDept();
+                        String strtNmInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getStrtNm();
+                        String bldgNbInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getBldgNb();
+                        String bldgNmInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getBldgNm();
+                        String flrInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getFlr();
+                        String pstBxInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getPstBx();
+                        String roomInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getRoom();
+                        String pstCdInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getPstCd();
+                        String twnLctnNmInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getTwnLctnNm();
+                        String dstrctNmInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getDstrctNm();
+                        String ctrySubDvsnInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getCtrySubDvsn();
+                        String ctryInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getCtry();
+                        String twnNmInstgRmbrsmntAgt = pstlAdrInstgRmbrsmntAgt.getTwnNm();
+                        if ((adrLineInstgRmbrsmntAgt.isEmpty() && (ctryInstgRmbrsmntAgt == null || ctryInstgRmbrsmntAgt.isEmpty()) && (twnNmInstgRmbrsmntAgt == null || twnNmInstgRmbrsmntAgt.isEmpty()))
+                                || (adrLineInstgRmbrsmntAgt.isEmpty() && (ctryInstgRmbrsmntAgt != null) && (twnNmInstgRmbrsmntAgt == null || twnNmInstgRmbrsmntAgt.isEmpty()))
+                                || (adrLineInstgRmbrsmntAgt.isEmpty() && (ctryInstgRmbrsmntAgt == null || ctryInstgRmbrsmntAgt.isEmpty()) && (twnNmInstgRmbrsmntAgt != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineInstgRmbrsmntAgt.isEmpty() && (DeptInstgRmbrsmntAgt != null || subDeptInstgRmbrsmntAgt != null
+                                || strtNmInstgRmbrsmntAgt != null || bldgNbInstgRmbrsmntAgt != null
+                                || bldgNmInstgRmbrsmntAgt != null || flrInstgRmbrsmntAgt != null
+                                || pstBxInstgRmbrsmntAgt != null || roomInstgRmbrsmntAgt != null
+                                || pstCdInstgRmbrsmntAgt != null || twnLctnNmInstgRmbrsmntAgt != null
+                                || dstrctNmInstgRmbrsmntAgt != null || ctrySubDvsnInstgRmbrsmntAgt != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (DeptInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(DeptInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(subDeptInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(strtNmInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNbInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNmInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(flrInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(pstBxInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(roomInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(pstCdInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(dstrctNmInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(ctryInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmInstgRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(twnNmInstgRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineInstgRmbrsmntAgt.isEmpty()) {
+                            for (int j = 0; j < adrLineInstgRmbrsmntAgt.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineInstgRmbrsmntAgt.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 instdRmbrsmntAgt = sttlmInf.getInstdRmbrsmntAgt();
+            if (instdRmbrsmntAgt != null) {
+                FinancialInstitutionIdentification18 finInstnIdInstdRmbrmsntAgt = instdRmbrsmntAgt.getFinInstnId();
+                if (finInstnIdInstdRmbrmsntAgt != null) {
+                    String nameInstdRmbrmsntAgt = finInstnIdInstdRmbrmsntAgt.getNm();
+                    PostalAddress24 pstlAdrInstdRmbrsmntAgt = finInstnIdInstdRmbrmsntAgt.getPstlAdr();
+                    if (((nameInstdRmbrmsntAgt == null || "".equalsIgnoreCase(nameInstdRmbrmsntAgt) || nameInstdRmbrmsntAgt.isEmpty())
+                            && pstlAdrInstdRmbrsmntAgt != null) || (pstlAdrInstdRmbrsmntAgt == null && nameInstdRmbrmsntAgt != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrInstdRmbrsmntAgt != null) {
+                        List<String> adrLineInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getAdrLine();
+                        String DeptInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getDept();
+                        String subDeptInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getSubDept();
+                        String strtNmInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getStrtNm();
+                        String bldgNbInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getBldgNb();
+                        String bldgNmInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getBldgNm();
+                        String flrInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getFlr();
+                        String pstBxInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getPstBx();
+                        String roomInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getRoom();
+                        String pstCdInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getPstCd();
+                        String twnLctnNmInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getTwnLctnNm();
+                        String dstrctNmInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getDstrctNm();
+                        String ctrySubDvsnInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getCtrySubDvsn();
+                        String ctryInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getCtry();
+                        String twnNmInstdRmbrsmntAgt = pstlAdrInstdRmbrsmntAgt.getTwnNm();
+                        if ((adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt == null || ctryInstdRmbrsmntAgt.isEmpty()) && (twnNmInstdRmbrsmntAgt == null || twnNmInstdRmbrsmntAgt.isEmpty()))
+                                || (adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt != null) && (twnNmInstdRmbrsmntAgt == null || twnNmInstdRmbrsmntAgt.isEmpty()))
+                                || (adrLineInstdRmbrsmntAgt.isEmpty() && (ctryInstdRmbrsmntAgt == null || ctryInstdRmbrsmntAgt.isEmpty()) && (twnNmInstdRmbrsmntAgt != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineInstdRmbrsmntAgt.isEmpty() && (DeptInstdRmbrsmntAgt != null || subDeptInstdRmbrsmntAgt != null
+                                || strtNmInstdRmbrsmntAgt != null || bldgNbInstdRmbrsmntAgt != null
+                                || bldgNmInstdRmbrsmntAgt != null || flrInstdRmbrsmntAgt != null
+                                || pstBxInstdRmbrsmntAgt != null || roomInstdRmbrsmntAgt != null
+                                || pstCdInstdRmbrsmntAgt != null || twnLctnNmInstdRmbrsmntAgt != null
+                                || dstrctNmInstdRmbrsmntAgt != null || ctrySubDvsnInstdRmbrsmntAgt != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (DeptInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(DeptInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(subDeptInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(strtNmInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNbInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNmInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(flrInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(pstBxInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(roomInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(pstCdInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(dstrctNmInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(ctryInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmInstdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(twnNmInstdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineInstdRmbrsmntAgt.isEmpty()) {
+                            for (int j = 0; j < adrLineInstdRmbrsmntAgt.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineInstdRmbrsmntAgt.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            BranchAndFinancialInstitutionIdentification6 thrdRmbrsmntAgt = sttlmInf.getThrdRmbrsmntAgt();
+            if (thrdRmbrsmntAgt != null) {
+                FinancialInstitutionIdentification18 finInstnIdThrdRmbrmsntAgt = thrdRmbrsmntAgt.getFinInstnId();
+                if (finInstnIdThrdRmbrmsntAgt != null) {
+                    String nameThrdRmbrmsntAgt = finInstnIdThrdRmbrmsntAgt.getNm();
+                    PostalAddress24 pstlAdrThrdRmbrsmntAgt = finInstnIdThrdRmbrmsntAgt.getPstlAdr();
+                    if (((nameThrdRmbrmsntAgt == null || "".equalsIgnoreCase(nameThrdRmbrmsntAgt) || nameThrdRmbrmsntAgt.isEmpty())
+                            && pstlAdrThrdRmbrsmntAgt != null) || (pstlAdrThrdRmbrsmntAgt == null && (nameThrdRmbrmsntAgt != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrThrdRmbrsmntAgt != null) {
+                        List<String> adrLineThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getAdrLine();
+                        String DeptThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getDept();
+                        String subDeptThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getSubDept();
+                        String strtNmThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getStrtNm();
+                        String bldgNbThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getBldgNb();
+                        String bldgNmThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getBldgNm();
+                        String flrThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getFlr();
+                        String pstBxThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getPstBx();
+                        String roomThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getRoom();
+                        String pstCdThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getPstCd();
+                        String twnLctnNmThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getTwnLctnNm();
+                        String dstrctNmThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getDstrctNm();
+                        String ctrySubDvsnThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getCtrySubDvsn();
+                        String ctryThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getCtry();
+                        String twnNmThrdRmbrsmntAgt = pstlAdrThrdRmbrsmntAgt.getTwnNm();
+                        if ((adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt == null || ctryThrdRmbrsmntAgt.isEmpty()) && (twnNmThrdRmbrsmntAgt == null || twnNmThrdRmbrsmntAgt.isEmpty()))
+                                || (adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt != null) && (twnNmThrdRmbrsmntAgt == null || twnNmThrdRmbrsmntAgt.isEmpty()))
+                                || (adrLineThrdRmbrsmntAgt.isEmpty() && (ctryThrdRmbrsmntAgt == null || ctryThrdRmbrsmntAgt.isEmpty()) && (twnNmThrdRmbrsmntAgt != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineThrdRmbrsmntAgt.isEmpty() && (DeptThrdRmbrsmntAgt != null || subDeptThrdRmbrsmntAgt != null
+                                || strtNmThrdRmbrsmntAgt != null || bldgNbThrdRmbrsmntAgt != null
+                                || bldgNmThrdRmbrsmntAgt != null || flrThrdRmbrsmntAgt != null
+                                || pstBxThrdRmbrsmntAgt != null || roomThrdRmbrsmntAgt != null
+                                || pstCdThrdRmbrsmntAgt != null || twnLctnNmThrdRmbrsmntAgt != null
+                                || dstrctNmThrdRmbrsmntAgt != null || ctrySubDvsnThrdRmbrsmntAgt != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (DeptThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(DeptThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(subDeptThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(strtNmThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNbThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(bldgNmThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(flrThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(pstBxThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(roomThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(pstCdThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(dstrctNmThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(ctryThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmThrdRmbrsmntAgt != null) {
+                            if ("".equalsIgnoreCase(twnNmThrdRmbrsmntAgt)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineThrdRmbrsmntAgt.isEmpty()) {
+                            for (int j = 0; j < adrLineThrdRmbrsmntAgt.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineThrdRmbrsmntAgt.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            CashAccount38 instdRmbrsmntAgtAcct = sttlmInf.getInstdRmbrsmntAgtAcct();
+            if (instdRmbrsmntAgtAcct != null && instdRmbrsmntAgt == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt\"><td>If InstructedReimbursementAgentAccount is present, then InstructedReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstdRmbrsmntAgt</td></tr>");
+            }
+
+            CashAccount38 instgRmbrsmntAgtAcct = sttlmInf.getInstgRmbrsmntAgtAcct();
+            if (instgRmbrsmntAgtAcct != null && instgRmbrsmntAgt == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt\"><td>If InstructingReimbursementAgentAccount is present, then InstructingReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/InstgRmbrsmntAgt</td></tr>");
+            }
+
+            CashAccount38 thrdRmbrsmntAgtAcct = sttlmInf.getThrdRmbrsmntAgtAcct();
+            if (thrdRmbrsmntAgtAcct != null && thrdRmbrsmntAgt == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt\"><td>If ThirdReimbursementAgentAccount is present, then ThirdReimbursementAgent must be present.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/ThrdRmbrsmntAgt</td></tr>");
+            }
+
+            if ((thrdRmbrsmntAgt != null && instdRmbrsmntAgt == null && instgRmbrsmntAgt == null) || (thrdRmbrsmntAgt != null && instdRmbrsmntAgt != null && instgRmbrsmntAgt == null) || (thrdRmbrsmntAgt != null && instdRmbrsmntAgt == null && instgRmbrsmntAgt != null)) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If ThirdReimbursementAgent is present, then InstructingReimbursementAgent and InstructedReimbursementAgent must both be present. </td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf</td></tr>");
+            }
+
+            SettlementMethod1Code sttlmMtd = sttlmInf.getSttlmMtd();
+            if ((sttlmMtd == SettlementMethod1Code.INDA || sttlmMtd == SettlementMethod1Code.INGA) && (instgRmbrsmntAgt != null || instdRmbrsmntAgt != null || thrdRmbrsmntAgt != null)) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If SettlementMethod is equal to INDA or INGA, then ReimbursementAgent(s) are not allowed. </td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf</td></tr>");
+            } else if (sttlmMtd == SettlementMethod1Code.COVE && instgRmbrsmntAgt == null && instdRmbrsmntAgt == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf\"><td>If SettlementMethod is equal to COVE, then InstructedReimbursementAgent or InstructingReimbursementAgent must be present. </td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf</td></tr>");
+            }
+
+            CashAccount38 sttlmAcct = sttlmInf.getSttlmAcct();
+            if (sttlmMtd == SettlementMethod1Code.COVE && sttlmAcct != null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/GrpHdr/SttlmInf/SttlmAcct\"><td>If SettlementMethod is equal to COVE, then SettlementAccount is not allowed.</td><td>FIToFICstmrCdtTrf/GrpHdr/SttlmInf/SttlmAcct</td></tr>");
+            }
+        }
+
+        PaymentIdentification7 pmtId = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPmtId();
+        if (pmtId != null) {
+            String instrId = pmtId.getInstrId();
+            if (instrId == null || "".equalsIgnoreCase(instrId) || instrId.isEmpty()) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>InstructionIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId</td></tr>");
+            }
+            if (instrId != null) {
+                if (instrId.startsWith("/") || instrId.endsWith("/") || instrId.contains("//")) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId\"><td>This field must not start or end with a slash '/' and must not contain two consecutive slashes '//'.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/InstrId</td></tr>");
+                }
+            }
+
+            String endToEndId = pmtId.getEndToEndId();
+            if (endToEndId == null || "".equalsIgnoreCase(endToEndId) || endToEndId.isEmpty()) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/EndToEndId\"><td>EndToEndIdentification is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/EndToEndId</td></tr>");
+            }
+
+            String uetr = pmtId.getUETR();
+            if (uetr == null || "".equalsIgnoreCase(uetr) || uetr.isEmpty()) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"UETR\"><td>UETR is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PmtId/UETR</td></tr>");
+            }
+        }
+
+        ActiveCurrencyAndAmount intrBkSttlmAmt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmAmt();
+        if (intrBkSttlmAmt.getValue() == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt\"><td>InterBankSettlementAmount is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt</td></tr>");
+        }
+
+        if (intrBkSttlmAmt != null) {
+            String currency = intrBkSttlmAmt.getCcy();
+            if (currency == null || "".equalsIgnoreCase(currency) || currency.isEmpty()) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/Ccy\"><td>Currency is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/Ccy</td></tr>");
+            } else if (currency.equalsIgnoreCase("XAU") || currency.equalsIgnoreCase("XAG") || currency.equalsIgnoreCase("XPD") || currency.equalsIgnoreCase("XPT")) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt/Ccy\"><td>The codes XAU, XAG, XPD and XPT are not allowed, as these are codes are only used for commodities.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmAmt</td></tr>");
+            }
+        }
+
+        LocalDate intrBkSttlmDt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrBkSttlmDt();
+        if (intrBkSttlmDt == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt\"><td>InterBankSettlementDate is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrBkSttlmDt</td></tr>");
+        }
+
+        ChargeBearerType1Code chrgBr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgBr();
+        List<Charges7> chrgsInf = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getChrgsInf();
+        if (chrgBr == ChargeBearerType1Code.CRED && (chrgsInf.isEmpty() || chrgsInf.isEmpty())) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>Charge information is mandatory if CRED is present – if no charges are taken, Zero must be used in \"Amount\" (any agent in the payment chain).</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgBr</td></tr>");
+        }
+
+        if (chrgBr == ChargeBearerType1Code.DEBT && chrgsInf.size() > 1) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf\"><td>If \"Charge Bearer/DEBT\" is present, then only one occurrence of \"Charge Information\" is allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf</td></tr>");
+        }
+
+        if (chrgsInf != null) {
+            for (int i = 0; i < chrgsInf.size(); i++) {
+                BranchAndFinancialInstitutionIdentification6 agtChrgsInf = chrgsInf.get(i).getAgt();
+                FinancialInstitutionIdentification18 finInstnIdChrgsInf = agtChrgsInf.getFinInstnId();
+                if (finInstnIdChrgsInf != null) {
+                    String nameChrgsInf = finInstnIdChrgsInf.getNm();
+                    PostalAddress24 pstlAdrChrgsInf = finInstnIdChrgsInf.getPstlAdr();
+                    String bicChrgsInf = finInstnIdChrgsInf.getBICFI();
+                    if ((nameChrgsInf == null || "".equalsIgnoreCase(nameChrgsInf)) && (bicChrgsInf == null || "".equalsIgnoreCase(bicChrgsInf))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId\"><td>FinancialInstitutionIdentification in ChargesInformation is mandatory if ChargesInformation is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId</td></tr>");
+                    }
+                    if (((nameChrgsInf == null || "".equalsIgnoreCase(nameChrgsInf) || nameChrgsInf.isEmpty())
+                            && pstlAdrChrgsInf != null) || (pstlAdrChrgsInf == null && nameChrgsInf != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId</td></tr>");
+                    }
+
+                    if (pstlAdrChrgsInf != null) {
+                        List<String> adrLineChrgsInf = pstlAdrChrgsInf.getAdrLine();
+                        String DeptChrgsInf = pstlAdrChrgsInf.getDept();
+                        String subDeptChrgsInf = pstlAdrChrgsInf.getSubDept();
+                        String strtNmChrgsInf = pstlAdrChrgsInf.getStrtNm();
+                        String bldgNbChrgsInf = pstlAdrChrgsInf.getBldgNb();
+                        String bldgNmChrgsInf = pstlAdrChrgsInf.getBldgNm();
+                        String flrChrgsInf = pstlAdrChrgsInf.getFlr();
+                        String pstBxChrgsInf = pstlAdrChrgsInf.getPstBx();
+                        String roomChrgsInf = pstlAdrChrgsInf.getRoom();
+                        String pstCdChrgsInf = pstlAdrChrgsInf.getPstCd();
+                        String twnLctnNmChrgsInf = pstlAdrChrgsInf.getTwnLctnNm();
+                        String dstrctNmChrgsInf = pstlAdrChrgsInf.getDstrctNm();
+                        String ctrySubDvsnChrgsInf = pstlAdrChrgsInf.getCtrySubDvsn();
+                        String ctryChrgsInf = pstlAdrChrgsInf.getCtry();
+                        String twnNmChrgsInf = pstlAdrChrgsInf.getTwnNm();
+                        if ((adrLineChrgsInf.isEmpty() && (ctryChrgsInf == null || ctryChrgsInf.isEmpty()) && (twnNmChrgsInf == null || "".equalsIgnoreCase(twnNmChrgsInf) || twnNmChrgsInf.isEmpty()))
+                                || (adrLineChrgsInf.isEmpty() && (ctryChrgsInf != null) && (twnNmChrgsInf == null || "".equalsIgnoreCase(twnNmChrgsInf) || twnNmChrgsInf.isEmpty()))
+                                || (adrLineChrgsInf.isEmpty() && (ctryChrgsInf == null || "".equalsIgnoreCase(ctryChrgsInf) || ctryChrgsInf.isEmpty()) && (twnNmChrgsInf != null))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (!adrLineChrgsInf.isEmpty() && (DeptChrgsInf != null || subDeptChrgsInf != null
+                                || strtNmChrgsInf != null || bldgNbChrgsInf != null
+                                || bldgNmChrgsInf != null || flrChrgsInf != null
+                                || pstBxChrgsInf != null || roomChrgsInf != null
+                                || pstCdChrgsInf != null || twnLctnNmChrgsInf != null
+                                || dstrctNmChrgsInf != null || ctrySubDvsnChrgsInf != null)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                        }
+
+                        if (DeptChrgsInf != null) {
+                            if ("".equalsIgnoreCase(DeptChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (subDeptChrgsInf != null) {
+                            if ("".equalsIgnoreCase(subDeptChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (strtNmChrgsInf != null) {
+                            if ("".equalsIgnoreCase(strtNmChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNbChrgsInf != null) {
+                            if ("".equalsIgnoreCase(bldgNbChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (bldgNmChrgsInf != null) {
+                            if ("".equalsIgnoreCase(bldgNmChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (flrChrgsInf != null) {
+                            if ("".equalsIgnoreCase(flrChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstBxChrgsInf != null) {
+                            if ("".equalsIgnoreCase(pstBxChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (roomChrgsInf != null) {
+                            if ("".equalsIgnoreCase(roomChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (pstCdChrgsInf != null) {
+                            if ("".equalsIgnoreCase(pstCdChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnLctnNmChrgsInf != null) {
+                            if ("".equalsIgnoreCase(twnLctnNmChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (dstrctNmChrgsInf != null) {
+                            if ("".equalsIgnoreCase(dstrctNmChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctrySubDvsnChrgsInf != null) {
+                            if ("".equalsIgnoreCase(ctrySubDvsnChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (ctryChrgsInf != null) {
+                            if ("".equalsIgnoreCase(ctryChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (twnNmChrgsInf != null) {
+                            if ("".equalsIgnoreCase(twnNmChrgsInf)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                        if (!adrLineChrgsInf.isEmpty()) {
+                            for (int j = 0; j < adrLineChrgsInf.size(); j++) {
+                                if ("".equalsIgnoreCase(adrLineChrgsInf.get(j))) {
+                                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/ChrgsInf/Agt/FinInstnId/PstlAdr</td></tr>");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 prvsInstgAgt1 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt1();
+        if (prvsInstgAgt1 != null) {
+            FinancialInstitutionIdentification18 finInstnIdPrvsInstgAgt1 = prvsInstgAgt1.getFinInstnId();
+            if (finInstnIdPrvsInstgAgt1 != null) {
+                String namePrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getNm();
+                PostalAddress24 pstlAdrPrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getPstlAdr();
+                String bicPrvsInstgAgt1 = finInstnIdPrvsInstgAgt1.getBICFI();
+                if ((namePrvsInstgAgt1 == null || "".equalsIgnoreCase(namePrvsInstgAgt1)) && (bicPrvsInstgAgt1 == null || "".equalsIgnoreCase(bicPrvsInstgAgt1))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent1 is mandatory if PreviousInstructingAgent1 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId</td></tr>");
+                }
+                if (((namePrvsInstgAgt1 == null || "".equalsIgnoreCase(namePrvsInstgAgt1) || namePrvsInstgAgt1.isEmpty())
+                        && pstlAdrPrvsInstgAgt1 != null) || (pstlAdrPrvsInstgAgt1 == null && (namePrvsInstgAgt1 != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrPrvsInstgAgt1 != null) {
+                    List<String> adrLinePrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getAdrLine();
+                    String DeptPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getDept();
+                    String subDeptPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getSubDept();
+                    String strtNmPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getStrtNm();
+                    String bldgNbPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getBldgNb();
+                    String bldgNmPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getBldgNm();
+                    String flrPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getFlr();
+                    String pstBxPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getPstBx();
+                    String roomPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getRoom();
+                    String pstCdPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getPstCd();
+                    String twnLctnNmPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getTwnLctnNm();
+                    String dstrctNmPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getDstrctNm();
+                    String ctrySubDvsnPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getCtrySubDvsn();
+                    String ctryPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getCtry();
+                    String twnNmPrvsInstgAgt1 = pstlAdrPrvsInstgAgt1.getTwnNm();
+                    if ((adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 == null || "".equalsIgnoreCase(ctryPrvsInstgAgt1) || ctryPrvsInstgAgt1.isEmpty()) && (twnNmPrvsInstgAgt1 == null || "".equalsIgnoreCase(twnNmPrvsInstgAgt1) || twnNmPrvsInstgAgt1.isEmpty()))
+                            || (adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 != null) && (twnNmPrvsInstgAgt1 == null || "".equalsIgnoreCase(twnNmPrvsInstgAgt1) || twnNmPrvsInstgAgt1.isEmpty()))
+                            || (adrLinePrvsInstgAgt1.isEmpty() && (ctryPrvsInstgAgt1 == null || "".equalsIgnoreCase(ctryPrvsInstgAgt1) || ctryPrvsInstgAgt1.isEmpty()) && (twnNmPrvsInstgAgt1 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLinePrvsInstgAgt1.isEmpty() && (DeptPrvsInstgAgt1 != null || subDeptPrvsInstgAgt1 != null
+                            || strtNmPrvsInstgAgt1 != null || bldgNbPrvsInstgAgt1 != null
+                            || bldgNmPrvsInstgAgt1 != null || flrPrvsInstgAgt1 != null
+                            || pstBxPrvsInstgAgt1 != null || roomPrvsInstgAgt1 != null
+                            || pstCdPrvsInstgAgt1 != null || twnLctnNmPrvsInstgAgt1 != null
+                            || dstrctNmPrvsInstgAgt1 != null || ctrySubDvsnPrvsInstgAgt1 != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(DeptPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(subDeptPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(strtNmPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(bldgNbPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(bldgNmPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(flrPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(pstBxPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(roomPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(pstCdPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(dstrctNmPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(ctryPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmPrvsInstgAgt1 != null) {
+                        if ("".equalsIgnoreCase(twnNmPrvsInstgAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLinePrvsInstgAgt1.isEmpty()) {
+                        for (int j = 0; j < adrLinePrvsInstgAgt1.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLinePrvsInstgAgt1.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 prvsInstgAgt2 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt2();
+        if (prvsInstgAgt2 != null) {
+            FinancialInstitutionIdentification18 finInstnIdPrvsInstgAgt2 = prvsInstgAgt2.getFinInstnId();
+            if (finInstnIdPrvsInstgAgt2 != null) {
+                String namePrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getNm();
+                PostalAddress24 pstlAdrPrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getPstlAdr();
+                String bicPrvsInstgAgt2 = finInstnIdPrvsInstgAgt2.getBICFI();
+                if ((namePrvsInstgAgt2 == null || "".equalsIgnoreCase(namePrvsInstgAgt2)) && (bicPrvsInstgAgt2 == null || "".equalsIgnoreCase(bicPrvsInstgAgt2))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent2 is mandatory if PreviousInstructingAgent2 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId</td></tr>");
+                }
+                if (((namePrvsInstgAgt2 == null || "".equalsIgnoreCase(namePrvsInstgAgt2) || namePrvsInstgAgt2.isEmpty())
+                        && pstlAdrPrvsInstgAgt2 != null) || (pstlAdrPrvsInstgAgt2 == null && (namePrvsInstgAgt2 != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrPrvsInstgAgt2 != null) {
+                    List<String> adrLinePrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getAdrLine();
+                    String DeptPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getDept();
+                    String subDeptPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getSubDept();
+                    String strtNmPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getStrtNm();
+                    String bldgNbPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getBldgNb();
+                    String bldgNmPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getBldgNm();
+                    String flrPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getFlr();
+                    String pstBxPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getPstBx();
+                    String roomPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getRoom();
+                    String pstCdPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getPstCd();
+                    String twnLctnNmPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getTwnLctnNm();
+                    String dstrctNmPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getDstrctNm();
+                    String ctrySubDvsnPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getCtrySubDvsn();
+                    String ctryPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getCtry();
+                    String twnNmPrvsInstgAgt2 = pstlAdrPrvsInstgAgt2.getTwnNm();
+                    if ((adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 == null || "".equalsIgnoreCase(ctryPrvsInstgAgt2) || ctryPrvsInstgAgt2.isEmpty()) && (twnNmPrvsInstgAgt2 == null || "".equalsIgnoreCase(twnNmPrvsInstgAgt2) || twnNmPrvsInstgAgt2.isEmpty()))
+                            || (adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 != null) && (twnNmPrvsInstgAgt2 == null || "".equalsIgnoreCase(twnNmPrvsInstgAgt2) || twnNmPrvsInstgAgt2.isEmpty()))
+                            || (adrLinePrvsInstgAgt2.isEmpty() && (ctryPrvsInstgAgt2 == null || "".equalsIgnoreCase(ctryPrvsInstgAgt2) || ctryPrvsInstgAgt2.isEmpty()) && (twnNmPrvsInstgAgt2 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLinePrvsInstgAgt2.isEmpty() && (DeptPrvsInstgAgt2 != null || subDeptPrvsInstgAgt2 != null
+                            || strtNmPrvsInstgAgt2 != null || bldgNbPrvsInstgAgt2 != null
+                            || bldgNmPrvsInstgAgt2 != null || flrPrvsInstgAgt2 != null
+                            || pstBxPrvsInstgAgt2 != null || roomPrvsInstgAgt2 != null
+                            || pstCdPrvsInstgAgt2 != null || twnLctnNmPrvsInstgAgt2 != null
+                            || dstrctNmPrvsInstgAgt2 != null || ctrySubDvsnPrvsInstgAgt2 != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(DeptPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(subDeptPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(strtNmPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(bldgNbPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(bldgNmPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(flrPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(pstBxPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(roomPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(pstCdPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(dstrctNmPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(ctryPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmPrvsInstgAgt2 != null) {
+                        if ("".equalsIgnoreCase(twnNmPrvsInstgAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLinePrvsInstgAgt2.isEmpty()) {
+                        for (int j = 0; j < adrLinePrvsInstgAgt2.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLinePrvsInstgAgt2.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 prvsInstgAgt3 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt3();
+        if (prvsInstgAgt3 != null) {
+            FinancialInstitutionIdentification18 finInstnIdPrvsInstgAgt3 = prvsInstgAgt3.getFinInstnId();
+            if (finInstnIdPrvsInstgAgt3 != null) {
+                String namePrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getNm();
+                PostalAddress24 pstlAdrPrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getPstlAdr();
+                String bicPrvsInstgAgt3 = finInstnIdPrvsInstgAgt3.getBICFI();
+                if ((namePrvsInstgAgt3 == null || "".equalsIgnoreCase(namePrvsInstgAgt3)) && (bicPrvsInstgAgt3 == null || "".equalsIgnoreCase(bicPrvsInstgAgt3))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId\"><td>FinancialInstitutionIdentification in PreviousInstructingAgent3 is mandatory if PreviousInstructingAgent3 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId</td></tr>");
+                }
+                if (((namePrvsInstgAgt3 == null || "".equalsIgnoreCase(namePrvsInstgAgt3) || namePrvsInstgAgt3.isEmpty())
+                        && pstlAdrPrvsInstgAgt3 != null) || (pstlAdrPrvsInstgAgt3 == null)) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrPrvsInstgAgt3 != null) {
+                    List<String> adrLinePrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getAdrLine();
+                    String DeptPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getDept();
+                    String subDeptPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getSubDept();
+                    String strtNmPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getStrtNm();
+                    String bldgNbPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getBldgNb();
+                    String bldgNmPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getBldgNm();
+                    String flrPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getFlr();
+                    String pstBxPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getPstBx();
+                    String roomPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getRoom();
+                    String pstCdPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getPstCd();
+                    String twnLctnNmPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getTwnLctnNm();
+                    String dstrctNmPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getDstrctNm();
+                    String ctrySubDvsnPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getCtrySubDvsn();
+                    String ctryPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getCtry();
+                    String twnNmPrvsInstgAgt3 = pstlAdrPrvsInstgAgt3.getTwnNm();
+                    if ((adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 == null || "".equalsIgnoreCase(ctryPrvsInstgAgt3) || ctryPrvsInstgAgt3.isEmpty()) && (twnNmPrvsInstgAgt3 == null || "".equalsIgnoreCase(twnNmPrvsInstgAgt3) || twnNmPrvsInstgAgt3.isEmpty()))
+                            || (adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 != null) && (twnNmPrvsInstgAgt3 == null || "".equalsIgnoreCase(twnNmPrvsInstgAgt3) || twnNmPrvsInstgAgt3.isEmpty()))
+                            || (adrLinePrvsInstgAgt3.isEmpty() && (ctryPrvsInstgAgt3 == null || "".equalsIgnoreCase(ctryPrvsInstgAgt3) || ctryPrvsInstgAgt3.isEmpty()) && (twnNmPrvsInstgAgt3 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLinePrvsInstgAgt3.isEmpty() && (DeptPrvsInstgAgt3 != null || subDeptPrvsInstgAgt3 != null
+                            || strtNmPrvsInstgAgt3 != null || bldgNbPrvsInstgAgt3 != null
+                            || bldgNmPrvsInstgAgt3 != null || flrPrvsInstgAgt3 != null
+                            || pstBxPrvsInstgAgt3 != null || roomPrvsInstgAgt3 != null
+                            || pstCdPrvsInstgAgt3 != null || twnLctnNmPrvsInstgAgt3 != null
+                            || dstrctNmPrvsInstgAgt3 != null || ctrySubDvsnPrvsInstgAgt3 != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(DeptPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(subDeptPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(strtNmPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(bldgNbPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(bldgNmPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(flrPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(pstBxPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(roomPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(pstCdPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(dstrctNmPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(ctryPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmPrvsInstgAgt3 != null) {
+                        if ("".equalsIgnoreCase(twnNmPrvsInstgAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLinePrvsInstgAgt3.isEmpty()) {
+                        for (int j = 0; j < adrLinePrvsInstgAgt3.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLinePrvsInstgAgt3.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 instgAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getInstgAgt();
+        if (instgAgt != null) {
+            FinancialInstitutionIdentification18 finInstnIdInstgAgt = instgAgt.getFinInstnId();
+            if (finInstnIdInstgAgt != null) {
+                String bicInstgAgt = finInstnIdInstgAgt.getBICFI();
+                if (bicInstgAgt == null || "".equalsIgnoreCase(bicInstgAgt) || bicInstgAgt.isEmpty()) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt\"><td>InstructingAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt</td></tr>");
+                } else {
+                    if (logicalTerminal != null) {
+                        String logicalTerminal1 = logicalTerminal.substring(0, 8) + logicalTerminal.substring(9, 12);
+                        if (!bicInstgAgt.equals(logicalTerminal1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI\"><td>\"From\" BIC must match \"Instructing Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstgAgt/FinInstnId/BICFI</td></tr>");
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 instdAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getInstdAgt();
+        if (instdAgt != null) {
+            FinancialInstitutionIdentification18 finInstnIdInstdAgt = instdAgt.getFinInstnId();
+            if (finInstnIdInstdAgt != null) {
+                String bicInstdAgt = finInstnIdInstdAgt.getBICFI();
+                if (bicInstdAgt == null || "".equalsIgnoreCase(bicInstdAgt) || bicInstdAgt.isEmpty()) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>InstructedAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                } else {
+                    if (receiverAddress == null || "".equalsIgnoreCase(receiverAddress)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                    } else {
+                        if (receiverAddress.length() == 12) {
+                            String receiverAddress1 = receiverAddress.substring(0, 8) + receiverAddress.substring(9, 12);
+                            if (!bicInstdAgt.equals(receiverAddress1)) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                            }
+                        } else {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI\"><td>\"To\" BIC must match \"Instructed Agent\"</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAgt/FinInstnId/BICFI</td></tr>");
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 intrmyAgt1 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt1();
+        if (intrmyAgt1 != null) {
+            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt1 = intrmyAgt1.getFinInstnId();
+            if (finInstnIdIntrmyAgt1 != null) {
+                String nameIntrmyAgt1 = finInstnIdIntrmyAgt1.getNm();
+                PostalAddress24 pstlAdrIntrmyAgt1 = finInstnIdIntrmyAgt1.getPstlAdr();
+                String bicIntrmyAgt1 = finInstnIdIntrmyAgt1.getBICFI();
+                if ((nameIntrmyAgt1 == null || "".equalsIgnoreCase(nameIntrmyAgt1)) && (bicIntrmyAgt1 == null || "".equalsIgnoreCase(bicIntrmyAgt1))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent1 is mandatory if IntermediaryAgent1 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId</td></tr>");
+                }
+                if (((nameIntrmyAgt1 == null || "".equalsIgnoreCase(nameIntrmyAgt1) || nameIntrmyAgt1.isEmpty())
+                        && pstlAdrIntrmyAgt1 != null) || (pstlAdrIntrmyAgt1 == null && (nameIntrmyAgt1 != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrIntrmyAgt1 != null) {
+                    List<String> adrLineIntrmyAgt1 = pstlAdrIntrmyAgt1.getAdrLine();
+                    String DeptIntrmyAgt1 = pstlAdrIntrmyAgt1.getDept();
+                    String subDeptIntrmyAgt1 = pstlAdrIntrmyAgt1.getSubDept();
+                    String strtNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getStrtNm();
+                    String bldgNbIntrmyAgt1 = pstlAdrIntrmyAgt1.getBldgNb();
+                    String bldgNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getBldgNm();
+                    String flrIntrmyAgt1 = pstlAdrIntrmyAgt1.getFlr();
+                    String pstBxIntrmyAgt1 = pstlAdrIntrmyAgt1.getPstBx();
+                    String roomIntrmyAgt1 = pstlAdrIntrmyAgt1.getRoom();
+                    String pstCdIntrmyAgt1 = pstlAdrIntrmyAgt1.getPstCd();
+                    String twnLctnNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getTwnLctnNm();
+                    String dstrctNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getDstrctNm();
+                    String ctrySubDvsnIntrmyAgt1 = pstlAdrIntrmyAgt1.getCtrySubDvsn();
+                    String ctryIntrmyAgt1 = pstlAdrIntrmyAgt1.getCtry();
+                    String twnNmIntrmyAgt1 = pstlAdrIntrmyAgt1.getTwnNm();
+                    if ((adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 == null || "".equalsIgnoreCase(ctryIntrmyAgt1) || ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 == null || "".equalsIgnoreCase(twnNmIntrmyAgt1) || twnNmIntrmyAgt1.isEmpty()))
+                            || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 != null) && (twnNmIntrmyAgt1 == null || "".equalsIgnoreCase(twnNmIntrmyAgt1) || twnNmIntrmyAgt1.isEmpty()))
+                            || (adrLineIntrmyAgt1.isEmpty() && (ctryIntrmyAgt1 == null || "".equalsIgnoreCase(ctryIntrmyAgt1) || ctryIntrmyAgt1.isEmpty()) && (twnNmIntrmyAgt1 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLineIntrmyAgt1.isEmpty() && (DeptIntrmyAgt1 != null || subDeptIntrmyAgt1 != null
+                            || strtNmIntrmyAgt1 != null || bldgNbIntrmyAgt1 != null
+                            || bldgNmIntrmyAgt1 != null || flrIntrmyAgt1 != null
+                            || pstBxIntrmyAgt1 != null || roomIntrmyAgt1 != null
+                            || pstCdIntrmyAgt1 != null || twnLctnNmIntrmyAgt1 != null
+                            || dstrctNmIntrmyAgt1 != null || ctrySubDvsnIntrmyAgt1 != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(DeptIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(subDeptIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(strtNmIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(bldgNbIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(bldgNmIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(flrIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(pstBxIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(roomIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(pstCdIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(dstrctNmIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(ctryIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmIntrmyAgt1 != null) {
+                        if ("".equalsIgnoreCase(twnNmIntrmyAgt1)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLineIntrmyAgt1.isEmpty()) {
+                        for (int j = 0; j < adrLineIntrmyAgt1.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLineIntrmyAgt1.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 intrmyAgt2 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt2();
+        if (intrmyAgt2 != null) {
+            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt2 = intrmyAgt2.getFinInstnId();
+            if (finInstnIdIntrmyAgt2 != null) {
+                String nameIntrmyAgt2 = finInstnIdIntrmyAgt2.getNm();
+                PostalAddress24 pstlAdrIntrmyAgt2 = finInstnIdIntrmyAgt2.getPstlAdr();
+                String bicIntrmyAgt2 = finInstnIdIntrmyAgt2.getBICFI();
+                if ((nameIntrmyAgt2 == null || "".equalsIgnoreCase(nameIntrmyAgt2)) && (bicIntrmyAgt2 == null || "".equalsIgnoreCase(bicIntrmyAgt2))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent2 is mandatory if IntermediaryAgent2 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId</td></tr>");
+                }
+                if (((nameIntrmyAgt2 == null || "".equalsIgnoreCase(nameIntrmyAgt2) || nameIntrmyAgt2.isEmpty())
+                        && pstlAdrIntrmyAgt2 != null) || (pstlAdrIntrmyAgt2 == null && (nameIntrmyAgt2 != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrIntrmyAgt2 != null) {
+                    List<String> adrLineIntrmyAgt2 = pstlAdrIntrmyAgt2.getAdrLine();
+                    String DeptIntrmyAgt2 = pstlAdrIntrmyAgt2.getDept();
+                    String subDeptIntrmyAgt2 = pstlAdrIntrmyAgt2.getSubDept();
+                    String strtNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getStrtNm();
+                    String bldgNbIntrmyAgt2 = pstlAdrIntrmyAgt2.getBldgNb();
+                    String bldgNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getBldgNm();
+                    String flrIntrmyAgt2 = pstlAdrIntrmyAgt2.getFlr();
+                    String pstBxIntrmyAgt2 = pstlAdrIntrmyAgt2.getPstBx();
+                    String roomIntrmyAgt2 = pstlAdrIntrmyAgt2.getRoom();
+                    String pstCdIntrmyAgt2 = pstlAdrIntrmyAgt2.getPstCd();
+                    String twnLctnNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getTwnLctnNm();
+                    String dstrctNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getDstrctNm();
+                    String ctrySubDvsnIntrmyAgt2 = pstlAdrIntrmyAgt2.getCtrySubDvsn();
+                    String ctryIntrmyAgt2 = pstlAdrIntrmyAgt2.getCtry();
+                    String twnNmIntrmyAgt2 = pstlAdrIntrmyAgt2.getTwnNm();
+                    if ((adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 == null || "".equalsIgnoreCase(ctryIntrmyAgt2) || ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 == null || "".equalsIgnoreCase(twnNmIntrmyAgt2) || twnNmIntrmyAgt2.isEmpty()))
+                            || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 != null) && (twnNmIntrmyAgt2 == null || "".equalsIgnoreCase(twnNmIntrmyAgt2) || twnNmIntrmyAgt2.isEmpty()))
+                            || (adrLineIntrmyAgt2.isEmpty() && (ctryIntrmyAgt2 == null || "".equalsIgnoreCase(ctryIntrmyAgt2) || ctryIntrmyAgt2.isEmpty()) && (twnNmIntrmyAgt2 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLineIntrmyAgt2.isEmpty() && (DeptIntrmyAgt2 != null || subDeptIntrmyAgt2 != null
+                            || strtNmIntrmyAgt2 != null || bldgNbIntrmyAgt2 != null
+                            || bldgNmIntrmyAgt2 != null || flrIntrmyAgt2 != null
+                            || pstBxIntrmyAgt2 != null || roomIntrmyAgt2 != null
+                            || pstCdIntrmyAgt2 != null || twnLctnNmIntrmyAgt2 != null
+                            || dstrctNmIntrmyAgt2 != null || ctrySubDvsnIntrmyAgt2 != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(DeptIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(subDeptIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(strtNmIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(bldgNbIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(bldgNmIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(flrIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(pstBxIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(roomIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(pstCdIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(dstrctNmIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(ctryIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmIntrmyAgt2 != null) {
+                        if ("".equalsIgnoreCase(twnNmIntrmyAgt2)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLineIntrmyAgt2.isEmpty()) {
+                        for (int j = 0; j < adrLineIntrmyAgt2.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLineIntrmyAgt2.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 intrmyAgt3 = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt3();
+        if (intrmyAgt3 != null) {
+            FinancialInstitutionIdentification18 finInstnIdIntrmyAgt3 = intrmyAgt3.getFinInstnId();
+            if (finInstnIdIntrmyAgt3 != null) {
+                String nameIntrmyAgt3 = finInstnIdIntrmyAgt3.getNm();
+                PostalAddress24 pstlAdrIntrmyAgt3 = finInstnIdIntrmyAgt3.getPstlAdr();
+                String bicIntrmyAgt3 = finInstnIdIntrmyAgt3.getBICFI();
+                if ((nameIntrmyAgt3 == null || "".equalsIgnoreCase(nameIntrmyAgt3)) && (bicIntrmyAgt3 == null || "".equalsIgnoreCase(bicIntrmyAgt3))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>FinancialInstitutionIdentification in IntermediaryAgent3 is mandatory if IntermediaryAgent3 is present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId</td></tr>");
+                }
+                if (((nameIntrmyAgt3 == null || "".equalsIgnoreCase(nameIntrmyAgt3) || nameIntrmyAgt3.isEmpty())
+                        && pstlAdrIntrmyAgt3 != null) || (pstlAdrIntrmyAgt3 == null && (nameIntrmyAgt3 != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrIntrmyAgt3 != null) {
+                    List<String> adrLineIntrmyAgt3 = pstlAdrIntrmyAgt3.getAdrLine();
+                    String DeptIntrmyAgt3 = pstlAdrIntrmyAgt3.getDept();
+                    String subDeptIntrmyAgt3 = pstlAdrIntrmyAgt3.getSubDept();
+                    String strtNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getStrtNm();
+                    String bldgNbIntrmyAgt3 = pstlAdrIntrmyAgt3.getBldgNb();
+                    String bldgNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getBldgNm();
+                    String flrIntrmyAgt3 = pstlAdrIntrmyAgt3.getFlr();
+                    String pstBxIntrmyAgt3 = pstlAdrIntrmyAgt3.getPstBx();
+                    String roomIntrmyAgt3 = pstlAdrIntrmyAgt3.getRoom();
+                    String pstCdIntrmyAgt3 = pstlAdrIntrmyAgt3.getPstCd();
+                    String twnLctnNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getTwnLctnNm();
+                    String dstrctNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getDstrctNm();
+                    String ctrySubDvsnIntrmyAgt3 = pstlAdrIntrmyAgt3.getCtrySubDvsn();
+                    String ctryIntrmyAgt3 = pstlAdrIntrmyAgt3.getCtry();
+                    String twnNmIntrmyAgt3 = pstlAdrIntrmyAgt3.getTwnNm();
+                    if ((adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 == null || "".equalsIgnoreCase(ctryIntrmyAgt3) || ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 == null || "".equalsIgnoreCase(twnNmIntrmyAgt3) || twnNmIntrmyAgt3.isEmpty()))
+                            || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 != null) && (twnNmIntrmyAgt3 == null || "".equalsIgnoreCase(twnNmIntrmyAgt3) || twnNmIntrmyAgt3.isEmpty()))
+                            || (adrLineIntrmyAgt3.isEmpty() && (ctryIntrmyAgt3 == null || "".equalsIgnoreCase(ctryIntrmyAgt3) || ctryIntrmyAgt3.isEmpty()) && (twnNmIntrmyAgt3 != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLineIntrmyAgt3.isEmpty() && (DeptIntrmyAgt3 != null || subDeptIntrmyAgt3 != null
+                            || strtNmIntrmyAgt3 != null || bldgNbIntrmyAgt3 != null
+                            || bldgNmIntrmyAgt3 != null || flrIntrmyAgt3 != null
+                            || pstBxIntrmyAgt3 != null || roomIntrmyAgt3 != null
+                            || pstCdIntrmyAgt3 != null || twnLctnNmIntrmyAgt3 != null
+                            || dstrctNmIntrmyAgt3 != null || ctrySubDvsnIntrmyAgt3 != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(DeptIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(subDeptIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(strtNmIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(bldgNbIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(bldgNmIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(flrIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(pstBxIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(roomIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(pstCdIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(dstrctNmIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(ctryIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmIntrmyAgt3 != null) {
+                        if ("".equalsIgnoreCase(twnNmIntrmyAgt3)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLineIntrmyAgt3.isEmpty()) {
+                        for (int j = 0; j < adrLineIntrmyAgt3.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLineIntrmyAgt3.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        PartyIdentification135 ultmtDbtr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getUltmtDbtr();
+        if (ultmtDbtr != null) {
+            String nmUltmtDbtr = ultmtDbtr.getNm();
+            PostalAddress24 pstlAdrUltmtDbtr = ultmtDbtr.getPstlAdr();
+            if (((nmUltmtDbtr == null || "".equalsIgnoreCase(nmUltmtDbtr) || nmUltmtDbtr.isEmpty())
+                    && pstlAdrUltmtDbtr != null) || (pstlAdrUltmtDbtr == null && (nmUltmtDbtr != null))) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr</td></tr>");
+            }
+
+            if (pstlAdrUltmtDbtr != null) {
+                String twnNmUltmtDbtr = pstlAdrUltmtDbtr.getTwnNm();
+                String ctryUltmtDbtr = pstlAdrUltmtDbtr.getCtry();
+                if ((twnNmUltmtDbtr == null || "".equalsIgnoreCase(twnNmUltmtDbtr) || twnNmUltmtDbtr.isEmpty()) || (ctryUltmtDbtr == null || "".equalsIgnoreCase(ctryUltmtDbtr) || ctryUltmtDbtr.isEmpty())) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/PstlAdr\"><td>If \"PostalAddress\" on UltimateDebtor is present, then TownName and Country must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtDbtr/PstlAdr</td></tr>");
+                }
+            }
+        }
+
+        PartyIdentification135 initgPty = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getInitgPty();
+        if (initgPty != null) {
+            String nmInitgPty = initgPty.getNm();
+            PostalAddress24 pstlAdrInitgPty = initgPty.getPstlAdr();
+            if (((nmInitgPty == null || "".equalsIgnoreCase(nmInitgPty) || nmInitgPty.isEmpty())
+                    && pstlAdrInitgPty != null) || (pstlAdrInitgPty == null && (nmInitgPty != null))) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty</td></tr>");
+            }
+
+            if (pstlAdrInitgPty != null) {
+                String twnNmInitgPty = pstlAdrInitgPty.getTwnNm();
+                String ctryInitgPty = pstlAdrInitgPty.getCtry();
+                if ((twnNmInitgPty == null || "".equalsIgnoreCase(twnNmInitgPty) || twnNmInitgPty.isEmpty()) || (ctryInitgPty == null || "".equalsIgnoreCase(ctryInitgPty) || ctryInitgPty.isEmpty())) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/PstlAdr\"><td>If \"PostalAddress\" on UltimateDebtor is present, then TownName and Country must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InitgPty/PstlAdr</td></tr>");
+                }
+            }
+        }
+
+        PartyIdentification135 dbtr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtr();
+        if (dbtr != null) {
+            String nmDbtr = dbtr.getNm();
+            PostalAddress24 pstlAdrDbtr = dbtr.getPstlAdr();
+            Party38Choice idDbtr = dbtr.getId();
+            if ((nmDbtr == null || "".equalsIgnoreCase(nmDbtr) || nmDbtr.isEmpty()) && pstlAdrDbtr == null && idDbtr == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr\"><td>Debtor is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr</td></tr>");
+            }
+
+            if (idDbtr != null) {
+                OrganisationIdentification29 orgIdDbtr = idDbtr.getOrgId();
+                if (orgIdDbtr != null) {
+                    String anyBicDbtr = orgIdDbtr.getAnyBIC();
+                    if ((anyBicDbtr == null || "".equalsIgnoreCase(anyBicDbtr) || anyBicDbtr.isEmpty()) && (nmDbtr == null || "".equalsIgnoreCase(nmDbtr) || nmDbtr.isEmpty())) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm\"><td>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm</td></tr>");
+                    }
+                }
+            }
+
+            if (pstlAdrDbtr != null && (nmDbtr == null || "".equalsIgnoreCase(nmDbtr) || nmDbtr.isEmpty())) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm\"><td>If Postal Address is present then Name is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/Nm</td></tr>");
+            }
+
+            if (pstlAdrDbtr != null) {
+                List<String> adrLineDbtr = pstlAdrDbtr.getAdrLine();
+                String DeptDbtr = pstlAdrDbtr.getDept();
+                String subDeptDbtr = pstlAdrDbtr.getSubDept();
+                String strtNmDbtr = pstlAdrDbtr.getStrtNm();
+                String bldgNbDbtr = pstlAdrDbtr.getBldgNb();
+                String bldgNmDbtr = pstlAdrDbtr.getBldgNm();
+                String flrDbtr = pstlAdrDbtr.getFlr();
+                String pstBxDbtr = pstlAdrDbtr.getPstBx();
+                String roomDbtr = pstlAdrDbtr.getRoom();
+                String pstCdDbtr = pstlAdrDbtr.getPstCd();
+                String twnLctnNmDbtr = pstlAdrDbtr.getTwnLctnNm();
+                String dstrctNmDbtr = pstlAdrDbtr.getDstrctNm();
+                String ctrySubDvsnDbtr = pstlAdrDbtr.getCtrySubDvsn();
+                String ctryDbtr = pstlAdrDbtr.getCtry();
+                String twnNmDbtr = pstlAdrDbtr.getTwnNm();
+                if ((adrLineDbtr.isEmpty() && (ctryDbtr == null || "".equalsIgnoreCase(ctryDbtr) || ctryDbtr.isEmpty()) && (twnNmDbtr == null || "".equalsIgnoreCase(twnNmDbtr) || twnNmDbtr.isEmpty()))
+                        || (adrLineDbtr.isEmpty() && (ctryDbtr != null) && (twnNmDbtr == null || "".equalsIgnoreCase(twnNmDbtr) || twnNmDbtr.isEmpty()))
+                        || (adrLineDbtr.isEmpty() && (ctryDbtr == null || "".equalsIgnoreCase(ctryDbtr) || ctryDbtr.isEmpty()) && (twnNmDbtr != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                }
+
+                if (!adrLineDbtr.isEmpty() && (DeptDbtr != null || subDeptDbtr != null
+                        || strtNmDbtr != null || bldgNbDbtr != null
+                        || bldgNmDbtr != null || flrDbtr != null
+                        || pstBxDbtr != null || roomDbtr != null
+                        || pstCdDbtr != null || twnLctnNmDbtr != null
+                        || dstrctNmDbtr != null || ctrySubDvsnDbtr != null)) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                }
+
+                if (DeptDbtr != null) {
+                    if ("".equalsIgnoreCase(DeptDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (subDeptDbtr != null) {
+                    if ("".equalsIgnoreCase(subDeptDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (strtNmDbtr != null) {
+                    if ("".equalsIgnoreCase(strtNmDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (bldgNbDbtr != null) {
+                    if ("".equalsIgnoreCase(bldgNbDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (bldgNmDbtr != null) {
+                    if ("".equalsIgnoreCase(bldgNmDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (flrDbtr != null) {
+                    if ("".equalsIgnoreCase(flrDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (pstBxDbtr != null) {
+                    if ("".equalsIgnoreCase(pstBxDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (roomDbtr != null) {
+                    if ("".equalsIgnoreCase(roomDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (pstCdDbtr != null) {
+                    if ("".equalsIgnoreCase(pstCdDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (twnLctnNmDbtr != null) {
+                    if ("".equalsIgnoreCase(twnLctnNmDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (dstrctNmDbtr != null) {
+                    if ("".equalsIgnoreCase(dstrctNmDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (ctrySubDvsnDbtr != null) {
+                    if ("".equalsIgnoreCase(ctrySubDvsnDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (ctryDbtr != null) {
+                    if ("".equalsIgnoreCase(ctryDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (twnNmDbtr != null) {
+                    if ("".equalsIgnoreCase(twnNmDbtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (!adrLineDbtr.isEmpty()) {
+                    for (int j = 0; j < adrLineDbtr.size(); j++) {
+                        if ("".equalsIgnoreCase(adrLineDbtr.get(j))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Dbtr/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 dbtrAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getDbtrAgt();
+        if (dbtrAgt != null) {
+            FinancialInstitutionIdentification18 finInstnIdDbtrAgt = dbtrAgt.getFinInstnId();
+            if (finInstnIdDbtrAgt != null) {
+                String nameDbtrAgt = finInstnIdDbtrAgt.getNm();
+                String bicDbtrAgt = finInstnIdDbtrAgt.getBICFI();
+                PostalAddress24 pstlAdrDbtrAgt = finInstnIdDbtrAgt.getPstlAdr();
+                if ((nameDbtrAgt == null || "".equalsIgnoreCase(nameDbtrAgt)) && (bicDbtrAgt == null || "".equalsIgnoreCase(bicDbtrAgt))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt\"><td>DebtorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt</td></tr>");
+                }
+                if (((nameDbtrAgt == null || "".equalsIgnoreCase(nameDbtrAgt) || nameDbtrAgt.isEmpty())
+                        && pstlAdrDbtrAgt != null) || (pstlAdrDbtrAgt == null && (nameDbtrAgt != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrDbtrAgt != null) {
+                    List<String> adrLineDbtrAgt = pstlAdrDbtrAgt.getAdrLine();
+                    String DeptDbtrAgt = pstlAdrDbtrAgt.getDept();
+                    String subDeptDbtrAgt = pstlAdrDbtrAgt.getSubDept();
+                    String strtNmDbtrAgt = pstlAdrDbtrAgt.getStrtNm();
+                    String bldgNbDbtrAgt = pstlAdrDbtrAgt.getBldgNb();
+                    String bldgNmDbtrAgt = pstlAdrDbtrAgt.getBldgNm();
+                    String flrDbtrAgt = pstlAdrDbtrAgt.getFlr();
+                    String pstBxDbtrAgt = pstlAdrDbtrAgt.getPstBx();
+                    String roomDbtrAgt = pstlAdrDbtrAgt.getRoom();
+                    String pstCdDbtrAgt = pstlAdrDbtrAgt.getPstCd();
+                    String twnLctnNmDbtrAgt = pstlAdrDbtrAgt.getTwnLctnNm();
+                    String dstrctNmDbtrAgt = pstlAdrDbtrAgt.getDstrctNm();
+                    String ctrySubDvsnDbtrAgt = pstlAdrDbtrAgt.getCtrySubDvsn();
+                    String ctryDbtrAgt = pstlAdrDbtrAgt.getCtry();
+                    String twnNmDbtrAgt = pstlAdrDbtrAgt.getTwnNm();
+                    if ((adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt == null || "".equalsIgnoreCase(ctryDbtrAgt) || ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt == null || "".equalsIgnoreCase(twnNmDbtrAgt) || twnNmDbtrAgt.isEmpty()))
+                            || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt != null) && (twnNmDbtrAgt == null || "".equalsIgnoreCase(twnNmDbtrAgt) || twnNmDbtrAgt.isEmpty()))
+                            || (adrLineDbtrAgt.isEmpty() && (ctryDbtrAgt == null || "".equalsIgnoreCase(ctryDbtrAgt) || ctryDbtrAgt.isEmpty()) && (twnNmDbtrAgt != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLineDbtrAgt.isEmpty() && (DeptDbtrAgt != null || subDeptDbtrAgt != null
+                            || strtNmDbtrAgt != null || bldgNbDbtrAgt != null
+                            || bldgNmDbtrAgt != null || flrDbtrAgt != null
+                            || pstBxDbtrAgt != null || roomDbtrAgt != null
+                            || pstCdDbtrAgt != null || twnLctnNmDbtrAgt != null
+                            || dstrctNmDbtrAgt != null || ctrySubDvsnDbtrAgt != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(DeptDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(subDeptDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(strtNmDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(bldgNbDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(bldgNmDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(flrDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(pstBxDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(roomDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(pstCdDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(dstrctNmDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(ctryDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmDbtrAgt != null) {
+                        if ("".equalsIgnoreCase(twnNmDbtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLineDbtrAgt.isEmpty()) {
+                        for (int j = 0; j < adrLineDbtrAgt.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLineDbtrAgt.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/DbtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        BranchAndFinancialInstitutionIdentification6 cdtrAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAgt();
+        if (cdtrAgt != null) {
+            FinancialInstitutionIdentification18 finInstnIdCdtrAgt = cdtrAgt.getFinInstnId();
+            if (finInstnIdCdtrAgt != null) {
+                String nameCdtrAgt = finInstnIdCdtrAgt.getNm();
+                String bicCdtrAgt = finInstnIdCdtrAgt.getBICFI();
+                PostalAddress24 pstlAdrCdtrAgt = finInstnIdCdtrAgt.getPstlAdr();
+                if ((nameCdtrAgt == null || "".equalsIgnoreCase(nameCdtrAgt)) && (bicCdtrAgt == null || "".equalsIgnoreCase(bicCdtrAgt))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt\"><td>CreditorAgent is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt</td></tr>");
+                }
+                if (((nameCdtrAgt == null || "".equalsIgnoreCase(nameCdtrAgt) || nameCdtrAgt.isEmpty())
+                        && pstlAdrCdtrAgt != null) || (pstlAdrCdtrAgt == null && (nameCdtrAgt != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId</td></tr>");
+                }
+
+                if (pstlAdrCdtrAgt != null) {
+                    List<String> adrLineCdtrAgt = pstlAdrCdtrAgt.getAdrLine();
+                    String DeptCdtrAgt = pstlAdrCdtrAgt.getDept();
+                    String subDeptCdtrAgt = pstlAdrCdtrAgt.getSubDept();
+                    String strtNmCdtrAgt = pstlAdrCdtrAgt.getStrtNm();
+                    String bldgNbCdtrAgt = pstlAdrCdtrAgt.getBldgNb();
+                    String bldgNmCdtrAgt = pstlAdrCdtrAgt.getBldgNm();
+                    String flrCdtrAgt = pstlAdrCdtrAgt.getFlr();
+                    String pstBxCdtrAgt = pstlAdrCdtrAgt.getPstBx();
+                    String roomCdtrAgt = pstlAdrCdtrAgt.getRoom();
+                    String pstCdCdtrAgt = pstlAdrCdtrAgt.getPstCd();
+                    String twnLctnNmCdtrAgt = pstlAdrCdtrAgt.getTwnLctnNm();
+                    String dstrctNmCdtrAgt = pstlAdrCdtrAgt.getDstrctNm();
+                    String ctrySubDvsnCdtrAgt = pstlAdrCdtrAgt.getCtrySubDvsn();
+                    String ctryCdtrAgt = pstlAdrCdtrAgt.getCtry();
+                    String twnNmCdtrAgt = pstlAdrCdtrAgt.getTwnNm();
+                    if ((adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt == null || "".equalsIgnoreCase(ctryCdtrAgt) || ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt == null || "".equalsIgnoreCase(twnNmCdtrAgt) || twnNmCdtrAgt.isEmpty()))
+                            || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt != null) && (twnNmCdtrAgt == null || "".equalsIgnoreCase(twnNmCdtrAgt) || twnNmCdtrAgt.isEmpty()))
+                            || (adrLineCdtrAgt.isEmpty() && (ctryCdtrAgt == null || "".equalsIgnoreCase(ctryCdtrAgt) || ctryCdtrAgt.isEmpty()) && (twnNmCdtrAgt != null))) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (!adrLineCdtrAgt.isEmpty() && (DeptCdtrAgt != null || subDeptCdtrAgt != null
+                            || strtNmCdtrAgt != null || bldgNbCdtrAgt != null
+                            || bldgNmCdtrAgt != null || flrCdtrAgt != null
+                            || pstBxCdtrAgt != null || roomCdtrAgt != null
+                            || pstCdCdtrAgt != null || twnLctnNmCdtrAgt != null
+                            || dstrctNmCdtrAgt != null || ctrySubDvsnCdtrAgt != null)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                    }
+
+                    if (DeptCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(DeptCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (subDeptCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(subDeptCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (strtNmCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(strtNmCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNbCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(bldgNbCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (bldgNmCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(bldgNmCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (flrCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(flrCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstBxCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(pstBxCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (roomCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(roomCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (pstCdCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(pstCdCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnLctnNmCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(twnLctnNmCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (dstrctNmCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(dstrctNmCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctrySubDvsnCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(ctrySubDvsnCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (ctryCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(ctryCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (twnNmCdtrAgt != null) {
+                        if ("".equalsIgnoreCase(twnNmCdtrAgt)) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                        }
+                    }
+                    if (!adrLineCdtrAgt.isEmpty()) {
+                        for (int j = 0; j < adrLineCdtrAgt.size(); j++) {
+                            if ("".equalsIgnoreCase(adrLineCdtrAgt.get(j))) {
+                                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAgt/FinInstnId/PstlAdr</td></tr>");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        PartyIdentification135 cdtr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtr();
+        if (cdtr != null) {
+            String nmCdtr = cdtr.getNm();
+            PostalAddress24 pstlAdrCdtr = cdtr.getPstlAdr();
+            Party38Choice idCdtr = cdtr.getId();
+            if ((nmCdtr == null || "".equalsIgnoreCase(nmCdtr) || nmCdtr.isEmpty()) && pstlAdrCdtr == null && idCdtr == null) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr\"><td>Creditor is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr</td></tr>");
+            }
+
+            if (idCdtr != null) {
+                OrganisationIdentification29 orgIdCdtr = idCdtr.getOrgId();
+                if (orgIdCdtr != null) {
+                    String anyBicCdtr = orgIdCdtr.getAnyBIC();
+                    if ((anyBicCdtr == null || "".equalsIgnoreCase(anyBicCdtr) || anyBicCdtr.isEmpty()) && (nmCdtr == null || "".equalsIgnoreCase(nmCdtr) || nmCdtr.isEmpty())) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm\"><td>If AnyBIC is absent then Name is mandatory and it is recommended to also provide the Postal Address.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm</td></tr>");
+                    }
+                }
+            }
+
+            if (pstlAdrCdtr != null && (nmCdtr == null || "".equalsIgnoreCase(nmCdtr) || nmCdtr.isEmpty())) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm\"><td>If Postal Address is present then Name is mandatory!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/Nm</td></tr>");
+            }
+
+            if (pstlAdrCdtr != null) {
+                List<String> adrLineCdtr = pstlAdrCdtr.getAdrLine();
+                String DeptCdtr = pstlAdrCdtr.getDept();
+                String subDeptCdtr = pstlAdrCdtr.getSubDept();
+                String strtNmCdtr = pstlAdrCdtr.getStrtNm();
+                String bldgNbCdtr = pstlAdrCdtr.getBldgNb();
+                String bldgNmCdtr = pstlAdrCdtr.getBldgNm();
+                String flrCdtr = pstlAdrCdtr.getFlr();
+                String pstBxCdtr = pstlAdrCdtr.getPstBx();
+                String roomCdtr = pstlAdrCdtr.getRoom();
+                String pstCdCdtr = pstlAdrCdtr.getPstCd();
+                String twnLctnNmCdtr = pstlAdrCdtr.getTwnLctnNm();
+                String dstrctNmCdtr = pstlAdrCdtr.getDstrctNm();
+                String ctrySubDvsnCdtr = pstlAdrCdtr.getCtrySubDvsn();
+                String ctryCdtr = pstlAdrCdtr.getCtry();
+                String twnNmCdtr = pstlAdrCdtr.getTwnNm();
+                if ((adrLineCdtr.isEmpty() && (ctryCdtr == null || "".equalsIgnoreCase(ctryCdtr) || ctryCdtr.isEmpty()) && (twnNmCdtr == null || "".equalsIgnoreCase(twnNmCdtr) || twnNmCdtr.isEmpty()))
+                        || (adrLineCdtr.isEmpty() && (ctryCdtr != null) && (twnNmCdtr == null || "".equalsIgnoreCase(twnNmCdtr) || twnNmCdtr.isEmpty()))
+                        || (adrLineCdtr.isEmpty() && (ctryCdtr == null || "".equalsIgnoreCase(ctryCdtr) || ctryCdtr.isEmpty()) && (twnNmCdtr != null))) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>If “PostalAddress” is used, and if AddressLine is absent, then Country and Town name must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                }
+
+                if (!adrLineCdtr.isEmpty() && (DeptCdtr != null || subDeptCdtr != null
+                        || strtNmCdtr != null || bldgNbCdtr != null
+                        || bldgNmCdtr != null || flrCdtr != null
+                        || pstBxCdtr != null || roomCdtr != null
+                        || pstCdCdtr != null || twnLctnNmCdtr != null
+                        || dstrctNmCdtr != null || ctrySubDvsnCdtr != null)) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>If PostalAddress is used and if AddressLine is present, then all other optional elements in PostalAddress must be absent.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                }
+
+                if (DeptCdtr != null) {
+                    if ("".equalsIgnoreCase(DeptCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (subDeptCdtr != null) {
+                    if ("".equalsIgnoreCase(subDeptCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Sub Departement field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (strtNmCdtr != null) {
+                    if ("".equalsIgnoreCase(strtNmCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Street Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (bldgNbCdtr != null) {
+                    if ("".equalsIgnoreCase(bldgNbCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Building Number field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (bldgNmCdtr != null) {
+                    if ("".equalsIgnoreCase(bldgNmCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Building Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (flrCdtr != null) {
+                    if ("".equalsIgnoreCase(flrCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Floor field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (pstBxCdtr != null) {
+                    if ("".equalsIgnoreCase(pstBxCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Post Box field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (roomCdtr != null) {
+                    if ("".equalsIgnoreCase(roomCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Room field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (pstCdCdtr != null) {
+                    if ("".equalsIgnoreCase(pstCdCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Post Code field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (twnLctnNmCdtr != null) {
+                    if ("".equalsIgnoreCase(twnLctnNmCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Town Location Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (dstrctNmCdtr != null) {
+                    if ("".equalsIgnoreCase(dstrctNmCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>District Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (ctrySubDvsnCdtr != null) {
+                    if ("".equalsIgnoreCase(ctrySubDvsnCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Country Sub Division field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (ctryCdtr != null) {
+                    if ("".equalsIgnoreCase(ctryCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Country field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (twnNmCdtr != null) {
+                    if ("".equalsIgnoreCase(twnNmCdtr)) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Town Name field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                    }
+                }
+                if (!adrLineCdtr.isEmpty()) {
+                    for (int j = 0; j < adrLineCdtr.size(); j++) {
+                        if ("".equalsIgnoreCase(adrLineCdtr.get(j))) {
+                            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr\"><td>Address Line field is opened, the value must not be empty!</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/Cdtr/PstlAdr</td></tr>");
+                        }
+                    }
+                }
+            }
+        }
+
+        PartyIdentification135 ultmtCdtr = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getUltmtCdtr();
+        if (ultmtCdtr != null) {
+            String nmUltmtCdtr = ultmtCdtr.getNm();
+            PostalAddress24 pstlAdrUltmtCdtr = ultmtCdtr.getPstlAdr();
+            if (((nmUltmtCdtr == null || "".equalsIgnoreCase(nmUltmtCdtr) || nmUltmtCdtr.isEmpty())
+                    && pstlAdrUltmtCdtr != null) || (pstlAdrUltmtCdtr == null && (nmUltmtCdtr != null))) {
+                validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr\"><td>Name and Address must always be present together.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr</td></tr>");
+            }
+
+            if (pstlAdrUltmtCdtr != null) {
+                String twnNmUltmtCdtr = pstlAdrUltmtCdtr.getTwnNm();
+                String ctryUltmtCdtr = pstlAdrUltmtCdtr.getCtry();
+                if ((twnNmUltmtCdtr == null || "".equalsIgnoreCase(twnNmUltmtCdtr) || twnNmUltmtCdtr.isEmpty()) || (ctryUltmtCdtr == null || "".equalsIgnoreCase(ctryUltmtCdtr) || ctryUltmtCdtr.isEmpty())) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/PstlAdr\"><td>If \"PostalAddress\" on UltimateDebtor is present, then TownName and Country must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/UltmtCdtr/PstlAdr</td></tr>");
+                }
+            }
+        }
+
+        CashAccount38 cdtrAcct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getCdtrAcct();
+        List<InstructionForCreditorAgent1> instrForCdtrAgt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getInstrForCdtrAgt();
+        if (!instrForCdtrAgt.isEmpty()) {
+            Instruction3Code code1 = instrForCdtrAgt.get(0).getCd();
+            if (instrForCdtrAgt.size() > 1) {
+                Instruction3Code code2 = instrForCdtrAgt.get(1).getCd();
+                if (code1 == Instruction3Code.CHQB && code2 == Instruction3Code.HOLD) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd\"><td>The code \"HOLD\" is not allowed if the code \"CHQB\" is present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd)</td></tr>");
+                } else if (code1 == Instruction3Code.PHOB && code2 == Instruction3Code.TELB) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd\"><td>The code \"TELB\" is not allowed if the code \"PHOB\" is present. </td><td>(FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd)</td></tr>");
+                }
+
+                if (code1 == code2) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd\"><td>Each code can only be used once for element instruction for Creditor Agent</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstrForCdtrAgt/Cd</td></tr>");
+                }
+
+                if (code1 == Instruction3Code.CHQB) {
+                    if (cdtrAcct != null) {
+                        validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAcct\"><td>If InstructionForCreditorAgent/Code contains CHQB (PayCreditorByCheque), then CreditorAccount is not allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/CdtrAcct</td></tr>");
+                    }
+                }
+            }
+        }
+
+        ActiveOrHistoricCurrencyAndAmount instdAmt = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getInstdAmt();
+        if (!chrgsInf.isEmpty() && instdAmt == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAmt\"><td>If ChargesInformation is present, then InstructedAmount must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/InstdAmt</td></tr>");
+        }
+
+        BigDecimal xChgRate = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getXchgRate();
+        if (instdAmt != null) {
+            String currencyIntrBkSttlmAmt = intrBkSttlmAmt.getCcy();
+            String currencyInstdAmt = instdAmt.getCcy();
+            if (currencyIntrBkSttlmAmt != null && currencyInstdAmt != null) {
+                if (!currencyInstdAmt.equalsIgnoreCase(currencyIntrBkSttlmAmt) && (xChgRate == null)) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate\"><td>If InstructedAmount is present and the currency is different from the currency in InterbankSettlementAmount, then ExchangeRate must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate</td></tr>");
+                }
+
+                if (currencyInstdAmt.equalsIgnoreCase(currencyIntrBkSttlmAmt) && (xChgRate != null)) {
+                    validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate\"><td>If InstructedAmount is present and the currency is the same as the currency in InterbankSettlementAmount, then ExchangeRate is not allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate</td></tr>");
+                }
+            }
+        } else if (instdAmt == null && xChgRate != null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate\"><td>If InstructedAmount is not present, then ExchangeRate is not allowed.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/XchgRate</td></tr>");
+        }
+
+        CashAccount38 intrmyAgt1Acct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt1Acct();
+        if (intrmyAgt1Acct != null && intrmyAgt1 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1\"><td>If IntermediaryAgent1Account is present, then IntermediaryAgent1 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1</td></tr>");
+        }
+
+        CashAccount38 intrmyAgt2Acct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt2Acct();
+        if (intrmyAgt2Acct != null && intrmyAgt2 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2\"><td>If IntermediaryAgent2Account is present, then IntermediaryAgent2 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2</td></tr>");
+        }
+
+        if (intrmyAgt2 != null && intrmyAgt1 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1\"><td>If IntermediaryAgent2 is present, then IntermediaryAgent1 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt1</td></tr>");
+        }
+
+        CashAccount38 intrmyAgt3Acct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getIntrmyAgt3Acct();
+        if (intrmyAgt3Acct != null && intrmyAgt3 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3\"><td>If IntermediaryAgent3Account is present, then IntermediaryAgent3 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt3</td></tr>");
+        }
+
+        if (intrmyAgt3 != null && intrmyAgt2 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2\"><td>If IntermediaryAgent3 is present, then IntermediaryAgent2 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/IntrmyAgt2</td></tr>");
+        }
+
+        CashAccount38 prvsInstgAgt1Acct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt1Acct();
+        if (prvsInstgAgt1Acct != null && prvsInstgAgt1 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1\"><td>If PreviousInstructing1Account is present, then PreviousInstructingAgent1 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1</td></tr>");
+        }
+
+        CashAccount38 prvsInstgAgt2Acct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt2Acct();
+        if (prvsInstgAgt2Acct != null && prvsInstgAgt2 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2\"><td>If PreviousInstructing2Account is present, then PreviousInstructingAgent2 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2</td></tr>");
+        }
+
+        CashAccount38 prvsInstgAgt3Acct = this.mxPacs00800108.getFIToFICstmrCdtTrf().getCdtTrfTxInf().get(0).getPrvsInstgAgt3Acct();
+        if (prvsInstgAgt3Acct != null && prvsInstgAgt3 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3\"><td>If PreviousInstructing3Account is present, then PreviousInstructingAgent3 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt3</td></tr>");
+        }
+
+        if (prvsInstgAgt2 != null && prvsInstgAgt1 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1\"><td>If PreviousInstructingAgent2 is present, then PreviousInstructingAgent1 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt1</td></tr>");
+        }
+
+        if (prvsInstgAgt3 != null && prvsInstgAgt2 == null) {
+            validationRuleComment.add("<tr class=\"error__row\" input-id=\"FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2\"><td>If PreviousInstructingAgent3 is present, then PreviousInstructingAgent2 must be present.</td><td>FIToFICstmrCdtTrf/CdtTrfTxInf/PrvsInstgAgt2</td></tr>");
+        }
+    }
+}
