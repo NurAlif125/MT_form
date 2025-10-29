@@ -240,6 +240,8 @@ response.setHeader("X-Powered-By", "Unknown");
                                             </c:forEach>
                                     </ul>
                                 </li>
+                                </c:if>
+                                </c:forEach>
                                 <li><span class="dir">Message Category 3</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">
