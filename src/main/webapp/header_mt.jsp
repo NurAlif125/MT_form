@@ -1,0 +1,89 @@
+<%-- 
+    Document   : header_mt
+    Created on : Aug 14, 2012, 6:48:05 AM
+    Author     : M Abdul Hadi
+--%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<input type="hidden" name="id" id="id" value="<%=request.getParameter("id")%>" />
+<div class="form-row"><span class="label_sub"><b>Sender</b></span></div>
+<div class="form-row"><span class="label"><a style="color:red;text-decoration:none">*</a>Sender Logical Terminal</span>
+    <c:choose>
+        <c:when test="${headerById.io_type == null}">
+            <select name="sender_logical_terminal" id="sender_logical_terminal">
+                <c:choose>
+                    <c:when test="${sessionScope.user_bic eq null or sessionScope.user_bic eq 'null'}">
+                        <c:forEach var="item1" items="${sessionScope.dataBicProp}">
+                            <option value="${item1}" <c:if test="${item1 == sessionScope.user_bic or item1==headerById.logicalTerminal}">selected="true"</c:if>>${item1}</option>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <%--<c:if test="${'Treasury OPS' eq sessionScope.channel}">--%>
+<!--                            <option value="BDINIDJAXTRS" <c:if test="${item1 == 'BDINIDJAXTRS' or item1== 'BDINIDJAXTRS'}">selected="true"</c:if>>BDINIDJAXTRS</option>
+                            <option value="BDINIDJAXXXX" <c:if test="${item1 == 'BDINIDJAXXXX' or item1== 'BDINIDJAXXXX'}">selected="true"</c:if>>BDINIDJAXXXX</option>-->
+                        <%--</c:if>--%>
+                        <%--<c:if test="${'Treasury OPS' ne sessionScope.channel}">--%>
+                            <option value="${sessionScope.user_bic}" selected="true">${sessionScope.user_bic}</option>
+                            <option value="BDINIDJAXXXX" <c:if test="${item1 == 'BDINIDJAXXXX' or item1== 'BDINIDJAXXXX'}">selected="true"</c:if>>BDINIDJAXXXX</option>
+                        <%--</c:if>--%>
+                    </c:otherwise>
+                </c:choose>
+            </select>
+        </c:when>
+        <c:when test="${headerById.io_type == 'I'}">
+            <c:choose>
+                <c:when test="${headerById.flag == 'MOD' || headerById.flag == 'CVT-MOD'}">
+                    <input type="text" name="sender_logical_terminal" id="sender_logical_terminal" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" maxlength="12" minlength="12" autocomplete="off" <c:choose><c:when test="${empty headerById.logicalTerminal}">value=""</c:when><c:otherwise>value="${headerById.logicalTerminal}"</c:otherwise></c:choose> />
+                </c:when>
+                <c:otherwise>
+                    <input type="text" name="sender_logical_terminal" id="sender_logical_terminal" maxlength="12" minlength="12" autocomplete="off" <c:choose><c:when test="${empty headerById.logicalTerminal}">value=""</c:when><c:otherwise>value="${headerById.logicalTerminal}" readonly="true"</c:otherwise></c:choose> />
+                </c:otherwise>
+            </c:choose>
+        </c:when>
+        <c:otherwise>
+            <input type="text" name="sender_logical_terminal" id="sender_logical_terminal" maxlength="12" minlength="12" autocomplete="off" <c:choose><c:when test="${empty headerById.logicalTerminal}">value=""</c:when><c:otherwise>value="${headerById.logicalTerminal}" readonly="true"</c:otherwise></c:choose> />
+        </c:otherwise>
+    </c:choose>
+
+</div>
+<div class="form-row"><span class="label">Address Expansion</span> <!-- 20191230 -->
+    <textarea name="address_sender_logical_terminal" id="address_sender_logical_terminal" disabled="true"><c:out value="${logicalTerminal}" /></textarea>
+</div>
+<hr/>
+<div class="form-row"><span class="label_sub"><b>Receiver</b></span></div>
+<div class="form-row"><span class="label"><a style="color:red;text-decoration:none">*</a>Institution</span>
+    <c:choose>
+        <c:when test="${headerById.io_type == null}">
+            <input type="text" name="receiver_institution" id="receiver_institution" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" maxlength="12" minlength="12" autocomplete="off" input_type="Receiver Institution" location="Header" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
+        </c:when>
+        <c:when test="${headerById.io_type == 'I'}">
+            <c:choose>
+                <c:when test="${headerById.flag == 'MOD' || headerById.flag == 'CVT-MOD'}">
+                    <input type="text" name="receiver_institution" id="receiver_institution" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" maxlength="12" minlength="12" autocomplete="off" input_type="Receiver Institution" location="Header" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />
+                </c:when>
+                <c:otherwise>
+                    <input type="text" name="receiver_institution" id="receiver_institution" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" maxlength="12" minlength="12" autocomplete="off" input_type="Receiver Institution" location="Header" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}" readonly="true"</c:otherwise></c:choose> />
+                </c:otherwise>
+            </c:choose>
+        </c:when>
+        <c:otherwise>
+            <input type="text" name="receiver_institution" id="receiver_institution" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" maxlength="12" minlength="12" autocomplete="off" input_type="Receiver Institution" location="Header" <c:choose><c:when test="${empty headerById.receiverAddress}">value=""</c:when><c:otherwise>value="${headerById.receiverAddress}" readonly="true"</c:otherwise></c:choose> />
+        </c:otherwise>
+    </c:choose>
+    <%--<input readonly="true" type="text" name="receiver_institution" id="receiver_institution" maxlength="12" <c:choose><c:when test="${empty headerById.receiverAddress}">value="INDOIDJRXXXX"</c:when><c:otherwise>value="${headerById.receiverAddress}"</c:otherwise></c:choose> />--%>
+</div>
+<div class="form-row"><span class="label">Address Expansion</span>  <!-- 20191230 -->
+    <textarea name="address_institution" id="address_institution" disabled="true"><c:out value="${receiverInstitution}" /></textarea>
+</div>
+<hr/>
+<div class="form-row"><span class="label_sub"><b>Options</b></span></div>
+<div class="form-row"><span class="label"><a style="color:red;text-decoration:none">*</a>Priority</span>
+    <select name="priority" id="priority">
+        <option value="N" <c:if test="${headerById.messagePriority=='N'}"> selected </c:if>>Normal</option>
+        <option value="U" <c:if test="${headerById.messagePriority=='U'}"> selected </c:if>>Urgent</option>
+        </select>
+    </div>
+    <hr/>
+    <div class="form-row"><span class="label_sub"><b>Block3</b></span></div>
+    <div class="form-row"><span class="label">Block3</span>
+        <input type="text" name="block3" id="block3" maxlength="100" size="100" value="<c:out value="${headerById.block3}" />" />
+</div>

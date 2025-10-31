@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<Context antiJARLocking="true" path="/AppRTGS"/>
+-->
+<Context antiJARLocking="true" antiResourceLocking="true" changeSessionIdOnAuthentication="true" path="/AppCM" reloadable="true" sessionCookiePathUsesTrailingSlash="false">
+  <!-- Enforce cookie-only session tracking -->
+  <CookieProcessor httpOnly="true" sameSiteCookies="strict" secure="true"/>
+  <Manager className="org.apache.catalina.session.PersistentManager" saveOnRestart="false"/>
+  <SessionCookieName>JSESSIONID</SessionCookieName>
+</Context>
+<!--<Context 
+    antiJARLocking="true" 
+    antiResourceLocking="true" 
+    path="/AppCM" 
+    reloadable="true"
+    changeSessionIdOnAuthentication="true" >
+    
+  <Manager className="org.apache.catalina.session.PersistentManager" saveOnRestart="false"/>
+  
+</Context>-->

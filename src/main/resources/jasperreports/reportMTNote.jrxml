@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="421" orientation="Landscape" columnWidth="381" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="400a589d-f823-491b-821e-d24a987b1823">
+	<property name="ireport.zoom" value="1.1000000000000048"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="tag50Nm" class="java.lang.String"/>
+	<field name="tag70" class="java.lang.String"/>
+	<field name="tag59Acc" class="java.lang.String"/>
+	<field name="tag59Nm" class="java.lang.String"/>
+	<field name="tag32Amount" class="java.lang.String"/>
+	<field name="terbilang" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="83" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="82" uuid="8bf1f42a-e8fd-4ed1-a00b-5c34835526f6"/>
+				<imageExpression><![CDATA["cmrtgs.png"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="ee05349c-b3ba-4493-8a8b-458ef031855c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="1" width="1" height="82" uuid="7aecf2b3-8c4d-4bd8-9a30-90100949d986"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="73" uuid="839cd407-798b-48b8-b714-03c4feb0103f"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="255" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="10" y="70" width="535" height="1" uuid="dc7683d9-df42-431a-bdc2-8832fc141c7c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="390" y="10" width="154" height="50" uuid="c6f683d4-bf5d-45cb-bd2a-58490efe667d"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="431" y="0" width="73" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="74625e15-6d35-47cd-add3-1a45c2c0e0a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Kirim Kepada]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="10" y="87" width="535" height="1" uuid="248aed7b-5d8c-4d4c-9f80-a4fcacab454f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="10" y="180" width="535" height="1" uuid="03075781-aded-432b-9c03-47cfc198cb13"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="10" y="160" width="370" height="2" uuid="0fe07c61-5b33-47de-8acd-8367b9bac83c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="248" y="71" width="1" height="109" uuid="caf143d4-8378-4dec-bb0c-490149fd37e5"/>
+			</line>
+			<line>
+				<reportElement x="380" y="71" width="1" height="109" uuid="866bed9f-6302-4e0b-bbbd-534e282687c5"/>
+			</line>
+			<line>
+				<reportElement x="10" y="71" width="1" height="109" uuid="e3a35d31-dba8-4598-9ebb-8e24f68417f8"/>
+			</line>
+			<line>
+				<reportElement x="545" y="70" width="1" height="110" uuid="b6b31ad3-859b-4825-863d-28de08861ece">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="11" y="71" width="237" height="16" backcolor="#EBFCEB" uuid="18ac5825-3dac-412a-88fb-3e579e3a9566"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[URAIAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="249" y="71" width="131" height="15" backcolor="#EBFCEB" uuid="3d4d9e30-d6ec-4767-af8e-bb5829d847fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RINCIAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="185" width="50" height="19" uuid="ef96bb90-fbef-4710-ac61-e926c2640cc1"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Terbilang :]]></text>
+			</staticText>
+			<rectangle radius="3">
+				<reportElement x="70" y="185" width="475" height="20" backcolor="#EBFCEB" uuid="63696e7f-8d06-4afe-a0b2-457f38bdf193"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="220" width="160" height="30" uuid="d1f6f1d6-22dd-435c-83bc-6923e2d40845"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Untuk Jumlah Diatas Kami Telah MenKREDITkan Rekening Sdr.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="210" width="50" height="20" uuid="14bc850a-08b6-4f17-9e8f-afed69320b88"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[Tgl. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="93" width="201" height="17" uuid="7139cff3-3d7b-4b33-a44b-4a846d512d38"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Kami telah mengkreditkan rekening saudara]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="131" width="29" height="17" uuid="90e9b577-fb10-4a9c-9645-3ff1e7dbe7fd"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[KET :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="112" width="29" height="17" uuid="0a4cd6fa-1e41-4b94-a63f-f496f40bd81b"/>
+				<textElement>
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[AP :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="100" width="150" height="48" uuid="8d73a48d-1220-495d-addb-cfe322abf208"/>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<text><![CDATA[Bersama Bank SUMUT, Anda Melangkah Menuju Masa Depan Yang Gemilang]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="254" width="555" height="1" uuid="3c9bebca-a11f-48c9-9ece-8c1aa8a6577a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="1.5" lineStyle="Solid" lineColor="#000000"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="-10" width="1" height="265" uuid="0c2c92f2-4270-4865-a0ea-750028b81200"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="554" y="-1" width="1" height="255" uuid="b1d8da9d-ba11-46e2-9b27-50301f29681e"/>
+				<graphicElement>
+					<pen lineWidth="1.5"/>
+				</graphicElement>
+			</line>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement style="Column header" x="460" y="210" width="92" height="20" forecolor="#000000" uuid="ec7d70d0-2a88-419c-8686-d2351786c34f"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Times New Roman" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="112" width="167" height="17" uuid="45220499-0e2c-45a2-9d15-a8384c9e224b">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tag50Nm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="75" y="131" width="167" height="27" uuid="09d47127-9596-4efb-a854-cc77025b1e26">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tag70}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="131" width="100" height="15" uuid="6690c16e-7f4e-4ef4-9523-9776627c3e8e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tag32Amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="163" width="100" height="15" uuid="d11e3d8b-7f74-4501-8767-21c25aeb37fe">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tag32Amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="40" width="138" height="14" uuid="2ebe102b-91a2-4963-b5a5-8b85774ba02d"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tag59Acc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="398" y="25" width="138" height="13" uuid="2fa8c366-7286-449d-ab38-0f40b406f0c2"/>
+				<textElement>
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tag59Nm}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="188" y="162" width="58" height="16" backcolor="#FFFFFF" uuid="856a951d-02f6-40f0-8454-bda5734c3a21"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUMLAH :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="250" y="162" width="18" height="16" backcolor="#FFFFFF" uuid="c5bbc816-d66e-4baa-988c-3a3841360b11">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rp.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="210" y="40" width="130" height="20" backcolor="#FFFFFF" uuid="559dfeb1-9f91-4462-9dae-2d0c8dc1559f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA KREDIT]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="75" y="187" width="458" height="15" uuid="20bb9683-f59c-42da-918c-b9c385ee565c"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{terbilang}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

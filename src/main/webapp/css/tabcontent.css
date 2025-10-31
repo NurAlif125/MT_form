@@ -1,0 +1,74 @@
+﻿
+ul.tabs
+{
+    padding: 5px 0;
+    font-size: 0;
+    margin:0;
+    list-style-type: none;
+    text-align: left; /*set to left, center, or right to align the tabs as desired*/
+}
+        
+ul.tabs li
+{
+    display: inline;
+    margin: 0;
+    margin-right:3px; /*distance between tabs*/
+}
+        
+ul.tabs li a
+{
+    font: normal 10px Verdana;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    padding: 5px 8px;
+    border: 1px solid #CCC;
+    border-bottom-color:#2e8085;
+    color: #000;
+    background: #F0F0F0 url(../images/tabbg.gif) 0 0 repeat-x;
+    border-radius: 2px 2px 0 0;
+    outline:none;
+}
+        
+ul.tabs li a:visited
+{
+    color: #000;
+}
+        
+ul.tabs li a:hover
+{
+    border: 1px solid #B7B7B7;
+    background:#F0F0F0 url(../images/tabbg.gif) 0 -36px repeat-x;
+}
+        
+ul.tabs li.selected a
+{
+    /*selected tab style */
+    position: relative;
+    top: 0px;
+    font-weight:bold;
+    background: #fafdfe;
+    border: 1px solid #2e8085;
+    border-bottom-color: #fafdfe;
+}
+        
+        
+ul.tabs li.selected a:hover
+{
+    /*selected tab style */
+    text-decoration: none;
+}
+        
+div.tabcontent
+{
+    display: block;
+}
+
+div.tabcontents
+{
+    border: 1px solid #2e8085; padding: 12px;
+    background-color:#fafdfe;
+    border-radius: 0 2px 0 0;
+    height: 67vh;
+    overflow-y: scroll;
+}

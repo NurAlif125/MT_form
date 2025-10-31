@@ -1,0 +1,25 @@
+ #filterRow th {
+    padding: 8px;
+    text-align: center;
+    background-color: #f8f9fa; 
+}
+
+#filterRow input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+  padding-right: 20px !important; 
+}
+
+
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+  right: 4px !important; 
+}

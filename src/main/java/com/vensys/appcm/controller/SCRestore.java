@@ -1,0 +1,131 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package com.vensys.appcm.controller;
+
+import com.vensys.appcm.dbase.DBArchive;
+import com.vensys.appcm.dbase.DBconnection;
+import com.vensys.appcm.dbase.DBconnectionArchive;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import com.vensys.appcm.model.Archive;
+import java.net.URISyntaxException;
+
+/**
+ *
+ * @author AplDev2
+ */
+public class SCRestore extends HttpServlet {
+
+    private static String RESTOREPAGE = "restore.jsp";
+
+    /**
+     * Processes requests for both HTTP
+     * <code>GET</code> and
+     * <code>POST</code> methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, URISyntaxException {
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession httpSession = request.getSession();
+        String date_from = request.getParameter("date_from");
+        String date_end = request.getParameter("date_end");
+        String user = (String) httpSession.getAttribute("user_id");
+        String action = request.getParameter("action");
+        // System.out.println("action : " + action);
+        String act = "2";
+        String forward = "";
+        DBconnection dbConn = new DBconnection();
+        DBconnectionArchive dbConnAr = new DBconnectionArchive();
+        List<Archive> restore = new ArrayList<>();
+        DBArchive dBRestore = new DBArchive(dbConn.getConnection());
+        DBArchive dBRestore2 = new DBArchive(dbConnAr.getConnectionAr());
+//        System.out.println("action : " + action);
+//        if(action.equalsIgnoreCase("1")){
+//            action = "backup";
+//        }else{
+//            action = "restore";
+//        }
+        try {
+
+//            System.out.println("masuk if");
+            if (action != null) {
+                System.out.println("action tidak null");
+                dBRestore2.restoreDataHeader(user, action, date_from, date_end);
+                dBRestore.addUtilityHistory(user, date_from, date_end, action);
+            }
+            restore = dBRestore.getAllData(act);
+            httpSession.setAttribute("restore", restore);
+            forward = RESTOREPAGE;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            dbConn.closeConnection();
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
+        dispatcher.forward(request, response);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP
+     * <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (URISyntaxException ex) {
+            System.getLogger(SCRestore.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
+    /**
+     * Handles the HTTP
+     * <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (URISyntaxException ex) {
+            System.getLogger(SCRestore.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+}

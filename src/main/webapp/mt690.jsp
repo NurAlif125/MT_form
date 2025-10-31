@@ -1,0 +1,128 @@
+<%--
+    Document   : mt690
+    Created on : Aug 14, 2012, 6:55:17 AM
+    Author     : M Abdul Hadi
+--%>
+
+<%@ include file="header.jsp" %>
+<%@ include file="rule/validate_rule_mtn90.jsp" %>
+<%@ include file="banner_image.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/validate_case.css" />
+<c:forEach var="item" items="${role}">
+    <c:if test="${item == 'MT:690'}">
+        <div id="tabs">
+            <!-- Tabs -->
+            <h3>MT 690 Advice of Charges, Interest and Other Adjustments</h3>
+            <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing">
+                <input name="messageType" id="messageType" type="hidden" value="690" />
+                <ul>
+                    <li><a href="#tabs-1">Header</a></li>
+                    <li><a href="#tabs-2">Body</a></li>
+                    <li><a href="#tabs-3">Comment</a></li>
+                </ul>
+                <div id="tabs-1">
+                    <%@ include file="header_mt.jsp" %>
+                </div>
+                <div id="tabs-2">
+                    <!-- MF20 -->
+                    <div class="form-row"><span class="label_body">MF20</span><span class="label">*Transaction Reference Number</span>
+                        <input type="text" name="_010_mf20_" id="_010_mf20_" maxlength="16" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                    </div>
+                    <hr/>
+
+                    <!-- OF21 -->
+                    <div class="form-row"><span class="label_body">OF21</span><span class="label">*Related Reference</span>
+                        <input type="text" name="_011_mf21_" id="_011_mf21_" maxlength="16" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_011_mf21_'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                    </div>
+                    <hr/>
+
+                    <!-- MF25 -->
+                    <div class="form-row"><span class="label_body">MF25</span><span class="label">*Account Identification</span>
+                        <input type="text" name="_012_mf25_" id="_012_mf25_" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_012_mf25_'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                    </div>
+                    <hr/>
+
+                    <!-- MF32 -->
+                    <div class="form-row"><span class="label_body">MF32</span><span class="label">*Value Date, Currency Code, Amount</span>
+                        <select id="type_mf32_" name="type_mf32_">
+                            <option value="">choose a type</option>
+                            <option value="c">C - Value Date, Currency Code, Amount</option>
+                            <option value="d">D - Value Date, Currency Code, Amount</option>
+                        </select>
+                        <div id="div_mf32c_">
+                            <div class="form-row"><span class="label_body">MF32C</span><span class="label">*Value Date</span>
+                                <input type="text" name="_060_mf32c_date" id="_060_mf32c_date" maxlength="6" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_060_mf32c_date'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Currency Code</span>
+                                <input type="text" name="_061_mf32c_currency" id="_061_mf32c_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_061_mf32c_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Amount</span>
+                                <input type="text" name="_062_mf32c_amount" id="_062_mf32c_amount" maxlength="15" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_062_mf32c_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                        </div>
+                        <div id="div_mf32d_">
+                            <div class="form-row"><span class="label_body">MF32D</span><span class="label">*Value Date</span>
+                                <input type="text" name="_070_mf32d_date" id="_070_mf32d_date" maxlength="6" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_070_mf32d_date'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Currency Code</span>
+                                <input type="text" name="_071_mf32d_currency" id="_071_mf32d_currency" maxlength="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_071_mf32d_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Amount</span>
+                                <input type="text" name="_072_mf32d_amount" id="_072_mf32d_amount" maxlength="15" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_mf32d_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+
+                    <!-- OF52 -->
+                    <div class="form-row"><span class="label_body">OF52 </span><span class="label">Ordering Institution</span>
+                        <select id="type_of52_" name="type_of52_">
+                            <option value="">choose a type</option>
+                            <option value="a">A - Ordering Institution - BIC</option>
+                            <option value="d">D - Ordering Institution - Name and Address</option>
+                        </select>
+                        <div id="div_of52a_">
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                <input type="text" name="_110_of52a_party_identifier" id="_110_of52a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_110_of52a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Identifier Code</span>
+                                <input type="text" name="_111_of52a_identifier_code" id="_111_of52a_identifier_code" maxlength="11" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_111_of52a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
+                                <textarea name="_112_of52a_address" id="_112_of52a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_112_of52a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                            </div>
+                        </div>
+                        <div id="div_of52d_">
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
+                                <input type="text" name="_113_of52d_party_identifier" id="_113_of52d_party_identifier" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_113_of52d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Name and Address</span>
+                                <textarea name="_114_of52d_name_address" id="_114_of52d_name_address"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_114_of52d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <hr/>
+
+                    <!-- MF71B -->
+                    <div class="form-row"><span class="label_body">MF71B</span><span class="label">*Details of Charges</span>
+                        <textarea name="_120_mf71b_details_charges" id="_120_mf71b_details_charges"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_120_mf71b_details_charges'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                    </div>
+                    <hr/>
+
+                    <!-- OF72 -->
+                    <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
+                        <textarea name="_130_of72_information" id="_130_of72_information"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_130_of72_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                    </div>
+                    <hr/>
+
+                </div>
+                <div id="tabs-3">
+                    <%@ include file="comment_mt.jsp" %>
+                </div>
+                <%@ include file="button_action.jsp" %>
+                <br/><br/>
+            </form>
+        </div>
+    </c:if>
+</c:forEach>
+<%@ include file="footer_1.jsp" %>

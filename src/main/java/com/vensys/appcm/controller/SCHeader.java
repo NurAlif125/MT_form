@@ -1,0 +1,380 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.vensys.appcm.controller;
+
+import com.vensys.appcm.dbase.DBHeader;
+import com.vensys.appcm.dbase.DBUserData;
+import com.vensys.appcm.dbase.DBconnection;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import com.vensys.appcm.model.Header;
+import com.vensys.appcm.model.HeaderSearchCriteria;
+import com.vensys.appcm.model.ResultHeader;
+import com.vensys.appcm.myutils.HistoryPaging;
+import java.io.Serializable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ *
+ * @author Muhammad Abdul Hadi
+ */
+public class SCHeader extends HttpServlet implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private static String CONTROLLERHEADERS = "controllerHeaders.jsp";
+    private static String RESULTHEADERS = "resultHeaders.jsp";
+    Logger log = LogManager.getLogger(getClass().getName());
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String io_type = request.getParameter("io_type");
+        
+        HeaderSearchCriteria criteria = new HeaderSearchCriteria();
+        criteria.setMtSearch(request.getParameter("columns[1][search][value]"));
+        criteria.setIoSearch(request.getParameter("columns[2][search][value]"));
+        criteria.setSeqSearch(request.getParameter("columns[3][search][value]"));
+        criteria.setLogicalSearch(request.getParameter("columns[4][search][value]"));
+        criteria.setReceiverSearch(request.getParameter("columns[5][search][value]"));
+        criteria.setRefSearch(request.getParameter("columns[6][search][value]"));
+        criteria.setRelRefSearch(request.getParameter("columns[7][search][value]"));
+        criteria.setValDateSearch(request.getParameter("columns[8][search][value]"));
+        criteria.setCcySearch(request.getParameter("columns[9][search][value]"));
+        criteria.setAmountSearch(request.getParameter("columns[10][search][value]"));
+        criteria.setCreatedDateSearch(request.getParameter("columns[11][search][value]"));
+        criteria.setFlagSearch(request.getParameter("columns[12][search][value]"));
+        criteria.setSourceSearch(request.getParameter("columns[13][search][value]"));
+        criteria.setCreateby(request.getParameter("columns[14][search][value]"));
+        criteria.setApproveby(request.getParameter("columns[15][search][value]"));
+        
+        int offset = 0;
+        int limit = 10; // default limit
+        try {
+            offset = Integer.parseInt(request.getParameter("offset"));
+            limit = Integer.parseInt(request.getParameter("limit"));
+        } catch (Exception e) {
+            // gunakan default jika tidak valid
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("db_type", request.getParameter("db_type"));
+        session.setAttribute("io_type", request.getParameter("io_type"));
+        session.setAttribute("sender_logical_terminal", request.getParameter("sender_logical_terminal"));
+        session.setAttribute("receiver_institution", request.getParameter("receiver_institution"));
+        session.setAttribute("mt_type", request.getParameter("mt_type"));
+        session.setAttribute("date_from", request.getParameter("date_from"));
+        session.setAttribute("date_end", request.getParameter("date_end"));
+        session.setAttribute("status", request.getParameter("status"));
+        session.setAttribute("sender_reference", request.getParameter("sender_reference"));
+        session.setAttribute("rel_reference", request.getParameter("rel_reference"));
+        session.setAttribute("currency_code", request.getParameter("currency_code"));
+        session.setAttribute("amount", request.getParameter("amount"));
+        session.setAttribute("find", "yes");
+
+        
+        log.info("SCHEADER:");
+        String sender_logical_terminal = request.getParameter("sender_logical_terminal");
+        String receiver_institution = request.getParameter("receiver_institution");
+        String mt_type = request.getParameter("mt_type");
+        String date_from = request.getParameter("date_from");
+        String date_end = request.getParameter("date_end");
+        String sender_reference = request.getParameter("sender_reference");
+        String rel_reference = request.getParameter("rel_reference"); // ditambahkan pada 20151001 by Azan
+//        String sender_bank = request.getParameter("sender_bank");// ditambahkan pada 20151102 by Azan
+//        String receiver_bank = request.getParameter("receiver_bank");// ditambahkan pada 20151102 by Azan
+        String currency_code = request.getParameter("currency_code");
+        String amount = request.getParameter("amount");
+        String find = request.getParameter("find");
+        String flag = request.getParameter("flag");
+//        log.info("flag: " + flag);
+        String status = request.getParameter("status");
+//        log.info("status: " + status);
+        String menu = request.getParameter("menu");
+//        log.info("menu: " + menu);
+        String forward = "";
+        int notifVer = 0;
+        int notifAuth = 0;
+        HttpSession httpSession = request.getSession();
+//        httpSession.removeAttribute("flagStatus");
+        DBconnection dbConn = new DBconnection();
+        DBUserData dbo = new DBUserData(dbConn.getConnection());
+        List<Header> headers = new ArrayList<Header>();
+        List<Header> headersPajak = new ArrayList<Header>();
+        DBHeader bBHeaders = new DBHeader(dbConn.getConnection());
+        List<ResultHeader> resultHeader = new ArrayList<ResultHeader>();
+        String flagStatus = (String) httpSession.getAttribute("flagStatus");
+//        log.info("flagStatus: " + flagStatus);
+        String channel = "";
+        try {
+            channel = (String) httpSession.getAttribute("channel");
+            if (!"".equalsIgnoreCase(channel) && channel != null) {
+                notifVer = dbo.getNotificationVer(channel);
+                notifAuth = dbo.getNotificationAuth(channel);
+            } else {
+                notifVer = dbo.getNotifVerAll();
+                notifAuth = dbo.getNotifAuthAll();
+            }
+//            log.info("notifAuth: " + notifAuth);
+            httpSession.setAttribute("notifVer", notifVer);
+            httpSession.setAttribute("notifAuth", notifAuth);
+            if ((find == null || find.isEmpty()) && (flag == null || flag.isEmpty())) {
+//                log.info("masuk sini");
+//                headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);// 2025-01-07
+//                headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel, offset, limit, criteria);
+
+
+//                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
+                forward = CONTROLLERHEADERS + "?menu=" + menu;
+                httpSession.setAttribute("headers", headers);
+                httpSession.removeAttribute("flagFilter");
+//                httpSession.setAttribute("headersPajak", headersPajak);
+            } else if (flag != null && !flag.isEmpty()) {
+                if (menu == null) {
+//                    log.info("flag if : " + flag);
+//                    log.info("flag statusnya adalah :" + flagStatus);
+//                httpSession.removeAttribute("flagFilter");
+                    if (flag.equalsIgnoreCase("VER")) {
+                        flag = "MOD";
+                        menu = "1";
+                    } else if (flag.equalsIgnoreCase("AUTH")) {
+                        flag = "VER";
+                        menu = "2";
+                    } else if (flag.equalsIgnoreCase("MOD") && (flagStatus.equalsIgnoreCase("NACK"))) {
+                        flag = "NACK";
+                        menu = "5";
+                    } else if ((flag.equalsIgnoreCase("VERACC")) && (flagStatus.equalsIgnoreCase("INC-INV"))) {
+                        flag = "INC-INV";
+                        menu = "8";
+                    } else if (flag.equalsIgnoreCase("VERACC")) {
+                        flag = "INC-WAIT";
+                        menu = "6";
+                    } else if ((flag.equalsIgnoreCase("SETTLE")) && (flagStatus.equalsIgnoreCase("INC-OK"))) {
+                        flag = "INC-OK";
+                        menu = "9";
+                    } else if ((flag.equalsIgnoreCase("SETTLE")) && (flagStatus.equalsIgnoreCase("INC-NOK"))) {
+                        flag = "INC-NOK";
+                        menu = "10";
+                    } else if (flag.equalsIgnoreCase("INC-STL")) {
+                        flag = "";
+                        menu = "";
+                    } else if (flag.equalsIgnoreCase("MOD")) {
+                        flag = "VER";
+                        menu = "2";
+                    } else if ((flag.equalsIgnoreCase("SENDTEXT")) && (flagStatus.equalsIgnoreCase("INC-INV"))) {
+                        flag = "INC-INV";
+                        menu = "8";
+                    } else if (flag.equalsIgnoreCase("SENDTEXT")) {
+                        flag = "INC-WAIT";
+                        menu = "6";
+                    } else if (flag.equalsIgnoreCase("RESENDTEXT")) {
+                        flag = "INC-STL";
+                        menu = "7";
+                    } else if (flag.equalsIgnoreCase("INC-WAIT") && (flagStatus.equalsIgnoreCase("INC-HOLD"))) {
+                        flag = "INC-HOLD";
+                        menu = "11";
+                    }  else if (flag.equalsIgnoreCase("ACK")) {
+                        flag = "ACK";
+                        menu = "13";
+                    } else if (flag.equalsIgnoreCase("INC-WAIT")) {
+                        flag = "INC-WAIT";
+                        menu = "6";
+                    } else if (flag.equalsIgnoreCase("INC-INV")) {
+                        flag = "INC-WAIT";
+                        menu = "6";
+                    } else if (flag.equalsIgnoreCase("INC-RTR")) {
+                        flag = "INC-INV";
+                        menu = "8";
+                    } else if (flag.equalsIgnoreCase("ERR")) {
+                        flag = "ERR";
+                        menu = "16";
+                    } else if (flag.equalsIgnoreCase("INC-SPRT")) {
+                        flag = "INC-NSTP";
+                        menu = "17";
+                    } else if (flag.equalsIgnoreCase("INC-SPOK")) {
+                        flag = "INC-SPRT";
+                        menu = "18";
+                    } else if (flag.equalsIgnoreCase("APPROVEADJ") || flag.equalsIgnoreCase("REJECTADJ")) {
+                        flag = "INC-ADJ";
+                        menu = "19";
+                    } else if (flag.equalsIgnoreCase("INC-ADJ") && flagStatus.equalsIgnoreCase("INC-WAIT")) {
+                        flag = "INC-WAIT";
+                        menu = "6";
+                    } else if (flag.equalsIgnoreCase("CVT-MOD")) {
+                        flag = "CVT-MOD";
+                        menu = "20";
+                    } else if (flag.equalsIgnoreCase("CVT-VER")) {
+                        flag = "CVT-VER";
+                        menu = "21";
+                    } else if (flag.equalsIgnoreCase("WAITING-AML")) {
+                        flag = "WAITING-AML";
+                        menu = "22";
+                    } else if (flag.equalsIgnoreCase("CVT-INC")) {
+                        flag = "CVT-INC";
+                        menu = "23";
+                    } else if (flag.equalsIgnoreCase("INC")) {
+                        flag = "INC";
+                        menu = "24";
+                    } else if (flag.equalsIgnoreCase("RESEND-CNF")) {
+                        flag = "RESEND-CNF";
+                        menu = "25";
+                    } else if (flag.equalsIgnoreCase("INC-AML")) {
+                        flag = "INC-AML";
+                        menu = "26";
+                    } else if (flag.equalsIgnoreCase("AML-TERMINATE-IN")) {
+                        flag = "AML-TERMINATE-IN";
+                        menu = "27";
+                    } else if (flag.equalsIgnoreCase("INC-AML-FAILED")) {
+                        flag = "INC-AML-FAILED";
+                        menu = "28";
+                    } else if (flag.equalsIgnoreCase("INC-AML-FAILED-CNF")) {
+                        flag = "INC-AML-FAILED-CNF";
+                        menu = "29";
+                    } else if (flag.equalsIgnoreCase("UNSETTLE-INC")) {
+                        flag = "UNSETTLE-INC";
+                        menu = "30";
+                    } else if (flag.equalsIgnoreCase("INC-RESEND-CNF")) {
+                        flag = "INC-RESEND-CNF";
+                        menu = "31";
+                    } else if (flag.equalsIgnoreCase("SETTLE")) {
+                        flag = "SETTLE";
+                        menu = "32";
+                    } else if (flag.equalsIgnoreCase("UNSETTLE-OUT")) {
+                        flag = "UNSETTLE-OUT";
+                        menu = "33";
+                    } else if (flag.equalsIgnoreCase("WAITING-SAA-CNF")) {
+                        flag = "WAITING-SAA-CNF";
+                        menu = "34";
+                    } else if (flag.equalsIgnoreCase("WAITING-AML")) {
+                        flag = "WAITING-AML";
+                        menu = "35";
+                    }  else if (flag.equalsIgnoreCase("AML-TERMINATE-OUT")) {
+                        flag = "AML-TERMINATE-OUT";
+                        menu = "36";
+                    } else if (flag.equalsIgnoreCase("FIA-FAILED")) {
+                        flag = "FIA-FAILED";
+                        menu = "38";
+                    } else if (flag.equalsIgnoreCase("FIA-FAILED-CNF")) {
+                        flag = "FIA-FAILED-CNF";
+                        menu = "39";
+                    } else {
+                        flag = "AUTH";
+                        menu = "3";
+                    }
+
+//                headers = bBHeaders.getAllHeader(httpSession, io_type, flag);
+//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
+//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel, offset, limit, criteria);
+//                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
+                    forward = CONTROLLERHEADERS + "?menu=" + menu;
+                    httpSession.setAttribute("headers", headers);
+                    httpSession.setAttribute("flag", flag);
+//                    if (flag.equalsIgnoreCase("VER")) {
+//                        httpSession.setAttribute("flagFilter", "MOD");
+//                    } else if (flag.equalsIgnoreCase("AUTH")) {
+//                        httpSession.setAttribute("flagFilter", "VER");
+//                    } else if (flag.equalsIgnoreCase("MOD")) {
+                    httpSession.setAttribute("flagFilter", flag);
+//                    }
+                } else {
+//                    log.info("flag else : " + flag);
+//                httpSession.removeAttribute("flagFilter");
+//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel);
+//                    headers = bBHeaders.getAllHeader(httpSession, io_type, flag, channel, offset, limit, criteria);
+//                    headers = bBHeaders.getAllHeader(httpSession, io_type, httpSession.getAttribute("flagFilter").toString());
+//                headersPajak = bBHeaders.getAllHeaderPajak(httpSession, io_type, flag);
+                    forward = CONTROLLERHEADERS + "?menu=" + menu;
+                    httpSession.setAttribute("headers", headers);
+                    httpSession.setAttribute("flag", flag);
+                    httpSession.setAttribute("flagFilter", flag);
+                }
+
+//                httpSession.setAttribute("headersPajak", headersPajak);
+            } else {
+//                log.info("masuk sini else");
+                // ditambahkan rel_reference pada 20151001 by Azan
+                // sender_logical_terminal => sender_bank dan receiver_institution => receiver_bank
+                String db_type = request.getParameter("db_type");
+//                resultHeader = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type);
+//                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel);
+//                headers = bBHeaders.getResultHeader(httpSession, io_type, sender_logical_terminal, receiver_institution, mt_type, date_from, date_end, sender_reference, rel_reference, currency_code, amount, status, db_type, channel, offset, limit, criteria);
+//                forward = RESULTHEADERS + "?menu="+menu;
+                forward = CONTROLLERHEADERS + "?menu=" + menu;
+                httpSession.setAttribute("flag", status);
+                httpSession.setAttribute("headers", headers);
+                httpSession.setAttribute("db_type", db_type);
+                if (httpSession.getAttribute("flagFilter") == null) {
+                    httpSession.removeAttribute("flagFilter");
+                }
+            }
+//            log.info("menunyaaaa.... " + menu);
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            dbConn.closeConnection();
+        }
+//        RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
+//        dispatcher.forward(request, response);
+        HistoryPaging.getAndSaveAllParameterOnSession(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(forward);
+        dispatcher.forward(request, response);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+}
