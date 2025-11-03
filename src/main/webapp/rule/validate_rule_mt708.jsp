@@ -1,5 +1,5 @@
 <%-- 
-    Document   : mt708
+    Document   : validate_rule_mt708
     Created on : Aug 15, 2018
     Author     : Andhita Deara
 --%>

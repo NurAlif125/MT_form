@@ -1,5 +1,5 @@
 <%-- 
-    Document   : mt760
+    Document   : validate_rule_mt760
     Created on : Jun 14, 2021, 2:02:40 PM
     Author     : Ovasae
 --%>
@@ -53,13 +53,29 @@
                 
 //                MF52a Issuer
                 _160_mf52a_issuer: "required",
-                _162_mf52a_identifier_code: "required",
-                _164_mf52d_name_address: "required",
+                _162_mf52a_identifier_code: {
+                    required: function(element) {
+                        return $("#_160_mf52a_issuer").val() == "a";
+                    }
+                },
+                _164_mf52d_name_address: {
+                    required: function(element) {
+                        return $("#_160_mf52a_issuer").val() == "d";
+                    }
+                },
                 
 //                MF59a Beneficiary
                 _170_mf59a_beneficiary: "required",
-                _172_mf59a_name_address: "required",
-                _174_mf59a_identifier_code: "required",
+                _172_mf59a_name_address: {
+                    required: function(element) {
+                        return $("#_170_mf59a_beneficiary").val() == "no";
+                    }
+                },
+                _174_mf59a_identifier_code: {
+                    required: function(element) {
+                        return $("#_170_mf59a_beneficiary").val() == "a";
+                    }
+                },
                 
 //                32B Undertaking Amount
                 _210_mf32b_currency: "required",
@@ -85,12 +101,15 @@
                 _090_mf22d_form_of_undertaking: {required: "mf22d_form_of_undertaking must be filled..!!"},
                 _100_mf40c_applicable_rules: {required: "mf40c_applicable_rules must be filled..!!"},
                 _110_mf23b_expiry_type: {required: "mf23b_expiry_type must be filled..!!"},
+                _160_mf52a_issuer: {required: "mf52a_issuer must be filled..!!"},
                 _162_mf52a_identifier_code: {required: "mf52a_identifier_code must be filled..!!"},
                 _164_mf52d_name_address: {required: "mf52d_name_address must be filled..!!"},
+                _170_mf59a_beneficiary: {required: "mf59a_beneficiary must be filled..!!"},
                 _172_mf59a_name_address: {required: "mf59a_name_address must be filled..!!"},
                 _174_mf59a_identifier_code: {required: "mf59a_identifier_code must be filled..!!"},
                 _210_mf32b_currency: {required: "mf32b_currency must be filled..!!"},
                 _211_mf32b_amount: {required: "mf32b_amount must be filled..!!"},
+                _260_mf77u_undertaking_terms_and_conditions: {required: "mf77u_undertaking_terms_and_conditions must be filled..!!"},
                 template_name: {required: "Template Name must be filled..!!"}
             },
             errorPlacement: function (error, element) {

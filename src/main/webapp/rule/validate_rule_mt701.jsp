@@ -1,5 +1,5 @@
 <%-- 
-    Document   : validate_rule_mt705
+    Document   : validate_rule_mt701
     update on : Aug 24, 2018, 
     Author     : Sri Puji I
 --%>

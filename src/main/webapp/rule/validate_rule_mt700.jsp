@@ -1,5 +1,5 @@
 <%-- 
-    Document   : mt700
+    Document   : validate_rule_mt700
     Created on : Jul 17, 2018
     Author     : Andhita Deara
 --%>
@@ -135,7 +135,7 @@
                 _061_mf40e_narrative: {required: "mf40e_narrative must be filled..!!"},
                 _070_mf31d_date_of_expiry: {required: "mf31d_date_of_expiry must be filled..!!"},
                 _071_mf31d_place_of_expiry: {required: "mf31d_place_of_expiry must be filled..!!"},
-                _090_mf50_applicant: {required: "mf50_name_address must be filled..!!"},
+                _090_mf50_applicant: {required: "mf50_applicant must be filled..!!"},
                 _100_mf59_account: {required: "mf59_account must be filled..!!"},
                 _101_mf59_name_address: {required: "mf59_name_address must be filled..!!"},
                 _110_mf32b_currency: {required: "mf32b_currency must be filled..!!"},
@@ -143,7 +143,7 @@
                 type_mf41_available_with_by: {required: "mf41 must be filled..!!"},
                 _141_mf41a_identifier_code: {required: "mf41a_identifier_code must be filled..!!"},
                 _142_mf41a_code: {required: "mf41a_code must be filled..!!"},
-                _143_mf41d_name_and_address: {required: "mf41d_name_address must be filled..!!"},
+                _143_mf41d_name_and_address: {required: "mf41d_name_and_address must be filled..!!"},
                 _144_mf41d_code: {required: "mf41d_code must be filled..!!"},
                 _340_mf49_confirmation_instructions: {required: "mf49_confirmation_instruction must be filled..!!"},
                 _150_of42c_drafts_at: {required: "fill in both fields of42c and of42a, or fill in only the of42m field or the of42p field..!!"},
@@ -508,6 +508,22 @@
             }
         });
 
+        //OF48_check
+        $("#check_of48").hide();
+        $("#_330_of48_days").attr("disabled", true);
+        $("#_331_of48_narrative").attr("disabled", true);
+        $("#period_for_presentation_in_days_checkbox").click(function(){
+            if ($("#period_for_presentation_in_days_checkbox").is(":checked")){
+                $("#check_of48").show();
+                $("#_330_of48_days").attr("disabled", false);
+                $("#_331_of48_narrative").attr("disabled", false);
+            } else {
+                $("#check_of48").hide();
+                $("#_330_of48_days").attr("disabled", true);
+                $("#_331_of48_narrative").attr("disabled", true);
+            }
+        });
+
     });
 </script>
 
@@ -542,20 +558,12 @@
             $("#div_of51a").hide();
             $("#div_of51d").show();
             $("#_081_of51a_party_identifier").attr("disabled", true);
-            $("#_082_of51a_identifier_code").attr("disabled", false);
-            $("#_083_of51d_party_identifier").attr("disabled", true);
-            $("#_084_of51d_name_address").attr("disabled", true);
-        } else if ($("#_083_of51d_party_identifier").val() != "" || $("#_084_of51d_name_address").val() != ""){
-            $("#type_of51_applicant_bank").val("d").attr("selected",true);
-            $("#div_of51a_").hide();
-            $("#div_of51d_").show();
-            $("#_081_of51a_party_identifier").attr("disabled", true);
             $("#_082_of51a_identifier_code").attr("disabled", true);
             $("#_083_of51d_party_identifier").attr("disabled", false);
             $("#_084_of51d_name_address").attr("disabled", false);
         } else{
-            $("#div_of51a_").hide();
-            $("#div_of51d_").hide();
+            $("#div_of51a").hide();
+            $("#div_of51d").hide();
             $("#_081_of51a_party_identifier").attr("disabled", true);
             $("#_082_of51a_identifier_code").attr("disabled", true);
             $("#_083_of51d_party_identifier").attr("disabled", true);
@@ -569,22 +577,22 @@
             $("#div_mf41d_").hide();
             $("#_141_mf41a_identifier_code").attr("disabled", false);
             $("#_142_mf41a_code").attr("disabled", false);
-            $("#_143_mf41d_name_address").attr("disabled", true);
+            $("#_143_mf41d_name_and_address").attr("disabled", true);
             $("#_144_mf41d_code").attr("disabled", true);
-        } else if ($("#_143_mf41d_name_address").val() != "" || $("#_144_mf41d_code").val() != ""){
+        } else if ($("#_143_mf41d_name_and_address").val() != "" || $("#_144_mf41d_code").val() != ""){
             $("#type_mf41_available_with_by").val("d").attr("selected",true);
             $("#div_mf41a_").hide();
             $("#div_mf41d_").show();
             $("#_141_mf41a_identifier_code").attr("disabled", true);
             $("#_142_mf41a_code").attr("disabled", true);
-            $("#_143_mf41d_name_address").attr("disabled", false);
+            $("#_143_mf41d_name_and_address").attr("disabled", false);
             $("#_144_mf41d_code").attr("disabled", false);
         } else{
             $("#div_mf41a_").hide();
             $("#div_mf41d_").hide();
             $("#_141_mf41a_identifier_code").attr("disabled", true);
             $("#_142_mf41a_code").attr("disabled", true);
-            $("#_143_mf41d_name_address").attr("disabled", true);
+            $("#_143_mf41d_name_and_address").attr("disabled", true);
             $("#_144_mf41d_code").attr("disabled", true);
         }
         
@@ -616,7 +624,7 @@
         
         //OF58_a_d
         if ($("#_351_of58a_party_identifier").val() != "" || $("#_352_of58a_identifier_code").val() != ""){
-            $("#type_of58_request_confirmation_party").val("a").attr("selected",true);
+            $("#type_of58_requested_confirmation_party").val("a").attr("selected",true);
             $("#div_of58a_").show();
             $("#div_of58d_").hide();
             $("#_351_of58a_party_identifier").attr("disabled", false);
@@ -624,7 +632,7 @@
             $("#_353_of58d_party_identifier").attr("disabled", true);
             $("#_354_of58d_name_address").attr("disabled", true);
         } else if ($("#_353_of58d_party_identifier").val() != "" || $("#_354_of58d_name_address").val() != ""){
-            $("#type_of58_request_confirmation_party").val("d").attr("selected",true);
+            $("#type_of58_requested_confirmation_party").val("d").attr("selected",true);
             $("#div_of58a_").hide();
             $("#div_of58d_").show();
             $("#_351_of58a_party_identifier").attr("disabled", true);
@@ -712,6 +720,17 @@
             $("#_386_of57d_name_address").attr("disabled", true);
         }
 
+        //OF48_check
+        if ($("#_330_of48_days").val() != "" || $("#_331_of48_narrative").val() != ""){
+            $("#period_for_presentation_in_days_checkbox").attr("checked", true);
+            $("#check_of48").show();
+            $("#_330_of48_days").attr("disabled", false);
+            $("#_331_of48_narrative").attr("disabled", false);
+        } else {
+            $("#check_of48").hide();
+            $("#_330_of48_days").attr("disabled", true);
+            $("#_331_of48_narrative").attr("disabled", true);
+        }
 
     });
 </script>

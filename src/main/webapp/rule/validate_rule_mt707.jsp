@@ -1,5 +1,5 @@
 <%-- 
-    Document   : mt707
+    Document   : validate_rule_mt707
     Created on : Jul 23, 2018
     Author     : Andhita Deara
 --%>
@@ -50,7 +50,7 @@
                 //mf22a
                 _100_mf22a_purpose_of_message: "required",
                 
-                //of23s
+                //of23s - C1: At least one field must be present after field 22A
                 _110_of23s_cancellation_request: {
                     required: function(element) {
                       return $("#_110_of23s_cancellation_request").val() == "" 
@@ -66,10 +66,10 @@
                               && $("#_171_of32b_amount").val() == ""
                               && $("#_180_of33b_currency").val() == ""
                               && $("#_181_of33b_amount").val() == ""
-                              && $("#_190_of39a_plus").val() == ""
-                              && $("#_191_of39a_minus").val() == ""
+                              && $("#_190_of39a_percentage_credit_amount_tolerance1").val() == ""
+                              && $("#_191_of39a_percentage_credit_amount_tolerance2").val() == ""
                               && $("#_200_of39c_additional_amounts_covered").val() == ""
-                              && $("#_210_of41a_available_with_by").val() == ""
+                              && $("#type_of41_available_with_by").val() == ""
                               && $("#_220_of42c_drafts_at").val() == ""
                               && $("#_230_of42a_drawee").val() == ""
                               && $("#_240_of42m_mixed_payment_details").val() == ""
@@ -101,7 +101,7 @@
                     }
                 },
                 
-                //of52
+                //of52a - C3: Either field 50B or field 52a, but not both, must be present
                 _050_of52a_issuing_bank: {
                     required: function(element) {
                       return ($("#_060_of50b_non_bank_issuer").val() == "" && $("#_050_of52a_issuing_bank").val() == "")
@@ -109,7 +109,7 @@
                     }
                 },
                 
-                //of50b
+                //of50b - C3: Either field 50B or field 52a, but not both, must be present
                 _060_of50b_non_bank_issuer: {
                     required: function(element) {
                       return ($("#_050_of52a_issuing_bank").val() == "" && $("#_060_of50b_non_bank_issuer").val() == "")
@@ -117,23 +117,23 @@
                     }
                 },
                 
-                //of33b
-//                decrease_of_credit_amount_checkbox: {
+                //of32b - C2: Either field 32B or field 33B may be present, but not both
+//                _170_of32b_currency: {
 //                    required: function(element) {
 //                      return ($("#_180_of33b_currency").val() == "" && $("#_181_of33b_amount").val() == "" && $("#_170_of32b_currency").val() == "" && $("#_171_of32b_amount").val() == "")
 //                             || ($("#_180_of33b_currency").val() != "" && $("#_181_of33b_amount").val() != "" && $("#_170_of32b_currency").val() != "" && $("#_171_of32b_amount").val() != "");
 //                    }
 //                },
                 
-                //of32b
-//                increase_of_credit_amount_checkbox: {
+                //of33b - C2: Either field 32B or field 33B may be present, but not both
+//                _180_of33b_currency: {
 //                    required: function(element) {
 //                      return ($("#_180_of33b_currency").val() == "" && $("#_181_of33b_amount").val() == "" && $("#_170_of32b_currency").val() == "" && $("#_171_of32b_amount").val() == "")
 //                             || ($("#_180_of33b_currency").val() != "" && $("#_181_of33b_amount").val() != "" && $("#_170_of32b_currency").val() != "" && $("#_171_of32b_amount").val() != "");
 //                    }
 //                },
                 
-                //of44c
+                //of44c - C4: Either field 44C or 44D, but not both, may be present
 //                _320_of44c_latest_date_of_shipment: {
 //                    required: function(element) {
 //                      return ($("#_330_of44d_shipment_period").val() == "" && $("#_320_of44c_latest_date_of_shipment").val() == "")
@@ -141,7 +141,7 @@
 //                    }
 //                },
                 
-                //of344d
+                //of44d - C4: Either field 44C or 44D, but not both, may be present
 //                _330_of44d_shipment_period: {
 //                    required: function(element) {
 //                      return ($("#_330_of44d_shipment_period").val() == "" && $("#_320_of44c_latest_date_of_shipment").val() == "")
@@ -149,10 +149,18 @@
 //                    }
 //                },
                 
-                //of71n
+                //of71n - Narrative is only required if code is OTHR
                 _401_of71n_narrative: {
                     required: function(element) {
                       return $("#_400_of71n_charge_code").val() == "OTHR" ;
+                    }
+                },
+                
+                //of58a - Field must be present if confirmation instructions is MAY ADD or CONFIRM
+                _430_of58a_requested_confirmation_party: {
+                    required: function(element) {
+                      return $("#_420_of49_confirmation_instructions").val() == "MAY ADD" 
+                             || $("#_420_of49_confirmation_instructions").val() == "CONFIRM";
                     }
                 },
                 
@@ -170,14 +178,15 @@
                 _080_mf26e_number_of_amendment: {required: "mf26e_number_of_amendment must be filled..!!"},
                 _090_mf30_date_of_amendment: {required: "mf30_date_of_amendment must be filled..!!"},
                 _100_mf22a_purpose_of_message: {required: "mf22a_purpose_of_message must be filled..!!"},
-                _050_of52a_issuing_bank: {required: "fill in either of52 or of50b..!!"},
-                _060_of50b_non_bank_issuer: {required: "fill in either of52 or of50b..!!"},
+                _050_of52a_issuing_bank: {required: "fill in either of52a or of50b, but not both..!!"},
+                _060_of50b_non_bank_issuer: {required: "fill in either of52a or of50b, but not both..!!"},
                 _110_of23s_cancellation_request: {required: "fill in at least one field after mf22a..!!"},
-//                decrease_of_credit_amount_checkbox: {required: "isi salah satu antara of33b atau of32b..!!"},
-//                increase_of_credit_amount_checkbox: {required: "isi salah satu antara of33b atau of32b..!!"},
-//                _320_of44c_latest_date_of_shipment: {required: "isi salah satu antara of44c atau of44d..!!"},
-//                _330_of44d_shipment_period: {required: "isi salah satu antara of44c atau of44d..!!"},
-                _401_of71n_narrative: {required: "fill in if code other party..!!"},
+//                _170_of32b_currency: {required: "fill in either of32b or of33b, but not both..!!"},
+//                _180_of33b_currency: {required: "fill in either of32b or of33b, but not both..!!"},
+//                _320_of44c_latest_date_of_shipment: {required: "fill in either of44c or of44d, but not both..!!"},
+//                _330_of44d_shipment_period: {required: "fill in either of44c or of44d, but not both..!!"},
+                _401_of71n_narrative: {required: "fill in narrative if code is OTHR..!!"},
+                _430_of58a_requested_confirmation_party: {required: "field must be present if confirmation instructions is MAY ADD or CONFIRM..!!"},
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);
@@ -340,81 +349,98 @@
         
         //OF39A_check
         $("#check_of39a").hide();
-        $("#_190_of39a_plus").attr("disabled", true);
-        $("#_191_of39a_minus").attr("disabled", true);
+        $("#_190_of39a_percentage_credit_amount_tolerance1").attr("disabled", true);
+        $("#_191_of39a_percentage_credit_amount_tolerance2").attr("disabled", true);
         $("#percentage_credit_amount_checkbox").click(function(){
             if ($("#percentage_credit_amount_checkbox").is(":checked")){
                 $("#check_of39a").show();
-                $("#_190_of39a_plus").attr("disabled", false);
-                $("#_191_of39a_minus").attr("disabled", false);
+                $("#_190_of39a_percentage_credit_amount_tolerance1").attr("disabled", false);
+                $("#_191_of39a_percentage_credit_amount_tolerance2").attr("disabled", false);
             } else {
                 $("#check_of39a").hide();
-                $("#_190_of39a_plus").attr("disabled", true);
-                $("#_191_of39a_minus").attr("disabled", true);
+                $("#_190_of39a_percentage_credit_amount_tolerance1").attr("disabled", true);
+                $("#_191_of39a_percentage_credit_amount_tolerance2").attr("disabled", true);
             }
         });
 
-        //OF52_a_d
-        $("#div_mf41a_").hide();
-        $("#div_mf41d_").hide();
+        //OF52a_A_D
+        $("#div_050_of52a_A").hide();
+        $("#div_050_of52a_D").hide();
+        $("#_051_of52a_party_identifier").attr("disabled", true);
+        $("#_052_of52a_identifier_code").attr("disabled", true);
+        $("#_053_of52a_party_identifier").attr("disabled", true);
+        $("#_054_of52a_name_address").attr("disabled", true);
+        $("#_050_of52a_issuing_bank").change(function() {
+            if ( $("#_050_of52a_issuing_bank").val() == "A"){
+                $("#div_050_of52a_A").show();
+                $("#div_050_of52a_D").hide();
+                $("#_051_of52a_party_identifier").attr("disabled", false);
+                $("#_052_of52a_identifier_code").attr("disabled", false);
+                $("#_053_of52a_party_identifier").attr("disabled", true);
+                $("#_054_of52a_name_address").attr("disabled", true);
+            } else if ( $("#_050_of52a_issuing_bank").val() == "D"){
+                $("#div_050_of52a_A").hide();
+                $("#div_050_of52a_D").show();
+                $("#_051_of52a_party_identifier").attr("disabled", true);
+                $("#_052_of52a_identifier_code").attr("disabled", true);
+                $("#_053_of52a_party_identifier").attr("disabled", false);
+                $("#_054_of52a_name_address").attr("disabled", false);
+            } else{
+                $("#div_050_of52a_A").hide();
+                $("#div_050_of52a_D").hide();
+                $("#_051_of52a_party_identifier").attr("disabled", true);
+                $("#_052_of52a_identifier_code").attr("disabled", true);
+                $("#_053_of52a_party_identifier").attr("disabled", true);
+                $("#_054_of52a_name_address").attr("disabled", true);
+            }
+        });
+
+        //OF40E_narrative (only if OTHR)
+        $("#div_130_of40e_narrative").hide();
+        $("#_131_of40e_narrative").attr("disabled", true);
+        $("#_130_of40e_applicable_rules").change(function() {
+            if ( $("#_130_of40e_applicable_rules").val() == "OTHR"){
+                $("#div_130_of40e_narrative").show();
+                $("#_131_of40e_narrative").attr("disabled", false);
+            } else{
+                $("#div_130_of40e_narrative").hide();
+                $("#_131_of40e_narrative").attr("disabled", true);
+            }
+        });
+
+        //OF41a_a_d
+        $("#div_of41a_").hide();
+        $("#div_of41d_").hide();
         $("#_211_of41a_party_identifier").attr("disabled", true);
         $("#_212_of41a_code").attr("disabled", true);
         $("#_213_of41d_name_and_address").attr("disabled", true);
         $("#_214_of41d_code").attr("disabled", true);
-        $("#type_mf41_available_with_by").change(function() {
-            if ( $("#type_mf41_available_with_by").val() == "a"){
-                $("#div_mf41a_").show();
-                $("#div_mf41d_").hide();
+        $("#type_of41_available_with_by").change(function() {
+            if ( $("#type_of41_available_with_by").val() == "a"){
+                $("#div_of41a_").show();
+                $("#div_of41d_").hide();
                 $("#_211_of41a_party_identifier").attr("disabled", false);
-                $("#_212_mf41a_code").attr("disabled", false);
-                $("#_213_mf41d_name_and_address").attr("disabled", true);
-                $("#_214_mf41d_code").attr("disabled", true);
-            } else if ( $("#type_mf41_available_with_by").val() == "d"){
-                $("#div_mf41a_").hide();
-                $("#div_mf41d_").show();
-                $("#_211_mf41a_party_identifier").attr("disabled", true);
-                $("#_212_mf41a_code").attr("disabled", true);
-                $("#_213_mf41d_name_and_address").attr("disabled", false);
-                $("#_214_mf41d_code").attr("disabled", false);
+                $("#_212_of41a_code").attr("disabled", false);
+                $("#_213_of41d_name_and_address").attr("disabled", true);
+                $("#_214_of41d_code").attr("disabled", true);
+            } else if ( $("#type_of41_available_with_by").val() == "d"){
+                $("#div_of41a_").hide();
+                $("#div_of41d_").show();
+                $("#_211_of41a_party_identifier").attr("disabled", true);
+                $("#_212_of41a_code").attr("disabled", true);
+                $("#_213_of41d_name_and_address").attr("disabled", false);
+                $("#_214_of41d_code").attr("disabled", false);
             } else{
-                $("#div_mf41a_").hide();
-                $("#div_mf41d_").hide();
-                $("#_211_mf41a_party_identifier").attr("disabled", true);
-                $("#_212_mf41a_code").attr("disabled", true);
-                $("#_213_mf41d_name_and_address").attr("disabled", true);
-                $("#_214_mf41d_code").attr("disabled", true);
+                $("#div_of41a_").hide();
+                $("#div_of41d_").hide();
+                $("#_211_of41a_party_identifier").attr("disabled", true);
+                $("#_212_of41a_code").attr("disabled", true);
+                $("#_213_of41d_name_and_address").attr("disabled", true);
+                $("#_214_of41d_code").attr("disabled", true);
             }
         });
 
-        //OF41_a_d
-        $("#div_210_of41a_A").hide();
-        $("#div_210_of41a_D").hide();
-        $("#_211_of41a_identifier_code").attr("disabled", true);
-        $("#_213_of41a_code").attr("disabled", true);
-        $("#_212_of41a_name_address").attr("disabled", true);
-        $("#_210_of41a_available_with_by").change(function() {
-            if ( $("#_210_of41a_available_with_by").val() == "A"){
-                $("#div_210_of41a_A").show();
-                $("#div_210_of41a_D").hide();
-                $("#_211_of41a_identifier_code").attr("disabled", false);
-                $("#_213_of41a_code").attr("disabled", false);
-                $("#_212_of41a_name_address").attr("disabled", true);
-            } else if ( $("#_210_of41a_available_with_by").val() == "D"){
-                $("#div_210_of41a_A").hide();
-                $("#div_210_of41a_D").show();
-                $("#_211_of41a_identifier_code").attr("disabled", true);
-                $("#_213_of41a_code").attr("disabled", true);
-                $("#_212_of41a_name_address").attr("disabled", false);
-            } else{
-                $("#div_210_of41a_A").hide();
-                $("#div_210_of41a_D").hide();
-                $("#_211_of41a_identifier_code").attr("disabled", true);
-                $("#_213_of41a_code").attr("disabled", true);
-                $("#_212_of41a_name_address").attr("disabled", true);
-            }
-        });
-
-        //OF42_a_d
+        //OF42a_A_D
         $("#div_230_of42a_A").hide();
         $("#div_230_of42a_D").hide();
         $("#_231_of42a_party_identifier").attr("disabled", true);
@@ -446,7 +472,7 @@
             }
         });
 
-        //OF58_a_d
+        //OF58a_A_D
         $("#div_430_of58a_A").hide();
         $("#div_430_of58a_D").hide();
         $("#_431_of58a_party_identifier").attr("disabled", true);
@@ -478,7 +504,7 @@
             }
         });
         
-        //OF53_a_d
+        //OF53a_A_D
         $("#div_440_of53a_A").hide();
         $("#div_440_of53a_D").hide();
         $("#_441_of53a_party_identifier").attr("disabled", true);
@@ -510,7 +536,7 @@
             }
         });
         
-        //OF57_a_b_d
+        //OF57a_A_B_D
         $("#div_460_of57a_A").hide();
         $("#div_460_of57a_B").hide();
         $("#div_460_of57a_D").hide();
@@ -564,6 +590,19 @@
             }
         });
 
+        //OF71N_narrative (only if OTHR)
+        $("#div_400_of71n_narrative").hide();
+        $("#_401_of71n_narrative").attr("disabled", true);
+        $("#_400_of71n_charge_code").change(function() {
+            if ( $("#_400_of71n_charge_code").val() == "OTHR"){
+                $("#div_400_of71n_narrative").show();
+                $("#_401_of71n_narrative").attr("disabled", false);
+            } else{
+                $("#div_400_of71n_narrative").hide();
+                $("#_401_of71n_narrative").attr("disabled", true);
+            }
+        });
+
     });
 </script>
 
@@ -597,18 +636,18 @@
         }
         
         //OF39A_check
-        if ($("#_190_of39a_plus").val() != "" || $("#_191_of39a_minus").val() != ""){
+        if ($("#_190_of39a_percentage_credit_amount_tolerance1").val() != "" || $("#_191_of39a_percentage_credit_amount_tolerance2").val() != ""){
             $("#percentage_credit_amount_checkbox").attr("checked", true);
             $("#check_of39a").show();
-            $("#_190_of39a_plus").attr("disabled", false);
-            $("#_191_of39a_minus").attr("disabled", false);
+            $("#_190_of39a_percentage_credit_amount_tolerance1").attr("disabled", false);
+            $("#_191_of39a_percentage_credit_amount_tolerance2").attr("disabled", false);
         } else {
             $("#check_of39a").hide();
-            $("#_190_of39a_plus").attr("disabled", true);
-            $("#_191_of39a_minus").attr("disabled", true);
+            $("#_190_of39a_percentage_credit_amount_tolerance1").attr("disabled", true);
+            $("#_191_of39a_percentage_credit_amount_tolerance2").attr("disabled", true);
         }
         
-        //OF52_a_d
+        //OF52a_A_D
         if ($("#_051_of52a_party_identifier").val() != "" || $("#_052_of52a_identifier_code").val() != ""){
             $("#_050_of52a_issuing_bank").val("A").attr("selected",true);
             $("#div_050_of52a_A").show();
@@ -634,30 +673,43 @@
             $("#_054_of52a_name_address").attr("disabled", true);
         }
 
-        //OF41_a_d
-        if ($("#_211_of41a_identifier_code").val() != "" || $("#_213_of41a_code").val() != ""){
-            $("#_210_of41a_available_with_by").val("A").attr("selected",true);
-            $("#div_210_of41a_A").show();
-            $("#div_210_of41a_D").hide();
-            $("#_211_of41a_identifier_code").attr("disabled", false);
-            $("#_213_of41a_code").attr("disabled", false);
-            $("#_212_of41a_name_address").attr("disabled", true);
-        } else if ($("#_212_of41a_name_address").val() != ""){
-            $("#_210_of41a_available_with_by").val("D").attr("selected",true);
-            $("#div_210_of41a_A").hide();
-            $("#div_210_of41a_D").show();
-            $("#_211_of41a_identifier_code").attr("disabled", true);
-            $("#_213_of41a_code").attr("disabled", true);
-            $("#_212_of41a_name_address").attr("disabled", false);
+        //OF40E_narrative
+        if ($("#_131_of40e_narrative").val() != ""){
+            $("#_130_of40e_applicable_rules").val("OTHR").attr("selected",true);
+            $("#div_130_of40e_narrative").show();
+            $("#_131_of40e_narrative").attr("disabled", false);
         } else{
-            $("#div_210_of41a_A").hide();
-            $("#div_210_of41a_D").hide();
-            $("#_211_of41a_identifier_code").attr("disabled", true);
-            $("#_213_of41a_code").attr("disabled", true);
-            $("#_212_of41a_name_address").attr("disabled", true);
+            $("#div_130_of40e_narrative").hide();
+            $("#_131_of40e_narrative").attr("disabled", true);
+        }
+
+        //OF41a_a_d
+        if ($("#_211_of41a_party_identifier").val() != "" || $("#_212_of41a_code").val() != ""){
+            $("#type_of41_available_with_by").val("a").attr("selected",true);
+            $("#div_of41a_").show();
+            $("#div_of41d_").hide();
+            $("#_211_of41a_party_identifier").attr("disabled", false);
+            $("#_212_of41a_code").attr("disabled", false);
+            $("#_213_of41d_name_and_address").attr("disabled", true);
+            $("#_214_of41d_code").attr("disabled", true);
+        } else if ($("#_213_of41d_name_and_address").val() != "" || $("#_214_of41d_code").val() != ""){
+            $("#type_of41_available_with_by").val("d").attr("selected",true);
+            $("#div_of41a_").hide();
+            $("#div_of41d_").show();
+            $("#_211_of41a_party_identifier").attr("disabled", true);
+            $("#_212_of41a_code").attr("disabled", true);
+            $("#_213_of41d_name_and_address").attr("disabled", false);
+            $("#_214_of41d_code").attr("disabled", false);
+        } else{
+            $("#div_of41a_").hide();
+            $("#div_of41d_").hide();
+            $("#_211_of41a_party_identifier").attr("disabled", true);
+            $("#_212_of41a_code").attr("disabled", true);
+            $("#_213_of41d_name_and_address").attr("disabled", true);
+            $("#_214_of41d_code").attr("disabled", true);
         }
         
-        //OF42_a_d
+        //OF42a_A_D
         if ($("#_231_of42a_party_identifier").val() != "" || $("#_232_of42a_identifier_code").val() != ""){
             $("#_230_of42a_drawee").val("A").attr("selected",true);
             $("#div_230_of42a_A").show();
@@ -683,7 +735,7 @@
             $("#_234_of42a_name_address").attr("disabled", true);
         }
         
-        //OF58_a_d
+        //OF58a_A_D
         if ($("#_431_of58a_party_identifier").val() != "" || $("#_432_of58a_identifier_code").val() != ""){
             $("#_430_of58a_requested_confirmation_party").val("A").attr("selected",true);
             $("#div_430_of58a_A").show();
@@ -709,7 +761,7 @@
             $("#_434_of58a_name_address").attr("disabled", true);
         }
         
-        //OF53_a_d
+        //OF53a_A_D
         if ($("#_441_of53a_party_identifier").val() != "" || $("#_442_of53a_identifier_code").val() != ""){
             $("#_440_of53a_reimbursing_bank").val("A").attr("selected",true);
             $("#div_440_of53a_A").show();
@@ -735,7 +787,7 @@
             $("#_444_of53a_name_address").attr("disabled", true);
         }
         
-        //OF57_a_b_d
+        //OF57a_A_B_D
         if ($("#_461_of57a_party_identifier").val() != "" || $("#_462_of57a_identifier_code").val() != ""){
             $("#_460_of57a_advise_through_bank").val("A").attr("selected",true);
             $("#div_460_of57a_A").show();
@@ -781,6 +833,15 @@
             $("#_466_of57a_name_address").attr("disabled", true);
         }
 
+        //OF71N_narrative
+        if ($("#_401_of71n_narrative").val() != ""){
+            $("#_400_of71n_charge_code").val("OTHR").attr("selected",true);
+            $("#div_400_of71n_narrative").show();
+            $("#_401_of71n_narrative").attr("disabled", false);
+        } else{
+            $("#div_400_of71n_narrative").hide();
+            $("#_401_of71n_narrative").attr("disabled", true);
+        }
 
     });
 </script>

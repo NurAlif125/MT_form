@@ -1,5 +1,5 @@
 <%-- 
-    Document   : mt761
+    Document   : validate_rule_mt761
     Created on : Jun 14, 2021, 2:02:58 PM
     Author     : Ovasae
 --%>
@@ -36,8 +36,16 @@
                 
 //                MF52a Issuer
                 _030_mf52a_issuer: "required",
-                _032_mf52a_identifier_code: "required",
-                _034_mf52d_name_address: "required",
+                _032_mf52a_identifier_code: {
+                    required: function(element) {
+                        return $("#_030_mf52a_issuer").val() == "a";
+                    }
+                },
+                _034_mf52d_name_address: {
+                    required: function(element) {
+                        return $("#_030_mf52a_issuer").val() == "d";
+                    }
+                },
                 
                 //of77u
                 _040_of77u_undertaking_terms_and_conditions: {
@@ -66,6 +74,7 @@
                 _010_mf27_number: {required: "mf27_number must be filled..!!"},
                 _011_mf27_total: {required: "mf27_total must be filled..!!"},
                 _020_mf20_undertaking_number: {required: "mf20_undertaking_number must be filled..!!"},
+                _030_mf52a_issuer: {required: "mf52a_issuer must be filled..!!"},
                 _032_mf52a_identifier_code: {required: "mf52a_identifier_code must be filled..!!"},
                 _034_mf52d_name_address: {required: "mf52d_name_address must be filled..!!"},
                 _040_of77u_undertaking_terms_and_conditions: {required: "field 77U or field 77L must be present, both may be present..!!"},
