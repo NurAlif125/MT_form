@@ -21,6 +21,7 @@ public class DataGeneralSetting {
     private String MT196;
     private String MT199;
     private String MT300;
+    private String MT543;
     private String MT700;
     private String MT701;
     private String MT707;
@@ -136,6 +137,15 @@ public class DataGeneralSetting {
 
     public void setMT300(String MT300) {
         this.MT300 = MT300;
+    }
+    
+    // MT543
+    public String getMT543() {
+        return MT543;
+    }
+
+    public void setMT543(String MT543) {
+        this.MT543 = MT543;
     }
     
     // MT700 MT701 MT707 MT708 MT710 MT711

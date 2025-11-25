@@ -268,9 +268,15 @@
 <!--                        <li><span class="dir">Message Category 4</span>
 
                         </li>
-                        <li><span class="dir">Message Category 5</span>
-
-                        </li>-->
+-->                     <li><span class="dir">Message Category 5</span>
+                            <ul>
+                                <c:forEach var="item" items="${role}">
+                                    <c:if test="${item == 'MT:543'}">
+                                        <li><a href="mt543.jsp">543 - Deliver Against Payment</a></li>
+                                        </c:if>
+                                    </c:forEach>
+                            </ul>
+                        </li>
                         <li><span class="dir">Message Category 7</span>
                             <ul>                        
                                 <c:forEach var="item" items="${role}">

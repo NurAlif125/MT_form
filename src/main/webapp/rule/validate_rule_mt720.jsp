@@ -1,5 +1,5 @@
 <%-- 
-    Document   : validate_rule_mt103
+    Document   : validate_rule_mt720
     Created on : Aug 12, 2012, 2:16:33 PM
     Author     : M Abdul Hadi
 --%>

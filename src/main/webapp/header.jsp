@@ -251,6 +251,15 @@ response.setHeader("X-Powered-By", "Unknown");
                                         </c:forEach>
                                     </ul>
                                 </li>
+                                <li><span class="dir">Message Category 5</span>
+                                    <ul>
+                                        <c:forEach var="item" items="${role}">
+                                            <c:if test="${item == 'MT:543'}">
+                                                <li><a onclick="userTrackMenuClick('543 - Deliver Against Payment')" href="mt543.jsp?create=true">543 - Deliver Against Payment</a></li>
+                                            </c:if>
+                                        </c:forEach>
+                                    </ul>
+                                </li>
                                 <li><span class="dir">Message Category 7</span>
                                     <ul>
                                         <c:forEach var="item" items="${role}">

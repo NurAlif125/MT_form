@@ -13,6 +13,7 @@ import com.vensys.appcm.controller.TagMT199;
 import com.vensys.appcm.controller.TagMT202;
 import com.vensys.appcm.controller.TagMT202COV;
 import com.vensys.appcm.controller.TagMT299;
+import com.vensys.appcm.controller.TagMT543;
 import com.vensys.appcm.controller.TagMT700;
 import com.vensys.appcm.controller.TagMT701;
 import com.vensys.appcm.controller.TagMT707;

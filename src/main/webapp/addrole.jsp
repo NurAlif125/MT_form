@@ -482,10 +482,15 @@
                     </div>
                     
                     <!--MT 4XX-->
-                    <div class="form-row"><span class="labelL">Message Category 3</span>
+                    <div class="form-row"><span class="labelL">Message Category 4</span>
                         <label>400 <input type="checkbox" name="role_detail" id="role_detail" value="MT:400" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:400'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>412 <input type="checkbox" name="role_detail" id="role_detail" value="MT:412" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:412'}"> checked="true" </c:if></c:forEach> /></label>
                         <label>499 <input type="checkbox" name="role_detail" id="role_detail" value="MT:499" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:499'}"> checked="true" </c:if></c:forEach> /></label>
+                    </div>
+                    
+                    <!--MT 5XX-->
+                    <div class="form-row"><span class="labelL">Message Category 5</span>
+                        <label>543 <input type="checkbox" name="role_detail" id="role_detail" value="MT:543" <c:forEach var="item" items="${list}"><c:if test="${item == 'MT:543'}"> checked="true" </c:if></c:forEach> /></label>
                     </div>
                     
                     <!-- MT 7XX-->
