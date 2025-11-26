@@ -34,6 +34,8 @@ public class DataGeneralSetting {
     private String MT740;
     private String MT742;
     private String MT747;
+    private String MT754;
+    private String MT756;
     private String MT759;
     private String MT760;
     private String MT761;
@@ -245,7 +247,21 @@ public class DataGeneralSetting {
     public void setMT747(String MT747) {
         this.MT747 = MT747;
     }
-    // MT759 MT760 MT761 MT767
+    // MT754 MT756 MT759 MT760 MT761 MT767
+    public String getMT754() {
+        return MT754;
+    }
+
+    public void setMT754(String MT754) {
+        this.MT754 = MT754;
+    }
+    public String getMT756() {
+        return MT756;
+    }
+
+    public void setMT756(String MT756) {
+        this.MT756 = MT756;
+    }
     public String getMT759() {
         return MT759;
     }

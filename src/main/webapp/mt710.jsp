@@ -132,7 +132,7 @@
 
                                 <!-- OF52a Issuing Bank -->
                                 <div class="form-row"><span class="label_body">OF52a</span><span class="label">Issuing Bank</span>
-                                    <select id="_090_of52a_issuing_bank" name="_090_of52a_issuing_bank" input_type="OF52a Issuing Bank" location="Body">
+                                    <select id="type_of52a_issuing_bank" name="type_of52a_issuing_bank" input_type="OF52a Issuing Bank" location="Body">
                                         <option value="">choose a type</option>
                                         <option value="a">A - Party Identifier - Identifier Code</option>
                                         <option value="d">D - Identifier Code - Name Address</option>
@@ -457,7 +457,7 @@
 
                                 <!-- OF58a Requested Confirmation Party -->
                                 <div class="form-row"><span class="label_body">OF58a</span><span class="label">Requested Confirmation Party</span>
-                                    <select id="_380_of58a_requested_confirmation_party" name="_380_of58a_requested_confirmation_party">
+                                    <select id="type_of58a_issuing_bank" name="type_of58a_issuing_bank">
                                         <option value="">choose a type</option>
                                         <option value="a">A - Party Identifier - Identifier Code</option>
                                         <option value="d">D - Party Identifier - Name and Address</option>

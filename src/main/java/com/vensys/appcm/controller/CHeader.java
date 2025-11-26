@@ -26,6 +26,8 @@ import com.vensys.appcm.controller.TagMT734;
 import com.vensys.appcm.controller.TagMT740;
 import com.vensys.appcm.controller.TagMT742;
 import com.vensys.appcm.controller.TagMT747;
+import com.vensys.appcm.controller.TagMT754;
+import com.vensys.appcm.controller.TagMT756;
 import com.vensys.appcm.controller.TagMT759;
 import com.vensys.appcm.controller.TagMT760;
 import com.vensys.appcm.controller.TagMT761;
@@ -1086,6 +1088,10 @@ public class CHeader {
             MxPacs00200110 dataMXpacs002 = (MxPacs00200110) abstractMX;
             dBDataTransaksiOutgoing2.addDataMXTag(String.valueOf(id), ((MxPacs00200110) abstractMX).toJson(), "");
         }
+    }
+
+    void splitMT33A(String tags, String tagName, String tagValue) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

@@ -209,25 +209,27 @@
                             <hr/>
 
                             <!-- MF32B Total Amount Claimed -->
-                            <div class="form-row"><span class="label_body">MF32B</span><span class="label"><a style="color:red;text-decoration:none">*</a>Total Amount Claimed</span>
-                                <input type="text" name="_030_mf32b_total_amount_claimed_currency" id="_030_mf32b_total_amount_claimed_currency" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_030_mf32b_total_amount_claimed_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                            </div>        
-                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Amount</span>
-                                <input type="text" name="_031_mf32b_amount" id="_031_mf32b_amount" maxlength="15" size="15" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_031_mf32b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                <font style="margin-left: 50px"></font>
-                                <script langauge="javascript">
-                                    function formatUang(n, currency) {
-                                        return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                    }
-                                    var number2 = document.getElementById('_031_mf32b_amount').value;
-                                    var number2r = number2.replace(',', '.');
-                                    var number2F = parseFloat(number2r);
-                                    var nominal = formatUang(number2F, "");
-                                    var nominalStyle = nominal.fontsize(3);
-                                    var nominalStylec = nominalStyle.fontcolor("red");
-                                    //var nominalStylecw = nominalStylec.fontWeight("900");
-                                    document.write(nominalStylec);
-                                </script>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency</span>
+                                <input type="text" name="_030_mf32b_total_amount_claimed_currency" id="_030_mf32b_total_amount_claimed_currency" maxlength="3" size="3" class="mandatory" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_030_mf32b_total_amount_claimed_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                            </div>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
+                                        <input type="text" name="_031_mf32b_amount" id="_031_mf32b_amount" class="mandatory" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" input_type="MF32B Total Amount Claimed" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_031_mf32b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_031_mf32b_amount');" />
+                                        <font style="margin-left: 50px"></font>
+                                        <script>
+                                            function formatUang(n, currency) {
+                                                if (isNaN(n)) { return ""; }
+                                                return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+                                            }
+                                            var number2 = document.getElementById('_031_mf32b_amount').value;
+                                            if (number2) {
+                                                var number2r = number2.replace(',', '.');
+                                                var number2F = parseFloat(number2r);
+                                                var nominal = formatUang(number2F, "");
+                                                if (nominal !== "") {
+                                                    document.write(nominal.fontsize(2).fontcolor("blue"));
+                                                }
+                                            }
+                                        </script>
                             </div>
                             <hr/>
 
@@ -235,25 +237,27 @@
                             <div class="form-row"><span class="label_body">MF33A</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount Reimbursed or Paid</span>
                                 <input type="text" name="_040_mf33a_amount_reimbursed_date" id="_040_mf33a_amount_reimbursed_date" maxlength="6" size="6" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_040_mf33a_amount_reimbursed_date'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
-                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Currency</span>
-                                <input type="text" name="_041_mf33a_currency" id="_041_mf33a_currency" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_041_mf33a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency</span>
+                                <input type="text" name="_041_mf33a_currency" id="_041_mf33a_currency" maxlength="3" size="3" class="mandatory" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_041_mf33a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
-                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">*Amount</span>
-                                <input type="text" name="_042_mf33a_amount" id="_042_mf33a_amount" maxlength="15" size="15" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_042_mf33a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
-                                <font style="margin-left: 50px"></font>
-                                <script langauge="javascript">
-                                    function formatUang(n, currency) {
-                                        return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
-                                    }
-                                    var number2 = document.getElementById('_042_mf33a_amount').value;
-                                    var number2r = number2.replace(',', '.');
-                                    var number2F = parseFloat(number2r);
-                                    var nominal = formatUang(number2F, "");
-                                    var nominalStyle = nominal.fontsize(3);
-                                    var nominalStylec = nominalStyle.fontcolor("red");
-                                    //var nominalStylecw = nominalStylec.fontWeight("900");
-                                    document.write(nominalStylec);
-                                </script>
+                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
+                                        <input type="text" name="_042_mf33a_amount" id="_042_mf33a_amount" class="mandatory" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" input_type="MF33A Amount Reimbursed or Paid" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_042_mf33a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_042_mf33a_amount');" />
+                                        <font style="margin-left: 50px"></font>
+                                        <script>
+                                            function formatUang(n, currency) {
+                                                if (isNaN(n)) { return ""; }
+                                                return currency + " " + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+                                            }
+                                            var number2 = document.getElementById('_042_mf33a_amount').value;
+                                            if (number2) {
+                                                var number2r = number2.replace(',', '.');
+                                                var number2F = parseFloat(number2r);
+                                                var nominal = formatUang(number2F, "");
+                                                if (nominal !== "") {
+                                                    document.write(nominal.fontsize(2).fontcolor("blue"));
+                                                }
+                                            }
+                                        </script>
                             </div>
                             <hr/>
 

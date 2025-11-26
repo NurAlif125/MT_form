@@ -133,18 +133,18 @@
 //                },
                 
                 //of52
-                _090_of52a_issuing_bank: {
+                type_of52a_issuing_bank: {
                     required: function(element) {
-                      return ($("#_100_of50b_non_bank_issuer").val() == "" && $("#_090_of52a_issuing_bank").val() == "")
-                             || ($("#_100_of50b_non_bank_issuer").val() != "" && $("#_090_of52a_issuing_bank").val() != "");
+                      return ($("#_100_of50b_non_bank_issuer").val() == "" && $("#type_of52a_issuing_bank").val() == "")
+                             || ($("#_100_of50b_non_bank_issuer").val() != "" && $("#type_of52a_issuing_bank").val() != "");
                     }
                 },
                 
                 //of50b
                 _100_of50b_non_bank_issuer: {
                     required: function(element) {
-                      return ($("#_090_of52a_issuing_bank").val() == "" && $("#_100_of50b_non_bank_issuer").val() == "")
-                             || ($("#_090_of52a_issuing_bank").val() != "" && $("#_100_of50b_non_bank_issuer").val() != "");
+                      return ($("#type_of52a_issuing_bank").val() == "" && $("#_100_of50b_non_bank_issuer").val() == "")
+                             || ($("#type_of52a_issuing_bank").val() != "" && $("#_100_of50b_non_bank_issuer").val() != "");
                     }
                 },
               
@@ -184,7 +184,7 @@
                 _210_of42p_negotiation: {required: "fill in both fields of42c and of42 or fill in the of42m field only or of42p only..!!"},
 //                _280_of44c_latest_date_of_shipment: {required: "isi antara field of44c atau of44d..!!"},
 //                _290_of44d_shipment_period: {required: "isi antara field of44c atau of44d..!!"},
-                _090_of52a_issuing_bank: {required: "fill in either of52 or of50b..!!"},
+                type_of52a_issuing_bank: {required: "fill in either of52 or of50b..!!"},
                 _100_of50b_non_bank_issuer: {required: "fill in either of52 or of50b..!!"},
               
                 
@@ -354,15 +354,15 @@
         $("#_092_of52a_identifier_code").attr("disabled", true);
         $("#_093_of52a_party_identifier").attr("disabled", true);
         $("#_094_of52a_name_address").attr("disabled", true);
-        $("#_090_of52a_issuing_bank").change(function() {
-            if ( $("#_090_of52a_issuing_bank").val() == "a"){
+        $("#type_of52a_issuing_bank").change(function() {
+            if ( $("#type_of52a_issuing_bank").val() == "a"){
                 $("#div_090_of52a_A").show();
                 $("#div_090_of52a_D").hide();
                 $("#_091_of52a_party_identifier").attr("disabled", false);
                 $("#_092_of52a_identifier_code").attr("disabled", false);
                 $("#_093_of52a_party_identifier").attr("disabled", true);
                  $("#_094_of52a_name_address").attr("disabled", true);
-            } else if ( $("#_090_of52a_issuing_bank").val() == "d"){
+            } else if ( $("#type_of52a_issuing_bank").val() == "d"){
                 $("#div_090_of52a_A").hide();
                 $("#div_090_of52a_D").show();
                 $("#_091_of52a_party_identifier").attr("disabled", true);
@@ -495,15 +495,15 @@
         $("#_382_of58a_bic").attr("disabled", true);
         $("#_383_of58a_party_identifier").attr("disabled", true);
         $("#_384_of58a_name_address").attr("disabled", true);
-        $("#_380_of58a_requested_confirmation_party").change(function() {
-            if ( $("#_380_of58a_requested_confirmation_party").val() == "a"){
+        $("#type_of58a_issuing_bank").change(function() {
+            if ( $("#type_of58a_issuing_bank").val() == "a"){
                 $("#div_380_of58a_A").show();
                 $("#div_380_of58a_D").hide();
                 $("#_381_of58a_party_identifier").attr("disabled", false);
                 $("#_382_of58a_bic").attr("disabled", false);
                 $("#_383_of58a_party_identifier").attr("disabled", true);
                 $("#_384_of58a_name_address").attr("disabled", true);
-            } else if ( $("#_380_of58a_requested_confirmation_party").val() == "d"){
+            } else if ( $("#type_of58a_issuing_bank").val() == "d"){
                 $("#div_380_of58a_A").hide();
                 $("#div_380_of58a_D").show();
                 $("#_381_of58a_party_identifier").attr("disabled", true);
@@ -650,7 +650,7 @@
 
         //of52a a_d
            if ($("#_091_of52a_party_identifier").val() != "" || $("#_092_of52a_identifier_code").val() != ""){
-              $("#_090_of52a_issuing_bank").val("a").attr("selected",true);
+              $("#type_of52a_issuing_bank").val("a").attr("selected",true);
                 $("#div_090_of52a_A").show();
                 $("#div_090_of52a_D").hide();
                 $("#_091_of52a_party_identifier").attr("disabled", false);
@@ -658,7 +658,7 @@
                 $("#_093_of52a_party_identifier").attr("disabled", true);
                 $("#_094_of52a_name_address").attr("disabled", true);
           } else if ($("#_093_of52a_party_identifier").val() != "" || $("#_094_of52a_name_address").val() != ""){
-                $("#_090_of52a_issuing_bank").val("d").attr("selected",true);
+                $("#type_of52a_issuing_bank").val("d").attr("selected",true);
                 $("#div_090_of52a_A").hide();
                 $("#div_090_of52a_D").show();
                 $("#_091_of52a_party_identifier").attr("disabled", true);
@@ -729,7 +729,7 @@
             
             //OF58//
            if ($("#_381_of58a_party_identifier").val() != "" || $("#_382_of58a_bic").val() != ""){
-                $("#_380_of58a_requested_confirmation_party").val("a").attr("selected",true);
+                $("#type_of58a_issuing_bank").val("a").attr("selected",true);
                 $("#div_380_of58a_A").show();
                 $("#div_380_of58a_D").hide();
                 $("#_381_of58a_party_identifier").attr("disabled", false);
@@ -737,7 +737,7 @@
                 $("#_383_of58a_party_identifier").attr("disabled", true);
                 $("#_384_of58a_name_address").attr("disabled", true);
              } else if ($("#_383_of58a_party_identifier").val() != "" || $("#_384_of58a_name_address").val() != ""){
-                $("#_380_of58a_requested_confirmation_party").val("d").attr("selected",true);
+                $("#type_of58a_issuing_bank").val("d").attr("selected",true);
                 $("#div_380_of58a_A").hide();
                 $("#div_380_of58a_D").show();
                 $("#_381_of58a_party_identifier").attr("disabled", true);

@@ -299,6 +299,12 @@ response.setHeader("X-Powered-By", "Unknown");
                                             <c:if test="${item == 'MT:747'}">
                                                 <li><a onclick="userTrackMenuClick('747 - Amendment to an Authorisation to Reimburse')" href="mt747.jsp?create=true">747 - Amendment to an Authorisation to Reimburse</a></li>
                                             </c:if>
+                                            <c:if test="${item == 'MT:754'}">
+                                                <li><a onclick="userTrackMenuClick('754 - Advice of Payment/Acceptance/Negotiation')" href="mt754.jsp?create=true">754 - Advice of Payment/Acceptance/Negotiation</a></li>
+                                            </c:if>
+                                            <c:if test="${item == 'MT:756'}">
+                                                <li><a onclick="userTrackMenuClick('756 - Advice of Reimbursement or Payment')" href="mt756.jsp?create=true">756 - Advice of Reimbursement or Payment</a></li>
+                                            </c:if>
                                             <c:if test="${item == 'MT:759'}">
                                                 <li><a onclick="userTrackMenuClick('759 - Ancillary Trade Structured Message')" href="mt759.jsp?create=true">759 - Ancillary Trade Structured Message</a></li>
                                             </c:if>

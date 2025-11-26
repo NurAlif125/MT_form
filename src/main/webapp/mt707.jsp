@@ -615,10 +615,10 @@
 
                                 <!-- OF52a Issuing Bank -->
                                 <div class="form-row"><span class="label_body">OF52a</span><span class="label">Issuing Bank</span>
-                                    <select id="_050_of52a_issuing_bank" name="_050_of52a_issuing_bank" input_type="OF52a Issuing Bank" location="Body">
+                                    <select id="type_of52_issuing_bank" name="type_of52_issuing_bank" input_type="OF52a Issuing Bank" location="Body">
                                         <option value="">choose a type</option>
-                                        <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_050_of52a_issuing_bank'}"><c:if test="${item.detail=='A'}"> selected="true" </c:if></c:if></c:forEach>>Option A (BIC)</option>
-                                        <option value="D" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_050_of52a_issuing_bank'}"><c:if test="${item.detail=='D'}"> selected="true" </c:if></c:if></c:forEach>>Option D (Name &amp; Address)</option>
+                                        <option value="A">Option A (BIC)</option>
+                                        <option value="D">Option D (Name &amp; Address)</option>
                                     </select>
                                 </div>
 
@@ -1089,11 +1089,11 @@
 
                                 <!-- OF57a 'Advise Through' Bank -->
                                 <div class="form-row"><span class="label_body">OF57a</span><span class="label">'Advise Through' Bank</span>
-                                    <select id="_460_of57a_advise_through_bank" name="_460_of57a_advise_through_bank">
+                                    <select id="type_of57a_issuing_bank" name="type_of57a_issuing_bank">
                                         <option value="">choose a type</option>
-                                        <option value="A" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_460_of57a_advise_through_bank'}"><c:if test="${item.detail=='A'}"> selected="true" </c:if></c:if></c:forEach>>Option A (BIC)</option>
-                                        <option value="B" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_460_of57a_advise_through_bank'}"><c:if test="${item.detail=='B'}"> selected="true" </c:if></c:if></c:forEach>>Option B (Location)</option>
-                                        <option value="D" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_460_of57a_advise_through_bank'}"><c:if test="${item.detail=='D'}"> selected="true" </c:if></c:if></c:forEach>>Option D (Name &amp; Address)</option>
+                                        <option value="A">Option A (BIC)</option>
+                                        <option value="B">Option B (Location)</option>
+                                        <option value="D">Option D (Name &amp; Address)</option>
                                     </select>
                                 </div>
                                 <div id="div_460_of57a_A" style="display:none;">

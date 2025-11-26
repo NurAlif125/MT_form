@@ -353,7 +353,7 @@
                                         <input type="text" name="_031_mf32a_currency" id="_031_mf32a_currency" maxlength="3" size="3" class="mandatory" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase();" input_type="MF32a Principal Amount Paid/Accepted/Negotiated" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_031_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
-                                        <input type="text" name="_032_mf32a_amount" id="_032_mf32a_amount" maxlength="15" size="15" class="mandatory" input_type="MF32a Principal Amount Paid/Accepted/Negotiated" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_032_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_032_mf32a_amount" id="_032_mf32a_amount" class="mandatory" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" input_type="MF32a Principal Amount Paid/Accepted/Negotiated" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_032_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_032_mf32a_amount');" />
                                         <font style="margin-left: 50px"></font>
                                         <script>
                                             function formatUang(n, currency) {
@@ -377,7 +377,7 @@
                                         <input type="text" name="_033_mf32b_currency" id="_033_mf32b_currency" maxlength="3" size="3" class="mandatory"style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_033_mf32b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
-                                        <input type="text" name="_034_mf32b_amount" id="_034_mf32b_amount" maxlength="15" size="15" class="mandatory" input_type="MF32a Principal Amount Paid/Accepted/Negotiated" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_034_mf32b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                        <input type="text" name="_034_mf32b_amount" id="_034_mf32b_amount" class="mandatory" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" input_type="MF32a Principal Amount Paid/Accepted/Negotiated" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_034_mf32b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_034_mf32b_amount');" />
                                         <font style="margin-left: 50px"></font>
                                         <script>
                                             function formatUang(n, currency) {
@@ -454,8 +454,8 @@
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
                                         <input type="text" name="_071_of34a_currency" id="_071_of34a_currency" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_071_of34a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
-                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                        <input type="text" name="_072_of34a_amount" id="_072_of34a_amount" maxlength="15" size="15" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of34a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
+                                        <input type="text" name="_072_of34a_amount" id="_072_of34a_amount" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_072_of34a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_072_of34a_amount');" />
                                         <font style="margin-left: 50px"></font>
                                         <script>
                                             function formatUang(n, currency) {
@@ -478,8 +478,8 @@
                                     <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
                                         <input type="text" name="_073_of34b_currency" id="_073_of34b_currency" maxlength="3" size="3" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_073_of34b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                     </div>
-                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
-                                        <input type="text" name="_074_of34b_amount" id="_074_of34b_amount" maxlength="15" size="15" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_074_of34b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
+                                        <input type="text" name="_074_of34b_amount" id="_074_of34b_amount" onblur="cek_koma(this);" maxlength="15" onpaste="return false" ondrop="return false" style="text-transform: uppercase;" oninput="this.value = this.value.toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_074_of34b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_074_of34b_amount');" />
                                         <font style="margin-left: 50px"></font>
                                         <script>
                                             function formatUang(n, currency) {

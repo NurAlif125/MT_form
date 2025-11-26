@@ -316,6 +316,12 @@
                                     <c:if test="${item == 'MT:747'}">
                                         <li><a href="mt747.jsp">747 - Amendment to an Authorisation to Reimburse</a></li>
                                     </c:if>
+                                    <c:if test="${item == 'MT:754'}">
+                                        <li><a href="mt754.jsp">754 - Advice of Payment/Acceptance/Negotiation</a></li>
+                                    </c:if>
+                                    <c:if test="${item == 'MT:756'}">
+                                        <li><a href="mt756.jsp">756 - Advice of Reimbursement or Payment</a></li>
+                                    </c:if>
                                     <c:if test="${item == 'MT:759'}">
                                         <li><a href="mt759.jsp">759 - Ancillary Trade Structured Message</a></li>
                                     </c:if>

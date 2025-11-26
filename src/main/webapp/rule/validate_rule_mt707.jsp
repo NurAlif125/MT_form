@@ -96,24 +96,24 @@
                               && $("#_430_of58a_requested_confirmation_party").val() == ""
                               && $("#_440_of53a_reimbursing_bank").val() == ""
                               && $("#_450_of78_instructions_to_the_paying_accepting_negotiating_bank").val() == ""
-                              && $("#_460_of57a_advise_through_bank").val() == ""
+                              && $("#type_of57a_issuing_bank").val() == ""
                               && $("#_470_of72z_sender_to_receiver_information").val() == "";
                     }
                 },
                 
                 //of52a - C3: Either field 50B or field 52a, but not both, must be present
-                _050_of52a_issuing_bank: {
+                type_of52_issuing_bank: {
                     required: function(element) {
-                      return ($("#_060_of50b_non_bank_issuer").val() == "" && $("#_050_of52a_issuing_bank").val() == "")
-                             || ($("#_060_of50b_non_bank_issuer").val() != "" && $("#_050_of52a_issuing_bank").val() != "");
+                      return ($("#_060_of50b_non_bank_issuer").val() == "" && $("#type_of52_issuing_bank").val() == "")
+                             || ($("#_060_of50b_non_bank_issuer").val() != "" && $("#type_of52_issuing_bank").val() != "");
                     }
                 },
                 
                 //of50b - C3: Either field 50B or field 52a, but not both, must be present
                 _060_of50b_non_bank_issuer: {
                     required: function(element) {
-                      return ($("#_050_of52a_issuing_bank").val() == "" && $("#_060_of50b_non_bank_issuer").val() == "")
-                             || ($("#_060_of50b_non_bank_issuer").val() != "" && $("#_050_of52a_issuing_bank").val() != "");
+                      return ($("#type_of52_issuing_bank").val() == "" && $("#_060_of50b_non_bank_issuer").val() == "")
+                             || ($("#_060_of50b_non_bank_issuer").val() != "" && $("#type_of52_issuing_bank").val() != "");
                     }
                 },
                 
@@ -178,7 +178,7 @@
                 _080_mf26e_number_of_amendment: {required: "mf26e_number_of_amendment must be filled..!!"},
                 _090_mf30_date_of_amendment: {required: "mf30_date_of_amendment must be filled..!!"},
                 _100_mf22a_purpose_of_message: {required: "mf22a_purpose_of_message must be filled..!!"},
-                _050_of52a_issuing_bank: {required: "fill in either of52a or of50b, but not both..!!"},
+                type_of52_issuing_bank: {required: "fill in either of52a or of50b, but not both..!!"},
                 _060_of50b_non_bank_issuer: {required: "fill in either of52a or of50b, but not both..!!"},
                 _110_of23s_cancellation_request: {required: "fill in at least one field after mf22a..!!"},
 //                _170_of32b_currency: {required: "fill in either of32b or of33b, but not both..!!"},
@@ -370,15 +370,15 @@
         $("#_052_of52a_identifier_code").attr("disabled", true);
         $("#_053_of52a_party_identifier").attr("disabled", true);
         $("#_054_of52a_name_address").attr("disabled", true);
-        $("#_050_of52a_issuing_bank").change(function() {
-            if ( $("#_050_of52a_issuing_bank").val() == "A"){
+        $("#type_of52_issuing_bank").change(function() {
+            if ( $("#type_of52_issuing_bank").val() == "A"){
                 $("#div_050_of52a_A").show();
                 $("#div_050_of52a_D").hide();
                 $("#_051_of52a_party_identifier").attr("disabled", false);
                 $("#_052_of52a_identifier_code").attr("disabled", false);
                 $("#_053_of52a_party_identifier").attr("disabled", true);
                 $("#_054_of52a_name_address").attr("disabled", true);
-            } else if ( $("#_050_of52a_issuing_bank").val() == "D"){
+            } else if ( $("#type_of52_issuing_bank").val() == "D"){
                 $("#div_050_of52a_A").hide();
                 $("#div_050_of52a_D").show();
                 $("#_051_of52a_party_identifier").attr("disabled", true);
@@ -546,8 +546,8 @@
         $("#_464_of57a_location").attr("disabled", true);
         $("#_465_of57a_party_identifier").attr("disabled", true);
         $("#_466_of57a_name_address").attr("disabled", true);
-        $("#_460_of57a_advise_through_bank").change(function() {
-            if ( $("#_460_of57a_advise_through_bank").val() == "A"){
+        $("#type_of57a_issuing_bank").change(function() {
+            if ( $("#type_of57a_issuing_bank").val() == "A"){
                 $("#div_460_of57a_A").show();
                 $("#div_460_of57a_B").hide();
                 $("#div_460_of57a_D").hide();
@@ -557,7 +557,7 @@
                 $("#_464_of57a_location").attr("disabled", true);
                 $("#_465_of57a_party_identifier").attr("disabled", true);
                 $("#_466_of57a_name_address").attr("disabled", true);
-            } else if ( $("#_460_of57a_advise_through_bank").val() == "B"){
+            } else if ( $("#type_of57a_issuing_bank").val() == "B"){
                 $("#div_460_of57a_A").hide();
                 $("#div_460_of57a_B").show();
                 $("#div_460_of57a_D").hide();
@@ -567,7 +567,7 @@
                 $("#_464_of57a_location").attr("disabled", false);
                 $("#_465_of57a_party_identifier").attr("disabled", true);
                 $("#_466_of57a_name_address").attr("disabled", true);
-            } else if ( $("#_460_of57a_advise_through_bank").val() == "D"){
+            } else if ( $("#type_of57a_issuing_bank").val() == "D"){
                 $("#div_460_of57a_A").hide();
                 $("#div_460_of57a_B").hide();
                 $("#div_460_of57a_D").show();
@@ -649,7 +649,7 @@
         
         //OF52a_A_D
         if ($("#_051_of52a_party_identifier").val() != "" || $("#_052_of52a_identifier_code").val() != ""){
-            $("#_050_of52a_issuing_bank").val("A").attr("selected",true);
+            $("#type_of52_issuing_bank").val("A").attr("selected",true);
             $("#div_050_of52a_A").show();
             $("#div_050_of52a_D").hide();
             $("#_051_of52a_party_identifier").attr("disabled", false);
@@ -657,7 +657,7 @@
             $("#_053_of52a_party_identifier").attr("disabled", true);
             $("#_054_of52a_name_address").attr("disabled", true);
         } else if ($("#_053_of52a_party_identifier").val() != "" || $("#_054_of52a_name_address").val() != ""){
-            $("#_050_of52a_issuing_bank").val("D").attr("selected",true);
+            $("#type_of52_issuing_bank").val("D").attr("selected",true);
             $("#div_050_of52a_A").hide();
             $("#div_050_of52a_D").show();
             $("#_051_of52a_party_identifier").attr("disabled", true);
@@ -789,7 +789,7 @@
         
         //OF57a_A_B_D
         if ($("#_461_of57a_party_identifier").val() != "" || $("#_462_of57a_identifier_code").val() != ""){
-            $("#_460_of57a_advise_through_bank").val("A").attr("selected",true);
+            $("#type_of57a_issuing_bank").val("A").attr("selected",true);
             $("#div_460_of57a_A").show();
             $("#div_460_of57a_B").hide();
             $("#div_460_of57a_D").hide();
@@ -800,7 +800,7 @@
             $("#_465_of57a_party_identifier").attr("disabled", true);
             $("#_466_of57a_name_address").attr("disabled", true);
         } else if ($("#_463_of57a_party_identifier").val() != "" || $("#_464_of57a_location").val() != ""){
-            $("#_460_of57a_advise_through_bank").val("B").attr("selected",true);
+            $("#type_of57a_issuing_bank").val("B").attr("selected",true);
             $("#div_460_of57a_A").hide();
             $("#div_460_of57a_B").show();
             $("#div_460_of57a_D").hide();
@@ -811,7 +811,7 @@
             $("#_465_of57a_party_identifier").attr("disabled", true);
             $("#_466_of57a_name_address").attr("disabled", true);
         } else if ($("#_465_of57a_party_identifier").val() != "" || $("#_466_of57a_name_address").val() != ""){
-            $("#_460_of57a_advise_through_bank").val("D").attr("selected",true);
+            $("#type_of57a_issuing_bank").val("D").attr("selected",true);
             $("#div_460_of57a_A").hide();
             $("#div_460_of57a_B").hide();
             $("#div_460_of57a_D").show();
