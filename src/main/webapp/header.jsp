@@ -234,6 +234,9 @@ response.setHeader("X-Powered-By", "Unknown");
                                             <c:if test="${item == 'MT:202COV'}">
                                                 <li><a onclick="userTrackMenuClick('202 COV - General Financial Institution Transfer')" href="mt202COV.jsp?create=true">202 COV - General Financial Institution Transfer</a></li>
                                             </c:if>
+                                            <c:if test="${item == 'MT:210'}">
+                                                <li><a onclick="userTrackMenuClick('210 - Notice to Receieve')" href="mt210.jsp?create=true">210 - Notice to Receieve</a></li>
+                                            </c:if>
                                             <c:if test="${item == 'MT:299'}">
                                                 <li><a onclick="userTrackMenuClick('299 - Free Format Message')" href="mt299.jsp?create=true">299 - Free Format Message</a></li>
                                             </c:if>

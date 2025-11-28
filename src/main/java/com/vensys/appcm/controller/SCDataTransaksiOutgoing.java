@@ -117,7 +117,7 @@ public class SCDataTransaksiOutgoing extends HttpServlet {
             //end of the code
             //UETR
             if (messageType.equals("103") || messageType.equals("110") || messageType.equals("111") || messageType.equals("191") || messageType.equals("192") || messageType.equals("199") || 
-                    messageType.contains("202") || messageType.equals("200") ||
+                    messageType.contains("202") || messageType.equals("200") || messageType.equals("210") ||
                     messageType.contains("543") ||
                     messageType.contains("700") || messageType.contains("701") || messageType.contains("707") || messageType.contains("708") || messageType.contains("710") || messageType.contains("711") || messageType.contains("720") || messageType.contains("730") || messageType.contains("734") || messageType.contains("740") || messageType.contains("742") || messageType.contains("747") || messageType.contains("754") || messageType.contains("756") || messageType.contains("759") || messageType.contains("760") || messageType.contains("761") || messageType.contains("767") ||
                     messageType.equals("940") || messageType.equals("950")) {//191227 ditambah uetr
