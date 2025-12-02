@@ -351,12 +351,36 @@
                 _302_mf59f_account: "required",
                 _303_mf59f_number: "required",
                 _304_mf59f_details: "required",
-                _305_mf59f_number: "required",
-                _306_mf59f_details: "required",
-                _307_mf59f_number: "required",
-                _308_mf59f_details: "required",
-                _309_mf59f_number: "required",
-                _310_mf59f_details: "required",
+                _305_mf59f_number: {
+                    required: function() {
+                        return $("#name_address_checkbox_2").is(":checked");
+                    }
+                },
+                _306_mf59f_details: {
+                    required: function() {
+                        return $("#name_address_checkbox_2").is(":checked");
+                    }
+                },
+                _307_mf59f_number: {
+                    required: function() {
+                        return $("#name_address_checkbox_3").is(":checked");
+                    }
+                },
+                _308_mf59f_details: {
+                    required: function() {
+                        return $("#name_address_checkbox_3").is(":checked");
+                    }
+                },
+                _309_mf59f_number: {
+                    required: function() {
+                        return $("#name_address_checkbox_4").is(":checked");
+                    }
+                },
+                _310_mf59f_details: {
+                    required: function() {
+                        return $("#name_address_checkbox_4").is(":checked");
+                    }
+                },
 
                 /*
                 _613_mf59f_number: "required",
