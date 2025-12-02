@@ -130,11 +130,11 @@
                 */
                
                 //of53a
-                _121_of53a_identifier_code: "required",
-                _136_of54d_name_address: "required",
-
-                //of50a
-                _181_of50a_identifier_code: "required",
+//                _121_of53a_identifier_code: "required",
+//                _136_of54d_name_address: "required",
+//
+//                //of50a
+//                _181_of50a_identifier_code: "required",
                 
                 /*
                 _491_of50a_identifier_code: "required",
@@ -164,10 +164,10 @@
                 */
         
                 //53d
-                _126_of53d_name_address: "required",
-
-                //54a
-                _131_of54a_identifier_code : "required",
+//                _126_of53d_name_address: "required",
+//
+//                //54a
+//                _131_of54a_identifier_code : "required",
                 
                 //50f
                 /*
@@ -277,7 +277,7 @@
                 */
         
                 //of50k
-                _193_of50k_name_address: "required",
+//                _193_of50k_name_address: "required",
                 /*
                 _503_of50k_name_address: "required",
                 _813_of50k_name_address: "required",
@@ -333,6 +333,7 @@
                 type_of59_59a__10: "required",
                 type_of59_59a_name_address: "required",
                 */
+                _300_mf59_account: "required",
                 _301_mf59_name_address: "required",
                 /*
                 _611_mf59_name_address: "required",
@@ -347,12 +348,15 @@
                 */
 
                 //mf59f
+                _302_mf59f_account: "required",
                 _303_mf59f_number: "required",
                 _304_mf59f_details: "required",
                 _305_mf59f_number: "required",
                 _306_mf59f_details: "required",
                 _307_mf59f_number: "required",
                 _308_mf59f_details: "required",
+                _309_mf59f_number: "required",
+                _310_mf59f_details: "required",
 
                 /*
                 _613_mf59f_number: "required",
@@ -538,29 +542,29 @@
                 */
 
                 //of53a
-                _121_of53a_identifier_code: {required: "identifier_code harus diisi..!!"},
-                _136_of54d_name_address: {required: "name_address harus diisi..!!"},
-
-                //53d
-                _126_of53d_name_address: {required: "name_address harus diisi..!!"},
-
-                //54a
-                _131_of54a_identifier_code: {required: "identifier_code harus diisi..!!"},
+//                _121_of53a_identifier_code: {required: "identifier_code harus diisi..!!"},
+//                _136_of54d_name_address: {required: "name_address harus diisi..!!"},
+//
+//                //53d
+//                _126_of53d_name_address: {required: "name_address harus diisi..!!"},
+//
+//                //54a
+//                _131_of54a_identifier_code: {required: "identifier_code harus diisi..!!"},
 
                 //of50a
-                _181_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _491_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _801_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _1111_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _1421_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _1731_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _2041_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _2351_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _2661_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-                _2971_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _181_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _491_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _801_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _1111_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _1421_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _1731_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _2041_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _2351_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _2661_of50a_identifier_code: {required: "identifier harus diisi..!!"},
+//                _2971_of50a_identifier_code: {required: "identifier harus diisi..!!"},
 
                 //of50f
-                _183_of50f_account: {required: "party_identifier harus diisi..!!"},
+//                _183_of50f_account: {required: "party_identifier harus diisi..!!"},
                 /*
                 _493_of50f_account: {required: "party_identifier harus diisi..!!"},
                 _803_of50f_account: {required: "party_identifier harus diisi..!!"},
@@ -574,7 +578,7 @@
                 */
 
                 //of50k
-                _192_of50k_account: {required: "party_identifier harus diisi..!!"},
+//                _192_of50k_account: {required: "party_identifier harus diisi..!!"},
                 
                 //of50f
                 /*
@@ -670,8 +674,9 @@
                 */
                 
                 //of50k
-                _193_of50k_name_address: {required: "name_address harus diisi..!!"},
+                
                 /*
+                _193_of50k_name_address: {required: "name_address harus diisi..!!"},
                 _503_of50k_name_address : {required: "name_address harus diisi..!!"},
                 _813_of50k_name_address : {required: "name_address harus diisi..!!"},
                 _1123_of50k_name_address : {required: "name_address harus diisi..!!"},
@@ -698,8 +703,9 @@
                 */
 
                 //of52d
-                _295_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
+                
                 /*
+                _295_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
                 _605_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
                 _915_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
                 _1225_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
@@ -712,7 +718,18 @@
                 */
         
                 //mf59
-                type_of59_59a_name_address: {required: "type_of59 harus diisi..!!"},
+                type_of59_59a_: {required: "type_mf59 harus diisi..!!"},
+                _300_mf59_account: {required: "mf59a account harus diisi..!!"},
+                _301_mf59_name_address: {required: "mf59a name address harus diisi..!!"},
+                _302_mf59f_account: {required: "mf59a account harus diisi..!!"},
+                _303_mf59f_number: {required: "mf59a number harus diisi..!!"},
+                _304_mf59f_details: {required: "mf59a details harus diisi..!!"},
+                _305_mf59f_number: {required: "mf59a number harus diisi..!!"},
+                _306_mf59f_details: {required: "mf59a details harus diisi..!!"},
+                _307_mf59f_number: {required: "mf59a number harus diisi..!!"},
+                _308_mf59f_details: {required: "mf59a details harus diisi..!!"},
+                _309_mf59f_number: {required: "mf59a number harus diisi..!!"},
+                _310_mf59f_details: {required: "mf59a details harus diisi..!!"},
                 /*
                 type_of59_59a_: {required: "type_of59 harus diisi..!!"},
                 type_of59_59a__2: {required: "type_of59 harus diisi..!!"},
