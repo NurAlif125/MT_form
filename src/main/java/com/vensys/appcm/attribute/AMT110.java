@@ -33,26 +33,15 @@ public class AMT110 {
 
         data.setMf20(prop.getProperty("mf20"));
         data.setOf53a(prop.getProperty("of53a"));
-        data.setOf53b(prop.getProperty("of53b"));
-        data.setOf53d(prop.getProperty("of53d"));
         data.setOf54a(prop.getProperty("of54a"));
-        data.setOf54b(prop.getProperty("of54b"));
-        data.setOf54d(prop.getProperty("of54d"));
         data.setOf72(prop.getProperty("of72"));
-
 
         data.setMf21(prop.getProperty("mf21"));
         data.setMf30(prop.getProperty("mf30"));
         data.setMf32a(prop.getProperty("mf32a"));
-        data.setMf32b(prop.getProperty("mf32b"));
         data.setOf50a(prop.getProperty("of50a"));
-        data.setOf50f(prop.getProperty("of50f"));
-        data.setOf50k(prop.getProperty("of50k"));
         data.setOf52a(prop.getProperty("of52a"));
-        data.setOf52b(prop.getProperty("of52b"));
-        data.setOf52d(prop.getProperty("of52d"));
-        data.setMf59(prop.getProperty("mf59"));
-        data.setMf59f(prop.getProperty("mf59f"));
+        data.setMf59a(prop.getProperty("mf59a"));
         return data;
     }
 
