@@ -328,7 +328,7 @@
                                 <hr/>--%>
                             <!-- MF20 Sender's Reference -->
                             <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sender's Reference</span>
-                                <input type="text" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" class="mandatory" maxlength="16" size="16" onkeypress="avoidSplChars(event)" input_type="MF20 Sender's Reference" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" input_type="MF20 Sender Reference" location="Body" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" class="mandatory" onkeypress="avoidSplChars(event)" maxlength="16" minlength="1" pattern="[0-9a-zA-Z/\-?:().,\'\+ ]{1,16}" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                             </div>
                             <hr/>
 
