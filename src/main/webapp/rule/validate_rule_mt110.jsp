@@ -135,6 +135,51 @@
 //
 //                //of50a
 //                _181_of50a_identifier_code: "required",
+                _183_of50f_account: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f";
+                    }
+                },
+                _184_mf50f_number: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f";
+                    }
+                },
+                _185_of50f_details: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f";
+                    }
+                },
+                _186_of50f_number: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_2_50").is(":checked");
+                    }
+                },
+                _187_of50f_details: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_2_50").is(":checked");
+                    }
+                },
+                _188_of50f_number: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_3_50").is(":checked");
+                    }
+                },
+                _189_of50f_details: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_3_50").is(":checked");
+                    }
+                },
+                _190_of50f_number: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_4_50").is(":checked");
+                    }
+                },
+                _191_of50f_details: {
+                    required: function() {
+                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_4_50").is(":checked");
+                    }
+                },
                 
                 /*
                 _491_of50a_identifier_code: "required",
@@ -468,45 +513,45 @@
             },
             messages: { 
                 
-                sender_logical_terminal: {required: "sender_logical_terminal harus diisi..!!"},
-                receiver_institution: {required: "receiver_institution harus diisi..!!"},
-                priority: {required: "priority harus diisi..!!"},
-                _010_mf20_senders_reference: {required: "senders_reference harus diisi..!!"},
+                sender_logical_terminal: {required: "sender_logical_terminal must be filled..!!"},
+                receiver_institution: {required: "receiver_institution must be filled..!!"},
+                priority: {required: "priority must be filled..!!"},
+                _010_mf20_senders_reference: {required: "senders_reference must be filled..!!"},
                 //mf21
-                _151_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _461_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _771_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _1081_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _1391_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _1701_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _2011_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _2321_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _2631_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
-                _2941_mf21_cheque_number: {required: "cheque_number harus diisi..!!"},
+                _151_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _461_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _771_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _1081_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _1391_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _1701_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _2011_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _2321_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _2631_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
+                _2941_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
 
                 //mf30a
-                _161_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _471_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _781_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _1091_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _1401_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _1711_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _2021_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _2331_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _2641_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
-                _2951_mf30_date_of_issue: {required: "date_of_issue harus diisi..!!"},
+                _161_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _471_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _781_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _1091_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _1401_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _1711_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _2021_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _2331_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _2641_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
+                _2951_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
 
                 //mf32a
-                type_mf32_amount_collected: {required: "type_mf32_amount_collected harus diisi..!!"},
-                type_mf32_amount_collected_2: {required: "type_mf32_amount_collected_2 harus diisi..!!"},
-                type_mf32_amount_collected_3: {required: "type_mf32_amount_collected_3 harus diisi..!!"},
-                type_mf32_amount_collected_4: {required: "type_mf32_amount_collected_4 harus diisi..!!"},
-                type_mf32_amount_collected_5: {required: "type_mf32_amount_collected_5 harus diisi..!!"},
-                type_mf32_amount_collected_6: {required: "type_mf32_amount_collected_6 harus diisi..!!"},
-                type_mf32_amount_collected_7: {required: "type_mf32_amount_collected_7 harus diisi..!!"},
-                type_mf32_amount_collected_8: {required: "type_mf32_amount_collected_8 harus diisi..!!"},
-                type_mf32_amount_collected_9: {required: "type_mf32_amount_collected_9 harus diisi..!!"},
-                type_mf32_amount_collected_10: {required: "type_mf32_amount_collected_10 harus diisi..!!"},
+                type_mf32_amount_collected: {required: "type_mf32_amount_collected must be filled..!!"},
+                type_mf32_amount_collected_2: {required: "type_mf32_amount_collected_2 must be filled..!!"},
+                type_mf32_amount_collected_3: {required: "type_mf32_amount_collected_3 must be filled..!!"},
+                type_mf32_amount_collected_4: {required: "type_mf32_amount_collected_4 must be filled..!!"},
+                type_mf32_amount_collected_5: {required: "type_mf32_amount_collected_5 must be filled..!!"},
+                type_mf32_amount_collected_6: {required: "type_mf32_amount_collected_6 must be filled..!!"},
+                type_mf32_amount_collected_7: {required: "type_mf32_amount_collected_7 must be filled..!!"},
+                type_mf32_amount_collected_8: {required: "type_mf32_amount_collected_8 must be filled..!!"},
+                type_mf32_amount_collected_9: {required: "type_mf32_amount_collected_9 must be filled..!!"},
+                type_mf32_amount_collected_10: {required: "type_mf32_amount_collected_10 must be filled..!!"},
                 
                 _170_mf32a_date: {required: "date harus diisi..!!"},
                 _171_mf32a_currency: {required: "currency harus diisi..!!"},
@@ -542,8 +587,8 @@
                 */
         
                 //mf32b
-                _173_mf32b_currency: {required: "currency harus diisi..!!"},
-                _174_mf32b_amount: {required: "amount harus diisi..!!"},
+                _173_mf32b_currency: {required: "currency must be filled..!!"},
+                _174_mf32b_amount: {required: "amount must be filled..!!"},
                 /*
                 _483_mf32b_currency: {required: "currency harus diisi..!!"},
                 _484_mf32b_amount: {required: "amount harus diisi..!!"},
@@ -588,6 +633,15 @@
 //                _2971_of50a_identifier_code: {required: "identifier harus diisi..!!"},
 
                 //of50f
+                _183_of50f_account: {required: "of50f account must be filled..!!"},
+                _184_mf50f_number: {required: "of50f number must be filled..!!"},
+                _185_of50f_details: {required: "of50f details must be filled!"},
+                _186_of50f_number: {required: "OF50F Number (Detail 2) must be selected!"},
+                _187_of50f_details: {required: "OF50F Details (Detail 2) must be filled!"},
+                _188_of50f_number: {required: "OF50F Number (Detail 3) must be selected!"},
+                _189_of50f_details: {required: "OF50F Details (Detail 3) must be filled!"},
+                _190_of50f_number: {required: "OF50F Number (Detail 4) must be selected!"},
+                _191_of50f_details: {required: "OF50F Details (Detail 4) must be filled!"},
 //                _183_of50f_account: {required: "party_identifier harus diisi..!!"},
                 /*
                 _493_of50f_account: {required: "party_identifier harus diisi..!!"},
@@ -742,18 +796,18 @@
                 */
         
                 //mf59
-                type_of59_59a_: {required: "type_mf59 harus diisi..!!"},
-                _300_mf59_account: {required: "mf59a account harus diisi..!!"},
-                _301_mf59_name_address: {required: "mf59a name address harus diisi..!!"},
-                _302_mf59f_account: {required: "mf59a account harus diisi..!!"},
-                _303_mf59f_number: {required: "mf59a number harus diisi..!!"},
-                _304_mf59f_details: {required: "mf59a details harus diisi..!!"},
-                _305_mf59f_number: {required: "mf59a number harus diisi..!!"},
-                _306_mf59f_details: {required: "mf59a details harus diisi..!!"},
-                _307_mf59f_number: {required: "mf59a number harus diisi..!!"},
-                _308_mf59f_details: {required: "mf59a details harus diisi..!!"},
-                _309_mf59f_number: {required: "mf59a number harus diisi..!!"},
-                _310_mf59f_details: {required: "mf59a details harus diisi..!!"},
+                type_of59_59a_: {required: "type_mf59 must be filled..!!"},
+                _300_mf59_account: {required: "mf59a account must be filled..!!"},
+                _301_mf59_name_address: {required: "mf59a name address must be filled..!!"},
+                _302_mf59f_account: {required: "mf59a account must be filled..!!"},
+                _303_mf59f_number: {required: "mf59a number must be filled..!!"},
+                _304_mf59f_details: {required: "mf59a details must be filled..!!"},
+                _305_mf59f_number: {required: "mf59a number must be filled..!!"},
+                _306_mf59f_details: {required: "mf59a details must be filled..!!"},
+                _307_mf59f_number: {required: "mf59a number must be filled..!!"},
+                _308_mf59f_details: {required: "mf59a details must be filled..!!"},
+                _309_mf59f_number: {required: "mf59a number must be filled..!!"},
+                _310_mf59f_details: {required: "mf59a details must be filled..!!"},
                 /*
                 type_of59_59a_: {required: "type_of59 harus diisi..!!"},
                 type_of59_59a__2: {required: "type_of59 harus diisi..!!"},
