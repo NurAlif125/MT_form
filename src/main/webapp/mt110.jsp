@@ -27,6 +27,24 @@
 <script type="text/javascript" src="js/jquery-ui-1.8.22.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.validate.js"></script>
 
+<%
+    String createParam = request.getParameter("create");
+        if ("true".equalsIgnoreCase(createParam)) {
+            session.setAttribute("flag", "");
+            session.setAttribute("flagStatus", "");
+        }
+%>
+
+<script>
+    var tagsData = [
+        <c:forEach var="t" items="${tags}" varStatus="s">
+        {
+            tagName: "${fn:escapeXml(t.tagName)}",
+            detail: "${fn:escapeXml(t.detail)}"
+        }<c:if test="${!s.last}">,</c:if>
+        </c:forEach>
+    ];
+</script>
 <div id="isi">
     <c:forEach var="item" items="${role}">
         <c:if test="${item == 'MT:110'}">
@@ -36,7 +54,17 @@
                 <c:forEach var="t" items="${tags}">
                 tagData["${t.tagName}"] = "${t.detail}";
                 </c:forEach>
+                    
+                var tagsData = [
+                    <c:forEach var="item" items="${tags}" varStatus="s">
+                    {
+                        tagName: "${fn:escapeXml(item.tagName)}",
+                        detail: "${fn:escapeXml(item.detail)}"
+                    }<c:if test="${!s.last}">,</c:if>
+                    </c:forEach>
+                ];
             </script>
+
             <!--js submitnya diubah menjadi di sini buak di validate_button 20180413-->
             <form id="form1" name="form1" method="post" action="ServletControllerDataTransaksiOutgoing" autocomplete="off" onsubmit="return confirm('Do you want to save this MT data?');">
                 <input name="messageType" id="messageType" type="hidden" value="110" />
@@ -64,7 +92,7 @@
                         <div id="view2" class="tabcontent">
                             <!-- MF20 -->
                             <div class="form-row"><span class="label_body">MF20</span><span class="label"><a style="color:red;text-decoration:none">*</a>Sender's Reference</span>
-                                <input type="text" input_type="MF20 Sender Reference" location="Body" name="_010_mf20_sender_reference" id="_010_mf20_sender_reference" class="mandatory" onkeypress="avoidSplChars(event)" maxlength="16" minlength="1" pattern="[0-9a-zA-Z/\-?:().,\'\+ ]{1,16}" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_sender_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                <input type="text" name="_010_mf20_senders_reference" id="_010_mf20_senders_reference" class="mandatory" input_type="MF20 Sender's Reference" location="Body" onpaste="return false;" maxlength="16" minlength="1" onkeypress="avoidSplChars(event)" pattern="[0-9a-zA-Z/\-?:().,\'\+ ]{1,16}" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_010_mf20_senders_reference'}"><c:out value="${item.detail}" /></c:if></c:forEach>"/>
                                     </div>
                                     <hr/>
 
@@ -72,7 +100,7 @@
                                     <div class="form-row"><span class="label_body">OF53</span><span class="label">Sender's Correspondent</span>
                                         <select id="type_of53_" name="type_of53_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - BIC</option>
+                                            <option value="a">A - Identifier Code</option>
                                             <option value="b">B - Location</option>
                                             <option value="d">D - Name and Address</option>
                                         </select>
@@ -80,8 +108,8 @@
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                 <input type="text" name="_120_of53a_party_identifier" id="_120_of53a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_120_of53a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code</span>
-                                                <input type="text" name="_121_of53a_identifier_code" id="_121_of53a_identifier_code" minlength="8" maxlength="11" class="mandatory" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_121_of53a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
+                                                <input type="text" name="_121_of53a_identifier_code" id="_121_of53a_identifier_code" minlength="8" maxlength="11" class="mandatory" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" input_type="OF53A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_121_of53a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea disabled="true"><c:out value="${senderBank}" /></textarea>
@@ -99,8 +127,8 @@
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                 <input type="text" name="_125_of53d_party_identifier" id="_125_of53d_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_125_of53d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
-                                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" class="mandatory" name="_126_of53d_name_address" id="_126_of53d_name_address" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_126_of53d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Name and Address</span>
+                                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" class="mandatory" name="_126_of53d_name_address" id="_126_of53d_name_address" input_type="OF53D Name and Address" location="Body"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_126_of53d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -109,7 +137,7 @@
                                     <div class="form-row"><span class="label_body">OF54</span><span class="label">Receiver's Correspondent</span>
                                         <select id="type_of54_" name="type_of54_">
                                             <option value="">choose a type</option>
-                                            <option value="a">A - Receiver's Correspondent - BIC</option>
+                                            <option value="a">A - Receiver's Correspondent - Identifier Code</option>
                                             <option value="b">B - Receiver's Correspondent - Location</option>
                                             <option value="d">D - Receiver's Correspondent - Name and Address</option>
                                         </select>
@@ -117,8 +145,8 @@
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                 <input type="text" name="_130_of54a_party_identifier" id="_130_of54a_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_130_of54a_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code</span>
-                                                <input type="text" name="_131_of54a_identifier_code" id="_131_of54a_identifier_code" minlength="8" maxlength="11" class="mandatory" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_131_of54a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
+                                                <input type="text" name="_131_of54a_identifier_code" id="_131_of54a_identifier_code" minlength="8" maxlength="11" class="mandatory" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" input_type="OF54A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_131_of54a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                             </div>
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                 <textarea name="_132_of54a_address" id="_132_of54a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_132_of54a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -136,22 +164,22 @@
                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                 <input type="text" name="_135_of54d_party_identifier" id="_135_of54d_party_identifier" maxlength="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_135_of54d_party_identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                             </div>
-                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
-                                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" class="mandatory" name="_136_of54d_name_address" id="_136_of54d_name_address" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_136_of54d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Name and Address</span>
+                                                <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" style="resize:none;" class="mandatory" name="_136_of54d_name_address" id="_136_of54d_name_address" input_type="OF54D Name and Address" location="Body"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_136_of54d_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <hr/>
                                     <!-- OF72 -->
                                     <div class="form-row"><span class="label_body">OF72</span><span class="label">Sender to Receiver Information</span>
-                                        <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_240_of72_sender_receiver_information" id="_240_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_240_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                        <textarea onkeypress="avoidSplChars(event)" cols="35" rows="6" maxlength="210" style="resize:none;" name="_137_of72_sender_receiver_information" id="_137_of72_sender_receiver_information" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_137_of72_sender_receiver_information'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                     </div>
                                     <hr/>
                                     <div id="loop-container"><div id="loop-container">
                                             <div id="loop-set">
                                                 <!--MF21-->
                                                 <div class="form-row"><span class="label_body">MF21</span><span class="label"><a style="color:red;text-decoration:none">*</a>Cheque Number</span>
-                                                    <input type="text" name="_151_mf21_cheque_number" id="_151_mf21_cheque_number" maxlength="16" class="mandatory" input_type="MF21 Cheque Number" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_151_mf21_cheque_number'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                    <input type="text" name="_151_mf21_cheque_number" id="_151_mf21_cheque_number" maxlength="16" class="mandatory" input_type="MF21 Cheque Number" location="Body" onkeypress="avoidSplChars(event)" pattern="[0-9a-zA-Z/\-?:().,\'\+ ]{1,16}" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_151_mf21_cheque_number'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                 </div>
 
                                                 <!-- MF30 -->
@@ -160,29 +188,29 @@
                                                 </div>
 
                                                 <!--MF32-->
-                                                <div class="form-row"><span class="label_body">MF32a</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
+                                                <div class="form-row"><span class="label_body">MF32</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
                                                     <select id="type_mf32_amount_collected" name="type_mf32_amount_collected" class="mandatory" input_type="MF32a Amount" location="Body">
                                                         <option value="">choose a type</option>
                                                         <option value="a">A - Date, Currency, Amount</option>
                                                         <option value="b">B - Currency - Amount</option>
                                                     </select>
                                                     <div id="div_mf32a">
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Date</span>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Date</span>
                                                             <input type="text" name="_170_mf32a_date" id="_170_mf32a_date" maxlength="6" minlength="6" size="6" class="mandatory" input_type="MF32a Date" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_170_mf32a_date'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                         </div>
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency</span>
                                                             <input type="text" name="_171_mf32a_currency" id="_171_mf32a_currency" maxlength="3" minlength="3" class="mandatory" input_type="MF32a Currency" location="Body" size="3" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z]/g,'').toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_171_mf32a_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />                                     
                                                         </div>
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
                                                             <input type="text" name="_172_mf32a_amount" id="_172_mf32a_amount" maxlength="15" minlength="1" size="15" class="mandatory" input_type="MF32a Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_172_mf32a_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_172_mf32a_amount');" onblur="cek_koma(this)"/>                                     
                                                         </div>
 
                                                     </div>
                                                     <div id="div_mf32b">
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Currency</span>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Currency</span>
                                                             <input type="text" name="_173_mf32b_currency" id="_173_mf32b_currency" maxlength="3" minlength="3" size="3" class="mandatory" input_type="MF32a Currency" location="Body" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z]/g,'').toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_173_mf32b_currency'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                         </div>
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Amount</span>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Amount</span>
                                                             <input type="text" name="_174_mf32b_amount" id="_174_mf32b_amount" maxlength="15" minlength="1" size="15" class="mandatory" input_type="MF32a Amount" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_174_mf32b_amount'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onkeypress="return numbersonly(event, '_172_mf32a_amount');" onblur="cek_koma(this)"/>                                     
                                                         </div>
                                                     </div>
@@ -192,7 +220,7 @@
                                                 <div class="form-row"><span class="label_body">OF50</span><span class="label">Payer</span>
                                                     <select id="type_of50_payer" name="type_of50_payer">
                                                         <option value="">choose a type</option>
-                                                        <option value="a">A - BIC</option>
+                                                        <option value="a">A - Identifier Code</option>
                                                         <option value="f">F - Number/Name and Address Details</option>
                                                         <option value="k">K - Name and Address</option>
                                                     </select>
@@ -200,8 +228,8 @@
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Account</span>
                                                             <input type="text" name="_180_of50a_account" id="_180_of50a_account" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_180_of50a_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                                         </div>
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code</span>
-                                                            <input type="text" name="_181_of50a_identifier_code" id="_181_of50a_identifier_code" minlength="8" maxlength="11" class="mandatory" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_181_of50a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
+                                                            <input type="text" name="_181_of50a_identifier_code" id="_181_of50a_identifier_code" minlength="8" maxlength="11" class="mandatory" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" input_type="OF50A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_181_of50a_identifier_code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                         </div>
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                             <textarea name="_182_of50a_address" id="_182_of50a_address" disabled="true"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_182_of50a_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
@@ -210,44 +238,44 @@
                                                     <!--20200709-->
                                                     <div id="div_mf50f_">
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Party Identifier</span>
-                                                            <input type="text" name="_183_of50f_account" id="_183_of50f_account" maxlength="35" class="mandatory" input_type="MF50f Party Identifier" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_183_of50f_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
+                                                            <input type="text" name="_183_of50f_account" id="_183_of50f_account" maxlength="35" class="mandatory" input_type="OF50F Party Identifier" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_183_of50f_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                                         </div>
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
-                                                            <select id="_184_mf50f_number" name="_184_mf50f_number" class="mandatory" input_type="MF50f Number" location="Body">
+                                                            <select id="_184_mf50f_number" name="_184_mf50f_number" class="mandatory" input_type="OF50F Number" location="Body" input_type="OF50F Number" location="Body">
                                                                 <option value=""></option>
-                                                                <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                        <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                        <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
-                                                        <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4</option>
-                                                        <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5</option>
-                                                        <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6</option>
-                                                        <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7</option>
-                                                        <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8</option>
+                                                                <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                        <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                        <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
+                                                        <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4 (Date of Birth)</option>
+                                                        <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5 (Place of Birth)</option>
+                                                        <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6 (Customer Identification Number)</option>
+                                                        <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7 (National Identity Number)</option>
+                                                        <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_184_mf50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8 (Additional Information)</option>
                                                                 </select>
                                                             </div>
                                                             <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
-                                                                <input type="text" name="_185_of50f_details" id="_185_of50f_details" maxlength="33" class="mandatory" input_type="MF50f Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_185_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                <input type="text" name="_185_of50f_details" id="_185_of50f_details" maxlength="33" class="mandatory" input_type="OF50F Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_185_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                         </div>
                                                     </div>
                                                     <div id="div_mf50f_2">
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number Name and Address Details 2</span>
-                                                            <input type="checkbox" name="name_address_checkbox_2_50" id="name_address_checkbox_2_50"/>
+                                                            <input type="checkbox" name="name_address_checkbox_2_50" id="name_address_checkbox_2_50" />
                                                             <div id="check_mf50f_2">
-                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                                    <select id="_186_of50f_number" name="_186_of50f_number" class="mandatory" input_type="MF50f Number Name and Address Details 2" location="Body">
+                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
+                                                                    <select id="_186_of50f_number" name="_186_of50f_number" class="mandatory" input_type="OF50F Number" location="Body">
                                                                         <option value=""></option>
-                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
-                                                                <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4</option>
-                                                                <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5</option>
-                                                                <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6</option>
-                                                                <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7</option>
-                                                                <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8</option>
+                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
+                                                                <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4 (Date of Birth)</option>
+                                                                <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5 (Place of Birth)</option>
+                                                                <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6 (Customer Identification Number)</option>
+                                                                <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7 (National Identity Number)</option>
+                                                                <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_186_of50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8 (Additional Information)</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                        <input type="text" name="_187_of50f_details" id="_187_of50f_details" maxlength="33" class="mandatory" input_type="MF50f Number Name and Address Details 2" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_187_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
+                                                                        <input type="text" name="_187_of50f_details" id="_187_of50f_details" maxlength="33" class="mandatory" input_type="OF50F Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_187_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -256,44 +284,44 @@
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number Name and Address Details 3</span>
                                                             <input type="checkbox" name="name_address_checkbox_3_50" id="name_address_checkbox_3_50" />
                                                             <div id="check_mf50f_3">
-                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                                    <select id="_188_of50f_number" name="_188_of50f_number" class="mandatory" input_type="MF50f Number Name and Address Details 3" location="Body">
+                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
+                                                                    <select id="_188_of50f_number" name="_188_of50f_number" class="mandatory" input_type="OF50F Number" location="Body">
                                                                         <option value=""></option>
-                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
-                                                                <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4</option>
-                                                                <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5</option>
-                                                                <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6</option>
-                                                                <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7</option>
-                                                                <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8</option>
+                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
+                                                                <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4 (Date of Birth)</option>
+                                                                <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5 (Place of Birth)</option>
+                                                                <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6 (Customer Identification Number)</option>
+                                                                <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7 (National Identity Number)</option>
+                                                                <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_188_of50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8 (Additional Information)</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                        <input type="text" name="_189_of50f_details" id="_189_of50f_details" maxlength="33" class="mandatory" input_type="MF50f Number Name and Address Details 3" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_189_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
+                                                                        <input type="text" name="_189_of50f_details" id="_189_of50f_details" maxlength="33" class="mandatory" input_type="OF50F Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_189_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div id="div_mf50f_4">
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number Name and Address Details 4</span>
-                                                            <input type="checkbox" name="name_address_checkbox_4_50" id="name_address_checkbox_4_50"/>
+                                                            <input type="checkbox" name="name_address_checkbox_4_50" id="name_address_checkbox_4_50" />
                                                             <div id="check_mf50f_4">
-                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                                    <select id="_190_of50f_number" name="_190_of50f_number" class="mandatory" input_type="MF50f Number Name and Address Details 4" location="Body">
+                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
+                                                                    <select id="_190_of50f_number" name="_190_of50f_number" class="mandatory" input_type="OF50F Number" location="Body">
                                                                         <option value=""></option>
-                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
-                                                                <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4</option>
-                                                                <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5</option>
-                                                                <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6</option>
-                                                                <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7</option>
-                                                                <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8</option>
+                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
+                                                                <option value="4" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='4'}"> selected="true" </c:if></c:if></c:forEach>>4 (Date of Birth)</option>
+                                                                <option value="5" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='5'}"> selected="true" </c:if></c:if></c:forEach>>5 (Place of Birth)</option>
+                                                                <option value="6" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='6'}"> selected="true" </c:if></c:if></c:forEach>>6 (Customer Identification Number)</option>
+                                                                <option value="7" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='7'}"> selected="true" </c:if></c:if></c:forEach>>7 (National Identity Number)</option>
+                                                                <option value="8" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_190_of50f_number'}"><c:if test="${item.detail=='8'}"> selected="true" </c:if></c:if></c:forEach>>8 (Additional Information)</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                        <input type="text" name="_191_of50f_details" id="_191_of50f_details" maxlength="33" class="mandatory" input_type="MF50f Number Name and Address Details 4" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_191_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
+                                                                        <input type="text" name="_191_of50f_details" id="_191_of50f_details" maxlength="33" class="mandatory" input_type="OF50F Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_191_of50f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -302,17 +330,17 @@
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Account</span>
                                                             <input type="text" name="_192_of50k_account" id="_192_of50k_account" maxlength="35" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_192_of50k_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                                         </div>
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
-                                                            <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" class="mandatory" style="resize:none;" name="_193_of50k_name_address" id="_193_of50k_name_address" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_193_of50k_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Name and Address</span>
+                                                            <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" class="mandatory" style="resize:none;" name="_193_of50k_name_address" id="_193_of50k_name_address" input_type="OF50K Name and Address" location="Body"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_193_of50k_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <!-- OF52A -->
-                                                <div class="form-row"><span class="label_body">OF52A</span><span class="label">Drawer Bank</span>
+                                                <div class="form-row"><span class="label_body">OF52</span><span class="label">Drawer Bank</span>
                                                     <select id="type_of52_Sender_of_Cash_Letter" name="type_of52_Sender_of_Cash_Letter">
                                                         <option value="">choose a type</option>
-                                                        <option value="a">A - BIC</option>
+                                                        <option value="a">A - Identifier Code</option>
                                                         <option value="b">B - Location</option>
                                                         <option value="d">D - Name and Address</option>
                                                     </select>
@@ -320,8 +348,8 @@
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                             <input type="text" name="_290_of52a_Party_Identifier" id="_290_of52a_Party_Identifier" maxlength="37" size="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_290_of52a_Party_Identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
                                                         </div>
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Identifier Code</span>
-                                                            <input type="text" name="_291_of52a_Identifier_Code" id="_291_of52a_Identifier_Code" minlength="8" maxlength="11" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_291_of52a_Identifier_Code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Identifier Code</span>
+                                                            <input type="text" name="_291_of52a_Identifier_Code" id="_291_of52a_Identifier_Code" class="mandatory" minlength="8" maxlength="11" autocomplete="off" style="text-transform: uppercase;" oninput="this.value = this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();" input_type="OF52A Identifier Code" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_291_of52a_Identifier_Code'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                         </div>
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Address Expansion</span>
                                                             <textarea disabled="true"><c:out value="${senderBank}" /></textarea>
@@ -339,20 +367,20 @@
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Party Identifier</span>
                                                             <input type="text" name="_294_of52d_Party_Identifier" id="_294_of52d_Party_Identifier" maxlength="37" size="37" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_294_of52d_Party_Identifier'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)"/>
                                                         </div>
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Name and Address</span>
-                                                            <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_295_of52d_Name_and_Address" id="_295_of52d_Name_and_Address" class="mandatory"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_295_of52d_Name_and_Address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Name and Address</span>
+                                                            <textarea cols="35" rows="4" maxlength="140" wrap="hard" style="resize:none;" name="_295_of52d_Name_and_Address" id="_295_of52d_Name_and_Address" class="mandatory" input_type="OF52D Name and Address" location="Body"><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_295_of52d_Name_and_Address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- M59/59A -->
-                                                <div class="form-row"><span class="label_body">MF59a</span><span class="label"><a style="color:red;text-decoration:none">*</a>Payee</span>
+                                                <div class="form-row"><span class="label_body">MF59</span><span class="label"><a style="color:red;text-decoration:none">*</a>Payee</span>
                                                     <select id="type_of59_59a_" name="type_of59_59a_" class="mandatory" input_type="MF59a Payee" location="Body">
                                                         <option value="">choose a type</option>
                                                         <option value="59">59 - Name and Address</option>
                                                         <option value="59f">59F - Number/Name and Address Details</option>
                                                     </select>
                                                     <div id="div_mf59_">
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Account</span>
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Account</span>
                                                             <input type="text" name="_300_mf59_account" id="_300_mf59_account" maxlength="35" size="40" input_type="MF59a Account" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_300_mf59_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                                         </div>
                                                 <% if (session.getAttribute("flagStatus").equals("INC-WAIT") || session.getAttribute("flagStatus").equals("INC-ADJ")) {%>
@@ -373,7 +401,7 @@
                                                 </div>
                                                 <% }%>
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Name and Address</span>
-                                                    <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" class="mandatory" style="resize:none;" name="_301_mf59_name_address" id="_301_mf59_name_address" input_type="MF59a Name and Address" location="Body" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_301_mf59_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>         
+                                                    <textarea onkeypress="avoidSplChars(event)" cols="35" rows="4" maxlength="140" class="mandatory" style="resize:none;" name="_301_mf59_name_address" id="_301_mf59_name_address" input_type="MF59 Name and Address" location="Body" ><c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_301_mf59_name_address'}"><c:out value="${item.detail}" /></c:if></c:forEach></textarea>         
                                                         </div>
                                                 <% if (session.getAttribute("flagStatus").equals("INC-WAIT") || session.getAttribute("flagStatus").equals("INC-ADJ")) {%>
                                                 <c:if test="${headerById.komentar=='Not Found'}">
@@ -385,7 +413,7 @@
                                             </div>
                                             <!--20200416-->
                                             <div id="div_mf59f_">
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Account</span>
+                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Account</span>
                                                     <input type="text" name="_302_mf59f_account" id="_302_mf59f_account" maxlength="35" input_type="MF59a Account" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_302_mf59f_account'}"><c:out value="${item.detail}" /></c:if></c:forEach>" onblur="cek_slash(this)" />
                                                         </div>
                                                 <% if (session.getAttribute("flagStatus").equals("INC-WAIT") || session.getAttribute("flagStatus").equals("INC-ADJ")) {%>
@@ -401,16 +429,16 @@
                                                     </div>
                                                 </c:if>
                                                 <% }%>
-                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                    <select id="_303_mf59f_number" name="_303_mf59f_number" class="mandatory" input_type="MF59a Number" location="Body">
+                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
+                                                    <select id="_303_mf59f_number" name="_303_mf59f_number" class="mandatory" input_type="MF59f Number" location="Body">
                                                         <option value=""></option>
-                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_303_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                        <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_303_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                        <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_303_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
+                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_303_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                        <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_303_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                        <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_303_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
                                                                 </select>
                                                             </div>
-                                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                <input type="text" name="_304_mf59f_details" id="_304_mf59f_details" maxlength="33" class="mandatory" input_type="MF59a Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_304_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" /> 
+                                                            <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
+                                                                <input type="text" name="_304_mf59f_details" id="_304_mf59f_details" maxlength="33" class="mandatory" input_type="MF59f Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_304_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                         </div>
                                                 <% if (session.getAttribute("flagStatus").equals("INC-WAIT") || session.getAttribute("flagStatus").equals("INC-ADJ")) {%>
                                                 <c:if test="${headerById.komentar=='Not Found'}">
@@ -424,16 +452,16 @@
                                                 <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number Name and Address Details 2</span>
                                                     <input type="checkbox" name="name_address_checkbox_2" id="name_address_checkbox_2" />
                                                     <div id="check_mf59f_2">
-                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                            <select id="_305_mf59f_number" name="_305_mf59f_number" class="mandatory" input_type="MF59a Number" location="Body">
+                                                        <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
+                                                            <select id="_305_mf59f_number" name="_305_mf59f_number" class="mandatory" input_type="MF59f Number" location="Body">
                                                                 <option value=""></option>
-                                                                <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_305_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_305_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_305_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
+                                                                <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_305_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_305_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_305_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                        <input type="text" name="_306_mf59f_details" id="_306_mf59f_details" maxlength="33" class="mandatory" input_type="MF59a Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_306_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
+                                                                        <input type="text" name="_306_mf59f_details" id="_306_mf59f_details" maxlength="33" class="mandatory" input_type="MF59f Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_306_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -442,16 +470,16 @@
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number Name and Address Details 3</span>
                                                             <input type="checkbox" name="name_address_checkbox_3" id="name_address_checkbox_3" />
                                                             <div id="check_mf59f_3">
-                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                                    <select id="_307_mf59f_number" name="_307_mf59f_number" class="mandatory" input_type="MF59a Number" location="Body">
+                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
+                                                                    <select id="_307_mf59f_number" name="_307_mf59f_number" class="mandatory" input_type="MF59f Number" location="Body">
                                                                         <option value=""></option>
-                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_307_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_307_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_307_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
+                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_307_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                                <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_307_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                                <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_307_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                        <input type="text" name="_308_mf59f_details" id="_308_mf59f_details" maxlength="33" class="mandatory" input_type="MF59a Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_308_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
+                                                                        <input type="text" name="_308_mf59f_details" id="_308_mf59f_details" maxlength="33" class="mandatory" input_type="MF59f Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_308_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -460,16 +488,16 @@
                                                         <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number Name and Address Details 4</span>
                                                             <input type="checkbox" name="name_address_checkbox_4" id="name_address_checkbox_4" />
                                                             <div id="check_mf59f_4">
-                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Number</span>
-                                                                    <select id="_309_mf59f_number" name="_309_mf59f_number" class="mandatory" input_type="MF59a Number" location="Body">
+                                                                <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Number</span>
+                                                                    <select id="_309_mf59f_number" name="_309_mf59f_number" class="mandatory" input_type="MF59f Number" location="Body">
                                                                         <option value=""></option>
-                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_309_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1</option>
-                                                                        <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_309_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2</option>
-                                                                        <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_309_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3</option>
+                                                                        <option value="1" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_309_mf59f_number'}"><c:if test="${item.detail=='1'}"> selected="true" </c:if></c:if></c:forEach>>1 (Payer's Name)</option>
+                                                                        <option value="2" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_309_mf59f_number'}"><c:if test="${item.detail=='2'}"> selected="true" </c:if></c:if></c:forEach>>2 (Address Line)</option>
+                                                                        <option value="3" <c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_309_mf59f_number'}"><c:if test="${item.detail=='3'}"> selected="true" </c:if></c:if></c:forEach>>3 (Country and Town)</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label">Details</span>
-                                                                        <input type="text" name="_310_mf59f_details" id="_310_mf59f_details" maxlength="33" class="mandatory" input_type="MF59a Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_310_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
+                                                                    <div class="form-row"><span class="label_body">&nbsp;</span><span class="label"><a style="color:red;text-decoration:none">*</a>Details</span>
+                                                                        <input type="text" name="_310_mf59f_details" id="_310_mf59f_details" maxlength="33" class="mandatory" input_type="MF59f Details" location="Body" value="<c:forEach var="item" items="${tags}"><c:if test="${item.tagName=='_310_mf59f_details'}"><c:out value="${item.detail}" /></c:if></c:forEach>" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -480,7 +508,7 @@
 
 
                                         <a id="renaa" href="#">Add Loop</a>
-
+                                        
                                         <hr/>
                                     </div>
                                 </div>
@@ -546,5 +574,4 @@
         startExpanded: true
     });
 </script>
-
 
