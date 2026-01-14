@@ -25,548 +25,6 @@
                 priority: "required",
                 //monitoring: "required",
 
-//                //body
-//                _010_mf20_senders_reference: "required",
-//                //mf21
-//                _151_mf21_cheque_number: "required",
-//                _461_mf21_cheque_number: "required",
-//                _771_mf21_cheque_number: "required",
-//                _1081_mf21_cheque_number: "required",
-//                _1391_mf21_cheque_number: "required",
-//                _1701_mf21_cheque_number: "required",
-//                _2011_mf21_cheque_number: "required",
-//                _2321_mf21_cheque_number: "required",
-//                _2631_mf21_cheque_number: "required",
-//                _2941_mf21_cheque_number: "required",
-//
-//                //mf30a
-//                _161_mf30_date_of_issue: "required",
-//                _471_mf30_date_of_issue: "required",
-//                _781_mf30_date_of_issue: "required",
-//                _1091_mf30_date_of_issue: "required",
-//                _1401_mf30_date_of_issue: "required",
-//                _1711_mf30_date_of_issue: "required",
-//                _2021_mf30_date_of_issue: "required",
-//                _2331_mf30_date_of_issue: "required",
-//                _2641_mf30_date_of_issue: "required",
-//                _2951_mf30_date_of_issue: "required",
-//
-//                //mf32a
-//                type_mf32_amount_collected: "required",
-//                type_mf32_amount_collected_2: "required",
-//                type_mf32_amount_collected_3: "required",
-//                type_mf32_amount_collected_4: "required",
-//                type_mf32_amount_collected_5: "required",
-//                type_mf32_amount_collected_6: "required",
-//                type_mf32_amount_collected_7: "required",
-//                type_mf32_amount_collected_8: "required",
-//                type_mf32_amount_collected_9: "required",
-//                type_mf32_amount_collected_10: "required",
-//                _170_mf32a_date: {
-//                    required: function(element) {
-//                        return $("#type_mf32_amount_collected").val() === "a";
-//                    }
-//                },
-//                _171_mf32a_currency: {
-//                    required: function(element) {
-//                        return $("#type_mf32_amount_collected").val() === "a";
-//                    }
-//                },
-//                _172_mf32a_amount: {
-//                    required: function(element) {
-//                        return $("#type_mf32_amount_collected").val() === "a";
-//                    }
-//                },
-//                
-//                /*
-//                _790_mf32a_date: "required",
-//                _791_mf32a_currency: "required",
-//                _792_mf32a_amount: "required",
-//
-//                _1100_mf32a_date: "required",
-//                _1101_mf32a_currency: "required",
-//                _1102_mf32a_amount: "required",
-//
-//                _1410_mf32a_date: "required",
-//                _1411_mf32a_currency: "required",
-//                _1412_mf32a_amount: "required",
-//
-//                _1720_mf32a_date: "required",
-//                _1721_mf32a_currency: "required",
-//                _1722_mf32a_amount: "required",
-//
-//                _2030_mf32a_date: "required",
-//                _2031_mf32a_currency: "required",
-//                _2032_mf32a_amount: "required",
-//
-//                _2340_mf32a_date: "required",
-//                _2341_mf32a_currency: "required",
-//                _2342_mf32a_amount: "required",
-//
-//                _2650_mf32a_date: "required",
-//                _2651_mf32a_currency: "required",
-//                _2652_mf32a_amount: "required",
-//
-//                _2960_mf32a_date: "required",
-//                _2961_mf32a_currency: "required",
-//                _2962_mf32a_amount: "required",
-//                */
-//
-//                //mf32b
-//                _173_mf32b_currency: "required",
-//                _174_mf32b_amount: "required",
-//                                _173_mf32b_currency: {
-//                    required: function(element) {
-//                        return $("#type_mf32_amount_collected").val() === "b";
-//                    }
-//                },
-//                _174_mf32b_amount: {
-//                    required: function(element) {
-//                        return $("#type_mf32_amount_collected").val() === "b";
-//                    }
-//                },
-//                
-//                /*
-//                _793_mf32b_currency: "required",
-//                _794_mf32b_amount: "required",
-//                _1103_mf32b_currency: "required",
-//                _1104_mf32b_amount: "required",
-//                _1413_mf32b_currency: "required",
-//                _1414_mf32b_amount: "required",
-//                _1723_mf32b_currency: "required",
-//                _1724_mf32b_amount: "required",
-//                _2033_mf32b_currency: "required",
-//                _2034_mf32b_amount: "required",
-//                _2343_mf32b_currency: "required",
-//                _2344_mf32b_amount: "required",
-//                _2653_mf32b_currency: "required",
-//                _2654_mf32b_amount: "required",
-//                _2963_mf32b_currency: "required",
-//                _2964_mf32b_amount: "required",
-//                */
-//               
-//                //of53a
-////                _121_of53a_identifier_code: "required",
-////                _136_of54d_name_address: "required",
-////
-////                //of50a
-////                _181_of50a_identifier_code: "required",
-//                _181_of50a_identifier_code: {
-//                    required: function(element) {
-//                        return $("#type_of50_payer").val() === "a";
-//                    }
-//                },
-//                
-//                //of50f
-//                _183_of50f_account: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f";
-//                    }
-//                },
-//                _184_mf50f_number: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f";
-//                    }
-//                },
-//                _185_of50f_details: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f";
-//                    }
-//                },
-//                _186_of50f_number: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_2_50").is(":checked");
-//                    }
-//                },
-//                _187_of50f_details: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_2_50").is(":checked");
-//                    }
-//                },
-//                _188_of50f_number: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_3_50").is(":checked");
-//                    }
-//                },
-//                _189_of50f_details: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_3_50").is(":checked");
-//                    }
-//                },
-//                _190_of50f_number: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_4_50").is(":checked");
-//                    }
-//                },
-//                _191_of50f_details: {
-//                    required: function() {
-//                        return $("#type_of50_payer").val() === "f" && $("#name_address_checkbox_4_50").is(":checked");
-//                    }
-//                },
-//                _193_of50k_name_address: {
-//                    required: function(element) {
-//                        return $("#type_of50_payer").val() === "k";
-//                    }
-//                },
-//                
-//                /*
-//                _491_of50a_identifier_code: "required",
-//                _801_of50a_identifier_code: "required",
-//                _1111_of50a_identifier_code: "required",
-//                _1421_of50a_identifier_code: "required",
-//                _1731_of50a_identifier_code: "required",
-//                _2041_of50a_identifier_code: "required",
-//                _2351_of50a_identifier_code: "required",
-//                _2661_of50a_identifier_code: "required",
-//                _2971_of50a_identifier_code: "required",
-//                */
-//                
-//                //of50f
-//                /*
-//                _183_of50f_account: "required",
-//                _493_of50f_account: "required",
-//                _803_of50f_account: "required",
-//                _803_of50f_account: "required",
-//                _1113_of50f_account: "required",
-//                _1423_of50f_account: "required",
-//                _1733_of50f_account: "required",
-//                _2043_of50f_account: "required",
-//                _2353_of50f_account: "required",
-//                _2663_of50f_account: "required",
-//                _2973_of50f_account: "required",
-//                */
-//        
-//                //53d
-////                _126_of53d_name_address: "required",
-////
-////                //54a
-////                _131_of54a_identifier_code : "required",
-//                
-//                //50f
-//                /*
-//                _183_of50f_account: "required",
-//                _184_mf50f_number: "required",
-//                _185_of50f_details: "required",
-//                _186_of50f_number: "required",
-//                _187_of50f_details: "required",
-//                _188_of50f_number: "required",
-//                _189_of50f_details: "required",
-//                _190_of50f_number: "required",
-//                _191_of50f_details: "required",
-//
-//
-//                _493_of50f_account: "required",
-//                _494_mf50f_number: "required",
-//                _495_of50f_details: "required",
-//                _496_of50f_number: "required",
-//                _497_of50f_details: "required",
-//                _498_of50f_number: "required",
-//                _499_of50f_details: "required",
-//                _500_of50f_number: "required",
-//                _501_of50f_details: "required",
-//
-//                _803_of50f_account: "required",
-//                _804_mf50f_number: "required",
-//                _805_of50f_details: "required",
-//                _806_of50f_number: "required",
-//                _807_of50f_details: "required",
-//                _808_of50f_number: "required",
-//                _809_of50f_details: "required",
-//                _810_of50f_number: "required",
-//                _811_of50f_details: "required",
-//
-//
-//                _1113_of50f_account: "required",
-//                _1114_mf50f_number: "required",
-//                _1115_of50f_details: "required",
-//                _1116_of50f_number: "required",
-//                _1117_of50f_details: "required",
-//                _1118_of50f_number: "required",
-//                _1119_of50f_details: "required",
-//                _1120_of50f_number: "required",
-//                _1121_of50f_details: "required",
-//
-//
-//
-//                _1423_of50f_account: "required",
-//                _1424_mf50f_number: "required",
-//                _1425_of50f_details: "required",
-//                _1426_of50f_number: "required",
-//                _1427_of50f_details: "required",
-//                _1428_of50f_number: "required",
-//                _1429_of50f_details: "required",
-//                _1430_of50f_number: "required",
-//                _1431_of50f_details: "required",
-//                
-//                _1733_of50f_account: "required",
-//                _1734_mf50f_number: "required",
-//                _1735_of50f_details: "required",
-//                _1736_of50f_number: "required",
-//                _1737_of50f_details: "required",
-//                _1738_of50f_number: "required",
-//                _1739_of50f_details: "required",
-//                _1740_of50f_number: "required",
-//                _1741_of50f_details: "required",
-//
-//                _2043_of50f_account: "required",
-//                _2044_mf50f_number: "required",
-//                _2045_of50f_details: "required",
-//                _2046_of50f_number: "required",
-//                _2047_of50f_details: "required",
-//                _2048_of50f_number: "required",
-//                _2049_of50f_details: "required",
-//                _2050_of50f_number: "required",
-//                _2051_of50f_details: "required",
-//
-//                _2353_of50f_account: "required",
-//                _2354_mf50f_number: "required",
-//                _2355_of50f_details: "required",
-//                _2356_of50f_number: "required",
-//                _2357_of50f_details: "required",
-//                _2358_of50f_number: "required",
-//                _2359_of50f_details: "required",
-//                _2360_of50f_number: "required",
-//                _2361_of50f_details: "required",
-//
-//                _2663_of50f_account: "required",
-//                _2664_mf50f_number: "required",
-//                _2665_of50f_details: "required",
-//                _2666_of50f_number: "required",
-//                _2667_of50f_details: "required",
-//                _2668_of50f_number: "required",
-//                _2669_of50f_details: "required",
-//                _2670_of50f_number: "required",
-//                _2671_of50f_details: "required",
-//
-//                _2973_of50f_account: "required",
-//                _2974_mf50f_number: "required",
-//                _2975_of50f_details: "required",
-//                _2976_of50f_number: "required",
-//                _2977_of50f_details: "required",
-//                _2978_of50f_number: "required",
-//                _2979_of50f_details: "required",
-//                _2980_of50f_number: "required",
-//                _2981_of50f_details: "required",
-//                */
-//        
-//                //of50k
-////                _193_of50k_name_address: "required",
-//                /*
-//                _503_of50k_name_address: "required",
-//                _813_of50k_name_address: "required",
-//                _1123_of50k_name_address: "required",
-//                _1433_of50k_name_address: "required",
-//                _1743_of50k_name_address: "required",
-//                _2053_of50k_name_address: "required",
-//                _2363_of50k_name_address: "required",
-//                _2673_of50k_name_address: "required",
-//                _2983_of50k_name_address: "required",
-//                */
-//
-//                //of52a
-//                _291_of52a_Identifier_Code: {
-//                    required: function(element) {
-//                        return $("#type_of52_Sender_of_Cash_Letter").val() === "a";
-//                    }
-//                },
-//                /*
-//                _291_of52a_Identifier_Code: "required",
-//                _601_of52a_Identifier_Code: "required",
-//                _911_of52a_Identifier_Code: "required",
-//                _1221_of52a_Identifier_Code: "required",
-//                _1531_of52a_Identifier_Code: "required",
-//                _1841_of52a_Identifier_Code: "required",
-//                _2151_of52a_Identifier_Code: "required",
-//                _2461_of52a_Identifier_Code: "required",
-//                _2771_of52a_Identifier_Code: "required",
-//                _3081_of52a_Identifier_Code: "required",
-//                */
-//                
-//
-//                //of52d
-//                _295_of52d_Name_and_Address: {
-//                    required: function(element) {
-//                        return $("#type_of52_Sender_of_Cash_Letter").val() === "d";
-//                    }
-//                },                
-//                /*
-//                _295_of52d_Name_and_Address: "required",
-//                _605_of52d_Name_and_Address: "required",
-//                _915_of52d_Name_and_Address: "required",
-//                _1225_of52d_Name_and_Address: "required",
-//                _1535_of52d_Name_and_Address: "required",
-//                _1845_of52d_Name_and_Address: "required",
-//                _2155_of52d_Name_and_Address: "required",
-//                _2465_of52d_Name_and_Address: "required",
-//                _2775_of52d_Name_and_Address: "required",
-//                _3085_of52d_Name_and_Address: "required",
-//                */
-//
-//                //mf59
-//                type_of59_59a_: "required",
-//                type_of59_59a__2: "required",
-//                type_of59_59a__3: "required",
-//                type_of59_59a__4: "required",
-//                type_of59_59a__5: "required",
-//                type_of59_59a__6: "required",
-//                type_of59_59a__7: "required",
-//                type_of59_59a__8: "required",
-//                type_of59_59a__9: "required",
-//                type_of59_59a__10: "required",
-//                _300_mf59_account: {
-//                    required: function(element) {
-//                        return $("#type_of59_59a_").val() === "59";
-//                    }
-//                },
-//                _301_mf59_name_address: {
-//                    required: function(element) {
-//                        return $("#type_of59_59a_").val() === "59";
-//                    }
-//                },
-//                /*
-//                _611_mf59_name_address: "required",
-//                _921_mf59_name_address: "required",
-//                _1231_mf59_name_address: "required",
-//                _1541_mf59_name_address: "required",
-//                _1851_mf59_name_address: "required",
-//                _2161_mf59_name_address: "required",
-//                _2471_mf59_name_address: "required",
-//                _2781_mf59_name_address: "required",
-//                _3091_mf59_name_address: "required",
-//                */
-//
-//                //mf59f
-//                _302_mf59f_account: {
-//                    required: function(element) {
-//                        return $("#type_of59_59a_").val() === "59f";
-//                    }
-//                },
-//                _303_mf59f_number: {
-//                    required: function(element) {
-//                        return $("#type_of59_59a_").val() === "59f";
-//                    }
-//                },
-//                _304_mf59f_details: {
-//                    required: function(element) {
-//                        return $("#type_of59_59a_").val() === "59f";
-//                    }
-//                },
-//                _305_mf59f_number: {
-//                    required: function() {
-//                        return $("#type_of59_59a_").val() === "59f" && $("#name_address_checkbox_2").is(":checked");
-//                    }
-//                },
-//                _306_mf59f_details: {
-//                    required: function() {
-//                        return $("#type_of59_59a_").val() === "59f" && $("#name_address_checkbox_2").is(":checked");
-//                    }
-//                },
-//                _307_mf59f_number: {
-//                    required: function() {
-//                        return $("#type_of59_59a_").val() === "59f" && $("#name_address_checkbox_3").is(":checked");
-//                    }
-//                },
-//                _308_mf59f_details: {
-//                    required: function() {
-//                        return $("#type_of59_59a_").val() === "59f" && $("#name_address_checkbox_3").is(":checked");
-//                    }
-//                },
-//                _309_mf59f_number: {
-//                    required: function() {
-//                        return $("#type_of59_59a_").val() === "59f" && $("#name_address_checkbox_4").is(":checked");
-//                    }
-//                },
-//                _310_mf59f_details: {
-//                    required: function() {
-//                        return $("#type_of59_59a_").val() === "59f" && $("#name_address_checkbox_4").is(":checked");
-//                    }
-//                },
-//
-//                /*
-//                _613_mf59f_number: "required",
-//                _614_mf59f_details: "required",
-//                _615_mf59f_number: "required",
-//                _616_mf59f_details: "required",
-//                _617_mf59f_number: "required",
-//                _618_mf59f_details: "required",
-//                _619_mf59f_number: "required",
-//                _620_mf59f_details: "required",
-//
-//
-//                _923_mf59f_number: "required",
-//                _924_mf59f_details: "required",
-//                _925_mf59f_number: "required",
-//                _926_mf59f_details: "required",
-//                _927_mf59f_number: "required",
-//                _928_mf59f_details: "required",
-//                _929_mf59f_number: "required",
-//                _930_mf59f_details: "required",
-//
-//                _1233_mf59f_number: "required",
-//                _1234_mf59f_details: "required",
-//                _1235_mf59f_number: "required",
-//                _1236_mf59f_details: "required",
-//                _1237_mf59f_number: "required",
-//                _1238_mf59f_details: "required",
-//                _1239_mf59f_number: "required",
-//                _1240_mf59f_details: "required",
-//
-//                _1543_mf59f_number: "required",
-//                _1544_mf59f_details: "required",
-//                _1545_mf59f_number: "required",
-//                _1546_mf59f_details: "required",
-//                _1547_mf59f_number: "required",
-//                _1548_mf59f_details: "required",
-//                _1549_mf59f_number: "required",
-//                _1550_mf59f_details: "required",
-//
-//                _1853_mf59f_number: "required",
-//                _1854_mf59f_details: "required",
-//                _1855_mf59f_number: "required",
-//                _1856_mf59f_details: "required",
-//                _1857_mf59f_number: "required",
-//                _1858_mf59f_details: "required",
-//                _1859_mf59f_number: "required",
-//                _1860_mf59f_details: "required",
-//
-//                _2163_mf59f_number: "required",
-//                _2164_mf59f_details: "required",
-//                _2165_mf59f_number: "required",
-//                _2166_mf59f_details: "required",
-//                _2167_mf59f_number: "required",
-//                _2168_mf59f_details: "required",
-//                _2169_mf59f_number: "required",
-//                _2170_mf59f_details: "required",
-//
-//                _2473_mf59f_number: "required",
-//                _2474_mf59f_details: "required",
-//                _2475_mf59f_number: "required",
-//                _2476_mf59f_details: "required",
-//                _2477_mf59f_number: "required",
-//                _2478_mf59f_details: "required",
-//                _2479_mf59f_number: "required",
-//                _2480_mf59f_details: "required",
-//
-//                _2783_mf59f_number: "required",
-//                _2784_mf59f_details: "required",
-//                _2785_mf59f_number: "required",
-//                _2786_mf59f_details: "required",
-//                _2787_mf59f_number: "required",
-//                _2788_mf59f_details: "required",
-//                _2789_mf59f_number: "required",
-//                _2790_mf59f_details: "required",
-//
-//                _3093_mf59f_number: "required",
-//                _3094_mf59f_details: "required",
-//                _3095_mf59f_number: "required",
-//                _3096_mf59f_details: "required",
-//                _3097_mf59f_number: "required",
-//                _3098_mf59f_details: "required",
-//                _3099_mf59f_number: "required",
-//                _3100_mf59f_details: "required",
-//                */
-//            },
-
                 //body
                 _010_mf20_senders_reference: "required",
                 
@@ -632,6 +90,267 @@
                 _174_mf32b_amount: {
                     required: function(element) {
                         return $("#type_mf32_amount_collected").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 2
+                _480_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_2").val() === "a";
+                    }
+                },
+                _481_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_2").val() === "a";
+                    }
+                },
+                _482_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_2").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 2
+                _483_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_2").val() === "b";
+                    }
+                },
+                _484_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_2").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 3
+                _790_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_3").val() === "a";
+                    }
+                },
+                _791_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_3").val() === "a";
+                    }
+                },
+                _792_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_3").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 3
+                _793_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_3").val() === "b";
+                    }
+                },
+                _794_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_3").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 4
+                _1100_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_4").val() === "a";
+                    }
+                },
+                _1101_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_4").val() === "a";
+                    }
+                },
+                _1102_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_4").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 4
+                _1103_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_4").val() === "b";
+                    }
+                },
+                _1104_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_4").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 5
+                _1410_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_5").val() === "a";
+                    }
+                },
+                _1411_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_5").val() === "a";
+                    }
+                },
+                _1412_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_5").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 5
+                _1413_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_5").val() === "b";
+                    }
+                },
+                _1414_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_5").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 6
+                _1720_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_6").val() === "a";
+                    }
+                },
+                _1721_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_6").val() === "a";
+                    }
+                },
+                _1722_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_6").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 6
+                _1723_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_6").val() === "b";
+                    }
+                },
+                _1724_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_6").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 7
+                _2030_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_7").val() === "a";
+                    }
+                },
+                _2031_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_7").val() === "a";
+                    }
+                },
+                _2032_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_7").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 7
+                _2033_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_7").val() === "b";
+                    }
+                },
+                _2034_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_7").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 8
+                _2340_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_8").val() === "a";
+                    }
+                },
+                _2341_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_8").val() === "a";
+                    }
+                },
+                _2342_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_8").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 8
+                _2343_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_8").val() === "b";
+                    }
+                },
+                _2344_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_8").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 9
+                _2650_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_9").val() === "a";
+                    }
+                },
+                _2651_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_9").val() === "a";
+                    }
+                },
+                _2652_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_9").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 9
+                _2653_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_9").val() === "b";
+                    }
+                },
+                _2654_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_9").val() === "b";
+                    }
+                },
+
+                //mf32a - Loop 10
+                _2960_mf32a_date: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_10").val() === "a";
+                    }
+                },
+                _2961_mf32a_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_10").val() === "a";
+                    }
+                },
+                _2962_mf32a_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_10").val() === "a";
+                    }
+                },
+
+                //mf32b - Loop 10
+                _2963_mf32b_currency: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_10").val() === "b";
+                    }
+                },
+                _2964_mf32b_amount: {
+                    required: function(element) {
+                        return $("#type_mf32_amount_collected_10").val() === "b";
                     }
                 },
 
@@ -1233,7 +952,7 @@
                     }
                 },
 
-                // OF52 - Loop 3
+                // ========== OF52 - Loop 3 ==========
                 _911_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_3").val() === "a";
@@ -1245,7 +964,7 @@
                     }
                 },
 
-                // OF52 - Loop 4
+                // ========== OF52 - Loop 4 ==========
                 _1221_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_4").val() === "a";
@@ -1257,7 +976,7 @@
                     }
                 },
 
-                // OF52 - Loop 5
+                // ========== OF52 - Loop 5 ==========
                 _1531_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_5").val() === "a";
@@ -1269,7 +988,7 @@
                     }
                 },
 
-                // OF52 - Loop 6
+                // ========== OF52 - Loop 6 ==========
                 _1841_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_6").val() === "a";
@@ -1281,7 +1000,7 @@
                     }
                 },
 
-                // OF52 - Loop 7
+                // ========== OF52 - Loop 7 ==========
                 _2151_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_7").val() === "a";
@@ -1293,7 +1012,7 @@
                     }
                 },
 
-                // OF52 - Loop 8
+                // ========== OF52 - Loop 8 ==========
                 _2461_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_8").val() === "a";
@@ -1305,7 +1024,7 @@
                     }
                 },
 
-                // OF52 - Loop 9
+                // ========== OF52 - Loop 9 ==========
                 _2771_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_9").val() === "a";
@@ -1317,7 +1036,7 @@
                     }
                 },
 
-                // OF52 - Loop 10
+                // ========== OF52 - Loop 10 ==========
                 _3081_of52a_Identifier_Code: {
                     required: function(element) {
                         return $("#type_of52_Sender_of_Cash_Letter_10").val() === "a";
@@ -1328,8 +1047,10 @@
                         return $("#type_of52_Sender_of_Cash_Letter_10").val() === "d";
                     }
                 },
+
+                //=== MF59 VALIDATION - ALL LOOPS WITH ALL SUBFIELDS ===
                 
-                // MF59 - Loop 1
+                // ========== MF59 - Loop 1 ==========
                 type_of59_59a_: "required",
                 _300_mf59_account: {
                     required: function(element) {
@@ -1387,7 +1108,7 @@
                     }
                 },
 
-                // MF59 - Loop 2
+                // ========== MF59 - Loop 2 ==========
                 type_of59_59a__2: "required",
                 _610_mf59_account: {
                     required: function(element) {
@@ -1445,418 +1166,472 @@
                     }
                 },
 
-                // MF59 - Loops 3-10 continue with same pattern
+                // ========== MF59 - Loop 3 ==========
                 type_of59_59a__3: "required",
+                _920_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__3").val() === "59";
+                    }
+                },
+                _921_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__3").val() === "59";
+                    }
+                },
+                _922_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__3").val() === "59f";
+                    }
+                },
+                _923_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__3").val() === "59f";
+                    }
+                },
+                _924_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__3").val() === "59f";
+                    }
+                },
+                _925_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__3").val() === "59f" && $("#name_address_checkbox_2_3").is(":checked");
+                    }
+                },
+                _926_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__3").val() === "59f" && $("#name_address_checkbox_2_3").is(":checked");
+                    }
+                },
+                _927_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__3").val() === "59f" && $("#name_address_checkbox_3_3").is(":checked");
+                    }
+                },
+                _928_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__3").val() === "59f" && $("#name_address_checkbox_3_3").is(":checked");
+                    }
+                },
+                _929_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__3").val() === "59f" && $("#name_address_checkbox_4_3").is(":checked");
+                    }
+                },
+                _930_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__3").val() === "59f" && $("#name_address_checkbox_4_3").is(":checked");
+                    }
+                },
+
+                // ========== MF59 - Loop 4 ==========
                 type_of59_59a__4: "required",
+                _1230_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__4").val() === "59";
+                    }
+                },
+                _1231_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__4").val() === "59";
+                    }
+                },
+                _1232_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__4").val() === "59f";
+                    }
+                },
+                _1233_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__4").val() === "59f";
+                    }
+                },
+                _1234_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__4").val() === "59f";
+                    }
+                },
+                _1235_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__4").val() === "59f" && $("#name_address_checkbox_2_4").is(":checked");
+                    }
+                },
+                _1236_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__4").val() === "59f" && $("#name_address_checkbox_2_4").is(":checked");
+                    }
+                },
+                _1237_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__4").val() === "59f" && $("#name_address_checkbox_3_4").is(":checked");
+                    }
+                },
+                _1238_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__4").val() === "59f" && $("#name_address_checkbox_3_4").is(":checked");
+                    }
+                },
+                _1239_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__4").val() === "59f" && $("#name_address_checkbox_4_4").is(":checked");
+                    }
+                },
+                _1240_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__4").val() === "59f" && $("#name_address_checkbox_4_4").is(":checked");
+                    }
+                },
+
+                // ========== MF59 - Loop 5 ==========
                 type_of59_59a__5: "required",
+                _1540_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__5").val() === "59";
+                    }
+                },
+                _1541_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__5").val() === "59";
+                    }
+                },
+                _1542_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__5").val() === "59f";
+                    }
+                },
+                _1543_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__5").val() === "59f";
+                    }
+                },
+                _1544_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__5").val() === "59f";
+                    }
+                },
+                _1545_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__5").val() === "59f" && $("#name_address_checkbox_2_5").is(":checked");
+                    }
+                },
+                _1546_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__5").val() === "59f" && $("#name_address_checkbox_2_5").is(":checked");
+                    }
+                },
+                _1547_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__5").val() === "59f" && $("#name_address_checkbox_3_5").is(":checked");
+                    }
+                },
+                _1548_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__5").val() === "59f" && $("#name_address_checkbox_3_5").is(":checked");
+                    }
+                },
+                _1549_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__5").val() === "59f" && $("#name_address_checkbox_4_5").is(":checked");
+                    }
+                },
+                _1550_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__5").val() === "59f" && $("#name_address_checkbox_4_5").is(":checked");
+                    }
+                },
+
+                // ========== MF59 - Loop 6 ==========
                 type_of59_59a__6: "required",
+                _1850_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__6").val() === "59";
+                    }
+                },
+                _1851_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__6").val() === "59";
+                    }
+                },
+                _1852_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__6").val() === "59f";
+                    }
+                },
+                _1853_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__6").val() === "59f";
+                    }
+                },
+                _1854_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__6").val() === "59f";
+                    }
+                },
+                _1855_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__6").val() === "59f" && $("#name_address_checkbox_2_6").is(":checked");
+                    }
+                },
+                _1856_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__6").val() === "59f" && $("#name_address_checkbox_2_6").is(":checked");
+                    }
+                },
+                _1857_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__6").val() === "59f" && $("#name_address_checkbox_3_6").is(":checked");
+                    }
+                },
+                _1858_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__6").val() === "59f" && $("#name_address_checkbox_3_6").is(":checked");
+                    }
+                },
+                _1859_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__6").val() === "59f" && $("#name_address_checkbox_4_6").is(":checked");
+                    }
+                },
+                _1860_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__6").val() === "59f" && $("#name_address_checkbox_4_6").is(":checked");
+                    }
+                },
+
+                // ========== MF59 - Loop 7 ==========
                 type_of59_59a__7: "required",
+                _2160_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__7").val() === "59";
+                    }
+                },
+                _2161_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__7").val() === "59";
+                    }
+                },
+                _2162_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__7").val() === "59f";
+                    }
+                },
+                _2163_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__7").val() === "59f";
+                    }
+                },
+                _2164_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__7").val() === "59f";
+                    }
+                },
+                _2165_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__7").val() === "59f" && $("#name_address_checkbox_2_7").is(":checked");
+                    }
+                },
+                _2166_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__7").val() === "59f" && $("#name_address_checkbox_2_7").is(":checked");
+                    }
+                },
+                _2167_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__7").val() === "59f" && $("#name_address_checkbox_3_7").is(":checked");
+                    }
+                },
+                _2168_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__7").val() === "59f" && $("#name_address_checkbox_3_7").is(":checked");
+                    }
+                },
+                _2169_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__7").val() === "59f" && $("#name_address_checkbox_4_7").is(":checked");
+                    }
+                },
+                _2170_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__7").val() === "59f" && $("#name_address_checkbox_4_7").is(":checked");
+                    }
+                },
+
+                // ========== MF59 - Loop 8 ==========
                 type_of59_59a__8: "required",
+                _2470_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__8").val() === "59";
+                    }
+                },
+                _2471_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__8").val() === "59";
+                    }
+                },
+                _2472_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__8").val() === "59f";
+                    }
+                },
+                _2473_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__8").val() === "59f";
+                    }
+                },
+                _2474_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__8").val() === "59f";
+                    }
+                },
+                _2475_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__8").val() === "59f" && $("#name_address_checkbox_2_8").is(":checked");
+                    }
+                },
+                _2476_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__8").val() === "59f" && $("#name_address_checkbox_2_8").is(":checked");
+                    }
+                },
+                _2477_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__8").val() === "59f" && $("#name_address_checkbox_3_8").is(":checked");
+                    }
+                },
+                _2478_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__8").val() === "59f" && $("#name_address_checkbox_3_8").is(":checked");
+                    }
+                },
+                _2479_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__8").val() === "59f" && $("#name_address_checkbox_4_8").is(":checked");
+                    }
+                },
+                _2480_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__8").val() === "59f" && $("#name_address_checkbox_4_8").is(":checked");
+                    }
+                },
+
+                // ========== MF59 - Loop 9 ==========
                 type_of59_59a__9: "required",
-                type_of59_59a__10: "required"
+                _2780_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__9").val() === "59";
+                    }
+                },
+                _2781_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__9").val() === "59";
+                    }
+                },
+                _2782_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__9").val() === "59f";
+                    }
+                },
+                _2783_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__9").val() === "59f";
+                    }
+                },
+                _2784_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__9").val() === "59f";
+                    }
+                },
+                _2785_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__9").val() === "59f" && $("#name_address_checkbox_2_9").is(":checked");
+                    }
+                },
+                _2786_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__9").val() === "59f" && $("#name_address_checkbox_2_9").is(":checked");
+                    }
+                },
+                _2787_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__9").val() === "59f" && $("#name_address_checkbox_3_9").is(":checked");
+                    }
+                },
+                _2788_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__9").val() === "59f" && $("#name_address_checkbox_3_9").is(":checked");
+                    }
+                },
+                _2789_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__9").val() === "59f" && $("#name_address_checkbox_4_9").is(":checked");
+                    }
+                },
+                _2790_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__9").val() === "59f" && $("#name_address_checkbox_4_9").is(":checked");
+                    }
+                },
+
+                // ========== MF59 - Loop 10 ==========
+                type_of59_59a__10: "required",
+                _3090_mf59_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__10").val() === "59";
+                    }
+                },
+                _3091_mf59_name_address: {
+                    required: function(element) {
+                        return $("#type_of59_59a__10").val() === "59";
+                    }
+                },
+                _3092_mf59f_account: {
+                    required: function(element) {
+                        return $("#type_of59_59a__10").val() === "59f";
+                    }
+                },
+                _3093_mf59f_number: {
+                    required: function(element) {
+                        return $("#type_of59_59a__10").val() === "59f";
+                    }
+                },
+                _3094_mf59f_details: {
+                    required: function(element) {
+                        return $("#type_of59_59a__10").val() === "59f";
+                    }
+                },
+                _3095_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__10").val() === "59f" && $("#name_address_checkbox_2_10").is(":checked");
+                    }
+                },
+                _3096_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__10").val() === "59f" && $("#name_address_checkbox_2_10").is(":checked");
+                    }
+                },
+                _3097_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__10").val() === "59f" && $("#name_address_checkbox_3_10").is(":checked");
+                    }
+                },
+                _3098_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__10").val() === "59f" && $("#name_address_checkbox_3_10").is(":checked");
+                    }
+                },
+                _3099_mf59f_number: {
+                    required: function() {
+                        return $("#type_of59_59a__10").val() === "59f" && $("#name_address_checkbox_3_10").is(":checked");
+                    }
+                },
+                _3100_mf59f_details: {
+                    required: function() {
+                        return $("#type_of59_59a__10").val() === "59f" && $("#name_address_checkbox_4_10").is(":checked");
+                    }
+                },
+
             },                
             messages: { 
-                
-//                sender_logical_terminal: {required: "sender_logical_terminal must be filled..!!"},
-//                receiver_institution: {required: "receiver_institution must be filled..!!"},
-//                priority: {required: "priority must be filled..!!"},
-//                _010_mf20_senders_reference: {required: "senders_reference must be filled..!!"},
-//                //mf21
-//                _151_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _461_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _771_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _1081_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _1391_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _1701_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _2011_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _2321_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _2631_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//                _2941_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-//
-//                //mf30a
-//                _161_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _471_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _781_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _1091_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _1401_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _1711_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _2021_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _2331_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _2641_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//                _2951_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-//
-//                //mf32a
-//                type_mf32_amount_collected: {required: "type_mf32_amount_collected must be filled..!!"},
-//                type_mf32_amount_collected_2: {required: "type_mf32_amount_collected_2 must be filled..!!"},
-//                type_mf32_amount_collected_3: {required: "type_mf32_amount_collected_3 must be filled..!!"},
-//                type_mf32_amount_collected_4: {required: "type_mf32_amount_collected_4 must be filled..!!"},
-//                type_mf32_amount_collected_5: {required: "type_mf32_amount_collected_5 must be filled..!!"},
-//                type_mf32_amount_collected_6: {required: "type_mf32_amount_collected_6 must be filled..!!"},
-//                type_mf32_amount_collected_7: {required: "type_mf32_amount_collected_7 must be filled..!!"},
-//                type_mf32_amount_collected_8: {required: "type_mf32_amount_collected_8 must be filled..!!"},
-//                type_mf32_amount_collected_9: {required: "type_mf32_amount_collected_9 must be filled..!!"},
-//                type_mf32_amount_collected_10: {required: "type_mf32_amount_collected_10 must be filled..!!"},
-//                
-//                _170_mf32a_date: {required: "date must be filled..!!"},
-//                _171_mf32a_currency: {required: "currency must be filled..!!"},
-//                _172_mf32a_amount: {required: "amount must be filled..!!"},
-//                /*
-//                _480_mf32_date: {required: "date harus diisi..!!"},
-//                _481_mf32_currency: {required: "currency harus diisi..!!"},
-//                _482_mf32_amount: {required: "amount harus diisi..!!"},
-//                _790_mf32a_date: {required: "date harus diisi..!!"},
-//                _791_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _792_mf32a_amount: {required: "amount harus diisi..!!"},
-//                _1100_mf32a_date: {required: "date harus diisi..!!"},
-//                _1101_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _1102_mf32a_amount: {required: "amount harus diisi..!!"},
-//                _1410_mf32a_date: {required: "date harus diisi..!!"},
-//                _1411_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _1412_mf32a_amount: {required: "amount harus diisi..!!"},
-//                _1720_mf32a_date: {required: "date harus diisi..!!"},
-//                _1721_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _1722_mf32a_amount: {required: "amount harus diisi..!!"},
-//                _2030_mf32a_date: {required: "date harus diisi..!!"},
-//                _2031_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _2032_mf32a_amount: {required: "amount harus diisi..!!"},
-//                _2340_mf32a_date: {required: "date harus diisi..!!"},
-//                _2341_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _2342_mf32a_amount: {required: "amount harus diisi..!!"},
-//                _2650_mf32a_date: {required: "date harus diisi..!!"},
-//                _2651_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _2652_mf32a_amount: {required: "amount harus diisi..!!"},
-//                _2960_mf32a_date: {required: "date harus diisi..!!"},
-//                _2961_mf32a_currency: {required: "currency harus diisi..!!"},
-//                _2962_mf32a_amount: {required: "amount harus diisi..!!"},
-//                */
-//        
-//                //mf32b
-//                _173_mf32b_currency: {required: "currency must be filled..!!"},
-//                _174_mf32b_amount: {required: "amount must be filled..!!"},
-//                /*
-//                _483_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _484_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _793_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _794_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _1103_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _1104_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _1413_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _1414_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _1723_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _1724_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _2033_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _2034_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _2343_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _2344_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _2653_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _2654_mf32b_amount: {required: "amount harus diisi..!!"},
-//                _2963_mf32b_currency: {required: "currency harus diisi..!!"},
-//                _2964_mf32b_amount: {required: "amount harus diisi..!!"},
-//                */
-//
-//                //of53a
-////                _121_of53a_identifier_code: {required: "identifier_code harus diisi..!!"},
-////                _136_of54d_name_address: {required: "name_address harus diisi..!!"},
-////
-////                //53d
-////                _126_of53d_name_address: {required: "name_address harus diisi..!!"},
-////
-////                //54a
-////                _131_of54a_identifier_code: {required: "identifier_code harus diisi..!!"},
-//
-//                //of50a
-//                _181_of50a_identifier_code: {required: "identifier must be filled..!!"},
-////                _491_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _801_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _1111_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _1421_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _1731_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _2041_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _2351_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _2661_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-////                _2971_of50a_identifier_code: {required: "identifier harus diisi..!!"},
-//
-//                //of50f
-//                _183_of50f_account: {required: "of50f account must be filled..!!"},
-//                _184_mf50f_number: {required: "of50f number must be filled..!!"},
-//                _185_of50f_details: {required: "of50f details must be filled!"},
-//                _186_of50f_number: {required: "OF50F Number (Detail 2) must be selected!"},
-//                _187_of50f_details: {required: "OF50F Details (Detail 2) must be filled!"},
-//                _188_of50f_number: {required: "OF50F Number (Detail 3) must be selected!"},
-//                _189_of50f_details: {required: "OF50F Details (Detail 3) must be filled!"},
-//                _190_of50f_number: {required: "OF50F Number (Detail 4) must be selected!"},
-//                _191_of50f_details: {required: "OF50F Details (Detail 4) must be filled!"},
-////                _183_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                /*
-//                _493_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _803_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _1113_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _1423_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _1733_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2043_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2353_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2663_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2973_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                */
-//
-//                //of50k
-//                _193_of50k_name_address: {required: "name_address must be filled..!!"},
-////                _192_of50k_account: {required: "party_identifier harus diisi..!!"},
-//                
-//                //of50f
-//                /*
-//                _184_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _185_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _186_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _187_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _188_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _189_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _190_of50f_number:{required: "of50f_number harus diisi..!!"},
-//                _191_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _493_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _494_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _495_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _496_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _497_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _498_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _499_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _500_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _501_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _803_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _804_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _805_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _806_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _807_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _808_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _809_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _810_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _811_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1113_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _1114_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _1115_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1116_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1117_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1118_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1119_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1120_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1121_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1423_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _1424_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _1425_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1426_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1427_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1428_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1429_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1430_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1431_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1733_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _1734_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _1735_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1736_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1737_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1738_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1739_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _1740_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _1741_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2043_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2044_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _2045_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2046_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2047_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2048_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2049_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2050_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2051_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2353_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2354_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _2355_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2356_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2357_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2358_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2359_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2360_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2361_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2663_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2664_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _2665_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2666_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2667_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2668_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2669_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2670_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2671_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2973_of50f_account: {required: "party_identifier harus diisi..!!"},
-//                _2974_mf50f_number: {required: "mf50f_number harus diisi..!!"},
-//                _2975_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2976_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2977_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2978_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2979_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                _2980_of50f_number: {required: "of50f_number harus diisi..!!"},
-//                _2981_of50f_details: {required: "of50f_details harus diisi..!!"},
-//                */
-//                
-//                //of50k
-//                
-//                /*
-//                _193_of50k_name_address: {required: "name_address harus diisi..!!"},
-//                _503_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _813_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _1123_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _1433_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _1743_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _2053_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _2363_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _2673_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                _2983_of50k_name_address : {required: "name_address harus diisi..!!"},
-//                */
-//
-//                //of52a
-//                _291_of52a_Identifier_Code: {required: "Identifier_Code must be filled..!!"},
-//                /*
-//                _291_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _601_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _911_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _1221_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _1531_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _1841_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _2151_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _2461_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _2771_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                _3081_of52a_Identifier_Code: {required: "Identifier_Code harus diisi..!!"},
-//                */
-//
-//                //of52d
-//                _295_of52d_Name_and_Address: {required: "Name_and_Address must be filled..!!"},
-//                /*
-//                _295_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _605_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _915_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _1225_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _1535_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _1845_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _2155_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _2465_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _2775_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                _3085_of52d_Name_and_Address: {required: "Name_and_Address harus diisi..!!"},
-//                */
-//        
-//                //mf59
-//                type_of59_59a_: {required: "type_mf59 must be filled..!!"},
-//                type_of59_59a__2: {required: "type_mf59_2 must be filled..!!"},
-//                type_of59_59a__3: {required: "type_mf59_3 must be filled..!!"},
-//                type_of59_59a__4: {required: "type_mf59_4 must be filled..!!"},
-//                type_of59_59a__5: {required: "type_mf59_5 must be filled..!!"},
-//                type_of59_59a__6: {required: "type_mf59_6 must be filled..!!"},
-//                type_of59_59a__7: {required: "type_mf59_7 must be filled..!!"},
-//                type_of59_59a__8: {required: "type_mf59_8 must be filled..!!"},
-//                type_of59_59a__9: {required: "type_mf59_9 must be filled..!!"},
-//                type_of59_59a__10: {required: "type_mf59_10 must be filled..!!"},
-//                _300_mf59_account: {required: "mf59a account must be filled..!!"},
-//                _301_mf59_name_address: {required: "mf59a name address must be filled..!!"},
-//                _302_mf59f_account: {required: "mf59a account must be filled..!!"},
-//                _303_mf59f_number: {required: "mf59a number must be filled..!!"},
-//                _304_mf59f_details: {required: "mf59a details must be filled..!!"},
-//                _305_mf59f_number: {required: "mf59a number must be filled..!!"},
-//                _306_mf59f_details: {required: "mf59a details must be filled..!!"},
-//                _307_mf59f_number: {required: "mf59a number must be filled..!!"},
-//                _308_mf59f_details: {required: "mf59a details must be filled..!!"},
-//                _309_mf59f_number: {required: "mf59a number must be filled..!!"},
-//                _310_mf59f_details: {required: "mf59a details must be filled..!!"},
-//                /*
-//                _301_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _611_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _921_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _1231_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _1541_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _1851_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _2161_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _2471_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _2781_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                _3091_mf59_name_address: {required: "name_address harus diisi..!!"},
-//                */
-//                
-//                //mf59f
-//                /*
-//                _303_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _304_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _305_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _306_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _307_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _308_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _613_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _614_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _615_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _616_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _617_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _618_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _619_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _620_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _923_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _924_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _925_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _926_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _927_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _928_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _929_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _930_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1233_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1234_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1235_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1236_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1237_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1238_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1239_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1240_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1543_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1544_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1545_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1546_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1547_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1548_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1549_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1550_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1853_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1854_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1855_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1856_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1857_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1858_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _1859_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _1860_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2163_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2164_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2165_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2166_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2167_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2168_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2169_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2170_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2473_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2474_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2475_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2476_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2477_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2478_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2479_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2480_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2783_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2784_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2785_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2786_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2787_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2788_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _2789_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _2790_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _3093_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _3094_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _3095_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _3096_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _3097_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _3098_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                _3099_mf59f_number: {required: "mf59f_number harus diisi..!!"},
-//                _3100_mf59f_details: {required: "mf59f_details harus diisi..!!"},
-//                */
 
                 sender_logical_terminal: {required: "sender_logical_terminal must be filled..!!"},
                 receiver_institution: {required: "receiver_institution must be filled..!!"},
@@ -1865,153 +1640,410 @@
                 
                 // MF21 messages
                 _151_mf21_cheque_number: {required: "cheque_number must be filled..!!"},
-                _461_mf21_cheque_number: {required: "cheque_number (Loop 2) must be filled..!!"},
-                _771_mf21_cheque_number: {required: "cheque_number (Loop 3) must be filled..!!"},
-                _1081_mf21_cheque_number: {required: "cheque_number (Loop 4) must be filled..!!"},
-                _1391_mf21_cheque_number: {required: "cheque_number (Loop 5) must be filled..!!"},
-                _1701_mf21_cheque_number: {required: "cheque_number (Loop 6) must be filled..!!"},
-                _2011_mf21_cheque_number: {required: "cheque_number (Loop 7) must be filled..!!"},
-                _2321_mf21_cheque_number: {required: "cheque_number (Loop 8) must be filled..!!"},
-                _2631_mf21_cheque_number: {required: "cheque_number (Loop 9) must be filled..!!"},
-                _2941_mf21_cheque_number: {required: "cheque_number (Loop 10) must be filled..!!"},
+                _461_mf21_cheque_number: {required: "cheque_number_2 must be filled..!!"},
+                _771_mf21_cheque_number: {required: "cheque_number_3 must be filled..!!"},
+                _1081_mf21_cheque_number: {required: "cheque_number_4 must be filled..!!"},
+                _1391_mf21_cheque_number: {required: "cheque_number_5 must be filled..!!"},
+                _1701_mf21_cheque_number: {required: "cheque_number_6 must be filled..!!"},
+                _2011_mf21_cheque_number: {required: "cheque_number_7 must be filled..!!"},
+                _2321_mf21_cheque_number: {required: "cheque_number_8 must be filled..!!"},
+                _2631_mf21_cheque_number: {required: "cheque_number_9 must be filled..!!"},
+                _2941_mf21_cheque_number: {required: "cheque_number_10 must be filled..!!"},
 
                 // MF30 messages
                 _161_mf30_date_of_issue: {required: "date_of_issue must be filled..!!"},
-                _471_mf30_date_of_issue: {required: "date_of_issue (Loop 2) must be filled..!!"},
-                _781_mf30_date_of_issue: {required: "date_of_issue (Loop 3) must be filled..!!"},
-                _1091_mf30_date_of_issue: {required: "date_of_issue (Loop 4) must be filled..!!"},
-                _1401_mf30_date_of_issue: {required: "date_of_issue (Loop 5) must be filled..!!"},
-                _1711_mf30_date_of_issue: {required: "date_of_issue (Loop 6) must be filled..!!"},
-                _2021_mf30_date_of_issue: {required: "date_of_issue (Loop 7) must be filled..!!"},
-                _2331_mf30_date_of_issue: {required: "date_of_issue (Loop 8) must be filled..!!"},
-                _2641_mf30_date_of_issue: {required: "date_of_issue (Loop 9) must be filled..!!"},
-                _2951_mf30_date_of_issue: {required: "date_of_issue (Loop 10) must be filled..!!"},
+                _471_mf30_date_of_issue: {required: "date_of_issue_2 must be filled..!!"},
+                _781_mf30_date_of_issue: {required: "date_of_issue_3 must be filled..!!"},
+                _1091_mf30_date_of_issue: {required: "date_of_issue_4 must be filled..!!"},
+                _1401_mf30_date_of_issue: {required: "date_of_issue_5 must be filled..!!"},
+                _1711_mf30_date_of_issue: {required: "date_of_issue_6 must be filled..!!"},
+                _2021_mf30_date_of_issue: {required: "date_of_issue_7 must be filled..!!"},
+                _2331_mf30_date_of_issue: {required: "date_of_issue_8 must be filled..!!"},
+                _2641_mf30_date_of_issue: {required: "date_of_issue_9 must be filled..!!"},
+                _2951_mf30_date_of_issue: {required: "date_of_issue_10 must be filled..!!"},
 
                 // MF32 type messages
                 type_mf32_amount_collected: {required: "type_mf32_amount_collected must be filled..!!"},
-                type_mf32_amount_collected_2: {required: "type_mf32_amount_collected (Loop 2) must be filled..!!"},
-                type_mf32_amount_collected_3: {required: "type_mf32_amount_collected (Loop 3) must be filled..!!"},
-                type_mf32_amount_collected_4: {required: "type_mf32_amount_collected (Loop 4) must be filled..!!"},
-                type_mf32_amount_collected_5: {required: "type_mf32_amount_collected (Loop 5) must be filled..!!"},
-                type_mf32_amount_collected_6: {required: "type_mf32_amount_collected (Loop 6) must be filled..!!"},
-                type_mf32_amount_collected_7: {required: "type_mf32_amount_collected (Loop 7) must be filled..!!"},
-                type_mf32_amount_collected_8: {required: "type_mf32_amount_collected (Loop 8) must be filled..!!"},
-                type_mf32_amount_collected_9: {required: "type_mf32_amount_collected (Loop 9) must be filled..!!"},
-                type_mf32_amount_collected_10: {required: "type_mf32_amount_collected (Loop 10) must be filled..!!"},
+                type_mf32_amount_collected_2: {required: "type_mf32_amount_collected_2 must be filled..!!"},
+                type_mf32_amount_collected_3: {required: "type_mf32_amount_collected_3 must be filled..!!"},
+                type_mf32_amount_collected_4: {required: "type_mf32_amount_collected_4 must be filled..!!"},
+                type_mf32_amount_collected_5: {required: "type_mf32_amount_collected_5 must be filled..!!"},
+                type_mf32_amount_collected_6: {required: "type_mf32_amount_collected_6 must be filled..!!"},
+                type_mf32_amount_collected_7: {required: "type_mf32_amount_collected_7 must be filled..!!"},
+                type_mf32_amount_collected_8: {required: "type_mf32_amount_collected_8 must be filled..!!"},
+                type_mf32_amount_collected_9: {required: "type_mf32_amount_collected_9 must be filled..!!"},
+                type_mf32_amount_collected_10: {required: "type_mf32_amount_collected_10 must be filled..!!"},
                 
-                _170_mf32a_date: {required: "date must be filled..!!"},
-                _171_mf32a_currency: {required: "currency must be filled..!!"},
-                _172_mf32a_amount: {required: "amount must be filled..!!"},
-                _173_mf32b_currency: {required: "currency must be filled..!!"},
-                _174_mf32b_amount: {required: "amount must be filled..!!"},
+                _170_mf32a_date: {required: "mf32a_date must be filled..!!"},
+                _171_mf32a_currency: {required: "mf32a_currency be filled..!!"},
+                _172_mf32a_amount: {required: "mf32a_amount must be filled..!!"},
+                _173_mf32b_currency: {required: "mf32b_currency must be filled..!!"},
+                _174_mf32b_amount: {required: "mf32b_amount must be filled..!!"},
+                
+                // MF32A - Loop 2
+                _480_mf32a_date: {required: "mf32a_date_2 must be filled..!!"},
+                _481_mf32a_currency: {required: "mf32a_currency_2 must be filled..!!"},
+                _482_mf32a_amount: {required: "mf32a_amount_2 must be filled..!!"},
+                _483_mf32b_currency: {required: "mf32b_currency_2 must be filled..!!"},
+                _484_mf32b_amount: {required: "mf32b_amount_2 must be filled..!!"},
 
-                //=== OF50 ERROR MESSAGES - ALL LOOPS ===
-                
+                // MF32A - Loop 3
+                _790_mf32a_date: {required: "mf32a_date_3 must be filled..!!"},
+                _791_mf32a_currency: {required: "mf32a_currency_3 must be filled..!!"},
+                _792_mf32a_amount: {required: "mf32a_amount_3 must be filled..!!"},
+                _793_mf32b_currency: {required: "mf32b_currency_3 must be filled..!!"},
+                _794_mf32b_amount: {required: "mf32b_amount_3 must be filled..!!"},
+
+                // MF32A - Loop 4
+                _1100_mf32a_date: {required: "mf32a_date_4 must be filled..!!"},
+                _1101_mf32a_currency: {required: "mf32a_currency_4 must be filled..!!"},
+                _1102_mf32a_amount: {required: "mf32a_amount_4 must be filled..!!"},
+                _1103_mf32b_currency: {required: "mf32b_currency_4 must be filled..!!"},
+                _1104_mf32b_amount: {required: "mf32b_amount_4 must be filled..!!"},
+
+                // MF32A - Loop 5
+                _1410_mf32a_date: {required: "mf32a_date_5 must be filled..!!"},
+                _1411_mf32a_currency: {required: "mf32a_currency_5 must be filled..!!"},
+                _1412_mf32a_amount: {required: "mf32a_amount_5 must be filled..!!"},
+                _1413_mf32b_currency: {required: "mf32b_currency_5 must be filled..!!"},
+                _1414_mf32b_amount: {required: "mf32b_amount_5 must be filled..!!"},
+
+                // MF32A - Loop 6
+                _1720_mf32a_date: {required: "mf32a_date_6 must be filled..!!"},
+                _1721_mf32a_currency: {required: "mf32a_currency_6 must be filled..!!"},
+                _1722_mf32a_amount: {required: "mf32a_amount_6 must be filled..!!"},
+                _1723_mf32b_currency: {required: "mf32b_currency_6 must be filled..!!"},
+                _1724_mf32b_amount: {required: "mf32b_amount_6 must be filled..!!"},
+
+                // MF32A - Loop 7
+                _2030_mf32a_date: {required: "mf32a_date_7 must be filled..!!"},
+                _2031_mf32a_currency: {required: "mf32a_currency_7 must be filled..!!"},
+                _2032_mf32a_amount: {required: "mf32a_amount_7 must be filled..!!"},
+                _2033_mf32b_currency: {required: "mf32b_currency_7 must be filled..!!"},
+                _2034_mf32b_amount: {required: "mf32b_amount_7 must be filled..!!"},
+
+                // MF32A - Loop 8
+                _2340_mf32a_date: {required: "mf32a_date_8 must be filled..!!"},
+                _2341_mf32a_currency: {required: "mf32a_currency_8 must be filled..!!"},
+                _2342_mf32a_amount: {required: "mf32a_amount_8 must be filled..!!"},
+                _2343_mf32b_currency: {required: "mf32b_currency_8 must be filled..!!"},
+                _2344_mf32b_amount: {required: "mf32b_amount_8 must be filled..!!"},
+
+                // MF32A - Loop 9
+                _2650_mf32a_date: {required: "mf32a_date_9 must be filled..!!"},
+                _2651_mf32a_currency: {required: "mf32a_currency_9 must be filled..!!"},
+                _2652_mf32a_amount: {required: "mf32a_amount_9 must be filled..!!"},
+                _2653_mf32b_currency: {required: "mf32b_currency_9 must be filled..!!"},
+                _2654_mf32b_amount: {required: "mf32b_amount_9 must be filled..!!"},
+
+                // MF32A - Loop 10
+                _2960_mf32a_date: {required: "mf32a_date_10 must be filled..!!"},
+                _2961_mf32a_currency: {required: "mf32a_currency_10 must be filled..!!"},
+                _2962_mf32a_amount: {required: "mf32a_amount_10 must be filled..!!"},
+                _2963_mf32b_currency: {required: "mf32b_currency_10 must be filled..!!"},
+                _2964_mf32b_amount: {required: "mf32b_amount_10 must be filled..!!"},
+
+                //=== OF50 ===
                 // OF50 - Loop 1
-                _181_of50a_identifier_code: {required: "OF50A Identifier Code must be filled..!!"},
-                _183_of50f_account: {required: "OF50F Party Identifier must be filled..!!"},
-                _184_mf50f_number: {required: "OF50F Number must be selected..!!"},
-                _185_of50f_details: {required: "OF50F Details must be filled..!!"},
-                _186_of50f_number: {required: "OF50F Number (Detail 2) must be selected..!!"},
-                _187_of50f_details: {required: "OF50F Details (Detail 2) must be filled..!!"},
-                _188_of50f_number: {required: "OF50F Number (Detail 3) must be selected..!!"},
-                _189_of50f_details: {required: "OF50F Details (Detail 3) must be filled..!!"},
-                _190_of50f_number: {required: "OF50F Number (Detail 4) must be selected..!!"},
-                _191_of50f_details: {required: "OF50F Details (Detail 4) must be filled..!!"},
-                _193_of50k_name_address: {required: "OF50K Name and Address must be filled..!!"},
+                _181_of50a_identifier_code: {required: "of50a_identifier_code must be filled..!!"},
+                _183_of50f_account: {required: "of50f_party_identifier must be filled..!!"},
+                _184_mf50f_number: {required: "of50f_number must be selected..!!"},
+                _185_of50f_details: {required: "of50f_details must be filled..!!"},
+                _186_of50f_number: {required: "of50f_number_detail_2 must be selected..!!"},
+                _187_of50f_details: {required: "of50f_details_detail_2 must be filled..!!"},
+                _188_of50f_number: {required: "of50f_number_detail_3 must be selected..!!"},
+                _189_of50f_details: {required: "of50f_details_detail_3 must be filled..!!"},
+                _190_of50f_number: {required: "of50f_number_detail_4 must be selected..!!"},
+                _191_of50f_details: {required: "of50f_details_detail_4 must be filled..!!"},
+                _193_of50k_name_address: {required: "of50k_name_and_address must be filled..!!"},
 
                 // OF50 - Loop 2
-                _491_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 2) must be filled..!!"},
-                _493_of50f_account: {required: "OF50F Party Identifier (Loop 2) must be filled..!!"},
-                _494_mf50f_number: {required: "OF50F Number (Loop 2) must be selected..!!"},
-                _495_of50f_details: {required: "OF50F Details (Loop 2) must be filled..!!"},
-                _496_of50f_number: {required: "OF50F Number Detail 2 (Loop 2) must be selected..!!"},
-                _497_of50f_details: {required: "OF50F Details Detail 2 (Loop 2) must be filled..!!"},
-                _498_of50f_number: {required: "OF50F Number Detail 3 (Loop 2) must be selected..!!"},
-                _499_of50f_details: {required: "OF50F Details Detail 3 (Loop 2) must be filled..!!"},
-                _500_of50f_number: {required: "OF50F Number Detail 4 (Loop 2) must be selected..!!"},
-                _501_of50f_details: {required: "OF50F Details Detail 4 (Loop 2) must be filled..!!"},
-                _503_of50k_name_address: {required: "OF50K Name and Address (Loop 2) must be filled..!!"},
+                _491_of50a_identifier_code: {required: "of50a_identifier_code_2 must be filled..!!"},
+                _493_of50f_account: {required: "of50f_party_identifier_2 must be filled..!!"},
+                _494_mf50f_number: {required: "of50f_number_2 must be selected..!!"},
+                _495_of50f_details: {required: "of50f_details_2 must be filled..!!"},
+                _496_of50f_number: {required: "of50f_number_2_detail_2 must be selected..!!"},
+                _497_of50f_details: {required: "of50f_details_2_detail_2 must be filled..!!"},
+                _498_of50f_number: {required: "of50f_number_2_detail_3 must be selected..!!"},
+                _499_of50f_details: {required: "of50f_details_2_detail_3 must be filled..!!"},
+                _500_of50f_number: {required: "of50f_number_2_detail_4 must be selected..!!"},
+                _501_of50f_details: {required: "of50f_details_2_detail_4 must be filled..!!"},
+                _503_of50k_name_address: {required: "of50k_name_and_address_2 must be filled..!!"},
 
                 // OF50 - Loop 3
-                _801_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 3) must be filled..!!"},
-                _803_of50f_account: {required: "OF50F Party Identifier (Loop 3) must be filled..!!"},
-                _804_mf50f_number: {required: "OF50F Number (Loop 3) must be selected..!!"},
-                _805_of50f_details: {required: "OF50F Details (Loop 3) must be filled..!!"},
-                _806_of50f_number: {required: "OF50F Number Detail 2 (Loop 3) must be selected..!!"},
-                _807_of50f_details: {required: "OF50F Details Detail 2 (Loop 3) must be filled..!!"},
-                _808_of50f_number: {required: "OF50F Number Detail 3 (Loop 3) must be selected..!!"},
-                _809_of50f_details: {required: "OF50F Details Detail 3 (Loop 3) must be filled..!!"},
-                _810_of50f_number: {required: "OF50F Number Detail 4 (Loop 3) must be selected..!!"},
-                _811_of50f_details: {required: "OF50F Details Detail 4 (Loop 3) must be filled..!!"},
-                _813_of50k_name_address: {required: "OF50K Name and Address (Loop 3) must be filled..!!"},
+                _801_of50a_identifier_code: {required: "of50a_identifier_code_3 must be filled..!!"},
+                _803_of50f_account: {required: "of50f_party_identifier_3 must be filled..!!"},
+                _804_mf50f_number: {required: "of50f_number_3 must be selected..!!"},
+                _805_of50f_details: {required: "of50f_details_3 must be filled..!!"},
+                _806_of50f_number: {required: "of50f_number_3_detail_2 must be selected..!!"},
+                _807_of50f_details: {required: "of50f_details_3_detail_2 must be filled..!!"},
+                _808_of50f_number: {required: "of50f_number_3_detail_3 must be selected..!!"},
+                _809_of50f_details: {required: "of50f_details_3_detail_3 must be filled..!!"},
+                _810_of50f_number: {required: "of50f_number_3_detail_4 must be selected..!!"},
+                _811_of50f_details: {required: "of50f_details_3_detail_4 must be filled..!!"},
+                _813_of50k_name_address: {required: "of50k_name_and_address_3 must be filled..!!"},
 
-                // OF50 - Loops 4-10 (abbreviated for brevity - follow same pattern)
-                _1111_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 4) must be filled..!!"},
-                _1421_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 5) must be filled..!!"},
-                _1731_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 6) must be filled..!!"},
-                _2041_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 7) must be filled..!!"},
-                _2351_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 8) must be filled..!!"},
-                _2661_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 9) must be filled..!!"},
-                _2971_of50a_identifier_code: {required: "OF50A Identifier Code (Loop 10) must be filled..!!"},
+                // OF50 - Loop 4
+                _1111_of50a_identifier_code: {required: "of50a_identifier_code_4 must be filled..!!"},
+                _1113_of50f_account: {required: "of50f_party_identifier_4 must be filled..!!"},
+                _1114_mf50f_number: {required: "of50f_number_4 must be selected..!!"},
+                _1115_of50f_details: {required: "of50f_details_4 must be filled..!!"},
+                _1116_of50f_number: {required: "of50f_number_4_detail_2 must be selected..!!"},
+                _1117_of50f_details: {required: "of50f_details_4_detail_2 must be filled..!!"},
+                _1118_of50f_number: {required: "of50f_number_4_detail_3 must be selected..!!"},
+                _1119_of50f_details: {required: "of50f_details_4_detail_3 must be filled..!!"},
+                _1120_of50f_number: {required: "of50f_number_4_detail_4 must be selected..!!"},
+                _1121_of50f_details: {required: "of50f_details_4_detail_4 must be filled..!!"},
+                _1123_of50k_name_address: {required: "of50k_name_and_address_4 must be filled..!!"},
 
-                //=== OF52 ERROR MESSAGES - ALL LOOPS ===
-                
+                // OF50 - Loop 5
+                _1421_of50a_identifier_code: {required: "of50a_identifier_code_5 must be filled..!!"},
+                _1423_of50f_account: {required: "of50f_party_identifier_5 must be filled..!!"},
+                _1424_mf50f_number: {required: "of50f_number_5 must be selected..!!"},
+                _1425_of50f_details: {required: "of50f_details_5 must be filled..!!"},
+                _1426_of50f_number: {required: "of50f_number_5_detail_2 must be selected..!!"},
+                _1427_of50f_details: {required: "of50f_details_5_detail_2 must be filled..!!"},
+                _1428_of50f_number: {required: "of50f_number_5_detail_3 must be selected..!!"},
+                _1429_of50f_details: {required: "of50f_details_5_detail_3 must be filled..!!"},
+                _1430_of50f_number: {required: "of50f_number_5_detail_4 must be selected..!!"},
+                _1431_of50f_details: {required: "of50f_details_5_detail_4 must be filled..!!"},
+                _1433_of50k_name_address: {required: "of50k_name_and_address_5 must be filled..!!"},
+
+                // OF50 - Loop 6
+                _1731_of50a_identifier_code: {required: "of50a_identifier_code_6 must be filled..!!"},
+                _1733_of50f_account: {required: "of50f_party_identifier_6 must be filled..!!"},
+                _1734_mf50f_number: {required: "of50f_number_6 must be selected..!!"},
+                _1735_of50f_details: {required: "of50f_details_6 must be filled..!!"},
+                _1736_of50f_number: {required: "of50f_number_6_detail_2 must be selected..!!"},
+                _1737_of50f_details: {required: "of50f_details_6_detail_2 must be filled..!!"},
+                _1738_of50f_number: {required: "of50f_number_6_detail_3 must be selected..!!"},
+                _1739_of50f_details: {required: "of50f_details_6_detail_3 must be filled..!!"},
+                _1740_of50f_number: {required: "of50f_number_6_detail_4 must be selected..!!"},
+                _1741_of50f_details: {required: "of50f_details_6_detail_4 must be filled..!!"},
+                _1743_of50k_name_address: {required: "of50k_name_and_address_6 must be filled..!!"},
+
+                // OF50 - Loop 7
+                _2041_of50a_identifier_code: {required: "of50a_identifier_code_7 must be filled..!!"},
+                _2043_of50f_account: {required: "of50f_party_identifier_7 must be filled..!!"},
+                _2044_mf50f_number: {required: "of50f_number_7 must be selected..!!"},
+                _2045_of50f_details: {required: "of50f_details_7 must be filled..!!"},
+                _2046_of50f_number: {required: "of50f_number_7_detail_2 must be selected..!!"},
+                _2047_of50f_details: {required: "of50f_details_7_detail_2 must be filled..!!"},
+                _2048_of50f_number: {required: "of50f_number_7_detail_3 must be selected..!!"},
+                _2049_of50f_details: {required: "of50f_details_7_detail_3 must be filled..!!"},
+                _2050_of50f_number: {required: "of50f_number_7_detail_4 must be selected..!!"},
+                _2051_of50f_details: {required: "of50f_details_7_detail_4 must be filled..!!"},
+                _2053_of50k_name_address: {required: "of50k_name_and_address_7 must be filled..!!"},
+
+                // OF50 - Loop 8
+                _2351_of50a_identifier_code: {required: "of50a_identifier_code_8 must be filled..!!"},
+                _2353_of50f_account: {required: "of50f_party_identifier_8 must be filled..!!"},
+                _2354_mf50f_number: {required: "of50f_number_8 must be selected..!!"},
+                _2355_of50f_details: {required: "of50f_details_8 must be filled..!!"},
+                _2356_of50f_number: {required: "of50f_number_8_detail_2 must be selected..!!"},
+                _2357_of50f_details: {required: "of50f_details_8_detail_2 must be filled..!!"},
+                _2358_of50f_number: {required: "of50f_number_8_detail_3 must be selected..!!"},
+                _2359_of50f_details: {required: "of50f_details_8_detail_3 must be filled..!!"},
+                _2360_of50f_number: {required: "of50f_number_8_detail_4 must be selected..!!"},
+                _2361_of50f_details: {required: "of50f_details_8_detail_4 must be filled..!!"},
+                _2363_of50k_name_address: {required: "of50k_name_and_address_8 must be filled..!!"},
+
+                // OF50 - Loop 9
+                _2661_of50a_identifier_code: {required: "of50a_identifier_code_9 must be filled..!!"},
+                _2663_of50f_account: {required: "of50f_party_identifier_9 must be filled..!!"},
+                _2664_mf50f_number: {required: "of50f_number_9 must be selected..!!"},
+                _2665_of50f_details: {required: "of50f_details_9 must be filled..!!"},
+                _2666_of50f_number: {required: "of50f_number_9_detail_2 must be selected..!!"},
+                _2667_of50f_details: {required: "of50f_details_9_detail_2 must be filled..!!"},
+                _2668_of50f_number: {required: "of50f_number_9_detail_3 must be selected..!!"},
+                _2669_of50f_details: {required: "of50f_details_9_detail_3 must be filled..!!"},
+                _2670_of50f_number: {required: "of50f_number_9_detail_4 must be selected..!!"},
+                _2671_of50f_details: {required: "of50f_details_9_detail_4 must be filled..!!"},
+                _2673_of50k_name_address: {required: "of50k_name_and_address_9 must be filled..!!"},
+
+                // OF50 - Loop 10
+                _2971_of50a_identifier_code: {required: "of50a_identifier_code_10 must be filled..!!"},
+                _2973_of50f_account: {required: "of50f_party_identifier_10 must be filled..!!"},
+                _2974_mf50f_number: {required: "of50f_number_10 must be selected..!!"},
+                _2975_of50f_details: {required: "of50f_details_10 must be filled..!!"},
+                _2976_of50f_number: {required: "of50f_number_10_detail_2 must be selected..!!"},
+                _2977_of50f_details: {required: "of50f_details_10_detail_2 must be filled..!!"},
+                _2978_of50f_number: {required: "of50f_number_10_detail_3 must be selected..!!"},
+                _2979_of50f_details: {required: "of50f_details_10_detail_3 must be filled..!!"},
+                _2980_of50f_number: {required: "of50f_number_10_detail_4 must be selected..!!"},
+                _2981_of50f_details: {required: "of50f_details_10_detail_4 must be filled..!!"},
+                _2983_of50k_name_address: {required: "of50k_name_and_address_10 must be filled..!!"},
+
+                //=== OF52 ===
                 // OF52 - Loop 1
-                _291_of52a_Identifier_Code: {required: "OF52A Identifier Code must be filled..!!"},
-                _295_of52d_Name_and_Address: {required: "OF52D Name and Address must be filled..!!"},
-
+                _291_of52a_Identifier_Code: {required: "of52a_identifier_code must be filled..!!"},
+                _295_of52d_Name_and_Address: {required: "of52d_name_and_address must be filled..!!"},
+                
                 // OF52 - Loop 2
-                _601_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 2) must be filled..!!"},
-                _605_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 2) must be filled..!!"},
-
+                _601_of52a_Identifier_Code: {required: "of52a_identifier_code_2 must be filled..!!"},
+                _605_of52d_Name_and_Address: {required: "of52d_name_and_address_2 must be filled..!!"},
+                
                 // OF52 - Loop 3
-                _911_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 3) must be filled..!!"},
-                _915_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 3) must be filled..!!"},
-
+                _911_of52a_Identifier_Code: {required: "of52a_identifier_code_3 must be filled..!!"},
+                _915_of52d_Name_and_Address: {required: "of52d_name_and_address_3 must be filled..!!"},
+                
                 // OF52 - Loops 4-10
-                _1221_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 4) must be filled..!!"},
-                _1225_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 4) must be filled..!!"},
-                _1531_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 5) must be filled..!!"},
-                _1535_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 5) must be filled..!!"},
-                _1841_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 6) must be filled..!!"},
-                _1845_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 6) must be filled..!!"},
-                _2151_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 7) must be filled..!!"},
-                _2155_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 7) must be filled..!!"},
-                _2461_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 8) must be filled..!!"},
-                _2465_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 8) must be filled..!!"},
-                _2771_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 9) must be filled..!!"},
-                _2775_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 9) must be filled..!!"},
-                _3081_of52a_Identifier_Code: {required: "OF52A Identifier Code (Loop 10) must be filled..!!"},
-                _3085_of52d_Name_and_Address: {required: "OF52D Name and Address (Loop 10) must be filled..!!"},
+                _1221_of52a_Identifier_Code: {required: "of52a_identifier_code_4 must be filled..!!"},
+                _1225_of52d_Name_and_Address: {required: "of52d_name_and_address_4 must be filled..!!"},
+                _1531_of52a_Identifier_Code: {required: "of52a_identifier_code_5 must be filled..!!"},
+                _1535_of52d_Name_and_Address: {required: "of52d_name_and_address_5 must be filled..!!"},
+                _1841_of52a_Identifier_Code: {required: "of52a_identifier_code_6 must be filled..!!"},
+                _1845_of52d_Name_and_Address: {required: "of52d_name_and_address_6 must be filled..!!"},
+                _2151_of52a_Identifier_Code: {required: "of52a_identifier_code_7 must be filled..!!"},
+                _2155_of52d_Name_and_Address: {required: "of52d_name_and_address_7 must be filled..!!"},
+                _2461_of52a_Identifier_Code: {required: "of52a_identifier_code_8 must be filled..!!"},
+                _2465_of52d_Name_and_Address: {required: "of52d_name_and_address_8 must be filled..!!"},
+                _2771_of52a_Identifier_Code: {required: "of52a_identifier_code_9 must be filled..!!"},
+                _2775_of52d_Name_and_Address: {required: "of52d_name_and_address_9 must be filled..!!"},
+                _3081_of52a_Identifier_Code: {required: "of52a_identifier_code_10 must be filled..!!"},
+                _3085_of52d_Name_and_Address: {required: "of52d_name_and_address_10 must be filled..!!"},
 
                 //=== MF59 ERROR MESSAGES - ALL LOOPS ===
-                
+
                 // MF59 - Loop 1
                 type_of59_59a_: {required: "MF59 Type must be selected..!!"},
-                _300_mf59_account: {required: "MF59 Account must be filled..!!"},
-                _301_mf59_name_address: {required: "MF59 Name and Address must be filled..!!"},
-                _302_mf59f_account: {required: "MF59F Account must be filled..!!"},
-                _303_mf59f_number: {required: "MF59F Number must be selected..!!"},
-                _304_mf59f_details: {required: "MF59F Details must be filled..!!"},
-                _305_mf59f_number: {required: "MF59F Number (Detail 2) must be selected..!!"},
-                _306_mf59f_details: {required: "MF59F Details (Detail 2) must be filled..!!"},
-                _307_mf59f_number: {required: "MF59F Number (Detail 3) must be selected..!!"},
-                _308_mf59f_details: {required: "MF59F Details (Detail 3) must be filled..!!"},
-                _309_mf59f_number: {required: "MF59F Number (Detail 4) must be selected..!!"},
-                _310_mf59f_details: {required: "MF59F Details (Detail 4) must be filled..!!"},
+                _300_mf59_account: {required: "mf59_account must be filled..!!"},
+                _301_mf59_name_address: {required: "mf59_name_address must be filled..!!"},
+                _302_mf59f_account: {required: "mf59f_account must be filled..!!"},
+                _303_mf59f_number: {required: "mf59f_number must be selected..!!"},
+                _304_mf59f_details: {required: "mf59f_details must be filled..!!"},
+                _305_mf59f_number: {required: "mf59f_number (Detail 2) must be selected..!!"},
+                _306_mf59f_details: {required: "mf59f_details (Detail 2) must be filled..!!"},
+                _307_mf59f_number: {required: "mf59f_number (Detail 3) must be selected..!!"},
+                _308_mf59f_details: {required: "mf59f_details (Detail 3) must be filled..!!"},
+                _309_mf59f_number: {required: "mf59f_number (Detail 4) must be selected..!!"},
+                _310_mf59f_details: {required: "mf59f_details (Detail 4) must be filled..!!"},
 
-                // MF59 - Loops 2-10
-                type_of59_59a__2: {required: "MF59 Type (Loop 2) must be selected..!!"},
-                _611_mf59_name_address: {required: "MF59 Name and Address (Loop 2) must be filled..!!"},
-                type_of59_59a__3: {required: "MF59 Type (Loop 3) must be selected..!!"},
-                type_of59_59a__4: {required: "MF59 Type (Loop 4) must be selected..!!"},
-                type_of59_59a__5: {required: "MF59 Type (Loop 5) must be selected..!!"},
-                type_of59_59a__6: {required: "MF59 Type (Loop 6) must be selected..!!"},
-                type_of59_59a__7: {required: "MF59 Type (Loop 7) must be selected..!!"},
-                type_of59_59a__8: {required: "MF59 Type (Loop 8) must be selected..!!"},
-                type_of59_59a__9: {required: "MF59 Type (Loop 9) must be selected..!!"},
-                type_of59_59a__10: {required: "MF59 Type (Loop 10) must be selected..!!"}
+                // MF59 - Loop 2
+                type_of59_59a__2: {required: "MF59 Type_2 must be selected..!!"},
+                _610_mf59_account: {required: "mf59_account_2 must be filled..!!"},
+                _611_mf59_name_address: {required: "mf59_name_address_2 must be filled..!!"},
+                _612_mf59f_account: {required: "mf59f_account_2 must be filled..!!"},
+                _613_mf59f_number: {required: "mf59f_number_2 must be selected..!!"},
+                _614_mf59f_details: {required: "mf59f_details_2 must be filled..!!"},
+                _615_mf59f_number: {required: "mf59f_number_2 (Detail 2) must be selected..!!"},
+                _616_mf59f_details: {required: "mf59f_details_2 (Detail 2) must be filled..!!"},
+                _617_mf59f_number: {required: "mf59f_number_2 (Detail 3) must be selected..!!"},
+                _618_mf59f_details: {required: "mf59f_details_2 (Detail 3) must be filled..!!"},
+                _619_mf59f_number: {required: "mf59f_number_2 (Detail 4) must be selected..!!"},
+                _620_mf59f_details: {required: "mf59f_details_2 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 3
+                type_of59_59a__3: {required: "MF59 Type_3 must be selected..!!"},
+                _920_mf59_account: {required: "mf59_account_3 must be filled..!!"},
+                _921_mf59_name_address: {required: "mf59_name_address_3 must be filled..!!"},
+                _922_mf59f_account: {required: "mf59f_account_3 must be filled..!!"},
+                _923_mf59f_number: {required: "mf59f_number_3 must be selected..!!"},
+                _924_mf59f_details: {required: "mf59f_details_3 must be filled..!!"},
+                _925_mf59f_number: {required: "mf59f_number_3 (Detail 2) must be selected..!!"},
+                _926_mf59f_details: {required: "mf59f_details_3 (Detail 2) must be filled..!!"},
+                _927_mf59f_number: {required: "mf59f_number_3 (Detail 3) must be selected..!!"},
+                _928_mf59f_details: {required: "mf59f_details_3 (Detail 3) must be filled..!!"},
+                _929_mf59f_number: {required: "mf59f_number_3 (Detail 4) must be selected..!!"},
+                _930_mf59f_details: {required: "mf59f_details_3 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 4
+                type_of59_59a__4: {required: "MF59 Type_4 must be selected..!!"},
+                _1230_mf59_account: {required: "mf59_account_4 must be filled..!!"},
+                _1231_mf59_name_address: {required: "mf59_name_address_4 must be filled..!!"},
+                _1232_mf59f_account: {required: "mf59f_account_4 must be filled..!!"},
+                _1233_mf59f_number: {required: "mf59f_number_4 must be selected..!!"},
+                _1234_mf59f_details: {required: "mf59f_details_4 must be filled..!!"},
+                _1235_mf59f_number: {required: "mf59f_number_4 (Detail 2) must be selected..!!"},
+                _1236_mf59f_details: {required: "mf59f_details_4 (Detail 2) must be filled..!!"},
+                _1237_mf59f_number: {required: "mf59f_number_4 (Detail 3) must be selected..!!"},
+                _1238_mf59f_details: {required: "mf59f_details_4 (Detail 3) must be filled..!!"},
+                _1239_mf59f_number: {required: "mf59f_number_4 (Detail 4) must be selected..!!"},
+                _1240_mf59f_details: {required: "mf59f_details_4 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 5
+                type_of59_59a__5: {required: "MF59 Type_5 must be selected..!!"},
+                _1540_mf59_account: {required: "mf59_account_5 must be filled..!!"},
+                _1541_mf59_name_address: {required: "mf59_name_address_5 must be filled..!!"},
+                _1542_mf59f_account: {required: "mf59f_account_5 must be filled..!!"},
+                _1543_mf59f_number: {required: "mf59f_number_5 must be selected..!!"},
+                _1544_mf59f_details: {required: "mf59f_details_5 must be filled..!!"},
+                _1545_mf59f_number: {required: "mf59f_number_5 (Detail 2) must be selected..!!"},
+                _1546_mf59f_details: {required: "mf59f_details_5 (Detail 2) must be filled..!!"},
+                _1547_mf59f_number: {required: "mf59f_number_5 (Detail 3) must be selected..!!"},
+                _1548_mf59f_details: {required: "mf59f_details_5 (Detail 3) must be filled..!!"},
+                _1549_mf59f_number: {required: "mf59f_number_5 (Detail 4) must be selected..!!"},
+                _1550_mf59f_details: {required: "mf59f_details_5 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 6
+                type_of59_59a__6: {required: "MF59 Type_6 must be selected..!!"},
+                _1850_mf59_account: {required: "mf59_account_6 must be filled..!!"},
+                _1851_mf59_name_address: {required: "mf59_name_address_6 must be filled..!!"},
+                _1852_mf59f_account: {required: "mf59f_account_6 must be filled..!!"},
+                _1853_mf59f_number: {required: "mf59f_number_6 must be selected..!!"},
+                _1854_mf59f_details: {required: "mf59f_details_6 must be filled..!!"},
+                _1855_mf59f_number: {required: "mf59f_number_6 (Detail 2) must be selected..!!"},
+                _1856_mf59f_details: {required: "mf59f_details_6 (Detail 2) must be filled..!!"},
+                _1857_mf59f_number: {required: "mf59f_number_6 (Detail 3) must be selected..!!"},
+                _1858_mf59f_details: {required: "mf59f_details_6 (Detail 3) must be filled..!!"},
+                _1859_mf59f_number: {required: "mf59f_number_6 (Detail 4) must be selected..!!"},
+                _1860_mf59f_details: {required: "mf59f_details_6 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 7
+                type_of59_59a__7: {required: "MF59 Type_7 must be selected..!!"},
+                _2160_mf59_account: {required: "mf59_account_7 must be filled..!!"},
+                _2161_mf59_name_address: {required: "mf59_name_address_7 must be filled..!!"},
+                _2162_mf59f_account: {required: "mf59f_account_7 must be filled..!!"},
+                _2163_mf59f_number: {required: "mf59f_number_7 must be selected..!!"},
+                _2164_mf59f_details: {required: "mf59f_details_7 must be filled..!!"},
+                _2165_mf59f_number: {required: "mf59f_number_7 (Detail 2) must be selected..!!"},
+                _2166_mf59f_details: {required: "mf59f_details_7 (Detail 2) must be filled..!!"},
+                _2167_mf59f_number: {required: "mf59f_number_7 (Detail 3) must be selected..!!"},
+                _2168_mf59f_details: {required: "mf59f_details_7 (Detail 3) must be filled..!!"},
+                _2169_mf59f_number: {required: "mf59f_number_7 (Detail 4) must be selected..!!"},
+                _2170_mf59f_details: {required: "mf59f_details_7 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 8
+                type_of59_59a__8: {required: "MF59 Type_8 must be selected..!!"},
+                _2470_mf59_account: {required: "mf59_account_8 must be filled..!!"},
+                _2471_mf59_name_address: {required: "mf59_name_address_8 must be filled..!!"},
+                _2472_mf59f_account: {required: "mf59f_account_8 must be filled..!!"},
+                _2473_mf59f_number: {required: "mf59f_number_8 must be selected..!!"},
+                _2474_mf59f_details: {required: "mf59f_details_8 must be filled..!!"},
+                _2475_mf59f_number: {required: "mf59f_number_8 (Detail 2) must be selected..!!"},
+                _2476_mf59f_details: {required: "mf59f_details_8 (Detail 2) must be filled..!!"},
+                _2477_mf59f_number: {required: "mf59f_number_8 (Detail 3) must be selected..!!"},
+                _2478_mf59f_details: {required: "mf59f_details_8 (Detail 3) must be filled..!!"},
+                _2479_mf59f_number: {required: "mf59f_number_8 (Detail 4) must be selected..!!"},
+                _2480_mf59f_details: {required: "mf59f_details_8 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 9
+                type_of59_59a__9: {required: "MF59 Type_9 must be selected..!!"},
+                _2780_mf59_account: {required: "mf59_account_9 must be filled..!!"},
+                _2781_mf59_name_address: {required: "mf59_name_address_9 must be filled..!!"},
+                _2782_mf59f_account: {required: "mf59f_account_9 must be filled..!!"},
+                _2783_mf59f_number: {required: "mf59f_number_9 must be selected..!!"},
+                _2784_mf59f_details: {required: "mf59f_details_9 must be filled..!!"},
+                _2785_mf59f_number: {required: "mf59f_number_9 (Detail 2) must be selected..!!"},
+                _2786_mf59f_details: {required: "mf59f_details_9 (Detail 2) must be filled..!!"},
+                _2787_mf59f_number: {required: "mf59f_number_9 (Detail 3) must be selected..!!"},
+                _2788_mf59f_details: {required: "mf59f_details_9 (Detail 3) must be filled..!!"},
+                _2789_mf59f_number: {required: "mf59f_number_9 (Detail 4) must be selected..!!"},
+                _2790_mf59f_details: {required: "mf59f_details_9 (Detail 4) must be filled..!!"},
+
+                // MF59 - Loop 10
+                type_of59_59a__10: {required: "MF59 Type_10 must be selected..!!"},
+                _3090_mf59_account: {required: "mf59_account_10 must be filled..!!"},
+                _3091_mf59_name_address: {required: "mf59_name_address_10 must be filled..!!"},
+                _3092_mf59f_account: {required: "mf59f_account_10 must be filled..!!"},
+                _3093_mf59f_number: {required: "mf59f_number_10 must be selected..!!"},
+                _3094_mf59f_details: {required: "mf59f_details_10 must be filled..!!"},
+                _3095_mf59f_number: {required: "mf59f_number_10 (Detail 2) must be selected..!!"},
+                _3096_mf59f_details: {required: "mf59f_details_10 (Detail 2) must be filled..!!"},
+                _3097_mf59f_number: {required: "mf59f_number_10 (Detail 3) must be selected..!!"},
+                _3098_mf59f_details: {required: "mf59f_details_10 (Detail 3) must be filled..!!"},
+                _3099_mf59f_number: {required: "mf59f_number_10 (Detail 4) must be selected..!!"},
+                _3100_mf59f_details: {required: "mf59f_details_10 (Detail 4) must be filled..!!"}
             },
             errorPlacement: function (error, element) {
                 error.insertAfter(element);

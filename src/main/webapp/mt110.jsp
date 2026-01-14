@@ -508,6 +508,9 @@
 
 
                                         <a id="renaa" href="#">Add Loop</a>
+                                        <span style="margin-left: 15px; font-style: italic; color: #666; font-size: 11px;">
+                                            *Mohon lengkapi data loop pertama sebelum menambahkan loop baru
+                                        </span>                                        
                                         
                                         <hr/>
                                     </div>
